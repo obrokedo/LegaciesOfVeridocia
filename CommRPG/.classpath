@@ -12,7 +12,6 @@
 	<classpathentry kind="lib" path="/GameLib/Jars/Slick/jogg-0.0.7.jar"/>
 	<classpathentry kind="lib" path="/GameLib/Jars/Slick/jorbis-0.0.15.jar"/>
 	<classpathentry kind="lib" path="/GameLib/Jars/Artemis/artemis-a609b2076aacc0ef5ecf0b390205d01bb88ceae2.jar" sourcepath="/GameLib/Jars/Artemis/artemis-a609b2076aacc0ef5ecf0b390205d01bb88ceae2-src.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/ZTCP"/>
 	<classpathentry kind="lib" path="/GameLib/Jars/javax.json-1.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
