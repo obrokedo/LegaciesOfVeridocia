@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="lib" path="/GameLib/Jars/LWJGL/lwjgl.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="GameLib/Jars/LWJGL/windows"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/GameLib/Jars/netty-3.6.2.Final/jar/netty-3.6.2.Final.jar" sourcepath="/GameLib/Jars/netty-3.6.2.Final/src"/>
+	<classpathentry kind="lib" path="/GameLib/Jars/Slick/slick.jar" sourcepath="/GameLib/Jars/Slick/src"/>
+	<classpathentry kind="lib" path="/GameLib/Jars/Slick/jogg-0.0.7.jar"/>
+	<classpathentry kind="lib" path="/GameLib/Jars/Slick/jorbis-0.0.15.jar"/>
+	<classpathentry kind="lib" path="/GameLib/Jars/Artemis/artemis-a609b2076aacc0ef5ecf0b390205d01bb88ceae2.jar" sourcepath="/GameLib/Jars/Artemis/artemis-a609b2076aacc0ef5ecf0b390205d01bb88ceae2-src.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/ZTCP"/>
+	<classpathentry kind="lib" path="/GameLib/Jars/javax.json-1.0.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

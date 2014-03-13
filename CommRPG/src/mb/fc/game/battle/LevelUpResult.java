@@ -1,0 +1,15 @@
+package mb.fc.game.battle;
+
+import java.io.Serializable;
+
+public class LevelUpResult implements Serializable
+{
+	private static final long serialVersionUID = 1L;
+	
+	public int attackGain;
+	public int defenseGain;
+	public int speedGain;
+	public int hitpointGain;
+	public int magicpointGain;
+	public String text;
+}
