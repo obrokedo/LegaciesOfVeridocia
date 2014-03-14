@@ -14,14 +14,16 @@ public class Progression implements Serializable
 	private int speedGains;
 	private int hpGains;
 	private int mpGains;
+	private int movementType;
 	
-	public Progression(int[] usuableWeapons, int[] usuableArmor, int move,
+	public Progression(int[] usuableWeapons, int[] usuableArmor, int move, int movementType,
 			int attackGains, int defenseGains, int speedGains, int hpGains,
 			int mpGains) {
 		super();
 		this.usuableWeapons = usuableWeapons;
 		this.usuableArmor = usuableArmor;
 		this.move = move;
+		this.movementType = movementType;
 		this.attackGains = attackGains;
 		this.defenseGains = defenseGains;
 		this.speedGains = speedGains;
@@ -53,5 +55,7 @@ public class Progression implements Serializable
 	public int getMpGains() {
 		return mpGains;
 	}
-
+	public int getMovementType() {
+		return movementType;
+	}
 }

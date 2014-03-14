@@ -7,7 +7,7 @@ import mb.fc.engine.ForsakenChampions;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.battle.LevelUpResult;
 import mb.fc.game.battle.spell.Spell;
-import mb.fc.game.battle.spell.SpellDescriptor;
+import mb.fc.game.battle.spell.KnownSpell;
 import mb.fc.game.resource.SpellResource;
 import mb.fc.resource.FCResourceManager;
 
@@ -117,7 +117,7 @@ public class HeroProgression implements Serializable
 					boolean found = false;
 					if (cs.getSpellsDescriptors() != null)
 					{
-						for (SpellDescriptor sd : cs.getSpellsDescriptors())
+						for (KnownSpell sd : cs.getSpellsDescriptors())
 						{
 							if (sd.getSpellId() == spell.getId())
 							{
@@ -129,13 +129,13 @@ public class HeroProgression implements Serializable
 						
 						if (!found)
 						{
-							cs.getSpellsDescriptors().add(new SpellDescriptor(spell.getId(), (byte) j));
+							cs.getSpellsDescriptors().add(new KnownSpell(spell.getId(), (byte) j));
 						}
 					}
 					else
 					{
-						cs.setSpells(new ArrayList<SpellDescriptor>());
-						cs.getSpellsDescriptors().add(new SpellDescriptor(spell.getId(), (byte) j));
+						cs.setSpells(new ArrayList<KnownSpell>());
+						cs.getSpellsDescriptors().add(new KnownSpell(spell.getId(), (byte) j));
 					}
 				}
 			}

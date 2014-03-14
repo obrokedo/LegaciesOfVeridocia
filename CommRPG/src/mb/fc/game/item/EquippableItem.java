@@ -27,9 +27,9 @@ public class EquippableItem extends Item
 	private boolean equipped;
 
 	public EquippableItem(String name, int cost, String description,
-			 ItemUse itemUse, boolean singleUse, int itemId,
-			int attack, int defense, int speed, int range, int itemType, int itemStyle, Image image) {
-		super(name, cost, description, itemUse, singleUse, true, itemId, image);
+			 ItemUse itemUse, int itemId, int attack, int defense, int speed, 
+			 int range, int itemType, int itemStyle) {
+		super(name, cost, description, itemUse, true, itemId);
 		this.attack = attack;
 		this.defense = defense;
 		this.speed = speed;

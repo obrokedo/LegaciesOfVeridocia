@@ -10,10 +10,18 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
+import mb.fc.game.definition.EnemyDefinition;
+import mb.fc.game.definition.HeroDefinition;
+import mb.fc.game.definition.ItemDefinition;
+import mb.fc.game.resource.EnemyResource;
+import mb.fc.game.resource.HeroResource;
+import mb.fc.game.resource.ItemResource;
 import mb.fc.game.text.Speech;
 import mb.fc.game.trigger.TriggerEvent;
 import mb.fc.map.Map;
 import mb.fc.utils.SpriteAnims;
+import mb.fc.utils.XMLParser;
+import mb.fc.utils.XMLParser.TagArea;
 import mb.gl2.loading.LoadingState;
 import mb.gl2.loading.ResourceManager;
 
@@ -83,8 +91,7 @@ public class FCResourceManager extends ResourceManager {
 					(int) ((split.length >= 6 ? Integer.parseInt(split[5]) : 0)  * scale)));
 		}
 		else if (split[0].equalsIgnoreCase("map"))
-		{
-			
+		{			
 			System.out.println("Load map: " + split[2]);
 			MapParser.parseMap(split[2], map, getClass());
 		}
@@ -98,6 +105,45 @@ public class FCResourceManager extends ResourceManager {
 		{
 			TextParser.parseText(split[1], speechesById, triggerEventById, getClass());
 		}
+		else if (split[0].equalsIgnoreCase("herodefs"))
+		{
+			ArrayList<TagArea> tagAreas = XMLParser.process(split[1], getClass());
+			Hashtable<Integer, HeroDefinition> heroDefinitionsById = new Hashtable<Integer, HeroDefinition>();
+			
+			for (TagArea ta : tagAreas)
+			{
+				HeroDefinition hd = HeroDefinition.parseHeroDefinition(ta);
+				heroDefinitionsById.put(hd.getId(), hd);
+			}
+			
+			HeroResource.initialize(heroDefinitionsById);
+		}
+		else if (split[0].equalsIgnoreCase("itemdefs"))
+		{
+			ArrayList<TagArea> tagAreas = XMLParser.process(split[1], getClass());
+			Hashtable<Integer, ItemDefinition> itemDefinitionsById = new Hashtable<Integer, ItemDefinition>();
+			
+			for (TagArea ta : tagAreas)
+			{
+				ItemDefinition id = ItemDefinition.parseItemDefinition(ta);
+				itemDefinitionsById.put(id.getId(), id);
+			}
+			
+			ItemResource.initialize(itemDefinitionsById);
+		}	
+		else if (split[0].equalsIgnoreCase("enemydefs"))
+		{
+			ArrayList<TagArea> tagAreas = XMLParser.process(split[1], getClass());
+			Hashtable<Integer, EnemyDefinition> enemyDefinitionsById = new Hashtable<Integer, EnemyDefinition>();
+			
+			for (TagArea ta : tagAreas)
+			{
+				EnemyDefinition ed = EnemyDefinition.parseEnemyDefinition(ta);
+				enemyDefinitionsById.put(ed.getId(), ed);
+			}
+			
+			EnemyResource.initialize(enemyDefinitionsById);
+		}	
 		else if (split[0].equalsIgnoreCase("music"))
 		{
 			musicByTitle.put(split[1], new Music(split[2]));

@@ -8,7 +8,7 @@ import mb.fc.engine.state.StateInfo;
 import mb.fc.game.Camera;
 import mb.fc.game.ai.AI;
 import mb.fc.game.ai.ClericAI;
-import mb.fc.game.battle.spell.SpellDescriptor;
+import mb.fc.game.battle.spell.KnownSpell;
 import mb.fc.game.constants.Direction;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.hudmenu.SpriteContextPanel;
@@ -52,8 +52,12 @@ public class CombatSprite extends AnimatedSprite
 	private boolean isHero = false;
 	private boolean isLeader = false;
 	private boolean isPromoted = false;
-	private int id = -1;
-	private ArrayList<SpellDescriptor> spells;
+	
+	// This value provides a mean of differentiating between multiple enemies of the same name,
+	// in addition this value can be user speified for enemies so that they may be the target
+	// of triggers
+	private int uniqueEnemyId = -1;
+	private ArrayList<KnownSpell> spells;
 	private ArrayList<Item> items;
 	private ArrayList<Boolean> equipped;
 	private int[] usuableWeapons;
@@ -74,17 +78,17 @@ public class CombatSprite extends AnimatedSprite
 	
 	public CombatSprite(boolean isLeader,
 			String name, String imageName, int hp, int mp, int attack, int defense, int speed, int move, 
-				int movementType, int level, int id, int portraitIndex, ArrayList<SpellDescriptor> spells) 
+				int movementType, int level, int id, int portraitIndex, ArrayList<KnownSpell> spells) 
 	{
 		this(isLeader, name, imageName, null, hp, mp, attack, defense, speed, move, movementType, level, 0, portraitIndex, spells);
-		this.id = id;
+		this.uniqueEnemyId = id;
 		this.ai = new ClericAI(AI.APPROACH_REACTIVE);	
 		this.isHero = false;
 	}
 	
 	public CombatSprite(boolean isLeader,
 			String name, String imageName, HeroProgression heroProgression, int hp, int mp, int attack,
-			int defense, int speed, int move, int movementType, int level, int exp, int portraitIndex, ArrayList<SpellDescriptor> spells) 
+			int defense, int speed, int move, int movementType, int level, int exp, int portraitIndex, ArrayList<KnownSpell> spells) 
 	{
 		super(0, 0, imageName);
 		
@@ -142,6 +146,7 @@ public class CombatSprite extends AnimatedSprite
 			super.setLocY(-1);
 		}
 		
+		System.out.println("Get image name " + imageName);
 		spriteAnims = stateInfo.getResourceManager().getSpriteAnimations().get(imageName);
 		currentAnim = spriteAnims.getAnimation("UnDown");
 		
@@ -150,7 +155,7 @@ public class CombatSprite extends AnimatedSprite
 		
 		if (spells != null && spells.size() > 0)
 		{
-			for (SpellDescriptor sd : spells)
+			for (KnownSpell sd : spells)
 				sd.initializeFromLoad(stateInfo);
 		}
 				
@@ -168,8 +173,6 @@ public class CombatSprite extends AnimatedSprite
 			Item item = ItemResource.getItem(items.get(0).getItemId(), stateInfo);			
 			items.add(item);			
 			items.remove(0);
-			if (items.get(0).isShouldEquip())
-				this.equipItem((EquippableItem) item);
 		}
 		
 		this.currentAttack = this.maxAttack;
@@ -411,14 +414,14 @@ public class CombatSprite extends AnimatedSprite
 		return spriteAnims.getImageAtIndex(index);
 	}
 	
-	public int getId()
+	public int getUniqueEnemyId()
 	{
-		return this.id;
+		return this.uniqueEnemyId;
 	}
 	
-	public void setId(int id)
+	public void setUniqueEnemyId(int id)
 	{
-		this.id = id;
+		this.uniqueEnemyId = id;
 	}
 	
 	public boolean isLeader() {
@@ -498,11 +501,11 @@ public class CombatSprite extends AnimatedSprite
 		this.exp = exp;
 	}
 
-	public ArrayList<SpellDescriptor> getSpellsDescriptors() {
+	public ArrayList<KnownSpell> getSpellsDescriptors() {
 		return spells;
 	}	
 	
-	public void setSpells(ArrayList<SpellDescriptor> spells) {
+	public void setSpells(ArrayList<KnownSpell> spells) {
 		this.spells = spells;
 	}
 

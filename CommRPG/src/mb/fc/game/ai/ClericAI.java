@@ -127,7 +127,7 @@ public class ClericAI extends CasterAI
 		currentConfidence -= cost;
 		
 		System.out.println("Spell confidence " + currentConfidence + " name " + 
-		targetSprite.getName() + " " + targetSprite.getId() + " spell " + spell.getName() + " level " + i);
+		targetSprite.getName() + " " + targetSprite.getUniqueEnemyId() + " spell " + spell.getName() + " level " + i);
 		
 		// Check to see if this is the most confident
 		mostConfident = checkForMaxConfidence(mostConfident, currentConfidence, spell, i, targetsInArea);
@@ -177,7 +177,7 @@ public class ClericAI extends CasterAI
 		
 		currentConfidence += distance - 1;
 		
-		System.out.println("Spell confidence " + currentConfidence + " name " + targetSprite.getName() + " " + targetSprite.getId() + " spell " + spell.getName() + " level " + i);
+		System.out.println("Spell confidence " + currentConfidence + " name " + targetSprite.getName() + " " + targetSprite.getUniqueEnemyId() + " spell " + spell.getName() + " level " + i);
 		
 		// Check to see if this is the most confident
 		mostConfident = checkForMaxConfidence(mostConfident, currentConfidence, spell, i, targetsInArea);

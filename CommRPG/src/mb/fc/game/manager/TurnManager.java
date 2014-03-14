@@ -548,6 +548,7 @@ public class TurnManager extends Manager implements KeyboardListener
 				// if there is a combat sprite here display it's health panel
 				if (cs != null)
 					cs.triggerOverEvent(stateInfo);
+				stateInfo.setInputDelay(System.currentTimeMillis() + 70);
 			}
 		}
 		

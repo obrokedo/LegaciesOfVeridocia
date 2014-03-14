@@ -1,7 +1,7 @@
 package mb.fc.game.menu;
 
 import mb.fc.engine.state.StateInfo;
-import mb.fc.game.battle.spell.SpellDescriptor;
+import mb.fc.game.battle.spell.KnownSpell;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.input.FCInput;
 import mb.fc.game.input.KeyMapping;
@@ -62,7 +62,7 @@ public class HeroStatMenu extends Menu
 			for (int i = 0; i < selectedSprite.getSpellsDescriptors().size(); i++)
 			{
 				graphics.setColor(Panel.COLOR_FOREFRONT);
-				SpellDescriptor sd = selectedSprite.getSpellsDescriptors().get(i);
+				KnownSpell sd = selectedSprite.getSpellsDescriptors().get(i);
 				graphics.drawImage(sd.getSpell().getSpellIcon(), x + 140, y + 185 + i * 47);
 				graphics.drawString(sd.getSpell().getName(), x + 175, y + 167 + i * 47);
 				for (int j = 0; j < sd.getMaxLevel(); j++)
@@ -85,7 +85,7 @@ public class HeroStatMenu extends Menu
 			if (itemSplit.length > 1)
 				graphics.drawString(itemSplit[1], x + 310, y + 180 + i * 47);
 			
-			if (selectedSprite.getEquipped().contains(selectedSprite.getItem(i)))
+			if (selectedSprite.getEquipped().get(i))
 			{
 				graphics.setColor(Color.pink);
 				graphics.drawString("EQPD", x + 310, y + 194 + i * 47);

@@ -5,7 +5,7 @@ import java.io.Serializable;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.resource.SpellResource;
 
-public class SpellDescriptor implements Serializable
+public class KnownSpell implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	
@@ -43,7 +43,7 @@ public class SpellDescriptor implements Serializable
 	 * @param spellId The spell id of the spell to create
 	 * @param maxLevel The max level that the caster knows of this spell
 	 */
-	public SpellDescriptor(int spellId, byte maxLevel) {
+	public KnownSpell(int spellId, byte maxLevel) {
 		super();
 		this.spellId = spellId;
 		this.maxLevel = maxLevel;		

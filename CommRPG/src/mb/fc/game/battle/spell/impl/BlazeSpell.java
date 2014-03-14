@@ -1,7 +1,7 @@
 package mb.fc.game.battle.spell.impl;
 
 import mb.fc.game.battle.spell.Spell;
-import mb.fc.game.battle.spell.SpellDescriptor;
+import mb.fc.game.battle.spell.KnownSpell;
 
 public class BlazeSpell extends Spell 
 {
@@ -16,7 +16,7 @@ public class BlazeSpell extends Spell
 		this.effects = null;
 		this.range = new int[] {2, 2, 2, 2};
 		this.area = new int[] {1, 2, 2, 1};
-		this.id = SpellDescriptor.ID_BLAZE;
+		this.id = KnownSpell.ID_BLAZE;
 	}
 
 	@Override

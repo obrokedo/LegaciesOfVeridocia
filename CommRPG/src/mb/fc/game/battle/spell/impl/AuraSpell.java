@@ -1,7 +1,7 @@
 package mb.fc.game.battle.spell.impl;
 
 import mb.fc.game.battle.spell.Spell;
-import mb.fc.game.battle.spell.SpellDescriptor;
+import mb.fc.game.battle.spell.KnownSpell;
 import mb.fc.game.sprite.CombatSprite;
 
 public class AuraSpell extends Spell
@@ -17,7 +17,7 @@ public class AuraSpell extends Spell
 		this.effects = null;
 		this.range = new int[] {3, 3, 3, 3};
 		this.area = new int[] {2, 3, 3, 3};
-		this.id = SpellDescriptor.ID_AURA;
+		this.id = KnownSpell.ID_AURA;
 	}
 
 	@Override

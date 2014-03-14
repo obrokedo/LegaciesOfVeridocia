@@ -4,7 +4,7 @@ import java.util.Hashtable;
 
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.battle.spell.Spell;
-import mb.fc.game.battle.spell.SpellDescriptor;
+import mb.fc.game.battle.spell.KnownSpell;
 import mb.fc.game.battle.spell.impl.AuraSpell;
 import mb.fc.game.battle.spell.impl.BlazeSpell;
 import mb.fc.game.battle.spell.impl.HealSpell;
@@ -17,9 +17,9 @@ public class SpellResource
 	static
 	{
 		spells = new Hashtable<Integer, Spell>();
-		spells.put(SpellDescriptor.ID_BLAZE, new BlazeSpell());
-		spells.put(SpellDescriptor.ID_HEAL, new HealSpell());
-		spells.put(SpellDescriptor.ID_AURA, new AuraSpell());
+		spells.put(KnownSpell.ID_BLAZE, new BlazeSpell());
+		spells.put(KnownSpell.ID_HEAL, new HealSpell());
+		spells.put(KnownSpell.ID_AURA, new AuraSpell());
 	}
 	
 	public static Spell getSpell(int spellId, FCResourceManager frm)

@@ -20,6 +20,7 @@ import mb.fc.game.manager.Manager;
 import mb.fc.game.menu.Menu;
 import mb.fc.game.persist.ClientProfile;
 import mb.fc.game.persist.ClientProgress;
+import mb.fc.game.resource.HeroResource;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.sprite.Sprite;
 import mb.fc.game.trigger.Trigger;
@@ -103,6 +104,15 @@ public class StateInfo
 	public void initState()
 	{
 		this.initialized = false;
+		
+		// Add starting heroes if they haven't been added yet
+		if (psi.getClientProfile().getStartingHeroIds() != null)
+		{
+			for (Integer heroId : psi.getClientProfile().getStartingHeroIds())
+				psi.getClientProfile().getHeroes().add(HeroResource.getHero(heroId, this));
+			psi.getClientProfile().setStartingHeroIds(null);
+		}
+		
 		initializeSystems();
 		if (isCombat)
 			this.heroes.addAll(getClientProfile().getHeroes());

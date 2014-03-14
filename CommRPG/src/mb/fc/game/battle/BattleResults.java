@@ -189,7 +189,7 @@ public class BattleResults implements Serializable
 				
 				expGained += exp;
 				
-				if (item.isSingleUse())
+				if (item.getItemUse().isSingleUse())
 					attacker.removeItem(item);
 			}
 			

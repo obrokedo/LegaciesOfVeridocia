@@ -66,7 +66,7 @@ public class MenuState extends LoadableGameState implements StringListener
 		if (clientProfile == null)
 		{
 			clientProfile = new ClientProfile("Test");
-			clientProfile.serializeToFile();
+			// clientProfile.serializeToFile();
 			System.out.println("CREATE AND SAVE PROFILE");
 		}
 		

@@ -13,9 +13,10 @@ public class ItemUse
 	private int range;
 	private int area;
 	private String battleText;
+	private boolean singleUse;
 
 	public ItemUse(boolean targetsEnemy, int damage, int mpDamage,
-			BattleEffect effects, int range, int area, String battleText) {
+			BattleEffect effects, int range, int area, String battleText, boolean singleUse) {
 		super();
 		this.targetsEnemy = targetsEnemy;
 		this.damage = damage;
@@ -24,6 +25,7 @@ public class ItemUse
 		this.range = range;
 		this.area = area;
 		this.battleText = battleText;
+		this.singleUse = singleUse;
 	}
 
 	public boolean isTargetsEnemy() {
@@ -52,6 +54,10 @@ public class ItemUse
 
 	public String getBattleText() {
 		return battleText;
+	}
+	
+	public boolean isSingleUse() {
+		return singleUse;
 	}
 
 	public int getExpGained()

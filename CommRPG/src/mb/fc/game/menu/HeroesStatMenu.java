@@ -3,7 +3,7 @@ package mb.fc.game.menu;
 import java.util.ArrayList;
 
 import mb.fc.engine.state.StateInfo;
-import mb.fc.game.battle.spell.SpellDescriptor;
+import mb.fc.game.battle.spell.KnownSpell;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.input.FCInput;
 import mb.fc.game.item.EquippableItem;
@@ -76,7 +76,7 @@ public class HeroesStatMenu extends Menu implements CellRenderer<CombatSprite>
 			for (int i = 0; i < selectedHero.getSpellsDescriptors().size(); i++)
 			{
 				graphics.setColor(Panel.COLOR_FOREFRONT);
-				SpellDescriptor sd = selectedHero.getSpellsDescriptors().get(i);
+				KnownSpell sd = selectedHero.getSpellsDescriptors().get(i);
 				graphics.drawString(sd.getSpell().getName(), x + 500, 330 + i * 30);
 				for (int j = 0; j < sd.getMaxLevel(); j++)
 				{

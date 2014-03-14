@@ -155,7 +155,7 @@ public class MapObject
 	public CombatSprite getEnemy(StateInfo stateInfo)
 	{
 		int enemyId = Integer.parseInt(params.get("enemyid"));	
-		CombatSprite enemy = EnemyResource.getEnemy(enemyId);
+		CombatSprite enemy = EnemyResource.getEnemy(enemyId, stateInfo);
 		if (params.containsKey("ai"))
 		{
 			String type = params.get("ai");
@@ -183,7 +183,7 @@ public class MapObject
 				enemy.setAi(new WarriorAI(approachIndex));
 			
 			if (id != 0)
-				enemy.setId(id);
+				enemy.setUniqueEnemyId(id);
 		}
 		
 		enemy.initializeSprite(stateInfo);

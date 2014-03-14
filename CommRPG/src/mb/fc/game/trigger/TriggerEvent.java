@@ -271,7 +271,7 @@ public class TriggerEvent
 		{			
 			for (CombatSprite s : stateInfo.getCombatSprites())
 			{
-				if (s.getId() == id)
+				if (s.getUniqueEnemyId() == id)
 				{
 					switch (speed)
 					{
@@ -279,7 +279,7 @@ public class TriggerEvent
 							CombatSprite targetSprite = null;
 							for (CombatSprite ts : stateInfo.getCombatSprites())
 							{
-								if (ts.getId() == targetId)
+								if (ts.getUniqueEnemyId() == targetId)
 								{
 									targetSprite = ts;
 									break;

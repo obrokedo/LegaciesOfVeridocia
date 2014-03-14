@@ -15,25 +15,10 @@ public class Item implements Serializable
 	private transient boolean isEquippable;
 	private int itemId;
 	private transient Image image;
-	private transient ItemUse itemUse;
-	private transient boolean shouldEquip;
-	private boolean singleUse;
+	private transient ItemUse itemUse;	
 	
-	/**
-	 * A constructor to create an item before resoures have been loaded. This should only
-	 * be used for the starting heroes
-	 * 
-	 * @param itemId The item id
-	 * @param shouldEquip A boolean indicating whether this item should be equipped once the sprite is initialized
-	 */
-	public Item(int itemId, boolean shouldEquip)
-	{
-		this.itemId = itemId;
-		this.shouldEquip = shouldEquip;
-	}
-	
-	public Item(String name, int cost, String description, ItemUse itemUse, boolean singleUse,
-			boolean isEquippable, int itemId, Image image) {
+	public Item(String name, int cost, String description, ItemUse itemUse,
+			boolean isEquippable, int itemId) {
 		super();
 		this.name = name;
 		this.cost = cost;
@@ -43,7 +28,6 @@ public class Item implements Serializable
 		this.itemUse = itemUse;
 		this.itemId = itemId;
 		this.image = image;
-		this.singleUse = singleUse;
 	}
 
 	public String getName() {
@@ -74,14 +58,6 @@ public class Item implements Serializable
 		return itemUse;
 	}
 
-	public boolean isShouldEquip() {
-		return shouldEquip;
-	}
-
-	public boolean isSingleUse() {
-		return singleUse;
-	}
-
 	public static EquippableDifference getEquippableDifference(EquippableItem oldItem, EquippableItem newItem)
 	{
 		return new EquippableDifference(oldItem, newItem);
@@ -106,6 +82,10 @@ public class Item implements Serializable
 				spd = newItem.getSpeed();
 			}
 		}
+	}
+
+	public void setImage(Image image) {
+		this.image = image;
 	}
 
 	public Image getImage() {

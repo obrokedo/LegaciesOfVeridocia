@@ -14,12 +14,8 @@ import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import mb.fc.game.battle.spell.SpellDescriptor;
-import mb.fc.game.item.EquippableItem;
-import mb.fc.game.item.Item;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.sprite.HeroProgression;
-import mb.fc.game.sprite.Progression;
 
 public class ClientProfile implements Serializable
 {
@@ -29,12 +25,18 @@ public class ClientProfile implements Serializable
 	private ArrayList<CombatSprite> heroes;
 	private int gold;
 	private String name;
+	private transient ArrayList<Integer> startingHeroIds = null;
 	
 	public ClientProfile(String name)
 	{
 		heroes = new ArrayList<CombatSprite>();
 		
-		leaderProgression = new HeroProgression(new int[][] {{SpellDescriptor.ID_BLAZE, 2, 6, 16, 27}}, 
+		startingHeroIds = new ArrayList<Integer>();
+		startingHeroIds.add(0);
+		startingHeroIds.add(1);
+		
+		/*
+		leaderProgression = new HeroProgression(new int[][] {{KnownSpell.ID_BLAZE, 2, 6, 16, 27}}, 
 				new Progression(new int[] {EquippableItem.STYLE_SWORD}, new int[] {EquippableItem.STYLE_LIGHT, 
 						EquippableItem.STYLE_MEDIUM, EquippableItem.STYLE_HEAVY}, 5, HeroProgression.STAT_AVERAGE,
 						HeroProgression.STAT_AVERAGE, HeroProgression.STAT_AVERAGE, HeroProgression.STAT_AVERAGE,
@@ -44,10 +46,10 @@ public class ClientProfile implements Serializable
 						HeroProgression.STAT_AVERAGE, HeroProgression.STAT_AVERAGE, HeroProgression.STAT_AVERAGE,
 						HeroProgression.STAT_AVERAGE));
 
-		ArrayList<SpellDescriptor> spellDs;
-		spellDs = new ArrayList<SpellDescriptor>();
-		spellDs.add(new SpellDescriptor(SpellDescriptor.ID_HEAL, (byte) 1));
-		spellDs.add(new SpellDescriptor(SpellDescriptor.ID_AURA, (byte) 1));
+		ArrayList<KnownSpell> spellDs;
+		spellDs = new ArrayList<KnownSpell>();
+		spellDs.add(new KnownSpell(KnownSpell.ID_HEAL, (byte) 1));
+		spellDs.add(new KnownSpell(KnownSpell.ID_AURA, (byte) 1));
 		
 		
 		heroes.add(new CombatSprite(true, "Kiwi1", "kiwi", leaderProgression, 12, 50, 12, 7, 8, 
@@ -62,12 +64,19 @@ public class ClientProfile implements Serializable
 				leaderProgression.getUnpromotedProgression().getMove(), CombatSprite.MOVEMENT_ANIMALS_BEASTMEN, 1, 0, 2, spellDs));
 		heroes.add(new CombatSprite(false, "Kiwi4", "kiwi", leaderProgression, 12, 50, 12, 7, 8, 
 				leaderProgression.getUnpromotedProgression().getMove(), CombatSprite.MOVEMENT_ANIMALS_BEASTMEN, 1, 0, 0, spellDs));
+		*/
 
-
-		// heroes.add(new CombatSprite(192, 96, true, false, "Chaz", "chaz"));
-		gold = 10000;
+		gold = 100;
 		this.name = name;
 		
+	}
+
+	public ArrayList<Integer> getStartingHeroIds() {
+		return startingHeroIds;
+	}
+
+	public void setStartingHeroIds(ArrayList<Integer> startingHeroIds) {
+		this.startingHeroIds = startingHeroIds;
 	}
 
 	public HeroProgression getLeaderProgression() {
@@ -137,6 +146,6 @@ public class ClientProfile implements Serializable
 	public void setClientId(int clientId)
 	{
 		for (CombatSprite cs : heroes)
-			cs.setId(clientId);
+			cs.setUniqueEnemyId(clientId);
 	}
 }

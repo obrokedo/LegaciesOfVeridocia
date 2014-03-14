@@ -85,7 +85,7 @@ public class LoadingState extends BasicGameState
 			{
 				try 
 				{				
-					resourceManager.addResource(allLines.get(loadIndex - 1), loadingEntity, loadIndex - 1, loadAmount + 2);
+					resourceManager.addResource(allLines.get(loadIndex - 1), loadingEntity, loadIndex - 1, loadAmount + 6);
 				} 
 				catch (Throwable e) 
 				{
@@ -106,15 +106,24 @@ public class LoadingState extends BasicGameState
 			{
 				try
 				{
-					resourceManager.addResource("map,map,/map/" + mapName + ".tmx", loadingEntity, loadIndex + 1, loadAmount + 2);
-					resourceManager.addResource("text,/text/" + textName, loadingEntity, loadIndex + 2, loadAmount + 2);
+					resourceManager.addResource("map,map,/map/" + mapName + ".tmx", loadingEntity, loadIndex + 1, loadAmount + 6);
+					resourceManager.addResource("text,/text/" + textName, loadingEntity, loadIndex + 2, loadAmount + 6);
+
+					// If we are loading maps and resources then this is the first load before enter the actual game state,
+					// in this case initialize definitions
+					if (loadResources)
+					{
+						resourceManager.addResource("herodefs,/definitions/Heroes", loadingEntity, loadIndex + 3, loadAmount + 6);
+						resourceManager.addResource("itemdefs,/definitions/Items", loadingEntity, loadIndex + 4, loadAmount + 6);
+						resourceManager.addResource("enemydefs,/definitions/Enemies", loadingEntity, loadIndex + 5, loadAmount + 6);
+					}
 				}
 				catch (Throwable e) 
 				{
 					System.err.println("Error loading map (tmx) and trigger/text file: " + mapName);
 					e.printStackTrace();
 					System.exit(0);
-				}
+				}						
 			}
 			
 			nextState.stateLoaded(resourceManager);

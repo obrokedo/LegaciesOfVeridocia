@@ -6,7 +6,7 @@ import mb.fc.engine.message.BattleSelectionMessage;
 import mb.fc.engine.message.ChatMessage;
 import mb.fc.engine.message.Message;
 import mb.fc.engine.state.StateInfo;
-import mb.fc.game.battle.spell.SpellDescriptor;
+import mb.fc.game.battle.spell.KnownSpell;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.input.FCInput;
 import mb.fc.game.input.KeyMapping;
@@ -67,7 +67,7 @@ public class SpellMenu extends Menu
 			
 			if (currentSprite.getSpellsDescriptors() != null && stateInfo.getCurrentSprite().getSpellsDescriptors().size() > i)
 			{			
-				SpellDescriptor sd  = stateInfo.getCurrentSprite().getSpellsDescriptors().get(i); 
+				KnownSpell sd  = stateInfo.getCurrentSprite().getSpellsDescriptors().get(i); 
 				spellIcons.add(new SpellIcon(iX, iY, 
 						sd.getSpell().getSpellIcon(), 
 						sd.getMaxLevel(), i, 

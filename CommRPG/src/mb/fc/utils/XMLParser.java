@@ -17,7 +17,7 @@ public class XMLParser
 		private String tagType;
 		
 		public TagArea(String line) throws IOException
-		{
+		{			
 			// Iterate through the line changing all of the spaces contained in quotations to something else to something else
 			int end = 0;
 			while (true)
@@ -37,6 +37,7 @@ public class XMLParser
 				line = line.replace(original, fixed);
 			}
 			
+			line = line.replaceAll("  ", " ");
 			String[] split = line.split(" ");			
 			tagType = split[0].replace("<", "").replace(">", "").replace("/>", "");			
 			// System.out.println(tagType);

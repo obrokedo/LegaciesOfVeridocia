@@ -1,7 +1,7 @@
 package mb.fc.game.battle.spell.impl;
 
 import mb.fc.game.battle.spell.Spell;
-import mb.fc.game.battle.spell.SpellDescriptor;
+import mb.fc.game.battle.spell.KnownSpell;
 import mb.fc.game.sprite.CombatSprite;
 
 public class HealSpell extends Spell
@@ -17,7 +17,7 @@ public class HealSpell extends Spell
 		this.effects = null;
 		this.range = new int[] {1, 2, 3, 1};
 		this.area = new int[] {1, 1, 1, 1};
-		this.id = SpellDescriptor.ID_HEAL;
+		this.id = KnownSpell.ID_HEAL;
 	}
 
 	@Override

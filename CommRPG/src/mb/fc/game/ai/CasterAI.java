@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.battle.command.BattleCommand;
 import mb.fc.game.battle.spell.Spell;
-import mb.fc.game.battle.spell.SpellDescriptor;
+import mb.fc.game.battle.spell.KnownSpell;
 import mb.fc.game.item.EquippableItem;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.turnaction.AttackSpriteAction;
@@ -84,7 +84,7 @@ public abstract class CasterAI extends AI
 		/**********************************************************/
 		if (currentSprite.getSpellsDescriptors() != null)
 		{
-			for (SpellDescriptor sd : currentSprite.getSpellsDescriptors())
+			for (KnownSpell sd : currentSprite.getSpellsDescriptors())
 			{
 				Spell spell = sd.getSpell();
 				
@@ -136,7 +136,7 @@ public abstract class CasterAI extends AI
 		// Get the largest spell range 
 		if (currentSprite.getSpellsDescriptors() != null)
 		{
-			for (SpellDescriptor sd : currentSprite.getSpellsDescriptors())
+			for (KnownSpell sd : currentSprite.getSpellsDescriptors())
 			{
 				Spell spell = sd.getSpell();
 				
