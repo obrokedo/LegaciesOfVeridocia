@@ -193,6 +193,22 @@ public class TriggerEvent
 		}
 	}
 	
+	public class TriggerShowCinematic extends TriggerType
+	{
+		private int cinematicId;
+		
+		public TriggerShowCinematic(int id)
+		{
+			cinematicId = id;
+		}
+
+		@Override
+		public boolean perform(StateInfo stateInfo) {
+			stateInfo.sendMessage(new IntMessage(Message.MESSAGE_SHOW_CINEMATIC, cinematicId));
+			return false;
+		}
+	}
+	
 	public class TriggerShowText extends TriggerType
 	{
 		private int textId;

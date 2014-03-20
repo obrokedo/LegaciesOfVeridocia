@@ -70,7 +70,7 @@ public class MoveableSpace implements KeyboardListener, MouseListener, TileBased
 		ms.spriteMovementType = currentSprite.getMovementType();
 		ms.topX = mapSpriteX - currentSprite.getCurrentMove();
 		ms.topY = mapSpriteY - currentSprite.getCurrentMove();
-		ms.tiles = stateInfo.getResourceManager().getMap().getMapLayer(4);
+		ms.tiles = stateInfo.getResourceManager().getMap().getMapLayer(3);
 		
 		// Check to see if there are any sprites in your moveable area that you will not be able to move through
 		Rectangle checkMoveableRect = new Rectangle(ms.topX,  ms.topY, ms.moveableTiles.length + 1, ms.moveableTiles.length + 1);

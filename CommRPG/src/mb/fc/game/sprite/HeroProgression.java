@@ -3,7 +3,7 @@ package mb.fc.game.sprite;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import mb.fc.engine.ForsakenChampions;
+import mb.fc.engine.CommRPG;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.battle.LevelUpResult;
 import mb.fc.game.battle.spell.Spell;
@@ -147,13 +147,13 @@ public class HeroProgression implements Serializable
 		switch (type)
 		{
 			case STAT_WEAK:
-				return ForsakenChampions.RANDOM.nextInt(1);
+				return CommRPG.RANDOM.nextInt(1);
 			case STAT_AVERAGE:
-				return ForsakenChampions.RANDOM.nextInt(3);
+				return CommRPG.RANDOM.nextInt(3);
 			case STAT_STRONG:
-				return ForsakenChampions.RANDOM.nextInt(3) + 1;
+				return CommRPG.RANDOM.nextInt(3) + 1;
 			case STAT_VERY_STRONG:
-				return ForsakenChampions.RANDOM.nextInt(4) + 1;
+				return CommRPG.RANDOM.nextInt(4) + 1;
 		}
 		
 		return 0;

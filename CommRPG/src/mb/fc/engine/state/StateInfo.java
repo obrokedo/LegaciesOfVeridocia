@@ -7,7 +7,6 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Stack;
 
-import mb.fc.engine.ForsakenChampions;
 import mb.fc.engine.message.IntMessage;
 import mb.fc.engine.message.LoadMapMessage;
 import mb.fc.engine.message.Message;
@@ -28,12 +27,8 @@ import mb.fc.game.ui.FCGameContainer;
 import mb.fc.map.Map;
 import mb.fc.map.MapObject;
 import mb.fc.resource.FCResourceManager;
-import mb.gl2.loading.LoadableGameState;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.state.transition.EmptyTransition;
-import org.newdawn.slick.state.transition.FadeOutTransition;
 
 public class StateInfo
 {
@@ -70,7 +65,7 @@ public class StateInfo
 	private Graphics graphics;
 	private ArrayList<CombatSprite> heroes;
 	private boolean showAttackCinematic = false;
-	private String entranceLocation = "priest";
+	
 	private String currentMap;
 	
 	public StateInfo(PersistentStateInfo psi, boolean isCombat)
@@ -94,7 +89,6 @@ public class StateInfo
 		graphics = psi.getGraphics();
 		heroes = psi.getHeroes();
 		
-		this.entranceLocation = psi.getClientProgress().getLocation();
 		this.currentMap = psi.getClientProgress().getMap();
 	}
 	
@@ -177,33 +171,8 @@ public class StateInfo
 		managers.add(m);
 	}
 	
-	/********************/
-	/* Map Management	*/
-	/********************/	
-	private void loadMap(String map)
-	{				
-		gc.getInput().removeAllKeyListeners();
-		
-		psi.getClientProgress().setMap(map);		
-		
-		psi.getGame().setLoadingInfo(map, map,
-				(LoadableGameState) psi.getGame().getState(ForsakenChampions.STATE_GAME_TOWN),
-					psi.getResourceManager());
-		psi.getGame().enterState(ForsakenChampions.STATE_GAME_LOADING, new FadeOutTransition(Color.black, 250), new EmptyTransition());
-	}
-	
-	private void loadBattle(String text, String map)
-	{			
-		gc.getInput().removeAllKeyListeners();
-		
-		psi.getGame().setLoadingInfo(text, map, 
-				(LoadableGameState) psi.getGame().getState(ForsakenChampions.STATE_GAME_BATTLE),
-					psi.getResourceManager());
-		psi.getGame().enterState(ForsakenChampions.STATE_GAME_LOADING, new FadeOutTransition(Color.black, 250), new EmptyTransition());
-	}	
-	
 	public String getEntranceLocation() {
-		return entranceLocation;
+		return psi.getEntranceLocation();
 	}
 	
 	/************************/
@@ -248,12 +217,11 @@ public class StateInfo
 			{			
 				case Message.MESSAGE_LOAD_MAP:
 					LoadMapMessage lmm = (LoadMapMessage) m;
-					entranceLocation = lmm.getLocation();
-					loadMap(lmm.getMap());
+					psi.loadMap(lmm.getMap(), lmm.getLocation());
 					break MESSAGES;
 				case Message.MESSAGE_START_BATTLE:
 					LoadMapMessage lmb = (LoadMapMessage) m;
-					loadBattle(lmb.getBattle(), lmb.getMap());
+					psi.loadBattle(lmb.getBattle(), lmb.getMap());
 					break MESSAGES;
 				case Message.MESSAGE_SAVE:
 					getClientProfile().serializeToFile();
@@ -615,5 +583,9 @@ public class StateInfo
 
 	public void setCurrentSprite(CombatSprite currentSprite) {
 		this.currentSprite = currentSprite;
+	}
+
+	public PersistentStateInfo getPsi() {
+		return psi;
 	}	
 }

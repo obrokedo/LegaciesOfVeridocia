@@ -5,64 +5,22 @@ import java.util.ArrayList;
 import mb.fc.engine.message.Message;
 import mb.fc.engine.message.SpeechMessage;
 import mb.fc.engine.state.StateInfo;
-import mb.fc.game.Camera;
-import mb.fc.game.hudmenu.Panel;
-import mb.fc.game.listener.MouseListener;
 import mb.fc.game.text.Speech;
-import mb.fc.game.ui.FCGameContainer;
 
-import org.newdawn.slick.Graphics;
-
-public class NPCSprite extends AnimatedSprite implements MouseListener
+public class NPCSprite extends AnimatedSprite
 {
 	private static final long serialVersionUID = 1L;
 	
 	private ArrayList<Speech> speeches;
+	private int uniqueNPCId;
 	
 	public NPCSprite(String imageName, 
 			ArrayList<Speech> speeches) 
 	{
 		super(0, 0, imageName);
 		this.speeches = speeches;
-	}
-
-	@Override
-	public void initializeSprite(StateInfo stateInfo) {
-		super.initializeSprite(stateInfo);
-		this.spriteSheet = stateInfo.getResourceManager().getSpriteSheets().get(imageName);
-		this.image = spriteSheet.getSprite(0, 0);
-		this.imageIndex = 0;
-		if (speeches != null)
-		{
-			stateInfo.registerMouseListener(this);
-		}
-	}
-	
-	@Override
-	public void render(Camera camera, Graphics graphics, FCGameContainer cont) 
-	{
-		graphics.drawImage(image, this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(), 
-			this.getLocY() - camera.getLocationY());
-	
-	}	
-
-	@Override
-	public boolean mouseUpdate(int frameMX, int frameMY, int mapMX,
-			int mapMY, boolean leftClicked, boolean rightClicked,
-			StateInfo stateInfo) 
-	{
-		// TODO Stupid tile width...
-		if (leftClicked && Panel.contains(getLocX(), getLocX() + stateInfo.getTileWidth(), 
-				mapMX, getLocY(), getLocY() + stateInfo.getTileHeight(), mapMY))
-		{
-			if ((Math.abs(stateInfo.getCurrentSprite().getLocX() - getLocX()) + 
-					Math.abs(stateInfo.getCurrentSprite().getLocY() - getLocY())) <= 64)
-			{
-				triggerButton1Event(stateInfo);
-			}
-			return true;
-		}
-		return false;
+		this.spriteType = Sprite.TYPE_NPC;
+		this.uniqueNPCId = 0;
 	}
 	
 	public void triggerButton1Event(StateInfo stateInfo)
@@ -95,10 +53,11 @@ public class NPCSprite extends AnimatedSprite implements MouseListener
 		}
 	}
 
-	@Override
-	public int getZOrder() {
-		return MouseListener.ORDER_NPC;
+	public int getUniqueNPCId() {
+		return uniqueNPCId;
 	}
-	
-	
+
+	public void setUniqueNPCId(int uniqueNPCId) {
+		this.uniqueNPCId = uniqueNPCId;
+	}
 }

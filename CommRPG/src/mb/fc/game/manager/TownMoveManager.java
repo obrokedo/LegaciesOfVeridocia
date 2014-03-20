@@ -38,28 +38,28 @@ public class TownMoveManager extends Manager
 			
 			if (stateInfo.getGc().getInput().isKeyDown(Input.KEY_RIGHT))
 			{
-				if (!blocked(stateInfo.getResourceManager().getMap().getMapLayer(4), sx + 1, sy))
+				if (!blocked(stateInfo.getResourceManager().getMap().getMapLayer(3), sx + 1, sy))
 					setMoving(Direction.RIGHT, current);
 				else
 					current.setFacing(Direction.RIGHT);
 			}
 			else if (stateInfo.getGc().getInput().isKeyDown(Input.KEY_LEFT))
 			{
-				if (!blocked(stateInfo.getResourceManager().getMap().getMapLayer(4), sx - 1, sy))
+				if (!blocked(stateInfo.getResourceManager().getMap().getMapLayer(3), sx - 1, sy))
 					setMoving(Direction.LEFT, current);
 				else
 					current.setFacing(Direction.LEFT);
 			}
 			else if (stateInfo.getGc().getInput().isKeyDown(Input.KEY_UP))
 			{
-				if (!blocked(stateInfo.getResourceManager().getMap().getMapLayer(4), sx, sy - 1))
+				if (!blocked(stateInfo.getResourceManager().getMap().getMapLayer(3), sx, sy - 1))
 					setMoving(Direction.UP, current);
 				else
 					current.setFacing(Direction.UP);
 			}
 			else if (stateInfo.getGc().getInput().isKeyDown(Input.KEY_DOWN))
 			{
-				if (!blocked(stateInfo.getResourceManager().getMap().getMapLayer(4), sx, sy + 1))
+				if (!blocked(stateInfo.getResourceManager().getMap().getMapLayer(3), sx, sy + 1))
 					setMoving(Direction.DOWN, current);
 				else
 					current.setFacing(Direction.DOWN);
@@ -112,7 +112,7 @@ public class TownMoveManager extends Manager
 				// stateInfo.checkTriggers(ms.getCombatSprite().getLocX(), ms.getCombatSprite().getLocY());
 			if (ms.getCombatSprite() == stateInfo.getCurrentSprite())
 			{
-				stateInfo.getCamera().centerOnSprite(ms.getCombatSprite(), stateInfo);
+				stateInfo.getCamera().centerOnSprite(ms.getCombatSprite(), stateInfo.getCurrentMap());
 			}
 		}
 	}
@@ -148,7 +148,7 @@ public class TownMoveManager extends Manager
 			stateInfo.checkTriggers(current.getLocX(), current.getLocY());
 			moving = false;
 		}
-		stateInfo.getCamera().centerOnSprite(current, stateInfo);
+		stateInfo.getCamera().centerOnSprite(current, stateInfo.getCurrentMap());
 	}
 	
 	private boolean blocked(int[][] tiles, int tx, int ty) 

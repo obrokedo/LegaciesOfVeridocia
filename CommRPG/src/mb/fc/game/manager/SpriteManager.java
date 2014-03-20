@@ -57,7 +57,7 @@ public class SpriteManager extends Manager
 			if (!foundStart)
 				defaultEntrance.getStartLocation(stateInfo);
 			
-			stateInfo.getCamera().centerOnSprite(stateInfo.getCurrentSprite(), stateInfo);
+			stateInfo.getCamera().centerOnSprite(stateInfo.getCurrentSprite(), stateInfo.getCurrentMap());
 		}
 		// Otherwise just add all of the heroes
 		else

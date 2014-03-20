@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
+import mb.fc.cinematic.Cinematic;
 import mb.fc.game.definition.EnemyDefinition;
 import mb.fc.game.definition.HeroDefinition;
 import mb.fc.game.definition.ItemDefinition;
@@ -46,6 +47,7 @@ public class FCResourceManager extends ResourceManager {
 	// These values need to be initialized each time a map is loaded
 	private Hashtable<Integer, ArrayList<Speech>> speechesById = new Hashtable<Integer, ArrayList<Speech>>();
 	private Hashtable<Integer, TriggerEvent> triggerEventById = new Hashtable<Integer, TriggerEvent>();
+	private Hashtable<Integer, Cinematic> cinematicById = new Hashtable<Integer, Cinematic>();
 	private Map map = new Map();
 	
 	private Color transparent = new Color(255, 0, 255);
@@ -62,16 +64,21 @@ public class FCResourceManager extends ResourceManager {
 		map.reinitalize();
 		speechesById.clear();
 		triggerEventById.clear();
+		cinematicById.clear();
 	}
 	
 	public void getNewMap(String mapName) throws IOException, SlickException
 	{
+		map.reinitalize();
 		MapParser.parseMap("/map/" + mapName + ".tmx", getMap(), getClass());
 	}
 	
 	public void getNewText(String text) throws IOException
 	{
-		TextParser.parseText("/text/" + text, speechesById, triggerEventById, getClass());
+		speechesById.clear();
+		triggerEventById.clear();
+		cinematicById.clear();
+		TextParser.parseText("/text/" + text, speechesById, triggerEventById, cinematicById,getClass());
 	}
 	
 	
@@ -80,7 +87,7 @@ public class FCResourceManager extends ResourceManager {
 			int maxIndex) throws IOException, SlickException {
 		String[] split = resource.split(",");
 		if (split[0].equalsIgnoreCase("image"))
-			images.put(split[1], new Image((LoadingState.inJar ? "" : "bin/") + split[2]).getScaledCopy(split.length == 4 ? Float.parseFloat(split[3]) : 1));
+			images.put(split[1], new Image((LoadingState.inJar ? "" : "bin/") + split[2], transparent).getScaledCopy(split.length == 4 ? Float.parseFloat(split[3]) : 1));
 		else if (split[0].equalsIgnoreCase("ss"))
 		{
 			float scale = split.length == 7 ? Float.parseFloat(split[6]) : 1;
@@ -103,7 +110,7 @@ public class FCResourceManager extends ResourceManager {
 		}
 		else if (split[0].equalsIgnoreCase("text"))
 		{
-			TextParser.parseText(split[1], speechesById, triggerEventById, getClass());
+			TextParser.parseText(split[1], speechesById, triggerEventById, cinematicById, getClass());
 		}
 		else if (split[0].equalsIgnoreCase("herodefs"))
 		{
@@ -172,8 +179,11 @@ public class FCResourceManager extends ResourceManager {
 			for (File file : dir.listFiles())
 			{
 				if (file.getName().endsWith(".png"))
-					spriteSheets.put(file.getName().replace(".png", ""), new SpriteSheet(file.getPath(), 
-						Integer.parseInt(split[3]), Integer.parseInt(split[3]), transparent));
+				{
+					Image im = new Image(file.getPath(), transparent);
+					spriteSheets.put(file.getName().replace(".png", ""), new SpriteSheet(im, 
+						Integer.parseInt(split[3]), Integer.parseInt(split[3])));
+				}
 			}
 		}
 		else if (split[0].equalsIgnoreCase("musicdir"))
@@ -191,7 +201,7 @@ public class FCResourceManager extends ResourceManager {
 			for (File file : dir.listFiles())
 			{
 				if (file.getName().endsWith(".png"))
-					images.put(file.getName().replace(".png", ""), new Image(file.getPath()));				
+					images.put(file.getName().replace(".png", ""), new Image(file.getPath(), transparent));				
 			}
 		}
 		else if (split[0].equalsIgnoreCase("animfsadir"))
@@ -201,6 +211,7 @@ public class FCResourceManager extends ResourceManager {
 			{
 				if (file.getName().endsWith(".fsa"))
 				{
+					System.out.println(file.getName());
 					SpriteAnims sa = SpriteAnims.deserializeFromFile(file.getPath());
 					sa.initialize(images.get(sa.getSpriteSheet()), 1.88f);			
 					spriteAnimations.put(file.getName().replace(".fsa", ""), sa);
@@ -253,6 +264,11 @@ public class FCResourceManager extends ResourceManager {
 	public void playMusicByName(String name)
 	{
 		musicByTitle.get(name).loop(1, .0f);
+	}
+	
+	public Cinematic getCinematicById(int id)
+	{
+		return cinematicById.get(id);
 	}
 	
 	public static ArrayList<String> readAllLines(String file, Class<?> cl) throws IOException

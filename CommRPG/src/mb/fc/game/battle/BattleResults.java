@@ -3,7 +3,7 @@ package mb.fc.game.battle;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import mb.fc.engine.ForsakenChampions;
+import mb.fc.engine.CommRPG;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.battle.command.BattleCommand;
 import mb.fc.game.battle.condition.BattleEffect;
@@ -63,7 +63,7 @@ public class BattleResults implements Serializable
 				
 				// TODO Critting, countering
 				// TODO A lot to do here, handle spells
-				if (ForsakenChampions.RANDOM.nextInt(100) < dodgeChance)
+				if (CommRPG.RANDOM.nextInt(100) < dodgeChance)
 				{
 					br.hpDamage.add(0);
 					br.mpDamage.add(0);
@@ -83,7 +83,7 @@ public class BattleResults implements Serializable
 							target.getTileX(), target.getTileY())) / 100.0f;
 					
 					int critChance = 3;
-					if (critChance >= ForsakenChampions.RANDOM.nextInt(100))
+					if (critChance >= CommRPG.RANDOM.nextInt(100))
 						br.critted = true;
 					
 					System.out.println("Land effect " + landEffect);
@@ -92,11 +92,11 @@ public class BattleResults implements Serializable
 					// between the two values is the damage dealt or 1 if result is less then 1.
 					int damage = -1 * Math.max(1, (int)(((
 							// A random number between .8 - 1.2
-							ForsakenChampions.RANDOM.nextInt(40) + 80) / 100.0 *
+							CommRPG.RANDOM.nextInt(40) + 80) / 100.0 *
 							// Attack
 							attacker.getCurrentAttack()) - 
 							// A random number between .8 - 1.2
-							((ForsakenChampions.RANDOM.nextInt(40) + 80) / 100.0 * 
+							((CommRPG.RANDOM.nextInt(40) + 80) / 100.0 * 
 									// Defense modified by land effect
 									+ landEffect * target.getCurrentDefense())));
 					

@@ -1,6 +1,6 @@
 package mb.fc.engine.state;
 
-import mb.fc.engine.ForsakenChampions;
+import mb.fc.engine.CommRPG;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.manager.InitiativeManager;
 import mb.fc.game.manager.KeyboardManager;
@@ -75,8 +75,7 @@ public class BattleState extends LoadableGameState
 	public void enter(GameContainer container, StateBasedGame game)
 			throws SlickException {		
 		super.enter(container, game);
-		
-		System.out.println("ENTER");
+
 		if (stateInfo.isShowAttackCinematic())
 		{
 			stateInfo.getInput().clear();
@@ -103,10 +102,10 @@ public class BattleState extends LoadableGameState
 			throws SlickException {
 		if (stateInfo.isInitialized())
 		{
-			tileMapRenderer.render(g);
+			tileMapRenderer.render(stateInfo.getCamera(), g, stateInfo.getGc());
 			turnManager.render(g);
 			spriteRenderer.render(g);
-			tileMapRenderer.renderForeground(g);
+			tileMapRenderer.renderForeground(stateInfo.getCamera(), g, stateInfo.getGc());
 			panelRenderer.render();
 			menuRenderer.render();
 		}
@@ -153,11 +152,11 @@ public class BattleState extends LoadableGameState
 	@Override
 	public void stateLoaded(ResourceManager resourceManager) {
 		this.stateInfo.setResourceManager((FCResourceManager) resourceManager);
-		Panel.intialize(stateInfo);
+		Panel.intialize(stateInfo.getResourceManager());
 	}
 
 	@Override
 	public int getID() {
-		return ForsakenChampions.STATE_GAME_BATTLE;
+		return CommRPG.STATE_GAME_BATTLE;
 	}
 }

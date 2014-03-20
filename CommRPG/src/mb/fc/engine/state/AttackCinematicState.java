@@ -3,7 +3,7 @@ package mb.fc.engine.state;
 import java.awt.Point;
 import java.util.ArrayList;
 
-import mb.fc.engine.ForsakenChampions;
+import mb.fc.engine.CommRPG;
 import mb.fc.game.battle.BattleResults;
 import mb.fc.game.battle.command.BattleCommand;
 import mb.fc.game.hudmenu.Panel;
@@ -196,7 +196,7 @@ public class AttackCinematicState extends LoadableGameState
 				else if (damageFade != -1)
 				{					
 					g.drawImage(targets.get(targetIndex).getAnimationImageAtIndex(as.imageIndex), 
-							xLoc + as.x * screenScale + ForsakenChampions.RANDOM.nextInt(20) - 10, yLoc + as.y * screenScale + ForsakenChampions.RANDOM.nextInt(20) - 10, damageColor);
+							xLoc + as.x * screenScale + CommRPG.RANDOM.nextInt(20) - 10, yLoc + as.y * screenScale + CommRPG.RANDOM.nextInt(20) - 10, damageColor);
 				}
 				else
 				{
@@ -427,13 +427,13 @@ public class AttackCinematicState extends LoadableGameState
 					{
 						case MENU_CLOSE:
 							container.getInput().removeAllKeyListeners();
-							game.enterState(ForsakenChampions.STATE_GAME_BATTLE);
+							game.enterState(CommRPG.STATE_GAME_BATTLE);
 							break;
 						default:
 							break;						
 					}
 				}
-				game.enterState(ForsakenChampions.STATE_GAME_BATTLE);
+				game.enterState(CommRPG.STATE_GAME_BATTLE);
 			}
 			else if (state == STATE_ATTACK_CLIMAX)
 			{
@@ -509,7 +509,7 @@ public class AttackCinematicState extends LoadableGameState
 
 	@Override
 	public int getID() {
-		return ForsakenChampions.STATE_GAME_BATTLE_ANIM;
+		return CommRPG.STATE_GAME_BATTLE_ANIM;
 	}
 	
 	public void setBattleInfo(CombatSprite attacker, FCResourceManager frm, Point bgImagePoint,

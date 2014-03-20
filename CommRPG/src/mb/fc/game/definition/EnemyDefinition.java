@@ -51,6 +51,8 @@ public class EnemyDefinition
 		hd.movementType = Integer.parseInt(tagArea.getParams().get("movementtype"));
 		if (tagArea.getParams().containsKey("portrait"))
 			hd.portrait = Integer.parseInt(tagArea.getParams().get("portrait"));
+		else
+			hd.portrait = -1;
 		hd.animations = tagArea.getParams().get("animations");
 		
 		if (tagArea.getParams().containsKey("leader"))

@@ -16,7 +16,7 @@ public class OverlandMove implements MouseListener, TileBasedMap
 	
 	public OverlandMove(StateInfo stateInfo) 
 	{
-		tiles = stateInfo.getResourceManager().getMap().getMapLayer(4);
+		tiles = stateInfo.getResourceManager().getMap().getMapLayer(3);
 		pathFinder = new AStarPathFinder(this, 200, false);
 		stateInfo.registerMouseListener(this);
 	}

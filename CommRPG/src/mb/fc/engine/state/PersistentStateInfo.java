@@ -2,29 +2,34 @@ package mb.fc.engine.state;
 
 import java.util.ArrayList;
 
-import mb.fc.engine.ForsakenChampions;
+import mb.fc.engine.CommRPG;
 import mb.fc.game.Camera;
 import mb.fc.game.persist.ClientProfile;
 import mb.fc.game.persist.ClientProgress;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.ui.FCGameContainer;
 import mb.fc.resource.FCResourceManager;
+import mb.gl2.loading.LoadableGameState;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.state.transition.EmptyTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
 
 public class PersistentStateInfo
 {
 	private Camera camera;	
-	private ForsakenChampions game;
+	private CommRPG game;
 	private FCGameContainer gc;
 	private Graphics graphics;
 	private ArrayList<CombatSprite> heroes;
 	private ClientProfile clientProfile;
 	private ClientProgress clientProgress;
 	private FCResourceManager resourceManager;
+	private String entranceLocation = "priest";
 	
-	public PersistentStateInfo(ClientProfile clientProfile, ClientProgress clientProgress, ForsakenChampions game, Camera camera, 
+	public PersistentStateInfo(ClientProfile clientProfile, ClientProgress clientProgress, CommRPG game, Camera camera, 
 			GameContainer gc, Graphics graphics, int clientId)
 	{
 		this.game = game;
@@ -37,7 +42,7 @@ public class PersistentStateInfo
 		this.heroes.addAll(clientProfile.getHeroes());
 	}
 	
-	public PersistentStateInfo(ClientProfile clientProfile, ClientProgress clientProgress, ForsakenChampions game, Camera camera, 
+	public PersistentStateInfo(ClientProfile clientProfile, ClientProgress clientProgress, CommRPG game, Camera camera, 
 			GameContainer gc, Graphics graphics, boolean isHost)
 	{
 		this.game = game;
@@ -48,7 +53,35 @@ public class PersistentStateInfo
 		this.clientProfile = clientProfile;
 		this.clientProgress = clientProgress;
 		this.heroes.addAll(clientProfile.getHeroes());
+		this.entranceLocation = getClientProgress().getLocation();
 	}
+	
+	/********************/
+	/* Map Management	*/
+	/********************/	
+	public void loadMap(String map, String entrance)
+	{				
+		this.entranceLocation = entrance;
+		
+		gc.getInput().removeAllKeyListeners();
+		
+		getClientProgress().setMap(map);		
+		
+		getGame().setLoadingInfo(map, map,
+				(LoadableGameState) getGame().getState(CommRPG.STATE_GAME_TOWN),
+					getResourceManager());
+		getGame().enterState(CommRPG.STATE_GAME_LOADING, new FadeOutTransition(Color.black, 250), new EmptyTransition());
+	}
+	
+	public void loadBattle(String text, String map)
+	{			
+		gc.getInput().removeAllKeyListeners();
+		
+		getGame().setLoadingInfo(text, map, 
+				(LoadableGameState) getGame().getState(CommRPG.STATE_GAME_BATTLE),
+					getResourceManager());
+		getGame().enterState(CommRPG.STATE_GAME_LOADING, new FadeOutTransition(Color.black, 250), new EmptyTransition());
+	}	
 
 	public Camera getCamera() {
 		return camera;
@@ -76,7 +109,7 @@ public class PersistentStateInfo
 		return this.clientProgress.isQuestComplete(questId);
 	}
 
-	public ForsakenChampions getGame() {
+	public CommRPG getGame() {
 		return game;
 	}
 
@@ -94,5 +127,9 @@ public class PersistentStateInfo
 
 	public void setResourceManager(FCResourceManager resourceManager) {
 		this.resourceManager = resourceManager;
+	}
+
+	public String getEntranceLocation() {
+		return entranceLocation;
 	}
 }

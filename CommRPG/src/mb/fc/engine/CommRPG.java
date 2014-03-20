@@ -15,7 +15,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class ForsakenChampions extends StateBasedGame   {
+public class CommRPG extends StateBasedGame   {
 	/**
 	 * State in which the game is actually being played
 	 */
@@ -30,11 +30,8 @@ public class ForsakenChampions extends StateBasedGame   {
 	 * State in which the game is actually being played
 	 */
 	public static final int STATE_GAME_BATTLE = 3;
-	
-	/**
-	 * State in which the game is actually being played
-	 */
-	public static final int STATE_GAME_MOVIE= 4;
+
+	public static final int STATE_GAME_CINEMATIC= 4;
 	
 	public static final int STATE_GAME_LOADING = 5;
 	
@@ -63,7 +60,7 @@ public class ForsakenChampions extends StateBasedGame   {
 		// frame rate
 		try
 		{
-			ForsakenChampions fc = new ForsakenChampions();
+			CommRPG fc = new CommRPG();
 			FCGameContainer container = new FCGameContainer(fc);
 			container.setShowFPS(false);
 									
@@ -102,9 +99,9 @@ public class ForsakenChampions extends StateBasedGame   {
 		}
 	}
 	
-	public ForsakenChampions() 
+	public CommRPG() 
 	{
-		super("Forsaken Champions");
+		super("Chronicles of Veridocia");
 	}
 	
 	/**

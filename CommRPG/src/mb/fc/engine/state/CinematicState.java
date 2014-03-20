@@ -1,9 +1,12 @@
 package mb.fc.engine.state;
 
-import java.util.ArrayList;
-
-import mb.fc.game.trigger.Trigger;
-import mb.fc.map.MapObject;
+import mb.fc.cinematic.Cinematic;
+import mb.fc.engine.CommRPG;
+import mb.fc.game.Camera;
+import mb.fc.game.hudmenu.Panel;
+import mb.fc.game.input.FCInput;
+import mb.fc.renderer.TileMapRenderer;
+import mb.fc.resource.FCResourceManager;
 import mb.gl2.loading.LoadableGameState;
 import mb.gl2.loading.ResourceManager;
 
@@ -14,60 +17,83 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class CinematicState extends LoadableGameState
 {
+	private TileMapRenderer tileMapRenderer;
+	private Camera camera;
+	private Cinematic cinematic;
+	private boolean initialized = false;
 	private PersistentStateInfo psi;
-	
-	private ArrayList<Trigger> triggers;
+	private FCInput input;
 
 	public CinematicState(PersistentStateInfo psi)
 	{
 		this.psi = psi;
-		triggers = new ArrayList<Trigger>();
+		tileMapRenderer = new TileMapRenderer();
+		camera = new Camera(psi.getGc().getWidth(), psi.getGc().getHeight());
+		input = new FCInput();
 	}
-	
-	public void initialize()
-	{
-		triggers.clear();
+
+	@Override
+	public void enter(GameContainer container, StateBasedGame game)
+			throws SlickException {
+		super.enter(container, game);
+		
+		this.tileMapRenderer.setMap(psi.getResourceManager().getMap());		
+		// Get the first cinematic
+		cinematic = psi.getResourceManager().getCinematicById(0);
+		cinematic.initialize(psi, camera, psi.getResourceManager().getMap(), null);
+		initialized = true;						
+		
+		input.clear();
+		container.getInput().addKeyListener(input);
 	}
-	
-	private void initializeMapObjects()
-	{
-		for (MapObject mo : psi.getResourceManager().getMap().getMapObjects())
-		{
-			if (mo.getKey().equalsIgnoreCase("trigger"))
-			{
-				
-			}
-		}
+
+	@Override
+	public void leave(GameContainer container, StateBasedGame game)
+			throws SlickException {
+		super.leave(container, game);
+		initialized = false;
+		container.getInput().removeKeyListener(input);
 	}
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
-			throws SlickException {
-		// TODO Auto-generated method stub
+			throws SlickException 
+	{
+		if (initialized)
+		{
+			tileMapRenderer.render(camera, g, psi.getGc());
+			cinematic.render(g, camera, psi.getGc());
+			tileMapRenderer.renderForeground(camera, g, psi.getGc());
+			cinematic.renderMenus(psi.getGc(), g);
+			cinematic.renderPostEffects(g);
+		}
 		
 	}
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
-		// TODO Auto-generated method stub
-		
+		if (initialized)
+		{
+			cinematic.update(delta, camera, input, psi.getGc(), psi, psi.getResourceManager().getMap(), null);
+		}
+		input.update();
 	}
 
 	@Override
 	public void stateLoaded(ResourceManager resourceManager) {
-		
+		psi.setResourceManager((FCResourceManager) resourceManager);
+		Panel.intialize(psi.getResourceManager());
 	}
 
 	@Override
 	public int getID() {
-		return 0;
+		return CommRPG.STATE_GAME_CINEMATIC;
 	}
 }

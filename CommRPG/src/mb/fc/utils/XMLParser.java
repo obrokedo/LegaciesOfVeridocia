@@ -38,8 +38,8 @@ public class XMLParser
 			}
 			
 			line = line.replaceAll("  ", " ");
-			String[] split = line.split(" ");			
-			tagType = split[0].replace("<", "").replace(">", "").replace("/>", "");			
+			String[] split = line.split(" ");				
+			tagType = split[0].replace("<", "").replace("/>", "").replace(">", "");
 			// System.out.println(tagType);
 			params = new Hashtable<String, String>();
 			children = new ArrayList<TagArea>();						
@@ -77,9 +77,13 @@ public class XMLParser
 	
 	public static ArrayList<TagArea> process(String file, Class<?> cl) throws IOException
 	{
+		return XMLParser.process(FCResourceManager.readAllLines(file, cl));
+	}
+	
+	public static ArrayList<TagArea> process(List<String> allLines) throws IOException
+	{
 		ArrayList<TagArea> parents = new ArrayList<TagArea>();
-		
-		List<String> allLines = FCResourceManager.readAllLines(file, cl);
+				
 		Stack<TagArea> openTags = new Stack<TagArea>();
 		for (String s : allLines)
 		{				

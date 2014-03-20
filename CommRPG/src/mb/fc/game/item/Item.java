@@ -27,7 +27,6 @@ public class Item implements Serializable
 		this.isEquippable = isEquippable;
 		this.itemUse = itemUse;
 		this.itemId = itemId;
-		this.image = image;
 	}
 
 	public String getName() {

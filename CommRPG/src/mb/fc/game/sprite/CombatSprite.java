@@ -9,7 +9,6 @@ import mb.fc.game.Camera;
 import mb.fc.game.ai.AI;
 import mb.fc.game.ai.ClericAI;
 import mb.fc.game.battle.spell.KnownSpell;
-import mb.fc.game.constants.Direction;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.hudmenu.SpriteContextPanel;
 import mb.fc.game.item.EquippableItem;
@@ -18,7 +17,6 @@ import mb.fc.game.resource.ItemResource;
 import mb.fc.game.ui.FCGameContainer;
 import mb.fc.utils.AnimSprite;
 import mb.fc.utils.Animation;
-import mb.fc.utils.SpriteAnims;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -26,7 +24,6 @@ import org.newdawn.slick.Image;
 
 public class CombatSprite extends AnimatedSprite
 {
-	// These values need to be resubstantiated on a load
 	private static final long serialVersionUID = 1L;
 	
 	public static final int MOVEMENT_WALKING = 0;
@@ -39,6 +36,7 @@ public class CombatSprite extends AnimatedSprite
 	public static final int MOVEMENT_ELVES = 7;	
 	
 	private transient Color fadeColor = new Color(255, 255, 255, 255);
+	private final transient static Color SHADOW_COLOR = new Color(0, 0, 0, 100);
 	
 	private int currentHP, maxHP, 
 				currentMP, maxMP, 
@@ -48,7 +46,10 @@ public class CombatSprite extends AnimatedSprite
 				currentAttack, maxAttack,
 				currentDefense, maxDefense,
 				level, exp;
-	private transient AI ai;
+	
+	private transient AI ai;	
+	private transient Image portraitImage;
+	
 	private boolean isHero = false;
 	private boolean isLeader = false;
 	private boolean isPromoted = false;
@@ -63,10 +64,7 @@ public class CombatSprite extends AnimatedSprite
 	private int[] usuableWeapons;
 	private int[] usuableArmor;	
 	private HeroProgression heroProgression;
-	private int movementType;
-	private SpriteAnims spriteAnims;
-	private Animation currentAnim;
-	private Image portraitImage;
+	private int movementType;	
 	private int portraitIndex;
 	private int kills;
 	private int defeat;
@@ -144,11 +142,7 @@ public class CombatSprite extends AnimatedSprite
 		{
 			super.setLocX(-1);
 			super.setLocY(-1);
-		}
-		
-		System.out.println("Get image name " + imageName);
-		spriteAnims = stateInfo.getResourceManager().getSpriteAnimations().get(imageName);
-		currentAnim = spriteAnims.getAnimation("UnDown");
+		}		
 		
 		if (portraitIndex != -1)
 			portraitImage = stateInfo.getResourceManager().getSpriteSheets().get("portraits").getSprite(portraitIndex, 0);			
@@ -158,14 +152,6 @@ public class CombatSprite extends AnimatedSprite
 			for (KnownSpell sd : spells)
 				sd.initializeFromLoad(stateInfo);
 		}
-				
-		/*
-		this.addItem(ItemResource.getItem(0, stateInfo));
-		this.addItem(ItemResource.getItem(1, stateInfo));
-		this.addItem(ItemResource.getItem(2, stateInfo));
-		this.addItem(ItemResource.getItem(2, stateInfo));
-		this.equipItem((EquippableItem) items.get(1));
-		*/
 		
 		int itemsSize = items.size();
 		for (int i = 0; i < itemsSize; i++)
@@ -197,16 +183,7 @@ public class CombatSprite extends AnimatedSprite
 	@Override
 	public void update() 
 	{
-		animationDelay++;
-		if (animationDelay == 4)
-		{
-			if (imageIndex % 2 == 1)
-				imageIndex--;		
-			else
-				imageIndex++;
-			
-			animationDelay = 0;
-		}
+		super.update();
 		
 		if (currentHP <= 0)
 		{
@@ -214,25 +191,177 @@ public class CombatSprite extends AnimatedSprite
 			fadeColor.a = (255 + currentHP) / 255.0f;
 		}
 	}
-
+	
 	@Override
 	public void render(Camera camera, Graphics graphics, FCGameContainer cont) 
 	{
 		for (AnimSprite as : currentAnim.frames.get(imageIndex).sprites)
 		{
+			
+			Image i = (spriteAnims.getImageAtIndex(as.imageIndex)).getFlippedCopy(false, true); 
+			i.drawSheared(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(), 
+					this.getLocY() - camera.getLocationY() + i.getHeight() - 5, -10, 0, SHADOW_COLOR);
+					
+			
+			
 			graphics.drawImage(spriteAnims.getImageAtIndex(as.imageIndex), this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(), 
 					this.getLocY() - camera.getLocationY(), fadeColor);
+					
+			/*
+			graphics.drawImage(spriteAnims.getImageAtIndex(as.imageIndex), this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(), 
+					this.getLocY() - camera.getLocationY(), fadeColor);
+			*/
 		}
-	}	
-		
-	@Override
-	public Image getCurrentImage() 
-	{
-		// TODO Auto-generated method stub
-		return spriteAnims.getImageAtIndex(currentAnim.frames.get(imageIndex).sprites.get(0).imageIndex);
 	}
 	
-	/**
+	/************************/
+	/* Handle item stuff	*/
+	/************************/
+	public Item getItem(int i) {
+		return items.get(i);
+	}
+	
+	public int getItemsSize() {
+		return items.size();
+	}
+	
+	public void removeItem(Item item)
+	{
+		int indexOf = items.indexOf(item);
+		items.remove(indexOf);
+		equipped.remove(indexOf);
+	}
+	
+	public void addItem(Item item)
+	{
+		items.add(item);
+		equipped.add(false);
+	}
+	
+	public EquippableItem getEquippedWeapon()
+	{
+		for (int i = 0; i < items.size(); i++)
+		{
+			if (items.get(i) instanceof EquippableItem && ((EquippableItem) items.get(i)).getItemType() == EquippableItem.TYPE_WEAPON && equipped.get(i))
+			{
+				return (EquippableItem) items.get(i);
+			}
+		}
+		return null;
+	}
+	
+	public EquippableItem getEquippedArmor()
+	{
+		for (int i = 0; i < items.size(); i++)
+		{
+			if (items.get(i) instanceof EquippableItem && ((EquippableItem) items.get(i)).getItemType() == EquippableItem.TYPE_ARMOR && equipped.get(i))
+			{
+				return (EquippableItem) items.get(i);
+			}
+		}
+		return null;
+	}
+	
+	public EquippableItem getEquippedRing()
+	{
+		for (int i = 0; i < items.size(); i++)
+		{
+			if (items.get(i) instanceof EquippableItem && ((EquippableItem) items.get(i)).getItemType() == EquippableItem.TYPE_RING && equipped.get(i))
+			{
+				return (EquippableItem) items.get(i);
+			}
+		}
+		return null;
+	}
+	
+	public boolean isEquippable(EquippableItem item)
+	{
+		if (EquippableItem.TYPE_WEAPON == item.getItemType())
+		{
+			for (int i = 0; i < usuableWeapons.length; i++)
+				if (usuableWeapons[i] == item.getItemStyle())
+					return true;
+			return false;
+		}
+		else if (EquippableItem.TYPE_ARMOR == item.getItemType())
+		{
+			for (int i = 0; i < usuableArmor.length; i++)
+				if (usuableArmor[i] == item.getItemStyle())
+					return true;
+			return false;
+		}
+		return true;
+	}
+
+	public ArrayList<Boolean> getEquipped() {
+		return equipped;
+	}
+	
+	public EquippableItem equipItem(EquippableItem item)
+	{
+		EquippableItem oldItem = null;
+		switch (item.getItemType())
+		{
+			case EquippableItem.TYPE_ARMOR:
+				oldItem = getEquippedArmor();
+				break;
+			case EquippableItem.TYPE_RING:
+				oldItem = getEquippedRing();
+				break;
+			case EquippableItem.TYPE_WEAPON:
+				oldItem = getEquippedWeapon();
+				break;
+		}
+		
+		if (oldItem != null)
+		{
+			this.currentAttack -= oldItem.getAttack();
+			this.currentDefense -= oldItem.getDefense();
+			this.currentSpeed -= oldItem.getSpeed();
+			this.maxAttack -= oldItem.getAttack();
+			this.maxDefense -= oldItem.getDefense();
+			this.maxSpeed -= oldItem.getSpeed();
+			int index = items.indexOf(oldItem);
+			this.equipped.set(index, false);
+			
+		}
+		
+		this.currentAttack += item.getAttack();
+		this.currentDefense += item.getDefense();
+		this.currentSpeed += item.getSpeed();
+		this.maxAttack += item.getAttack();
+		this.maxDefense += item.getDefense();
+		this.maxSpeed += item.getSpeed();
+		int index = items.indexOf(item);
+		this.equipped.set(index, true);
+		
+		return oldItem;
+	}
+	
+	public void unequipItem(EquippableItem item)
+	{
+		this.currentAttack -= item.getAttack();
+		this.currentDefense -= item.getDefense();
+		this.currentSpeed -= item.getSpeed();
+		this.maxAttack -= item.getAttack();
+		this.maxDefense -= item.getDefense();
+		this.maxSpeed -= item.getSpeed();
+		int index = items.indexOf(item);
+		this.equipped.set(index, false);		
+	}
+	
+	public int getAttackRange()
+	{
+		EquippableItem equippedWeapon = this.getEquippedWeapon();
+		if (equippedWeapon != null)
+			return equippedWeapon.getRange();
+		return 1;
+	}
+	
+	/*******************************************/
+	/* MUTATOR AND ACCESSOR METHODS START HERE */
+	/*******************************************/
+	/*
 	 * Gets the image portrait of this combat sprite. This will return NULL if the combat sprite does not
 	 * have a portrait.
 	 * 
@@ -426,60 +555,6 @@ public class CombatSprite extends AnimatedSprite
 	
 	public boolean isLeader() {
 		return isLeader;
-	}
-	
-	@Override
-	public void setLocX(int locX) {
-		// Moving right
-		if (locX > this.getLocX())
-			setFacing(Direction.RIGHT);
-		// Moving left
-		else if (locX < this.getLocX())
-			setFacing(Direction.LEFT);
-		super.setLocX(locX);
-	}
-
-	@Override
-	public void setLocY(int locY) {
-		// Moving down
-		if (locY > this.getLocY())
-			setFacing(Direction.DOWN);
-		// Moving up
-		else if (locY < this.getLocY())
-			setFacing(Direction.UP);
-		super.setLocY(locY);
-	}
-		
-	public void setFacing(Direction dir)
-	{
-		switch (dir)
-		{
-			case UP:
-				currentAnim = spriteAnims.getAnimation("UnUp");			
-				break;
-			case DOWN:
-				currentAnim = spriteAnims.getAnimation("UnDown");
-				break;
-			case LEFT:
-				currentAnim = spriteAnims.getAnimation("UnLeft");
-				break;
-			case RIGHT:
-				currentAnim = spriteAnims.getAnimation("UnRight");
-				break;
-		}
-	}
-	
-	/**
-	 * Sets the location of the sprite and points it facing down
-	 * 
-	 * @param locX
-	 * @param locY
-	 */
-	public void setLocation(int locX, int locY)
-	{
-		super.setLocX(locX);
-		super.setLocY(locY);
-		setFacing(Direction.DOWN);
 	}	
 
 	/************************/
@@ -520,151 +595,6 @@ public class CombatSprite extends AnimatedSprite
 	public HeroProgression getHeroProgression() {
 		return heroProgression;
 	}
-
-	/************************/
-	/* Handle item stuff	*/
-	/************************/
-	public Item getItem(int i) {
-		return items.get(i);
-	}
-	
-	public int getItemsSize() {
-		return items.size();
-	}
-	
-	public void removeItem(Item item)
-	{
-		int indexOf = items.indexOf(item);
-		items.remove(indexOf);
-		equipped.remove(indexOf);
-	}
-	
-	public void addItem(Item item)
-	{
-		items.add(item);
-		equipped.add(false);
-	}
-	
-	public EquippableItem getEquippedWeapon()
-	{
-		for (int i = 0; i < items.size(); i++)
-		{
-			if (items.get(i) instanceof EquippableItem && ((EquippableItem) items.get(i)).getItemType() == EquippableItem.TYPE_WEAPON && equipped.get(i))
-			{
-				return (EquippableItem) items.get(i);
-			}
-		}
-		return null;
-	}
-	
-	public EquippableItem getEquippedArmor()
-	{
-		for (int i = 0; i < items.size(); i++)
-		{
-			if (items.get(i) instanceof EquippableItem && ((EquippableItem) items.get(i)).getItemType() == EquippableItem.TYPE_ARMOR && equipped.get(i))
-			{
-				return (EquippableItem) items.get(i);
-			}
-		}
-		return null;
-	}
-	
-	public EquippableItem getEquippedRing()
-	{
-		for (int i = 0; i < items.size(); i++)
-		{
-			if (items.get(i) instanceof EquippableItem && ((EquippableItem) items.get(i)).getItemType() == EquippableItem.TYPE_RING && equipped.get(i))
-			{
-				return (EquippableItem) items.get(i);
-			}
-		}
-		return null;
-	}
-	
-	public boolean isEquippable(EquippableItem item)
-	{
-		if (EquippableItem.TYPE_WEAPON == item.getItemType())
-		{
-			for (int i = 0; i < usuableWeapons.length; i++)
-				if (usuableWeapons[i] == item.getItemStyle())
-					return true;
-			return false;
-		}
-		else if (EquippableItem.TYPE_ARMOR == item.getItemType())
-		{
-			for (int i = 0; i < usuableArmor.length; i++)
-				if (usuableArmor[i] == item.getItemStyle())
-					return true;
-			return false;
-		}
-		return true;
-	}
-
-	public ArrayList<Boolean> getEquipped() {
-		return equipped;
-	}
-	
-	public EquippableItem equipItem(EquippableItem item)
-	{
-		EquippableItem oldItem = null;
-		switch (item.getItemType())
-		{
-			case EquippableItem.TYPE_ARMOR:
-				oldItem = getEquippedArmor();
-				break;
-			case EquippableItem.TYPE_RING:
-				oldItem = getEquippedRing();
-				break;
-			case EquippableItem.TYPE_WEAPON:
-				oldItem = getEquippedWeapon();
-				break;
-		}
-		
-		if (oldItem != null)
-		{
-			this.currentAttack -= oldItem.getAttack();
-			this.currentDefense -= oldItem.getDefense();
-			this.currentSpeed -= oldItem.getSpeed();
-			this.maxAttack -= oldItem.getAttack();
-			this.maxDefense -= oldItem.getDefense();
-			this.maxSpeed -= oldItem.getSpeed();
-			int index = items.indexOf(oldItem);
-			this.equipped.set(index, false);
-			
-		}
-		
-		this.currentAttack += item.getAttack();
-		this.currentDefense += item.getDefense();
-		this.currentSpeed += item.getSpeed();
-		this.maxAttack += item.getAttack();
-		this.maxDefense += item.getDefense();
-		this.maxSpeed += item.getSpeed();
-		int index = items.indexOf(item);
-		this.equipped.set(index, true);
-		
-		return oldItem;
-	}
-	
-	public void unequipItem(EquippableItem item)
-	{
-		this.currentAttack -= item.getAttack();
-		this.currentDefense -= item.getDefense();
-		this.currentSpeed -= item.getSpeed();
-		this.maxAttack -= item.getAttack();
-		this.maxDefense -= item.getDefense();
-		this.maxSpeed -= item.getSpeed();
-		int index = items.indexOf(item);
-		this.equipped.set(index, false);		
-	}
-	
-	public int getAttackRange()
-	{
-		EquippableItem equippedWeapon = this.getEquippedWeapon();
-		if (equippedWeapon != null)
-			return equippedWeapon.getRange();
-		return 1;
-	}
-
 	
 	
 	public void triggerButton1Event(StateInfo stateInfo)

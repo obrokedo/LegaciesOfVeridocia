@@ -7,8 +7,9 @@ public class EquippableItem extends Item
 	private static final long serialVersionUID = 1L;
 	
 	public static final int TYPE_WEAPON = 0;
-	public static final int TYPE_ARMOR = 1;
-	public static final int TYPE_RING = 2;
+	public static final int TYPE_RING = 1;
+	public static final int TYPE_ARMOR = 2;
+	
 	
 	public static final int STYLE_SPEAR = 0;
 	public static final int STYLE_AXE = 1;

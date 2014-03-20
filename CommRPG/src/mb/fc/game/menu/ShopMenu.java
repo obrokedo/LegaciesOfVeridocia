@@ -2,8 +2,6 @@ package mb.fc.game.menu;
 
 import java.util.ArrayList;
 
-import mb.fc.engine.message.ChatMessage;
-import mb.fc.engine.message.Message;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.input.FCInput;
@@ -11,7 +9,6 @@ import mb.fc.game.item.EquippableItem;
 import mb.fc.game.item.Item;
 import mb.fc.game.item.Item.EquippableDifference;
 import mb.fc.game.listener.YesNoListener;
-import mb.fc.game.menu.Menu.MenuUpdate;
 import mb.fc.game.resource.ItemResource;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.ui.Button;

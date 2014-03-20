@@ -3,7 +3,7 @@ package mb.fc.game.manager;
 import java.awt.Point;
 import java.util.ArrayList;
 
-import mb.fc.engine.ForsakenChampions;
+import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.BattleResultsMessage;
 import mb.fc.engine.message.BattleSelectionMessage;
 import mb.fc.engine.message.IntMessage;
@@ -141,7 +141,7 @@ public class TurnManager extends Manager implements KeyboardListener
 				else if (cursor.getY() > currentSprite.getLocY())
 					cursor.setY(cursor.getY() - stateInfo.getTileHeight());
 				
-				stateInfo.getCamera().centerOnPoint((int) cursor.getX(), (int) cursor.getY(), stateInfo);
+				stateInfo.getCamera().centerOnPoint((int) cursor.getX(), (int) cursor.getY(), stateInfo.getCurrentMap());
 				break;
 			case TurnAction.ACTION_MOVE_TO:
 				handleSpriteMovement(a);
@@ -196,10 +196,10 @@ public class TurnManager extends Manager implements KeyboardListener
 			case TurnAction.ACTION_PERFORM_ATTACK:
 				stateInfo.removePanel(Panel.PANEL_HEALTH_BAR);
 				stateInfo.setShowAttackCinematic(true);
-				AttackCinematicState acs = (AttackCinematicState) game.getState(ForsakenChampions.STATE_GAME_BATTLE_ANIM);
+				AttackCinematicState acs = (AttackCinematicState) game.getState(CommRPG.STATE_GAME_BATTLE_ANIM);
 				acs.setBattleInfo(currentSprite, stateInfo.getResourceManager(), 
 					new Point(2, 0), battleResults, stateInfo.getGc());
-				game.enterState(ForsakenChampions.STATE_GAME_BATTLE_ANIM);
+				game.enterState(CommRPG.STATE_GAME_BATTLE_ANIM);
 				turnActions.remove(0);				
 				break;
 			case TurnAction.ACTION_CHECK_DEATH:				
@@ -242,7 +242,7 @@ public class TurnManager extends Manager implements KeyboardListener
 		}
 		
 		
-		stateInfo.getCamera().centerOnSprite(currentSprite, stateInfo);
+		stateInfo.getCamera().centerOnSprite(currentSprite, stateInfo.getCurrentMap());
 	}
 	
 	private void determineMoveableSpaces()
@@ -541,7 +541,7 @@ public class TurnManager extends Manager implements KeyboardListener
 			{
 				// Remove any health bar panels that may have been displayed from a sprite that we were previously over
 				stateInfo.removePanel(Panel.PANEL_HEALTH_BAR);
-				stateInfo.getCamera().centerOnPoint((int) cursor.getX(), (int) cursor.getY(), stateInfo);
+				stateInfo.getCamera().centerOnPoint((int) cursor.getX(), (int) cursor.getY(), stateInfo.getCurrentMap());
 				// Get any combat sprite at the cursors location
 				CombatSprite cs = stateInfo.getCombatSpriteAtMapLocation((int) cursor.getX(), (int) cursor.getY(), null);
 				

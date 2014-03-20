@@ -28,7 +28,7 @@ public class FCLoadingRenderSystem extends EntityProcessingSystem
 	protected void process(Entity e) {
 		LoadingComp loading = loadingMapper.get(e);
 		graphics.setColor(Color.white);
-		graphics.drawString("Forsaken Champions", 15, gc.getHeight() - 30);
+		graphics.drawString("Chronicles of Veridocia", 15, gc.getHeight() - 30);
 		graphics.drawString("LOADING: " + loading.currentIndex + " / " + loading.maxIndex, gc.getWidth() - 185, gc.getHeight() - 30);
 	}	
 }

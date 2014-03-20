@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-import mb.fc.engine.ForsakenChampions;
+import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.Message;
 import mb.fc.engine.message.MultiSpriteContextMessage;
 import mb.fc.engine.message.SpriteContextMessage;
@@ -12,7 +12,6 @@ import mb.fc.engine.state.StateInfo;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.listener.MouseListener;
 import mb.fc.game.sprite.CombatSprite;
-import mb.fc.game.sprite.Sprite;
 import mb.fc.game.ui.FCGameContainer;
 
 import org.newdawn.slick.Color;
@@ -113,7 +112,7 @@ public class InitiativeManager extends Manager
 			for (CombatSprite cs : initOrder)
 			{
 				// Increase the sprites initiaitive by 7 and potentially an addtional 1 based on speed
-				cs.setCurrentInit(cs.getCurrentInit() + 7 + (ForsakenChampions.RANDOM.nextInt(100) < cs.getCurrentSpeed() ? 1 : 0));
+				cs.setCurrentInit(cs.getCurrentInit() + 7 + (CommRPG.RANDOM.nextInt(100) < cs.getCurrentSpeed() ? 1 : 0));
 				if (cs.getCurrentInit() >= 100)
 				{
 					if (nextTurn == null || cs.getCurrentInit() > nextTurn.getCurrentInit() ||
@@ -157,7 +156,6 @@ public class InitiativeManager extends Manager
 				initMenu.initOrder = ((MultiSpriteContextMessage) message).getSprites();
 				break;
 			case Message.MESSAGE_INTIIALIZE:
-				System.out.println("INIT IN INIT");
 				initializeAfterSprites();
 				break;
 		}

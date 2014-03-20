@@ -1,0 +1,9 @@
+<item name="Short Sword" cost=50 description="A short sword" id=0 imageindexx=0 imageindexy=1>
+	<equippable attack=5 defense=0 speed=0 type=0 style=2 range=1/>
+</item>
+<item name="Long Sword" cost=150 description="A long sword" id=1 imageindexx=1 imageindexy=1>
+	<equippable attack=9 defense=0 speed=0 type=0 style=2 range=1/>
+</item>
+<item name="Medical Herb" cost=10 description="Heals for 10 hp" id=2 imageindexx=17 imageindexy=2>
+	<use targetsenemy=false damage=10 mpdamage=0 range=1 area=1 text="is healed for 10" singleuse=true/>
+</item>

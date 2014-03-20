@@ -1,8 +1,9 @@
 package mb.fc.engine.state;
 
-import mb.fc.engine.ForsakenChampions;
+import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.Message;
 import mb.fc.game.hudmenu.Panel;
+import mb.fc.game.manager.CinematicManager;
 import mb.fc.game.manager.PanelManager;
 import mb.fc.game.manager.MenuManager;
 import mb.fc.game.manager.SpriteManager;
@@ -31,6 +32,7 @@ public class TownState extends LoadableGameState
 	private PanelManager panelManager;
 	private MenuManager menuManager;
 	private TownMoveManager townMoveManager;
+	private CinematicManager cinematicManager;
 	
 	private StateInfo stateInfo;
 	
@@ -55,6 +57,8 @@ public class TownState extends LoadableGameState
 		stateInfo.registerManager(menuManager);
 		this.townMoveManager = new TownMoveManager();
 		stateInfo.registerManager(townMoveManager);
+		this.cinematicManager = new CinematicManager();
+		stateInfo.registerManager(cinematicManager);
 	}
 	
 	@Override
@@ -85,11 +89,14 @@ public class TownState extends LoadableGameState
 			throws SlickException {
 		if (stateInfo.isInitialized())
 		{
-			tileMapRenderer.render(g);
+			tileMapRenderer.render(stateInfo.getCamera(), g, stateInfo.getGc());
 			spriteRenderer.render(g);
-			tileMapRenderer.renderForeground(g);
+			cinematicManager.render(g);
+			tileMapRenderer.renderForeground(stateInfo.getCamera(), g, stateInfo.getGc());
 			panelRenderer.render();
 			menuRenderer.render();
+			cinematicManager.renderMenu(g);
+			cinematicManager.renderPostEffects(g);
 		}
 	}
 
@@ -98,17 +105,18 @@ public class TownState extends LoadableGameState
 			throws SlickException 	
 	{						
 		if ((turnDelta += delta) > 50)
-		{			
-			turnDelta = 0;
-			
+		{	
 			stateInfo.processMessages();
 			if (stateInfo.isInitialized())
 			{				
 				menuManager.update();
-				if (!menuManager.isBlocking())
+				cinematicManager.update((int) turnDelta);
+				if (!menuManager.isBlocking() && !cinematicManager.isBlocking())
+				{
 					panelManager.update();
-				spriteManager.update();
-				townMoveManager.update();
+					townMoveManager.update();
+				}
+				spriteManager.update();				
 				
 				if (System.currentTimeMillis() > stateInfo.getInputDelay())
 				{
@@ -131,19 +139,21 @@ public class TownState extends LoadableGameState
 				
 				stateInfo.getInput().update();
 			}
+			
+			turnDelta = 0;
 		}
 		
 	}
 
 	@Override
 	public int getID() {
-		return ForsakenChampions.STATE_GAME_TOWN;
+		return CommRPG.STATE_GAME_TOWN;
 	}
 
 	@Override
 	public void stateLoaded(ResourceManager resourceManager) {	
 		this.stateInfo.setResourceManager((FCResourceManager) resourceManager);
-		Panel.intialize(stateInfo);
+		Panel.intialize(stateInfo.getResourceManager());
 		// Menu.menuBackground = this.stateInfo.getResourceManager().getImages().get("menubg");
 	}
 }

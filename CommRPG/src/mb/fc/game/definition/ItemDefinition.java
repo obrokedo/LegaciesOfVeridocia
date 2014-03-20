@@ -50,7 +50,7 @@ public class ItemDefinition
 					itemUse, id.id, attack, defense, speed, range, type, style);
 		else
 			id.item = new Item(tagArea.getParams().get("name"), Integer.parseInt(tagArea.getParams().get("cost")), tagArea.getParams().get("description"), 
-						itemUse, false, Integer.parseInt(tagArea.getParams().get("id")));
+						itemUse, false, id.id);
 		
 		id.imageX = Integer.parseInt(tagArea.getParams().get("imageindexx"));
 		id.imageY = Integer.parseInt(tagArea.getParams().get("imageindexy"));

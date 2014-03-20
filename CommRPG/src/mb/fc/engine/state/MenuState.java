@@ -2,10 +2,9 @@ package mb.fc.engine.state;
 
 import java.io.File;
 
-import mb.fc.engine.ForsakenChampions;
+import mb.fc.engine.CommRPG;
 import mb.fc.game.Camera;
 import mb.fc.game.listener.StringListener;
-import mb.fc.game.menu.StringMenu;
 import mb.fc.game.persist.ClientProfile;
 import mb.fc.game.persist.ClientProgress;
 import mb.fc.game.ui.FCGameContainer;
@@ -14,7 +13,6 @@ import mb.gl2.loading.ResourceManager;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -78,11 +76,12 @@ public class MenuState extends LoadableGameState implements StringListener
 		}
 		
 		PersistentStateInfo persistentStateInfo = 
-				new PersistentStateInfo(clientProfile, clientProgress, (ForsakenChampions) game, new Camera(gc.getWidth() - ((FCGameContainer) gc).getDisplayPaddingX() * 2, 
+				new PersistentStateInfo(clientProfile, clientProgress, (CommRPG) game, new Camera(gc.getWidth() - ((FCGameContainer) gc).getDisplayPaddingX() * 2, 
 						gc.getHeight()), gc, gc.getGraphics(), true);
 		
 		game.addState(new BattleState(persistentStateInfo));
-		game.addState(new TownState(persistentStateInfo));		
+		game.addState(new TownState(persistentStateInfo));
+		game.addState(new CinematicState(persistentStateInfo));		
 		
 		// mapNameMenu = new StringMenu(gc, "Map name to start:", this);
 		
@@ -93,9 +92,9 @@ public class MenuState extends LoadableGameState implements StringListener
 		*/
 		
 		
-		((ForsakenChampions) game).setLoadingInfo(clientProgress.getMap(), clientProgress.getMap(),
-				(LoadableGameState) game.getState(ForsakenChampions.STATE_GAME_TOWN), true);
-		game.enterState(ForsakenChampions.STATE_GAME_LOADING);
+		((CommRPG) game).setLoadingInfo("Castle", "Castle",
+				(LoadableGameState) game.getState(CommRPG.STATE_GAME_CINEMATIC), true);
+		game.enterState(CommRPG.STATE_GAME_LOADING);
 		
 		
 	}
@@ -125,14 +124,14 @@ public class MenuState extends LoadableGameState implements StringListener
 	@Override
 	public int getID() {
 		// TODO Auto-generated method stub
-		return ForsakenChampions.STATE_GAME_MENU;
+		return CommRPG.STATE_GAME_MENU;
 	}
 
 	@Override
 	public void stringEntered(String string) {
-		((ForsakenChampions) game).setLoadingInfo(string, string,
-				(LoadableGameState) game.getState(ForsakenChampions.STATE_GAME_TOWN), true);
-		game.enterState(ForsakenChampions.STATE_GAME_LOADING);
+		((CommRPG) game).setLoadingInfo(string, string,
+				(LoadableGameState) game.getState(CommRPG.STATE_GAME_TOWN), true);
+		game.enterState(CommRPG.STATE_GAME_LOADING);
 		
 	}
 }

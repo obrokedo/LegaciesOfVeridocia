@@ -1,0 +1,13 @@
+<hero name="Noah" id=0 leader=true hp=12 mp=0 attack=9 defense=5 speed=4 promoted=false level=1 animations="bowie">
+	<progression promoted=false attack=1 defense=1 speed=1 hp=1 mp=1 move=5 movementtype=0 usuableitems=2 portrait=0/>
+	<progression promoted=true attack=1 defense=1 speed=1 hp=1 mp=1 move=7 movementtype=0 usuableitems=2 portrait=0/>
+	<spellprogression spellid=0 gained=2,6,9/>
+	<item itemid=1 equipped=true/>
+	<item itemid=2/>
+</hero>
+<hero name="Sharna" id=1 leader=false hp=9 mp=7 attack=6 defense=5 speed=6 promoted=false level=1 animations="kiwi">
+	<progression promoted=false attack=1 defense=1 speed=1 hp=1 mp=1 move=5 movementtype=0 usuableitems=2 portrait=1/>
+	<progression promoted=true attack=1 defense=1 speed=1 hp=1 mp=1 move=7 movementtype=0 usuableitems=2 portrait=1/>
+	<spellprogression spellid=1 gained=0,2,6,9/>
+	<item itemid=0 equipped=true/>
+</hero>

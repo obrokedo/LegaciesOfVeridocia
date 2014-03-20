@@ -4,6 +4,7 @@ import java.awt.Font;
 
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.ui.FCGameContainer;
+import mb.fc.resource.FCResourceManager;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -64,10 +65,10 @@ public abstract class Panel
 		}
 	}
 	
-	public static void intialize(StateInfo stateInfo)
+	public static void intialize(FCResourceManager frm)
 	{
-		MENU_BORDER = stateInfo.getResourceManager().getSpriteSheets().get("menuborder");
-		PANEL_FONT = stateInfo.getResourceManager().getFontByName("menufont");
+		MENU_BORDER = frm.getSpriteSheets().get("menuborder");
+		PANEL_FONT = frm.getFontByName("menufont");
 		
 		Font awtFont = new Font("Times New Roman", Font.ITALIC, 24);
 		UnicodeFont ufont = new UnicodeFont(awtFont, 30, false, true);
