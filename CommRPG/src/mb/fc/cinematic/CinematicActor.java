@@ -25,6 +25,7 @@ public class CinematicActor
 	public static final int SE_LAY_ON_SIDE = 5;
 	public static final int SE_FLASH = 6;
 	public static final int SE_NOD = 7;
+	public static final int SE_HEAD_SHAKE = 8;
 	
 	private SpriteAnims spriteAnims;
 	private Animation currentAnim;
@@ -147,6 +148,28 @@ public class CinematicActor
 								this.getLocY() - camera.getLocationY() + 10);
 						im.getSubImage(0, 0, im.getWidth(), 10).draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(), 
 								this.getLocY() - camera.getLocationY() + 1);
+						break;
+					case SE_HEAD_SHAKE:
+						im.getSubImage(0, 10, im.getWidth(), 14).draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(), 
+								this.getLocY() - camera.getLocationY() + 10);
+						
+						switch ((int) specialEffectCounter % 4)
+						{
+							case 0:
+							case 2:
+								im.getSubImage(0, 0, im.getWidth(), 10).draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(), 
+									this.getLocY() - camera.getLocationY());
+								break;
+							case 1:
+								im.getSubImage(0, 0, im.getWidth(), 10).draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX() + 1, 
+										this.getLocY() - camera.getLocationY());
+								break;
+							case 3:
+								im.getSubImage(0, 0, im.getWidth(), 10).draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX() - 1, 
+										this.getLocY() - camera.getLocationY());
+								break;
+						}
+						
 						break;
 				}
 					
@@ -355,12 +378,26 @@ public class CinematicActor
 					case SE_NOD:
 						specialEffectType = SE_NONE;
 						break;
+					case SE_HEAD_SHAKE:
+						if (specialEffectCounter + 1 == 10)
+							specialEffectType = SE_NONE;
+						else
+							specialEffectCounter++;
+						break;
 				}
 			}
 		}
 	}
 	
-	public void nod()
+	public void shakeHead()
+	{
+		specialEffectType = SE_HEAD_SHAKE;
+		specialEffectDelta = 0;
+		specialEffectUpdate = 75;
+		specialEffectCounter = 0;
+	}
+	
+	public void nodHead()
 	{
 		specialEffectType = SE_NOD;
 		specialEffectDelta = 0;
@@ -386,7 +423,7 @@ public class CinematicActor
 		specialEffectType = SE_FLASH;
 		specialEffectDuration = duration;
 		specialEffectDelta = 0;
-		specialEffectUpdate = speed;
+		specialEffectUpdate = speed / 102;
 		specialEffectCounter = 0;		
 	}
 	
@@ -442,9 +479,9 @@ public class CinematicActor
 		this.locY = locY;
 	}
 	
-	public void setSpinning(int spinTime, int spinDuration)
+	public void setSpinning(int spinSpeed, int spinDuration)
 	{
-		this.spinSpeed = spinTime;
+		this.spinSpeed = spinSpeed;
 		this.spinDuration = spinDuration;
 		this.animUpdate = Long.MAX_VALUE;
 		this.spinDelta = 0;
@@ -491,8 +528,6 @@ public class CinematicActor
 		this.moveToLocX = moveToLocX;
 		this.moveToLocY = moveToLocY;
 		this.haltingMove = haltingMove;
-		float distance = Math.abs(moveToLocX - locX);
-		distance += Math.abs(moveToLocY - locY);
 		this.moveSpeed = speed;
 		this.animDelta = 0;
 		this.animUpdate = (long) (469.875 / moveSpeed);

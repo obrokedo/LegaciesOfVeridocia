@@ -1,5 +1,6 @@
 package mb.fc.utils.planner;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
@@ -12,11 +13,13 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.text.NumberFormatter;
 
 public class PlannerLine extends JPanel
 {
@@ -41,11 +44,18 @@ public class PlannerLine extends JPanel
 	{
 		this.commitChanges();
 		this.removeAll();
+		JPanel headDescPanel = new JPanel(new BorderLayout());
 		JPanel headerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		if (isDefining)
+		{
+			headDescPanel.setBackground(Color.DARK_GRAY);
 			headerPanel.setBackground(Color.DARK_GRAY);
+		}
 		else
+		{
 			headerPanel.setBackground(Color.LIGHT_GRAY);
+			headDescPanel.setBackground(Color.LIGHT_GRAY);
+		}
 		JLabel headerLabel = new JLabel(plDef.getTag().toUpperCase());
 		headerPanel.add(headerLabel);		
 		if (isDefining)
@@ -69,9 +79,20 @@ public class PlannerLine extends JPanel
 			removeLineButton.setActionCommand("remove " + index);
 			removeLineButton.addActionListener(aListener);
 			headerPanel.add(removeLineButton);
+			JButton moveupButton = new JButton("Move Up");
+			moveupButton.setActionCommand("moveup " + index);
+			moveupButton.addActionListener(aListener);
+			headerPanel.add(moveupButton);
+			JButton movedownButton = new JButton("Move Down");
+			movedownButton.setActionCommand("movedown " + index);
+			movedownButton.addActionListener(aListener);
+			headerPanel.add(movedownButton);
+						
+			headDescPanel.add(headerPanel.add(new JLabel(this.plDef.getDescription())), BorderLayout.PAGE_END);
 		}
 		
-		this.add(headerPanel);
+		headDescPanel.add(headerPanel, BorderLayout.CENTER);
+		this.add(headDescPanel);
 		
 		JPanel valuePanel = new JPanel();
 		valuePanel.setLayout(new BoxLayout(valuePanel, BoxLayout.PAGE_AXIS));
@@ -91,9 +112,12 @@ public class PlannerLine extends JPanel
 						SpinnerNumberModel snm = null;
 						
 						snm = new SpinnerNumberModel(0, -1, Integer.MAX_VALUE, 1);
+						
 						if (values.size() > 0)
 							snm.setValue(values.get(i));
 						c = new JSpinner(snm);
+						
+						((NumberFormatter) ((JSpinner.NumberEditor) ((JSpinner) c).getEditor()).getTextField().getFormatter()).setAllowsInvalid(false);
 					}
 					else
 					{
@@ -111,9 +135,18 @@ public class PlannerLine extends JPanel
 						((JCheckBox) c).setSelected((boolean) values.get(i));
 					break;
 				case PlannerValueDef.TYPE_STRING:
-					c = new JTextField(30);
-					if (values.size() > 0)
-						((JTextField) c).setText((String) values.get(i));					
+					if (pv.getRefersTo() == PlannerValueDef.REFERS_NONE)
+					{
+						c = new JTextField(30);
+						if (values.size() > 0)
+							((JTextField) c).setText((String) values.get(i));
+					}
+					else
+					{
+						Vector<String> items = new Vector<String>(listOfLists.get(pv.getRefersTo() - 1));
+						c = new JComboBox<String>(items);
+						((JComboBox) c).setSelectedItem(values.get(i));
+					}
 					break;
 			}			
 			
@@ -147,10 +180,20 @@ public class PlannerLine extends JPanel
 							values.set(i, ((JCheckBox) components.get(i)).isSelected());									
 						break;
 					case PlannerValueDef.TYPE_STRING:
-						if (noValues)
-							values.add(((JTextField) components.get(i)).getText());
+						if (pv.getRefersTo() == PlannerValueDef.REFERS_NONE)
+						{
+							if (noValues)
+								values.add(((JTextField) components.get(i)).getText());
+							else
+								values.set(i, ((JTextField) components.get(i)).getText());
+						}
 						else
-							values.set(i, ((JTextField) components.get(i)).getText());
+						{
+							if (noValues)
+								values.add(((JComboBox) components.get(i)).getSelectedItem());
+							else
+								values.set(i, ((JComboBox) components.get(i)).getSelectedItem());		
+						}
 						break;
 					case PlannerValueDef.TYPE_INT:
 						if (pv.getRefersTo() == PlannerValueDef.REFERS_NONE)

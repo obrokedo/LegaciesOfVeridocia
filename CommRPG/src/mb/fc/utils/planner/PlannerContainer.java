@@ -72,6 +72,30 @@ public class PlannerContainer extends JPanel implements ActionListener
 			this.revalidate();
 			this.repaint();
 		}
+		else if (action.startsWith("moveup"))
+		{
+			int index = Integer.parseInt(action.split(" ")[1]) - 1;
+			if (index != 0)
+			{
+				PlannerLine pl = lines.remove(index);
+				lines.add(index - 1, pl);
+				setupUI();
+				this.revalidate();
+				this.repaint();
+			}
+		}
+		else if (action.startsWith("movedown"))
+		{
+			int index = Integer.parseInt(action.split(" ")[1]) - 1;
+			if (index != lines.size() - 1)
+			{
+				PlannerLine pl = lines.remove(index);
+				lines.add(index + 1, pl);
+				setupUI();
+				this.revalidate();
+				this.repaint();
+			}
+		}
 	}
 	
 	public void commitChanges()

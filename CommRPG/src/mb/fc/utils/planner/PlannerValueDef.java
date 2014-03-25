@@ -1,5 +1,7 @@
 package mb.fc.utils.planner;
 
+import java.io.File;
+
 public class PlannerValueDef 
 {
 	public static final int REFERS_NONE = 0;
@@ -18,6 +20,8 @@ public class PlannerValueDef
 	public static final int REFERS_MOVE_TYPE = 13;	
 	public static final int REFERS_SPELL = 14;
 	public static final int REFERS_ITEM_AREA = 15;
+	public static final int REFERS_DIRECTION = 16;
+	public static final int REFERS_ANIMATIONS = 17;	
 	
 	public static final int TYPE_STRING = 0;
 	public static final int TYPE_INT = 1;

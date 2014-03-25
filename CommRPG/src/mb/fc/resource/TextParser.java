@@ -140,16 +140,9 @@ public class TextParser
 				ArrayList<CinematicEvent> events = new ArrayList<CinematicEvent>();
 				
 				for (TagArea childArea : tagArea.getChildren())
-				{
-					if (childArea.getTagType().equalsIgnoreCase("initialize"))
-					{
-						// Add all the intialize events to the initialize list
-						for (TagArea initArea : childArea.getChildren())
-							initEvents.add(parseCinematicEvent(initArea));
-					}
-					else
+				{					
 					// Add the event
-						events.add(parseCinematicEvent(childArea));
+					events.add(parseCinematicEvent(childArea, initEvents));
 				}
 				
 				cinematicById.put(cinematicId, new Cinematic(initEvents, events, cameraX, cameraY));
@@ -158,15 +151,20 @@ public class TextParser
 		}
 	}
 	
-	private static CinematicEvent parseCinematicEvent(TagArea area)
+	private static CinematicEvent parseCinematicEvent(TagArea area, ArrayList<CinematicEvent> initEvents)
 	{
 		String type = area.getTagType();
 		
 		if (type.equalsIgnoreCase("addactor"))
-			return new CinematicEvent(CinematicEventType.ADD_ACTOR, Integer.parseInt(area.getParams().get("x")), 
+		{
+			CinematicEvent ce = new CinematicEvent(CinematicEventType.ADD_ACTOR, Integer.parseInt(area.getParams().get("x")), 
 					Integer.parseInt(area.getParams().get("y")), 
 					area.getParams().get("name"), area.getParams().get("anim"), 
-					area.getParams().get("startanim"), Boolean.parseBoolean(area.getParams().get("visible")));
+					area.getParams().get("startanim"), Boolean.parseBoolean(area.getParams().get("visible"))); 
+			if (Boolean.parseBoolean(area.getParams().get("init")))
+				initEvents.add(ce);				
+			return ce;
+		}
 		else if (type.equalsIgnoreCase("camerafollow"))
 			return new CinematicEvent(CinematicEventType.CAMERA_FOLLOW, area.getParams().get("name"));
 		else if (type.equalsIgnoreCase("haltingmove"))
@@ -218,6 +216,8 @@ public class TextParser
 					Integer.parseInt(area.getParams().get("speed")), Integer.parseInt(area.getParams().get("time")));
 		else if (type.equalsIgnoreCase("nod"))
 			return new CinematicEvent(CinematicEventType.NOD, area.getParams().get("name"));
+		else if (type.equalsIgnoreCase("shakehead"))
+			return new CinematicEvent(CinematicEventType.HEAD_SHAKE, area.getParams().get("name"));
 		else if (type.equalsIgnoreCase("loopmove"))
 			return new CinematicEvent(CinematicEventType.LOOP_MOVE, area.getParams().get("name"), Integer.parseInt(area.getParams().get("x")), 
 					Integer.parseInt(area.getParams().get("y")), Integer.parseInt(area.getParams().get("speed")));

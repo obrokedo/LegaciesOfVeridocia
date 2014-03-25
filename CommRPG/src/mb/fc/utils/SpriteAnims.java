@@ -13,6 +13,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Hashtable;
+import java.util.Set;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
@@ -100,6 +101,11 @@ public class SpriteAnims implements Serializable
 		System.out.println("-- Print Animations --");
 		for (String a : animations.keySet())
 			System.out.println(a);
+	}
+	
+	public Set<String> getAnimationKeys()
+	{
+		return animations.keySet();
 	}
 
 	public void serializeToFile(String fileName)

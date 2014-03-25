@@ -234,7 +234,10 @@ public class Cinematic
 				actors.get((String) ce.getParam(0)).flash((int) ce.getParam(1), (int) ce.getParam(2));
 				break;
 			case NOD:
-				actors.get((String) ce.getParam(0)).nod();
+				actors.get((String) ce.getParam(0)).nodHead();
+				break;
+			case HEAD_SHAKE:
+				actors.get((String) ce.getParam(0)).shakeHead();
 				break;
 			case STOP_SE:
 				actors.get((String) ce.getParam(0)).stopSpecialEffect();

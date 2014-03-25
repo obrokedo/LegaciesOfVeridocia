@@ -7,7 +7,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.OpenOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
@@ -20,7 +19,6 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -32,8 +30,6 @@ public class PlannerFrame extends JFrame implements ActionListener, ChangeListen
 {
 	private static final long serialVersionUID = 1L;
 	
-	private QuestList questList;
-	private JScrollPane questScroll;
 	private Hashtable<String, PlannerContainerDef> containersByName;
 	private ArrayList<ArrayList<String>> listOfLists;
 	private JTabbedPane jtp;
@@ -50,6 +46,7 @@ public class PlannerFrame extends JFrame implements ActionListener, ChangeListen
 	private static String PATH_ENEMIES = "definitions/Enemies";
 	private static String PATH_HEROES = "definitions/Heroes";
 	private static String PATH_ITEMS = "definitions/Items";
+	private static String PATH_ANIMATIONS = "animations/fsa";
 	private static String PATH_QUESTS = "Quests";
 
 	public static void main(String args[])
@@ -100,7 +97,7 @@ public class PlannerFrame extends JFrame implements ActionListener, ChangeListen
 		
 		listOfLists = new ArrayList<ArrayList<String>>();
 		
-		for (int i = 0; i < 15; i++)
+		for (int i = 0; i < 18; i++)
 			listOfLists.add(new ArrayList<String>());
 			
 		// Setup AI Types
@@ -169,6 +166,19 @@ public class PlannerFrame extends JFrame implements ActionListener, ChangeListen
 		listOfLists.get(PlannerValueDef.REFERS_SPELL - 1).add("Bolt");
 		listOfLists.get(PlannerValueDef.REFERS_SPELL - 1).add("Blast");
 		
+		// Setup Direction
+		listOfLists.get(PlannerValueDef.REFERS_DIRECTION - 1).add("Up");
+		listOfLists.get(PlannerValueDef.REFERS_DIRECTION - 1).add("Down");
+		listOfLists.get(PlannerValueDef.REFERS_DIRECTION - 1).add("Left");
+		listOfLists.get(PlannerValueDef.REFERS_DIRECTION - 1).add("Right");
+				
+		// Animation files
+		File animations = new File(PATH_ANIMATIONS);
+		for (String f : animations.list())
+			if (f.endsWith(".fsa"))
+				listOfLists.get(PlannerValueDef.REFERS_ANIMATIONS - 1).add(f.replaceFirst(".fsa", ""));
+
+		
 		/*******************/
 		/* Set up triggers */
 		/*******************/
@@ -178,6 +188,7 @@ public class PlannerFrame extends JFrame implements ActionListener, ChangeListen
 		setupEnemyDefinitions();
 		setupItemDefinitions();
 		setupQuestDefinitions();
+		setupCinematicDefinitions();
 		
 		initUI();
 		
@@ -259,7 +270,6 @@ public class PlannerFrame extends JFrame implements ActionListener, ChangeListen
 			jtp.addTab("Quests", new PlannerTab(containersByName, new String[] {"quest"}));
 			*/
 			
-			
 			parseContainer(XMLParser.process(Files.readAllLines(Paths.get(PATH_ENEMIES), StandardCharsets.UTF_8)), TAB_ENEMY, "enemy");
 			parseContainer(XMLParser.process(Files.readAllLines(Paths.get(PATH_HEROES), StandardCharsets.UTF_8)), TAB_HERO, "hero");
 			parseContainer(XMLParser.process(Files.readAllLines(Paths.get(PATH_ITEMS), StandardCharsets.UTF_8)), TAB_ITEM, "item");
@@ -308,6 +318,7 @@ public class PlannerFrame extends JFrame implements ActionListener, ChangeListen
 	
 	private void parseLine(PlannerLine plannerLine, PlannerLineDef pld, TagArea ta)
 	{
+		System.out.println("PARENT: " + pld.getTag());
 		for (PlannerValueDef pvd : pld.getPlannerValues())			
 		{
 			if (pvd.getValueType() == PlannerValueDef.TYPE_STRING)
@@ -315,7 +326,10 @@ public class PlannerFrame extends JFrame implements ActionListener, ChangeListen
 			else if (pvd.getValueType() == PlannerValueDef.TYPE_INT)
 			{
 				if (pvd.getRefersTo() == PlannerValueDef.REFERS_NONE)
+				{
+					System.out.println("TAG: " + pvd.getTag() + " " + ta.getParams().get(pvd.getTag()));
 					plannerLine.getValues().add(Integer.parseInt(ta.getParams().get(pvd.getTag())));
+				}
 				else
 				{
 					if (pvd.getRefersTo() == PlannerValueDef.REFERS_TRIGGER)
@@ -327,6 +341,281 @@ public class PlannerFrame extends JFrame implements ActionListener, ChangeListen
 				plannerLine.getValues().add(Boolean.parseBoolean(ta.getParams().get(pvd.getTag())));
 			
 		}
+	}
+	
+	private void setupCinematicDefinitions()
+	{
+		PlannerContainerDef cinematicContainer;
+		
+		// Setup defining line
+		ArrayList<PlannerValueDef> definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "description", false, 
+				"Description", "A description of the object that will be presented to the players"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "camerax", false, 
+				"The initial X location of the camera", "The x position (in pixels) of the items image"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "cameray", false, 
+				"The initial Y location of the camera", "The y position (in pixels) of the items image"));
+		PlannerLineDef definingLine = new PlannerLineDef("cinematic", "Cinematic", "", definingValues);
+		
+		// Setup allowable containers
+		ArrayList<PlannerContainerDef> allowableContainers = new ArrayList<PlannerContainerDef>();
+		
+		// Setup available types
+		ArrayList<PlannerLineDef> allowableLines = new ArrayList<PlannerLineDef>();
+				
+		// Add actor
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "x", false, 
+				"Start Location X", "The x coordinate (in pixels) to start the actor in"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "y", false, 
+				"Start Location Y", "The y coordinate (in pixels) to start the actor in"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "name", false, 
+				"Actor Name", "The name of the actor to be created. This will be used to reference the actor in the cinematic"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_ANIMATIONS, PlannerValueDef.TYPE_STRING, "anim", false, 
+				"Animation file", "The name of the animation file to be used for this actor"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "startanim", false, 
+				"Starting Animation", "The name of the animation that this actor should start in"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_BOOLEAN, "visible", false, 
+				"Starts Visible", "Whether this actor should start visible"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_BOOLEAN, "init", false, 
+				"Initialize before Cinematic", "Indicates that this action should be taken before the scene is rendered. Blocking actions should NEVER be initialized before the scene"));
+
+		allowableLines.add(new PlannerLineDef("addactor", "Add Actor", "Adds an actor to the cinematic, this actor can be accessed in the future by its' name", definingValues));
+		
+		// Camera follow
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "name", false, 
+				"Actor Name", "The name of the actor that the camera should follow. This actor should already have been added to the cinematic"));
+
+		allowableLines.add(new PlannerLineDef("camerafollow", "Set Camera follows actor", "Causes the camera to always be centered on the current actor. You can cancel this function by calling another camera location command", definingValues));
+		
+		// Halting Move
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "name", false, 
+				"Actor Name", "The name of the actor that should perform the action"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "x", false, 
+				"X Coordinate", "The x coordinate (in pixels) that the actor should move to"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "y", false, 
+				"Y Coordinate", "The y coordinate (in pixels) that the actor should move to"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "speed", false, 
+				"Move Speed", "The amount of pixels that the actor will move every 30ms towards their destination"));
+
+		allowableLines.add(new PlannerLineDef("haltingmove", "Halting Move", "Orders the specified actor to move to the specified coordinate. This action is 'halting' which means no further actions will be issued until this action is complete", definingValues));
+		
+		// Move
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "name", false, 
+				"Actor Name", "The name of the actor that should perform the action"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "x", false, 
+				"X Coordinate", "The x coordinate (in pixels) that the actor should move to"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "y", false, 
+				"Y Coordinate", "The y coordinate (in pixels) that the actor should move to"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "speed", false, 
+				"Move Speed", "The amount of pixels that the actor will move every 30ms towards their destination"));
+
+		allowableLines.add(new PlannerLineDef("move", "Move", "Orders the specified actor to move to the specified coordinate.", definingValues));
+		
+		// Halting Anim
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "name", false, 
+				"Actor Name", "The name of the actor that should perform the action"));		
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "time", false, 
+				"Time", "The amount of time in milliseconds that this animation should be performed over. All frames will be shown for an equal time."));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "anim", false, 
+				"Animation to Show", "The name of the animation that the actor should take"));
+
+		allowableLines.add(new PlannerLineDef("haltinganim", "Halting Animation", "Causes the specified actor to perform the specified animation, This action is 'halting' which means no further actions will be issued until this action is complete.", definingValues));
+		
+		// Anim
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "name", false, 
+				"Actor Name", "The name of the actor that should perform the action"));		
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "time", false, 
+				"Time", "The amount of time in milliseconds that this animation should be performed over. All frames will be shown for an equal time."));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "anim", false, 
+				"Animation to Show", "The name of the animation that the actor should take"));
+
+		allowableLines.add(new PlannerLineDef("anim", "Animation", "Causes the specified actor to perform the specified animation.", definingValues));
+		
+		// Camera Move
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "x", false, 
+				"X Coordinate", "The x coordinate (in pixels) that the camera should move to"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "y", false, 
+				"Y Coordinate", "The y coordinate (in pixels) that the camera should move to"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "time", false, 
+				"Moving Time", "The amount of time in ms that the camera should be moved over"));
+
+		allowableLines.add(new PlannerLineDef("cameramove", "Camera Pan", "Pans the camera to the specified location over time. If the time is 0 then the camera immediate will move to the location", definingValues));
+		
+		// Text Box
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "text", false, 
+				"Text", "The text that should be displayed"));
+
+		allowableLines.add(new PlannerLineDef("speech", "Show Speech Box", "Displays the specified text in a text box. This action is 'halting', which means subsequent actions will not be performed until the text box is dismissed via user input.", definingValues));
+		
+		// Load map
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "map", false, 
+				"Map", "The name of the map file to be loaded, the associated text file should have the same name"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "enter", false, 
+				"Map Entrance", "The entrance area definied in the map file that the hero should start in once the map loads. The area should be marked with a 'start' name and an 'exit' value"));
+
+		allowableLines.add(new PlannerLineDef("loadmap", "Load Map", "Loads the specified map and places the hero at the specified entrance.", definingValues));
+		
+		// Wait
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "time", false, 
+				"Wait Time", "The amount of time in ms that the cinematic should wait before more actions are processed"));
+
+		allowableLines.add(new PlannerLineDef("wait", "Wait", "Halts new actions from being processed for the specified time. This is a halting action", definingValues));
+		
+		// Spin
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "name", false, 
+				"Actor Name", "The name of the actor that should spin"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "speed", false, 
+				"Spin Speed", "The amount of time in ms that should pass in between changing facing direction"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "time", false, 
+				"Spin Duration", "The amount of time that this actor should spin for. A value of -1 indicates that this actor should spin for an indefinite amount of time. If an indefinite amount of time is specified then the actor will stop spinning when the a STOP SPIN action is issued"));
+
+		allowableLines.add(new PlannerLineDef("spin", "Spin Actor", "Causes the specified actor to begin spinning, this will cause other animations to stop for the duration of the spin. This can be used in conjunction with the grow and shrink special effect", definingValues));
+		
+		// Stop Spin
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "name", false, 
+				"Actor Name", "The name of the actor that should stop spinning"));
+		
+		allowableLines.add(new PlannerLineDef("stopspin", "Stop Actor Spinning", "Stops the specified actor from spinning. If the actor is not spinning then no action will be taken", definingValues));
+		
+		// Facing
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "name", false, 
+				"Actor Name", "The name of the actor that should change their facing"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_DIRECTION, PlannerValueDef.TYPE_INT, "dir", false, 
+				"Facing Direction", "The direction that the actor should face"));
+
+		allowableLines.add(new PlannerLineDef("facing", "Set Actor Facing", "Causes the specified actor to face the specified direction", definingValues));
+		
+		// Shrink
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "name", false, 
+				"Actor Name", "The name of the actor that should perform the shrink special effect"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "time", false, 
+				"Shrink Time", "The amount of time that this actor should shrink over"));
+
+		allowableLines.add(new PlannerLineDef("shrink", "Shrink Actor", "Causes the specified actor to shrink over time, once the time is up the actor will immediately return to normal size, so if the intention is to remove the actor then it should be removed immediately before the end of this action. This is a 'special effect'. Only one special effect can be active on a given actor at any time. This will stop any current animations.", definingValues));
+		
+		// Grow
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "name", false, 
+				"Actor Name", "The name of the actor that should perform the grow special effect"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "time", false, 
+				"Grow Time", "The amount of time that this actor should grow over"));
+
+		allowableLines.add(new PlannerLineDef("grow", "Grow Actor", "Causes the specified actor to grow over time from 1% height to 100% height, once the time is up the actor will immediately return to normal size. This is a 'special effect'. Only one special effect can be active on a given actor at any time. This will stop any current animations", definingValues));
+		
+		// Stop Special Effect
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "name", false, 
+				"Actor Name", "The name of the actor that should stop performing special effects"));
+
+		allowableLines.add(new PlannerLineDef("stopse", "Stop Actor Special Effect", "Causes the specified actor to stop peforming any special effects that are currently active. This should be used to stop special effects of indefinite duration.", definingValues));
+		
+		// Visible
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "name", false, 
+				"Actor Name", "The name of the actor whose visibility should be changed"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_BOOLEAN, "isvis", false, 
+				"Is Visible", "If true, the actor should become visible, otherwise they should become invisible"));
+
+		allowableLines.add(new PlannerLineDef("visible", "Set Actor Visiblity", "Sets the specified actors visiblity", definingValues));
+		
+		// Remove Actor
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "name", false, 
+				"Actor Name", "The name of the actor that should be removed from the cinematic"));
+
+		allowableLines.add(new PlannerLineDef("removeactor", "Remove Actor", "Removes the specified actor from the cinematic. This actor will no longer be able to be the target of actions.", definingValues));
+		
+		// Quiver
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "name", false, 
+				"Actor Name", "The name of the actor that should perform the quiver special effect"));
+
+		allowableLines.add(new PlannerLineDef("quiver", "Start Actor Quivering", "Causes the specified actor to begin quivering. This effect will continue until a STOP SPECIAL EFFECT is issued for the actor. This is a 'special effect'. Only one special effect can be active on a given actor at any time. This will stop any current animations.", definingValues));
+		
+		// Fall on Face
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "name", false, 
+				"Actor Name", "The name of the actor that should perform the fall-on-face special effect"));
+
+		allowableLines.add(new PlannerLineDef("fallonface", "Actor Fall on Face", "Causes the specified actor to fall on their face. This effect will continue until a STOP SPECIAL EFFECT is issued for the actor. This is a 'special effect'. Only one special effect can be active on a given actor at any time. This will stop any current animations.", definingValues));
+				
+		// Lay on Side
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "name", false, 
+				"Actor Name", "The name of the actor that should perform the lay-on-side special effect"));
+
+		allowableLines.add(new PlannerLineDef("layonside", "Actor Lay on Side", "Causes the specified actor to lay on their side. This effect will continue until a STOP SPECIAL EFFECT is issued for the actor. This is a 'special effect'. Only one special effect can be active on a given actor at any time. This will stop any current animations.", definingValues));
+		
+		// Flash
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "name", false, 
+				"Actor Name", "The name of the actor that should perform the flash special effect"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "time", false, 
+				"Flash Duration", "The amount of time in ms that this actor should flash for"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "speed", false, 
+				"Flash Speed", "The amount of time that a single flash should take"));
+
+		allowableLines.add(new PlannerLineDef("flash", "Actor Flash", "Causes the specified actor to flash white. If the duration is marked as indefinite then this effect will continue until a STOP SPECIAL EFFECT is issued for the actor. This is a 'special effect'. Only one special effect can be active on a given actor at any time. This will stop any current animations.", definingValues));
+		
+		// Nod
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "name", false, 
+				"Actor Name", "The name of the actor that should perform the nod effect"));
+
+		allowableLines.add(new PlannerLineDef("nod", "Actor Nod", "Causes the specified actor to nod. This effect lasts 500ms. This is a 'special effect'. Only one special effect can be active on a given actor at any time. This will stop any current animations.", definingValues));
+		
+		// Shake head
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "name", false, 
+				"Actor Name", "The name of the actor that should perform the shake head effect"));
+
+		allowableLines.add(new PlannerLineDef("shakehead", "Actor Shake Head", "Causes the specified actor to nod. This effect lasts 750ms. This is a 'special effect'. Only one special effect can be active on a given actor at any time. This will stop any current animations.", definingValues));
+			
+		// Loop Move
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "name", false, 
+				"Actor Name", "The name of the actor that should perform the looping move"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "x", false, 
+				"X Coordinate", "The x coordinate (in pixels) that the actor should move to"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "y", false, 
+				"Y Coordinate", "The y coordinate (in pixels) that the actor should move to"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "speed", false, 
+				"Move Speed", "The amount of pixels that the actor will move every 30ms towards their destination"));
+
+		allowableLines.add(new PlannerLineDef("loopmove", "Move Actor in Loop", "Causes the specified actor to move to the specified location, once the actor gets to that location they will teleport back to where they started when this action was first called. This action will continue until a STOP LOOP MOVE action is called on this actor or another move command is issued for this actor", definingValues));
+				
+		// Stop Loop Move
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "name", false, 
+				"Actor Name", "The name of the actor that should stop their looping move"));
+
+		allowableLines.add(new PlannerLineDef("stoploopmove", "Stop Actor Looping Move", "Causes the specified actor to stop looping their move, they will still walk to their target location but will not teleport", definingValues));
+		
+		// Loop Move
+		definingValues = new ArrayList<PlannerValueDef>();	
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "time", false, 
+				"Shake Time", "The amount of time that the camera should shake for"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "severity", false, 
+				"Severity", "The amount of pixels that the camera can be offset to during the shake"));
+
+		allowableLines.add(new PlannerLineDef("camerashake", "Shake Camera", "Shakes the camera to simulate an earthquake effect. After the camera is done shaking it will return to it's original location", definingValues));
+		
+		cinematicContainer = new PlannerContainerDef(definingLine, allowableContainers, allowableLines, listOfLists, PlannerValueDef.REFERS_CINEMATIC - 1);
+		containersByName.put("cinematic", cinematicContainer);
 	}
 	
 	private void setupItemDefinitions()
@@ -477,7 +766,7 @@ public class PlannerFrame extends JFrame implements ActionListener, ChangeListen
 				"Movement Type", "The enemies movement type as it relates to land effect and barriers"));
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "portrait", false, 
 				"Portrait Index", "The index of the portrait in the portraits image. If this enemy has no portrait then use -1"));
-		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "animations", false, 
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_ANIMATIONS, PlannerValueDef.TYPE_STRING, "animations", false, 
 				"Animation File", "The name of the animation file that should be used for this enemy"));
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_BOOLEAN, "leader", false, 
 				"Is Leader", "Whether this enemy is the leader of the force"));
@@ -534,7 +823,7 @@ public class PlannerFrame extends JFrame implements ActionListener, ChangeListen
 				"Promoted", "If true, this hero is promoted"));
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "level", false, 
 				"Level", "Starting Level for the hero"));
-		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "animations", false, 
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_ANIMATIONS, PlannerValueDef.TYPE_STRING, "animations", false, 
 				"Animation File", "The name of the animation file that should be used for this hero"));
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_BOOLEAN, "leader", true, 
 				"Is Leader", "Whether this hero is the leader of the force"));
@@ -755,11 +1044,7 @@ public class PlannerFrame extends JFrame implements ActionListener, ChangeListen
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		if (arg0.getActionCommand().equalsIgnoreCase("addquest"))
-		{
-			questList.addQuest("New Quest");
-		}
-		else if (arg0.getActionCommand().equalsIgnoreCase("new"))
+		if (arg0.getActionCommand().equalsIgnoreCase("new"))
 		{
 			JFileChooser fc = new JFileChooser(new File("."));
 			int returnVal = fc.showSaveDialog(this);
@@ -818,7 +1103,7 @@ public class PlannerFrame extends JFrame implements ActionListener, ChangeListen
 				try {
 					parseContainer(XMLParser.process(Files.readAllLines(Paths.get(triggerFile.getAbsolutePath()), StandardCharsets.UTF_8)), TAB_TRIGGER, "trigger");
 					parseContainer(XMLParser.process(Files.readAllLines(Paths.get(triggerFile.getAbsolutePath()), StandardCharsets.UTF_8)), TAB_TEXT, "text");
-					// parseContainer(XMLParser.process(Files.readAllLines(Paths.get(triggerFile.getAbsolutePath()), StandardCharsets.UTF_8)), TAB_CIN, "cinematic");
+					parseContainer(XMLParser.process(Files.readAllLines(Paths.get(triggerFile.getAbsolutePath()), StandardCharsets.UTF_8)), TAB_CIN, "cinematic");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

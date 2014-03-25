@@ -11,6 +11,10 @@ import mb.fc.game.battle.spell.Spell;
 import mb.fc.game.item.Item;
 import mb.fc.game.item.ItemUse;
 import mb.fc.game.sprite.CombatSprite;
+import de.congrace.exp4j.Calculable;
+import de.congrace.exp4j.ExpressionBuilder;
+import de.congrace.exp4j.UnknownFunctionException;
+import de.congrace.exp4j.UnparsableExpressionException;
 
 public class BattleResults implements Serializable
 {
@@ -219,8 +223,9 @@ public class BattleResults implements Serializable
 		return br;	
 	}
 	
-	public static void main(String args[])
+	public static void main(String args[]) throws UnknownFunctionException, UnparsableExpressionException
 	{
+		/*
 		System.out.println("% Dam  10 20 30 40 50 60 70 80 90");
 		for (int i = 1; i < 9; i++)
 		{
@@ -231,6 +236,7 @@ public class BattleResults implements Serializable
 			}
 			System.out.println();
 		}
+		*/
 	}
 	
 	private static String getExperienceByDamage(int damage, int attackerLevel, int targetHP, int targetMaxHP, int targetLevel)

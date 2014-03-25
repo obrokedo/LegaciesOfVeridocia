@@ -26,6 +26,7 @@ public class CinematicEvent
 		LOAD_BATTLE,
 		FLASH,
 		NOD,
+		HEAD_SHAKE,
 		FACING,
 		SHRINK,
 		GROW,
