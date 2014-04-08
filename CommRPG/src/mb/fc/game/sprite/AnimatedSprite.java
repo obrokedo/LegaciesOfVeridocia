@@ -8,6 +8,7 @@ import mb.fc.utils.AnimSprite;
 import mb.fc.utils.Animation;
 import mb.fc.utils.SpriteAnims;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
@@ -15,11 +16,14 @@ public class AnimatedSprite extends Sprite
 {
 	private static final long serialVersionUID = 1L;
 	
+	protected final transient static Color SHADOW_COLOR = new Color(0, 0, 0, 100);
+	
 	protected transient int imageIndex;
 	protected transient int animationDelay = 0;
 	protected transient SpriteAnims spriteAnims;
 	protected transient Animation currentAnim;
 	protected String imageName;
+	private Direction facing;
 	
 	public AnimatedSprite(int locX, int locY, String imageName) {
 		super(locX, locY);
@@ -35,8 +39,14 @@ public class AnimatedSprite extends Sprite
 	public void render(Camera camera, Graphics graphics, FCGameContainer cont) {
 		for (AnimSprite as : currentAnim.frames.get(imageIndex).sprites)
 		{
+			Image i = (spriteAnims.getImageAtIndex(as.imageIndex)).getFlippedCopy(false, true); 
+			i.drawSheared(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(), 
+					this.getLocY() - camera.getLocationY() + i.getHeight() - 5 - 12, -10, 0, SHADOW_COLOR);
+					
+			
+			
 			graphics.drawImage(spriteAnims.getImageAtIndex(as.imageIndex), this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(), 
-					this.getLocY() - camera.getLocationY());
+					this.getLocY() - camera.getLocationY() - 12);
 		}
 	}
 
@@ -47,13 +57,14 @@ public class AnimatedSprite extends Sprite
 		imageIndex = 0;
 		spriteAnims = stateInfo.getResourceManager().getSpriteAnimations().get(imageName);
 		currentAnim = spriteAnims.getAnimation("UnDown");
+		facing = Direction.DOWN;
 	}
 
 	@Override
 	public void update() 
 	{		
 		animationDelay++;
-		if (animationDelay == 6)
+		if (animationDelay == 4)
 		{
 			if (imageIndex % 2 == 1)
 				imageIndex--;		
@@ -103,6 +114,7 @@ public class AnimatedSprite extends Sprite
 				currentAnim = spriteAnims.getAnimation("UnRight");
 				break;
 		}
+		facing = dir;
 	}
 	
 	/**
@@ -116,5 +128,9 @@ public class AnimatedSprite extends Sprite
 		super.setLocX(locX);
 		super.setLocY(locY);
 		setFacing(Direction.DOWN);
+	}
+
+	public Direction getFacing() {
+		return facing;
 	}	
 }

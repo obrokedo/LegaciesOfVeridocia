@@ -51,6 +51,7 @@ public class Message implements Serializable
 	public static final int MESSAGE_SHOW_ITEM_MENU = 43;
 	public static final int MESSAGE_SHOW_ITEM_OPTION_MENU = 44;
 	public static final int MESSAGE_SHOW_CINEMATIC = 45;
+	public static final int MESSAGE_INVESTIGATE = 46;
 	private int messageType;
 	private boolean immediate = false;
 	

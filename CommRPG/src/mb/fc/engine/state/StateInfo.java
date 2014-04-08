@@ -24,9 +24,9 @@ import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.sprite.Sprite;
 import mb.fc.game.trigger.Trigger;
 import mb.fc.game.ui.FCGameContainer;
+import mb.fc.loading.FCResourceManager;
 import mb.fc.map.Map;
 import mb.fc.map.MapObject;
-import mb.fc.resource.FCResourceManager;
 
 import org.newdawn.slick.Graphics;
 
@@ -97,6 +97,7 @@ public class StateInfo
 	/************************/
 	public void initState()
 	{
+		System.out.println("Initialize State");
 		this.initialized = false;
 		
 		// Add starting heroes if they haven't been added yet
@@ -404,12 +405,14 @@ public class StateInfo
 	/*********************/
 	public int getTileWidth()
 	{
-		return psi.getResourceManager().getMap().getTileWidth();
+		return psi.getResourceManager().getMap().getTileEffectiveWidth();
+		// return psi.getResourceManager().getMap().getTileWidth();
 	}
 	
 	public int getTileHeight()
 	{
-		return psi.getResourceManager().getMap().getTileHeight();
+		return psi.getResourceManager().getMap().getTileEffectiveHeight();
+		// return psi.getResourceManager().getMap().getTileHeight();
 	}
 	
 	public Map getCurrentMap()

@@ -1,4 +1,4 @@
-package mb.fc.resource;
+package mb.fc.loading;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,9 +15,9 @@ import mb.fc.utils.XMLParser.TagArea;
 public class TextParser 
 {
 	public static void parseText(String file, Hashtable<Integer, ArrayList<Speech>> speechesById,
-			Hashtable<Integer, TriggerEvent> triggerEventById, Hashtable<Integer, Cinematic> cinematicById, Class<?> cl) throws IOException
+			Hashtable<Integer, TriggerEvent> triggerEventById, Hashtable<Integer, Cinematic> cinematicById) throws IOException
 	{
-		ArrayList<TagArea> tagAreas = XMLParser.process(file, cl);
+		ArrayList<TagArea> tagAreas = XMLParser.process(file);
 		for (TagArea tagArea : tagAreas)
 		{
 			if (tagArea.getTagType().equalsIgnoreCase("text"))
@@ -173,6 +173,10 @@ public class TextParser
 		else if (type.equalsIgnoreCase("move"))
 			return new CinematicEvent(CinematicEventType.MOVE, Integer.parseInt(area.getParams().get("x")), 
 					Integer.parseInt(area.getParams().get("y")), Integer.parseInt(area.getParams().get("speed")), area.getParams().get("name"));
+		else if (type.equalsIgnoreCase("forcedmove"))
+			return new CinematicEvent(CinematicEventType.MOVE_ENFORCE_FACING, Integer.parseInt(area.getParams().get("x")), 
+					Integer.parseInt(area.getParams().get("y")), Integer.parseInt(area.getParams().get("speed")), area.getParams().get("name"),
+						Integer.parseInt(area.getParams().get("facing")));
 		else if (type.equalsIgnoreCase("haltinganim"))
 			return new CinematicEvent(CinematicEventType.HALTING_ANIMATION, area.getParams().get("name"), 
 					area.getParams().get("anim"), Integer.parseInt(area.getParams().get("time")));
@@ -183,7 +187,7 @@ public class TextParser
 			return new CinematicEvent(CinematicEventType.CAMERA_MOVE, Integer.parseInt(area.getParams().get("x")), 
 					Integer.parseInt(area.getParams().get("y")), Integer.parseInt(area.getParams().get("time")));
 		else if (type.equalsIgnoreCase("speech"))
-			return new CinematicEvent(CinematicEventType.SPEECH, area.getParams().get("text"));
+			return new CinematicEvent(CinematicEventType.SPEECH, area.getParams().get("text"), Integer.parseInt(area.getParams().get("portrait")));
 		else if (type.equalsIgnoreCase("loadmap"))
 			return new CinematicEvent(CinematicEventType.LOAD_MAP, area.getParams().get("map"), area.getParams().get("enter"));
 		else if (type.equalsIgnoreCase("wait"))
@@ -225,6 +229,16 @@ public class TextParser
 			return new CinematicEvent(CinematicEventType.STOP_LOOP_MOVE, area.getParams().get("name"));
 		else if (type.equalsIgnoreCase("camerashake"))
 			return new CinematicEvent(CinematicEventType.CAMERA_SHAKE, Integer.parseInt(area.getParams().get("time")), Integer.parseInt(area.getParams().get("severity")));
+		else if (type.equalsIgnoreCase("playmusic"))
+			return new CinematicEvent(CinematicEventType.PLAY_MUSIC, area.getParams().get("music"), Integer.parseInt(area.getParams().get("volume")));
+		else if (type.equalsIgnoreCase("pausemusic"))
+			return new CinematicEvent(CinematicEventType.PAUSE_MUSIC);
+		else if (type.equalsIgnoreCase("resumemusic"))
+			return new CinematicEvent(CinematicEventType.RESUME_MUSIC);
+		else if (type.equalsIgnoreCase("fademusic"))
+			return new CinematicEvent(CinematicEventType.FADE_MUSIC, Integer.parseInt(area.getParams().get("duration")));
+		else if (type.equalsIgnoreCase("playsound"))
+			return new CinematicEvent(CinematicEventType.PLAY_SOUND, area.getParams().get("sound"), Integer.parseInt(area.getParams().get("volume")));
 		return null;
 	}
 }

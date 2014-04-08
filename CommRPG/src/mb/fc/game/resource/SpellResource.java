@@ -8,7 +8,7 @@ import mb.fc.game.battle.spell.KnownSpell;
 import mb.fc.game.battle.spell.impl.AuraSpell;
 import mb.fc.game.battle.spell.impl.BlazeSpell;
 import mb.fc.game.battle.spell.impl.HealSpell;
-import mb.fc.resource.FCResourceManager;
+import mb.fc.loading.FCResourceManager;
 
 public class SpellResource 
 {

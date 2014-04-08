@@ -8,7 +8,7 @@ import mb.fc.game.persist.ClientProfile;
 import mb.fc.game.persist.ClientProgress;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.ui.FCGameContainer;
-import mb.fc.resource.FCResourceManager;
+import mb.fc.loading.FCResourceManager;
 import mb.gl2.loading.LoadableGameState;
 
 import org.newdawn.slick.Color;

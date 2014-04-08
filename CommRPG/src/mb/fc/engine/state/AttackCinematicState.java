@@ -13,7 +13,7 @@ import mb.fc.game.input.KeyMapping;
 import mb.fc.game.menu.SpeechMenu;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.ui.FCGameContainer;
-import mb.fc.resource.FCResourceManager;
+import mb.fc.loading.FCResourceManager;
 import mb.fc.utils.AnimSprite;
 import mb.fc.utils.Animation;
 import mb.fc.utils.SpriteAnims;
@@ -472,7 +472,7 @@ public class AttackCinematicState extends LoadableGameState
 				}
 			}					
 		}		
-		input.update();
+		input.update(delta);
 	}
 	
 	private void performBattleResult()
@@ -521,10 +521,10 @@ public class AttackCinematicState extends LoadableGameState
 		targetIndex = 0;
 		deathFade = false;
 		Image bgIm = frm.getSpriteSheets().get("battlebg").getSprite(bgImagePoint.x, bgImagePoint.y);
-		backgroundImage = bgIm.getScaledCopy((gc.getWidth() - gc.getDisplayPaddingX() * 2) / (float) bgIm.getWidth());
+		backgroundImage = bgIm.getScaledCopy((gc.getWidth() - gc.getDisplayPaddingX() * screenScale) / (float) bgIm.getWidth());
 		
 		bgXPos = gc.getDisplayPaddingX();
-		bgYPos = (gc.getHeight() - backgroundImage.getHeight()) / 2;		
+		bgYPos = (int) ((gc.getHeight() - backgroundImage.getHeight()) / screenScale);		
 		
 		this.attacker = attacker;
 		attackerMenu = new SpriteContextPanel((attacker.isHero() ? Panel.PANEL_HEALTH_BAR : Panel.PANEL_ENEMY_HEALTH_BAR), attacker, gc);

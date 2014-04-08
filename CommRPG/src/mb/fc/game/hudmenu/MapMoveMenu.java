@@ -32,8 +32,8 @@ public class MapMoveMenu extends Panel
 		for (MouseListener ml : listeners)
 			stateInfo.registerMouseListener(ml);
 		Map map = stateInfo.getResourceManager().getMap();
-		maxX = map.getMapWidth() * map.getTileWidth() - stateInfo.getCamera().getViewportWidth();
-		maxY = map.getMapHeight() * map.getTileHeight() - stateInfo.getCamera().getViewportHeight();
+		maxX = map.getMapWidth() * stateInfo.getTileWidth() - stateInfo.getCamera().getViewportWidth();
+		maxY = map.getMapHeight() * stateInfo.getTileHeight() - stateInfo.getCamera().getViewportHeight();
 		
 		camera = stateInfo.getCamera();;
 		

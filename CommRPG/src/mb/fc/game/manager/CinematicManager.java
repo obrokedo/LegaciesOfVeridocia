@@ -18,7 +18,7 @@ public class CinematicManager extends Manager
 	public void update(int delta)
 	{
 		if (cinematic != null && cinematic.update(delta, stateInfo.getCamera(), stateInfo.getInput(), 
-				stateInfo.getGc(), stateInfo.getPsi(), stateInfo.getCurrentMap(), stateInfo))
+				stateInfo.getGc(), stateInfo.getCurrentMap(), stateInfo))
 		{
 			cinematic = null;
 			stateInfo.getCamera().centerOnSprite(stateInfo.getCurrentSprite(), stateInfo.getCurrentMap());
@@ -52,7 +52,7 @@ public class CinematicManager extends Manager
 			case Message.MESSAGE_SHOW_CINEMATIC:
 				IntMessage im = (IntMessage) message;
 				cinematic = stateInfo.getResourceManager().getCinematicById(im.getValue());
-				cinematic.initialize(stateInfo.getPsi(), stateInfo.getCamera(), stateInfo.getCurrentMap(), stateInfo);
+				cinematic.initialize(stateInfo);
 				break;
 		}
 	}

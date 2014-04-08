@@ -5,10 +5,8 @@ import java.util.Hashtable;
 
 import mb.fc.cinematic.event.CinematicEvent;
 import mb.fc.engine.CommRPG;
-import mb.fc.engine.state.PersistentStateInfo;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.Camera;
-import mb.fc.game.constants.Direction;
 import mb.fc.game.input.FCInput;
 import mb.fc.game.menu.Menu.MenuUpdate;
 import mb.fc.game.menu.SpeechMenu;
@@ -57,15 +55,15 @@ public class Cinematic
 		this.cameraMoveToY = cameraY;
 	}
 	
-	public void initialize(PersistentStateInfo psi, Camera camera, Map map, StateInfo stateInfo)
+	public void initialize(StateInfo stateInfo)
 	{		
-		camera.setLocation(cameraStartX, cameraStartY);
+		stateInfo.getCamera().setLocation(cameraStartX, cameraStartY);
 		
 		for (CinematicEvent ce : initializeEvents)
-			handleEvent(ce, camera, psi.getGc(), psi, map, stateInfo);
+			handleEvent(ce, stateInfo);
 	}
 	
-	public boolean update(int delta, Camera camera, FCInput input, GameContainer gc, PersistentStateInfo psi, Map map, StateInfo stateInfo)
+	public boolean update(int delta, Camera camera, FCInput input, GameContainer gc, Map map, StateInfo stateInfo)
 	{
 		for (CinematicActor ca : actors.values())
 			ca.update(delta, this);
@@ -136,7 +134,7 @@ public class Cinematic
 					cinematicEvents.size() > 0)
 		{
 			CinematicEvent ce = cinematicEvents.remove(0);
-			handleEvent(ce, camera, gc, psi, map, stateInfo);
+			handleEvent(ce, stateInfo);
 		}
 		
 		return waitTime == 0 && haltedAnims == 0 && 
@@ -144,18 +142,21 @@ public class Cinematic
 				cinematicEvents.size() == 0;
 	}	
 	
-	private void handleEvent(CinematicEvent ce, Camera camera, GameContainer gc, 
-			PersistentStateInfo psi, Map map, StateInfo stateInfo)
+	private void handleEvent(CinematicEvent ce, StateInfo stateInfo)
 	{
 		System.out.println("Handle event: " + ce.getType());
 		switch (ce.getType())
 		{
 			case HALTING_MOVE:
-				actors.get(ce.getParam(3)).moveToLocation((int) ce.getParam(0), (int) ce.getParam(1), (int) ce.getParam(2), true);
+				actors.get(ce.getParam(3)).moveToLocation((int) ce.getParam(0), 
+						(int) ce.getParam(1), (int) ce.getParam(2), true, -1);
 				haltedMovers++;
 				break;
 			case MOVE:
-				actors.get(ce.getParam(3)).moveToLocation((int) ce.getParam(0), (int) ce.getParam(1), (int) ce.getParam(2), false);
+				actors.get(ce.getParam(3)).moveToLocation((int) ce.getParam(0), (int) ce.getParam(1), (int) ce.getParam(2), false, -1);
+				break;
+			case MOVE_ENFORCE_FACING:
+				actors.get(ce.getParam(3)).moveToLocation((int) ce.getParam(0), (int) ce.getParam(1), (int) ce.getParam(2), false, (int) ce.getParam(4));
 				break;
 			case LOOP_MOVE:
 				actors.get(ce.getParam(0)).loopMoveToLocation((int) ce.getParam(1), (int) ce.getParam(2), (int) ce.getParam(3));
@@ -166,19 +167,19 @@ public class Cinematic
 			case CAMERA_MOVE:
 				cameraMoveToX = (int) ce.getParam(0);
 				cameraMoveToY = (int) ce.getParam(1);				
-				int distance = Math.abs(camera.getLocationX() - cameraMoveToX);
-				distance += Math.abs(camera.getLocationY() - cameraMoveToY);
+				int distance = Math.abs(stateInfo.getCamera().getLocationX() - cameraMoveToX);
+				distance += Math.abs(stateInfo.getCamera().getLocationY() - cameraMoveToY);
 				System.out.println((int) ce.getParam(2));
 				cameraMoveSpeed = distance / ((int) ce.getParam(2) / CAMERA_UPDATE); 
 				cameraFollow = null;
 				break;
 			case CAMERA_CENTER:
-				camera.centerOnPoint((int) ce.getParam(0), (int) ce.getParam(1), map);
+				stateInfo.getCamera().centerOnPoint((int) ce.getParam(0), (int) ce.getParam(1), stateInfo.getCurrentMap());
 				cameraFollow = null;
 				break;
 			case CAMERA_FOLLOW:
 				cameraFollow = actors.get(ce.getParam(0));
-				camera.centerOnPoint(cameraFollow.getLocX(), cameraFollow.getLocY(), map);					
+				stateInfo.getCamera().centerOnPoint(cameraFollow.getLocX(), cameraFollow.getLocY(), stateInfo.getCurrentMap());					
 				break;
 			case CAMERA_SHAKE:
 				lastCameraShake = 0;
@@ -187,13 +188,13 @@ public class Cinematic
 				cameraShaking = true;				
 				break;
 			case SPEECH:
-				speechMenu = new SpeechMenu((String) ce.getParam(0), gc);
+				speechMenu = new SpeechMenu((String) ce.getParam(0), stateInfo.getGc(), -1, (int) ce.getParam(1), stateInfo);
 				break;
 			case LOAD_MAP:
-				psi.loadMap((String) ce.getParam(0), (String) ce.getParam(1));
+				stateInfo.getPsi().loadMap((String) ce.getParam(0), (String) ce.getParam(1));
 				break;
 			case LOAD_BATTLE:
-				psi.loadBattle((String) ce.getParam(0), (String) ce.getParam(1));
+				stateInfo.getPsi().loadBattle((String) ce.getParam(0), (String) ce.getParam(1));
 				break;
 			case HALTING_ANIMATION:	
 				actors.get((String) ce.getParam(0)).setAnimation((String) ce.getParam(1), (int) ce.getParam(2), true, false);
@@ -203,7 +204,7 @@ public class Cinematic
 				actors.get((String) ce.getParam(0)).setAnimation((String) ce.getParam(1), (int) ce.getParam(2), false, (boolean) ce.getParam(3));
 				break;
 			case ADD_ACTOR:
-				actors.put((String) ce.getParam(2), new CinematicActor(psi.getResourceManager().getSpriteAnimations().get((String) ce.getParam(3)), 
+				actors.put((String) ce.getParam(2), new CinematicActor(stateInfo.getResourceManager().getSpriteAnimations().get((String) ce.getParam(3)), 
 						(String) ce.getParam(4), (int) ce.getParam(0), (int) ce.getParam(1), (boolean) ce.getParam(5)));
 				break;
 			case WAIT:
@@ -250,14 +251,7 @@ public class Cinematic
 				break;
 			case FACING:
 				int dir = (int) ce.getParam(1);
-				if (dir == 0)
-					actors.get((String) ce.getParam(0)).setFacing(Direction.UP);
-				else if (dir == 1)
-					actors.get((String) ce.getParam(0)).setFacing(Direction.DOWN);
-				else if (dir == 2)
-					actors.get((String) ce.getParam(0)).setFacing(Direction.LEFT);
-				else if (dir == 3)
-					actors.get((String) ce.getParam(0)).setFacing(Direction.RIGHT);
+				actors.get((String) ce.getParam(0)).setFacing(dir);
 				break;
 			case ASSOCIATE_NPC_AS_ACTOR:
 				for (Sprite s : stateInfo.getSprites())
@@ -268,6 +262,21 @@ public class Cinematic
 						break;
 					}
 				}
+				break;
+			case PLAY_MUSIC:
+				stateInfo.getResourceManager().playMusicByName((String) ce.getParam(0), ((int) ce.getParam(1)) / 100.0f);
+				break;
+			case PAUSE_MUSIC:
+				stateInfo.getResourceManager().pauseMusic();
+				break;
+			case RESUME_MUSIC:
+				stateInfo.getResourceManager().resumeMusic();
+				break;
+			case FADE_MUSIC:
+				stateInfo.getResourceManager().fadeMusic((int) ce.getParam(0));
+				break;
+			case PLAY_SOUND:
+				stateInfo.getResourceManager().playSoundByName((String) ce.getParam(0), ((int) ce.getParam(1)) / 100);
 				break;
 		}				
 	}

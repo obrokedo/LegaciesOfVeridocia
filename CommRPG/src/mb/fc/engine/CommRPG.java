@@ -6,8 +6,8 @@ import mb.fc.engine.state.AttackCinematicState;
 import mb.fc.engine.state.MenuState;
 import mb.fc.engine.state.PersistentStateInfo;
 import mb.fc.game.ui.FCGameContainer;
-import mb.fc.resource.FCResourceManager;
-import mb.fc.system.loading.FCLoadingRenderSystem;
+import mb.fc.loading.FCLoadingRenderSystem;
+import mb.fc.loading.FCResourceManager;
 import mb.gl2.loading.LoadableGameState;
 import mb.gl2.loading.LoadingState;
 
@@ -62,7 +62,7 @@ public class CommRPG extends StateBasedGame   {
 		{
 			CommRPG fc = new CommRPG();
 			FCGameContainer container = new FCGameContainer(fc);
-			container.setShowFPS(false);
+			container.setShowFPS(true);
 									
 			// TODO We want to keep the same screen resolution ratio but then just expand the vertical black bars. Potentially put menus in the bars
 			

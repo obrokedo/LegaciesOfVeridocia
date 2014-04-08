@@ -50,6 +50,8 @@ public class MapObject
 			shape = new Polygon(points);
 			x = (int) shape.getX();
 			y = (int) shape.getY();
+			width = (int) shape.getWidth();
+			height = (int) shape.getHeight();
 		}
 	}
 	
@@ -58,6 +60,12 @@ public class MapObject
 	}
 	public void setHeight(int height) {
 		this.height = height;
+	}
+	public int getWidth() {
+		return width;
+	}
+	public int getHeight() {
+		return height;
 	}
 	public int getX() {
 		return x;
@@ -125,7 +133,9 @@ public class MapObject
 			if (sprite.getSpriteType() == Sprite.TYPE_COMBAT && ((CombatSprite) sprite).isHero() && sprite.getLocX() == -1)
 			{
 				if (shape.contains(x + startX + 1, y + startY + 1))
+				{
 					((CombatSprite) sprite).setLocation(x + startX, y + startY);
+				}
 				else
 					getOnNext = false;
 				

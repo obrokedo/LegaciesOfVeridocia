@@ -130,6 +130,7 @@ public class ClientProgress implements Serializable
 		
 	public void addNonretriggerableByMap(int triggerId)
 	{
+		System.out.println("Add non retrig " + triggerId + " " + map);
 		if (!nonretriggerablesPerMap.containsKey(map))
 			nonretriggerablesPerMap.put(map, new ArrayList<Integer>());
 		nonretriggerablesPerMap.get(map).add(triggerId);

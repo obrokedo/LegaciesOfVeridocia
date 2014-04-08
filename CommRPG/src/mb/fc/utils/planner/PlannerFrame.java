@@ -51,7 +51,8 @@ public class PlannerFrame extends JFrame implements ActionListener, ChangeListen
 
 	public static void main(String args[])
 	{
-		PlannerFrame pf = new PlannerFrame();		
+		PlannerFrame pf = new PlannerFrame();
+		System.out.println("Planner frame started");
 	}
 	
 	private PlannerFrame()
@@ -452,6 +453,8 @@ public class PlannerFrame extends JFrame implements ActionListener, ChangeListen
 		definingValues = new ArrayList<PlannerValueDef>();
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "text", false, 
 				"Text", "The text that should be displayed"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "portrait", false, 
+				"Portrait Index", "The index of the portrait that should be used from the Image/Portraits file starting from 0. A value of -1 means no portrait should be displayed"));
 
 		allowableLines.add(new PlannerLineDef("speech", "Show Speech Box", "Displays the specified text in a text box. This action is 'halting', which means subsequent actions will not be performed until the text box is dismissed via user input.", definingValues));
 		
@@ -605,7 +608,7 @@ public class PlannerFrame extends JFrame implements ActionListener, ChangeListen
 
 		allowableLines.add(new PlannerLineDef("stoploopmove", "Stop Actor Looping Move", "Causes the specified actor to stop looping their move, they will still walk to their target location but will not teleport", definingValues));
 		
-		// Loop Move
+		// Camera Shake
 		definingValues = new ArrayList<PlannerValueDef>();	
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "time", false, 
 				"Shake Time", "The amount of time that the camera should shake for"));
@@ -613,6 +616,54 @@ public class PlannerFrame extends JFrame implements ActionListener, ChangeListen
 				"Severity", "The amount of pixels that the camera can be offset to during the shake"));
 
 		allowableLines.add(new PlannerLineDef("camerashake", "Shake Camera", "Shakes the camera to simulate an earthquake effect. After the camera is done shaking it will return to it's original location", definingValues));
+		
+		// Forced Facing Move
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "name", false, 
+				"Actor Name", "The name of the actor that should perform the action"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "x", false, 
+				"X Coordinate", "The x coordinate (in pixels) that the actor should move to"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "y", false, 
+				"Y Coordinate", "The y coordinate (in pixels) that the actor should move to"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "speed", false, 
+				"Move Speed", "The amount of pixels that the actor will move every 30ms towards their destination"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_DIRECTION, PlannerValueDef.TYPE_INT, "facing", false, 
+				"Facing", "The direction that the sprite should face for the duration of the move"));
+
+		allowableLines.add(new PlannerLineDef("forcedmove", "Move Forced Facing", "Orders the specified actor to move to the specified coordinate. This actor will keep facing the same direction for the duration of the move", definingValues));
+		
+		// Play Music
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "music", false, 
+				"Music Title", "The name of the music that should be played"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "volume", false, 
+				"Volume", "The percent volume that the music should be played at. This should be a value between 1-100"));
+
+		allowableLines.add(new PlannerLineDef("playmusic", "Play Music", "Loops music at the specified volume. Only one song can be playing at a time, starting music while one is already playing will end the other one.", definingValues));
+		
+		// Pause Music
+		definingValues = new ArrayList<PlannerValueDef>();
+		allowableLines.add(new PlannerLineDef("pausemusic", "Pause Music", "Pauses the currently playing music", definingValues));
+		
+		// Resume Music
+		definingValues = new ArrayList<PlannerValueDef>();
+		allowableLines.add(new PlannerLineDef("resumemusic", "Resume Music", "Resumes any paused music", definingValues));
+		
+		// Fade Music
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "duration", false, 
+				"Fade Duration", "The amount of time in ms that the music should fade out over"));
+		allowableLines.add(new PlannerLineDef("fademusic", "Fade Out Music", "Fades out any playing music to no volume over the specified period of time. The music stops playing after the fade", definingValues));
+		
+		
+		// Play Sound
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "sound", false, 
+				"Sound Title", "The name of the sound that should be played"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "volume", false, 
+				"Volume", "The percent volume that the sound should be played at. This should be a value between 1-100"));
+
+		allowableLines.add(new PlannerLineDef("playsound", "Play Sound", "Plays sound at the specified volume.", definingValues));
 		
 		cinematicContainer = new PlannerContainerDef(definingLine, allowableContainers, allowableLines, listOfLists, PlannerValueDef.REFERS_CINEMATIC - 1);
 		containersByName.put("cinematic", cinematicContainer);
@@ -861,6 +912,8 @@ public class PlannerFrame extends JFrame implements ActionListener, ChangeListen
 		// TODO MULTIPLE
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_ITEM_STYLE, PlannerValueDef.TYPE_INT, "usuableitems", false, 
 				"Usuable Items", "The type of weapons that this hero can use"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "class", false, 
+				"Class Name", "The name of this characters class."));
 		allowableLines.add(new PlannerLineDef("progression", "Hero Progression", "This heroes statistic progression", definingValues));
 		
 		// Spell Progression
@@ -984,43 +1037,15 @@ public class PlannerFrame extends JFrame implements ActionListener, ChangeListen
 	
 	private void initUI()
 	{
-		/*
-		questList = new QuestList();
-				
-		JPanel questButtonPanel = new JPanel();
-		questButtonPanel.add(createActionButton("+", "addquest", this));
-		questButtonPanel.add(createActionButton("-", "removequest", this));
-		questScroll = new JScrollPane(questList);
-		questScroll.setPreferredSize(new Dimension(200, 600));
-		
-		JPanel questPanel = new JPanel(new BorderLayout());
-		questPanel.add(new JLabel("Quest names"), BorderLayout.PAGE_START);
-		questPanel.add(questScroll, BorderLayout.CENTER);
-		questPanel.add(questButtonPanel, BorderLayout.PAGE_END);				
-		
-		backPanel.add(questPanel, BorderLayout.LINE_START);
-		*/
-		
-		// Planner Container
-		/*
-		PlannerContainerDef pcd = containersByName.get("trigger");
-		PlannerLine pl = new PlannerLine(pcd.getDefiningLine(), true);
-				
-		PlannerContainer pc = new PlannerContainer(pcd);
-		pc.setDefLine(pl);
-		pc.setupUI();		
-		JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		panel.add(pc);
-		backPanel.add(new JScrollPane(panel), BorderLayout.CENTER);
-		*/
 		jtp = new JTabbedPane();
-		jtp.addTab("Triggers", new PlannerTab(containersByName, new String[] {"trigger"}));		
-		jtp.addTab("Cinematic", new PlannerTab(containersByName, new String[] {"cinematic"}));		
-		jtp.addTab("Speech", new PlannerTab(containersByName, new String[] {"text"}));		
-		jtp.addTab("Heroes", new PlannerTab(containersByName, new String[] {"hero"}));
-		jtp.addTab("Enemies", new PlannerTab(containersByName, new String[] {"enemy"}));
-		jtp.addTab("Items", new PlannerTab(containersByName, new String[] {"item"}));
-		jtp.addTab("Quests", new PlannerTab(containersByName, new String[] {"quest"}));
+		jtp.addTab("Triggers", new PlannerTab(containersByName, new String[] {"trigger"}, PlannerValueDef.REFERS_TRIGGER, this));		
+		jtp.addTab("Cinematic", new PlannerTab(containersByName, new String[] {"cinematic"}, PlannerValueDef.REFERS_CINEMATIC, this));		
+		jtp.addTab("Speech", new PlannerTab(containersByName, new String[] {"text"}, PlannerValueDef.REFERS_TEXT, this));		
+		jtp.addTab("Heroes", new PlannerTab(containersByName, new String[] {"hero"}, PlannerValueDef.REFERS_HERO, this));
+		jtp.addTab("Enemies", new PlannerTab(containersByName, new String[] {"enemy"}, PlannerValueDef.REFERS_ENEMY, this));
+		jtp.addTab("Items", new PlannerTab(containersByName, new String[] {"item"}, PlannerValueDef.REFERS_ITEM, this));
+		jtp.addTab("Quests", new PlannerTab(containersByName, new String[] {"quest"}, PlannerValueDef.REFERS_QUEST, this));
+		jtp.addTab("Battle Functions", new PlannerFunctionPanel());
 		jtp.addChangeListener(this);
 		jtp.setEnabledAt(TAB_TRIGGER, false);
 		jtp.setEnabledAt(TAB_CIN, false);
@@ -1085,6 +1110,8 @@ public class PlannerFrame extends JFrame implements ActionListener, ChangeListen
 			
 			if (returnVal == JFileChooser.APPROVE_OPTION)
 			{
+				triggerFile = fc.getSelectedFile();						
+				
 				if (triggerFile != null)
 				{
 					listOfLists.get(PlannerValueDef.REFERS_TRIGGER - 1).clear();
@@ -1094,9 +1121,7 @@ public class PlannerFrame extends JFrame implements ActionListener, ChangeListen
 					((PlannerTab) jtp.getComponent(TAB_TRIGGER)).clearValues(listOfLists);
 					((PlannerTab) jtp.getComponent(TAB_CIN)).clearValues(listOfLists);
 					((PlannerTab) jtp.getComponent(TAB_TEXT)).clearValues(listOfLists);
-				}
-				
-				triggerFile = fc.getSelectedFile();								
+				}						
 				
 				this.setTitle("Planner: " + triggerFile.getName());
 				
@@ -1116,7 +1141,7 @@ public class PlannerFrame extends JFrame implements ActionListener, ChangeListen
 		}
 		else if (arg0.getActionCommand().equalsIgnoreCase("save"))
 		{			
-			for (int i = 0; i < jtp.getTabCount(); i++)					
+			for (int i = 0; i < jtp.getTabCount() - 1; i++)					
 				((PlannerTab) jtp.getComponent(i)).setNewValues();
 			
 			saveTriggers();
@@ -1158,10 +1183,37 @@ public class PlannerFrame extends JFrame implements ActionListener, ChangeListen
 			exportData(((PlannerTab) jtp.getComponent(TAB_CIN)).getListPC(), triggerFile.getAbsolutePath(), true);
 		}
 	}
+	
+	public void removeReferences(int referenceType, int referenceIndex)
+	{
+		for (int i = 0; i < jtp.getTabCount() - 1; i++)		
+		{
+			for (PlannerContainer pcs : ((PlannerTab) jtp.getComponent(i)).getListPC())
+			{
+				for (PlannerLine pl : pcs.getLines())
+				{
+					for (int j = 0; j < pl.getPlDef().getPlannerValues().size(); j++)
+					{
+						PlannerValueDef pvd = pl.getPlDef().getPlannerValues().get(j);
+						
+						if (pvd.getRefersTo() == referenceType && pvd.getValueType() == PlannerValueDef.TYPE_INT)
+						{
+							if ((int) pl.getValues().get(j) == referenceIndex + 1)
+								pl.getValues().set(j, 0);
+							else if ((int) pl.getValues().get(j) > referenceIndex + 1)
+							{
+								pl.getValues().set(j, (int) pl.getValues().get(j) - 1);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 
 	@Override
 	public void stateChanged(ChangeEvent arg0) {
-		for (int i = 0; i < jtp.getTabCount(); i++)					
+		for (int i = 0; i < jtp.getTabCount() - 1; i++)					
 			((PlannerTab) jtp.getComponent(i)).setNewValues();
 	}
 }

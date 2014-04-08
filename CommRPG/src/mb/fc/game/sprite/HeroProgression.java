@@ -9,7 +9,7 @@ import mb.fc.game.battle.LevelUpResult;
 import mb.fc.game.battle.spell.Spell;
 import mb.fc.game.battle.spell.KnownSpell;
 import mb.fc.game.resource.SpellResource;
-import mb.fc.resource.FCResourceManager;
+import mb.fc.loading.FCResourceManager;
 
 public class HeroProgression implements Serializable 
 {

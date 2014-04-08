@@ -62,6 +62,8 @@ public class TurnManager extends Manager implements KeyboardListener
 	private BattleActionsMenu battleActionsMenu;
 	private LandEffectPanel landEffectPanel;
 	private Rectangle cursor;
+	private int updateDelta = 0;
+	private static final int UPDATE_TIME = 50;
 	
 	// This describes the location and size of the moveable tiles array on the world
 	private boolean displayMoveable = false;
@@ -83,12 +85,17 @@ public class TurnManager extends Manager implements KeyboardListener
 		cursor = new Rectangle(0, 0, stateInfo.getTileWidth(), stateInfo.getTileHeight());
 	}
 	
-	public void update(StateBasedGame game)
+	public void update(StateBasedGame game, int delta)
 	{
-		// If there are actions to process then handle those
-		if (turnActions.size() > 0)
+		updateDelta += delta;
+		if (updateDelta >= UPDATE_TIME)
 		{
-			processTurnActions(game);
+			updateDelta -= UPDATE_TIME;
+			// If there are actions to process then handle those
+			if (turnActions.size() > 0)
+			{
+				processTurnActions(game);
+			}
 		}
 	}
 	
@@ -218,13 +225,13 @@ public class TurnManager extends Manager implements KeyboardListener
 		int yDelta = 0;
 		
 		if (move.locX > currentSprite.getLocX())
-			xDelta = 8;					
+			xDelta = stateInfo.getTileWidth() / 4;					
 		else if (move.locX < currentSprite.getLocX())
-			xDelta = -8;
+			xDelta = -stateInfo.getTileWidth() / 4;
 		else if (move.locY > currentSprite.getLocY())
-			yDelta = 8;
+			yDelta = stateInfo.getTileWidth() / 4;
 		else if (move.locY < currentSprite.getLocY())
-			yDelta = -8;
+			yDelta = -stateInfo.getTileWidth() / 4;
 		
 		currentSprite.setLocX(currentSprite.getLocX() + xDelta);
 		currentSprite.setLocY(currentSprite.getLocY() + yDelta);

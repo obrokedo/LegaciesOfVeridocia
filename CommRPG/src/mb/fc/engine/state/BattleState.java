@@ -8,11 +8,11 @@ import mb.fc.game.manager.MenuManager;
 import mb.fc.game.manager.PanelManager;
 import mb.fc.game.manager.SpriteManager;
 import mb.fc.game.manager.TurnManager;
+import mb.fc.loading.FCResourceManager;
 import mb.fc.renderer.MenuRenderer;
 import mb.fc.renderer.PanelRenderer;
 import mb.fc.renderer.SpriteRenderer;
 import mb.fc.renderer.TileMapRenderer;
-import mb.fc.resource.FCResourceManager;
 import mb.gl2.loading.LoadableGameState;
 import mb.gl2.loading.ResourceManager;
 
@@ -36,8 +36,6 @@ public class BattleState extends LoadableGameState
 	private TurnManager turnManager;
 	
 	private StateInfo stateInfo;
-	
-	private long turnDelta = 0;
 	
 	public BattleState(PersistentStateInfo psi)
 	{
@@ -79,7 +77,7 @@ public class BattleState extends LoadableGameState
 		if (stateInfo.isShowAttackCinematic())
 		{
 			stateInfo.getInput().clear();
-			container.getInput().addKeyListener(stateInfo.getInput());
+			// container.getInput().addKeyListener(stateInfo.getInput());
 			this.stateInfo.setInputDelay(System.currentTimeMillis() + 200);
 			stateInfo.setShowAttackCinematic(false);
 		}			
@@ -114,39 +112,33 @@ public class BattleState extends LoadableGameState
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException 	
-	{		
-		if ((turnDelta += delta) > 50)
-		{			
-			turnDelta = 0;
-			
-			stateInfo.processMessages();
-			if (stateInfo.isInitialized())
+	{				
+		stateInfo.processMessages();
+		if (stateInfo.isInitialized())
+		{
+			menuManager.update();
+			if (!menuManager.isBlocking())
 			{
-				menuManager.update();
-				if (!menuManager.isBlocking())
-				{
-					//hudMenuManager.update();
-					keyboardManager.update();
-				}
-	
-				turnManager.update(game);
-				spriteManager.update();
-				
-				/*
-				if (System.currentTimeMillis() > stateInfo.getInputDelay())
-				{
-					if (container.getInput().isKeyDown(Input.KEY_ESCAPE))
-					{
-						stateInfo.sendMessage(Message.MESSAGE_SHOW_SYSTEM_MENU);
-						stateInfo.setInputDelay(System.currentTimeMillis() + 200);
-					}
-				}
-				*/
-				
-				stateInfo.getInput().update();
+				//hudMenuManager.update();
+				keyboardManager.update();
 			}
-		}
-		
+
+			turnManager.update(game, delta);
+			spriteManager.update(delta);
+			
+			/*
+			if (System.currentTimeMillis() > stateInfo.getInputDelay())
+			{
+				if (container.getInput().isKeyDown(Input.KEY_ESCAPE))
+				{
+					stateInfo.sendMessage(Message.MESSAGE_SHOW_SYSTEM_MENU);
+					stateInfo.setInputDelay(System.currentTimeMillis() + 200);
+				}
+			}
+			*/
+			
+			stateInfo.getInput().update(delta);
+		}		
 	}
 
 	@Override

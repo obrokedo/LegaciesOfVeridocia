@@ -15,5 +15,5 @@ public abstract class Manager
 	
 	public abstract void initialize();
 	
-	public abstract void recieveMessage(Message message);
+	public abstract void recieveMessage(Message message);	
 }

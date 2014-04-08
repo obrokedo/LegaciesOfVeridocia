@@ -53,8 +53,8 @@ public class MenuManager extends Manager
 	{
 		switch (message.getMessageType())
 		{
-			case Message.MESSAGE_SPEECH:				
-				stateInfo.addMenu(new SpeechMenu(((SpeechMessage) message).getText(), stateInfo.getGc(), ((SpeechMessage) message).getTriggerId()));
+			case Message.MESSAGE_SPEECH:			
+				stateInfo.addMenu(new SpeechMenu(((SpeechMessage) message).getText(), stateInfo.getGc(), ((SpeechMessage) message).getTriggerId(), -1, stateInfo));
 				break;
 			case Message.MESSAGE_SHOW_SYSTEM_MENU:
 				stateInfo.addSingleInstanceMenu(new SystemMenu(stateInfo.getGc()));

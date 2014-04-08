@@ -6,7 +6,7 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Stack;
 
-import mb.fc.resource.FCResourceManager;
+import mb.fc.loading.FCResourceManager;
 
 public class XMLParser 
 {
@@ -75,9 +75,9 @@ public class XMLParser
 		}
 	}
 	
-	public static ArrayList<TagArea> process(String file, Class<?> cl) throws IOException
+	public static ArrayList<TagArea> process(String file) throws IOException
 	{
-		return XMLParser.process(FCResourceManager.readAllLines(file, cl));
+		return XMLParser.process(FCResourceManager.readAllLines(file));
 	}
 	
 	public static ArrayList<TagArea> process(List<String> allLines) throws IOException

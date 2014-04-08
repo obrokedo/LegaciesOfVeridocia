@@ -8,11 +8,11 @@ import mb.fc.game.manager.PanelManager;
 import mb.fc.game.manager.MenuManager;
 import mb.fc.game.manager.SpriteManager;
 import mb.fc.game.manager.TownMoveManager;
+import mb.fc.loading.FCResourceManager;
 import mb.fc.renderer.PanelRenderer;
 import mb.fc.renderer.MenuRenderer;
 import mb.fc.renderer.SpriteRenderer;
 import mb.fc.renderer.TileMapRenderer;
-import mb.fc.resource.FCResourceManager;
 import mb.gl2.loading.LoadableGameState;
 import mb.gl2.loading.ResourceManager;
 
@@ -35,8 +35,6 @@ public class TownState extends LoadableGameState
 	private CinematicManager cinematicManager;
 	
 	private StateInfo stateInfo;
-	
-	private long turnDelta = 0;
 	
 	public TownState(PersistentStateInfo psi)
 	{
@@ -104,45 +102,44 @@ public class TownState extends LoadableGameState
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException 	
 	{						
-		if ((turnDelta += delta) > 50)
-		{	
-			stateInfo.processMessages();
-			if (stateInfo.isInitialized())
-			{				
-				menuManager.update();
-				cinematicManager.update((int) turnDelta);
-				if (!menuManager.isBlocking() && !cinematicManager.isBlocking())
+		stateInfo.processMessages();
+		if (stateInfo.isInitialized())
+		{				
+			menuManager.update();
+			cinematicManager.update(delta);
+			if (!menuManager.isBlocking() && !cinematicManager.isBlocking())
+			{
+				panelManager.update();
+				townMoveManager.update(delta);
+			}
+			spriteManager.update(delta);				
+			
+			if (System.currentTimeMillis() > stateInfo.getInputDelay())
+			{
+				if (container.getInput().isKeyDown(Input.KEY_ESCAPE))
 				{
-					panelManager.update();
-					townMoveManager.update();
+					stateInfo.sendMessage(Message.MESSAGE_SHOW_SYSTEM_MENU);
+					stateInfo.setInputDelay(System.currentTimeMillis() + 200);
 				}
-				spriteManager.update();				
-				
-				if (System.currentTimeMillis() > stateInfo.getInputDelay())
+				else if (container.getInput().isKeyDown(Input.KEY_C))
 				{
-					if (container.getInput().isKeyDown(Input.KEY_ESCAPE))
-					{
-						stateInfo.sendMessage(Message.MESSAGE_SHOW_SYSTEM_MENU);
-						stateInfo.setInputDelay(System.currentTimeMillis() + 200);
-					}
-					else if (container.getInput().isKeyDown(Input.KEY_C))
-					{
-						stateInfo.sendMessage(Message.MESSAGE_SHOW_HEROES);
-						stateInfo.setInputDelay(System.currentTimeMillis() + 200);
-					}
-					else if (container.getInput().isKeyDown(Input.KEY_S))
-					{
-						stateInfo.sendMessage(Message.MESSAGE_SHOW_PRIEST);
-						stateInfo.setInputDelay(System.currentTimeMillis() + 200);
-					}
+					stateInfo.sendMessage(Message.MESSAGE_SHOW_HEROES);
+					stateInfo.setInputDelay(System.currentTimeMillis() + 200);
 				}
-				
-				stateInfo.getInput().update();
+				else if (container.getInput().isKeyDown(Input.KEY_S))
+				{
+					stateInfo.sendMessage(Message.MESSAGE_SHOW_PRIEST);
+					stateInfo.setInputDelay(System.currentTimeMillis() + 200);
+				}
+				else if (container.getInput().isKeyDown(Input.KEY_D))
+				{
+					stateInfo.sendMessage(Message.MESSAGE_INVESTIGATE);
+					stateInfo.setInputDelay(System.currentTimeMillis() + 200);
+				}
 			}
 			
-			turnDelta = 0;
-		}
-		
+			stateInfo.getInput().update(delta);
+		}		
 	}
 
 	@Override

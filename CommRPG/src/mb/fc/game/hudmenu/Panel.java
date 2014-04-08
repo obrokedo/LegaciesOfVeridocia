@@ -4,7 +4,7 @@ import java.awt.Font;
 
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.ui.FCGameContainer;
-import mb.fc.resource.FCResourceManager;
+import mb.fc.loading.FCResourceManager;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -102,15 +102,16 @@ public abstract class Panel
 		// graphics.drawImage(menuBackground.getSubImage(0, 0, width - 10, height - 10), x + 5, y + 5);
 		graphics.setFont(PANEL_FONT);
 		graphics.setColor(Color.blue);
-		graphics.fillRoundRect(x, y, width, height, 5);
+		graphics.fillRect(x, y, width, height);
+		MENU_BORDER.getSprite(4, 0).draw(x, y + height - 12, x + width, y + height, 4, 0, 5, 12);
+		MENU_BORDER.getSprite(5, 0).draw(x, y, x + width, y + 12, 4, 0, 5, 12);
+		MENU_BORDER.getSprite(6, 0).draw(x, y + 12, 12, height - 24);
+		MENU_BORDER.getSprite(7, 0).draw(x + width - 12, y + 12, 12, height - 24);
+		
 		MENU_BORDER.getSprite(0, 0).draw(x, y + height - 12);
 		MENU_BORDER.getSprite(1, 0).draw(x, y);		
 		MENU_BORDER.getSprite(2, 0).draw(x + width - 12, y + height - 12);
-		MENU_BORDER.getSprite(3, 0).draw(x + width - 12, y);
-		MENU_BORDER.getSprite(4, 0).draw(x + 12, y + height - 12, width - 24, 12);
-		MENU_BORDER.getSprite(5, 0).draw(x + 12, y, width - 24, 12);
-		MENU_BORDER.getSprite(6, 0).draw(x, y + 12, 12, height - 24);
-		MENU_BORDER.getSprite(7, 0).draw(x + width - 12, y + 12, 12, height - 24);
+		MENU_BORDER.getSprite(3, 0).draw(x + width - 12, y);		
 	}
 	
 	public static void drawRect(Rectangle rect, Graphics graphics)

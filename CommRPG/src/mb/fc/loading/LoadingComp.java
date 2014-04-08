@@ -1,4 +1,4 @@
-package mb.fc.resource;
+package mb.fc.loading;
 
 import com.artemis.Component;
 

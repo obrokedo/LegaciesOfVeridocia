@@ -1,10 +1,8 @@
-package mb.fc.system.loading;
+package mb.fc.loading;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-
-import mb.fc.resource.LoadingComp;
 
 import com.artemis.Aspect;
 import com.artemis.ComponentMapper;

@@ -9,6 +9,7 @@ import mb.fc.game.Camera;
 import mb.fc.game.ai.AI;
 import mb.fc.game.ai.ClericAI;
 import mb.fc.game.battle.spell.KnownSpell;
+import mb.fc.game.constants.Direction;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.hudmenu.SpriteContextPanel;
 import mb.fc.game.item.EquippableItem;
@@ -35,8 +36,7 @@ public class CombatSprite extends AnimatedSprite
 	public static final int MOVEMENT_SWIMMING = 6;
 	public static final int MOVEMENT_ELVES = 7;	
 	
-	private transient Color fadeColor = new Color(255, 255, 255, 255);
-	private final transient static Color SHADOW_COLOR = new Color(0, 0, 0, 100);
+	private transient Color fadeColor = new Color(255, 255, 255, 255);	
 	
 	private int currentHP, maxHP, 
 				currentMP, maxMP, 
@@ -68,6 +68,7 @@ public class CombatSprite extends AnimatedSprite
 	private int portraitIndex;
 	private int kills;
 	private int defeat;
+	
 	
 	/**
 	 * A boolean indicating whether the combat sprite dodges or blocks attacks, dodges if true, blocks if false
@@ -200,12 +201,12 @@ public class CombatSprite extends AnimatedSprite
 			
 			Image i = (spriteAnims.getImageAtIndex(as.imageIndex)).getFlippedCopy(false, true); 
 			i.drawSheared(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(), 
-					this.getLocY() - camera.getLocationY() + i.getHeight() - 5, -10, 0, SHADOW_COLOR);
+					this.getLocY() - camera.getLocationY() + i.getHeight() - 5 - 12, -10, 0, SHADOW_COLOR);
 					
 			
 			
 			graphics.drawImage(spriteAnims.getImageAtIndex(as.imageIndex), this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(), 
-					this.getLocY() - camera.getLocationY(), fadeColor);
+					this.getLocY() - camera.getLocationY() - 12, fadeColor);
 					
 			/*
 			graphics.drawImage(spriteAnims.getImageAtIndex(as.imageIndex), this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(), 

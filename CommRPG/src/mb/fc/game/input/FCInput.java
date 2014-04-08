@@ -9,6 +9,8 @@ public class FCInput implements KeyListener
 {
 	private HashSet<Integer> keysPressed;
 	private HashSet<Integer> keysHeld;
+	private int updateDelta = 0;
+	private static final int UPDATE_TIME = 50;
 	
 	public FCInput() {
 		super();
@@ -16,9 +18,14 @@ public class FCInput implements KeyListener
 		keysHeld = new HashSet<Integer>();
 	}
 	
-	public void update()
+	public void update(int delta)
 	{
-		keysPressed.clear();
+		updateDelta += delta;
+		if (updateDelta >= UPDATE_TIME)
+		{
+			updateDelta -= UPDATE_TIME;
+			keysPressed.clear();
+		}
 	}
 	
 	public void clear()

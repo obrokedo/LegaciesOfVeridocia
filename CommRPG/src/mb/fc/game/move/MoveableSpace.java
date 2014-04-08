@@ -38,7 +38,6 @@ import org.newdawn.slick.util.pathfinding.TileBasedMap;
 public class MoveableSpace implements KeyboardListener, MouseListener, TileBasedMap
 {
 	private int[][] moveableTiles;
-	private int[][] tiles;
 	private int topX, topY;
 	private int tileWidth, tileHeight;
 	private boolean owner;
@@ -62,15 +61,14 @@ public class MoveableSpace implements KeyboardListener, MouseListener, TileBased
 		for (int i = 0; i < ms.moveableTiles.length; i++)
 			for (int j = 0; j < ms.moveableTiles.length; j++)
 				ms.moveableTiles[i][j] = -1;
-		ms.tileWidth = ms.map.getTileWidth();
-		ms.tileHeight = ms.map.getTileHeight();
+		ms.tileWidth = stateInfo.getTileWidth();
+		ms.tileHeight = stateInfo.getTileHeight();
 		int mapSpriteX = currentSprite.getTileX();
 		int mapSpriteY = currentSprite.getTileY();
 
 		ms.spriteMovementType = currentSprite.getMovementType();
 		ms.topX = mapSpriteX - currentSprite.getCurrentMove();
 		ms.topY = mapSpriteY - currentSprite.getCurrentMove();
-		ms.tiles = stateInfo.getResourceManager().getMap().getMapLayer(3);
 		
 		// Check to see if there are any sprites in your moveable area that you will not be able to move through
 		Rectangle checkMoveableRect = new Rectangle(ms.topX,  ms.topY, ms.moveableTiles.length + 1, ms.moveableTiles.length + 1);
@@ -92,7 +90,8 @@ public class MoveableSpace implements KeyboardListener, MouseListener, TileBased
 				ms.moveableTiles[sY - ms.topY][sX - ms.topX] = UNMOVEABLE_TILE;
 		}
 		
-		// TODO THIS +1 to MOVE SPEED SHOULD BE THE ACTUAL MOVE COST OF THE CURRENTLY OCCUPIED TILE
+		// Add the move cost of the current tile as it will be subtracted from the sprites move. Use 10 as the lowest cost so tha we can
+		// have half-values (1.5, 2.5) without making the cost a double
 		ms.determineMoveableSpacesRecursive(currentSprite.getCurrentMove()  * 10 + ms.map.getMovementCostByType(currentSprite.getMovementType(), 
 				mapSpriteX, mapSpriteY), currentSprite.getCurrentMove(), 
 					currentSprite.getCurrentMove(), mapSpriteX, mapSpriteY);		
@@ -272,7 +271,7 @@ public class MoveableSpace implements KeyboardListener, MouseListener, TileBased
 		if (checkMoveable)
 			return moveableTiles.length;
 		else
-			return tiles[0].length;
+			return map.getMapWidth();
 	}
 
 	@Override
@@ -280,7 +279,7 @@ public class MoveableSpace implements KeyboardListener, MouseListener, TileBased
 		if (checkMoveable)
 			return moveableTiles.length;
 		else
-			return tiles.length;
+			return map.getMapHeight();
 	}
 
 	@Override
@@ -292,8 +291,8 @@ public class MoveableSpace implements KeyboardListener, MouseListener, TileBased
 			return moveableTiles[ty][tx] < 0;
 		else
 		{
-			if (tiles.length > ty && tiles[0].length > tx)		
-				return tiles[ty][tx] == 0;
+			if (map.getMapHeight() > ty && map.getMapWidth() > tx)		
+				return !map.isMarkedMoveable(tx, ty);
 			return true;
 		}
 	}

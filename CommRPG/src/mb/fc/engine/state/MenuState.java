@@ -4,7 +4,9 @@ import java.io.File;
 
 import mb.fc.engine.CommRPG;
 import mb.fc.game.Camera;
+import mb.fc.game.input.FCInput;
 import mb.fc.game.listener.StringListener;
+import mb.fc.game.menu.UninitializedStringMenu;
 import mb.fc.game.persist.ClientProfile;
 import mb.fc.game.persist.ClientProgress;
 import mb.fc.game.ui.FCGameContainer;
@@ -13,6 +15,7 @@ import mb.gl2.loading.ResourceManager;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -24,28 +27,29 @@ public class MenuState extends LoadableGameState implements StringListener
 
 	private StateBasedGame game;
 	private boolean init = false;
-	// private StringMenu mapNameMenu;
-
+	private UninitializedStringMenu mapNameMenu;
+	private FCInput input;
+	private GameContainer gc;
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
 		
 		this.game = game;
-		
+		this.gc = container;
 	}
 
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException 
 	{
-		/*
-		if (init)
-			mapNameMenu.render((FCGameContainer) container, g);
-			*/
+		if (mapNameMenu != null)
+		{
+			mapNameMenu.render((FCGameContainer) container, g);			
+		}
 	}
 	
-	public void start(GameContainer gc)
+	public void start(GameContainer gc, boolean cin, String map)
 	{
 		clientProgress = null;
 		File file = new File(".");		
@@ -72,7 +76,7 @@ public class MenuState extends LoadableGameState implements StringListener
 		{
 			System.out.println("CREATE PROGRESS");
 			clientProgress = new ClientProgress("Quest");
-			clientProgress.serializeToFile("Town1", "north");			
+			clientProgress.serializeToFile(map, "north");			
 		}
 		
 		PersistentStateInfo persistentStateInfo = 
@@ -81,22 +85,29 @@ public class MenuState extends LoadableGameState implements StringListener
 		
 		game.addState(new BattleState(persistentStateInfo));
 		game.addState(new TownState(persistentStateInfo));
-		game.addState(new CinematicState(persistentStateInfo));		
+		game.addState(new CinematicState(persistentStateInfo));				
 		
-		// mapNameMenu = new StringMenu(gc, "Map name to start:", this);
+		if (cin)
+			((CommRPG) game).setLoadingInfo(map, map,
+				(LoadableGameState) game.getState(CommRPG.STATE_GAME_CINEMATIC), true);
+		else
+		{
+			((CommRPG) game).setLoadingInfo(map, map,
+					(LoadableGameState) game.getState(CommRPG.STATE_GAME_TOWN), true);
+		}
+		game.enterState(CommRPG.STATE_GAME_LOADING);
 		
 		/*
-		((ForsakenChampions) game).setLoadingInfo("GHLand1", "GHLand1",
-				(LoadableGameState) game.getState(ForsakenChampions.STATE_GAME_TOWN), true);
-		game.enterState(ForsakenChampions.STATE_GAME_LOADING);
-		*/
-		
-		
-		((CommRPG) game).setLoadingInfo("Castle", "Castle",
-				(LoadableGameState) game.getState(CommRPG.STATE_GAME_CINEMATIC), true);
+		((CommRPG) game).setLoadingInfo("GHLand1", "GHLand1",
+				(LoadableGameState) game.getState(CommRPG.STATE_GAME_TOWN), true);
 		game.enterState(CommRPG.STATE_GAME_LOADING);
 		
 		
+		
+		((CommRPG) game).setLoadingInfo("Town1", "Town1",
+				(LoadableGameState) game.getState(CommRPG.STATE_GAME_TOWN), true);
+		game.enterState(CommRPG.STATE_GAME_LOADING);
+		*/
 	}
 
 	@Override
@@ -105,14 +116,16 @@ public class MenuState extends LoadableGameState implements StringListener
 	{
 		if (!init)
 		{
-			start(container);
+			mapNameMenu = new UninitializedStringMenu(gc, "Map name to start:", this);
 			init = true;
+			input = new FCInput();
+			container.getInput().addKeyListener(input);
 		}
-		/*
 		else
-			mapNameMenu.handleUserInput(container.getInput().getMouseX(), container.getInput().getMouseY(), 
-					container.getInput().isMouseButtonDown(Input.MOUSE_LEFT_BUTTON), false, null, null);
-					*/
+		{
+			mapNameMenu.handleMouseInput(container.getInput().getMouseX(), container.getInput().getMouseY(), 
+					container.getInput().isMouseButtonDown(Input.MOUSE_LEFT_BUTTON));
+		}
 	}
 
 	@Override
@@ -128,10 +141,8 @@ public class MenuState extends LoadableGameState implements StringListener
 	}
 
 	@Override
-	public void stringEntered(String string) {
-		((CommRPG) game).setLoadingInfo(string, string,
-				(LoadableGameState) game.getState(CommRPG.STATE_GAME_TOWN), true);
-		game.enterState(CommRPG.STATE_GAME_LOADING);
-		
+	public void stringEntered(String string, String action) {
+		gc.getInput().removeKeyListener(input);
+		start(game.getContainer(), action.equalsIgnoreCase("CIN"), string);				
 	}
 }

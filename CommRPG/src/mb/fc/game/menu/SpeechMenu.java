@@ -10,6 +10,7 @@ import mb.fc.game.ui.FCGameContainer;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 
 public class SpeechMenu extends Menu
 {	
@@ -18,13 +19,19 @@ public class SpeechMenu extends Menu
 	private ArrayList<String> panelText;
 	private int textIndex = 0;
 	private int triggerId = -1;
+	private Image portrait;
 	
 	public SpeechMenu(String text, GameContainer gc) 
 	{
-		this(text, gc, -1);
+		this(text, gc, -1, -1, null);
 	}
 	
-	public SpeechMenu(String text, GameContainer gc, int triggerId) 
+	public SpeechMenu(String text, GameContainer gc, int portraitId, StateInfo stateInfo) 
+	{
+		this(text, gc, -1, portraitId, stateInfo);
+	}
+	
+	public SpeechMenu(String text, GameContainer gc, int triggerId, int portraitId, StateInfo stateInfo) 
 	{
 		super(Panel.PANEL_SPEECH);
 		width = gc.getWidth() - 100;
@@ -60,6 +67,11 @@ public class SpeechMenu extends Menu
 			panelText.add(currentLine);
 		
 		this.triggerId = triggerId;
+
+		if (portraitId != -1)
+			portrait = stateInfo.getResourceManager().getSpriteSheets().get("portraits").getSprite(portraitId, 0);		
+		else
+			portrait = null;
 	}
 
 	public void render(FCGameContainer gc, Graphics graphics)
@@ -73,7 +85,10 @@ public class SpeechMenu extends Menu
 		{
 			graphics.drawString(panelText.get(i), x + 15, 
 					gc.getHeight() - 110 + (i - textIndex) * 29);
-		}		
+		}
+		
+		if (portrait != null)
+			graphics.drawImage(portrait, 10, 10);
 	}
 
 	@Override

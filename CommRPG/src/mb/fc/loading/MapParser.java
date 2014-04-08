@@ -1,4 +1,4 @@
-package mb.fc.resource;
+package mb.fc.loading;
 
 import java.awt.Point;
 import java.io.IOException;
@@ -16,9 +16,9 @@ import org.newdawn.slick.SpriteSheet;
 
 public class MapParser 
 {
-	public static void parseMap(String mapFile, Map map, Class<?> cl) throws IOException, SlickException
+	public static void parseMap(String mapFile, Map map) throws IOException, SlickException
 	{
-		ArrayList<TagArea> tagAreas = XMLParser.process(mapFile, cl);
+		ArrayList<TagArea> tagAreas = XMLParser.process(mapFile);
 		
 		TagArea tagArea = tagAreas.get(0);
 		
@@ -33,9 +33,11 @@ public class MapParser
 			if (childArea.getTagType().equalsIgnoreCase("tileset"))
 			{
 				tileSet = childArea.getChildren().get(0).getParams().get("source");
+				String trans = childArea.getChildren().get(0).getParams().get("trans");
 				int startIndex = Integer.parseInt(childArea.getParams().get("firstgid"));
 				String[] tsSplit = tileSet.split(",")[0].split("/");
-				SpriteSheet ss = new SpriteSheet("image\\" + tsSplit[tsSplit.length - 1], tileWidth, tileHeight, Color.black);
+				
+				SpriteSheet ss = new SpriteSheet("image/" + tsSplit[tsSplit.length - 1], tileWidth, tileHeight, new Color(Integer.parseInt(trans.substring(0, 2), 16), Integer.parseInt(trans.substring(2, 4), 16), Integer.parseInt(trans.substring(4, 6), 16)));
 				Hashtable<Integer, Integer> landEffectByTileId = new Hashtable<Integer, Integer>();
 				
 				for (TagArea tile : childArea.getChildren())
@@ -88,9 +90,10 @@ public class MapParser
 							for (String point : points)
 							{
 								String[] p = point.split(",");
-								pointList.add(new Point(Integer.parseInt(p[0]), Integer.parseInt(p[1])));
-								mapObject.setPolyPoints(pointList);
+								pointList.add(new Point(Integer.parseInt(p[0]), Integer.parseInt(p[1])));								
 							}
+							
+							mapObject.setPolyPoints(pointList);
 						}
 					}
 					mapObject.determineShape();

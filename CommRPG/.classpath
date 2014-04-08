@@ -4,6 +4,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="lib" path="/GameLib/Jars/Artemis/artemis-a609b2076aacc0ef5ecf0b390205d01bb88ceae2.jar" sourcepath="/GameLib/Jars/Artemis/artemis-a609b2076aacc0ef5ecf0b390205d01bb88ceae2-src.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Slick2D"/>
-	<classpathentry kind="lib" path="C:/Users/Broked/Dropbox/Projects/In Progress/GameLib/Jars/exp4j-0.3.11.jar"/>
+	<classpathentry kind="lib" path="/GameLib/Jars/exp4j-0.3.11.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

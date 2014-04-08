@@ -50,6 +50,7 @@ public class CinematicActor
 	private boolean loopMoving = false;
 	private float startLoopX;
 	private float startLoopY;
+	private boolean forceFacingMove = false;
 	
 	// Rotate Params
 	private int spinSpeed;
@@ -172,39 +173,6 @@ public class CinematicActor
 						
 						break;
 				}
-					
-				
-				/********************************/
-				/* NODDING 						*/
-				/********************************/
-				/*
-				im.getSubImage(0, 10, im.getWidth(), 14).draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(), 
-						this.getLocY() - camera.getLocationY() + 10);
-				im.getSubImage(0, 0, im.getWidth(), 10).draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(), 
-						this.getLocY() - camera.getLocationY() + 1);
-						*/
-				
-				/********************************/
-				/* Terrible Head Shake			*/
-				/********************************/
-				/*
-				im.getSubImage(0, 10, im.getWidth(), 14).draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(), 
-						this.getLocY() - camera.getLocationY() + 10);
-				if (shakeCount == 0)
-				{					
-					Image sub = im.getSubImage(0, 0, im.getWidth(), 10);
-					sub.rotate(10);
-					sub.draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(), 
-							this.getLocY() - camera.getLocationY() + 1);
-				}
-				else if (shakeCount == 2)
-				{			
-					Image sub = im.getSubImage(0, 0, im.getWidth(), 10);
-					sub.rotate(-10);
-					sub.draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(), 
-							this.getLocY() - camera.getLocationY() + 1);
-				}
-				*/
 			}
 		}
 		else if (specialEffectType == SE_FALL_ON_FACE)
@@ -319,6 +287,7 @@ public class CinematicActor
 					if (!loopMoving)
 					{
 						moving = false;
+						this.forceFacingMove = false;
 						
 						if (haltingMove)
 						{						
@@ -460,22 +429,28 @@ public class CinematicActor
 	}
 	
 	private void setLocX(float locX) {
-		// Moving right
-		if (locX > this.locX)
-			setFacing(Direction.RIGHT);
-		// Moving left
-		else if (locX < this.locX)
-			setFacing(Direction.LEFT);
+		if (!this.forceFacingMove)
+		{
+			// Moving right
+			if (locX > this.locX)
+				setFacing(Direction.RIGHT);
+			// Moving left
+			else if (locX < this.locX)
+				setFacing(Direction.LEFT);
+		}
 		this.locX = locX;
 	}
 
 	private void setLocY(float locY) {
-		// Moving down
-		if (locY > this.locY)
-			setFacing(Direction.DOWN);
-		// Moving up
-		else if (locY < this.locY)
-			setFacing(Direction.UP);
+		if (!this.forceFacingMove)
+		{
+			// Moving down
+			if (locY > this.locY)
+				setFacing(Direction.DOWN);
+			// Moving up
+			else if (locY < this.locY)
+				setFacing(Direction.UP);
+		}
 		this.locY = locY;
 	}
 	
@@ -513,6 +488,18 @@ public class CinematicActor
 		facing = dir;
 	}
 	
+	public void setFacing(int dir)
+	{
+		if (dir == 0)
+			setFacing(Direction.UP);
+		else if (dir == 1)
+			setFacing(Direction.DOWN);
+		else if (dir == 2)
+			setFacing(Direction.LEFT);
+		else if (dir == 3)
+			setFacing(Direction.RIGHT);
+	}
+	
 	public void setAnimation(String animation, int time, boolean halting, boolean looping)
 	{
 		this.animHalting = halting;
@@ -522,7 +509,7 @@ public class CinematicActor
 		this.animUpdate = time / currentAnim.frames.size();		
 	}
 	
-	public void moveToLocation(int moveToLocX, int moveToLocY, int speed, boolean haltingMove)
+	public void moveToLocation(int moveToLocX, int moveToLocY, int speed, boolean haltingMove, int direction)
 	{
 		this.loopMoving = false;
 		this.moveToLocX = moveToLocX;
@@ -531,6 +518,13 @@ public class CinematicActor
 		this.moveSpeed = speed;
 		this.animDelta = 0;
 		this.animUpdate = (long) (469.875 / moveSpeed);
+		if (direction != -1)
+		{
+			this.setFacing(direction);
+			this.forceFacingMove = true;
+		}
+		else
+			this.forceFacingMove = false;
 		moving = true;
 	}
 	
@@ -545,6 +539,7 @@ public class CinematicActor
 		this.moveSpeed = speed;			
 		this.animDelta = 0;
 		this.animUpdate = (long) (469.875 / moveSpeed);
+		this.forceFacingMove = false;
 		moving = true;
 	}
 	

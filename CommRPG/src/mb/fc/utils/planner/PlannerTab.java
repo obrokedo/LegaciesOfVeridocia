@@ -28,8 +28,11 @@ public class PlannerTab extends JPanel implements ActionListener, ListSelectionL
 	private int selectedPC;
 	private JScrollPane currentPCScroll;
 	private JComboBox<String> typeComboBox;
+	private int refersTo;
+	private PlannerFrame plannerFrame;
 	
-	public PlannerTab(Hashtable<String, PlannerContainerDef> containersByName, String[] containers)
+	public PlannerTab(Hashtable<String, PlannerContainerDef> containersByName, 
+			String[] containers, int refersTo, PlannerFrame plannerFrame)
 	{
 		super(new BorderLayout());
 		
@@ -55,6 +58,8 @@ public class PlannerTab extends JPanel implements ActionListener, ListSelectionL
 		buttonPanel.add(PlannerFrame.createActionButton("Remove", "remove", this));
 		listPanel.add(buttonPanel, BorderLayout.PAGE_END);
 		this.add(listPanel, BorderLayout.LINE_START);
+		this.refersTo = refersTo;
+		this.plannerFrame = plannerFrame;
 	}
 
 	@Override
@@ -75,6 +80,7 @@ public class PlannerTab extends JPanel implements ActionListener, ListSelectionL
 		else if (command.equalsIgnoreCase("remove"))
 		{
 			int selected = list.getSelectedIndex();
+			plannerFrame.removeReferences(refersTo, selected);
 			currentPC.getPcdef().getDataLines().remove(selected);
 			currentPC = null;
 			listModel.remove(selected);

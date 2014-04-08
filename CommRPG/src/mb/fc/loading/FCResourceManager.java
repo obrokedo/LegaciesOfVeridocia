@@ -1,4 +1,4 @@
-package mb.fc.resource;
+package mb.fc.loading;
 
 import java.awt.Font;
 import java.awt.FontFormatException;
@@ -30,6 +30,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
@@ -42,6 +43,7 @@ public class FCResourceManager extends ResourceManager {
 	private Hashtable<String, SpriteSheet> spriteSheets = new Hashtable<String, SpriteSheet>();
 	private Hashtable<String, SpriteAnims> spriteAnimations = new Hashtable<String, SpriteAnims>();
 	private Hashtable<String, Music> musicByTitle = new Hashtable<String, Music>();
+	private Hashtable<String, Sound> soundByTitle = new Hashtable<String, Sound>();
 	private Hashtable<String, UnicodeFont> unicodeFonts = new Hashtable<String, UnicodeFont>();
 	
 	// These values need to be initialized each time a map is loaded
@@ -51,6 +53,9 @@ public class FCResourceManager extends ResourceManager {
 	private Map map = new Map();
 	
 	private Color transparent = new Color(255, 0, 255);
+	
+	private Music playingMusic = null;	
+	// private 
 
 	public static void main(String args[])
 	{
@@ -61,16 +66,18 @@ public class FCResourceManager extends ResourceManager {
 	
 	public void reinitialize()
 	{
+		stopMusic();
 		map.reinitalize();
 		speechesById.clear();
 		triggerEventById.clear();
 		cinematicById.clear();
 	}
 	
+	/*
 	public void getNewMap(String mapName) throws IOException, SlickException
 	{
 		map.reinitalize();
-		MapParser.parseMap("/map/" + mapName + ".tmx", getMap(), getClass());
+		MapParser.parseMap("/map/" + mapName + ".tmx", getMap());
 	}
 	
 	public void getNewText(String text) throws IOException
@@ -78,8 +85,9 @@ public class FCResourceManager extends ResourceManager {
 		speechesById.clear();
 		triggerEventById.clear();
 		cinematicById.clear();
-		TextParser.parseText("/text/" + text, speechesById, triggerEventById, cinematicById,getClass());
+		TextParser.parseText("/text/" + text, speechesById, triggerEventById, cinematicById);
 	}
+	*/
 	
 	
 	@Override
@@ -87,11 +95,15 @@ public class FCResourceManager extends ResourceManager {
 			int maxIndex) throws IOException, SlickException {
 		String[] split = resource.split(",");
 		if (split[0].equalsIgnoreCase("image"))
+		{
+			System.out.println("Load image " + split[2]);
 			images.put(split[1], new Image((LoadingState.inJar ? "" : "bin/") + split[2], transparent).getScaledCopy(split.length == 4 ? Float.parseFloat(split[3]) : 1));
+		}
 		else if (split[0].equalsIgnoreCase("ss"))
 		{
 			float scale = split.length == 7 ? Float.parseFloat(split[6]) : 1;
 			System.out.println("SCALE FOR " + split[1] + " " + scale);
+			System.out.println("Load sprite sheet " + split[2]);
 			Image ssIm = new Image((LoadingState.inJar ? "" : "bin/") + split[2], transparent).getScaledCopy(scale);			
 			spriteSheets.put(split[1], new SpriteSheet(ssIm, 
 					(int) (Integer.parseInt(split[3]) * scale), (int) (Integer.parseInt(split[4])  * scale), 
@@ -100,7 +112,7 @@ public class FCResourceManager extends ResourceManager {
 		else if (split[0].equalsIgnoreCase("map"))
 		{			
 			System.out.println("Load map: " + split[2]);
-			MapParser.parseMap(split[2], map, getClass());
+			MapParser.parseMap(split[2], map);
 		}
 		else if (split[0].equalsIgnoreCase("anim"))
 		{
@@ -110,11 +122,11 @@ public class FCResourceManager extends ResourceManager {
 		}
 		else if (split[0].equalsIgnoreCase("text"))
 		{
-			TextParser.parseText(split[1], speechesById, triggerEventById, cinematicById, getClass());
+			TextParser.parseText(split[1], speechesById, triggerEventById, cinematicById);
 		}
 		else if (split[0].equalsIgnoreCase("herodefs"))
 		{
-			ArrayList<TagArea> tagAreas = XMLParser.process(split[1], getClass());
+			ArrayList<TagArea> tagAreas = XMLParser.process(split[1]);
 			Hashtable<Integer, HeroDefinition> heroDefinitionsById = new Hashtable<Integer, HeroDefinition>();
 			
 			for (TagArea ta : tagAreas)
@@ -127,7 +139,7 @@ public class FCResourceManager extends ResourceManager {
 		}
 		else if (split[0].equalsIgnoreCase("itemdefs"))
 		{
-			ArrayList<TagArea> tagAreas = XMLParser.process(split[1], getClass());
+			ArrayList<TagArea> tagAreas = XMLParser.process(split[1]);
 			Hashtable<Integer, ItemDefinition> itemDefinitionsById = new Hashtable<Integer, ItemDefinition>();
 			
 			for (TagArea ta : tagAreas)
@@ -140,7 +152,7 @@ public class FCResourceManager extends ResourceManager {
 		}	
 		else if (split[0].equalsIgnoreCase("enemydefs"))
 		{
-			ArrayList<TagArea> tagAreas = XMLParser.process(split[1], getClass());
+			ArrayList<TagArea> tagAreas = XMLParser.process(split[1]);
 			Hashtable<Integer, EnemyDefinition> enemyDefinitionsById = new Hashtable<Integer, EnemyDefinition>();
 			
 			for (TagArea ta : tagAreas)
@@ -192,7 +204,16 @@ public class FCResourceManager extends ResourceManager {
 			for (File file : dir.listFiles())
 			{
 				if (file.getName().endsWith(".ogg"))
-					musicByTitle.put(file.getName().replace(".ogg", ""), new Music(file.getPath()));				
+					musicByTitle.put(file.getName().replace(".ogg", ""), new Music(file.getPath()));
+			}
+		}
+		else if (split[0].equalsIgnoreCase("sounddir"))
+		{
+			File dir = new File((LoadingState.inJar ? "" : "bin/") + split[1]);
+			for (File file : dir.listFiles())
+			{
+				if (file.getName().endsWith(".ogg"))
+					soundByTitle.put(file.getName().replace(".ogg", ""), new Sound(file.getPath()));
 			}
 		}
 		else if (split[0].equalsIgnoreCase("animsheetdir"))
@@ -201,7 +222,10 @@ public class FCResourceManager extends ResourceManager {
 			for (File file : dir.listFiles())
 			{
 				if (file.getName().endsWith(".png"))
-					images.put(file.getName().replace(".png", ""), new Image(file.getPath(), transparent));				
+				{
+					System.out.println("Anim sheet " + file.getName());
+					images.put(file.getName().replace(".png", ""), new Image(file.getPath(), transparent));
+				}
 			}
 		}
 		else if (split[0].equalsIgnoreCase("animfsadir"))
@@ -261,9 +285,48 @@ public class FCResourceManager extends ResourceManager {
 		return triggerEventById.get(id);
 	}
 	
+	public void playSoundByName(String name, float volume)
+	{
+		soundByTitle.get(name).play(1f, volume);
+	}
+	
 	public void playMusicByName(String name)
 	{
-		musicByTitle.get(name).loop(1, .0f);
+		playingMusic = musicByTitle.get(name);
+		playingMusic.loop(1, .1f);
+	}
+	
+	public void pauseMusic()
+	{
+		if (playingMusic != null)
+			playingMusic.pause();
+	}
+	
+	public void resumeMusic()
+	{
+		if (playingMusic != null)
+			playingMusic.resume();
+	}
+	
+	public void stopMusic()
+	{
+		if (playingMusic != null)
+		{
+			playingMusic.stop();
+			playingMusic = null;
+		}
+	}
+	
+	public void fadeMusic(int duration)
+	{
+		if (playingMusic != null)
+			playingMusic.fade(duration, 0f, true);
+	}
+	
+	public void playMusicByName(String name, float volume)
+	{
+		playingMusic = musicByTitle.get(name); 
+		playingMusic.loop(1, volume);
 	}
 	
 	public Cinematic getCinematicById(int id)
@@ -271,10 +334,10 @@ public class FCResourceManager extends ResourceManager {
 		return cinematicById.get(id);
 	}
 	
-	public static ArrayList<String> readAllLines(String file, Class<?> cl) throws IOException
+	public static ArrayList<String> readAllLines(String file) throws IOException
 	{
-		System.out.println("Read all lines " + file);
-		BufferedReader br = new BufferedReader(new InputStreamReader(cl.getResourceAsStream(file)));
+		System.out.println("Read all lines " + file);		
+		BufferedReader br = new BufferedReader(new InputStreamReader(ResourceLoader.getResourceAsStream(file)));
 		ArrayList<String> allLines = new ArrayList<String>();
 		String line;
 		while ((line = br.readLine()) != null) {

@@ -3,8 +3,8 @@ package mb.gl2.loading;
 import java.util.ArrayList;
 import java.util.List;
 
-import mb.fc.resource.FCResourceManager;
-import mb.fc.resource.LoadingComp;
+import mb.fc.loading.FCResourceManager;
+import mb.fc.loading.LoadingComp;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -35,6 +35,7 @@ public class LoadingState extends BasicGameState
 	private List<String> allLines;
 	private int loadAmount;
 	private boolean loadingMap;
+	private String errorMessage = null;
 	
 	public static final boolean inJar = true;
 	
@@ -54,6 +55,12 @@ public class LoadingState extends BasicGameState
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
 		loadingRenderer.process();
+		if (errorMessage != null)
+		{
+			g.setColor(Color.white);
+			int strWidth = container.getDefaultFont().getWidth(errorMessage);
+			g.drawString(errorMessage, (container.getWidth() - strWidth) / 2, container.getHeight() / 2);
+		}
 	}
 
 	@Override
@@ -62,6 +69,9 @@ public class LoadingState extends BasicGameState
 	{
 		world.setDelta(delta);
 		world.process();
+		
+		if (errorMessage != null)
+			return;
 		
 		// Check to see if this is the first time through the update loop, if so then
 		// intialize the list of resources that need to be loaded
@@ -75,7 +85,7 @@ public class LoadingState extends BasicGameState
 					{
 						// If we are loading maps and resources then this is the first load before enter the actual game state.
 						// In this case initialize the default resources
-						allLines = FCResourceManager.readAllLines("/loader/Default", getClass());						
+						allLines = FCResourceManager.readAllLines("/loader/Default");						
 					}
 				
 					// Regardless of whether we are loading other resources, add the map and text files
@@ -86,15 +96,16 @@ public class LoadingState extends BasicGameState
 				}
 				// If we are not loading the map then we just want to load the specified resources
 				else if (loadResources)
-					allLines = FCResourceManager.readAllLines(textName, getClass());						
+					allLines = FCResourceManager.readAllLines(textName);						
 				loadAmount = allLines.size();	
 				
 			} 
 			catch (Throwable e) 
 			{
 				System.err.println("Error loading resource list: " + mapName);
+				errorMessage = "Error loading resource list: " + mapName;
 				e.printStackTrace();
-				System.exit(0);
+				// System.exit(0);
 			}
 		}
 		else if (allLines.size() > 0)
@@ -109,8 +120,9 @@ public class LoadingState extends BasicGameState
 				catch (Throwable e) 
 				{
 					System.err.println("Error loading resource: " + line);
+					errorMessage = "Error loading resource: " + line;
 					e.printStackTrace();
-					System.exit(0);
+					// System.exit(0);
 				}
 			}			
 		}

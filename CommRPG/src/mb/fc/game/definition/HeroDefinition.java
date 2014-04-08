@@ -26,6 +26,7 @@ public class HeroDefinition
 	private int level;
 	private String animations;
 	
+	private String className[];
 	private int move[];
 	private int movementType[];
 	private int attackGain[];
@@ -82,6 +83,7 @@ public class HeroDefinition
 			hd.mpGain = new int[2];
 			hd.usuableWeapons = new int[2][];
 			hd.portrait = new int[2];
+			hd.className = new String[2];
 		}
 		// Otherwise 
 		else
@@ -95,6 +97,7 @@ public class HeroDefinition
 			hd.mpGain = new int[1];
 			hd.usuableWeapons = new int[1][];
 			hd.portrait = new int[1];
+			hd.className = new String[1];
 		}
 		
 		hd.spellsPerLevel = new ArrayList<int[]>();
@@ -134,6 +137,7 @@ public class HeroDefinition
 				hd.hpGain[index] = Integer.parseInt(childTagArea.getParams().get("hp"));
 				hd.mpGain[index] = Integer.parseInt(childTagArea.getParams().get("mp"));
 				hd.portrait[index] = Integer.parseInt(childTagArea.getParams().get("portrait"));
+				hd.className[index] = childTagArea.getParams().get("class");
 				
 				String[] splitItems = childTagArea.getParams().get("usuableitems").split(",");
 				int[] splitIds = new int[splitItems.length];
@@ -176,14 +180,14 @@ public class HeroDefinition
 		// Set up unpromoted progression
 		if(!promoted)
 			unpromotedProgression = new Progression(usuableWeapons[0], null, move[0], movementType[0], attackGain[0], 
-					defenseGain[0], speedGain[0], hpGain[0], mpGain[0], portrait[0]);
+					defenseGain[0], speedGain[0], hpGain[0], mpGain[0], portrait[0], className[0]);
 	
 		// Set up promoted progression
 		int index = 1;
 		if (promoted)
 			index = 0;
 		promotedProgression = new Progression(usuableWeapons[index], null, move[index], movementType[index], attackGain[index], 
-				defenseGain[index], speedGain[index], hpGain[index], mpGain[index], portrait[index]);
+				defenseGain[index], speedGain[index], hpGain[index], mpGain[index], portrait[index], className[index]);
 		
 		// Set up spell Progression
 		int[][] spellProgression = new int[spellsPerLevel.size()][];
@@ -207,14 +211,7 @@ public class HeroDefinition
 			if (known)
 				knownSpells.add(new KnownSpell(spellsPerLevel.get(i)[0], (byte) maxLevel));
 		}
-		
-		// Get default values for promotion based stats
-		Progression currentProgress = null;
-		if (unpromotedProgression != null)
-			currentProgress = unpromotedProgression;
-		else
-			currentProgress = promotedProgression;
-		
+
 		// Create hero progression
 		HeroProgression heroProgression = new HeroProgression(spellProgression, unpromotedProgression, promotedProgression);
 						

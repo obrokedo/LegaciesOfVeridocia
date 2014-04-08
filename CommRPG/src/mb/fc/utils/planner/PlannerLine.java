@@ -13,7 +13,6 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
-import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
@@ -145,7 +144,8 @@ public class PlannerLine extends JPanel
 					{
 						Vector<String> items = new Vector<String>(listOfLists.get(pv.getRefersTo() - 1));
 						c = new JComboBox<String>(items);
-						((JComboBox) c).setSelectedItem(values.get(i));
+						if (values.size() > 0)
+							((JComboBox) c).setSelectedItem(values.get(i));
 					}
 					break;
 			}			
@@ -168,7 +168,7 @@ public class PlannerLine extends JPanel
 				noValues = true;
 			
 			for (int i = 0; i < plDef.getPlannerValues().size(); i++)
-			{
+			{				
 				PlannerValueDef pv = plDef.getPlannerValues().get(i);
 				
 				switch (pv.getValueType())
@@ -188,7 +188,7 @@ public class PlannerLine extends JPanel
 								values.set(i, ((JTextField) components.get(i)).getText());
 						}
 						else
-						{
+						{							
 							if (noValues)
 								values.add(((JComboBox) components.get(i)).getSelectedItem());
 							else
@@ -218,6 +218,14 @@ public class PlannerLine extends JPanel
 		}
 	}
 	
+	public ArrayList<Component> getPlannerLineComponents() {
+		return components;
+	}
+
+	public void setComponents(ArrayList<Component> components) {
+		this.components = components;
+	}
+
 	public int getSelectedItem()
 	{
 		return box.getSelectedIndex();

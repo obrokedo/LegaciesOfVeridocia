@@ -10,9 +10,27 @@ import mb.fc.game.sprite.CombatSprite;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
 
+/**
+ * @author Broked
+ * 
+ * Holds values that describe a map created in Mappy, namely;
+ * - Map dimensions
+ * - Tileset
+ * - Tile Size
+ * - Polygon based map-objects that are created in "object" layers.
+ * - Map layer data
+ * In addition it provides methods for accessing this data in that allows the caller
+ * to be unaware of multiple tilesets and tiles being handled differently then they are rendered
+ */
 public class Map 
 {
+	/**
+	 * Table that defines how each type of battle unit's movement is effected by each type of terrain.
+	 * A value of 1000 means that the space is unmoveable in battle. A value of 10 is equivalent to 1 space 
+	 */
 	private static final int[][] movementCostsByType = {
+														//Sky      Path   Forest   Sand      Water
+														//	  Even     Ovrgrth Mtn     High Mt.
 														// Walking
 														{1000, 10, 10, 15, 20, 15, 15, 1000, 1000},
 														// Horses/Centaurs
@@ -31,13 +49,23 @@ public class Map
 														{1000, 10, 10, 10, 10, 10, 20, 1000, 1000},
 													};
 	
-	private static final int[] terrainEffectByType = {0, 15, 0, 30, 30, 30, 0, 0, 0};
+	/**
+	 * Describes the land effect of each terrain type for units that are not flying
+	 */
+													//Sky      Path   Forest   Sand      Water
+													//	  Even     Ovrgrth Mtn     High Mt.
+	private static final int[] terrainEffectByType = {0,  15,  0,  30, 30, 30, 0,  0,    0};
 	
+	/**
+	 * A list of 2 dimensional int arrays, where each entry contains the tile indexs for each tile on that layer.
+	 * A value of 0 in any given layer means that no tile was selected at this location.
+	 */
 	private ArrayList<int[][]> mapLayer = new ArrayList<int[][]>();
 	private int tileWidth, tileHeight;
 	private ArrayList<TileSet> tileSets = new ArrayList<TileSet>();
 	private ArrayList<MapObject> mapObjects = new ArrayList<MapObject>();
 	private Hashtable<Integer, Integer> landEffectByTileId = new Hashtable<Integer, Integer>();
+	private Hashtable<TerrainTypeIndicator, Integer> overriddenTerrain = new Hashtable<TerrainTypeIndicator, Integer>();
 	
 	public Map() {
 		super();
@@ -47,6 +75,9 @@ public class Map
 	{
 		mapObjects.clear();
 		mapLayer.clear();
+		landEffectByTileId.clear();
+		tileSets.clear();
+		overriddenTerrain.clear();
 	}
 	
 	public void addLayer(int[][] layer)
@@ -73,12 +104,22 @@ public class Map
 	public int[][] getMapLayer(int layer) {
 		return mapLayer.get(layer);
 	}
+	
+	public int getTileEffectiveWidth()
+	{
+		return 24;
+	}
+	
+	public int getTileEffectiveHeight()
+	{
+		return 24;
+	}
 
-	public int getTileWidth() {
+	public int getTileRenderWidth() {
 		return tileWidth;
 	}
 
-	public int getTileHeight() {
+	public int getTileRenderHeight() {
 		return tileHeight;
 	}
 
@@ -87,7 +128,23 @@ public class Map
 	}
 
 	public void addMapObject(MapObject mo) {
-		this.mapObjects.add(mo);
+		if (mo.getKey().equalsIgnoreCase("terrain"))
+		{			
+			for (int x = mo.getX(); x < mo.getX() + mo.getWidth(); x += getTileEffectiveWidth())
+			{
+				for (int y = mo.getY(); y < mo.getY() + mo.getHeight(); y += getTileEffectiveHeight())
+				{
+					if (mo.getShape().contains(x + 1, y + 1))
+					{
+						overriddenTerrain.put(new TerrainTypeIndicator(x / getTileEffectiveWidth(), y / getTileEffectiveHeight()), Integer.parseInt(mo.getParam("type")));
+					}
+				}
+			}						
+		}
+		else
+			this.mapObjects.add(mo);
+		
+		
 	}
 	
 	public void addTileset(SpriteSheet spriteSheet, int tileStartIndex, int tileWidth, int tileHeight, Hashtable<Integer, Integer> landEffectByTileId)
@@ -111,44 +168,70 @@ public class Map
 	public int getMovementCostByType(int moverType, int tileX, int tileY)
 	{
 		int tile;
-		if (mapLayer.get(1)[tileY][tileX] != 0)
-			tile = mapLayer.get(1)[tileY][tileX];
-		else
-			tile = mapLayer.get(0)[tileY][tileX];
 		
-		// Subtract one to account for the blank space at 0
-		tile--;
-		
-		if (landEffectByTileId.containsKey(tile))
-			return movementCostsByType[moverType][landEffectByTileId.get(tile)];
+		TerrainTypeIndicator tti = new TerrainTypeIndicator(tileX, tileY);
+		if (overriddenTerrain.containsKey(tti))
+		{
+			tile = overriddenTerrain.get(tti);
+			return movementCostsByType[moverType][tile];
+		}
 		else
-			return 10;
+		{	
+			if (mapLayer.get(1)[tileY][tileX] != 0)
+				tile = mapLayer.get(1)[tileY][tileX];
+			else
+				tile = mapLayer.get(0)[tileY][tileX];
+			
+			// Subtract one to account for the blank space at 0
+			tile--;
+			
+			if (landEffectByTileId.containsKey(tile))
+			{
+				return movementCostsByType[moverType][landEffectByTileId.get(tile)];
+			}
+			else
+				return 10000;
+		}
 	}
 
 	public int getLandEffectByTile(int moverType, int tileX, int tileY)
 	{
-		int tile;
-		if (mapLayer.get(1)[tileY][tileX] != 0)
-			tile = mapLayer.get(1)[tileY][tileX];
-		else
-			tile = mapLayer.get(0)[tileY][tileX];
-		
-		// Subtract one to account for the blank space at 0
-		tile--;	
-		
 		if (moverType == CombatSprite.MOVEMENT_FLYING)
 			return 0;
 		
-		if (landEffectByTileId.containsKey(tile))
-		{			
-			return terrainEffectByType[landEffectByTileId.get(tile)];
-		}		
-		else
+		int tile;
+		
+		TerrainTypeIndicator tti = new TerrainTypeIndicator(tileX, tileY);
+		if (overriddenTerrain.containsKey(tti))
 		{
-			return 0;
+			tile = overriddenTerrain.get(tti);
+			return terrainEffectByType[tile];
 		}
-	}
+		else
+		{	
+			if (mapLayer.get(1)[tileY][tileX] != 0)
+				tile = mapLayer.get(1)[tileY][tileX];
+			else
+				tile = mapLayer.get(0)[tileY][tileX];
+			
+			// Subtract one to account for the blank space at 0
+			tile--;
+			
+			if (landEffectByTileId.containsKey(tile))
+			{			
+				return terrainEffectByType[landEffectByTileId.get(tile)];
+			}		
+			else
+			{
+				return 0;
+			}
+		}								
+	}		
 	
+	public boolean isMarkedMoveable(int tileX, int tileY)
+	{
+		return mapLayer.get(3)[tileY * 2][tileX * 2] != 0;
+	}
 	
 	private class TileSet
 	{
@@ -178,6 +261,47 @@ public class Map
 		public int compare(TileSet ts0, TileSet ts1) 		
 		{
 			return ts1.startIndex - ts0.startIndex;
+		}
+	}
+	
+	private class TerrainTypeIndicator
+	{
+		private int tileX;
+		private int tileY;
+		
+		public TerrainTypeIndicator(int tileX, int tileY) {
+			super();
+			this.tileX = tileX;
+			this.tileY = tileY;
+		}
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + getOuterType().hashCode();
+			result = prime * result + tileX;
+			result = prime * result + tileY;
+			return result;
+		}
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			TerrainTypeIndicator other = (TerrainTypeIndicator) obj;
+			if (!getOuterType().equals(other.getOuterType()))
+				return false;
+			if (tileX != other.tileX)
+				return false;
+			if (tileY != other.tileY)
+				return false;
+			return true;
+		}
+		private Map getOuterType() {
+			return Map.this;
 		}
 	}
 }

@@ -8,6 +8,7 @@ public class CinematicEvent
 	{
 		MOVE,
 		HALTING_MOVE,
+		MOVE_ENFORCE_FACING,
 		LOOP_MOVE,
 		STOP_LOOP_MOVE,
 		REMOVE_ACTOR,
@@ -42,7 +43,12 @@ public class CinematicEvent
 		CAMERA_MOVE,
 		STARTLOOPMAP,
 		ENDLOOPMAP,
-		FADE
+		FADE,
+		PLAY_MUSIC,
+		PAUSE_MUSIC,
+		RESUME_MUSIC,
+		FADE_MUSIC,
+		PLAY_SOUND
 	}
 	
 	private CinematicEventType type;

@@ -4,11 +4,15 @@ import java.util.Iterator;
 
 import mb.fc.engine.message.Message;
 import mb.fc.game.sprite.CombatSprite;
+import mb.fc.game.sprite.NPCSprite;
 import mb.fc.game.sprite.Sprite;
 import mb.fc.map.MapObject;
 
 public class SpriteManager extends Manager
 {
+	private int updateDelta = 0;
+	private static final int UPDATE_TIME = 50;
+	
 	@Override
 	public void initialize() 
 	{		
@@ -84,32 +88,37 @@ public class SpriteManager extends Manager
 		}
 	}
 	
-	public void update()
+	public void update(int delta)
 	{
-		boolean isEnemyAlive = false;
-
-		Iterator<Sprite> spriteItr = stateInfo.getSpriteIterator();
-				
-		while (spriteItr.hasNext())
+		updateDelta += delta;
+		while (updateDelta >= UPDATE_TIME)
 		{
-			Sprite s = spriteItr.next();
-			s.update();
-			if (s.getSpriteType() == Sprite.TYPE_COMBAT)
+			updateDelta -= UPDATE_TIME;
+			boolean isEnemyAlive = false;
+	
+			Iterator<Sprite> spriteItr = stateInfo.getSpriteIterator();
+					
+			while (spriteItr.hasNext())
 			{
-				if (((CombatSprite) s).getCurrentHP() < -255)
+				Sprite s = spriteItr.next();
+				s.update();
+				if (s.getSpriteType() == Sprite.TYPE_COMBAT)
 				{
-					stateInfo.removeCombatSprite((CombatSprite) s);
-					s.destroy(stateInfo);
-					spriteItr.remove();					
+					if (((CombatSprite) s).getCurrentHP() < -255)
+					{
+						stateInfo.removeCombatSprite((CombatSprite) s);
+						s.destroy(stateInfo);
+						spriteItr.remove();					
+					}
+					// If the sprite did not die, then check to see if it is an enemy, if so the battle is not over 
+					else if (!((CombatSprite) s).isHero())
+						isEnemyAlive = true;
 				}
-				// If the sprite did not die, then check to see if it is an enemy, if so the battle is not over 
-				else if (!((CombatSprite) s).isHero())
-					isEnemyAlive = true;
 			}
+			
+			if (!isEnemyAlive && stateInfo.isCombat())
+				stateInfo.getResourceManager().getTriggerEventById(1).perform(stateInfo);
 		}
-		
-		if (!isEnemyAlive && stateInfo.isCombat())
-			stateInfo.getResourceManager().getTriggerEventById(1).perform(stateInfo);
 	}
 
 	@Override
@@ -119,6 +128,39 @@ public class SpriteManager extends Manager
 		{			
 			case Message.MESSAGE_INTIIALIZE:
 				initializeAfterSprites();
+				break;
+			case Message.MESSAGE_INVESTIGATE:
+				int checkX = stateInfo.getCurrentSprite().getTileX();
+				int checkY = stateInfo.getCurrentSprite().getTileY();
+				
+				switch (stateInfo.getCurrentSprite().getFacing())
+				{
+					case UP:
+						checkY--;
+						break;
+					case DOWN:
+						checkY++;
+						break;
+					case LEFT:
+						checkX--;
+						break;
+					case RIGHT:
+						checkX++;
+						break;
+				}
+				
+				for (Sprite s : stateInfo.getSprites())
+				{
+					if (s.getSpriteType() == Sprite.TYPE_NPC)
+					{
+						NPCSprite npc = (NPCSprite) s;
+						if (npc.getTileX() == checkX &&
+								npc.getTileY() == checkY)
+							npc.triggerButton1Event(stateInfo);
+
+						break;
+					}
+				}
 				break;
 		}
 	}
