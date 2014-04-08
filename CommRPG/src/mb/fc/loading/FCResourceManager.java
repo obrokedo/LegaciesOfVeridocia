@@ -66,7 +66,6 @@ public class FCResourceManager extends ResourceManager {
 	
 	public void reinitialize()
 	{
-		stopMusic();
 		map.reinitalize();
 		speechesById.clear();
 		triggerEventById.clear();
@@ -214,6 +213,8 @@ public class FCResourceManager extends ResourceManager {
 			{
 				if (file.getName().endsWith(".ogg"))
 					soundByTitle.put(file.getName().replace(".ogg", ""), new Sound(file.getPath()));
+				else if (file.getName().endsWith(".wav"))
+					soundByTitle.put(file.getName().replace(".wav", ""), new Sound(file.getPath()));
 			}
 		}
 		else if (split[0].equalsIgnoreCase("animsheetdir"))
@@ -269,6 +270,15 @@ public class FCResourceManager extends ResourceManager {
 		return unicodeFonts.get(name);
 	}
 
+	public Sound getSoundByName(String name)
+	{
+		return soundByTitle.get(name);
+	}
+	
+	public Music getMusicByName(String name)
+	{
+		return musicByTitle.get(name);
+	}
 
 	public Map getMap()
 	{
@@ -283,50 +293,6 @@ public class FCResourceManager extends ResourceManager {
 	public TriggerEvent getTriggerEventById(int id)
 	{
 		return triggerEventById.get(id);
-	}
-	
-	public void playSoundByName(String name, float volume)
-	{
-		soundByTitle.get(name).play(1f, volume);
-	}
-	
-	public void playMusicByName(String name)
-	{
-		playingMusic = musicByTitle.get(name);
-		playingMusic.loop(1, .1f);
-	}
-	
-	public void pauseMusic()
-	{
-		if (playingMusic != null)
-			playingMusic.pause();
-	}
-	
-	public void resumeMusic()
-	{
-		if (playingMusic != null)
-			playingMusic.resume();
-	}
-	
-	public void stopMusic()
-	{
-		if (playingMusic != null)
-		{
-			playingMusic.stop();
-			playingMusic = null;
-		}
-	}
-	
-	public void fadeMusic(int duration)
-	{
-		if (playingMusic != null)
-			playingMusic.fade(duration, 0f, true);
-	}
-	
-	public void playMusicByName(String name, float volume)
-	{
-		playingMusic = musicByTitle.get(name); 
-		playingMusic.loop(1, volume);
 	}
 	
 	public Cinematic getCinematicById(int id)

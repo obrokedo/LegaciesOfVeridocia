@@ -48,7 +48,7 @@ public class NPCSprite extends AnimatedSprite
 				}
 			}
 			
-			stateInfo.sendMessage(new SpeechMessage(Message.MESSAGE_SPEECH, s.getMessage(), s.getTriggerId()));
+			stateInfo.sendMessage(new SpeechMessage(Message.MESSAGE_SPEECH, s.getMessage(), s.getTriggerId(), s.getPortraitId()));
 			break;
 		}
 	}

@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.IntMessage;
 import mb.fc.engine.message.LoadMapMessage;
 import mb.fc.engine.message.Message;
@@ -188,7 +189,7 @@ public class TriggerEvent
 
 		@Override
 		public boolean perform(StateInfo stateInfo) {
-			stateInfo.getResourceManager().playMusicByName(song);
+			stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_PLAY_MUSIC, song, 1, true));
 			return false;
 		}
 	}
@@ -244,7 +245,7 @@ public class TriggerEvent
 					}
 				}
 				
-				stateInfo.sendMessage(new SpeechMessage(Message.MESSAGE_SPEECH, s.getMessage(), s.getTriggerId()));
+				stateInfo.sendMessage(new SpeechMessage(Message.MESSAGE_SPEECH, s.getMessage(), s.getTriggerId(), s.getPortraitId()));
 				break;
 			}
 			

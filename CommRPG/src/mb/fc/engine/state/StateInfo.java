@@ -29,6 +29,7 @@ import mb.fc.map.Map;
 import mb.fc.map.MapObject;
 
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Music;
 
 public class StateInfo
 {
@@ -40,6 +41,7 @@ public class StateInfo
 	private ArrayList<Message> newMessages;
 	private boolean initialized = false;		
 	private boolean isCombat = false;
+	private boolean isCinematic = false;
 	private PersistentStateInfo psi;
 	
 	// These values need to be reinitialized each time a map is loaded
@@ -66,12 +68,15 @@ public class StateInfo
 	private ArrayList<CombatSprite> heroes;
 	private boolean showAttackCinematic = false;
 	
+	private Music playingMusic = null;
+	
 	private String currentMap;
 	
-	public StateInfo(PersistentStateInfo psi, boolean isCombat)
+	public StateInfo(PersistentStateInfo psi, boolean isCombat, boolean isCinematic)
 	{
 		this.psi = psi;
 		this.isCombat = isCombat;
+		this.isCinematic = isCinematic;
 		sprites = new ArrayList<Sprite>();
 		combatSprites = new ArrayList<CombatSprite>();
 		panels = new ArrayList<Panel>();
@@ -149,7 +154,8 @@ public class StateInfo
 		
 		this.currentMap = psi.getClientProgress().getMap();
 		
-		psi.getResourceManager().getTriggerEventById(0).perform(this);
+		if (!isCinematic)
+			psi.getResourceManager().getTriggerEventById(0).perform(this);
 	}
 	
 	private void initializeMapObjects()
@@ -219,10 +225,20 @@ public class StateInfo
 				case Message.MESSAGE_LOAD_MAP:
 					LoadMapMessage lmm = (LoadMapMessage) m;
 					psi.loadMap(lmm.getMap(), lmm.getLocation());
+					if (playingMusic != null)
+					{
+						playingMusic.stop();
+						playingMusic = null;
+					}
 					break MESSAGES;
 				case Message.MESSAGE_START_BATTLE:
 					LoadMapMessage lmb = (LoadMapMessage) m;
 					psi.loadBattle(lmb.getBattle(), lmb.getMap());
+					if (playingMusic != null)
+					{
+						playingMusic.stop();
+						playingMusic = null;
+					}
 					break MESSAGES;
 				case Message.MESSAGE_SAVE:
 					getClientProfile().serializeToFile();
@@ -586,6 +602,14 @@ public class StateInfo
 
 	public void setCurrentSprite(CombatSprite currentSprite) {
 		this.currentSprite = currentSprite;
+	}
+
+	public Music getPlayingMusic() {
+		return playingMusic;
+	}
+
+	public void setPlayingMusic(Music playingMusic) {
+		this.playingMusic = playingMusic;
 	}
 
 	public PersistentStateInfo getPsi() {

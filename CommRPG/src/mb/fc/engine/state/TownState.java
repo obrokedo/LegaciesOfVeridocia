@@ -6,6 +6,7 @@ import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.manager.CinematicManager;
 import mb.fc.game.manager.PanelManager;
 import mb.fc.game.manager.MenuManager;
+import mb.fc.game.manager.SoundManager;
 import mb.fc.game.manager.SpriteManager;
 import mb.fc.game.manager.TownMoveManager;
 import mb.fc.loading.FCResourceManager;
@@ -33,12 +34,13 @@ public class TownState extends LoadableGameState
 	private MenuManager menuManager;
 	private TownMoveManager townMoveManager;
 	private CinematicManager cinematicManager;
+	private SoundManager soundManager;
 	
 	private StateInfo stateInfo;
 	
 	public TownState(PersistentStateInfo psi)
 	{
-		this.stateInfo = new StateInfo(psi, false);
+		this.stateInfo = new StateInfo(psi, false, false);
 		this.tileMapRenderer = new TileMapRenderer();
 		stateInfo.registerManager(tileMapRenderer);
 		this.spriteRenderer = new SpriteRenderer();
@@ -57,6 +59,8 @@ public class TownState extends LoadableGameState
 		stateInfo.registerManager(townMoveManager);
 		this.cinematicManager = new CinematicManager();
 		stateInfo.registerManager(cinematicManager);
+		this.soundManager = new SoundManager();
+		stateInfo.registerManager(soundManager);
 	}
 	
 	@Override
@@ -112,7 +116,8 @@ public class TownState extends LoadableGameState
 				panelManager.update();
 				townMoveManager.update(delta);
 			}
-			spriteManager.update(delta);				
+			spriteManager.update(delta);	
+			soundManager.update(delta);
 			
 			if (System.currentTimeMillis() > stateInfo.getInputDelay())
 			{

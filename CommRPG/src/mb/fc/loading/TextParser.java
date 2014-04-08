@@ -28,12 +28,14 @@ public class TextParser
 				for (TagArea childTagArea : tagArea.getChildren())
 				{
 					int triggerId = -1;
+					int portraitId = -1;
 					String message = childTagArea.getParams().get("message");
 					//String requires = childTagArea.getParams().get("require");
 					//String excludes = childTagArea.getParams().get("exclude");
 					int requires = Integer.parseInt(childTagArea.getParams().get("require"));
 					int excludes = Integer.parseInt(childTagArea.getParams().get("exclude"));
 					String trigger = childTagArea.getParams().get("trigger");
+					String portrait = childTagArea.getParams().get("portrait");
 					int[] requireIds = null;
 					if (requires != -1)
 						requireIds = new int[] {requires};
@@ -63,7 +65,10 @@ public class TextParser
 					if (trigger != null)
 						triggerId = Integer.parseInt(trigger);
 					
-					speeches.add(new Speech(message, requireIds, excludeIds, triggerId));
+					if (portrait != null)
+						portraitId = Integer.parseInt(portrait);
+					
+					speeches.add(new Speech(message, requireIds, excludeIds, triggerId, portraitId));
 				}
 				speechesById.put(id, speeches);
 			}

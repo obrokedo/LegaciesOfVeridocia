@@ -39,7 +39,7 @@ public class BattleState extends LoadableGameState
 	
 	public BattleState(PersistentStateInfo psi)
 	{
-		this.stateInfo = new StateInfo(psi, true);
+		this.stateInfo = new StateInfo(psi, true, false);
 		this.tileMapRenderer = new TileMapRenderer();
 		stateInfo.registerManager(tileMapRenderer);
 		this.spriteRenderer = new SpriteRenderer();

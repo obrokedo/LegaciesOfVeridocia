@@ -6,11 +6,13 @@ public class SpeechMessage extends Message
 	
 	private String text;
 	private int triggerId = -1;
+	private int portraitId = -1;
 	
-	public SpeechMessage(int messageType, String text, int triggerId) {
+	public SpeechMessage(int messageType, String text, int triggerId, int portraitId) {
 		super(messageType);
 		this.text = text;
 		this.triggerId = triggerId;
+		this.portraitId = portraitId;
 	}
 
 	public String getText() {
@@ -19,5 +21,9 @@ public class SpeechMessage extends Message
 
 	public int getTriggerId() {
 		return triggerId;
+	}
+
+	public int getPortraitId() {
+		return portraitId;
 	}
 }

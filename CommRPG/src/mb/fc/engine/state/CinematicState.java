@@ -26,7 +26,7 @@ public class CinematicState extends LoadableGameState
 	
 	public CinematicState(PersistentStateInfo psi)
 	{
-		this.stateInfo = new StateInfo(psi, false);
+		this.stateInfo = new StateInfo(psi, false, true);
 		this.tileMapRenderer = new TileMapRenderer();
 		stateInfo.registerManager(tileMapRenderer);
 		this.soundManager = new SoundManager();
@@ -78,6 +78,7 @@ public class CinematicState extends LoadableGameState
 			throws SlickException {
 		if (stateInfo.isInitialized())
 		{
+			stateInfo.processMessages();
 			cinematic.update(delta, stateInfo.getCamera(), stateInfo.getInput(), stateInfo.getGc(), stateInfo.getResourceManager().getMap(), stateInfo);
 		}
 		stateInfo.getInput().update(delta);

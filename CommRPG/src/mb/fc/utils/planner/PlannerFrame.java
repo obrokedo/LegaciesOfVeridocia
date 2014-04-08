@@ -329,7 +329,14 @@ public class PlannerFrame extends JFrame implements ActionListener, ChangeListen
 				if (pvd.getRefersTo() == PlannerValueDef.REFERS_NONE)
 				{
 					System.out.println("TAG: " + pvd.getTag() + " " + ta.getParams().get(pvd.getTag()));
-					plannerLine.getValues().add(Integer.parseInt(ta.getParams().get(pvd.getTag())));
+					int value = 0;
+					try
+					{
+						value = Integer.parseInt(ta.getParams().get(pvd.getTag()));
+					}
+					catch (NumberFormatException ex) {}
+					
+					plannerLine.getValues().add(value);
 				}
 				else
 				{
@@ -784,7 +791,9 @@ public class PlannerFrame extends JFrame implements ActionListener, ChangeListen
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_QUEST, PlannerValueDef.TYPE_INT, "exclude", false, 
 				"Exclude Quest", "The ID of the quest that CAN NOT be complete for this to be shown"));
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_TRIGGER, PlannerValueDef.TYPE_INT, "trigger", false, 
-				"Trigger ID", "The ID of the trigger that should be run after this message is complete"));
+				"Trigger ID", "The ID of the trigger that should be run after this message is complete."));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "portrait", false, 
+				"Portrait Index", "The index of the portrait in the Image/Portraits file starting from index 0 that should be shown during this text. A value of -1 means no portrait should be shown"));
 		allowableLines.add(new PlannerLineDef("string", "Message Text", "A message that should be displayed", definingValues));		
 		
 		textContainer = new PlannerContainerDef(definingLine, allowableContainers, allowableLines, listOfLists, PlannerValueDef.REFERS_TEXT - 1);
