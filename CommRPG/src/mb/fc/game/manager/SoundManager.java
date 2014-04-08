@@ -26,14 +26,13 @@ public class SoundManager extends Manager
 	public void playMusicByName(String name)
 	{
 		Music playingMusic = stateInfo.getResourceManager().getMusicByName(name);
-		playingMusic.loop(1, 1);
+		playingMusic.loop(1, 0);
 		stateInfo.setPlayingMusic(playingMusic);
 	}
 	
 
 	public void playMusicByName(String name, float volume)
 	{
-		System.out.println("Play music by name " + name + " " + volume);
 		Music playingMusic = stateInfo.getResourceManager().getMusicByName(name);
 		playingMusic.loop(1, volume);
 		stateInfo.setPlayingMusic(playingMusic);
@@ -69,7 +68,6 @@ public class SoundManager extends Manager
 	@Override
 	public void recieveMessage(Message message) 
 	{
-		System.out.println("GOT MESSAGE " + message.getMessageType());
 		switch (message.getMessageType())
 		{
 			case Message.MESSAGE_SOUND_EFFECT:
@@ -83,7 +81,6 @@ public class SoundManager extends Manager
 				resumeMusic();
 				break;
 			case Message.MESSAGE_PLAY_MUSIC:
-				System.out.println("Message play music");
 				am = (AudioMessage) message;
 				playMusicByName(am.getAudio(), am.getVolume());
 				break;

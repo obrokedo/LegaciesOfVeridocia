@@ -126,6 +126,7 @@ public class TownState extends LoadableGameState
 					stateInfo.sendMessage(Message.MESSAGE_SHOW_SYSTEM_MENU);
 					stateInfo.setInputDelay(System.currentTimeMillis() + 200);
 				}
+				/*
 				else if (container.getInput().isKeyDown(Input.KEY_C))
 				{
 					stateInfo.sendMessage(Message.MESSAGE_SHOW_HEROES);
@@ -136,9 +137,15 @@ public class TownState extends LoadableGameState
 					stateInfo.sendMessage(Message.MESSAGE_SHOW_PRIEST);
 					stateInfo.setInputDelay(System.currentTimeMillis() + 200);
 				}
+				*/
 				else if (container.getInput().isKeyDown(Input.KEY_D))
 				{
 					stateInfo.sendMessage(Message.MESSAGE_INVESTIGATE);
+					stateInfo.setInputDelay(System.currentTimeMillis() + 200);
+				}
+				else if (container.getInput().isKeyDown(Input.KEY_ENTER))
+				{					
+					stateInfo.sendMessage(Message.MESSAGE_SHOW_DEBUG);
 					stateInfo.setInputDelay(System.currentTimeMillis() + 200);
 				}
 			}

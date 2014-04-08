@@ -57,6 +57,7 @@ public class Message implements Serializable
 	public static final int MESSAGE_RESUME_MUSIC = 49;
 	public static final int MESSAGE_PLAY_MUSIC = 50;
 	public static final int MESSAGE_FADE_MUSIC = 51;
+	public static final int MESSAGE_SHOW_DEBUG = 52;
 	private int messageType;
 	private boolean immediate = false;
 	

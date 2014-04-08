@@ -19,6 +19,8 @@ import javax.swing.event.ListSelectionListener;
 
 public class PlannerTab extends JPanel implements ActionListener, ListSelectionListener
 {
+	private static final long serialVersionUID = 1L;
+	
 	private Hashtable<String, PlannerContainerDef> containersByName;
 	private String[] containers;
 	private JList<String> list;
@@ -102,8 +104,8 @@ public class PlannerTab extends JPanel implements ActionListener, ListSelectionL
 			this.remove(currentPCScroll);
 		if (currentPC != null)
 		{
-			currentPC.commitChanges();
-			listModel.set(selectedPC, currentPC.getPcdef().getDefiningLine().getTag() + " " + currentPC.getDescription());
+			currentPC.commitChanges();			
+			listModel.set(selectedPC, "(ID: " + (selectedPC) + ") " + currentPC.getDescription());
 			currentPC.getPcdef().getDataLines().set(selectedPC, currentPC.getDescription());	
 		}
 		
@@ -130,7 +132,7 @@ public class PlannerTab extends JPanel implements ActionListener, ListSelectionL
 	public void addPlannerContainer(PlannerContainer pc)
 	{
 		this.listPC.add(pc);
-		listModel.addElement(pc.getPcdef().getDefiningLine().getTag() + " " + pc.getDescription());
+		listModel.addElement("(ID: " + (this.listPC.size() - 1) + ") " + pc.getDescription());
 	}
 
 	public ArrayList<PlannerContainer> getListPC() {

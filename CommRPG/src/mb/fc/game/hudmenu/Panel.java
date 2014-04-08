@@ -2,7 +2,6 @@ package mb.fc.game.hudmenu;
 
 import java.awt.Font;
 
-import mb.fc.engine.state.StateInfo;
 import mb.fc.game.ui.FCGameContainer;
 import mb.fc.loading.FCResourceManager;
 
@@ -44,6 +43,7 @@ public abstract class Panel
 	public static final int PANEL_BATTLE_MOVE = 22;
 	public static final int PANEL_ITEM = 23;
 	public static final int PANEL_ITEM_OPTIONS = 24;
+	public static final int PANEL_DEBUG = 25;
 	
 	protected int panelType;	
 	public final static Color COLOR_MOUSE_OVER = new Color(0, 0, 153);

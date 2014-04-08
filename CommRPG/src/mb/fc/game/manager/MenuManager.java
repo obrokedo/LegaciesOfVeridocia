@@ -4,6 +4,7 @@ import mb.fc.engine.message.Message;
 import mb.fc.engine.message.ShopMessage;
 import mb.fc.engine.message.SpeechMessage;
 import mb.fc.engine.message.SpriteContextMessage;
+import mb.fc.game.menu.DebugMenu;
 import mb.fc.game.menu.HeroStatMenu;
 import mb.fc.game.menu.HeroesStatMenu;
 import mb.fc.game.menu.PriestMenu;
@@ -73,6 +74,9 @@ public class MenuManager extends Manager
 				break;
 			case Message.MESSAGE_SHOW_PRIEST:
 				stateInfo.addMenu(new PriestMenu(stateInfo, stateInfo.getGc(), stateInfo.getClientProfile().getHeroes()));
+				break;
+			case Message.MESSAGE_SHOW_DEBUG:
+				stateInfo.addMenu(new DebugMenu(stateInfo.getGc()));
 				break;
 		}
 	}

@@ -155,7 +155,10 @@ public class StateInfo
 		this.currentMap = psi.getClientProgress().getMap();
 		
 		if (!isCinematic)
+		{
+			System.out.println("Perform first trigger");
 			psi.getResourceManager().getTriggerEventById(0).perform(this);
+		}
 	}
 	
 	private void initializeMapObjects()

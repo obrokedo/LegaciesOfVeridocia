@@ -82,6 +82,16 @@ public class PersistentStateInfo
 					getResourceManager());
 		getGame().enterState(CommRPG.STATE_GAME_LOADING, new FadeOutTransition(Color.black, 250), new EmptyTransition());
 	}	
+	
+	public void loadCinematic(String map)
+	{
+		gc.getInput().removeAllKeyListeners();
+		
+		getGame().setLoadingInfo(map, map,
+				(LoadableGameState) getGame().getState(CommRPG.STATE_GAME_CINEMATIC),
+					getResourceManager());
+		getGame().enterState(CommRPG.STATE_GAME_LOADING, new FadeOutTransition(Color.black, 250), new EmptyTransition());
+	}
 
 	public Camera getCamera() {
 		return camera;

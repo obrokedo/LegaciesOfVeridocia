@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import mb.fc.game.ui.FCGameContainer;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 public class ChatPanel extends Panel 
@@ -26,6 +27,7 @@ public class ChatPanel extends Panel
 	public void render(FCGameContainer gc, Graphics graphics) 
 	{
 		int startY = gc.getHeight() - 50; 
+		graphics.setColor(Color.white);
 		for (int i = 0; i < timedMessages.size(); i++)
 			graphics.drawString(timedMessages.get(i).getName(), 50 + gc.getDisplayPaddingX(), startY - 30 * i);
 	}
@@ -50,7 +52,7 @@ public class ChatPanel extends Panel
 		public TimedMessage(String name) {
 			super();
 			this.name = name;
-			this.timeToLive = 30;
+			this.timeToLive = 300;
 		}
 		int update(int delta)
 		{

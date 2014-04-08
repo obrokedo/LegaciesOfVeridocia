@@ -189,7 +189,7 @@ public class TriggerEvent
 
 		@Override
 		public boolean perform(StateInfo stateInfo) {
-			stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_PLAY_MUSIC, song, 1, true));
+			stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_PLAY_MUSIC, song, .5f, true));
 			return false;
 		}
 	}

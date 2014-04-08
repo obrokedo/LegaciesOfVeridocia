@@ -51,7 +51,7 @@ public class PlannerFrame extends JFrame implements ActionListener, ChangeListen
 
 	public static void main(String args[])
 	{
-		PlannerFrame pf = new PlannerFrame();
+		new PlannerFrame();
 		System.out.println("Planner frame started");
 	}
 	

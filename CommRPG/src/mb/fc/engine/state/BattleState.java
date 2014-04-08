@@ -1,11 +1,13 @@
 package mb.fc.engine.state;
 
 import mb.fc.engine.CommRPG;
+import mb.fc.engine.message.Message;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.manager.InitiativeManager;
 import mb.fc.game.manager.KeyboardManager;
 import mb.fc.game.manager.MenuManager;
 import mb.fc.game.manager.PanelManager;
+import mb.fc.game.manager.SoundManager;
 import mb.fc.game.manager.SpriteManager;
 import mb.fc.game.manager.TurnManager;
 import mb.fc.loading.FCResourceManager;
@@ -18,6 +20,7 @@ import mb.gl2.loading.ResourceManager;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -31,6 +34,7 @@ public class BattleState extends LoadableGameState
 	private PanelManager panelManager;
 	private MenuManager menuManager;
 	private KeyboardManager keyboardManager;
+	private SoundManager soundManager;
 	
 	private InitiativeManager initManager;
 	private TurnManager turnManager;
@@ -60,6 +64,8 @@ public class BattleState extends LoadableGameState
 		stateInfo.registerManager(initManager);
 		this.turnManager = new TurnManager();
 		stateInfo.registerManager(turnManager);
+		this.soundManager = new SoundManager();
+		stateInfo.registerManager(soundManager);
 	}
 	
 	@Override
@@ -125,17 +131,24 @@ public class BattleState extends LoadableGameState
 
 			turnManager.update(game, delta);
 			spriteManager.update(delta);
+			soundManager.update(delta);
 			
-			/*
+			
 			if (System.currentTimeMillis() > stateInfo.getInputDelay())
 			{
+				if (container.getInput().isKeyDown(Input.KEY_ENTER))
+				{					
+					stateInfo.sendMessage(Message.MESSAGE_SHOW_DEBUG);
+					stateInfo.setInputDelay(System.currentTimeMillis() + 200);
+				}
+				/*
 				if (container.getInput().isKeyDown(Input.KEY_ESCAPE))
 				{
 					stateInfo.sendMessage(Message.MESSAGE_SHOW_SYSTEM_MENU);
 					stateInfo.setInputDelay(System.currentTimeMillis() + 200);
-				}
+				}*/
 			}
-			*/
+			
 			
 			stateInfo.getInput().update(delta);
 		}		
