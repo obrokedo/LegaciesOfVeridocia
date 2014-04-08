@@ -166,6 +166,15 @@ public class CommRPG extends StateBasedGame   {
 		return persistentStateInfo;
 	}
 	
+	/**
+	 * Sets the loading state to use existing resources that are already contained in the resource manager
+	 * and to just load the specified text and map. It then transtions into the specifed next state.
+	 * 
+	 * @param text The text file to load
+	 * @param map The map file to load
+	 * @param nextState The next state that should be entered once the loading is done
+	 * @param fcResourceManager Existing resource manager that contains all resources already loaded
+	 */
 	public void setLoadingInfo(String text, String map, LoadableGameState nextState, 
 			FCResourceManager fcResourceManager)
 	{
@@ -175,7 +184,16 @@ public class CommRPG extends StateBasedGame   {
 						new FCLoadingRenderSystem(this.getContainer()));
 	}
 	
-	public void setLoadingInfo(String text, String map, LoadableGameState nextState, boolean loadResources)
+	/**
+	 * Configures the loading state to load all resoruces and once it has will load the specified
+	 * map and text files. It will then move into the next specified state. This should only be called
+	 * once per execution as we don't need to load the files every time.
+	 * 
+	 * @param text The text file to load
+	 * @param map The map file to load
+	 * @param nextState The state that should be entered once the loading is done
+	 */
+	public void setLoadingInfo(String text, String map, LoadableGameState nextState)
 	{
 		loadingState.setLoadingInfo(text, map, true, true,
 				new FCResourceManager(), 

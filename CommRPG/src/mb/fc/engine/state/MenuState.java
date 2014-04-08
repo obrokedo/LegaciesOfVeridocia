@@ -89,11 +89,11 @@ public class MenuState extends LoadableGameState implements StringListener
 		
 		if (cin)
 			((CommRPG) game).setLoadingInfo(map, map,
-				(LoadableGameState) game.getState(CommRPG.STATE_GAME_CINEMATIC), true);
+				(LoadableGameState) game.getState(CommRPG.STATE_GAME_CINEMATIC));
 		else
 		{
 			((CommRPG) game).setLoadingInfo(map, map,
-					(LoadableGameState) game.getState(CommRPG.STATE_GAME_TOWN), true);
+					(LoadableGameState) game.getState(CommRPG.STATE_GAME_TOWN));
 		}
 		game.enterState(CommRPG.STATE_GAME_LOADING);
 		

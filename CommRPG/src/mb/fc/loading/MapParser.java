@@ -61,7 +61,7 @@ public class MapParser
 					layer[index / width][index % width] = Integer.parseInt(tileTag.getParams().get("gid"));
 					index++;					
 				}
-
+				
 				map.addLayer(layer);
 			}
 			else if (childArea.getTagType().equalsIgnoreCase("objectgroup"))

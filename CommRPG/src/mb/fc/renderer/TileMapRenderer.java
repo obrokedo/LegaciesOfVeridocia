@@ -5,6 +5,7 @@ import mb.fc.game.Camera;
 import mb.fc.game.manager.Manager;
 import mb.fc.game.ui.FCGameContainer;
 import mb.fc.map.Map;
+import mb.fc.map.Roof;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -84,6 +85,25 @@ public class TileMapRenderer extends Manager
 				
 				// g.drawString(mapX +"\n" + mapY, frameX * map.getTileWidth() - xOffset + gc.getDisplayPaddingX(), frameY * map.getTileHeight() - yOffset);
 			}			
+		}
+		
+		for (Roof roof : map.getRoofIterator())
+		{
+			if (!roof.isVisible())
+				continue;
+			
+			for (int mapX = (int) roof.getRectangle().getX(); mapX < roof.getRectangle().getWidth() + roof.getRectangle().getX(); mapX++)
+			{
+				for (int mapY = (int) roof.getRectangle().getY(); mapY < roof.getRectangle().getHeight() + roof.getRectangle().getY(); mapY++)
+				{					
+					if (map.getMapLayer(4)[mapY][mapX] != 0)
+					{
+						g.drawImage(map.getSprite(map.getMapLayer(4)[mapY][mapX]), 
+							mapX * map.getTileRenderWidth() - xOffset + gc.getDisplayPaddingX(), mapY * map.getTileRenderHeight() - yOffset);						
+					}
+				}
+			}
+									
 		}
 		
 		g.setColor(Color.black);

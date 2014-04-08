@@ -96,7 +96,7 @@ public class LoadingState extends BasicGameState
 				}
 				// If we are not loading the map then we just want to load the specified resources
 				else if (loadResources)
-					allLines = FCResourceManager.readAllLines(textName);						
+					allLines = FCResourceManager.readAllLines(textName);	
 				loadAmount = allLines.size();	
 				
 			} 

@@ -326,4 +326,22 @@ public class TriggerEvent
 			return true;
 		}
 	}
+	
+	public class TriggerToggleRoof extends TriggerType
+	{
+		private int roofId;
+		private boolean show;
+		
+		public TriggerToggleRoof(int id, boolean showRoof)
+		{
+			roofId = id;
+			this.show = showRoof;
+		}
+
+		@Override
+		public boolean perform(StateInfo stateInfo) {
+			stateInfo.getResourceManager().getMap().getRoofById(roofId).setVisible(show);
+			return false;
+		}
+	}
 }

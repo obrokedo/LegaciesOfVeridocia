@@ -9,6 +9,7 @@ import mb.fc.game.sprite.CombatSprite;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.geom.Rectangle;
 
 /**
  * @author Broked
@@ -66,6 +67,7 @@ public class Map
 	private ArrayList<MapObject> mapObjects = new ArrayList<MapObject>();
 	private Hashtable<Integer, Integer> landEffectByTileId = new Hashtable<Integer, Integer>();
 	private Hashtable<TerrainTypeIndicator, Integer> overriddenTerrain = new Hashtable<TerrainTypeIndicator, Integer>();
+	private Hashtable<Integer, Roof> roofsById = new Hashtable<Integer, Roof>();
 	
 	public Map() {
 		super();
@@ -78,6 +80,7 @@ public class Map
 		landEffectByTileId.clear();
 		tileSets.clear();
 		overriddenTerrain.clear();
+		roofsById.clear();
 	}
 	
 	public void addLayer(int[][] layer)
@@ -140,6 +143,16 @@ public class Map
 					}
 				}
 			}						
+		}
+		else if (mo.getKey().equalsIgnoreCase("roof"))
+		{
+			int roofWidth = mo.getWidth() / getTileRenderWidth();
+			int roofHeight = mo.getHeight() / getTileRenderHeight();
+			
+			int startX = mo.getX() / getTileRenderWidth();
+			int startY = mo.getY() / getTileRenderHeight();
+
+			roofsById.put(Integer.parseInt(mo.getParam("roofid")), new Roof(new Rectangle(startX, startY, roofWidth, roofHeight)));
 		}
 		else
 			this.mapObjects.add(mo);
@@ -300,8 +313,18 @@ public class Map
 				return false;
 			return true;
 		}
-		private Map getOuterType() {
+		private Map getOuterType() {			
 			return Map.this;
 		}
+	}
+	
+	public Iterable<Roof> getRoofIterator()
+	{
+		return roofsById.values();
+	}
+	
+	public Roof getRoofById(int id)
+	{
+		return roofsById.get(id);
 	}
 }

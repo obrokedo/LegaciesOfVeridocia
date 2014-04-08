@@ -1037,6 +1037,18 @@ public class PlannerFrame extends JFrame implements ActionListener, ChangeListen
 				"Hero ID", "The ID of the hero that should be added to the force"));
 		allowableLines.add(new PlannerLineDef("addhero", "Add Hero", "Adds a new hero to the force", definingValues));
 		
+		// Hide Roof
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "roofid", false, 
+				"Roof ID", "The ID of the roof that should no longer be visible"));
+		allowableLines.add(new PlannerLineDef("hideroof", "Hide Roof", "Hides the roof with designated ID. The roof will remain hidden until a show roof command is issued for that roof.", definingValues));
+		
+		// Show Roof
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "roofid", false, 
+				"Roof ID", "The ID of the roof that should be visible"));
+		allowableLines.add(new PlannerLineDef("showroof", "Show Roof", "Shows the roof with designated ID.", definingValues));
+		
 		// TODO SHOW SHOP
 		// TODO ADD HERO
 		

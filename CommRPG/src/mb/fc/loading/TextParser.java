@@ -130,6 +130,14 @@ public class TextParser
 						{
 							te.addTriggerType(te.new TriggerShowCinematic(Integer.parseInt(actionParams.get("cinematicid"))));
 						}
+						else if (tagArea.getChildren().get(k).getTagType().equalsIgnoreCase("showroof"))
+						{
+							te.addTriggerType(te.new TriggerToggleRoof(Integer.parseInt(actionParams.get("roofid")), true));
+						}
+						else if (tagArea.getChildren().get(k).getTagType().equalsIgnoreCase("hideroof"))
+						{
+							te.addTriggerType(te.new TriggerToggleRoof(Integer.parseInt(actionParams.get("roofid")), false));
+						}
 					}
 				}				
 				

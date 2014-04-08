@@ -5,12 +5,12 @@ import mb.fc.map.MapObject;
 
 import org.newdawn.slick.geom.Shape;
 
-public class Trigger 
+public class TriggerLocation 
 {
 	private Shape triggerLocation;
 	private TriggerEvent event;
 	
-	public Trigger(StateInfo stateInfo, MapObject mo)
+	public TriggerLocation(StateInfo stateInfo, MapObject mo)
 	{
 		triggerLocation = mo.getShape();
 		event = new TriggerEvent(-1, false, false);

@@ -22,7 +22,7 @@ import mb.fc.game.persist.ClientProgress;
 import mb.fc.game.resource.HeroResource;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.sprite.Sprite;
-import mb.fc.game.trigger.Trigger;
+import mb.fc.game.trigger.TriggerLocation;
 import mb.fc.game.ui.FCGameContainer;
 import mb.fc.loading.FCResourceManager;
 import mb.fc.map.Map;
@@ -45,7 +45,7 @@ public class StateInfo
 	private PersistentStateInfo psi;
 	
 	// These values need to be reinitialized each time a map is loaded
-	private ArrayList<Trigger> triggers;
+	private ArrayList<TriggerLocation> triggers;
 	private ArrayList<Sprite> sprites;
 	private ArrayList<CombatSprite> combatSprites;
 	private ArrayList<Panel> panels;
@@ -86,7 +86,7 @@ public class StateInfo
 		this.managers = new ArrayList<Manager>();
 		this.messagesToProcess = new ArrayList<Message>();		
 		this.newMessages = new ArrayList<Message>();
-		this.triggers = new ArrayList<Trigger>();
+		this.triggers = new ArrayList<TriggerLocation>();
 		this.fcInput = new FCInput();
 		
 		camera = psi.getCamera();
@@ -164,11 +164,11 @@ public class StateInfo
 		{
 			if (!isCombat && mo.getKey().equalsIgnoreCase("trigger"))
 			{
-				triggers.add(new Trigger(this, mo));
+				triggers.add(new TriggerLocation(this, mo));
 			}
 			else if (isCombat && mo.getKey().equalsIgnoreCase("battletrigger"))
 			{
-				triggers.add(new Trigger(this, mo));
+				triggers.add(new TriggerLocation(this, mo));
 			}
 		}
 	}
@@ -397,7 +397,7 @@ public class StateInfo
 	/****************************/
 	public void checkTriggers(int mapX, int mapY)
 	{
-		for (Trigger trigger : triggers)
+		for (TriggerLocation trigger : triggers)
 		{
 			if (trigger.contains(mapX, mapY))
 			{
