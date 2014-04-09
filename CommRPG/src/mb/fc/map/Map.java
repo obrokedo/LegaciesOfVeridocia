@@ -69,6 +69,8 @@ public class Map
 	private Hashtable<TerrainTypeIndicator, Integer> overriddenTerrain = new Hashtable<TerrainTypeIndicator, Integer>();
 	private Hashtable<Integer, Roof> roofsById = new Hashtable<Integer, Roof>();
 	
+	private final static int TILE_RATIO = 2;
+	
 	public Map() {
 		super();
 	}
@@ -110,12 +112,12 @@ public class Map
 	
 	public int getTileEffectiveWidth()
 	{
-		return 24;
+		return tileWidth * TILE_RATIO;
 	}
 	
 	public int getTileEffectiveHeight()
 	{
-		return 24;
+		return tileHeight * TILE_RATIO;
 	}
 
 	public int getTileRenderWidth() {
@@ -243,7 +245,7 @@ public class Map
 	
 	public boolean isMarkedMoveable(int tileX, int tileY)
 	{
-		return mapLayer.get(3)[tileY * 2][tileX * 2] != 0;
+		return mapLayer.get(3)[tileY * TILE_RATIO][tileX * TILE_RATIO] != 0;
 	}
 	
 	private class TileSet

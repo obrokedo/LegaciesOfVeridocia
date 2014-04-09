@@ -24,6 +24,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -103,7 +104,7 @@ public class AttackCinematicState extends LoadableGameState
 	/**
 	 * 
 	 */
-	private Panel textMenu;
+	private SpeechMenu textMenu;
 	private CombatSprite attacker;
 	private ArrayList<CombatSprite> targets;
 	private int attackerAnimIndex = 0, attackerDelta = 0;
@@ -133,6 +134,7 @@ public class AttackCinematicState extends LoadableGameState
 	
 	private FCResourceManager frm;
 	private FCInput input;
+	private Music music;
 	
 	//private Color[] targetColors = new Color[] {Color.red, Color.blue, Color.green};
 	//private Color attackerColor = Color.yellow;
@@ -253,6 +255,9 @@ public class AttackCinematicState extends LoadableGameState
 		handleTransitionUpdate(container, delta);
 		
 		handleStateUpdate(container, game, delta);
+		
+		if (textMenu != null)
+			textMenu.handleUserInput(input, null);
 	}
 	
 	private void handleAttackerUpdate(GameContainer container, int delta)
@@ -308,7 +313,7 @@ public class AttackCinematicState extends LoadableGameState
 				if (state == STATE_ATTACKING && attackerAnimIndex == attackerAnim.frames.size() - 1)
 				{
 					
-					textMenu = new SpeechMenu(battleResults.text.get(targetIndex), container);
+					textMenu = new SpeechMenu(battleResults.text.get(targetIndex), container, true);
 					
 					if (spellAnim != null)
 						spellAnimIndex = 0;							
@@ -365,7 +370,7 @@ public class AttackCinematicState extends LoadableGameState
 					{
 						if (battleResults.attackOverText != null)
 						{
-							textMenu = new SpeechMenu(battleResults.attackOverText, container);
+							textMenu = new SpeechMenu(battleResults.attackOverText, container, true);
 							if (battleResults.levelUpResult != null)
 								attacker.getHeroProgression().levelUp(attacker, battleResults.levelUpResult, frm);
 						}
@@ -380,7 +385,7 @@ public class AttackCinematicState extends LoadableGameState
 					{
 						deathFade = false;
 						targetAnim = targets.get(++targetIndex).getAnimation("UnStand");
-						textMenu = new SpeechMenu(battleResults.text.get(targetIndex), container);						
+						textMenu = new SpeechMenu(battleResults.text.get(targetIndex), container, true);						
 						performBattleResult();
 						
 					}
@@ -423,17 +428,19 @@ public class AttackCinematicState extends LoadableGameState
 			{
 				if (textMenu != null)
 				{
-					switch (((SpeechMenu) textMenu).handleUserInput(input, null))
+					switch (textMenu.handleUserInput(input, null))
 					{
 						case MENU_CLOSE:
 							container.getInput().removeAllKeyListeners();
 							game.enterState(CommRPG.STATE_GAME_BATTLE);
+							music.stop();
 							break;
 						default:
 							break;						
 					}
 				}
-				game.enterState(CommRPG.STATE_GAME_BATTLE);
+				else
+					game.enterState(CommRPG.STATE_GAME_BATTLE);
 			}
 			else if (state == STATE_ATTACK_CLIMAX)
 			{
@@ -456,7 +463,7 @@ public class AttackCinematicState extends LoadableGameState
 						
 						if (battleResults.attackOverText != null)
 						{
-							textMenu = new SpeechMenu(battleResults.attackOverText, container);
+							textMenu = new SpeechMenu(battleResults.attackOverText, container, true);
 							if (battleResults.levelUpResult != null)
 								attacker.getHeroProgression().levelUp(attacker, battleResults.levelUpResult, frm);
 						}
@@ -549,12 +556,12 @@ public class AttackCinematicState extends LoadableGameState
 		this.battleResults = battleResults;
 				
 		if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_ATTACK)
-			textMenu = new SpeechMenu(attacker.getName() + " Attacks!", gc);
+			textMenu = new SpeechMenu(attacker.getName() + " Attacks!", gc, true);
 		else if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_SPELL)
 			textMenu = new SpeechMenu(attacker.getName() + " casts " + battleResults.battleCommand.getSpell().getName() + " " 
-					+ (battleResults.battleCommand.getLevel()), gc);
+					+ (battleResults.battleCommand.getLevel()), gc, true);
 		else if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_ITEM)
-			textMenu = new SpeechMenu(attacker.getName() + " uses the " + battleResults.battleCommand.getItem().getName(), gc);
+			textMenu = new SpeechMenu(attacker.getName() + " uses the " + battleResults.battleCommand.getItem().getName(), gc, true);
 		state = 0;
 		stateDelta = 0;
 		
@@ -580,6 +587,9 @@ public class AttackCinematicState extends LoadableGameState
 			targetMenus.add(new SpriteContextPanel((targets.get(0).isHero() ? Panel.PANEL_HEALTH_BAR : Panel.PANEL_ENEMY_HEALTH_BAR), cs, gc));			
 		}
 		targetAnim = targets.get(targetIndex).getAnimation("UnStand");
+		
+		music = frm.getMusicByName("attack");
+		music.play();
 		
 		// Get the land tile image for the current target
 		// TODO Change this on a by-target basis

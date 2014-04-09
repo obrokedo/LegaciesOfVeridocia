@@ -137,16 +137,16 @@ public class TownMoveManager extends Manager
 		switch (movingDirection)
 		{
 			case UP:
-				current.setLocY(current.getLocY() - 2);
+				current.setLocY(current.getLocY() - 4);
 				break;
 			case DOWN:
-				current.setLocY(current.getLocY() + 2);
+				current.setLocY(current.getLocY() + 4);
 				break;
 			case LEFT:
-				current.setLocX(current.getLocX() - 2);
+				current.setLocX(current.getLocX() - 4);
 				break;
 			case RIGHT:
-				current.setLocX(current.getLocX() + 2);
+				current.setLocX(current.getLocX() + 4);
 				break;
 		}
 		

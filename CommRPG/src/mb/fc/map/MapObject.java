@@ -134,7 +134,7 @@ public class MapObject
 			{
 				if (shape.contains(x + startX + 1, y + startY + 1))
 				{
-					((CombatSprite) sprite).setLocation(x + startX, y + startY);
+					((CombatSprite) sprite).setLocation((x + startX), (y + startY));
 				}
 				else
 					getOnNext = false;

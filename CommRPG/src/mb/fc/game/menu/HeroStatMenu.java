@@ -106,18 +106,18 @@ public class HeroStatMenu extends Menu
 		/*****************************/
 		Panel.drawPanelBox(x, y + 156, 124, 160, graphics);
 		graphics.setColor(Panel.COLOR_FOREFRONT);
-		graphics.drawImage(selectedSprite.getAnimationImageAtIndex(selectedSprite.getAnimation("UnDown").frames.get(0).sprites.get(0).imageIndex), x + 49, y + 170);
-		graphics.drawString("Kills", x + 15, y + 190);		
-		graphics.drawString("Defeat", x + 15, y + 240);
+		graphics.drawImage(selectedSprite.getAnimationImageAtIndex(selectedSprite.getAnimation("UnDown").frames.get(0).sprites.get(0).imageIndex), x + 30, y + 165);
+		graphics.drawString("Kills", x + 15, y + 200);		
+		graphics.drawString("Defeat", x + 15, y + 250);
 		if (selectedSprite.isHero())
 		{
-			graphics.drawString(selectedSprite.getKills() + "", x + 30, y + 210);
-			graphics.drawString(selectedSprite.getDefeat() + "", x + 30, y + 260);
+			graphics.drawString(selectedSprite.getKills() + "", x + 30, y + 220);
+			graphics.drawString(selectedSprite.getDefeat() + "", x + 30, y + 270);
 		}
 		else
 		{
-			graphics.drawString("?", x + 30, y + 210);
-			graphics.drawString("?", x + 30, y + 260);
+			graphics.drawString("?", x + 30, y + 220);
+			graphics.drawString("?", x + 30, y + 270);
 		}
 		
 		/************************/

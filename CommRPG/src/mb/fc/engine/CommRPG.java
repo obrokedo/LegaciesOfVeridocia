@@ -51,6 +51,8 @@ public class CommRPG extends StateBasedGame   {
 	
 	private PersistentStateInfo persistentStateInfo;
 	
+	public static final int GLOBAL_WORLD_SCALE = 2;
+	
 	/**
 	 * Entry point into Eaton
 	 */

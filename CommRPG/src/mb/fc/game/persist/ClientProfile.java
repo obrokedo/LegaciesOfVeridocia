@@ -34,6 +34,7 @@ public class ClientProfile implements Serializable
 		startingHeroIds = new ArrayList<Integer>();
 		startingHeroIds.add(0);
 		startingHeroIds.add(1);
+		startingHeroIds.add(2);
 		
 		/*
 		leaderProgression = new HeroProgression(new int[][] {{KnownSpell.ID_BLAZE, 2, 6, 16, 27}}, 

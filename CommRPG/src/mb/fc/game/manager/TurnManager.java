@@ -38,6 +38,7 @@ import mb.fc.game.turnaction.WaitAction;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -96,6 +97,7 @@ public class TurnManager extends Manager implements KeyboardListener
 			{
 				processTurnActions(game);
 			}
+			Input i = stateInfo.getGc().getInput();
 		}
 	}
 	
@@ -113,7 +115,7 @@ public class TurnManager extends Manager implements KeyboardListener
 			graphics.setColor(Color.white);
 			graphics.drawRect(cursor.getX() - stateInfo.getCamera().getLocationX(), 
 					cursor.getY() - stateInfo.getCamera().getLocationY(), 
-						stateInfo.getTileWidth(), stateInfo.getTileHeight());
+						stateInfo.getTileWidth() - 1, stateInfo.getTileHeight() - 1);
 		}
 	}
 	
@@ -126,14 +128,21 @@ public class TurnManager extends Manager implements KeyboardListener
 				if (cursor.getX() == currentSprite.getLocX() &&
 					cursor.getY() == currentSprite.getLocY())
 				{
-					if (ownsSprite)						
-						stateInfo.addKeyboardListener(ms);				
+					System.out.println("OWNS SPRITE: " + ownsSprite);
+					if (ownsSprite)	
+					{
+						System.out.println("ADD KEYBOARD LISTENER " + ms);
+						stateInfo.addKeyboardListener(ms);
+					}
 					landEffectPanel.setLandEffect(stateInfo.getCurrentMap().getLandEffectByTile(currentSprite.getMovementType(), 
 							currentSprite.getTileX(), currentSprite.getTileY()));
 					stateInfo.addPanel(landEffectPanel);					
 					displayMoveable = true;
 					// The display cursor will toggled via the wait
-					turnActions.remove(0);							
+					turnActions.remove(0);	
+					
+					stateInfo.removePanel(Panel.PANEL_HEALTH_BAR);
+					currentSprite.triggerOverEvent(stateInfo);
 					
 					if (turnActions.size() == 0)
 						displayCursor = false;
@@ -175,7 +184,7 @@ public class TurnManager extends Manager implements KeyboardListener
 				}
 				turnActions.clear();
 				stateInfo.removePanel(landEffectPanel);
-				stateInfo.removeKeyboardListeners();
+				// stateInfo.removeKeyboardListeners();
 				displayAttackable = false;
 				displayMoveable = false;
 				cursor.setLocation(currentSprite.getLocX(), currentSprite.getLocY());
@@ -259,11 +268,10 @@ public class TurnManager extends Manager implements KeyboardListener
 	
 	private void initializeCombatantTurn(CombatSprite sprite)
 	{				
+		System.out.println("REMOVE ALL KEYBOARD LISTENERS");
+		stateInfo.removeKeyboardListeners();
 		currentSprite = sprite;						
 		stateInfo.setCurrentSprite(currentSprite);
-		turnActions.add(new TurnAction(TurnAction.ACTION_MOVE_CURSOR));
-		turnActions.add(new WaitAction(3));
-		
 		
 		as = null;
 		this.battleResults = null;
@@ -289,8 +297,11 @@ public class TurnManager extends Manager implements KeyboardListener
 		determineMoveableSpaces();
 		
 		// If we own this sprite then we add keyboard input listener 
-		if (ownsSprite)
-			stateInfo.addKeyboardListener(this);
+		// if (ownsSprite)
+			// stateInfo.addKeyboardListener(this);
+		
+		turnActions.add(new TurnAction(TurnAction.ACTION_MOVE_CURSOR));
+		turnActions.add(new WaitAction(3));
 		
 		if (sprite.getAi() != null)
 			turnActions.addAll(sprite.getAi().performAI(stateInfo, ms, currentSprite));
@@ -447,6 +458,7 @@ public class TurnManager extends Manager implements KeyboardListener
 					displayMoveable = false;
 					displayCursor = true;
 					stateInfo.removePanel(landEffectPanel);
+					System.out.println("RESET SPRITE LOC REMOVE KEYBOARD LISTENER");
 					stateInfo.removeKeyboardListener();
 				}
 				else

@@ -26,11 +26,18 @@ public class SpeechMenu extends Menu
 	private boolean initialized = false;
 	
 	private boolean textMoving = true;
-	private int textMovingIndex = 0; 
+	private int textMovingIndex = 0;
+	private boolean attackCin = false;
 	
-	public SpeechMenu(String text, GameContainer gc) 
+	public SpeechMenu(String text, GameContainer gc, boolean attackCin) 
 	{
 		this(text, gc, -1, -1, null);
+		this.attackCin = attackCin;		
+		if (attackCin)
+		{
+			y = 0;
+			this.textIndex = panelText.size() - 1;
+		}
 	}
 	
 	public SpeechMenu(String text, GameContainer gc, int portraitId, StateInfo stateInfo) 
@@ -38,7 +45,8 @@ public class SpeechMenu extends Menu
 		this(text, gc, -1, portraitId, stateInfo);
 	}
 	
-	public SpeechMenu(String text, GameContainer gc, int triggerId, int portraitId, StateInfo stateInfo) 
+	public SpeechMenu(String text, GameContainer gc, int triggerId, 
+			int portraitId, StateInfo stateInfo) 
 	{
 		super(Panel.PANEL_SPEECH);
 		width = gc.getWidth() - 100;
@@ -78,7 +86,7 @@ public class SpeechMenu extends Menu
 		if (portraitId != -1)
 			portrait = stateInfo.getResourceManager().getSpriteSheets().get("portraits").getSprite(portraitId, 0);		
 		else
-			portrait = null;
+			portrait = null;				
 	}
 
 	public void render(FCGameContainer gc, Graphics graphics)
@@ -106,10 +114,11 @@ public class SpeechMenu extends Menu
 	public MenuUpdate handleUserInput(FCInput input, StateInfo stateInfo) 
 	{
 		if (!initialized)
-		{
-			y -= 15;
+		{			
 			if (y == 0)
 				initialized = true;
+			else
+				y -= 15;
 			
 			return MenuUpdate.MENU_NO_ACTION;
 		}
@@ -124,7 +133,7 @@ public class SpeechMenu extends Menu
 			else
 			{
 				textMovingIndex += 1;
-				if (textMovingIndex % 6 == 0)
+				if (!attackCin && textMovingIndex % 6 == 0)
 					stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "speechblip", .15f, false));
 			}
 		}

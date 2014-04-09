@@ -44,17 +44,13 @@ public class SpriteAnims implements Serializable
 	{
 		images = new ArrayList<Image>();
 		
-		HashSet<Integer> unmagnified = getUnmagnifiedIndexes();
-		
 		for (int i = 0; i < imageLocs.size(); i++)
 		{
 			Rectangle r = imageLocs.get(i);
-			
-			if (unmagnified.contains(i))
-				images.add(image.getSubImage((int) r.getX(), (int) r.getY(), (int) r.getWidth(), (int) r.getHeight()));
-			else
-				images.add(image.getSubImage((int) r.getX(), (int) r.getY(), (int) r.getWidth(), 
-						(int) r.getHeight()).getScaledCopy(magnify));
+			Image subImage = image.getSubImage((int) r.getX(), (int) r.getY(), (int) r.getWidth(), 
+					(int) r.getHeight());
+			subImage.setFilter(Image.FILTER_NEAREST);
+			images.add(subImage.getScaledCopy(magnify));
 		}
 	}
 	

@@ -99,7 +99,8 @@ public class TileMapRenderer extends Manager
 					if (map.getMapLayer(4)[mapY][mapX] != 0)
 					{
 						g.drawImage(map.getSprite(map.getMapLayer(4)[mapY][mapX]), 
-							mapX * map.getTileRenderWidth() - xOffset + gc.getDisplayPaddingX(), mapY * map.getTileRenderHeight() - yOffset);						
+							mapX * map.getTileRenderWidth() + gc.getDisplayPaddingX() - camera.getLocationX(), 
+								mapY * map.getTileRenderHeight() - camera.getLocationY());						
 					}
 				}
 			}

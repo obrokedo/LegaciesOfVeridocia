@@ -21,11 +21,12 @@ import mb.gl2.loading.ResourceManager;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class BattleState extends LoadableGameState
-{
+{	
 	private TileMapRenderer tileMapRenderer;
 	private SpriteRenderer spriteRenderer;
 	private PanelRenderer panelRenderer;	
@@ -40,6 +41,10 @@ public class BattleState extends LoadableGameState
 	private TurnManager turnManager;
 	
 	private StateInfo stateInfo;
+	
+	private float musicPosition = 0;
+	private float musicVolume = 0;
+	private Music music = null;
 	
 	public BattleState(PersistentStateInfo psi)
 	{
@@ -83,9 +88,16 @@ public class BattleState extends LoadableGameState
 		if (stateInfo.isShowAttackCinematic())
 		{
 			stateInfo.getInput().clear();
-			// container.getInput().addKeyListener(stateInfo.getInput());
+			container.getInput().addKeyListener(stateInfo.getInput());
 			this.stateInfo.setInputDelay(System.currentTimeMillis() + 200);
 			stateInfo.setShowAttackCinematic(false);
+			if (music != null)
+			{
+				music.setPosition(musicPosition);
+				music.setVolume(musicVolume);
+				music.loop();
+				// music.loop(1f, volume);
+			}
 		}			
 	}
 
@@ -97,6 +109,13 @@ public class BattleState extends LoadableGameState
 			stateInfo.getResourceManager().reinitialize();		
 			stateInfo.setInitialized(false);
 		}		
+		else
+		{
+			musicVolume = stateInfo.getPlayingMusic().getVolume();
+			musicPosition = stateInfo.getPlayingMusic().getPosition();
+			music = stateInfo.getPlayingMusic();
+			music.stop();
+		}
 		
 		super.leave(container, game);
 	}

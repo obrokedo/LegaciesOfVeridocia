@@ -35,6 +35,7 @@ public class InitiativeManager extends Manager
 
 		@Override
 		public void render(FCGameContainer gc, Graphics graphics) {
+			/*
 			graphics.setColor(Color.white);
 			graphics.drawRect(20, 20, 30, 14);
 			if (displayInit && initOrder != null && initOrder.size() > 0)
@@ -48,6 +49,7 @@ public class InitiativeManager extends Manager
 			}
 			else
 				graphics.drawString("v", 28, 18);
+				*/
 		}		
 		
 		@Override

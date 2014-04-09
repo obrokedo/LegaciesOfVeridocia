@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 
 import mb.fc.cinematic.Cinematic;
+import mb.fc.engine.CommRPG;
 import mb.fc.game.definition.EnemyDefinition;
 import mb.fc.game.definition.HeroDefinition;
 import mb.fc.game.definition.ItemDefinition;
@@ -96,14 +97,18 @@ public class FCResourceManager extends ResourceManager {
 		if (split[0].equalsIgnoreCase("image"))
 		{
 			System.out.println("Load image " + split[2]);
-			images.put(split[1], new Image((LoadingState.inJar ? "" : "bin/") + split[2], transparent).getScaledCopy(split.length == 4 ? Float.parseFloat(split[3]) : 1));
+			Image nImage = new Image((LoadingState.inJar ? "" : "bin/") + split[2], transparent);
+			nImage.setFilter(Image.FILTER_NEAREST);
+			images.put(split[1], nImage.getScaledCopy(split.length == 4 ? Float.parseFloat(split[3]) : 1));
 		}
 		else if (split[0].equalsIgnoreCase("ss"))
 		{
 			float scale = split.length == 7 ? Float.parseFloat(split[6]) : 1;
 			System.out.println("SCALE FOR " + split[1] + " " + scale);
 			System.out.println("Load sprite sheet " + split[2]);
-			Image ssIm = new Image((LoadingState.inJar ? "" : "bin/") + split[2], transparent).getScaledCopy(scale);			
+			Image ssIm = new Image((LoadingState.inJar ? "" : "bin/") + split[2], transparent);
+			ssIm.setFilter(Image.FILTER_NEAREST);
+			ssIm = ssIm.getScaledCopy(scale);
 			spriteSheets.put(split[1], new SpriteSheet(ssIm, 
 					(int) (Integer.parseInt(split[3]) * scale), (int) (Integer.parseInt(split[4])  * scale), 
 					(int) ((split.length >= 6 ? Integer.parseInt(split[5]) : 0)  * scale)));
@@ -192,6 +197,7 @@ public class FCResourceManager extends ResourceManager {
 				if (file.getName().endsWith(".png"))
 				{
 					Image im = new Image(file.getPath(), transparent);
+					im.setFilter(Image.FILTER_NEAREST);
 					spriteSheets.put(file.getName().replace(".png", ""), new SpriteSheet(im, 
 						Integer.parseInt(split[3]), Integer.parseInt(split[3])));
 				}
@@ -204,6 +210,8 @@ public class FCResourceManager extends ResourceManager {
 			{
 				if (file.getName().endsWith(".ogg"))
 					musicByTitle.put(file.getName().replace(".ogg", ""), new Music(file.getPath()));
+				else if (file.getName().endsWith(".wav"))
+					musicByTitle.put(file.getName().replace(".wav", ""), new Music(file.getPath()));
 			}
 		}
 		else if (split[0].equalsIgnoreCase("sounddir"))
@@ -238,7 +246,7 @@ public class FCResourceManager extends ResourceManager {
 				{
 					System.out.println(file.getName());
 					SpriteAnims sa = SpriteAnims.deserializeFromFile(file.getPath());
-					sa.initialize(images.get(sa.getSpriteSheet()), 1.88f);			
+					sa.initialize(images.get(sa.getSpriteSheet()), CommRPG.GLOBAL_WORLD_SCALE);// 1.88f);			
 					spriteAnimations.put(file.getName().replace(".fsa", ""), sa);
 				}
 			}

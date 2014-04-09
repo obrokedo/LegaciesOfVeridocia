@@ -201,7 +201,7 @@ public class CombatSprite extends AnimatedSprite
 			
 			Image i = (spriteAnims.getImageAtIndex(as.imageIndex)).getFlippedCopy(false, true); 
 			i.drawSheared(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(), 
-					this.getLocY() - camera.getLocationY() + i.getHeight() - 5 - 12, -10, 0, SHADOW_COLOR);
+					this.getLocY() - camera.getLocationY() + i.getHeight() - SHADOW_OFFSET - 12, -10, 0, SHADOW_COLOR);
 					
 			
 			

@@ -17,13 +17,14 @@ public class AnimatedSprite extends Sprite
 	private static final long serialVersionUID = 1L;
 	
 	protected final transient static Color SHADOW_COLOR = new Color(0, 0, 0, 100);
+	protected final static int SHADOW_OFFSET = 10;
 	
 	protected transient int imageIndex;
 	protected transient int animationDelay = 0;
 	protected transient SpriteAnims spriteAnims;
 	protected transient Animation currentAnim;
 	protected String imageName;
-	private Direction facing;
+	private Direction facing;	
 	
 	public AnimatedSprite(int locX, int locY, String imageName) {
 		super(locX, locY);
@@ -41,7 +42,7 @@ public class AnimatedSprite extends Sprite
 		{
 			Image i = (spriteAnims.getImageAtIndex(as.imageIndex)).getFlippedCopy(false, true); 
 			i.drawSheared(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(), 
-					this.getLocY() - camera.getLocationY() + i.getHeight() - 5 - 12, -10, 0, SHADOW_COLOR);
+					this.getLocY() - camera.getLocationY() + i.getHeight() - SHADOW_OFFSET - 12, -10, 0, SHADOW_COLOR);
 					
 			
 			
@@ -64,7 +65,7 @@ public class AnimatedSprite extends Sprite
 	public void update() 
 	{		
 		animationDelay++;
-		if (animationDelay == 4)
+		if (animationDelay == 8)
 		{
 			if (imageIndex % 2 == 1)
 				imageIndex--;		
