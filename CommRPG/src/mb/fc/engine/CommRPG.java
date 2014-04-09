@@ -87,8 +87,8 @@ public class CommRPG extends StateBasedGame   {
 			*/
 			
 			
+			// container.setDisplayMode(640, 480, true);
 			container.setDisplayMode(640, 480, false);
-			// container.setDisplayMode(800, 600, false);
 			
 			container.setVSync(true);
 			container.setAlwaysRender(true);

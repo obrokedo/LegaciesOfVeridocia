@@ -128,10 +128,8 @@ public class TurnManager extends Manager implements KeyboardListener
 				if (cursor.getX() == currentSprite.getLocX() &&
 					cursor.getY() == currentSprite.getLocY())
 				{
-					System.out.println("OWNS SPRITE: " + ownsSprite);
 					if (ownsSprite)	
 					{
-						System.out.println("ADD KEYBOARD LISTENER " + ms);
 						stateInfo.addKeyboardListener(ms);
 					}
 					landEffectPanel.setLandEffect(stateInfo.getCurrentMap().getLandEffectByTile(currentSprite.getMovementType(), 
@@ -268,7 +266,6 @@ public class TurnManager extends Manager implements KeyboardListener
 	
 	private void initializeCombatantTurn(CombatSprite sprite)
 	{				
-		System.out.println("REMOVE ALL KEYBOARD LISTENERS");
 		stateInfo.removeKeyboardListeners();
 		currentSprite = sprite;						
 		stateInfo.setCurrentSprite(currentSprite);
@@ -297,8 +294,8 @@ public class TurnManager extends Manager implements KeyboardListener
 		determineMoveableSpaces();
 		
 		// If we own this sprite then we add keyboard input listener 
-		// if (ownsSprite)
-			// stateInfo.addKeyboardListener(this);
+		if (ownsSprite)
+			stateInfo.addKeyboardListener(this);
 		
 		turnActions.add(new TurnAction(TurnAction.ACTION_MOVE_CURSOR));
 		turnActions.add(new WaitAction(3));
@@ -458,7 +455,6 @@ public class TurnManager extends Manager implements KeyboardListener
 					displayMoveable = false;
 					displayCursor = true;
 					stateInfo.removePanel(landEffectPanel);
-					System.out.println("RESET SPRITE LOC REMOVE KEYBOARD LISTENER");
 					stateInfo.removeKeyboardListener();
 				}
 				else
