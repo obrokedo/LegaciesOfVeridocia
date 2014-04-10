@@ -12,8 +12,10 @@ import mb.fc.engine.message.ShopMessage;
 import mb.fc.engine.message.SpeechMessage;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.ai.AI;
+import mb.fc.game.resource.ItemResource;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.sprite.Sprite;
+import mb.fc.game.sprite.StaticSprite;
 import mb.fc.game.text.Speech;
 
 public class TriggerEvent 
@@ -228,9 +230,9 @@ public class TriggerEvent
 	{
 		private int textId;
 		
-		public TriggerShowText(String textId)
+		public TriggerShowText(int textId)
 		{
-			this.textId = Integer.parseInt(textId);
+			this.textId = textId;
 		}
 
 		@Override
@@ -381,6 +383,58 @@ public class TriggerEvent
 					return false;
 				}
 			}
+			return false;
+		}
+	}
+	
+	public class TriggerChangeSprite extends TriggerType
+	{
+		private String spriteName;
+		private String newImage;
+		
+		public TriggerChangeSprite(String spriteName, String newImage) {
+			super();
+			this.spriteName = spriteName;
+			this.newImage = newImage;
+		}
+
+		@Override
+		public boolean perform(StateInfo stateInfo) {
+			Iterator<Sprite> spriteIt = stateInfo.getSpriteIterator();
+			while (spriteIt.hasNext())
+			{
+				Sprite s = spriteIt.next();
+				
+				if (s.getName() != null && s.getName().equalsIgnoreCase(spriteName))
+				{
+					StaticSprite ss = (StaticSprite) s;
+					ss.setImage(stateInfo.getResourceManager().getImages().get(newImage));
+					return false;
+				}
+			}
+			return false;
+		}
+	}
+	
+	public class TriggerAddItem extends TriggerType
+	{
+		private int itemId;
+		
+		public TriggerAddItem(int itemId) {
+			super();
+		}
+
+		@Override
+		public boolean perform(StateInfo stateInfo) {
+			for (CombatSprite hero : stateInfo.getClientProfile().getHeroes())
+			{
+				if (hero.getItemsSize() != 4)
+				{
+					hero.addItem(ItemResource.getItem(itemId, stateInfo));
+					break;
+				}
+			}
+			
 			return false;
 		}
 	}

@@ -124,7 +124,7 @@ public class TextParser
 						}
 						else if (tagArea.getChildren().get(k).getTagType().equalsIgnoreCase("showtext"))
 						{
-							te.addTriggerType(te.new TriggerShowText(actionParams.get("text")));
+							te.addTriggerType(te.new TriggerShowText(Integer.parseInt(actionParams.get("textid"))));
 						}
 						else if (tagArea.getChildren().get(k).getTagType().equalsIgnoreCase("cinematic"))
 						{
@@ -141,6 +141,14 @@ public class TextParser
 						else if (tagArea.getChildren().get(k).getTagType().equalsIgnoreCase("removesprite"))
 						{
 							te.addTriggerType(te.new TriggerRemoveSprite(actionParams.get("name")));
+						}
+						else if (tagArea.getChildren().get(k).getTagType().equalsIgnoreCase("changesprite"))
+						{
+							te.addTriggerType(te.new TriggerChangeSprite(actionParams.get("name"), actionParams.get("image")));
+						}
+						else if (tagArea.getChildren().get(k).getTagType().equalsIgnoreCase("additem"))
+						{
+							te.addTriggerType(te.new TriggerAddItem(Integer.parseInt(actionParams.get("itemid"))));
 						}
 					}
 				}				

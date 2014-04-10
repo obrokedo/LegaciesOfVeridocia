@@ -209,7 +209,17 @@ public class MapObject
 	{
 		String name = params.get("name");
 		Image image = stateInfo.getResourceManager().getImages().get(params.get("image"));
-		Sprite s = new StaticSprite(x, y, name, image);
+		
+		int[] trigger = null;
+		if (params.containsKey("searchtrigger"))
+		{
+			String[] split = params.get("searchtrigger").split(",");
+			trigger = new int[split.length];
+			for (int i = 0; i < split.length; i++)
+				trigger[i] = Integer.parseInt(split[i]);
+		}
+				
+		Sprite s = new StaticSprite(x, y, name, image, trigger);
 		s.initializeSprite(stateInfo);
 		s.setLocX(x);
 		s.setLocY(y);

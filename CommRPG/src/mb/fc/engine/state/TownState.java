@@ -82,7 +82,7 @@ public class TownState extends LoadableGameState
 	
 		stateInfo.getResourceManager().reinitialize();		
 		stateInfo.setInitialized(false);
-		
+		stateInfo.getInput().clear();
 		super.leave(container, game);
 	}
 

@@ -6,6 +6,7 @@ import mb.fc.engine.message.Message;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.sprite.NPCSprite;
 import mb.fc.game.sprite.Sprite;
+import mb.fc.game.sprite.StaticSprite;
 import mb.fc.map.MapObject;
 
 public class SpriteManager extends Manager
@@ -158,9 +159,21 @@ public class SpriteManager extends Manager
 						NPCSprite npc = (NPCSprite) s;
 						if (npc.getTileX() == checkX &&
 								npc.getTileY() == checkY)
+						{
 							npc.triggerButton1Event(stateInfo);
-
-						break;
+							break;
+						}
+						
+					}
+					else if (s.getSpriteType() == Sprite.TYPE_STATIC_SPRITE)
+					{
+						StaticSprite ss = (StaticSprite) s;
+						if (s.getTileX() == checkX &&
+								ss.getTileY() == checkY)
+						{
+							ss.triggerButton1Event(stateInfo);
+							break;
+						}
 					}
 				}
 				break;

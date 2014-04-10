@@ -16,6 +16,7 @@ public class Sprite implements Serializable
 	public static final byte TYPE_SPRITE = 0;
 	public static final byte TYPE_COMBAT = 1;
 	public static final byte TYPE_NPC = 2;
+	public static final byte TYPE_STATIC_SPRITE = 3;
 	protected Rectangle spriteBounds;
 	private int tileX, tileY;
 	protected byte spriteType;

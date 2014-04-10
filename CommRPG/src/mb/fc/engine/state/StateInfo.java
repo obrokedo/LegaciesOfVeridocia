@@ -104,8 +104,8 @@ public class StateInfo
 	/* State Initialization */
 	/************************/
 	public void initState()
-	{
-		System.out.println("Initialize State");
+	{		
+		System.out.println("Initialize State");		
 		this.initialized = false;
 		
 		// Add starting heroes if they haven't been added yet
@@ -126,8 +126,7 @@ public class StateInfo
 		if (this.getClientProgress().getRetriggerablesByMap() != null)
 			for (Integer triggerId : this.getClientProgress().getRetriggerablesByMap())
 				getResourceManager().getTriggerEventById(triggerId).perform(this);
-		
-		fcInput.clear();
+				
 		gc.getInput().addKeyListener(fcInput);
 		
 		this.initialized = true;

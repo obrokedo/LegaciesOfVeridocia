@@ -118,7 +118,7 @@ public class ItemMenu extends Menu
 				graphics.setColor(COLOR_FOREFRONT);
 				graphics.drawString(currentSprite.getItem(i).getName(), 410, 370);
 				
-				if (currentSprite.getEquipped().contains(currentSprite.getItem(i)))
+				if (currentSprite.getEquipped().get(i))
 				{
 					graphics.setColor(Color.pink);
 					graphics.drawString("Equipped", 410, 390);

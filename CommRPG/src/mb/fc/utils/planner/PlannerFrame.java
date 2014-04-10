@@ -1015,9 +1015,9 @@ public class PlannerFrame extends JFrame implements ActionListener, ChangeListen
 		
 		// Show Text
 		definingValues = new ArrayList<PlannerValueDef>();
-		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "text", false, 
-				"Text", "The text that should be displayed"));
-		allowableLines.add(new PlannerLineDef("showtext", "Show Text", "Shows the specified text", definingValues));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_TEXT, PlannerValueDef.TYPE_INT, "textid", false, 
+				"Text ID", "The ID of the text that should be displayed"));
+		allowableLines.add(new PlannerLineDef("showtext", "Show Text", "Shows the text with the specified ID", definingValues));
 		
 		// Show Cinematic
 		definingValues = new ArrayList<PlannerValueDef>();
@@ -1054,6 +1054,20 @@ public class PlannerFrame extends JFrame implements ActionListener, ChangeListen
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "name", false, 
 				"Sprite Name", "The name of the sprite to be removed"));
 		allowableLines.add(new PlannerLineDef("removesprite", "Remove Sprite", "Removes the sprite from the map with the specified name.", definingValues));
+		
+		// Change Sprite Image
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "name", false, 
+				"Sprite Name", "The name of the sprite to be changed"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "image", false, 
+				"New Sprite Image", "The new image for this sprite"));
+		allowableLines.add(new PlannerLineDef("changesprite", "Change Sprite Image", "Changes an existing sprites image to the specified image.", definingValues));
+		
+		// Add Item
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_ITEM, PlannerValueDef.TYPE_INT, "itemid", false, 
+				"Item ID", "The item that should be given to the group"));
+		allowableLines.add(new PlannerLineDef("additem", "Add Item to Group", "Gives the specified item to the first person with room in the group.", definingValues));
 		
 		// TODO SHOW SHOP
 		// TODO ADD HERO

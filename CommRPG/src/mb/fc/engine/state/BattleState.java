@@ -108,6 +108,7 @@ public class BattleState extends LoadableGameState
 		{
 			stateInfo.getResourceManager().reinitialize();		
 			stateInfo.setInitialized(false);
+			stateInfo.getInput().clear();
 		}		
 		else
 		{

@@ -24,6 +24,7 @@ public class TownMoveManager extends Manager
 	public void initialize() {		
 		// new OverlandMove(stateInfo);
 		movers = new ArrayList<MovingSprite>();
+		moving = false;
 	}
 	
 	public void update(int delta)
