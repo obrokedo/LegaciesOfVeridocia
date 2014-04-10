@@ -2,6 +2,7 @@ package mb.fc.game.menu;
 
 import java.awt.Point;
 
+import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.IntMessage;
 import mb.fc.engine.message.Message;
 import mb.fc.engine.state.StateInfo;
@@ -52,30 +53,46 @@ public class ItemMenu extends Menu
 	public MenuUpdate handleUserInput(FCInput input, StateInfo stateInfo) {
 		if (input.isKeyDown(KeyMapping.BUTTON_UP))
 		{
-			selected = 0;
+			if (selected != 0)
+				stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menumove", 1f, false));
+			selected = 0;			
 		}
 		else if (input.isKeyDown(KeyMapping.BUTTON_DOWN))
 		{
 			if (currentSprite.getItemsSize() > 3)
-				selected = 3;
+			{
+				if (selected != 3)
+					stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menumove", 1f, false));
+				selected = 3;				
+			}
 		}		
 		else if (input.isKeyDown(KeyMapping.BUTTON_LEFT))
 		{
 			if (currentSprite.getItemsSize() > 1)
-				selected = 1;
+			{
+				if (selected != 1)
+					stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menumove", 1f, false));
+				selected = 1;				
+			}
 		}
 		else if (input.isKeyDown(KeyMapping.BUTTON_RIGHT))
 		{
 			if (currentSprite.getItemsSize() > 2)
-				selected = 2;
+			{
+				if (selected != 2)
+					stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menumove", 1f, false));
+				selected = 2;				
+			}
 		}
 		else if (input.isKeyDown(KeyMapping.BUTTON_2))
 		{
+			stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menuback", 1f, false));
 			stateInfo.sendMessage(Message.MESSAGE_SHOW_BATTLEMENU);
 			return MenuUpdate.MENU_CLOSE;
 		}
 		else if (input.isKeyDown(KeyMapping.BUTTON_3))
 		{	
+			stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menuselect", 1f, false));
 			stateInfo.sendMessage(new IntMessage(Message.MESSAGE_SHOW_ITEM_OPTION_MENU, selected));			
 			return MenuUpdate.MENU_CLOSE;
 		}

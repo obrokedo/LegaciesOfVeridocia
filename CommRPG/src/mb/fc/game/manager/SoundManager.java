@@ -5,6 +5,7 @@ import mb.fc.engine.message.IntMessage;
 import mb.fc.engine.message.Message;
 
 import org.newdawn.slick.Music;
+import org.newdawn.slick.Sound;
 
 public class SoundManager extends Manager
 {
@@ -20,7 +21,8 @@ public class SoundManager extends Manager
 	
 	public void playSoundByName(String name, float volume)
 	{		
-		stateInfo.getResourceManager().getSoundByName(name).play(1f, volume);
+		Sound sound = stateInfo.getResourceManager().getSoundByName(name); 
+		sound.play(1f, volume);
 	}
 	
 	public void playMusicByName(String name)

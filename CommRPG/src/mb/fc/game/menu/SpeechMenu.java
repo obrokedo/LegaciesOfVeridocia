@@ -133,7 +133,10 @@ public class SpeechMenu extends Menu
 			else
 			{
 				textMovingIndex += 1;
-				if (!attackCin && textMovingIndex % 6 == 0)
+				// This is a bit of a kludge, when we are in the attack cinematic we want the text to scroll but we don't
+				// want the :talking" sound effect. Really this should probably be a different boolean rather then just
+				// checking to see if the state info is not null
+				if (!attackCin && textMovingIndex % 6 == 0 && stateInfo != null)
 					stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "speechblip", .15f, false));
 			}
 		}

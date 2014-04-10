@@ -96,6 +96,8 @@ public class SpriteManager extends Manager
 			updateDelta -= UPDATE_TIME;
 			boolean isEnemyAlive = false;
 	
+			// TODO Is this to cumbersome, could move it when people move around the map?
+			stateInfo.sortSprites();
 			Iterator<Sprite> spriteItr = stateInfo.getSpriteIterator();
 					
 			while (spriteItr.hasNext())

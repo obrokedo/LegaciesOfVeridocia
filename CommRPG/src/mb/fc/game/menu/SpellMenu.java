@@ -2,6 +2,7 @@ package mb.fc.game.menu;
 
 import java.util.ArrayList;
 
+import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.BattleSelectionMessage;
 import mb.fc.engine.message.ChatMessage;
 import mb.fc.engine.message.Message;
@@ -177,24 +178,37 @@ public class SpellMenu extends Menu
 		if (input.isKeyDown(KeyMapping.BUTTON_UP))
 		{
 			if (!hasSelected)
+			{
+				if (selected != 0)
+					stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menumove", 1f, false));
 				selected = 0;
+			}
 		}
 		else if (input.isKeyDown(KeyMapping.BUTTON_DOWN))
 		{
 			if (!hasSelected && spellIcons.get(3).getIndex() != -1)
+			{
+				if (selected != 3)
+					stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menumove", 1f, false));
 				selected = 3;
+			}
 		}		
 		else if (input.isKeyDown(KeyMapping.BUTTON_LEFT))
-		{
+		{			
 			if (!hasSelected)
 			{
 				if (spellIcons.get(1).getIndex() != -1)
-					selected = 1;
+				{
+					if (selected != 1)
+						stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menumove", 1f, false));
+					selected = 1;					
+				}
 			}
 			else
 			{
 				if (spellIcons.get(selected).level > 1)
 				{
+					stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menumove", 1f, false));
 					spellIcons.get(selected).setLevel(spellIcons.get(selected).level - 1);
 					return MenuUpdate.MENU_ACTION_SHORT;
 				}
@@ -205,12 +219,17 @@ public class SpellMenu extends Menu
 			if (!hasSelected)
 			{
 				if (spellIcons.get(2).getIndex() != -1)
-					selected = 2;
+				{
+					if (selected != 2)
+						stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menumove", 1f, false));
+					selected = 2;					
+				}
 			}
 			else
 			{
 				if (spellIcons.get(selected).level < spellIcons.get(selected).maxLevel)
 				{
+					stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menumove", 1f, false));
 					spellIcons.get(selected).setLevel(spellIcons.get(selected).level + 1);
 					return MenuUpdate.MENU_ACTION_SHORT;
 				}
@@ -218,6 +237,7 @@ public class SpellMenu extends Menu
 		}
 		else if (input.isKeyDown(KeyMapping.BUTTON_2))
 		{
+			stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menuback", 1f, false));
 			if (hasSelected)
 			{
 				hasSelected = false;
@@ -230,11 +250,12 @@ public class SpellMenu extends Menu
 			}
 		}
 		else if (input.isKeyDown(KeyMapping.BUTTON_3))
-		{					
+		{								
 			if (hasSelected)
 			{
 				if (spellIcons.get(selected).cost <= stateInfo.getCurrentSprite().getCurrentMP())
 				{
+					stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "targetselect", 1f, false));
 					stateInfo.sendMessage(new BattleSelectionMessage(Message.MESSAGE_SELECT_SPELL, selected, spellIcons.get(selected).level));
 					return MenuUpdate.MENU_CLOSE;
 				}
@@ -245,6 +266,7 @@ public class SpellMenu extends Menu
 			}
 			else
 			{
+				stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menuselect", 1f, false));
 				spellIcons.get(selected).setLevel(1);
 				hasSelected = true;				
 				return MenuUpdate.MENU_ACTION_LONG;

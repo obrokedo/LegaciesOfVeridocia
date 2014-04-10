@@ -463,7 +463,7 @@ public class AttackCinematicState extends LoadableGameState
 						
 						if (battleResults.attackOverText != null)
 						{
-							textMenu = new SpeechMenu(battleResults.attackOverText, container, true);
+							textMenu = new SpeechMenu(battleResults.attackOverText, container, false);
 							if (battleResults.levelUpResult != null)
 								attacker.getHeroProgression().levelUp(attacker, battleResults.levelUpResult, frm);
 						}

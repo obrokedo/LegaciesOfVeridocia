@@ -138,6 +138,10 @@ public class TextParser
 						{
 							te.addTriggerType(te.new TriggerToggleRoof(Integer.parseInt(actionParams.get("roofid")), false));
 						}
+						else if (tagArea.getChildren().get(k).getTagType().equalsIgnoreCase("removesprite"))
+						{
+							te.addTriggerType(te.new TriggerRemoveSprite(actionParams.get("name")));
+						}
 					}
 				}				
 				

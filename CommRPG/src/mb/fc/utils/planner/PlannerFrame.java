@@ -1049,6 +1049,12 @@ public class PlannerFrame extends JFrame implements ActionListener, ChangeListen
 				"Roof ID", "The ID of the roof that should be visible"));
 		allowableLines.add(new PlannerLineDef("showroof", "Show Roof", "Shows the roof with designated ID.", definingValues));
 		
+		// Remove Sprite
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "name", false, 
+				"Sprite Name", "The name of the sprite to be removed"));
+		allowableLines.add(new PlannerLineDef("removesprite", "Remove Sprite", "Removes the sprite from the map with the specified name.", definingValues));
+		
 		// TODO SHOW SHOP
 		// TODO ADD HERO
 		

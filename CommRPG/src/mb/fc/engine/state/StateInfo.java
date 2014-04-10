@@ -22,6 +22,7 @@ import mb.fc.game.persist.ClientProgress;
 import mb.fc.game.resource.HeroResource;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.sprite.Sprite;
+import mb.fc.game.sprite.SpriteZComparator;
 import mb.fc.game.trigger.TriggerLocation;
 import mb.fc.game.ui.FCGameContainer;
 import mb.fc.loading.FCResourceManager;
@@ -33,6 +34,8 @@ import org.newdawn.slick.Music;
 
 public class StateInfo
 {
+	private static final SpriteZComparator SPRITE_Z_ORDER_COMPARATOR = new SpriteZComparator();
+	
 	/*************************************************************/
 	/* These values are created specifically for this state info */
 	/*************************************************************/	
@@ -172,6 +175,10 @@ public class StateInfo
 			else if (isCombat && mo.getKey().equalsIgnoreCase("battletrigger"))
 			{
 				triggers.add(new TriggerLocation(this, mo));
+			}
+			else if (mo.getKey().equalsIgnoreCase("sprite"))
+			{
+				addSprite(mo.getSprite(this));
 			}
 		}
 	}
@@ -499,6 +506,11 @@ public class StateInfo
 	public Iterator<Sprite> getSpriteIterator()
 	{
 		return sprites.iterator();
+	}
+	
+	public void sortSprites()
+	{
+		Collections.sort(sprites, SPRITE_Z_ORDER_COMPARATOR);
 	}
 
 	public void addSprite(Sprite s)

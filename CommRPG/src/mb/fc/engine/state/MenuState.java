@@ -95,6 +95,9 @@ public class MenuState extends LoadableGameState implements StringListener
 			((CommRPG) game).setLoadingInfo(map, map,
 					(LoadableGameState) game.getState(CommRPG.STATE_GAME_TOWN));
 		}
+		
+		gc.setMouseGrabbed(true);
+		
 		game.enterState(CommRPG.STATE_GAME_LOADING);
 		
 		/*

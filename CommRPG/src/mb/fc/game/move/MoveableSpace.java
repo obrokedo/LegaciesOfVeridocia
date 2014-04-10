@@ -2,6 +2,7 @@ package mb.fc.game.move;
 
 import java.util.ArrayList;
 
+import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.LocationMessage;
 import mb.fc.engine.message.Message;
 import mb.fc.engine.state.StateInfo;
@@ -372,12 +373,14 @@ public class MoveableSpace implements KeyboardListener, MouseListener, TileBased
 			if (canEndMoveHere(stateInfo.getCurrentSprite().getTileX(), stateInfo.getCurrentSprite().getTileY()))
 			{
 				stateInfo.sendMessage(Message.MESSAGE_SHOW_BATTLEMENU);
+				stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menuselect", 1f, false));
 				return true;
 			}
 		}
 		else if (input.isKeyDown(KeyMapping.BUTTON_2))
 		{
 			stateInfo.sendMessage(Message.MESSAGE_RESET_SPRITELOC);
+			stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menuback", 1f, false));
 			return true;
 		}
 		else if (input.isKeyDown(KeyMapping.BUTTON_UP))

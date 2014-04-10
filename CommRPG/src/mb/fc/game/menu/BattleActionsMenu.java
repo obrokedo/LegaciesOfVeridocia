@@ -1,11 +1,13 @@
 package mb.fc.game.menu;
 
+import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.Message;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.input.FCInput;
 import mb.fc.game.input.KeyMapping;
 import mb.fc.game.item.EquippableItem;
+import mb.fc.game.menu.Menu.MenuUpdate;
 import mb.fc.game.move.AttackableSpace;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.ui.FCGameContainer;
@@ -137,44 +139,67 @@ public class BattleActionsMenu extends Menu
 		else if (input.isKeyDown(KeyMapping.BUTTON_2))
 		{
 			stateInfo.sendMessage(Message.MESSAGE_SHOW_MOVEABLE);
+			stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menuback", 1f, false));
 			return MenuUpdate.MENU_CLOSE;
 		}
 		else if (input.isKeyDown(KeyMapping.BUTTON_3))
-		{
+		{			
 			switch (selected)
 			{
 				case 4:
 					stateInfo.sendMessage(Message.MESSAGE_ATTACK_PRESSED);
+					stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "targetselect", 1f, false));
 					return MenuUpdate.MENU_CLOSE;
 				case 5:
 					stateInfo.sendMessage(Message.MESSAGE_SHOW_SPELLMENU);
+					stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menuselect", 1f, false));
 					return MenuUpdate.MENU_CLOSE;
 				case 6:
 					stateInfo.sendMessage(Message.MESSAGE_SHOW_ITEM_MENU);
+					stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menuselect", 1f, false));
 					return MenuUpdate.MENU_CLOSE;
 				case 7:
 					stateInfo.sendMessage(Message.MESSAGE_PLAYER_END_TURN);
+					stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menuselect", 1f, false));
 					return MenuUpdate.MENU_CLOSE;
 			}
 		}
 		else if (input.isKeyDown(KeyMapping.BUTTON_UP))
 		{
 			if (enabled[0])
-				selected = 4;
+			{
+				if (selected != 4)
+					stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menumove", 1f, false));
+				selected = 4;				
+				return MenuUpdate.MENU_ACTION_SHORT;
+			}
 		}
 		else if (input.isKeyDown(KeyMapping.BUTTON_DOWN))
 		{
+			if (selected != 7)
+				stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menumove", 1f, false));
 			selected = 7;
+			return MenuUpdate.MENU_ACTION_SHORT;
 		}		
 		else if (input.isKeyDown(KeyMapping.BUTTON_LEFT))
 		{
 			if (enabled[1])
-					selected = 5;
+			{
+				if (selected != 5)
+					stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menumove", 1f, false));
+				selected = 5;				
+				return MenuUpdate.MENU_ACTION_SHORT;
+			}
 		}
 		else if (input.isKeyDown(KeyMapping.BUTTON_RIGHT))
 		{
 			if (enabled[2])
-					selected = 6;
+			{
+				if (selected != 6)
+					stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menumove", 1f, false));
+				selected = 6;				
+				return MenuUpdate.MENU_ACTION_SHORT;
+			}
 		}
 		return MenuUpdate.MENU_NO_ACTION;
 	}

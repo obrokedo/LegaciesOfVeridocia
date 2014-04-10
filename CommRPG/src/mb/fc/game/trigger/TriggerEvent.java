@@ -13,6 +13,7 @@ import mb.fc.engine.message.SpeechMessage;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.ai.AI;
 import mb.fc.game.sprite.CombatSprite;
+import mb.fc.game.sprite.Sprite;
 import mb.fc.game.text.Speech;
 
 public class TriggerEvent 
@@ -39,7 +40,15 @@ public class TriggerEvent
 		if (nonRetrig)
 		{
 			if (stateInfo.getClientProgress().isNonretriggableTrigger(id))
+			{
+				// Check to see if this is a "on enter" perform for a retriggerable trigger that has already been triggered
+				// If so we want this to be retriggered
+				if (!stateInfo.isInitialized()) // && retrigOnEnter && stateInfo.getClientProgress().isPreviouslyTriggered(id))
+				{
+					performTriggerImpl(stateInfo);
+				}
 				return;
+			}
 			else
 				stateInfo.getClientProgress().addNonretriggerableByMap(id);
 		}
@@ -47,6 +56,11 @@ public class TriggerEvent
 		if (retrigOnEnter && !stateInfo.getClientProgress().isPreviouslyTriggered(id))
 			stateInfo.getClientProgress().addRetriggerableByMap(id);
 		
+		performTriggerImpl(stateInfo);
+	}
+	
+	private void performTriggerImpl(StateInfo stateInfo)
+	{
 		Iterator<TriggerType> tt = triggerTypes.iterator();
 		
 		while (tt.hasNext())
@@ -341,6 +355,32 @@ public class TriggerEvent
 		@Override
 		public boolean perform(StateInfo stateInfo) {
 			stateInfo.getResourceManager().getMap().getRoofById(roofId).setVisible(show);
+			return false;
+		}
+	}
+	
+	public class TriggerRemoveSprite extends TriggerType
+	{
+		private String spriteName;
+		
+		public TriggerRemoveSprite(String spriteName) {
+			super();
+			this.spriteName = spriteName;
+		}
+
+		@Override
+		public boolean perform(StateInfo stateInfo) {
+			Iterator<Sprite> spriteIt = stateInfo.getSpriteIterator();
+			while (spriteIt.hasNext())
+			{
+				Sprite s = spriteIt.next();
+				
+				if (s.getName() != null && s.getName().equalsIgnoreCase(spriteName))
+				{
+					spriteIt.remove();
+					return false;
+				}
+			}
 			return false;
 		}
 	}

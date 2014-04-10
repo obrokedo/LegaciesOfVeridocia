@@ -237,6 +237,19 @@ public class FCResourceManager extends ResourceManager {
 				}
 			}
 		}
+		else if (split[0].equalsIgnoreCase("spritedir"))
+		{
+			File dir = new File((LoadingState.inJar ? "" : "bin/") + split[1]);
+			for (File file : dir.listFiles())
+			{
+				if (file.getName().endsWith(".png"))
+				{
+					Image nIm = new Image(file.getPath(), transparent);
+					nIm.setFilter(Image.FILTER_NEAREST);
+					images.put(file.getName().replace(".png", ""), nIm.getScaledCopy(CommRPG.GLOBAL_WORLD_SCALE));
+				}
+			}
+		}
 		else if (split[0].equalsIgnoreCase("animfsadir"))
 		{
 			File dir = new File((LoadingState.inJar ? "" : "bin/") + split[1]);

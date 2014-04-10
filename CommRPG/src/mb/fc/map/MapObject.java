@@ -15,8 +15,10 @@ import mb.fc.game.resource.NPCResource;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.sprite.NPCSprite;
 import mb.fc.game.sprite.Sprite;
+import mb.fc.game.sprite.StaticSprite;
 import mb.fc.game.text.Speech;
 
+import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
@@ -201,5 +203,16 @@ public class MapObject
 		enemy.setLocY(y);
 		
 		return enemy;
+	}
+	
+	public Sprite getSprite(StateInfo stateInfo)
+	{
+		String name = params.get("name");
+		Image image = stateInfo.getResourceManager().getImages().get(params.get("image"));
+		Sprite s = new StaticSprite(x, y, name, image);
+		s.initializeSprite(stateInfo);
+		s.setLocX(x);
+		s.setLocY(y);
+		return s;
 	}
 }

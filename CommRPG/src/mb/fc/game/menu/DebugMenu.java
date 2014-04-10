@@ -54,6 +54,7 @@ public class DebugMenu extends Menu
 					stateInfo.sendMessage(new ChatMessage(Message.MESSAGE_SEND_INTERNAL_MESSAGE, "SYSTEM", "Playing music: " + stateInfo.getPlayingMusic().toString()));
 			}
 			
+			textField.deactivate();
 			return MenuUpdate.MENU_CLOSE;
 		}
 		

@@ -1,5 +1,6 @@
 package mb.fc.game.menu;
 
+import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.BattleSelectionMessage;
 import mb.fc.engine.message.Message;
 import mb.fc.engine.state.StateInfo;
@@ -88,11 +89,13 @@ public class ItemOptionMenu extends Menu
 		}
 		else if (input.isKeyDown(KeyMapping.BUTTON_2))
 		{
+			stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menuback", 1f, false));
 			stateInfo.sendMessage(Message.MESSAGE_SHOW_ITEM_MENU);
 			return MenuUpdate.MENU_CLOSE;
 		}
 		else if (input.isKeyDown(KeyMapping.BUTTON_3))
 		{
+			stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menuselect", 1f, false));
 			switch (selected)
 			{
 				case 4:
@@ -112,20 +115,32 @@ public class ItemOptionMenu extends Menu
 		else if (input.isKeyDown(KeyMapping.BUTTON_UP))
 		{
 			if (item.isUsuable())
-				selected = 4;
+			{
+				if (selected != 4)
+					stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menumove", 1f, false));
+				selected = 4;				
+			}
 		}
 		else if (input.isKeyDown(KeyMapping.BUTTON_DOWN))
 		{
+			if (selected != 7)
+				stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menumove", 1f, false));
 			selected = 7;
 		}		
 		else if (input.isKeyDown(KeyMapping.BUTTON_LEFT))
 		{
+			if (selected != 5)
+				stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menumove", 1f, false));
 			selected = 5;
 		}
 		else if (input.isKeyDown(KeyMapping.BUTTON_RIGHT))
 		{
 			if (item.isEquippable())
-				selected = 6;
+			{
+				if (selected != 6)
+					stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menumove", 1f, false));
+				selected = 6;				
+			}
 		}
 		return MenuUpdate.MENU_NO_ACTION;
 	}

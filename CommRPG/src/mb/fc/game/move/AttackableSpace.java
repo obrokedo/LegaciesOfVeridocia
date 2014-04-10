@@ -2,6 +2,7 @@ package mb.fc.game.move;
 
 import java.util.ArrayList;
 
+import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.ChatMessage;
 import mb.fc.engine.message.Message;
 import mb.fc.engine.message.MultiSpriteContextMessage;
@@ -227,12 +228,15 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 			// Remove yourself as the active keyboard listener
 			stateInfo.removeKeyboardListener();			
 			stateInfo.sendMessage(Message.MESSAGE_SHOW_BATTLEMENU);
+			stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menuback", 1f, false));
 			return true;
 		}
 		else if (input.isKeyDown(KeyMapping.BUTTON_3))
 		{
 			if (targetsInRange.size() == 0)
 				return false;
+			
+			stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "targetselect", 1f, false));
 			
 			ArrayList<CombatSprite> sprites = new ArrayList<CombatSprite>();
 			for (int i = 0; i < area.length; i++)
@@ -273,6 +277,7 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 			selectedTarget = (selectedTarget + 1) % targetsInRange.size();
 			selectX = targetsInRange.get(selectedTarget).getLocX();
 			selectY = targetsInRange.get(selectedTarget).getLocY();
+			stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "targetselect", 1f, false));
 			return true;
 		}
 		else if (input.isKeyDown(KeyMapping.BUTTON_DOWN) || input.isKeyDown(KeyMapping.BUTTON_RIGHT))
@@ -286,6 +291,7 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 				selectedTarget = targetsInRange.size() - 1;
 			selectX = targetsInRange.get(selectedTarget).getLocX();
 			selectY = targetsInRange.get(selectedTarget).getLocY();
+			stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "targetselect", 1f, false));
 			return true;
 		}
 		return false;
