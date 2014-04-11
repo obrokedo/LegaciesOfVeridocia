@@ -10,6 +10,7 @@ import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.hudmenu.SpriteContextPanel;
 import mb.fc.game.input.FCInput;
 import mb.fc.game.input.KeyMapping;
+import mb.fc.game.menu.Menu.MenuUpdate;
 import mb.fc.game.menu.SpeechMenu;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.ui.FCGameContainer;
@@ -254,10 +255,7 @@ public class AttackCinematicState extends LoadableGameState
 		
 		handleTransitionUpdate(container, delta);
 		
-		handleStateUpdate(container, game, delta);
-		
-		if (textMenu != null)
-			textMenu.handleUserInput(input, null);
+		handleStateUpdate(container, game, delta);				
 	}
 	
 	private void handleAttackerUpdate(GameContainer container, int delta)
@@ -410,74 +408,74 @@ public class AttackCinematicState extends LoadableGameState
 		stateDelta += delta;
 		
 		// Handle use input based on the current state
-		if (stateDelta > 250 && container.getInput().isKeyDown(KeyMapping.BUTTON_3))
+		if (stateDelta > 25)
 		{
-			stateDelta = 0;
-
-			// If the user clicks pre-attack then start the attack sequence
-			if (state == STATE_PRE_ATTACK)
+			MenuUpdate menuUpdate = MenuUpdate.MENU_NO_ACTION;
+			if (textMenu != null)
+				menuUpdate = textMenu.handleUserInput(input, null);
+			// If the enemy was the attacker then there will be no menu to check, in this case just look directly for the key down
+			else if (state == STATE_POST_ATTACK && container.getInput().isKeyDown(KeyMapping.BUTTON_3))
+			{
+				container.getInput().removeAllKeyListeners();
+				game.enterState(CommRPG.STATE_GAME_BATTLE);
+				music.stop();
+			}
+			
+			if (menuUpdate == MenuUpdate.MENU_CLOSE)
 			{				
-				state = STATE_ATTACKING;
-				attackerAnimIndex = 0;
-				attackerAnim = attacker.getAnimation("UnAttack");				
-				
-				
-			}
-			// If the user clicks after the attack then return to the battle game-state
-			else if (state == STATE_POST_ATTACK)
-			{
-				if (textMenu != null)
-				{
-					switch (textMenu.handleUserInput(input, null))
-					{
-						case MENU_CLOSE:
-							container.getInput().removeAllKeyListeners();
-							game.enterState(CommRPG.STATE_GAME_BATTLE);
-							music.stop();
-							break;
-						default:
-							break;						
-					}
+				stateDelta = 0;
+	
+				// If the user clicks pre-attack then start the attack sequence
+				if (state == STATE_PRE_ATTACK)
+				{								
+					state = STATE_ATTACKING;
+					attackerAnimIndex = 0;
+					attackerAnim = attacker.getAnimation("UnAttack");
 				}
-				else
+				// If the user clicks after the attack then return to the battle game-state
+				else if (state == STATE_POST_ATTACK)
+				{
+					container.getInput().removeAllKeyListeners();
 					game.enterState(CommRPG.STATE_GAME_BATTLE);
-			}
-			else if (state == STATE_ATTACK_CLIMAX)
-			{
-				System.out.println("CLICKED CLIMAX");
-				// This is the final target, switch off multiple targets so the battle can end
-				if (targetIndex + 1 == targets.size())
-				{ 
-					spellAnimIndex = -1;
-					// If this action is targeting allies and the attacker is not a target then we need to transition them back in.
-					if (targetsAreAllies && !targetSelf)
-					{
-						state = STATE_TRANSITION_ATTACKER_IN;
-						transitionIndex = 1;
+					music.stop();
+				}
+				else if (state == STATE_ATTACK_CLIMAX)
+				{
+					System.out.println("CLICKED CLIMAX");
+					// This is the final target, switch off multiple targets so the battle can end
+					if (targetIndex + 1 == targets.size())
+					{ 
+						spellAnimIndex = -1;
+						// If this action is targeting allies and the attacker is not a target then we need to transition them back in.
+						if (targetsAreAllies && !targetSelf)
+						{
+							state = STATE_TRANSITION_ATTACKER_IN;
+							transitionIndex = 1;
+						}
+						else
+						{
+							attackerAnim = attacker.getAnimation("UnStand");
+							targetAnim = targets.get(targetIndex).getAnimation("UnStand");							
+							attackerAnimIndex = 0;						
+							
+							if (battleResults.attackOverText != null)
+							{
+								textMenu = new SpeechMenu(battleResults.attackOverText, (FCGameContainer) container, false);
+								if (battleResults.levelUpResult != null)
+									attacker.getHeroProgression().levelUp(attacker, battleResults.levelUpResult, frm);
+							}
+							else
+								textMenu = null;
+							
+							state = STATE_POST_ATTACK;
+						}
 					}
 					else
 					{
-						attackerAnim = attacker.getAnimation("UnStand");
-						targetAnim = targets.get(targetIndex).getAnimation("UnStand");							
-						attackerAnimIndex = 0;						
-						
-						if (battleResults.attackOverText != null)
-						{
-							textMenu = new SpeechMenu(battleResults.attackOverText, (FCGameContainer) container, false);
-							if (battleResults.levelUpResult != null)
-								attacker.getHeroProgression().levelUp(attacker, battleResults.levelUpResult, frm);
-						}
-						else
-							textMenu = null;
-						
-						state = STATE_POST_ATTACK;
+						transitionIndex = 1;
 					}
-				}
-				else
-				{
-					transitionIndex = 1;
-				}
-			}					
+				}				
+			}
 		}		
 		input.update(delta);
 	}
@@ -522,6 +520,7 @@ public class AttackCinematicState extends LoadableGameState
 	public void setBattleInfo(CombatSprite attacker, FCResourceManager frm, Point bgImagePoint,
 			BattleResults battleResults, FCGameContainer gc)
 	{				
+		this.frm = frm;
 		input.clear();
 		gc.getInput().addKeyListener(input);
 		
@@ -556,12 +555,12 @@ public class AttackCinematicState extends LoadableGameState
 		this.battleResults = battleResults;
 				
 		if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_ATTACK)
-			textMenu = new SpeechMenu(attacker.getName() + " Attacks!", gc, true);
+			textMenu = new SpeechMenu(attacker.getName() + " Attacks!}", gc, true);
 		else if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_SPELL)
 			textMenu = new SpeechMenu(attacker.getName() + " casts " + battleResults.battleCommand.getSpell().getName() + " " 
-					+ (battleResults.battleCommand.getLevel()), gc, true);
+					+ (battleResults.battleCommand.getLevel() + "}"), gc, true);
 		else if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_ITEM)
-			textMenu = new SpeechMenu(attacker.getName() + " uses the " + battleResults.battleCommand.getItem().getName(), gc, true);
+			textMenu = new SpeechMenu(attacker.getName() + " uses the " + battleResults.battleCommand.getItem().getName() + "}", gc, true);
 		state = 0;
 		stateDelta = 0;
 		

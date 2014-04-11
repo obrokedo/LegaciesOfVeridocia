@@ -26,6 +26,7 @@ public class AnimatedSprite extends Sprite
 	protected transient Animation currentAnim;
 	protected String imageName;
 	private Direction facing;	
+	private int animationUpdate = 8;
 	
 	public AnimatedSprite(int locX, int locY, String imageName) {
 		super(locX, locY);
@@ -61,13 +62,14 @@ public class AnimatedSprite extends Sprite
 		spriteAnims = stateInfo.getResourceManager().getSpriteAnimations().get(imageName);
 		currentAnim = spriteAnims.getAnimation("UnDown");
 		facing = Direction.DOWN;
+		animationUpdate = 8;
 	}
 
 	@Override
 	public void update() 
 	{		
 		animationDelay++;
-		if (animationDelay == 8)
+		if (animationDelay >= animationUpdate)
 		{
 			if (imageIndex % 2 == 1)
 				imageIndex--;		
@@ -135,5 +137,9 @@ public class AnimatedSprite extends Sprite
 
 	public Direction getFacing() {
 		return facing;
+	}
+
+	public void setAnimationUpdate(int animationUpdate) {
+		this.animationUpdate = animationUpdate;
 	}	
 }

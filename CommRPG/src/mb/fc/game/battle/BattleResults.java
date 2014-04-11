@@ -72,9 +72,9 @@ public class BattleResults implements Serializable
 					br.hpDamage.add(0);
 					br.mpDamage.add(0);
 					if (target.isDodges())
-						text = target.getName() + " quickly dodged the attack!";
+						text = target.getName() + " quickly dodged the attack!}";
 					else
-						text = target.getName() + " blocked the attack!";
+						text = target.getName() + " blocked the attack!}";
 					br.targetEffects.add(null);
 					br.attackerHPDamage.add(0);
 					br.attackerMPDamage.add(0);
@@ -89,9 +89,6 @@ public class BattleResults implements Serializable
 					int critChance = 3;
 					if (critChance >= CommRPG.RANDOM.nextInt(100))
 						br.critted = true;
-					
-					System.out.println("Land effect " + landEffect);
-					
 					// Multiply the attackers attack by .8 - 1.2 and the targets defense by .8 - 1.2 and then the difference
 					// between the two values is the damage dealt or 1 if result is less then 1.
 					int damage = -1 * Math.max(1, (int)(((
@@ -107,12 +104,12 @@ public class BattleResults implements Serializable
 					if (br.critted)
 					{
 						br.hpDamage.add((int) (damage * 1.25));					
-						text = attacker.getName() + " inflicted a vicious blow dealing " + (damage * -1) + " damage.";
+						text = attacker.getName() + " inflicted a vicious blow dealing " + (damage * -1) + " damage.}";
 					}
 					else
 					{
 						br.hpDamage.add(damage);					
-						text = attacker.getName() + " dealt " + (damage * -1) + " damage.";
+						text = attacker.getName() + " dealt " + (damage * -1) + " damage.}";
 					}
 					br.mpDamage.add(0);
 					br.targetEffects.add(null);
@@ -127,7 +124,7 @@ public class BattleResults implements Serializable
 				int spellLevel = battleCommand.getLevel() - 1;
 				int damage = 0;
 				
-				text = spell.getBattleText(target.getName(), spellLevel);
+				text = spell.getBattleText(target.getName(), spellLevel) + "}";
 				
 				if (spell.getDamage() != null)
 				{
@@ -165,7 +162,7 @@ public class BattleResults implements Serializable
 				Item item = battleCommand.getItem();
 				ItemUse itemUse = item.getItemUse();
 				
-				text = itemUse.getBattleText(target.getName());
+				text = itemUse.getBattleText(target.getName()) + "}";
 				
 				int damage = 0;
 				if (itemUse.getDamage() != 0)
@@ -200,7 +197,7 @@ public class BattleResults implements Serializable
 			if (target.getCurrentHP() + br.hpDamage.get(index) <= 0)
 			{
 				br.death = true;
-				text = text + " " + target.getName() + " has been defeated...";
+				text = text + " " + target.getName() + " has been defeated...}";
 			}
 			br.text.add(text);
 			index++;
@@ -212,8 +209,8 @@ public class BattleResults implements Serializable
 		if (attacker.isHero())
 		{
 			attacker.setExp(attacker.getExp() + expGained);
-			br.attackOverText = attacker.getName() + " gained " + expGained +  " experience. ";
-			if (attacker.getExp() >= 100)
+			br.attackOverText = attacker.getName() + " gained " + expGained +  " experience. }";
+			if (attacker.getExp() >= 1)
 			{
 				br.levelUpResult = attacker.getHeroProgression().getLevelUpResults(attacker, stateInfo);
 				br.attackOverText += br.levelUpResult.text;

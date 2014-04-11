@@ -103,7 +103,8 @@ public class CommRPG extends StateBasedGame   {
 				for (DisplayMode dm : modes)
 				{
 					double sRatio = 1.0 * dm.getWidth() / dm.getHeight();
-					if (sRatio == ratio && smallestHeight > dm.getHeight() && dm.getHeight() % 240 == 0) // && dm.getHeight() >= 720 && dm.getWidth() >= 960)
+					if (sRatio == ratio && smallestHeight > dm.getHeight() 
+							&& dm.getHeight() % 240 == 0 && dm.getHeight() > 240)
 					{
 						smallestWidth = dm.getWidth();
 						smallestHeight = dm.getHeight();
@@ -132,7 +133,7 @@ public class CommRPG extends StateBasedGame   {
 				container.setDisplayMode(960, 720, false);
 			}
 			else
-				container.setDisplayMode(smallestWidth, smallestHeight, true);
+				container.setDisplayMode(smallestWidth, smallestHeight, false);
 			// container.setDisplayPaddingX(100);
 			// container.setDisplayMode(200 + 320 * GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], 240 * GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], false);
 			

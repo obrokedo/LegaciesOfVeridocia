@@ -117,6 +117,10 @@ public class TextParser
 						{
 							te.addTriggerType(te.new TriggerPlayMusic(actionParams.get("music")));
 						}
+						else if (tagArea.getChildren().get(k).getTagType().equalsIgnoreCase("playsound"))
+						{
+							te.addTriggerType(te.new TriggerPlaySound(actionParams.get("sound"), Integer.parseInt(actionParams.get("volume"))));
+						}
 						else if (tagArea.getChildren().get(k).getTagType().equalsIgnoreCase("changeai"))
 						{
 							te.addTriggerType(te.new TriggerChangeAI(actionParams.get("aitype"), 

@@ -783,7 +783,7 @@ public class PlannerFrame extends JFrame implements ActionListener, ChangeListen
 		// Text
 		definingValues = new ArrayList<PlannerValueDef>();
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "message", false, 
-				"Message Text", "The text that should be displayed"));
+				"Message Text", "The text that should be displayed. Using the { character will cause a short pause, the } character will do a soft stop and the } chararacter will do a hard stop."));
 		// TODO SHOULD BE MULTI
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_QUEST, PlannerValueDef.TYPE_INT, "require", false, 
 				"Required Quest", "The ID of the quest that must be complete for this to be shown"));
@@ -998,6 +998,14 @@ public class PlannerFrame extends JFrame implements ActionListener, ChangeListen
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "music", false, 
 				"Music File", "The name of the music that should be played"));
 		allowableLines.add(new PlannerLineDef("playmusic", "Play Music", "Plays the specified music", definingValues));
+		
+		// Play Sound
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "sound", false, 
+				"Sound File", "The name of the sound that should be played"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "volume", false, 
+				"Volume", "A number between 1-100 that represents the percent volume the sound should be played at"));
+		allowableLines.add(new PlannerLineDef("playsound", "Play Sound", "Plays the specified sound effect", definingValues));
 		
 		// Change AI
 		definingValues = new ArrayList<PlannerValueDef>();

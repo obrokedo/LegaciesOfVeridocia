@@ -138,7 +138,7 @@ public class TownState extends LoadableGameState
 					stateInfo.setInputDelay(System.currentTimeMillis() + 200);
 				}
 				*/
-				else if (container.getInput().isKeyDown(Input.KEY_D))
+				else if (container.getInput().isKeyDown(Input.KEY_D) && !stateInfo.areMenusDisplayed())
 				{
 					stateInfo.sendMessage(Message.MESSAGE_INVESTIGATE);
 					stateInfo.setInputDelay(System.currentTimeMillis() + 200);

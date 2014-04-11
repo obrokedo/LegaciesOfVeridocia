@@ -231,6 +231,8 @@ public class TurnManager extends Manager implements KeyboardListener
 		int xDelta = 0;
 		int yDelta = 0;
 		
+		currentSprite.setAnimationUpdate(4);
+		
 		if (move.locX > currentSprite.getLocX())
 			xDelta = stateInfo.getTileWidth() / 4;					
 		else if (move.locX < currentSprite.getLocX())
@@ -248,6 +250,7 @@ public class TurnManager extends Manager implements KeyboardListener
 		if (move.locX == currentSprite.getLocX() &&
 				move.locY == currentSprite.getLocY())
 		{
+			currentSprite.setAnimationUpdate(8);
 			turnActions.remove(0);
 			if (turnActions.size() == 0)
 				ms.setCheckEvents(true);
@@ -468,6 +471,7 @@ public class TurnManager extends Manager implements KeyboardListener
 				
 				MoveToTurnAction mtta = new MoveToTurnAction(((LocationMessage) message).locX, 
 						((LocationMessage) message).locY);
+				
 				turnActions.add(mtta);
 				
 				// Grab the final TurnAction, it should be a MoveToTurnAction. Process the first move

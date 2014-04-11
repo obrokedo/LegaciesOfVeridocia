@@ -210,6 +210,24 @@ public class TriggerEvent
 		}
 	}
 	
+	public class TriggerPlaySound extends TriggerType
+	{
+		private String song;
+		private int volume;
+		
+		public TriggerPlaySound(String song, int volume)
+		{
+			this.song = song;
+			this.volume = volume;
+		}
+
+		@Override
+		public boolean perform(StateInfo stateInfo) {
+			stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, song, volume / 100.0f, false));
+			return false;
+		}
+	}
+	
 	public class TriggerShowCinematic extends TriggerType
 	{
 		private int cinematicId;

@@ -131,6 +131,7 @@ public class TownMoveManager extends Manager
 	{
 		movingDirection = direction;
 		moving = true;
+		current.setAnimationUpdate(4);
 		move(current);
 	}
 	
@@ -152,10 +153,13 @@ public class TownMoveManager extends Manager
 				break;
 		}
 		
+		
+		
 		if (current.getLocX() % stateInfo.getTileWidth() == 0 && 
 			current.getLocY() % stateInfo.getTileHeight() == 0)
 		{
 			stateInfo.checkTriggers(current.getLocX(), current.getLocY());
+			current.setAnimationUpdate(8);
 			moving = false;
 		}
 		stateInfo.getCamera().centerOnSprite(current, stateInfo.getCurrentMap());
