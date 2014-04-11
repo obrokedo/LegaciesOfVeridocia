@@ -2,8 +2,9 @@ package mb.fc.game.menu;
 
 import java.util.ArrayList;
 
-import mb.fc.engine.message.Message;
+import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.AudioMessage;
+import mb.fc.engine.message.Message;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.input.FCInput;
@@ -17,7 +18,7 @@ import org.newdawn.slick.Image;
 public class SpeechMenu extends Menu
 {	
 	private int x;
-	private int y = 120;
+	private int y = 60 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
 	private int width;
 	private ArrayList<String> panelText;
 	private int textIndex = 0;
@@ -29,7 +30,7 @@ public class SpeechMenu extends Menu
 	private int textMovingIndex = 0;
 	private boolean attackCin = false;
 	
-	public SpeechMenu(String text, GameContainer gc, boolean attackCin) 
+	public SpeechMenu(String text, FCGameContainer gc, boolean attackCin) 
 	{
 		this(text, gc, -1, -1, null);
 		this.attackCin = attackCin;		
@@ -40,17 +41,17 @@ public class SpeechMenu extends Menu
 		}
 	}
 	
-	public SpeechMenu(String text, GameContainer gc, int portraitId, StateInfo stateInfo) 
+	public SpeechMenu(String text, FCGameContainer gc, int portraitId, StateInfo stateInfo) 
 	{
 		this(text, gc, -1, portraitId, stateInfo);
 	}
 	
-	public SpeechMenu(String text, GameContainer gc, int triggerId, 
+	public SpeechMenu(String text, FCGameContainer gc, int triggerId, 
 			int portraitId, StateInfo stateInfo) 
 	{
 		super(Panel.PANEL_SPEECH);
-		width = gc.getWidth() - 100;
-		x = 50; 
+		width = gc.getWidth() - 100 - gc.getDisplayPaddingX() * 2;
+		x = 50 + gc.getDisplayPaddingX();
 		
 		int maxTextWidth = width - 10;		
 		int spaceWidth = SPEECH_FONT.getWidth("_");
@@ -91,7 +92,7 @@ public class SpeechMenu extends Menu
 
 	public void render(FCGameContainer gc, Graphics graphics)
 	{
-		Panel.drawPanelBox(x, gc.getHeight() - 120 + y, width , 115, graphics);
+		Panel.drawPanelBox(x, gc.getHeight() - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 60 + y, width , CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 60 - 5, graphics);
 		
 		if (!initialized)
 			return;
@@ -103,11 +104,11 @@ public class SpeechMenu extends Menu
 		for (int i = Math.max(0, textIndex - 2); i <= textIndex; i++)
 		{			
 			graphics.drawString((i == textIndex ? panelText.get(i).substring(0, textMovingIndex) : panelText.get(i)), x + 15, 
-					gc.getHeight() - 110 + (i - textIndex + (textIndex >= 2 ? 2 : textIndex)) * 29);
+					gc.getHeight() - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 60 + 5 + (i - textIndex + (textIndex >= 2 ? 2 : textIndex)) * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 15);
 		}
 		
 		if (portrait != null)
-			graphics.drawImage(portrait, 10, 10);
+			graphics.drawImage(portrait, x, 25);
 	}
 
 	@Override
@@ -115,10 +116,10 @@ public class SpeechMenu extends Menu
 	{
 		if (!initialized)
 		{			
-			if (y == 0)
+			if (y <= 0)
 				initialized = true;
 			else
-				y -= 15;
+				y -= CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 8;
 			
 			return MenuUpdate.MENU_NO_ACTION;
 		}

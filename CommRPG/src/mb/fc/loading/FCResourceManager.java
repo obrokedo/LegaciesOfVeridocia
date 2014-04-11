@@ -99,13 +99,19 @@ public class FCResourceManager extends ResourceManager {
 			System.out.println("Load image " + split[2]);
 			Image nImage = new Image((LoadingState.inJar ? "" : "bin/") + split[2], transparent);
 			nImage.setFilter(Image.FILTER_NEAREST);
-			images.put(split[1], nImage.getScaledCopy(split.length == 4 ? Float.parseFloat(split[3]) : 1));
+			images.put(split[1], nImage.getScaledCopy(split.length == 4 ? Float.parseFloat(split[3]) * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] : CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]));
 		}
 		else if (split[0].equalsIgnoreCase("ss"))
 		{
-			float scale = split.length == 7 ? Float.parseFloat(split[6]) : 1;
-			System.out.println("SCALE FOR " + split[1] + " " + scale);
-			System.out.println("Load sprite sheet " + split[2]);
+			
+			float scale = CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
+			if (split.length == 7)
+			{
+				if (Float.parseFloat(split[6]) == -1)
+					scale = 1;
+				else
+					scale *= Float.parseFloat(split[6]);
+			}
 			Image ssIm = new Image((LoadingState.inJar ? "" : "bin/") + split[2], transparent);
 			ssIm.setFilter(Image.FILTER_NEAREST);
 			ssIm = ssIm.getScaledCopy(scale);
@@ -177,7 +183,7 @@ public class FCResourceManager extends ResourceManager {
 			try 
 			{
 				Font awtFont = Font.createFont(Font.TRUETYPE_FONT, inputStream);
-				UnicodeFont ufont = new UnicodeFont(awtFont, Integer.parseInt(split[3]), false, false);
+				UnicodeFont ufont = new UnicodeFont(awtFont, Integer.parseInt(split[3]) * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], false, false);
 				ufont.getEffects().add(new ColorEffect(java.awt.Color.WHITE));
 				ufont.addAsciiGlyphs();
 				ufont.addGlyphs(400, 600);
@@ -246,7 +252,7 @@ public class FCResourceManager extends ResourceManager {
 				{
 					Image nIm = new Image(file.getPath(), transparent);
 					nIm.setFilter(Image.FILTER_NEAREST);
-					images.put(file.getName().replace(".png", ""), nIm.getScaledCopy(CommRPG.GLOBAL_WORLD_SCALE));
+					images.put(file.getName().replace(".png", ""), nIm.getScaledCopy(CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]));
 				}
 			}
 		}
@@ -259,7 +265,7 @@ public class FCResourceManager extends ResourceManager {
 				{
 					System.out.println(file.getName());
 					SpriteAnims sa = SpriteAnims.deserializeFromFile(file.getPath());
-					sa.initialize(images.get(sa.getSpriteSheet()), CommRPG.GLOBAL_WORLD_SCALE);// 1.88f);			
+					sa.initialize(images.get(sa.getSpriteSheet()), CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);// 1.88f);			
 					spriteAnimations.put(file.getName().replace(".fsa", ""), sa);
 				}
 			}

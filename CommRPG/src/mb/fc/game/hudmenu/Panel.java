@@ -2,6 +2,7 @@ package mb.fc.game.hudmenu;
 
 import java.awt.Font;
 
+import mb.fc.engine.CommRPG;
 import mb.fc.game.ui.FCGameContainer;
 import mb.fc.loading.FCResourceManager;
 
@@ -71,7 +72,7 @@ public abstract class Panel
 		PANEL_FONT = frm.getFontByName("menufont");
 		
 		Font awtFont = new Font("Times New Roman", Font.ITALIC, 24);
-		UnicodeFont ufont = new UnicodeFont(awtFont, 30, false, true);
+		UnicodeFont ufont = new UnicodeFont(awtFont, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 15, false, true);
 		ufont.getEffects().add(new ColorEffect(java.awt.Color.WHITE));
 		ufont.addAsciiGlyphs();
 		ufont.addGlyphs(400, 600);

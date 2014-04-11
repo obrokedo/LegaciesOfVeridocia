@@ -26,8 +26,9 @@ public class MapParser
 		
 		int width = Integer.parseInt(tagArea.getParams().get("width"));
 		int height = Integer.parseInt(tagArea.getParams().get("height"));
-		int tileWidth = Integer.parseInt(tagArea.getParams().get("tilewidth")) * CommRPG.GLOBAL_WORLD_SCALE;
-		int tileHeight = Integer.parseInt(tagArea.getParams().get("tileheight")) * CommRPG.GLOBAL_WORLD_SCALE;
+		int tileWidth = Integer.parseInt(tagArea.getParams().get("tilewidth")) * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
+		int tileHeight = Integer.parseInt(tagArea.getParams().get("tileheight")) * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
+		System.out.println("TILE " + tileWidth  + " " + tileHeight);
 		String tileSet = null;
 		
 		for (TagArea childArea : tagArea.getChildren())
@@ -42,8 +43,9 @@ public class MapParser
 				Image tileSheetImage = new Image("image/" + tsSplit[tsSplit.length - 1], new Color(	Integer.parseInt(trans.substring(0, 2), 16), 
 						Integer.parseInt(trans.substring(2, 4), 16), 
 						Integer.parseInt(trans.substring(4, 6), 16)));
+				System.out.println("LOAD TILESET " + tileSheetImage);
 				tileSheetImage.setFilter(Image.FILTER_NEAREST);
-				SpriteSheet ss = new SpriteSheet(tileSheetImage.getScaledCopy(2), tileWidth, tileHeight);
+				SpriteSheet ss = new SpriteSheet(tileSheetImage.getScaledCopy(CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]), tileWidth, tileHeight);
 				Hashtable<Integer, Integer> landEffectByTileId = new Hashtable<Integer, Integer>();
 				
 				for (TagArea tile : childArea.getChildren())
@@ -76,12 +78,12 @@ public class MapParser
 				{
 					MapObject mapObject = new MapObject();
 					mapObject.setName(objectTag.getParams().get("name"));
-					mapObject.setX(CommRPG.GLOBAL_WORLD_SCALE * Integer.parseInt(objectTag.getParams().get("x")));
-					mapObject.setY(CommRPG.GLOBAL_WORLD_SCALE * Integer.parseInt(objectTag.getParams().get("y")));
+					mapObject.setX(CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * Integer.parseInt(objectTag.getParams().get("x")));
+					mapObject.setY(CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * Integer.parseInt(objectTag.getParams().get("y")));
 					if (objectTag.getParams().containsKey("width"))
-						mapObject.setWidth(CommRPG.GLOBAL_WORLD_SCALE * Integer.parseInt(objectTag.getParams().get("width")));
+						mapObject.setWidth(CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * Integer.parseInt(objectTag.getParams().get("width")));
 					if (objectTag.getParams().containsKey("height"))
-						mapObject.setHeight(CommRPG.GLOBAL_WORLD_SCALE * Integer.parseInt(objectTag.getParams().get("height")));
+						mapObject.setHeight(CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * Integer.parseInt(objectTag.getParams().get("height")));
 					for (TagArea propArea : objectTag.getChildren())
 					{
 						if (propArea.getTagType().equalsIgnoreCase("properties"))
@@ -96,7 +98,7 @@ public class MapParser
 							for (String point : points)
 							{
 								String[] p = point.split(",");
-								pointList.add(new Point(CommRPG.GLOBAL_WORLD_SCALE * Integer.parseInt(p[0]), CommRPG.GLOBAL_WORLD_SCALE * Integer.parseInt(p[1])));								
+								pointList.add(new Point(CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * Integer.parseInt(p[0]), CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * Integer.parseInt(p[1])));								
 							}
 							
 							mapObject.setPolyPoints(pointList);

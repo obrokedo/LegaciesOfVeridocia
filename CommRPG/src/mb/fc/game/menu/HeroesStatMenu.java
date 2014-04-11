@@ -2,6 +2,7 @@ package mb.fc.game.menu;
 
 import java.util.ArrayList;
 
+import mb.fc.engine.CommRPG;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.battle.spell.KnownSpell;
 import mb.fc.game.hudmenu.Panel;

@@ -1,5 +1,6 @@
 package mb.fc.game.menu;
 
+import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.Message;
 import mb.fc.engine.state.StateInfo;
@@ -101,16 +102,21 @@ public class BattleActionsMenu extends Menu
 		int x = (gc.getWidth() - iconWidth) / 2;
 		int y = gc.getHeight() - iconHeight * 2 - 25;				
 		
-		Panel.drawPanelBox(396, 383, 115, 50, graphics);
+		Panel.drawPanelBox(CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 198 + gc.getDisplayPaddingX(), 
+				CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 195, 
+				CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 57, 
+				CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 15 + 12, graphics);
 		graphics.setColor(COLOR_FOREFRONT);
+		int sX = CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 205 + gc.getDisplayPaddingX();
+		int sY = CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 190 + 3;
 		if (selected == 4)
-			graphics.drawString("ATTACK", 410, 381);
+			graphics.drawString("ATTACK", sX, sY);
 		else if (selected == 5)
-			graphics.drawString("MAGIC", 410, 381);
+			graphics.drawString("MAGIC", sX, sY);
 		else if (selected == 6)
-			graphics.drawString("ITEMS", 410, 381);
+			graphics.drawString("ITEMS", sX, sY);
 		else if (selected == 7)
-			graphics.drawString("STAY", 410, 381);		
+			graphics.drawString("STAY", sX, sY);		
 		
 		if (enabled[0])
 			graphics.drawImage(icons[(selected == 4 ? 4 : 0)], x, y);

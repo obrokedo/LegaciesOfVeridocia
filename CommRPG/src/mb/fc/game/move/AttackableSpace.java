@@ -130,7 +130,7 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 				for (int j = 0; j < area[0].length; j++)
 				{
 					if (area[i][j] == 1)
-						graphics.drawRect(selectX + (tileWidth * (i - areaOffset)) - camera.getLocationX(), 
+						graphics.drawRect(selectX + (tileWidth * (i - areaOffset)) - camera.getLocationX() + gc.getDisplayPaddingX(), 
 								selectY + (tileHeight * (j - areaOffset)) - camera.getLocationY(), tileWidth, tileHeight);
 				}
 			}						

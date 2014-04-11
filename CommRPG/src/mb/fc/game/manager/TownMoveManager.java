@@ -2,6 +2,7 @@ package mb.fc.game.manager;
 
 import java.util.ArrayList;
 
+import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.Message;
 import mb.fc.engine.message.OverlandMoveMessage;
 import mb.fc.game.constants.Direction;
@@ -18,7 +19,7 @@ public class TownMoveManager extends Manager
 	private boolean moving = false;
 	private Direction movingDirection;
 	private int updateDelta = 0;
-	private static final int UPDATE_TIME = 13;
+	private static int UPDATE_TIME = 20;
 
 	@Override
 	public void initialize() {		
@@ -138,16 +139,16 @@ public class TownMoveManager extends Manager
 		switch (movingDirection)
 		{
 			case UP:
-				current.setLocY(current.getLocY() - 4);
+				current.setLocY((int) (current.getLocY() - 2 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]));
 				break;
 			case DOWN:
-				current.setLocY(current.getLocY() + 4);
+				current.setLocY((int) (current.getLocY() + 2 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]));
 				break;
 			case LEFT:
-				current.setLocX(current.getLocX() - 4);
+				current.setLocX((int) (current.getLocX() - 2 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]));
 				break;
 			case RIGHT:
-				current.setLocX(current.getLocX() + 4);
+				current.setLocX((int) (current.getLocX() + 2 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]));
 				break;
 		}
 		

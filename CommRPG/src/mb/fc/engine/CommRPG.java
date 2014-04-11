@@ -11,6 +11,9 @@ import mb.fc.loading.FCResourceManager;
 import mb.gl2.loading.LoadableGameState;
 import mb.gl2.loading.LoadingState;
 
+import org.lwjgl.LWJGLException;
+import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.DisplayMode;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
@@ -51,7 +54,30 @@ public class CommRPG extends StateBasedGame   {
 	
 	private PersistentStateInfo persistentStateInfo;
 	
-	public static final int GLOBAL_WORLD_SCALE = 2;
+	public static final int[] GLOBAL_WORLD_SCALE = new int[] {3, 2};
+	
+	public static final String GAME_TITLE = "Legacies of Veridocia";
+		
+	private static DEBUG_HOLDER DH;
+	
+	private class DEBUG_HOLDER
+	{
+		int value;
+
+		public DEBUG_HOLDER(int value) {
+			super();
+			this.value = value;
+		}
+
+		public int getValue() {
+			return value;
+		}
+	}
+	
+	public static int getGameInstance()
+	{
+		return DH.getValue();
+	}
 	
 	/**
 	 * Entry point into Eaton
@@ -66,29 +92,49 @@ public class CommRPG extends StateBasedGame   {
 			FCGameContainer container = new FCGameContainer(fc);
 			container.setShowFPS(true);
 									
-			// TODO We want to keep the same screen resolution ratio but then just expand the vertical black bars. Potentially put menus in the bars
+			// TODO We want to keep the same screen resolution ratio but then just expand the vertical black bars. Potentially put menus in the bars					
+			int smallestWidth = 0;
+			int smallestHeight = Integer.MAX_VALUE;
 			
-			/*
-			double ratio =  container.getScreenWidth() * 1.0 / container.getScreenHeight();
-			
-			// We want the screen to be 768 pixels large
-			int preferredScreenWidth = (int) Math.ceil(480 * ratio);
-
-			try
-			{
-				container.setDisplayMode(640, 480, true);
-				// container.setDisplayPaddingX((preferredScreenWidth - 640) / 2);
+			try {
+				double ratio =  container.getScreenWidth() * 1.0 / container.getScreenHeight();
+				System.out.println(ratio);
+				DisplayMode[] modes = Display.getAvailableDisplayModes();
+				for (DisplayMode dm : modes)
+				{
+					double sRatio = 1.0 * dm.getWidth() / dm.getHeight();
+					if (sRatio == ratio && smallestHeight > dm.getHeight() && dm.getHeight() % 240 == 0) // && dm.getHeight() >= 720 && dm.getWidth() >= 960)
+					{
+						smallestWidth = dm.getWidth();
+						smallestHeight = dm.getHeight();
+					}
+				}
+				
+				System.out.println(smallestWidth + " " + smallestHeight);
+				
+				GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] = smallestHeight / 240;
+				container.setDisplayPaddingX((int) ((smallestWidth - (GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 320)) / 2));
+				
+				
+			} catch (LWJGLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			catch (SlickException ex)
-			{
-				System.out.println("ERROR finding resolution");
-				container.setDisplayMode(1024, 768, true);
-			} 
-			*/
 			
 			
 			// container.setDisplayMode(640, 480, true);
-			container.setDisplayMode(640, 480, false);
+			// container.setDisplayMode(640, 480, false);
+			// container.setDisplayMode(960, 720, false);
+			
+			if (smallestWidth == 0)
+			{
+				System.out.println("Unable to enter full screen");
+				container.setDisplayMode(960, 720, false);
+			}
+			else
+				container.setDisplayMode(smallestWidth, smallestHeight, true);
+			// container.setDisplayPaddingX(100);
+			// container.setDisplayMode(200 + 320 * GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], 240 * GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], false);
 			
 			container.setVSync(true);
 			container.setAlwaysRender(true);
@@ -103,7 +149,8 @@ public class CommRPG extends StateBasedGame   {
 	
 	public CommRPG() 
 	{
-		super("Chronicles of Veridocia");
+		super(GAME_TITLE);
+		DH =  new DEBUG_HOLDER(0);
 	}
 	
 	/**

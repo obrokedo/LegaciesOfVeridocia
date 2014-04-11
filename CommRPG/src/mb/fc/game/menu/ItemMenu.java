@@ -2,6 +2,7 @@ package mb.fc.game.menu;
 
 import java.awt.Point;
 
+import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.IntMessage;
 import mb.fc.engine.message.Message;
@@ -100,8 +101,13 @@ public class ItemMenu extends Menu
 	}
 
 	@Override
-	public void render(FCGameContainer gc, Graphics graphics) {
-		Panel.drawPanelBox(396, 378, 200, 60, graphics);
+	public void render(FCGameContainer gc, Graphics graphics) 
+	{
+		Panel.drawPanelBox(CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 198 + gc.getDisplayPaddingX(), 
+				CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 200 - 22, 
+				CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 100, 
+				CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 30, 
+				graphics);
 		
 		for (int i = 0; i < 4; i++)
 		{			
@@ -116,12 +122,12 @@ public class ItemMenu extends Menu
 				graphics.drawRect(drawPoints[i].x, drawPoints[i].y, width, height);
 				graphics.drawRect(drawPoints[i].x + 1, drawPoints[i].y + 1, width - 2, height - 2);
 				graphics.setColor(COLOR_FOREFRONT);
-				graphics.drawString(currentSprite.getItem(i).getName(), 410, 370);
+				graphics.drawString(currentSprite.getItem(i).getName(), CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 205 + gc.getDisplayPaddingX(), CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 195 - 22);
 				
 				if (currentSprite.getEquipped().get(i))
 				{
 					graphics.setColor(Color.pink);
-					graphics.drawString("Equipped", 410, 390);
+					graphics.drawString("Equipped", CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 205 + gc.getDisplayPaddingX(), CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 205 - 22);
 				}
 			}						
 		}			

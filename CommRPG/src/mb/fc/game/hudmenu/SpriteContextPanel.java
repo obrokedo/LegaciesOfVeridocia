@@ -1,5 +1,6 @@
 package mb.fc.game.hudmenu;
 
+import mb.fc.engine.CommRPG;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.ui.FCGameContainer;
 
@@ -40,63 +41,68 @@ public class SpriteContextPanel extends Panel
 		}
 	}
 	
-	private void displayHealth(GameContainer gc, Graphics graphics, int position)
+	private void displayHealth(FCGameContainer gc, Graphics graphics, int position)
 	{		
 		// Determine panel width by max hp of entity		
-		int width = 150;
-		int healthWidth = (int) (sprite.getMaxHP() * 1.5);
-		int mpWidth = (int) (sprite.getMaxMP() * 1.5);
-		width = Math.max(width, 115 + healthWidth);
-		width = Math.max(width, 115 + mpWidth);
-		int height = 55 + (sprite.getMaxMP() != 0 ? 20 : 0);
+		int width = CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 75;
+		int healthWidth = (int) (sprite.getMaxHP() * .75 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);
+		int mpWidth = (int) (sprite.getMaxMP() * .75 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);
+		width = Math.max(width, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 57 + healthWidth);
+		width = Math.max(width, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 57 + mpWidth);
+		int height = CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 27 + (sprite.getMaxMP() != 0 ? CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 10 : 0);
+		int x = 0;
+		int y = 0;
 		
 		if (position == 0)
 		{
-			Panel.drawPanelBox(gc.getWidth() - width - 5, 5, width, height, graphics);
-			graphics.setColor(Panel.COLOR_FOREFRONT);
-			graphics.drawString(sprite.getName(), gc.getWidth() - width + 5, -3);
-			graphics.drawString("HP", gc.getWidth() - width + 5, 15);		
-			graphics.drawString(sprite.getCurrentHP() + "/" + sprite.getMaxHP(), gc.getWidth() - width + 45 + healthWidth, 15);
-			if (sprite.getMaxMP() != 0)
-			{
-				graphics.drawString("MP", gc.getWidth() - width + 5, 31);
-				graphics.drawString(sprite.getCurrentMP() + "/" + sprite.getMaxMP(), gc.getWidth() - width + 45 + mpWidth, 31);
-			}
-			graphics.setColor(Color.red);
-			graphics.fillRoundRect(gc.getWidth() - width + 40, 35, healthWidth, 15, 5);
-			if (sprite.getMaxMP() != 0)
-				graphics.fillRoundRect(gc.getWidth() - width + 40, 51, mpWidth, 15, 5);
-			
-			graphics.setColor(Color.yellow);
-			graphics.fillRoundRect(gc.getWidth() - width + 40, 35, (int) (Math.max(0, sprite.getCurrentHP() * 1.5)), 15, 5);
-			if (sprite.getMaxMP() != 0)
-				graphics.fillRoundRect(gc.getWidth() - width + 40, 51, (int) (Math.max(0, sprite.getCurrentMP() * 1.5)), 15, 5);
+			x = gc.getWidth() - gc.getDisplayPaddingX() - width - 5;
+			y = 5;
 		}
 		else
 		{
-			
-			Panel.drawPanelBox(5, gc.getHeight() - height - 5, width, height, graphics);			
-			graphics.setColor(Panel.COLOR_FOREFRONT);
-			
-			graphics.drawString(sprite.getName(), 15, gc.getHeight() - height + -13);
-			graphics.drawString("HP", 15, gc.getHeight() - height + 5);		
-			graphics.drawString(sprite.getCurrentHP() + "/" + sprite.getMaxHP(), 50 + healthWidth, gc.getHeight() - height + 5);
-			if (sprite.getMaxMP() != 0)
-			{
-				graphics.drawString("MP", 15, gc.getHeight() - height + 21);
-				graphics.drawString(sprite.getCurrentMP() + "/" + sprite.getMaxMP(), 50 + mpWidth, gc.getHeight() - height + 21);
-			}
-			graphics.setColor(Color.red);
-			graphics.fillRoundRect(45, gc.getHeight() - height + 25, healthWidth, 15, 5);
-			if (sprite.getMaxMP() != 0)
-				graphics.fillRoundRect(45, gc.getHeight() - height + 41, mpWidth, 15, 5);
-			
-			graphics.setColor(Color.yellow);
-			graphics.fillRoundRect(45, gc.getHeight() - height + 25, (int) (sprite.getCurrentHP() * 1.5), 15, 5);
-			if (sprite.getMaxMP() != 0)
-				graphics.fillRoundRect(45, gc.getHeight() - height + 41, (int) (sprite.getCurrentMP() * 1.5), 15, 5);
-				
+			x = 5;
+			y = gc.getHeight() - height - 5;
 		}
+		
+		Panel.drawPanelBox(x, y, width, height, graphics);
+		graphics.setColor(Panel.COLOR_FOREFRONT);
+		graphics.drawString(sprite.getName(), x + 10, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * -7 + 2);
+		graphics.drawString("HP", x + 10, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 4 - 1);		
+		graphics.drawString(sprite.getCurrentHP() + "/" + sprite.getMaxHP(), 
+				x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 22 + healthWidth, 
+				 y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 4 - 1);
+		if (sprite.getMaxMP() != 0)
+		{
+			graphics.drawString("MP", x + 10, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 14 - 2);
+			graphics.drawString(sprite.getCurrentMP() + "/" + sprite.getMaxMP(), 
+					x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 22 + mpWidth, 
+					y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 14 - 2);
+		}
+		graphics.setColor(Color.red);
+		graphics.fillRoundRect(x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 20, 
+				y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 14 - 2,  
+				healthWidth, 
+				CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 8, 
+				5);
+		if (sprite.getMaxMP() != 0)
+			graphics.fillRoundRect(x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 20, 
+					y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 22 + 1,
+					mpWidth, 
+					CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 8, 
+					5);
+		
+		graphics.setColor(Color.yellow);
+		graphics.fillRoundRect(x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 20, 
+				y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 14 - 2, 
+				(int) (Math.max(0, sprite.getCurrentHP() * .75 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()])), 
+				CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 8, 
+				5);
+		if (sprite.getMaxMP() != 0)
+			graphics.fillRoundRect(x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 20, 
+					y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 22 + 1,
+					(int) (Math.max(0, sprite.getCurrentMP() * .75 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()])), 
+					CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 8, 
+					5);
 	}
 	
 	private void displayStatPanel(GameContainer gc, Graphics graphics)

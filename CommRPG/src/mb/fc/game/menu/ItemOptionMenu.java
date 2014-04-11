@@ -1,5 +1,6 @@
 package mb.fc.game.menu;
 
+import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.BattleSelectionMessage;
 import mb.fc.engine.message.Message;
@@ -54,16 +55,21 @@ public class ItemOptionMenu extends Menu
 		int x = (gc.getWidth() - iconWidth) / 2;
 		int y = gc.getHeight() - iconHeight * 2 - 25;				
 		
-		Panel.drawPanelBox(396, 383, 115, 50, graphics);
+		Panel.drawPanelBox(gc.getDisplayPaddingX() + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 198, 
+				CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 202 - 17, 
+				CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 57,
+				CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 20 + 5, graphics);
 		graphics.setColor(COLOR_FOREFRONT);
+		int sX = CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 205 + gc.getDisplayPaddingX();
+		int sY = CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 198 - 14;
 		if (selected == 4)
-			graphics.drawString("USE", 410, 381);
+			graphics.drawString("USE", sX, sY);
 		else if (selected == 5)
-			graphics.drawString("GIVE", 410, 381);
+			graphics.drawString("GIVE", sX, sY);
 		else if (selected == 6)
-			graphics.drawString("EQUIP", 410, 381);
+			graphics.drawString("EQUIP", sX, sY);
 		else if (selected == 7)
-			graphics.drawString("DROP", 410, 381);
+			graphics.drawString("DROP", sX, sY);
 		
 		if (item.isUsuable())
 			graphics.drawImage(icons[(selected == 4 ? 4 : 0)], x, y);

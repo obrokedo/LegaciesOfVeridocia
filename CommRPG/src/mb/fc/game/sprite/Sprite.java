@@ -23,7 +23,7 @@ public class Sprite implements Serializable
 	protected String name;
 	protected boolean visible = true;
 	
-	private static StateInfo stateInfo;
+	protected static StateInfo stateInfo;
 	
 	public Sprite(int locX, int locY)
 	{

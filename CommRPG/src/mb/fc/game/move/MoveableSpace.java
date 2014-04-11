@@ -140,7 +140,7 @@ public class MoveableSpace implements KeyboardListener, MouseListener, TileBased
 				if (moveableTiles[j][i] != -1)
 				{
 					graphics.setColor(MOVEABLE_COLOR);
-					graphics.fillRect((i + topX) * tileWidth - camX, 
+					graphics.fillRect((i + topX) * tileWidth - camX + gc.getDisplayPaddingX(), 
 							(j + topY) * tileHeight - camY, 
 							tileWidth - 1, tileHeight - 1);
 				}

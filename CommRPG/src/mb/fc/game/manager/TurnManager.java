@@ -113,7 +113,7 @@ public class TurnManager extends Manager implements KeyboardListener
 		if (displayCursor)
 		{
 			graphics.setColor(Color.white);
-			graphics.drawRect(cursor.getX() - stateInfo.getCamera().getLocationX(), 
+			graphics.drawRect(cursor.getX() - stateInfo.getCamera().getLocationX() + stateInfo.getGc().getDisplayPaddingX(),
 					cursor.getY() - stateInfo.getCamera().getLocationY(), 
 						stateInfo.getTileWidth() - 1, stateInfo.getTileHeight() - 1);
 		}

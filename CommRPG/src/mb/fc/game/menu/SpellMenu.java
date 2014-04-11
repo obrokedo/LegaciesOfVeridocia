@@ -2,6 +2,7 @@ package mb.fc.game.menu;
 
 import java.util.ArrayList;
 
+import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.BattleSelectionMessage;
 import mb.fc.engine.message.ChatMessage;
@@ -15,7 +16,6 @@ import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.ui.FCGameContainer;
 
 import org.newdawn.slick.Color;
-import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
@@ -88,13 +88,16 @@ public class SpellMenu extends Menu
 	{
 		graphics.setColor(Panel.COLOR_FOREFRONT);
 		
-		Panel.drawPanelBox(396, 353, 150, 110, graphics);		
+		Panel.drawPanelBox(CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 198 + gc.getDisplayPaddingX(), 
+				CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 200 - 40, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 75, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 36 + 18, graphics);		
 		
+		/*
 		if (hasSelected)
 		{
 			graphics.setColor(Color.red);
 			graphics.drawRect(405, 393, 132, 25);
 		}
+		*/
 		
 		for (SpellIcon sml : spellIcons)
 		{
@@ -121,7 +124,7 @@ public class SpellMenu extends Menu
 			this.spellName = spellName;
 		}
 		
-		public void render(GameContainer gc, Graphics graphics)
+		public void render(FCGameContainer gc, Graphics graphics)
 		{
 			graphics.setColor(Panel.COLOR_FOREFRONT);
 			graphics.drawImage(icon, iconArea.getX(), iconArea.getY());
@@ -130,10 +133,13 @@ public class SpellMenu extends Menu
 			{
 				graphics.setColor(Color.red);
 				Menu.drawRect(iconArea, graphics);
-				graphics.drawRect(iconArea.getX() + 1, iconArea.getY() + 1, iconArea.getWidth() - 2, iconArea.getHeight() - 2);
+				graphics.drawRect(iconArea.getX() + 1, 
+						iconArea.getY() + 1, 
+						iconArea.getWidth() - 2, 
+						iconArea.getHeight() - 2);
 				
 				graphics.setColor(COLOR_FOREFRONT);
-				graphics.drawString(spellName, 410, 351);
+				graphics.drawString(spellName, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 205 + gc.getDisplayPaddingX(), CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 195 - 35);
 				for (int i = 0; i < maxLevel; i++)
 				{
 					if (hasSelected)
@@ -141,20 +147,23 @@ public class SpellMenu extends Menu
 						if (i < level)
 						{
 							graphics.setColor(Color.yellow);
-							graphics.fillRoundRect(410 + i * 30, 399, 28, 15, 4);	
+							graphics.fillRoundRect(CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 200 + 10 + i * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 15 + gc.getDisplayPaddingX(),
+									CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 215 - 30, 
+									CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 14, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 7, 4);	
 							graphics.setColor(COLOR_FOREFRONT);
 						}
 					}					
-					graphics.drawRoundRect(410 + i * 30, 399, 28, 15, 4);					
+					graphics.drawRoundRect(CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 200 + 10 + i * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 15 + gc.getDisplayPaddingX(), CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 215 - 30, 
+							CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 14, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 7, 4);					
 				}
 				// graphics.drawString(spellName, 410, 399);
-				graphics.drawString("Cost:", 410, 411);
+				graphics.drawString("Cost:", CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 205 + gc.getDisplayPaddingX(), CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 215 - 30);
 				
 				if (hasSelected)
 				{
 					if (currentSprite.getCurrentMP() < cost)
 						graphics.setColor(Color.red);
-						graphics.drawString(cost + "", 490, 411);
+						graphics.drawString(cost + "", CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 245 + gc.getDisplayPaddingX(), CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 215 - 30);
 				}
 			}
 		}

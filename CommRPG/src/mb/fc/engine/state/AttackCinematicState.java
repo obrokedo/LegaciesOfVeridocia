@@ -128,7 +128,7 @@ public class AttackCinematicState extends LoadableGameState
 	private Animation spellAnim;
 	private int spellAnimIndex = 0;
 	
-	private float screenScale = 1.88f; // (640 * 1024 / 3)
+	private float screenScale = CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];// 1.88f; // (640 * 1024 / 3)
 	
 	private Image heroFloorImage;
 	
@@ -313,7 +313,7 @@ public class AttackCinematicState extends LoadableGameState
 				if (state == STATE_ATTACKING && attackerAnimIndex == attackerAnim.frames.size() - 1)
 				{
 					
-					textMenu = new SpeechMenu(battleResults.text.get(targetIndex), container, true);
+					textMenu = new SpeechMenu(battleResults.text.get(targetIndex), (FCGameContainer) container, true);
 					
 					if (spellAnim != null)
 						spellAnimIndex = 0;							
@@ -370,7 +370,7 @@ public class AttackCinematicState extends LoadableGameState
 					{
 						if (battleResults.attackOverText != null)
 						{
-							textMenu = new SpeechMenu(battleResults.attackOverText, container, true);
+							textMenu = new SpeechMenu(battleResults.attackOverText, (FCGameContainer) container, true);
 							if (battleResults.levelUpResult != null)
 								attacker.getHeroProgression().levelUp(attacker, battleResults.levelUpResult, frm);
 						}
@@ -385,7 +385,7 @@ public class AttackCinematicState extends LoadableGameState
 					{
 						deathFade = false;
 						targetAnim = targets.get(++targetIndex).getAnimation("UnStand");
-						textMenu = new SpeechMenu(battleResults.text.get(targetIndex), container, true);						
+						textMenu = new SpeechMenu(battleResults.text.get(targetIndex), (FCGameContainer) container, true);						
 						performBattleResult();
 						
 					}
@@ -463,7 +463,7 @@ public class AttackCinematicState extends LoadableGameState
 						
 						if (battleResults.attackOverText != null)
 						{
-							textMenu = new SpeechMenu(battleResults.attackOverText, container, false);
+							textMenu = new SpeechMenu(battleResults.attackOverText, (FCGameContainer) container, false);
 							if (battleResults.levelUpResult != null)
 								attacker.getHeroProgression().levelUp(attacker, battleResults.levelUpResult, frm);
 						}
@@ -528,7 +528,7 @@ public class AttackCinematicState extends LoadableGameState
 		targetIndex = 0;
 		deathFade = false;
 		Image bgIm = frm.getSpriteSheets().get("battlebg").getSprite(bgImagePoint.x, bgImagePoint.y);
-		backgroundImage = bgIm.getScaledCopy((gc.getWidth() - gc.getDisplayPaddingX() * screenScale) / (float) bgIm.getWidth());
+		backgroundImage = bgIm.getScaledCopy((gc.getWidth() - gc.getDisplayPaddingX() * 2) / (float) bgIm.getWidth());
 		
 		bgXPos = gc.getDisplayPaddingX();
 		bgYPos = (int) ((gc.getHeight() - backgroundImage.getHeight()) / screenScale);		

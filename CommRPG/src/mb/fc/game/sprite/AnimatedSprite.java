@@ -1,5 +1,6 @@
 package mb.fc.game.sprite;
 
+import mb.fc.engine.CommRPG;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.Camera;
 import mb.fc.game.constants.Direction;
@@ -17,7 +18,7 @@ public class AnimatedSprite extends Sprite
 	private static final long serialVersionUID = 1L;
 	
 	protected final transient static Color SHADOW_COLOR = new Color(0, 0, 0, 100);
-	protected final static int SHADOW_OFFSET = 10;
+	protected final static int SHADOW_OFFSET = 8;
 	
 	protected transient int imageIndex;
 	protected transient int animationDelay = 0;
@@ -42,12 +43,13 @@ public class AnimatedSprite extends Sprite
 		{
 			Image i = (spriteAnims.getImageAtIndex(as.imageIndex)).getFlippedCopy(false, true); 
 			i.drawSheared(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(), 
-					this.getLocY() - camera.getLocationY() + i.getHeight() - SHADOW_OFFSET - 12, -10, 0, SHADOW_COLOR);
+					this.getLocY() - camera.getLocationY() + i.getHeight() - SHADOW_OFFSET * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] - 
+					stateInfo.getResourceManager().getMap().getTileRenderHeight(), -10, 0, SHADOW_COLOR);
 					
 			
 			
 			graphics.drawImage(spriteAnims.getImageAtIndex(as.imageIndex), this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(), 
-					this.getLocY() - camera.getLocationY() - 12);
+					this.getLocY() - camera.getLocationY() - stateInfo.getResourceManager().getMap().getTileRenderHeight());
 		}
 	}
 
