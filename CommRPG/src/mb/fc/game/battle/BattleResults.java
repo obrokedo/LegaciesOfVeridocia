@@ -197,6 +197,7 @@ public class BattleResults implements Serializable
 			if (target.getCurrentHP() + br.hpDamage.get(index) <= 0)
 			{
 				br.death = true;
+				text = text.replaceAll("}", "");
 				text = text + " " + target.getName() + " has been defeated...}";
 			}
 			br.text.add(text);
@@ -210,7 +211,7 @@ public class BattleResults implements Serializable
 		{
 			attacker.setExp(attacker.getExp() + expGained);
 			br.attackOverText = attacker.getName() + " gained " + expGained +  " experience. }";
-			if (attacker.getExp() >= 1)
+			if (attacker.getExp() >= 100)
 			{
 				br.levelUpResult = attacker.getHeroProgression().getLevelUpResults(attacker, stateInfo);
 				br.attackOverText += br.levelUpResult.text;

@@ -26,6 +26,7 @@ public class PlannerValueDef
 	public static final int TYPE_STRING = 0;
 	public static final int TYPE_INT = 1;
 	public static final int TYPE_BOOLEAN = 2;
+	public static final int TYPE_MULTI_INT = 3;
 	
 	// Refers to
 	private int refersTo;

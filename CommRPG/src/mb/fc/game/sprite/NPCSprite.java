@@ -32,7 +32,7 @@ public class NPCSprite extends AnimatedSprite
 			{
 				for (int i : s.getRequires())
 				{
-					if (!stateInfo.isQuestComplete(i))
+					if (i != -1 && !stateInfo.isQuestComplete(i))
 						continue SPEECHLOOP;
 				}
 			}
@@ -43,7 +43,7 @@ public class NPCSprite extends AnimatedSprite
 			{
 				for (int i : s.getExcludes())
 				{						
-					if (stateInfo.isQuestComplete(i))
+					if (i != -1 && stateInfo.isQuestComplete(i))
 						continue SPEECHLOOP;
 				}
 			}

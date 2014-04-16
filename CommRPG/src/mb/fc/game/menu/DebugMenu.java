@@ -4,6 +4,7 @@ import mb.fc.engine.message.ChatMessage;
 import mb.fc.engine.message.Message;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.input.FCInput;
+import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.ui.FCGameContainer;
 
 import org.newdawn.slick.Color;
@@ -52,6 +53,14 @@ public class DebugMenu extends Menu
 					stateInfo.sendMessage(new ChatMessage(Message.MESSAGE_SEND_INTERNAL_MESSAGE, "SYSTEM", "Playing music: NULL"));
 				else
 					stateInfo.sendMessage(new ChatMessage(Message.MESSAGE_SEND_INTERNAL_MESSAGE, "SYSTEM", "Playing music: " + stateInfo.getPlayingMusic().toString()));
+			}
+			else if (splitText[0].equalsIgnoreCase("heal"))
+			{
+				for (CombatSprite cs : stateInfo.getHeroes())
+				{
+					cs.setCurrentHP(cs.getMaxHP());
+					cs.setCurrentMP(cs.getMaxMP());
+				}
 			}
 			
 			textField.deactivate();

@@ -128,6 +128,37 @@ public class PlannerLine extends JPanel
 							((JComboBox) c).setSelectedIndex(((int) values.get(i)));
 					}
 					break;
+				case PlannerValueDef.TYPE_MULTI_INT:
+					Vector<String> mitems = new Vector<String>();
+					mitems.add("No value selected");
+					mitems.addAll(listOfLists.get(pv.getRefersTo() - 1));
+					
+					c = new MultiIntPanel(listOfLists.get(pv.getRefersTo() - 1));
+					JButton ab = new JButton("Add Item");
+					ab.addActionListener((MultiIntPanel) c);
+					ab.setActionCommand("ADD");
+					c.add(ab);
+					
+					JButton rb = new JButton("Remove Last Item");
+					rb.addActionListener((MultiIntPanel) c);
+					rb.setActionCommand("REMOVE");
+					c.add(rb);
+					if (values.size() > 0)
+					{
+						String[] vals = ((String) values.get(i)).split(",");
+						
+						for (String s : vals)
+						{
+							JComboBox<String> jcb = new JComboBox<String>(mitems);
+							if (s.length() > 0)
+								jcb.setSelectedIndex(Integer.parseInt(s));
+							c.add(jcb);
+						}
+					}
+					else
+						c.add(new JComboBox<String>(mitems));
+					
+					break;
 				case PlannerValueDef.TYPE_BOOLEAN:					
 					c = new JCheckBox();					
 					if (values.size() > 0)
@@ -210,6 +241,23 @@ public class PlannerLine extends JPanel
 							else
 								values.set(i, ((JComboBox) components.get(i)).getSelectedIndex());							
 						}
+						break;
+					case PlannerValueDef.TYPE_MULTI_INT:
+						String multi = "";
+						MultiIntPanel mip = (MultiIntPanel) components.get(i);
+						for (int j = 2; j < mip.getComponentCount(); j++)
+						{
+							multi = multi + ((JComboBox)mip.getComponent(j)).getSelectedIndex();
+							if (j + 1 != mip.getComponentCount())
+								multi = multi + ",";
+						}
+						System.out.println("Multi: " + multi);
+						
+						if (noValues)
+							values.add(multi);
+						else
+							values.set(i, multi);
+						
 						break;
 				}
 			}

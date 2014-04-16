@@ -23,13 +23,17 @@ public class TriggerEvent
 	private ArrayList<TriggerType> triggerTypes = new ArrayList<TriggerType>();
 	private boolean retrigOnEnter;
 	private boolean nonRetrig;
+	private int[] requires;
+	private int[] excludes;
 	private int id;
 	
-	public TriggerEvent(int id, boolean retrigOnEnter, boolean nonRetrig) {
+	public TriggerEvent(int id, boolean retrigOnEnter, boolean nonRetrig, int[] requires, int[] excludes) {
 		super();
 		this.retrigOnEnter = retrigOnEnter;
 		this.nonRetrig = nonRetrig;
 		this.id = id;
+		this.requires = requires;
+		this.excludes = excludes;
 	}
 
 	public void addTriggerType(TriggerType tt)
@@ -38,7 +42,28 @@ public class TriggerEvent
 	}
 	
 	public void perform(StateInfo stateInfo)
-	{
+	{		
+		// Check to see if this trigger meets all required quests
+		if (requires != null)
+		{			
+			for (int i : requires)
+			{
+				if (i != -1 && !stateInfo.isQuestComplete(i))
+					return;
+			}
+		}
+		
+		// Check to see if the excludes quests have been completed, if so
+		// then we can't use this trigger
+		if (excludes != null)
+		{
+			for (int i : excludes)
+			{						
+				if (i != -1 && stateInfo.isQuestComplete(i))
+					return;
+			}
+		}
+		
 		if (nonRetrig)
 		{
 			if (stateInfo.getClientProgress().isNonretriggableTrigger(id))
@@ -263,7 +288,7 @@ public class TriggerEvent
 				{
 					for (int i : s.getRequires())
 					{
-						if (!stateInfo.isQuestComplete(i))
+						if (i != -1 && !stateInfo.isQuestComplete(i))
 							continue SPEECHLOOP;
 					}
 				}
@@ -274,7 +299,7 @@ public class TriggerEvent
 				{
 					for (int i : s.getExcludes())
 					{						
-						if (stateInfo.isQuestComplete(i))
+						if (i != -1 && stateInfo.isQuestComplete(i))
 							continue SPEECHLOOP;
 					}
 				}

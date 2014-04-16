@@ -3,6 +3,7 @@ package mb.fc.game.ai;
 import java.awt.Point;
 import java.util.ArrayList;
 
+import mb.fc.engine.CommRPG;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.move.MoveableSpace;
 import mb.fc.game.sprite.CombatSprite;
@@ -32,6 +33,7 @@ public abstract class AI
 	private boolean canHeal;
 	private Point targetPoint;
 	private CombatSprite targetCS;
+	private AttackSpriteAction potentialAttackSpriteAction = null;
 
 	public AI(int approachType, boolean canHeal) {
 		super();
@@ -101,6 +103,19 @@ public abstract class AI
 						targetPoint = attackPoint;
 						target = as;
 						maxConfidence = currentConfidence;
+						potentialAttackSpriteAction = getPerformedTurnAction(target.getCombatSprite());
+					}
+					else if (currentConfidence == maxConfidence)
+					{
+						System.out.println("Found equal confidence = " + currentConfidence);
+						if (CommRPG.RANDOM.nextInt(100) > 50)
+						{
+							targetPoint = attackPoint;
+							target = as;
+							maxConfidence = currentConfidence;
+							potentialAttackSpriteAction = getPerformedTurnAction(target.getCombatSprite());
+							System.out.println("Switched action");
+						}
 					}
 				}										
 			}
@@ -140,11 +155,10 @@ public abstract class AI
 		if (target != null)
 		{
 			ms.addMoveActionsToLocation(targetPoint.x, targetPoint.y, currentSprite, turnActions);
+			turnActions.add(new WaitAction());			
+			turnActions.add(new TargetSpriteAction(potentialAttackSpriteAction.getBattleCommand(), target.getCombatSprite()));
 			turnActions.add(new WaitAction());
-			AttackSpriteAction attackAction = getPerformedTurnAction(target.getCombatSprite());
-			turnActions.add(new TargetSpriteAction(attackAction.getBattleCommand(), target.getCombatSprite()));
-			turnActions.add(new WaitAction());
-			turnActions.add(attackAction);
+			turnActions.add(potentialAttackSpriteAction);
 			attacking = true;
 		}	
 		else

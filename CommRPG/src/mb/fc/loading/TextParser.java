@@ -30,16 +30,12 @@ public class TextParser
 					int triggerId = -1;
 					int portraitId = -1;
 					String message = childTagArea.getParams().get("message");
-					//String requires = childTagArea.getParams().get("require");
-					//String excludes = childTagArea.getParams().get("exclude");
-					int requires = Integer.parseInt(childTagArea.getParams().get("require"));
-					int excludes = Integer.parseInt(childTagArea.getParams().get("exclude"));
+					String requires = childTagArea.getParams().get("require");
+					String excludes = childTagArea.getParams().get("exclude");
 					String trigger = childTagArea.getParams().get("trigger");
 					String portrait = childTagArea.getParams().get("portrait");
 					int[] requireIds = null;
-					if (requires != -1)
-						requireIds = new int[] {requires};
-					/*
+					
 					if (requires != null)
 					{
 						String[] splitReq = requires.split(",");
@@ -47,12 +43,10 @@ public class TextParser
 						for (int i = 0; i < splitReq.length; i++)
 							requireIds[i] = Integer.parseInt(splitReq[i]);
 					}
-					*/
+					
 					
 					int[] excludeIds = null;
-					if (excludes != -1)
-						excludeIds = new int[] {excludes};
-					/*
+					
 					if (excludes != null)
 					{
 						String[] splitEx = excludes.split(",");
@@ -60,7 +54,7 @@ public class TextParser
 						for (int i = 0; i < splitEx.length; i++)
 							excludeIds[i] = Integer.parseInt(splitEx[i]);
 					}
-					*/										
+															
 					
 					if (trigger != null)
 						triggerId = Integer.parseInt(trigger);
@@ -77,12 +71,33 @@ public class TextParser
 				int id = Integer.parseInt(tagArea.getParams().get("id"));
 				boolean nonRetrig = false;
 				boolean retrigOnEnter = false;
+				int[] requireIds = null;
+				int[] excludeIds = null;
 				if (tagArea.getParams().containsKey("nonretrig"))
 					nonRetrig = Boolean.parseBoolean(tagArea.getParams().get("nonretrig"));
 				if (tagArea.getParams().containsKey("retrigonenter"))
 					retrigOnEnter = Boolean.parseBoolean(tagArea.getParams().get("retrigonenter"));
 				
-				TriggerEvent te = new TriggerEvent(id, retrigOnEnter, nonRetrig);
+				String requires = tagArea.getParams().get("require");
+				String excludes = tagArea.getParams().get("exclude");
+				
+				if (requires != null)
+				{
+					String[] splitReq = requires.split(",");
+					requireIds = new int[splitReq.length];
+					for (int i = 0; i < splitReq.length; i++)
+						requireIds[i] = Integer.parseInt(splitReq[i]);
+				}
+				
+				if (excludes != null)
+				{
+					String[] splitEx = excludes.split(",");
+					excludeIds = new int[splitEx.length];
+					for (int i = 0; i < splitEx.length; i++)
+						excludeIds[i] = Integer.parseInt(splitEx[i]);
+				}
+				
+				TriggerEvent te = new TriggerEvent(id, retrigOnEnter, nonRetrig, requireIds, excludeIds);
 				if (tagArea.getChildren().size() > 0)
 				{
 					for (int k = 0; k < tagArea.getChildren().size(); k++)

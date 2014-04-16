@@ -249,6 +249,20 @@ public class PlannerFrame extends JFrame implements ActionListener, ChangeListen
 				else
 					stringBuffer += (int) pl.getValues().get(i) - 1;
 			}
+			else if (pvd.getValueType() == PlannerValueDef.TYPE_MULTI_INT)
+			{
+				String[] oldVals = ((String) pl.getValues().get(i)).split(",");
+				String newVals = "";
+				
+				for (int j = 0; j < oldVals.length; j++)
+				{
+					newVals = newVals + (Integer.parseInt(oldVals[j]) - 1);
+					if (j + 1 <= oldVals.length)
+						newVals += ",";
+				}
+				
+				stringBuffer += newVals;
+			}
 		}
 		if (pl.isDefining())
 			stringBuffer += ">";
@@ -339,11 +353,26 @@ public class PlannerFrame extends JFrame implements ActionListener, ChangeListen
 					plannerLine.getValues().add(value);
 				}
 				else
-				{
-					if (pvd.getRefersTo() == PlannerValueDef.REFERS_TRIGGER)
-						System.out.println(Integer.parseInt(ta.getParams().get(pvd.getTag())) + 1);
 					plannerLine.getValues().add(Integer.parseInt(ta.getParams().get(pvd.getTag())) + 1);
+			}
+			else if (pvd.getValueType() == PlannerValueDef.TYPE_MULTI_INT)
+			{								
+				String newVals = "";
+				
+				if (ta.getParams().get(pvd.getTag()) !=  null)
+				{
+					String[] values = ta.getParams().get(pvd.getTag()).split(",");				
+					for (int j = 0; j < values.length; j++)
+					{
+						newVals = newVals + (Integer.parseInt(values[j]) + 1);
+						if (j + 1 != values.length)
+							newVals = newVals + ",";
+					}
 				}
+				else
+					newVals = "0";
+				
+				plannerLine.getValues().add(newVals);
 			}
 			else if (pvd.getValueType() == PlannerValueDef.TYPE_BOOLEAN)
 				plannerLine.getValues().add(Boolean.parseBoolean(ta.getParams().get(pvd.getTag())));
@@ -784,11 +813,9 @@ public class PlannerFrame extends JFrame implements ActionListener, ChangeListen
 		definingValues = new ArrayList<PlannerValueDef>();
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "message", false, 
 				"Message Text", "The text that should be displayed. Using the { character will cause a short pause, the } character will do a soft stop and the } chararacter will do a hard stop."));
-		// TODO SHOULD BE MULTI
-		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_QUEST, PlannerValueDef.TYPE_INT, "require", false, 
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_QUEST, PlannerValueDef.TYPE_MULTI_INT, "require", false, 
 				"Required Quest", "The ID of the quest that must be complete for this to be shown"));
-		// TODO SHOULD BE MULTI
-		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_QUEST, PlannerValueDef.TYPE_INT, "exclude", false, 
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_QUEST, PlannerValueDef.TYPE_MULTI_INT, "exclude", false, 
 				"Exclude Quest", "The ID of the quest that CAN NOT be complete for this to be shown"));
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_TRIGGER, PlannerValueDef.TYPE_INT, "trigger", false, 
 				"Trigger ID", "The ID of the trigger that should be run after this message is complete."));
@@ -918,8 +945,7 @@ public class PlannerFrame extends JFrame implements ActionListener, ChangeListen
 				"MP Gain", "The amount of MP the hero should gain per level"));
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "portrait", false, 
 				"Portrait Index", "The index of the portrait in the portraits image."));
-		// TODO MULTIPLE
-		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_ITEM_STYLE, PlannerValueDef.TYPE_INT, "usuableitems", false, 
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_ITEM_STYLE, PlannerValueDef.TYPE_MULTI_INT, "usuableitems", false, 
 				"Usuable Items", "The type of weapons that this hero can use"));
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "class", false, 
 				"Class Name", "The name of this characters class."));
@@ -953,8 +979,10 @@ public class PlannerFrame extends JFrame implements ActionListener, ChangeListen
 		ArrayList<PlannerValueDef> definingValues = new ArrayList<PlannerValueDef>();
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "description", false, 
 				"Description", "Description"));
-		// definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "triggerid", false, 
-			//	"Unique Trigger Id", "Unique id that can be used to identify a given trigger"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_QUEST, PlannerValueDef.TYPE_MULTI_INT, "require", false, 
+				"Required Quest", "The ID of the quest that must be complete for this to be shown"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_QUEST, PlannerValueDef.TYPE_MULTI_INT, "exclude", false, 
+				"Exclude Quest", "The ID of the quest that CAN NOT be complete for this to be shown"));
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_BOOLEAN, "nonretrig", false, 
 				"Non Retriggerable", "If true, indicates that this trigger can only be executed once per game"));
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_BOOLEAN, "retrigonenter", false, 
