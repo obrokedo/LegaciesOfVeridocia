@@ -266,6 +266,17 @@ public class StateInfo
 	/********************************/
 	/* Panel and Menu management	*/
 	/********************************/
+	public void addSingleInstancePanel(Panel panel)
+	{
+		for (Panel m : panels)
+		{
+			if (m.getPanelType() == panel.getPanelType())
+				return;
+		}
+		
+		panels.add(panel);
+	}
+	
 	public void addPanel(Panel panel)
 	{
 		panels.add(panel);

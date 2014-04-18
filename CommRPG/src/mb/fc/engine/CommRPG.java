@@ -56,6 +56,8 @@ public class CommRPG extends StateBasedGame   {
 	
 	public static final int[] GLOBAL_WORLD_SCALE = new int[] {3, 2};
 	
+	private static int fullScreenWidth, fullScreenHeight;
+	
 	public static final String GAME_TITLE = "Legacies of Veridocia";
 		
 	private static DEBUG_HOLDER DH;
@@ -93,8 +95,8 @@ public class CommRPG extends StateBasedGame   {
 			container.setShowFPS(true);
 									
 			// TODO We want to keep the same screen resolution ratio but then just expand the vertical black bars. Potentially put menus in the bars					
-			int smallestWidth = 0;
-			int smallestHeight = Integer.MAX_VALUE;
+			fullScreenWidth = 0;
+			fullScreenHeight = Integer.MAX_VALUE;
 			
 			try {
 				double ratio =  container.getScreenWidth() * 1.0 / container.getScreenHeight();
@@ -103,18 +105,18 @@ public class CommRPG extends StateBasedGame   {
 				for (DisplayMode dm : modes)
 				{
 					double sRatio = 1.0 * dm.getWidth() / dm.getHeight();
-					if (sRatio == ratio && smallestHeight > dm.getHeight() 
+					if (sRatio == ratio && fullScreenHeight > dm.getHeight() 
 							&& dm.getHeight() % 240 == 0 && dm.getHeight() > 240)
 					{
-						smallestWidth = dm.getWidth();
-						smallestHeight = dm.getHeight();
+						fullScreenWidth = dm.getWidth();
+						fullScreenHeight = dm.getHeight();
 					}
 				}
 				
-				System.out.println(smallestWidth + " " + smallestHeight);
+				System.out.println(fullScreenWidth + " " +fullScreenHeight);
 				
-				GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] = smallestHeight / 240;
-				container.setDisplayPaddingX((int) ((smallestWidth - (GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 320)) / 2));
+				GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] = fullScreenHeight / 240;
+				container.setDisplayPaddingX((int) ((fullScreenWidth - (GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 320)) / 2));
 				
 				
 			} catch (LWJGLException e) {
@@ -127,20 +129,20 @@ public class CommRPG extends StateBasedGame   {
 			// container.setDisplayMode(640, 480, false);
 			// container.setDisplayMode(960, 720, false);
 			
-			if (smallestWidth == 0)
+			if (fullScreenWidth == 0)
 			{
 				System.out.println("Unable to enter full screen");
 				container.setDisplayMode(960, 720, false);
 			}
 			else
-				container.setDisplayMode(smallestWidth, smallestHeight, false);
+				container.setDisplayMode(fullScreenWidth, fullScreenHeight, true);
 			// container.setDisplayPaddingX(100);
-			// container.setDisplayMode(200 + 320 * GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], 240 * GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], false);
+			// container.setDisplayMode(200 + 320 * GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], 240 * GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], false);						
 			
 			container.setVSync(true);
 			container.setAlwaysRender(true);
 			container.setTargetFrameRate(60);
-			container.start();						
+			container.start();
 		}
 		catch (SlickException ex)
 		{
@@ -249,5 +251,23 @@ public class CommRPG extends StateBasedGame   {
 				new FCResourceManager(), 
 					nextState, 
 						new FCLoadingRenderSystem(this.getContainer()));
+	}
+	
+	public void toggleFullScreen() throws SlickException
+	{
+		if (this.getContainer().isFullscreen())
+		{						
+			 ((FCGameContainer)this.getContainer()).setDisplayMode(320 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], 
+					240 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], false);
+			 ((FCGameContainer)this.getContainer()).setDisplayPaddingX(0);
+		}
+		else
+		{
+			if (fullScreenWidth != 0)
+			{
+				 ((FCGameContainer)this.getContainer()).setDisplayMode(fullScreenWidth, fullScreenHeight, true);
+				 ((FCGameContainer)this.getContainer()).setDisplayPaddingX((int) ((fullScreenWidth - (GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 320)) / 2));
+			}
+		}
 	}
 }

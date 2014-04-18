@@ -65,18 +65,28 @@ public class Sprite implements Serializable
 		return (int) spriteBounds.getX();
 	}
 
-	public void setLocX(int locX) {
+	public void setLocX(float locX) {
 		spriteBounds.setX(locX);
-		tileX = locX / stateInfo.getTileWidth();
+		tileX = (int) (locX / stateInfo.getTileWidth());
 	}
 
 	public int getLocY() {
 		return (int) spriteBounds.getY();
 	}
+	
+	public float getAbsLocX()
+	{
+		return spriteBounds.getX();
+	}
+	
+	public float getAbsLocY()
+	{
+		return spriteBounds.getY();
+	}
 
-	public void setLocY(int locY) {
+	public void setLocY(float locY) {
 		spriteBounds.setY(locY);
-		tileY = locY / stateInfo.getTileHeight();
+		tileY = (int) (locY / stateInfo.getTileHeight());
 	}
 
 	public int getTileX() {

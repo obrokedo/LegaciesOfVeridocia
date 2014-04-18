@@ -10,6 +10,7 @@ import mb.fc.game.ai.AI;
 import mb.fc.game.ai.ClericAI;
 import mb.fc.game.ai.WarriorAI;
 import mb.fc.game.ai.WizardAI;
+import mb.fc.game.constants.Direction;
 import mb.fc.game.resource.EnemyResource;
 import mb.fc.game.resource.NPCResource;
 import mb.fc.game.sprite.CombatSprite;
@@ -137,6 +138,7 @@ public class MapObject
 				if (shape.contains(x + startX + 1, y + startY + 1))
 				{
 					((CombatSprite) sprite).setLocation((x + startX), (y + startY));
+					((CombatSprite) sprite).setFacing(Direction.DOWN);
 				}
 				else
 					getOnNext = false;

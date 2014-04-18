@@ -167,6 +167,10 @@ public class BattleState extends LoadableGameState
 					stateInfo.sendMessage(Message.MESSAGE_SHOW_SYSTEM_MENU);
 					stateInfo.setInputDelay(System.currentTimeMillis() + 200);
 				}*/
+				else if (container.getInput().isKeyDown(Input.KEY_F7))
+				{					
+					((CommRPG) game).toggleFullScreen();
+				}
 			}
 			
 			

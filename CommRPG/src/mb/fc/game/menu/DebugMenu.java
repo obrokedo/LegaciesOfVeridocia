@@ -4,6 +4,7 @@ import mb.fc.engine.message.ChatMessage;
 import mb.fc.engine.message.Message;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.input.FCInput;
+import mb.fc.game.move.MovingSprite;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.ui.FCGameContainer;
 
@@ -61,6 +62,18 @@ public class DebugMenu extends Menu
 					cs.setCurrentHP(cs.getMaxHP());
 					cs.setCurrentMP(cs.getMaxMP());
 				}
+			}
+			else if (splitText[0].equalsIgnoreCase("movespeed"))
+			{
+				MovingSprite.MOVE_SPEED = Integer.parseInt(splitText[1]);
+			}
+			else if (splitText[0].equalsIgnoreCase("moveanim"))
+			{
+				MovingSprite.WALK_ANIMATION_SPEED = Integer.parseInt(splitText[1]);
+			}
+			else if (splitText[0].equalsIgnoreCase("standanim"))
+			{
+				MovingSprite.STAND_ANIMATION_SPEED = Integer.parseInt(splitText[1]);
 			}
 			
 			textField.deactivate();

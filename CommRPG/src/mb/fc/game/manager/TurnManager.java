@@ -29,6 +29,7 @@ import mb.fc.game.menu.LandEffectPanel;
 import mb.fc.game.menu.SpellMenu;
 import mb.fc.game.move.AttackableSpace;
 import mb.fc.game.move.MoveableSpace;
+import mb.fc.game.move.MovingSprite;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.turnaction.AttackSpriteAction;
 import mb.fc.game.turnaction.MoveToTurnAction;
@@ -38,7 +39,6 @@ import mb.fc.game.turnaction.WaitAction;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -53,6 +53,7 @@ public class TurnManager extends Manager implements KeyboardListener
 	private MoveableSpace ms;
 	private AttackableSpace as;
 	private CombatSprite currentSprite;	
+	private MovingSprite movingSprite;
 	private Point spriteStartPoint;
 	private boolean ownsSprite;
 	private BattleResults battleResults;
@@ -63,8 +64,9 @@ public class TurnManager extends Manager implements KeyboardListener
 	private BattleActionsMenu battleActionsMenu;
 	private LandEffectPanel landEffectPanel;
 	private Rectangle cursor;
+	private int cursorTargetX, cursorTargetY;
 	private int updateDelta = 0;
-	private static final int UPDATE_TIME = 50;
+	private static final int UPDATE_TIME = 20;
 	
 	// This describes the location and size of the moveable tiles array on the world
 	private boolean displayMoveable = false;
@@ -82,6 +84,7 @@ public class TurnManager extends Manager implements KeyboardListener
 		itemMenu = new ItemMenu(stateInfo);
 		itemOptionMenu = new ItemOptionMenu(stateInfo);
 		landEffectPanel = new LandEffectPanel();
+		movingSprite = null;
 		
 		cursor = new Rectangle(0, 0, stateInfo.getTileWidth(), stateInfo.getTileHeight());
 	}
@@ -89,7 +92,7 @@ public class TurnManager extends Manager implements KeyboardListener
 	public void update(StateBasedGame game, int delta)
 	{
 		updateDelta += delta;
-		if (updateDelta >= UPDATE_TIME)
+		while (updateDelta >= UPDATE_TIME)
 		{
 			updateDelta -= UPDATE_TIME;
 			// If there are actions to process then handle those
@@ -97,7 +100,6 @@ public class TurnManager extends Manager implements KeyboardListener
 			{
 				processTurnActions(game);
 			}
-			Input i = stateInfo.getGc().getInput();
 		}
 	}
 	
@@ -124,7 +126,31 @@ public class TurnManager extends Manager implements KeyboardListener
 		TurnAction a = turnActions.get(0);
 		switch (a.action)
 		{
-			case TurnAction.ACTION_MOVE_CURSOR:
+			case TurnAction.ACTION_MANUAL_MOVE_CURSOR:
+				
+				if (cursor.getX() < cursorTargetX)
+					cursor.setX(cursor.getX() + stateInfo.getTileWidth() / 6);
+				else if (cursor.getX() > cursorTargetX)
+					cursor.setX(cursor.getX() - stateInfo.getTileWidth() / 6);
+				else if (cursor.getY() < cursorTargetY)
+					cursor.setY(cursor.getY() + stateInfo.getTileHeight() / 6);
+				else if (cursor.getY() > cursorTargetY)
+					cursor.setY(cursor.getY() - stateInfo.getTileHeight() / 6);
+				
+				stateInfo.getCamera().centerOnPoint((int) cursor.getX(), (int) cursor.getY(), stateInfo.getCurrentMap());
+								
+				if (cursorTargetX == cursor.getX() && cursorTargetY == cursor.getY())
+				{				
+					// Get any combat sprite at the cursors location
+					CombatSprite cs = stateInfo.getCombatSpriteAtMapLocation((int) cursor.getX(), (int) cursor.getY(), null);
+					
+					// if there is a combat sprite here display it's health panel
+					if (cs != null)
+						cs.triggerOverEvent(stateInfo);
+					turnActions.remove(0);
+				}
+				break;
+			case TurnAction.ACTION_MOVE_CURSOR_TO_ACTOR:
 				if (cursor.getX() == currentSprite.getLocX() &&
 					cursor.getY() == currentSprite.getLocY())
 				{
@@ -133,8 +159,8 @@ public class TurnManager extends Manager implements KeyboardListener
 						stateInfo.addKeyboardListener(ms);
 					}
 					landEffectPanel.setLandEffect(stateInfo.getCurrentMap().getLandEffectByTile(currentSprite.getMovementType(), 
-							currentSprite.getTileX(), currentSprite.getTileY()));
-					stateInfo.addPanel(landEffectPanel);					
+							currentSprite.getTileX(), currentSprite.getTileY()));					
+					stateInfo.addSingleInstancePanel(landEffectPanel);
 					displayMoveable = true;
 					// The display cursor will toggled via the wait
 					turnActions.remove(0);	
@@ -147,13 +173,13 @@ public class TurnManager extends Manager implements KeyboardListener
 				}
 				
 				if (cursor.getX() < currentSprite.getLocX())
-					cursor.setX(cursor.getX() + stateInfo.getTileWidth());
+					cursor.setX(cursor.getX() + stateInfo.getTileWidth() / 2);
 				else if (cursor.getX() > currentSprite.getLocX())
-					cursor.setX(cursor.getX() - stateInfo.getTileWidth());
+					cursor.setX(cursor.getX() - stateInfo.getTileWidth() / 2);
 				else if (cursor.getY() < currentSprite.getLocY())
-					cursor.setY(cursor.getY() + stateInfo.getTileHeight());
+					cursor.setY(cursor.getY() + stateInfo.getTileHeight() / 2);
 				else if (cursor.getY() > currentSprite.getLocY())
-					cursor.setY(cursor.getY() - stateInfo.getTileHeight());
+					cursor.setY(cursor.getY() - stateInfo.getTileHeight() / 2);
 				
 				stateInfo.getCamera().centerOnPoint((int) cursor.getX(), (int) cursor.getY(), stateInfo.getCurrentMap());
 				break;
@@ -218,7 +244,7 @@ public class TurnManager extends Manager implements KeyboardListener
 				break;
 			case TurnAction.ACTION_CHECK_DEATH:				
 				if (battleResults.death)
-					turnActions.add(new WaitAction(30));
+					turnActions.add(new WaitAction(1500 / UPDATE_TIME));
 				turnActions.add(new TurnAction(TurnAction.ACTION_END_TURN));
 				turnActions.remove(0);
 				break;
@@ -227,39 +253,45 @@ public class TurnManager extends Manager implements KeyboardListener
 	
 	private void handleSpriteMovement(TurnAction turnAction)
 	{
-		MoveToTurnAction move = (MoveToTurnAction) turnAction;
-		int xDelta = 0;
-		int yDelta = 0;
+		if (movingSprite == null)
+		{
+			MoveToTurnAction move = (MoveToTurnAction) turnAction;
+			
+			Direction dir = Direction.UP;
+			
+			if (move.locX > currentSprite.getLocX())
+				dir = Direction.RIGHT;				
+			else if (move.locX < currentSprite.getLocX())
+				dir = Direction.LEFT;
+			else if (move.locY > currentSprite.getLocY())
+				dir = Direction.DOWN;
+			else if (move.locY < currentSprite.getLocY())
+				dir = Direction.UP;
+			else
+			{
+				turnActions.remove(0);
+				if (turnActions.size() == 0)
+					ms.setCheckEvents(true);
+				landEffectPanel.setLandEffect(stateInfo.getCurrentMap().getLandEffectByTile(currentSprite.getMovementType(), 
+						currentSprite.getTileX(), currentSprite.getTileY()));
+				movingSprite = null;
+				return;
+			}
+			
+			movingSprite = new MovingSprite(currentSprite, dir, stateInfo);
+		}
 		
-		currentSprite.setAnimationUpdate(4);
-		
-		if (move.locX > currentSprite.getLocX())
-			xDelta = stateInfo.getTileWidth() / 4;					
-		else if (move.locX < currentSprite.getLocX())
-			xDelta = -stateInfo.getTileWidth() / 4;
-		else if (move.locY > currentSprite.getLocY())
-			yDelta = stateInfo.getTileWidth() / 4;
-		else if (move.locY < currentSprite.getLocY())
-			yDelta = -stateInfo.getTileWidth() / 4;
-		
-		currentSprite.setLocX(currentSprite.getLocX() + xDelta);
-		currentSprite.setLocY(currentSprite.getLocY() + yDelta);
-					
 		// Check to see if we have arrived at our destination, if so
 		// then we just remove this action and allow input for the moveablespace
-		if (move.locX == currentSprite.getLocX() &&
-				move.locY == currentSprite.getLocY())
+		if (movingSprite.update())
 		{
-			currentSprite.setAnimationUpdate(8);
 			turnActions.remove(0);
 			if (turnActions.size() == 0)
 				ms.setCheckEvents(true);
 			landEffectPanel.setLandEffect(stateInfo.getCurrentMap().getLandEffectByTile(currentSprite.getMovementType(), 
 					currentSprite.getTileX(), currentSprite.getTileY()));
+			movingSprite = null;
 		}
-		
-		
-		stateInfo.getCamera().centerOnSprite(currentSprite, stateInfo.getCurrentMap());
 	}
 	
 	private void determineMoveableSpaces()
@@ -300,8 +332,8 @@ public class TurnManager extends Manager implements KeyboardListener
 		if (ownsSprite)
 			stateInfo.addKeyboardListener(this);
 		
-		turnActions.add(new TurnAction(TurnAction.ACTION_MOVE_CURSOR));
-		turnActions.add(new WaitAction(3));
+		turnActions.add(new TurnAction(TurnAction.ACTION_MOVE_CURSOR_TO_ACTOR));
+		turnActions.add(new WaitAction(150 / UPDATE_TIME));
 		
 		if (sprite.getAi() != null)
 			turnActions.addAll(sprite.getAi().performAI(stateInfo, ms, currentSprite));
@@ -508,7 +540,7 @@ public class TurnManager extends Manager implements KeyboardListener
 			}
 			else if (input.isKeyDown(KeyMapping.BUTTON_2))
 			{
-				turnActions.add(new TurnAction(TurnAction.ACTION_MOVE_CURSOR));
+				turnActions.add(new TurnAction(TurnAction.ACTION_MOVE_CURSOR_TO_ACTOR));
 				return true;
 			}
 			else if (input.isKeyDown(KeyMapping.BUTTON_3))
@@ -527,7 +559,8 @@ public class TurnManager extends Manager implements KeyboardListener
 			{
 				if (cursor.getY() > 0)
 				{
-					cursor.setY(cursor.getY() - stateInfo.getTileHeight());
+					cursorTargetY = (int) (cursor.getY() - stateInfo.getTileHeight());
+					cursorTargetX = (int) cursor.getX();
 					moved = true;
 				}
 			}
@@ -535,7 +568,8 @@ public class TurnManager extends Manager implements KeyboardListener
 			{
 				if (cursor.getY() + stateInfo.getTileHeight() < stateInfo.getCurrentMap().getMapHeightInPixels())
 				{
-					cursor.setY(cursor.getY() + stateInfo.getTileHeight());
+					cursorTargetY = (int) (cursor.getY() + stateInfo.getTileHeight());
+					cursorTargetX = (int) cursor.getX();
 					moved = true;
 				}
 			}
@@ -543,7 +577,8 @@ public class TurnManager extends Manager implements KeyboardListener
 			{
 				if (cursor.getX() > 0)
 				{
-					cursor.setX(cursor.getX() - stateInfo.getTileWidth());
+					cursorTargetX = (int) (cursor.getX() - stateInfo.getTileWidth()); 
+					cursorTargetY = (int) cursor.getY();
 					moved = true;
 				}
 			}
@@ -551,23 +586,17 @@ public class TurnManager extends Manager implements KeyboardListener
 			{
 				if (cursor.getX() + stateInfo.getTileWidth() < stateInfo.getCurrentMap().getMapWidthInPixels())
 				{
-					cursor.setX(cursor.getX() + stateInfo.getTileWidth());
+					cursorTargetX = (int) (cursor.getX() + stateInfo.getTileWidth()); 
+					cursorTargetY = (int) cursor.getY();
 					moved = true;
 				}
 			}
 			
 			if (moved)
 			{
+				turnActions.add(new TurnAction(TurnAction.ACTION_MANUAL_MOVE_CURSOR));
 				// Remove any health bar panels that may have been displayed from a sprite that we were previously over
 				stateInfo.removePanel(Panel.PANEL_HEALTH_BAR);
-				stateInfo.getCamera().centerOnPoint((int) cursor.getX(), (int) cursor.getY(), stateInfo.getCurrentMap());
-				// Get any combat sprite at the cursors location
-				CombatSprite cs = stateInfo.getCombatSpriteAtMapLocation((int) cursor.getX(), (int) cursor.getY(), null);
-				
-				// if there is a combat sprite here display it's health panel
-				if (cs != null)
-					cs.triggerOverEvent(stateInfo);
-				stateInfo.setInputDelay(System.currentTimeMillis() + 70);
 			}
 		}
 		

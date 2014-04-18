@@ -56,8 +56,8 @@ public class MoveableSpace implements KeyboardListener, MouseListener, TileBased
 		
 		ms.owner = ownsSprite;		
 		ms.map = stateInfo.getResourceManager().getMap();
-		ms.mapWidth = ms.map.getMapWidth();
-		ms.mapHeight = ms.map.getMapHeight();
+		ms.mapWidth = ms.map.getMapEffectiveWidth();
+		ms.mapHeight = ms.map.getMapEffectiveHeight();
 		ms.moveableTiles = new int[currentSprite.getCurrentMove() * 2 + 1][currentSprite.getCurrentMove() * 2 + 1];
 		for (int i = 0; i < ms.moveableTiles.length; i++)
 			for (int j = 0; j < ms.moveableTiles.length; j++)
@@ -272,7 +272,7 @@ public class MoveableSpace implements KeyboardListener, MouseListener, TileBased
 		if (checkMoveable)
 			return moveableTiles.length;
 		else
-			return map.getMapWidth();
+			return map.getMapEffectiveWidth();
 	}
 
 	@Override
@@ -280,7 +280,7 @@ public class MoveableSpace implements KeyboardListener, MouseListener, TileBased
 		if (checkMoveable)
 			return moveableTiles.length;
 		else
-			return map.getMapHeight();
+			return map.getMapEffectiveHeight();
 	}
 
 	@Override
@@ -292,7 +292,7 @@ public class MoveableSpace implements KeyboardListener, MouseListener, TileBased
 			return moveableTiles[ty][tx] < 0;
 		else
 		{
-			if (map.getMapHeight() > ty && map.getMapWidth() > tx)		
+			if (map.getMapEffectiveHeight() > ty && map.getMapEffectiveWidth() > tx)		
 				return !map.isMarkedMoveable(tx, ty);
 			return true;
 		}

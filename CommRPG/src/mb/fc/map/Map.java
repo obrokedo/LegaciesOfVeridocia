@@ -110,6 +110,16 @@ public class Map
 		return mapLayer.get(layer);
 	}
 	
+	public int getMapEffectiveWidth()
+	{
+		return mapLayer.get(0)[0].length / 2;
+	}
+	
+	public int getMapEffectiveHeight()
+	{
+		return mapLayer.get(0).length / 2;
+	}
+	
 	public int getTileEffectiveWidth()
 	{
 		return tileWidth * TILE_RATIO;

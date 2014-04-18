@@ -14,7 +14,8 @@ public class TurnAction implements Serializable
 	public static final int ACTION_PERFORM_ATTACK = 6;
 	public static final int ACTION_CHECK_DEATH = 7;
 	public static final int ACTION_TARGET_SPRITE = 8;
-	public static final int ACTION_MOVE_CURSOR = 9;
+	public static final int ACTION_MOVE_CURSOR_TO_ACTOR = 9;
+	public static final int ACTION_MANUAL_MOVE_CURSOR = 10;
 	public int action;
 	
 	public TurnAction(int action) {

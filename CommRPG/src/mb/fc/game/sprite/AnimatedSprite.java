@@ -81,7 +81,7 @@ public class AnimatedSprite extends Sprite
 	}
 	
 	@Override
-	public void setLocX(int locX) {
+	public void setLocX(float locX) {
 		// Moving right
 		if (locX > this.getLocX())
 			setFacing(Direction.RIGHT);
@@ -92,7 +92,7 @@ public class AnimatedSprite extends Sprite
 	}
 
 	@Override
-	public void setLocY(int locY) {
+	public void setLocY(float locY) {
 		// Moving down
 		if (locY > this.getLocY())
 			setFacing(Direction.DOWN);
@@ -123,7 +123,7 @@ public class AnimatedSprite extends Sprite
 	}
 	
 	/**
-	 * Sets the location of the sprite and points it facing down
+	 * Sets the location of the sprite
 	 * 
 	 * @param locX
 	 * @param locY
@@ -132,7 +132,6 @@ public class AnimatedSprite extends Sprite
 	{
 		super.setLocX(locX);
 		super.setLocY(locY);
-		setFacing(Direction.DOWN);
 	}
 
 	public Direction getFacing() {

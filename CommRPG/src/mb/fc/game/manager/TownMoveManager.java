@@ -2,24 +2,21 @@ package mb.fc.game.manager;
 
 import java.util.ArrayList;
 
-import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.Message;
-import mb.fc.engine.message.OverlandMoveMessage;
 import mb.fc.game.constants.Direction;
+import mb.fc.game.move.MovingSprite;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.sprite.Sprite;
 import mb.fc.map.Map;
 
 import org.newdawn.slick.Input;
-import org.newdawn.slick.util.pathfinding.Path;
 
 public class TownMoveManager extends Manager
 {
 	private ArrayList<MovingSprite> movers;
 	private boolean moving = false;
-	private Direction movingDirection;
 	private int updateDelta = 0;
-	private static int UPDATE_TIME = 20;
+	public static int UPDATE_TIME = 20;	
 
 	@Override
 	public void initialize() {		
@@ -74,54 +71,20 @@ public class TownMoveManager extends Manager
 						current.setFacing(Direction.DOWN);
 				}			
 			}
-			else
-			{
-				move(current);
-			}
 			
 			for (int i = 0; i < movers.size(); i++)
 			{
 				MovingSprite ms = movers.get(i);
 				
-				if (ms.getMoveIndex() == ms.getPath().getLength())
-				{				
+				if (ms.update())
+				{
 					movers.remove(i);
 					i--;
-					continue;
-				}					
-				
-				int moveToX = ms.getPath().getStep(ms.getMoveIndex()).getX() * stateInfo.getTileWidth();
-				int moveToY = ms.getPath().getStep(ms.getMoveIndex()).getY() * stateInfo.getTileHeight();
-								
-				
-				// Move Right
-				if (moveToX > ms.getCombatSprite().getLocX())
-					ms.getCombatSprite().setLocX(ms.getCombatSprite().getLocX() + 8);
-				// Move Left
-				else if (moveToX < ms.getCombatSprite().getLocX())
-					ms.getCombatSprite().setLocX(ms.getCombatSprite().getLocX() - 8);
-				// Move Down
-				else if (moveToY > ms.getCombatSprite().getLocY())
-					ms.getCombatSprite().setLocY(ms.getCombatSprite().getLocY() + 8);
-				// Move Up
-				else if (moveToY < ms.getCombatSprite().getLocY())
-					ms.getCombatSprite().setLocY(ms.getCombatSprite().getLocY() - 8);
-				
-				if (ms.getCombatSprite().getLocX() % 32 == 0 && ms.getCombatSprite().getLocY() % 32 == 0) // ms.getOffsetIndex() == 3)
-				{								
-					stateInfo.checkTriggers(ms.getCombatSprite().getLocX(), ms.getCombatSprite().getLocY());
-					ms.setOffsetIndex(0);
-					ms.setMoveIndex(ms.getMoveIndex() + 1);				
-				}
-				else
-					ms.setOffsetIndex(ms.getOffsetIndex() + 1);		
-				
-				// We are on a square now so check for triggers and see if we need to move the camera
-				// if (ms.getOffsetIndex() == 0)
-					// stateInfo.checkTriggers(ms.getCombatSprite().getLocX(), ms.getCombatSprite().getLocY());
-				if (ms.getCombatSprite() == stateInfo.getCurrentSprite())
-				{
-					stateInfo.getCamera().centerOnSprite(ms.getCombatSprite(), stateInfo.getCurrentMap());
+					if (stateInfo.getCurrentSprite() == ms.getCombatSprite())
+					{
+						stateInfo.checkTriggers(stateInfo.getCurrentSprite().getLocX(), stateInfo.getCurrentSprite().getLocY());
+						moving = false;
+					}
 				}
 			}
 		}
@@ -129,45 +92,14 @@ public class TownMoveManager extends Manager
 	
 	private void setMoving(Direction direction, CombatSprite current)
 	{
-		movingDirection = direction;
-		moving = true;
-		current.setAnimationUpdate(4);
-		move(current);
-	}
-	
-	private void move(CombatSprite current)
-	{
-		switch (movingDirection)
-		{
-			case UP:
-				current.setLocY((int) (current.getLocY() - 2 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]));
-				break;
-			case DOWN:
-				current.setLocY((int) (current.getLocY() + 2 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]));
-				break;
-			case LEFT:
-				current.setLocX((int) (current.getLocX() - 2 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]));
-				break;
-			case RIGHT:
-				current.setLocX((int) (current.getLocX() + 2 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]));
-				break;
-		}
-		
-		
-		
-		if (current.getLocX() % stateInfo.getTileWidth() == 0 && 
-			current.getLocY() % stateInfo.getTileHeight() == 0)
-		{
-			stateInfo.checkTriggers(current.getLocX(), current.getLocY());
-			current.setAnimationUpdate(8);
-			moving = false;
-		}
-		stateInfo.getCamera().centerOnSprite(current, stateInfo.getCurrentMap());
+		if (current == stateInfo.getCurrentSprite())		
+			moving = true;
+		movers.add(new MovingSprite(current, direction, stateInfo));
 	}
 	
 	private boolean blocked(Map map, int tx, int ty) 
 	{
-		if (tx >= 0 && ty >= 0 && map.getMapHeight() > ty && map.getMapWidth() > tx && map.isMarkedMoveable(tx, ty))
+		if (tx >= 0 && ty >= 0 && map.getMapEffectiveHeight() > ty && map.getMapEffectiveWidth() > tx && map.isMarkedMoveable(tx, ty))
 		{
 			for (Sprite s : stateInfo.getSprites())
 			{
@@ -183,6 +115,7 @@ public class TownMoveManager extends Manager
 	@Override
 	public void recieveMessage(Message message) 
 	{
+		/*
 		switch (message.getMessageType())
 		{
 			case Message.MESSAGE_OVERLAND_MOVE_MESSAGE:
@@ -204,43 +137,6 @@ public class TownMoveManager extends Manager
 				movers.add(ms);
 				break;
 		}
-	}
-	
-	private class MovingSprite
-	{
-		private CombatSprite combatSprite;
-		private Path path;
-		private int moveIndex;
-		private int offsetIndex;
-		
-		public MovingSprite(CombatSprite combatSprite, Path path) {
-			super();
-			this.combatSprite = combatSprite;
-			this.path = path;
-		}
-
-		public CombatSprite getCombatSprite() {
-			return combatSprite;
-		}
-
-		public Path getPath() {
-			return path;
-		}
-
-		public int getMoveIndex() {
-			return moveIndex;
-		}
-
-		public void setMoveIndex(int moveIndex) {
-			this.moveIndex = moveIndex;
-		}
-
-		public int getOffsetIndex() {
-			return offsetIndex;
-		}
-
-		public void setOffsetIndex(int offsetIndex) {
-			this.offsetIndex = offsetIndex;
-		}
+		*/
 	}
 }
