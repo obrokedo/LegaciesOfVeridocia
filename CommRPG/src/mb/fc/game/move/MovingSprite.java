@@ -11,8 +11,8 @@ public class MovingSprite
 	private Direction direction;
 	private int endX, endY;
 	private StateInfo stateInfo;
-	public static int MOVE_SPEED = 8; 
-	public static int STAND_ANIMATION_SPEED = 8;
+	public static int MOVE_SPEED = 10; 
+	public static int STAND_ANIMATION_SPEED = 10;
 	public static int WALK_ANIMATION_SPEED = 4;
 	
 	public MovingSprite(CombatSprite combatSprite, Direction dir, StateInfo stateInfo) {

@@ -9,7 +9,7 @@ public class HealSpell extends Spell
 	public HealSpell()
 	{
 		this.name = "Heal";
-		this.costs = new int[] {3, 6, 9, 12};
+		this.costs = new int[] {3, 5, 9, 12};
 		this.targetsEnemy = false;
 		this.maxLevel = costs.length;
 		this.damage = new int[] {15, 22, 36, 120};

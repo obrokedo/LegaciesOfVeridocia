@@ -1,43 +1,37 @@
 package mb.fc.game.menu;
 
-import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.Message;
 import mb.fc.engine.state.StateInfo;
+import mb.fc.game.constants.Direction;
 import mb.fc.game.hudmenu.Panel;
-import mb.fc.game.input.FCInput;
-import mb.fc.game.input.KeyMapping;
 import mb.fc.game.item.EquippableItem;
-import mb.fc.game.menu.Menu.MenuUpdate;
 import mb.fc.game.move.AttackableSpace;
 import mb.fc.game.sprite.CombatSprite;
-import mb.fc.game.ui.FCGameContainer;
 
-import org.newdawn.slick.Color;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
-public class BattleActionsMenu extends Menu
-{
-	private Image[] icons;
-	private int selected = -1;
-	private static final Color disabledColor = new Color(111, 111, 111);
-	private boolean[] enabled;
 
+public class BattleActionsMenu extends QuadMenu
+{	
 	public BattleActionsMenu(StateInfo stateInfo) {
-		super(Panel.PANEL_BATTLE);
+		super(Panel.PANEL_BATTLE, stateInfo);
+		
 		icons = new Image[8];
 		
 		for (int i = 0; i < icons.length; i++)
 			icons[i] = stateInfo.getResourceManager().getSpriteSheets().get("actionicons").getSubImage(i % 4, i / 4);
 		
-		enabled = new boolean[] {true, true, true};
-	}
-	
-	public void initialize(StateInfo stateInfo)
-	{
+		text = new String[] {"Attack", "Magic", "Items", "Stay"};
+		enabled = new boolean[4];
+		enabled[3] = true;
+	}	
+
+	@Override
+	public void initialize() {
+		this.selected = Direction.DOWN;
 		CombatSprite currentSprite = stateInfo.getCurrentSprite();
-		selected = 7;
+		
 		if (currentSprite.getSpellsDescriptors() != null && stateInfo.getCurrentSprite().getSpellsDescriptors().size() > 0)
 			enabled[1] = true;
 		else
@@ -85,128 +79,45 @@ public class BattleActionsMenu extends Menu
 					if (targetable != null)
 					{
 						enabled[0] = true;
-						selected = 4;
+						this.selected = Direction.UP;
 						break OUTER;
 					}
 				}
 			}
+		}		
+	}
+
+	@Override
+	public MenuUpdate onBack() {
+		stateInfo.sendMessage(Message.MESSAGE_SHOW_MOVEABLE);
+		stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menuback", 1f, false));
+		return MenuUpdate.MENU_CLOSE;
+	}
+
+	@Override
+	public MenuUpdate onConfirm() {
+		switch (selected)
+		{
+			case UP:
+				stateInfo.sendMessage(Message.MESSAGE_ATTACK_PRESSED);
+				stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "targetselect", 1f, false));
+				break;
+			case LEFT:
+				stateInfo.sendMessage(Message.MESSAGE_SHOW_SPELLMENU);
+				stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menuselect", 1f, false));
+				break;
+			case RIGHT:
+				stateInfo.sendMessage(Message.MESSAGE_SHOW_ITEM_MENU);
+				stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menuselect", 1f, false));
+				break;
+			case DOWN:
+				stateInfo.sendMessage(Message.MESSAGE_PLAYER_END_TURN);
+				stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menuselect", 1f, false));
+				break;
 		}
+		
+		return MenuUpdate.MENU_CLOSE;
 	}
 
 	
-	@Override
-	public void render(FCGameContainer gc, Graphics graphics) {
-		int iconWidth = icons[0].getWidth();
-		int iconHeight = icons[0].getHeight();
-		
-		int x = (gc.getWidth() - iconWidth) / 2;
-		int y = gc.getHeight() - iconHeight * 2 - 25;				
-		
-		Panel.drawPanelBox(CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 198 + gc.getDisplayPaddingX(), 
-				CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 195, 
-				CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 57, 
-				CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 15 + 12, graphics);
-		graphics.setColor(COLOR_FOREFRONT);
-		int sX = CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 205 + gc.getDisplayPaddingX();
-		int sY = CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 190 + 3;
-		if (selected == 4)
-			graphics.drawString("ATTACK", sX, sY);
-		else if (selected == 5)
-			graphics.drawString("MAGIC", sX, sY);
-		else if (selected == 6)
-			graphics.drawString("ITEMS", sX, sY);
-		else if (selected == 7)
-			graphics.drawString("STAY", sX, sY);		
-		
-		if (enabled[0])
-			graphics.drawImage(icons[(selected == 4 ? 4 : 0)], x, y);
-		else
-			graphics.drawImage(icons[(selected == 4 ? 4 : 0)], x, y, disabledColor);
-		
-		if (enabled[1])
-			graphics.drawImage(icons[(selected == 5 ? 5 : 1)], x - iconWidth, (float) (y + iconHeight * .5));
-		else
-			graphics.drawImage(icons[(selected == 5 ? 5 : 1)], x - iconWidth, (float) (y + iconHeight * .5), disabledColor);
-		
-		if (enabled[2])
-			graphics.drawImage(icons[(selected == 6 ? 6 : 2)], x + iconWidth, (float) (y + iconHeight * .5));
-		else
-			graphics.drawImage(icons[(selected == 6 ? 6 : 2)], x + iconWidth, (float) (y + iconHeight * .5), disabledColor);
-		graphics.drawImage(icons[(selected == 7 ? 7 : 3)], x, y + iconHeight);
-	}	
-
-	@Override
-	public MenuUpdate handleUserInput(FCInput input, StateInfo stateInfo) 
-	{
-		if (input.isKeyDown(KeyMapping.BUTTON_1))
-		{
-			
-		}
-		else if (input.isKeyDown(KeyMapping.BUTTON_2))
-		{
-			stateInfo.sendMessage(Message.MESSAGE_SHOW_MOVEABLE);
-			stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menuback", 1f, false));
-			return MenuUpdate.MENU_CLOSE;
-		}
-		else if (input.isKeyDown(KeyMapping.BUTTON_3))
-		{			
-			switch (selected)
-			{
-				case 4:
-					stateInfo.sendMessage(Message.MESSAGE_ATTACK_PRESSED);
-					stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "targetselect", 1f, false));
-					return MenuUpdate.MENU_CLOSE;
-				case 5:
-					stateInfo.sendMessage(Message.MESSAGE_SHOW_SPELLMENU);
-					stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menuselect", 1f, false));
-					return MenuUpdate.MENU_CLOSE;
-				case 6:
-					stateInfo.sendMessage(Message.MESSAGE_SHOW_ITEM_MENU);
-					stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menuselect", 1f, false));
-					return MenuUpdate.MENU_CLOSE;
-				case 7:
-					stateInfo.sendMessage(Message.MESSAGE_PLAYER_END_TURN);
-					stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menuselect", 1f, false));
-					return MenuUpdate.MENU_CLOSE;
-			}
-		}
-		else if (input.isKeyDown(KeyMapping.BUTTON_UP))
-		{
-			if (enabled[0])
-			{
-				if (selected != 4)
-					stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menumove", 1f, false));
-				selected = 4;				
-				return MenuUpdate.MENU_ACTION_SHORT;
-			}
-		}
-		else if (input.isKeyDown(KeyMapping.BUTTON_DOWN))
-		{
-			if (selected != 7)
-				stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menumove", 1f, false));
-			selected = 7;
-			return MenuUpdate.MENU_ACTION_SHORT;
-		}		
-		else if (input.isKeyDown(KeyMapping.BUTTON_LEFT))
-		{
-			if (enabled[1])
-			{
-				if (selected != 5)
-					stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menumove", 1f, false));
-				selected = 5;				
-				return MenuUpdate.MENU_ACTION_SHORT;
-			}
-		}
-		else if (input.isKeyDown(KeyMapping.BUTTON_RIGHT))
-		{
-			if (enabled[2])
-			{
-				if (selected != 6)
-					stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menumove", 1f, false));
-				selected = 6;				
-				return MenuUpdate.MENU_ACTION_SHORT;
-			}
-		}
-		return MenuUpdate.MENU_NO_ACTION;
-	}
 }

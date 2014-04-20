@@ -8,6 +8,7 @@ import mb.fc.engine.message.Message;
 import mb.fc.engine.message.MultiSpriteContextMessage;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.Camera;
+import mb.fc.game.constants.Direction;
 import mb.fc.game.input.FCInput;
 import mb.fc.game.input.KeyMapping;
 import mb.fc.game.listener.KeyboardListener;
@@ -95,6 +96,7 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 		{
 			selectX = targetsInRange.get(0).getLocX();
 			selectY = targetsInRange.get(0).getLocY();
+			this.setTargetSprite(targetsInRange.get(0), stateInfo);
 		}
 		else
 			stateInfo.sendMessage(new ChatMessage(Message.MESSAGE_SEND_INTERNAL_MESSAGE, null, "No targets in range!"));
@@ -205,10 +207,21 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 		return false;
 	}		
 	
-	public void setTargetSprite(CombatSprite targetSprite)
+	public void setTargetSprite(CombatSprite targetSprite, StateInfo stateInfo)
 	{
 		selectX = targetSprite.getLocX();
 		selectY = targetSprite.getLocY();
+		
+		if (selectX > currentSprite.getLocX())
+			currentSprite.setFacing(Direction.RIGHT);
+		else if (selectX < currentSprite.getLocX())
+			currentSprite.setFacing(Direction.LEFT);
+		else if (selectY > currentSprite.getLocY())
+			currentSprite.setFacing(Direction.DOWN);
+		else if (selectY < currentSprite.getLocY())
+			currentSprite.setFacing(Direction.UP);
+		
+		stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "targetselect", 1f, false));
 	}
 
 	@Override
@@ -275,9 +288,7 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 			if (targetsInRange.size() == 0)
 				return false;
 			selectedTarget = (selectedTarget + 1) % targetsInRange.size();
-			selectX = targetsInRange.get(selectedTarget).getLocX();
-			selectY = targetsInRange.get(selectedTarget).getLocY();
-			stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "targetselect", 1f, false));
+			setTargetSprite(targetsInRange.get(selectedTarget), stateInfo);
 			return true;
 		}
 		else if (input.isKeyDown(KeyMapping.BUTTON_DOWN) || input.isKeyDown(KeyMapping.BUTTON_RIGHT))
@@ -289,9 +300,7 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 				selectedTarget--;
 			else
 				selectedTarget = targetsInRange.size() - 1;
-			selectX = targetsInRange.get(selectedTarget).getLocX();
-			selectY = targetsInRange.get(selectedTarget).getLocY();
-			stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "targetselect", 1f, false));
+			setTargetSprite(targetsInRange.get(selectedTarget), stateInfo);			
 			return true;
 		}
 		return false;

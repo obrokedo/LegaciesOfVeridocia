@@ -41,33 +41,33 @@ public class HeroProgression implements Serializable
 	public LevelUpResult getLevelUpResults(CombatSprite cs, StateInfo stateInfo)
 	{
 		Progression p = (cs.isPromoted() ? promotedProgression : unpromotedProgression);
-		String text = cs.getName() + " has reached level " + (cs.getLevel() + 1) + "!}";
+		String text = cs.getName() + " has reached level " + (cs.getLevel() + 1) + "![}";
 		LevelUpResult level = new LevelUpResult();
 		
 		int increase = getStatIncrease(p.getAttackGains());
 		level.attackGain = increase;
 		if (increase > 0)
-			text += " Attack increased by " + increase + ".}";
+			text += " Attack increased by " + increase + ".[}";
 		
 		increase = getStatIncrease(p.getDefenseGains());
 		level.defenseGain = increase;
 		if (increase > 0)
-			text += " Defense increased by " + increase + ".}";
+			text += " Defense increased by " + increase + ".[}";
 		
 		increase = getStatIncrease(p.getSpeedGains());
 		level.speedGain = increase;
 		if (increase > 0)
-			text += " Speed increased by " + increase + ".}";
+			text += " Speed increased by " + increase + ".[}";
 		
 		increase = getStatIncrease(p.getHpGains());
 		level.hitpointGain = increase;
 		if (increase > 0)
-			text += " HP increased by " + increase + ".}";
+			text += " HP increased by " + increase + ".[}";
 		
 		increase = getStatIncrease(p.getMpGains());
 		level.magicpointGain = increase;
 		if (increase > 0)
-			text += " MP increased by " + increase + ".}";		
+			text += " MP increased by " + increase + ".[}";		
 		
 		for (int i = 0; i < spellLevels.length; i++)
 		{
@@ -76,7 +76,7 @@ public class HeroProgression implements Serializable
 				if (spellLevels[i][j] == (cs.getLevel() + 1))
 				{
 					Spell spell = SpellResource.getSpell(spellLevels[i][0], stateInfo);
-					text += " " + cs.getName() + " learned " + spell.getName() + " " + j + "}";
+					text += " " + cs.getName() + " learned " + spell.getName() + " " + j + "[}";
 				}
 			}
 		}

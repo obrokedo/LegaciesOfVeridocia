@@ -34,6 +34,7 @@ public class SpeechMenu extends Menu
 	private static final String CHAR_PAUSE = "{";
 	private static final String CHAR_SOFT_STOP = "}";
 	private static final String CHAR_HARD_STOP = "]";
+	private static final String CHAR_LINE_BREAK = "[";
 	
 	public SpeechMenu(String text, FCGameContainer gc, boolean attackCin) 
 	{
@@ -69,11 +70,22 @@ public class SpeechMenu extends Menu
 		for (int i = 0; i < splitText.length; i++)
 		{
 			int wordWidth = SPEECH_FONT.getWidth(splitText[i]);
-			
+						
 			if (wordWidth + currentLineWidth <= maxTextWidth)
-			{
-				currentLine += " " + splitText[i];
+			{	
+				boolean lineBreak = false;
+				if (splitText[i].contains("["))
+					lineBreak = true;
+				
+				currentLine += " " + splitText[i].replace("[", "");
 				currentLineWidth += wordWidth + spaceWidth;
+				
+				if (lineBreak)
+				{
+					currentLineWidth = 0;				
+					panelText.add(currentLine);
+					currentLine = "";		
+				}
 			}
 			else
 			{
@@ -81,7 +93,7 @@ public class SpeechMenu extends Menu
 				currentLineWidth = 0;				
 				panelText.add(currentLine);
 				currentLine = "";				
-			}			
+			}
 		}
 		
 		if (currentLineWidth > 0)

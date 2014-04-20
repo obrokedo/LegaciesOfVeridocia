@@ -173,13 +173,14 @@ public class TurnManager extends Manager implements KeyboardListener
 				}
 				
 				if (cursor.getX() < currentSprite.getLocX())
-					cursor.setX(cursor.getX() + stateInfo.getTileWidth() / 2);
+					cursor.setX(cursor.getX() + stateInfo.getTileWidth() / 4);
 				else if (cursor.getX() > currentSprite.getLocX())
-					cursor.setX(cursor.getX() - stateInfo.getTileWidth() / 2);
-				else if (cursor.getY() < currentSprite.getLocY())
-					cursor.setY(cursor.getY() + stateInfo.getTileHeight() / 2);
+					cursor.setX(cursor.getX() - stateInfo.getTileWidth() / 4);
+				
+				if (cursor.getY() < currentSprite.getLocY())
+					cursor.setY(cursor.getY() + stateInfo.getTileHeight() / 4);
 				else if (cursor.getY() > currentSprite.getLocY())
-					cursor.setY(cursor.getY() - stateInfo.getTileHeight() / 2);
+					cursor.setY(cursor.getY() - stateInfo.getTileHeight() / 4);
 				
 				stateInfo.getCamera().centerOnPoint((int) cursor.getX(), (int) cursor.getY(), stateInfo.getCurrentMap());
 				break;
@@ -221,8 +222,8 @@ public class TurnManager extends Manager implements KeyboardListener
 			case TurnAction.ACTION_TARGET_SPRITE:
 				TargetSpriteAction tsa = (TargetSpriteAction) a;
 				this.battleCommand = tsa.getBattleCommand();
-				this.displayAttackable(false);
-				as.setTargetSprite(tsa.getTargetSprite());
+				this.determineAttackbleSpace(false);
+				as.setTargetSprite(tsa.getTargetSprite(), stateInfo);
 				displayAttackable = true;
 				turnActions.remove(0);
 				break;
@@ -342,7 +343,7 @@ public class TurnManager extends Manager implements KeyboardListener
 		
 	}
 	
-	private void displayAttackable(boolean playerAttacking)
+	private void determineAttackbleSpace(boolean playerAttacking)
 	{	
 		displayMoveable = false;		
 		
@@ -429,28 +430,28 @@ public class TurnManager extends Manager implements KeyboardListener
 			case Message.MESSAGE_SHOW_BATTLEMENU:
 				displayMoveable = false;
 				displayAttackable = false;		
-				battleActionsMenu.initialize(stateInfo);
+				battleActionsMenu.initialize();
 				stateInfo.addMenu(battleActionsMenu);
 				break;
 			case Message.MESSAGE_SHOW_MOVEABLE:
 				displayMoveable = true;
 				break;
 			case Message.MESSAGE_SHOW_SPELLMENU:
-				spellMenu.initialize(stateInfo);
+				spellMenu.initialize();
 				stateInfo.addMenu(spellMenu);
 				break;
 			case Message.MESSAGE_SHOW_ITEM_MENU:
-				itemMenu.initialize(stateInfo);
+				itemMenu.initialize();
 				stateInfo.addMenu(itemMenu);
 				break;
 			case Message.MESSAGE_SHOW_ITEM_OPTION_MENU:				
-				itemOptionMenu.initialize(((IntMessage) message).getValue(), stateInfo);
+				itemOptionMenu.initialize(((IntMessage) message).getValue());
 				stateInfo.addMenu(itemOptionMenu);
 				break;
 			// THIS IS SENT BY THE OWNER
 			case Message.MESSAGE_ATTACK_PRESSED:
 				battleCommand = new BattleCommand(BattleCommand.COMMAND_ATTACK);
-				displayAttackable(true);				
+				determineAttackbleSpace(true);				
 				break;
 			// This message should never be sent by AI
 			// THIS IS SENT BY THE OWNER
@@ -469,13 +470,13 @@ public class TurnManager extends Manager implements KeyboardListener
 				BattleSelectionMessage bsm = (BattleSelectionMessage) message;
 				battleCommand = new BattleCommand(BattleCommand.COMMAND_SPELL, 
 						currentSprite.getSpellsDescriptors().get(bsm.getSelectionIndex()).getSpell(), bsm.getLevel());				
-				displayAttackable(true);
+				determineAttackbleSpace(true);
 				break;
 			case Message.MESSAGE_SELECT_ITEM:
 				BattleSelectionMessage ibsm = (BattleSelectionMessage) message;
 				battleCommand = new BattleCommand(BattleCommand.COMMAND_ITEM, 
 						currentSprite.getItem(ibsm.getSelectionIndex()));				
-				displayAttackable(true);
+				determineAttackbleSpace(true);
 				break;
 			case Message.MESSAGE_COMBATANT_TURN:
 				initializeCombatantTurn((CombatSprite) ((SpriteContextMessage) message).getSprite());

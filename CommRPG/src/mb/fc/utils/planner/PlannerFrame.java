@@ -152,6 +152,7 @@ public class PlannerFrame extends JFrame implements ActionListener, ChangeListen
 		listOfLists.get(PlannerValueDef.REFERS_MOVE_TYPE - 1).add("ELVES");
 		
 		// Setup spells
+		listOfLists.get(PlannerValueDef.REFERS_SPELL - 1).add("Heal");
 		listOfLists.get(PlannerValueDef.REFERS_SPELL - 1).add("Aura");
 		listOfLists.get(PlannerValueDef.REFERS_SPELL - 1).add("Detox");
 		listOfLists.get(PlannerValueDef.REFERS_SPELL - 1).add("Boost");

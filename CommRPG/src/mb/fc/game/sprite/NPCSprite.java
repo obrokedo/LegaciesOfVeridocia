@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import mb.fc.engine.message.Message;
 import mb.fc.engine.message.SpeechMessage;
 import mb.fc.engine.state.StateInfo;
+import mb.fc.game.constants.Direction;
 import mb.fc.game.text.Speech;
 
 public class NPCSprite extends AnimatedSprite
@@ -47,6 +48,15 @@ public class NPCSprite extends AnimatedSprite
 						continue SPEECHLOOP;
 				}
 			}
+			
+			if (stateInfo.getCurrentSprite().getLocX() > this.getLocX())
+				this.setFacing(Direction.RIGHT);
+			else if (stateInfo.getCurrentSprite().getLocX() < this.getLocX())
+				this.setFacing(Direction.LEFT);
+			else if (stateInfo.getCurrentSprite().getLocY() > this.getLocY())
+				this.setFacing(Direction.DOWN);
+			else if (stateInfo.getCurrentSprite().getLocY() < this.getLocY())
+				this.setFacing(Direction.UP);
 			
 			stateInfo.sendMessage(new SpeechMessage(Message.MESSAGE_SPEECH, s.getMessage(), s.getTriggerId(), s.getPortraitId()));
 			break;

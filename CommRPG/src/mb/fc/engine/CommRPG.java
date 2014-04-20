@@ -260,6 +260,7 @@ public class CommRPG extends StateBasedGame   {
 			 ((FCGameContainer)this.getContainer()).setDisplayMode(320 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], 
 					240 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], false);
 			 ((FCGameContainer)this.getContainer()).setDisplayPaddingX(0);
+			 this.getContainer().setMouseGrabbed(false);
 		}
 		else
 		{
