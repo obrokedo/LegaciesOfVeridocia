@@ -41,6 +41,8 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.EmptyTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
 
 public class TurnManager extends Manager implements KeyboardListener
 {		
@@ -239,8 +241,8 @@ public class TurnManager extends Manager implements KeyboardListener
 				stateInfo.setShowAttackCinematic(true);
 				AttackCinematicState acs = (AttackCinematicState) game.getState(CommRPG.STATE_GAME_BATTLE_ANIM);
 				acs.setBattleInfo(currentSprite, stateInfo.getResourceManager(), 
-					new Point(2, 0), battleResults, stateInfo.getGc());
-				game.enterState(CommRPG.STATE_GAME_BATTLE_ANIM);
+					new Point(2, 0), battleResults, stateInfo.getGc());			
+				game.enterState(CommRPG.STATE_GAME_BATTLE_ANIM, new FadeOutTransition(Color.black, 250), new EmptyTransition());				
 				turnActions.remove(0);				
 				break;
 			case TurnAction.ACTION_CHECK_DEATH:				
@@ -519,6 +521,10 @@ public class TurnManager extends Manager implements KeyboardListener
 				break;			
 			case Message.MESSAGE_BATTLE_RESULTS:
 				battleResults = ((BattleResultsMessage) message).getBattleResults();
+				stateInfo.setPlayingMusicPostion(stateInfo.getPlayingMusic().getPosition());
+				stateInfo.getPlayingMusic().fade(250, 0f, true);
+				System.out.println("PLAYING POSITION " + stateInfo.getPlayingMusicPostion());
+				// turnActions.add(new WaitAction(15));
 				turnActions.add(new AttackSpriteAction(TurnAction.ACTION_PERFORM_ATTACK, battleResults.targets, battleResults.battleCommand));
 				turnActions.add(new TurnAction(TurnAction.ACTION_CHECK_DEATH));								
 				break;

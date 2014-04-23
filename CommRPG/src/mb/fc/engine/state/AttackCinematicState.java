@@ -28,6 +28,8 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.EmptyTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
 
 /**
  * A warning to anyone who wants to figure out how the battle cinematics work,
@@ -417,8 +419,8 @@ public class AttackCinematicState extends LoadableGameState
 			else if (state == STATE_POST_ATTACK && container.getInput().isKeyDown(KeyMapping.BUTTON_3))
 			{
 				container.getInput().removeAllKeyListeners();
-				game.enterState(CommRPG.STATE_GAME_BATTLE);
-				music.stop();
+				game.enterState(CommRPG.STATE_GAME_BATTLE, new FadeOutTransition(Color.black, 250), new EmptyTransition());
+				music.fade(250, 0f, true);
 			}
 			
 			if (menuUpdate == MenuUpdate.MENU_CLOSE)
@@ -436,8 +438,8 @@ public class AttackCinematicState extends LoadableGameState
 				else if (state == STATE_POST_ATTACK)
 				{
 					container.getInput().removeAllKeyListeners();
-					game.enterState(CommRPG.STATE_GAME_BATTLE);
-					music.stop();
+					game.enterState(CommRPG.STATE_GAME_BATTLE, new FadeOutTransition(Color.black, 250), new EmptyTransition());
+					music.fade(250, 0f, true);
 				}
 				else if (state == STATE_ATTACK_CLIMAX)
 				{
@@ -530,7 +532,7 @@ public class AttackCinematicState extends LoadableGameState
 		backgroundImage = bgIm.getScaledCopy((gc.getWidth() - gc.getDisplayPaddingX() * 2) / (float) bgIm.getWidth());
 		
 		bgXPos = gc.getDisplayPaddingX();
-		bgYPos = (int) ((gc.getHeight() - backgroundImage.getHeight()) / screenScale);		
+		bgYPos = (int) ((gc.getHeight() - backgroundImage.getHeight()) / 2);		
 		
 		this.attacker = attacker;
 		attackerMenu = new SpriteContextPanel((attacker.isHero() ? Panel.PANEL_HEALTH_BAR : Panel.PANEL_ENEMY_HEALTH_BAR), attacker, gc);

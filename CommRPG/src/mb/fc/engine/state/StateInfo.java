@@ -72,6 +72,8 @@ public class StateInfo
 	private boolean showAttackCinematic = false;
 	
 	private Music playingMusic = null;
+	private float playingMusicPostion;
+	private String playingMusicName;
 	
 	private String currentMap;
 	
@@ -637,7 +639,23 @@ public class StateInfo
 		this.playingMusic = playingMusic;
 	}
 
+	public String getPlayingMusicName() {
+		return playingMusicName;
+	}
+
+	public void setPlayingMusicName(String playingMusicName) {
+		this.playingMusicName = playingMusicName;
+	}
+
 	public PersistentStateInfo getPsi() {
 		return psi;
+	}
+
+	public float getPlayingMusicPostion() {
+		return playingMusicPostion;
+	}
+
+	public void setPlayingMusicPostion(float playingMusicPostion) {
+		this.playingMusicPostion = playingMusicPostion;
 	}	
 }

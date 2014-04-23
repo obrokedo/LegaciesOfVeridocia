@@ -424,6 +424,11 @@ public class CinematicActor
 		specialEffectCounter = 0f;
 	}
 	
+	public void stopAnimation()
+	{
+		animUpdate = Long.MAX_VALUE;
+	}
+	
 	public void stopSpecialEffect()
 	{
 		specialEffectType = SE_NONE;

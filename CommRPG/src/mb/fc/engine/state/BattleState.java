@@ -1,6 +1,7 @@
 package mb.fc.engine.state;
 
 import mb.fc.engine.CommRPG;
+import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.Message;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.manager.InitiativeManager;
@@ -42,9 +43,8 @@ public class BattleState extends LoadableGameState
 	
 	private StateInfo stateInfo;
 	
-	private float musicPosition = 0;
 	private float musicVolume = 0;
-	private Music music = null;
+	private String music = null;
 	
 	public BattleState(PersistentStateInfo psi)
 	{
@@ -93,10 +93,8 @@ public class BattleState extends LoadableGameState
 			stateInfo.setShowAttackCinematic(false);
 			if (music != null)
 			{
-				music.setPosition(musicPosition);
-				music.setVolume(musicVolume);
-				music.loop();
-				// music.loop(1f, volume);
+				stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_PLAY_MUSIC, music, .5f, stateInfo.getPlayingMusicPostion(), true));
+				System.out.println("MUSIC ENTER " + musicVolume + " " + stateInfo.getPlayingMusicPostion() + " " + music);
 			}
 		}			
 	}
@@ -113,9 +111,8 @@ public class BattleState extends LoadableGameState
 		else
 		{
 			musicVolume = stateInfo.getPlayingMusic().getVolume();
-			musicPosition = stateInfo.getPlayingMusic().getPosition();
-			music = stateInfo.getPlayingMusic();
-			music.stop();
+			music = stateInfo.getPlayingMusicName();
+			System.out.println("MUSIC EXIT " + musicVolume + " " + stateInfo.getPlayingMusicPostion() + " " + music + " " + stateInfo);
 		}
 		
 		super.leave(container, game);

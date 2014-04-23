@@ -11,7 +11,7 @@ public class SoundManager extends Manager
 {
 	public void update(int delta)
 	{
-		
+
 	}
 
 	@Override
@@ -32,12 +32,24 @@ public class SoundManager extends Manager
 		stateInfo.setPlayingMusic(playingMusic);
 	}
 	
+	public void playMusicByName(String name, float volume, float position)
+	{
+		Music playingMusic = stateInfo.getResourceManager().getMusicByName(name);
+		playingMusic.stop();
+		playingMusic.setPosition(position);		
+		playingMusic.loop(1, 0);
+		playingMusic.fade(2000, volume, false);
+		stateInfo.setPlayingMusic(playingMusic);
+		stateInfo.setPlayingMusicName(name);		
+	}
+	
 
 	public void playMusicByName(String name, float volume)
 	{
 		Music playingMusic = stateInfo.getResourceManager().getMusicByName(name);
 		playingMusic.loop(1, volume);
 		stateInfo.setPlayingMusic(playingMusic);
+		stateInfo.setPlayingMusicName(name);
 	}
 	
 	public void pauseMusic()
@@ -84,7 +96,7 @@ public class SoundManager extends Manager
 				break;
 			case Message.MESSAGE_PLAY_MUSIC:
 				am = (AudioMessage) message;
-				playMusicByName(am.getAudio(), am.getVolume());
+				playMusicByName(am.getAudio(), am.getVolume(), am.getPosition());
 				break;
 			case Message.MESSAGE_FADE_MUSIC:
 				IntMessage im = (IntMessage) message;

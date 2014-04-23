@@ -228,6 +228,8 @@ public class TextParser
 			return new CinematicEvent(CinematicEventType.ANIMATION, area.getParams().get("name"), 
 					area.getParams().get("anim"), Integer.parseInt(area.getParams().get("time")), 
 					Boolean.parseBoolean(area.getParams().get("loops")));
+		else if (type.equalsIgnoreCase("stopanim"))
+			return new CinematicEvent(CinematicEventType.STOP_ANIMATION, area.getParams().get("name"));
 		else if (type.equalsIgnoreCase("cameramove"))
 			return new CinematicEvent(CinematicEventType.CAMERA_MOVE, Integer.parseInt(area.getParams().get("x")), 
 					Integer.parseInt(area.getParams().get("y")), Integer.parseInt(area.getParams().get("time")));

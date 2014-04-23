@@ -129,7 +129,7 @@ public class CommRPG extends StateBasedGame   {
 			// container.setDisplayMode(640, 480, true);
 			// container.setDisplayMode(640, 480, false);
 			// container.setDisplayMode(960, 720, false);
-			// fullScreenWidth = 0;
+			fullScreenWidth = 0;
 			
 			if (fullScreenWidth == 0)
 			{			

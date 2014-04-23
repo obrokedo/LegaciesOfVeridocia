@@ -477,6 +477,13 @@ public class PlannerFrame extends JFrame implements ActionListener, ChangeListen
 
 		allowableLines.add(new PlannerLineDef("anim", "Animation", "Causes the specified actor to perform the specified animation.", definingValues));
 		
+		// Stop Anim
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "name", false, 
+				"Actor Name", "The name of the actor that should perform the action"));		
+
+		allowableLines.add(new PlannerLineDef("stopanim", "Stop Animation", "Causes the specified actor to stop its' current animation.", definingValues));
+		
 		// Camera Move
 		definingValues = new ArrayList<PlannerValueDef>();
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "x", false, 

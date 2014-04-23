@@ -283,6 +283,9 @@ public class Cinematic
 			case PLAY_SOUND:
 				stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, (String) ce.getParam(0), ((int) ce.getParam(1)) / 100.0f, true));
 				break;
+			case STOP_ANIMATION:
+				actors.get((String) ce.getParam(0)).stopAnimation();
+				break;
 		}				
 	}
 	
