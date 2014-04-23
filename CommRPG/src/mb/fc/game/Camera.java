@@ -1,6 +1,5 @@
 package mb.fc.game;
 
-import mb.fc.engine.state.StateInfo;
 import mb.fc.game.sprite.Sprite;
 import mb.fc.map.Map;
 

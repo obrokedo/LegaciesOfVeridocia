@@ -1,5 +1,6 @@
 package mb.fc.cinematic;
 
+import mb.fc.engine.CommRPG;
 import mb.fc.game.Camera;
 import mb.fc.game.constants.Direction;
 import mb.fc.game.sprite.AnimatedSprite;
@@ -46,7 +47,7 @@ public class CinematicActor
 	private boolean haltingMove;
 	private float moveSpeed;
 	private int movingDelta;
-	private static final int MOVE_UPDATE = 30;
+	private static final int MOVE_UPDATE = 20;
 	private boolean loopMoving = false;
 	private float startLoopX;
 	private float startLoopY;
@@ -73,11 +74,10 @@ public class CinematicActor
 		this.facing = Direction.DOWN;
 		this.spriteAnims = spriteAnims;
 		currentAnim = this.spriteAnims.getAnimation(initialAnimation);
-		animationLooping = true;
-		this.locX = x;
-		this.locY = y;
+		this.setAnimation(initialAnimation, 1000, false, true);
+		this.locX = x * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
+		this.locY = y * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
 		this.visible = visible;
-		System.out.println("VISIBLE " + visible + " " + spriteAnims);
 	}
 	
 	public CinematicActor(AnimatedSprite sprite)
@@ -109,7 +109,7 @@ public class CinematicActor
 								this.getLocY() - camera.getLocationY() + im.getHeight() - scaled.getHeight());
 						break;
 					case SE_QUIVER:
-							graphics.drawImage(im, locX - camera.getLocationX() + cont.getDisplayPaddingX() + (specialEffectCounter % 2 == 0 ? 0 : -2 + specialEffectCounter), 
+							graphics.drawImage(im, locX - camera.getLocationX() + cont.getDisplayPaddingX() + (specialEffectCounter % 2 == 0 ? 0 : (-2 + specialEffectCounter) * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]), 
 								locY - camera.getLocationY());
 						break;
 					case SE_FLASH:
@@ -145,28 +145,29 @@ public class CinematicActor
 								*/
 						break;
 					case SE_NOD:
-						im.getSubImage(0, 10, im.getWidth(), 14).draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(), 
+						im.getSubImage(0, 10 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], im.getWidth(), 14 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]).draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(), 
 								this.getLocY() - camera.getLocationY() + 10);
-						im.getSubImage(0, 0, im.getWidth(), 10).draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(), 
-								this.getLocY() - camera.getLocationY() + 1);
+						im.getSubImage(0, 0, im.getWidth(), 10 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]).draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(), 
+								this.getLocY() - camera.getLocationY() + 1 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);
 						break;
 					case SE_HEAD_SHAKE:
-						im.getSubImage(0, 10, im.getWidth(), 14).draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(), 
-								this.getLocY() - camera.getLocationY() + 10);
+						im.getSubImage(0, 10 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], 
+								im.getWidth(), 14 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]).draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(), 
+								this.getLocY() - camera.getLocationY() + 10 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);
 						
 						switch ((int) specialEffectCounter % 4)
 						{
 							case 0:
 							case 2:
-								im.getSubImage(0, 0, im.getWidth(), 10).draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(), 
+								im.getSubImage(0, 0, im.getWidth(), 10 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]).draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(), 
 									this.getLocY() - camera.getLocationY());
 								break;
 							case 1:
-								im.getSubImage(0, 0, im.getWidth(), 10).draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX() + 1, 
+								im.getSubImage(0, 0, im.getWidth(), 10 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]).draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX() + 1 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], 
 										this.getLocY() - camera.getLocationY());
 								break;
 							case 3:
-								im.getSubImage(0, 0, im.getWidth(), 10).draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX() - 1, 
+								im.getSubImage(0, 0, im.getWidth(), 10 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]).draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX() - 1 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], 
 										this.getLocY() - camera.getLocationY());
 								break;
 						}
@@ -203,12 +204,11 @@ public class CinematicActor
 	}
 	
 	public void update(int delta, Cinematic cinematic) 
-	{		
+	{	
 		animDelta += delta;
 		while (animDelta > animUpdate)
 		{
 			animDelta -= animUpdate;
-			
 			if (imageIndex % currentAnim.frames.size() == currentAnim.frames.size() - 1)
 			{
 				imageIndex = 0;
@@ -294,7 +294,8 @@ public class CinematicActor
 							haltingMove = false;
 							cinematic.decreaseMoves();
 						}
-						this.animUpdate = Long.MAX_VALUE;
+						this.animUpdate = 500;
+						// this.animUpdate = Long.MAX_VALUE;
 					}
 					else
 					{
@@ -509,15 +510,15 @@ public class CinematicActor
 		this.animUpdate = time / currentAnim.frames.size();		
 	}
 	
-	public void moveToLocation(int moveToLocX, int moveToLocY, int speed, boolean haltingMove, int direction)
+	public void moveToLocation(int moveToLocX, int moveToLocY, float speed, boolean haltingMove, int direction)
 	{
 		this.loopMoving = false;
-		this.moveToLocX = moveToLocX;
-		this.moveToLocY = moveToLocY;
+		this.moveToLocX = moveToLocX * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
+		this.moveToLocY = moveToLocY * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
 		this.haltingMove = haltingMove;
-		this.moveSpeed = speed;
+		this.moveSpeed = speed * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
 		this.animDelta = 0;
-		this.animUpdate = (long) (469.875 / moveSpeed);
+		this.animUpdate = (long) (469.875 / speed);
 		if (direction != -1)
 		{
 			this.setFacing(direction);
@@ -528,19 +529,12 @@ public class CinematicActor
 		moving = true;
 	}
 	
-	public void loopMoveToLocation(int moveToLocX, int moveToLocY, int speed)
+	public void loopMoveToLocation(int moveToLocX, int moveToLocY, float speed)
 	{
 		this.startLoopX = this.locX;
 		this.startLoopY = this.locY;
+		moveToLocation(moveToLocX, moveToLocY, speed, haltingMove, -1);		
 		this.loopMoving = true;
-		this.moveToLocX = moveToLocX;
-		this.moveToLocY = moveToLocY;
-		this.haltingMove = false;
-		this.moveSpeed = speed;			
-		this.animDelta = 0;
-		this.animUpdate = (long) (469.875 / moveSpeed);
-		this.forceFacingMove = false;
-		moving = true;
 	}
 	
 	public void stopLoopMove()

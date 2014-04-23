@@ -27,6 +27,7 @@ public class PlannerLine extends JPanel
 	private ArrayList<Object> values;
 	private boolean isDefining;
 	private JComboBox<String> box;
+	private JPanel definingPanel;
 	
 	public PlannerLine(PlannerLineDef plDef, boolean isDefining)
 	{
@@ -70,7 +71,8 @@ public class PlannerLine extends JPanel
 			JButton addLineButton = new JButton("Add line");
 			addLineButton.setActionCommand("addline");
 			addLineButton.addActionListener(aListener);
-			headerPanel.add(addLineButton);						
+			headerPanel.add(addLineButton);				
+			definingPanel = headerPanel;
 		}
 		else
 		{
@@ -88,10 +90,12 @@ public class PlannerLine extends JPanel
 			headerPanel.add(movedownButton);
 						
 			headDescPanel.add(headerPanel.add(new JLabel(this.plDef.getDescription())), BorderLayout.PAGE_END);
+			headDescPanel.add(headerPanel, BorderLayout.CENTER);
+			this.add(headDescPanel);
 		}
 		
-		headDescPanel.add(headerPanel, BorderLayout.CENTER);
-		this.add(headDescPanel);
+		
+		
 		
 		JPanel valuePanel = new JPanel();
 		valuePanel.setLayout(new BoxLayout(valuePanel, BoxLayout.PAGE_AXIS));
@@ -188,6 +192,11 @@ public class PlannerLine extends JPanel
 			valuePanel.add(panel);
 		}
 		this.add(valuePanel);
+	}
+	
+	public JPanel getDefiningPanel()
+	{
+		return definingPanel;
 	}
 	
 	public void commitChanges()

@@ -2,7 +2,6 @@ package mb.fc.game.sprite;
 
 import java.util.ArrayList;
 
-import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.Message;
 import mb.fc.engine.message.SpriteContextMessage;
 import mb.fc.engine.state.StateInfo;
@@ -197,22 +196,16 @@ public class CombatSprite extends AnimatedSprite
 	public void render(Camera camera, Graphics graphics, FCGameContainer cont) 
 	{
 		for (AnimSprite as : currentAnim.frames.get(imageIndex).sprites)
-		{
-			
-			Image i = (spriteAnims.getImageAtIndex(as.imageIndex)).getFlippedCopy(false, true); 
-			i.drawSheared(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(), 
-					this.getLocY() - camera.getLocationY() + i.getHeight() - SHADOW_OFFSET * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] - 
-					stateInfo.getResourceManager().getMap().getTileRenderHeight(), -10, 0, SHADOW_COLOR);
-					
-			
+		{			
+			if (movementType != CombatSprite.MOVEMENT_FLYING)
+			{
+				Image i = (spriteAnims.getImageAtIndex(as.imageIndex)).getScaledCopy((spriteAnims.getImageAtIndex(as.imageIndex)).getWidth(), (int) ((spriteAnims.getImageAtIndex(as.imageIndex)).getHeight() * .65));
+				i.drawSheared(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX() - 40, 
+						this.getLocY() - camera.getLocationY() - stateInfo.getResourceManager().getMap().getTileRenderHeight() + stateInfo.getTileHeight() - i.getHeight(), 40, 0, SHADOW_COLOR);
+			}				
 			
 			graphics.drawImage(spriteAnims.getImageAtIndex(as.imageIndex), this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(), 
 					this.getLocY() - camera.getLocationY() - stateInfo.getResourceManager().getMap().getTileRenderHeight(), fadeColor);
-					
-			/*
-			graphics.drawImage(spriteAnims.getImageAtIndex(as.imageIndex), this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(), 
-					this.getLocY() - camera.getLocationY(), fadeColor);
-			*/
 		}
 	}
 	

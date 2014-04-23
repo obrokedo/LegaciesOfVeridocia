@@ -4,6 +4,7 @@ import mb.fc.engine.CommRPG;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.Camera;
 import mb.fc.game.constants.Direction;
+import mb.fc.game.move.MovingSprite;
 import mb.fc.game.ui.FCGameContainer;
 import mb.fc.utils.AnimSprite;
 import mb.fc.utils.Animation;
@@ -17,7 +18,7 @@ public class AnimatedSprite extends Sprite
 {
 	private static final long serialVersionUID = 1L;
 	
-	protected final transient static Color SHADOW_COLOR = new Color(0, 0, 0, 100);
+	protected final transient static Color SHADOW_COLOR = new Color(0, 0, 0, 120);
 	protected final static int SHADOW_OFFSET = 8;
 	
 	protected transient int imageIndex;
@@ -26,7 +27,7 @@ public class AnimatedSprite extends Sprite
 	protected transient Animation currentAnim;
 	protected String imageName;
 	private Direction facing;	
-	private int animationUpdate = 8;
+	private int animationUpdate = 10;
 	
 	public AnimatedSprite(int locX, int locY, String imageName) {
 		super(locX, locY);
@@ -41,14 +42,11 @@ public class AnimatedSprite extends Sprite
 	@Override
 	public void render(Camera camera, Graphics graphics, FCGameContainer cont) {
 		for (AnimSprite as : currentAnim.frames.get(imageIndex).sprites)
-		{
-			Image i = (spriteAnims.getImageAtIndex(as.imageIndex)).getFlippedCopy(false, true); 
-			i.drawSheared(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(), 
-					this.getLocY() - camera.getLocationY() + i.getHeight() - SHADOW_OFFSET * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] - 
-					stateInfo.getResourceManager().getMap().getTileRenderHeight(), -10, 0, SHADOW_COLOR);
-					
-			
-			
+		{	
+			Image i = (spriteAnims.getImageAtIndex(as.imageIndex)).getScaledCopy((spriteAnims.getImageAtIndex(as.imageIndex)).getWidth(), (int) ((spriteAnims.getImageAtIndex(as.imageIndex)).getHeight() * .65));
+			i.drawSheared(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX() - 40, 
+					this.getLocY() - camera.getLocationY() - stateInfo.getResourceManager().getMap().getTileRenderHeight() + stateInfo.getTileHeight() - i.getHeight(), 40, 0, SHADOW_COLOR);
+											
 			graphics.drawImage(spriteAnims.getImageAtIndex(as.imageIndex), this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(), 
 					this.getLocY() - camera.getLocationY() - stateInfo.getResourceManager().getMap().getTileRenderHeight());
 		}
@@ -62,15 +60,16 @@ public class AnimatedSprite extends Sprite
 		spriteAnims = stateInfo.getResourceManager().getSpriteAnimations().get(imageName);
 		currentAnim = spriteAnims.getAnimation("UnDown");
 		facing = Direction.DOWN;
-		animationUpdate = 8;
+		animationUpdate = MovingSprite.STAND_ANIMATION_SPEED;
 	}
-
+	
 	@Override
 	public void update() 
 	{		
 		animationDelay++;
 		if (animationDelay >= animationUpdate)
 		{
+			
 			if (imageIndex % 2 == 1)
 				imageIndex--;		
 			else

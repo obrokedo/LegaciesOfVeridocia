@@ -213,20 +213,21 @@ public class TextParser
 			return new CinematicEvent(CinematicEventType.CAMERA_FOLLOW, area.getParams().get("name"));
 		else if (type.equalsIgnoreCase("haltingmove"))
 			return new CinematicEvent(CinematicEventType.HALTING_MOVE, Integer.parseInt(area.getParams().get("x")), 
-					Integer.parseInt(area.getParams().get("y")), Integer.parseInt(area.getParams().get("speed")), area.getParams().get("name"));
+					Integer.parseInt(area.getParams().get("y")), Float.parseFloat(area.getParams().get("speed")), area.getParams().get("name"));
 		else if (type.equalsIgnoreCase("move"))
 			return new CinematicEvent(CinematicEventType.MOVE, Integer.parseInt(area.getParams().get("x")), 
-					Integer.parseInt(area.getParams().get("y")), Integer.parseInt(area.getParams().get("speed")), area.getParams().get("name"));
+					Integer.parseInt(area.getParams().get("y")), Float.parseFloat(area.getParams().get("speed")), area.getParams().get("name"));
 		else if (type.equalsIgnoreCase("forcedmove"))
 			return new CinematicEvent(CinematicEventType.MOVE_ENFORCE_FACING, Integer.parseInt(area.getParams().get("x")), 
-					Integer.parseInt(area.getParams().get("y")), Integer.parseInt(area.getParams().get("speed")), area.getParams().get("name"),
+					Integer.parseInt(area.getParams().get("y")), Float.parseFloat(area.getParams().get("speed")), area.getParams().get("name"),
 						Integer.parseInt(area.getParams().get("facing")));
 		else if (type.equalsIgnoreCase("haltinganim"))
 			return new CinematicEvent(CinematicEventType.HALTING_ANIMATION, area.getParams().get("name"), 
 					area.getParams().get("anim"), Integer.parseInt(area.getParams().get("time")));
 		else if (type.equalsIgnoreCase("anim"))
 			return new CinematicEvent(CinematicEventType.ANIMATION, area.getParams().get("name"), 
-					area.getParams().get("anim"), Integer.parseInt(area.getParams().get("time")), Boolean.parseBoolean(area.getParams().get("loops")));
+					area.getParams().get("anim"), Integer.parseInt(area.getParams().get("time")), 
+					Boolean.parseBoolean(area.getParams().get("loops")));
 		else if (type.equalsIgnoreCase("cameramove"))
 			return new CinematicEvent(CinematicEventType.CAMERA_MOVE, Integer.parseInt(area.getParams().get("x")), 
 					Integer.parseInt(area.getParams().get("y")), Integer.parseInt(area.getParams().get("time")));
@@ -268,7 +269,7 @@ public class TextParser
 			return new CinematicEvent(CinematicEventType.HEAD_SHAKE, area.getParams().get("name"));
 		else if (type.equalsIgnoreCase("loopmove"))
 			return new CinematicEvent(CinematicEventType.LOOP_MOVE, area.getParams().get("name"), Integer.parseInt(area.getParams().get("x")), 
-					Integer.parseInt(area.getParams().get("y")), Integer.parseInt(area.getParams().get("speed")));
+					Integer.parseInt(area.getParams().get("y")), Float.parseFloat(area.getParams().get("speed")));
 		else if (type.equalsIgnoreCase("stoploopmove"))
 			return new CinematicEvent(CinematicEventType.STOP_LOOP_MOVE, area.getParams().get("name"));
 		else if (type.equalsIgnoreCase("camerashake"))

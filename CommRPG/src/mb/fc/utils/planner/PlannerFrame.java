@@ -435,8 +435,8 @@ public class PlannerFrame extends JFrame implements ActionListener, ChangeListen
 				"X Coordinate", "The x coordinate (in pixels) that the actor should move to"));
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "y", false, 
 				"Y Coordinate", "The y coordinate (in pixels) that the actor should move to"));
-		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "speed", false, 
-				"Move Speed", "The amount of pixels that the actor will move every 30ms towards their destination"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "speed", false, 
+				"Move Speed", "The amount of pixels that the actor will move every 20ms towards their destination. Normal movement is 2.4"));
 
 		allowableLines.add(new PlannerLineDef("haltingmove", "Halting Move", "Orders the specified actor to move to the specified coordinate. This action is 'halting' which means no further actions will be issued until this action is complete", definingValues));
 		
@@ -448,8 +448,8 @@ public class PlannerFrame extends JFrame implements ActionListener, ChangeListen
 				"X Coordinate", "The x coordinate (in pixels) that the actor should move to"));
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "y", false, 
 				"Y Coordinate", "The y coordinate (in pixels) that the actor should move to"));
-		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "speed", false, 
-				"Move Speed", "The amount of pixels that the actor will move every 30ms towards their destination"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "speed", false, 
+				"Move Speed", "The amount of pixels that the actor will move every 20ms towards their destination. Normal movement is 2.4"));
 
 		allowableLines.add(new PlannerLineDef("move", "Move", "Orders the specified actor to move to the specified coordinate.", definingValues));
 		
@@ -458,7 +458,7 @@ public class PlannerFrame extends JFrame implements ActionListener, ChangeListen
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "name", false, 
 				"Actor Name", "The name of the actor that should perform the action"));		
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "time", false, 
-				"Time", "The amount of time in milliseconds that this animation should be performed over. All frames will be shown for an equal time."));
+				"Time", "The amount of time in milliseconds that this animation should be performed over. All frames will be shown for an equal time. General stand speed is 1000ms"));
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "anim", false, 
 				"Animation to Show", "The name of the animation that the actor should take"));
 
@@ -469,9 +469,11 @@ public class PlannerFrame extends JFrame implements ActionListener, ChangeListen
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "name", false, 
 				"Actor Name", "The name of the actor that should perform the action"));		
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "time", false, 
-				"Time", "The amount of time in milliseconds that this animation should be performed over. All frames will be shown for an equal time."));
+				"Time", "The amount of time in milliseconds that this animation should be performed over. All frames will be shown for an equal time. General stand speed is 1000ms"));
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "anim", false, 
 				"Animation to Show", "The name of the animation that the actor should take"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_BOOLEAN, "loops", false, 
+				"Loop Animation", "Whether this animation should loop after it has finished playing."));
 
 		allowableLines.add(new PlannerLineDef("anim", "Animation", "Causes the specified actor to perform the specified animation.", definingValues));
 		
@@ -633,8 +635,8 @@ public class PlannerFrame extends JFrame implements ActionListener, ChangeListen
 				"X Coordinate", "The x coordinate (in pixels) that the actor should move to"));
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "y", false, 
 				"Y Coordinate", "The y coordinate (in pixels) that the actor should move to"));
-		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT, "speed", false, 
-				"Move Speed", "The amount of pixels that the actor will move every 30ms towards their destination"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "speed", false, 
+				"Move Speed", "The amount of pixels that the actor will move every 20ms towards their destination. Normal movement is 2.4"));
 
 		allowableLines.add(new PlannerLineDef("loopmove", "Move Actor in Loop", "Causes the specified actor to move to the specified location, once the actor gets to that location they will teleport back to where they started when this action was first called. This action will continue until a STOP LOOP MOVE action is called on this actor or another move command is issued for this actor", definingValues));
 				

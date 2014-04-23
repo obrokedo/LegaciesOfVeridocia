@@ -156,20 +156,20 @@ public class Cinematic
 				haltedMovers++;
 				break;
 			case MOVE:
-				actors.get(ce.getParam(3)).moveToLocation((int) ce.getParam(0), (int) ce.getParam(1), (int) ce.getParam(2), false, -1);
+				actors.get(ce.getParam(3)).moveToLocation((int) ce.getParam(0), (int) ce.getParam(1), (float) ce.getParam(2), false, -1);
 				break;
 			case MOVE_ENFORCE_FACING:
-				actors.get(ce.getParam(3)).moveToLocation((int) ce.getParam(0), (int) ce.getParam(1), (int) ce.getParam(2), false, (int) ce.getParam(4));
+				actors.get(ce.getParam(3)).moveToLocation((int) ce.getParam(0), (int) ce.getParam(1), (float) ce.getParam(2), false, (int) ce.getParam(4));
 				break;
 			case LOOP_MOVE:
-				actors.get(ce.getParam(0)).loopMoveToLocation((int) ce.getParam(1), (int) ce.getParam(2), (int) ce.getParam(3));
+				actors.get(ce.getParam(0)).loopMoveToLocation((int) ce.getParam(1), (int) ce.getParam(2), (float) ce.getParam(3));
 				break;
 			case STOP_LOOP_MOVE:
 				actors.get((String) ce.getParam(0)).stopLoopMove();
 				break;
 			case CAMERA_MOVE:
-				cameraMoveToX = (int) ce.getParam(0);
-				cameraMoveToY = (int) ce.getParam(1);				
+				cameraMoveToX = (int) ce.getParam(0) * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
+				cameraMoveToY = (int) ce.getParam(1) * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
 				int distance = Math.abs(stateInfo.getCamera().getLocationX() - cameraMoveToX);
 				distance += Math.abs(stateInfo.getCamera().getLocationY() - cameraMoveToY);
 				System.out.println((int) ce.getParam(2));
@@ -177,7 +177,8 @@ public class Cinematic
 				cameraFollow = null;
 				break;
 			case CAMERA_CENTER:
-				stateInfo.getCamera().centerOnPoint((int) ce.getParam(0), (int) ce.getParam(1), stateInfo.getCurrentMap());
+				stateInfo.getCamera().centerOnPoint((int) ce.getParam(0) * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], 
+						(int) ce.getParam(1) * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], stateInfo.getCurrentMap());
 				cameraFollow = null;
 				break;
 			case CAMERA_FOLLOW:
@@ -187,8 +188,12 @@ public class Cinematic
 			case CAMERA_SHAKE:
 				lastCameraShake = 0;
 				cameraShakeDuration = (int) ce.getParam(0);
-				cameraShakeSeverity = (int) ce.getParam(1);
+				cameraShakeSeverity = (int) ce.getParam(1) * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
 				cameraShaking = true;				
+				break;
+			case ADD_ACTOR:
+				actors.put((String) ce.getParam(2), new CinematicActor(stateInfo.getResourceManager().getSpriteAnimations().get((String) ce.getParam(3)), 
+						(String) ce.getParam(4), (int) ce.getParam(0), (int) ce.getParam(1), (boolean) ce.getParam(5)));
 				break;
 			case SPEECH:
 				speechMenu = new SpeechMenu((String) ce.getParam(0), stateInfo.getGc(), -1, (int) ce.getParam(1), stateInfo);
@@ -205,11 +210,7 @@ public class Cinematic
 				break;
 			case ANIMATION:	
 				actors.get((String) ce.getParam(0)).setAnimation((String) ce.getParam(1), (int) ce.getParam(2), false, (boolean) ce.getParam(3));
-				break;
-			case ADD_ACTOR:
-				actors.put((String) ce.getParam(2), new CinematicActor(stateInfo.getResourceManager().getSpriteAnimations().get((String) ce.getParam(3)), 
-						(String) ce.getParam(4), (int) ce.getParam(0), (int) ce.getParam(1), (boolean) ce.getParam(5)));
-				break;
+				break;			
 			case WAIT:
 				waitTime = (int) ce.getParam(0);
 				break;

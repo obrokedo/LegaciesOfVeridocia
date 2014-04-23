@@ -81,6 +81,7 @@ public class MovingSprite
 		if (moveIndex == moveSpeed)
 		{				
 			combatSprite.setLocation(endX, endY);
+			stateInfo.getCamera().centerOnSprite(combatSprite, stateInfo.getCurrentMap());
 			combatSprite.setAnimationUpdate(STAND_ANIMATION_SPEED);
 			return true;
 		}	

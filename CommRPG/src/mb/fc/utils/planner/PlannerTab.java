@@ -101,7 +101,14 @@ public class PlannerTab extends JPanel implements ActionListener, ListSelectionL
 	public void setNewValues()
 	{
 		if (currentPCScroll != null)
-			this.remove(currentPCScroll);
+		{
+			this.remove(currentPCScroll);			
+		}
+		
+		if (currentPC != null && currentPC.getDefLine() != null)
+		{
+			this.remove(currentPC.getDefLine());
+		}
 		if (currentPC != null)
 		{
 			currentPC.commitChanges();			
@@ -112,11 +119,12 @@ public class PlannerTab extends JPanel implements ActionListener, ListSelectionL
 		if (list.getSelectedIndex() != -1)
 		{
 			currentPC = listPC.get(list.getSelectedIndex());
-			selectedPC = list.getSelectedIndex();
-			currentPC.setupUI();		
+			selectedPC = list.getSelectedIndex();			
+			currentPC.setupUI();			
 			JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 			panel.add(currentPC);
 			currentPCScroll = new JScrollPane(panel);
+			this.add(currentPC.getDefLine().getDefiningPanel(), BorderLayout.PAGE_START);
 			this.add(currentPCScroll, BorderLayout.CENTER);
 			this.revalidate();
 		}

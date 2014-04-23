@@ -5,7 +5,9 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 public class PlannerContainer extends JPanel implements ActionListener
 {
@@ -19,7 +21,7 @@ public class PlannerContainer extends JPanel implements ActionListener
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		this.pcdef = pcdef;
 				
-		this.defLine = new PlannerLine(pcdef.getDefiningLine(), true);				
+		this.defLine = new PlannerLine(pcdef.getDefiningLine(), true);		
 		this.containers = new ArrayList<PlannerContainer>();
 		this.lines = new ArrayList<PlannerLine>();
 	}
@@ -39,7 +41,9 @@ public class PlannerContainer extends JPanel implements ActionListener
 			listPanel.add(line);
 			i++;
 		}
+		
 		this.add(listPanel);
+		// this.add(new JScrollPane(listPanel));
 	}
 	
 	public void addLine(PlannerLine line)

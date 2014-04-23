@@ -102,6 +102,7 @@ public class CommRPG extends StateBasedGame   {
 				double ratio =  container.getScreenWidth() * 1.0 / container.getScreenHeight();
 				System.out.println(ratio);
 				DisplayMode[] modes = Display.getAvailableDisplayModes();
+
 				for (DisplayMode dm : modes)
 				{
 					double sRatio = 1.0 * dm.getWidth() / dm.getHeight();
@@ -128,10 +129,13 @@ public class CommRPG extends StateBasedGame   {
 			// container.setDisplayMode(640, 480, true);
 			// container.setDisplayMode(640, 480, false);
 			// container.setDisplayMode(960, 720, false);
+			// fullScreenWidth = 0;
 			
 			if (fullScreenWidth == 0)
-			{
+			{			
 				System.out.println("Unable to enter full screen");
+				GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] = 3;
+				container.setDisplayPaddingX(0);
 				container.setDisplayMode(960, 720, false);
 			}
 			else

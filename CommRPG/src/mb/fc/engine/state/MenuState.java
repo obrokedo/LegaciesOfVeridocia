@@ -96,7 +96,8 @@ public class MenuState extends LoadableGameState implements StringListener
 					(LoadableGameState) game.getState(CommRPG.STATE_GAME_TOWN));
 		}
 		
-		gc.setMouseGrabbed(true);
+		if (gc.isFullscreen())
+			gc.setMouseGrabbed(true);
 		
 		game.enterState(CommRPG.STATE_GAME_LOADING);
 		
