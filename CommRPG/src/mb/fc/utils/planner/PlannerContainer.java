@@ -2,12 +2,16 @@ package mb.fc.utils.planner;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+
+import mb.fc.cinematic.event.CinematicEvent;
+import mb.fc.loading.TextParser;
+import mb.fc.utils.XMLParser;
+import mb.fc.utils.XMLParser.TagArea;
 
 public class PlannerContainer extends JPanel implements ActionListener
 {
@@ -15,6 +19,7 @@ public class PlannerContainer extends JPanel implements ActionListener
 	private ArrayList<PlannerContainer> containers;
 	private ArrayList<PlannerLine> lines;
 	private PlannerLine defLine;
+	private PlannerTimeBarViewer plannerGraph = null;
 	
 	public PlannerContainer(PlannerContainerDef pcdef) {
 		super();
@@ -43,6 +48,29 @@ public class PlannerContainer extends JPanel implements ActionListener
 		}
 		
 		this.add(listPanel);
+		
+		if (pcdef.getDefiningLine().getTag().equalsIgnoreCase("Cinematic"))
+		{
+			try
+			{
+				ArrayList<PlannerContainer> pcs = new ArrayList<PlannerContainer>();
+				pcs.add(this);
+				ArrayList<String> results = PlannerFrame.export(pcs);
+				
+				ArrayList<TagArea> tas = XMLParser.process(results);
+				if (tas.size() > 0)
+				{
+					ArrayList<CinematicEvent> initEvents = new ArrayList<CinematicEvent>();
+					if (plannerGraph == null)
+						plannerGraph = new PlannerTimeBarViewer(TextParser.parseCinematicEvents(tas.get(0), initEvents));
+					else
+						plannerGraph.generateGraph(TextParser.parseCinematicEvents(tas.get(0), initEvents));
+					// this.add(ptbv);
+				}
+			}
+			catch (Exception ex) {ex.printStackTrace();}
+			
+		}
 		// this.add(new JScrollPane(listPanel));
 	}
 	
@@ -59,11 +87,17 @@ public class PlannerContainer extends JPanel implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent a) {
 		String action = a.getActionCommand();
-		
+		System.out.println("ACTION PERFORMED");
 		if (action.equalsIgnoreCase("addline"))
 		{
 			int index = defLine.getSelectedItem();
 			this.lines.add(new PlannerLine(pcdef.getAllowableLines().get(index), false));			
+			setupUI();
+			this.revalidate();
+			this.repaint();
+		}
+		else if (action.startsWith("refresh"))
+		{
 			setupUI();
 			this.revalidate();
 			this.repaint();
@@ -124,5 +158,9 @@ public class PlannerContainer extends JPanel implements ActionListener
 
 	public ArrayList<PlannerLine> getLines() {
 		return lines;
+	}
+
+	public PlannerTimeBarViewer getPlannerGraph() {
+		return plannerGraph;
 	}
 }

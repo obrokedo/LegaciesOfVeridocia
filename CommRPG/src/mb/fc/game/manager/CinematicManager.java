@@ -29,7 +29,7 @@ public class CinematicManager extends Manager
 	public void render(Graphics g)
 	{
 		if (cinematic != null)
-			cinematic.render(g, stateInfo.getCamera(), stateInfo.getGc());
+			cinematic.render(g, stateInfo.getCamera(), stateInfo.getGc(), stateInfo);
 	}
 
 	public void renderMenu(Graphics g)

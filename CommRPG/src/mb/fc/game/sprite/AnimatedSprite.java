@@ -18,7 +18,7 @@ public class AnimatedSprite extends Sprite
 {
 	private static final long serialVersionUID = 1L;
 	
-	protected final transient static Color SHADOW_COLOR = new Color(0, 0, 0, 120);
+	public final transient static Color SHADOW_COLOR = new Color(0, 0, 0, 120);
 	protected final static int SHADOW_OFFSET = 8;
 	
 	protected transient int imageIndex;
@@ -43,13 +43,20 @@ public class AnimatedSprite extends Sprite
 	public void render(Camera camera, Graphics graphics, FCGameContainer cont) {
 		for (AnimSprite as : currentAnim.frames.get(imageIndex).sprites)
 		{	
-			Image i = (spriteAnims.getImageAtIndex(as.imageIndex)).getScaledCopy((spriteAnims.getImageAtIndex(as.imageIndex)).getWidth(), (int) ((spriteAnims.getImageAtIndex(as.imageIndex)).getHeight() * .65));
-			i.drawSheared(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX() - 40, 
-					this.getLocY() - camera.getLocationY() - stateInfo.getResourceManager().getMap().getTileRenderHeight() + stateInfo.getTileHeight() - i.getHeight(), 40, 0, SHADOW_COLOR);
+			AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), this.getLocX(), this.getLocY(), cont.getDisplayPaddingX(), camera, true);
 											
 			graphics.drawImage(spriteAnims.getImageAtIndex(as.imageIndex), this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(), 
 					this.getLocY() - camera.getLocationY() - stateInfo.getResourceManager().getMap().getTileRenderHeight());
 		}
+	}
+	
+	public static void drawShadow(Image originalIm, int locX, int locY, int displayPadding, Camera camera, boolean tileOffset)
+	{
+		Image i = (originalIm).getScaledCopy(originalIm.getWidth(), (int) (originalIm.getHeight() * .65));
+		i.drawSheared(locX - camera.getLocationX() + displayPadding - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 13, 
+				locY - camera.getLocationY() - (tileOffset ? stateInfo.getResourceManager().getMap().getTileRenderHeight() : 0) + originalIm.getHeight() - 
+					i.getHeight(), CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 13,
+				0, SHADOW_COLOR);
 	}
 
 	@Override

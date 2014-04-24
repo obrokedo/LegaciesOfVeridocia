@@ -181,18 +181,26 @@ public class TextParser
 				int cameraY = Integer.parseInt(tagArea.getParams().get("cameray"));
 				
 				ArrayList<CinematicEvent> initEvents = new ArrayList<CinematicEvent>();
-				ArrayList<CinematicEvent> events = new ArrayList<CinematicEvent>();
+				ArrayList<CinematicEvent> events = parseCinematicEvents(tagArea, initEvents);
 				
-				for (TagArea childArea : tagArea.getChildren())
-				{					
-					// Add the event
-					events.add(parseCinematicEvent(childArea, initEvents));
-				}
 				
 				cinematicById.put(cinematicId, new Cinematic(initEvents, events, cameraX, cameraY));
 				System.out.println();
 			}
 		}
+	}
+	
+	public static ArrayList<CinematicEvent> parseCinematicEvents(TagArea tagArea, ArrayList<CinematicEvent> initEvents)
+	{
+		ArrayList<CinematicEvent> events = new ArrayList<CinematicEvent>();
+		
+		for (TagArea childArea : tagArea.getChildren())
+		{					
+			// Add the event
+			events.add(parseCinematicEvent(childArea, initEvents));
+		}
+		
+		return events;
 	}
 	
 	private static CinematicEvent parseCinematicEvent(TagArea area, ArrayList<CinematicEvent> initEvents)

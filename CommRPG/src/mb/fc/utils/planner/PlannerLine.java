@@ -62,17 +62,28 @@ public class PlannerLine extends JPanel
 		{
 			headerLabel.setForeground(Color.WHITE);
 			
-			Vector<String> allowableStrings = new Vector<String>();
-			for (PlannerLineDef pld : allowableValues)
-				allowableStrings.add(pld.getName());
-			box = new JComboBox<String>(allowableStrings);
-			headerPanel.add(box);
-			
-			JButton addLineButton = new JButton("Add line");
-			addLineButton.setActionCommand("addline");
-			addLineButton.addActionListener(aListener);
-			headerPanel.add(addLineButton);				
-			definingPanel = headerPanel;
+			if (definingPanel == null)
+			{
+				Vector<String> allowableStrings = new Vector<String>();
+				for (PlannerLineDef pld : allowableValues)
+					allowableStrings.add(pld.getName());
+				box = new JComboBox<String>(allowableStrings);
+				headerPanel.add(box);
+				
+				JButton addLineButton = new JButton("Add line");
+				addLineButton.setActionCommand("addline");
+				addLineButton.addActionListener(aListener);
+				headerPanel.add(addLineButton);				
+				
+				if (plDef.getTag().equalsIgnoreCase("Cinematic"))
+				{
+					JButton refreshButton = new JButton("Refresh");
+					refreshButton.setActionCommand("refresh");
+					refreshButton.addActionListener(aListener);
+					headerPanel.add(refreshButton);
+				}
+				definingPanel = headerPanel;
+			}
 		}
 		else
 		{
@@ -285,6 +296,8 @@ public class PlannerLine extends JPanel
 
 	public int getSelectedItem()
 	{
+		System.out.println(box.getSelectedIndex());
+		System.out.println(box);
 		return box.getSelectedIndex();
 	}
 

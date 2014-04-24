@@ -1,6 +1,7 @@
 package mb.fc.cinematic;
 
 import mb.fc.engine.CommRPG;
+import mb.fc.engine.state.StateInfo;
 import mb.fc.game.Camera;
 import mb.fc.game.constants.Direction;
 import mb.fc.game.sprite.AnimatedSprite;
@@ -85,7 +86,7 @@ public class CinematicActor
 		this.sprite = sprite;
 	}
 	
-	public void render(Graphics graphics, Camera camera, FCGameContainer cont)
+	public void render(Graphics graphics, Camera camera, FCGameContainer cont, StateInfo stateInfo)
 	{
 		if (!visible)
 			return;
@@ -98,6 +99,9 @@ public class CinematicActor
 				switch (specialEffectType)
 				{
 					case SE_NONE:
+					
+						AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), (int) this.getLocX(), (int) this.getLocY(), cont.getDisplayPaddingX(), camera, false);
+						
 						graphics.drawImage(im, locX - camera.getLocationX() + cont.getDisplayPaddingX(), 
 								locY - camera.getLocationY());
 						break;
@@ -105,14 +109,22 @@ public class CinematicActor
 					case SE_SHRINK:
 						Image scaled = im.getScaledCopy(specialEffectCounter);
 						
+						AnimatedSprite.drawShadow(scaled, (int) this.getLocX(), (int) this.getLocY(), cont.getDisplayPaddingX(), camera, false);
+						
 						scaled.draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX() + im.getWidth() - scaled.getWidth(), 
 								this.getLocY() - camera.getLocationY() + im.getHeight() - scaled.getHeight());
 						break;
 					case SE_QUIVER:
-							graphics.drawImage(im, locX - camera.getLocationX() + cont.getDisplayPaddingX() + (specialEffectCounter % 2 == 0 ? 0 : (-2 + specialEffectCounter) * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]), 
+						
+						AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), (int) (this.getLocX() + (specialEffectCounter % 2 == 0 ? 0 : (-2 + specialEffectCounter) * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()])), 
+								(int) this.getLocY(), cont.getDisplayPaddingX(), camera, false);
+											
+						graphics.drawImage(im, locX - camera.getLocationX() + cont.getDisplayPaddingX() + (specialEffectCounter % 2 == 0 ? 0 : (-2 + specialEffectCounter) * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]), 
 								locY - camera.getLocationY());
 						break;
 					case SE_FLASH:
+						AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), (int) this.getLocX(), (int) this.getLocY(), cont.getDisplayPaddingX(), camera, false);
+						
 						Image whiteIm = im.copy();
 						
 						// 1. bind the sprite sheet
@@ -145,12 +157,16 @@ public class CinematicActor
 								*/
 						break;
 					case SE_NOD:
+						AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), (int) this.getLocX(), (int) this.getLocY(), cont.getDisplayPaddingX(), camera, false);
+						
 						im.getSubImage(0, 10 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], im.getWidth(), 14 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]).draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(), 
 								this.getLocY() - camera.getLocationY() + 10);
 						im.getSubImage(0, 0, im.getWidth(), 10 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]).draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(), 
 								this.getLocY() - camera.getLocationY() + 1 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);
 						break;
 					case SE_HEAD_SHAKE:
+						AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), (int) this.getLocX(), (int) this.getLocY(), cont.getDisplayPaddingX(), camera, false);
+						
 						im.getSubImage(0, 10 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], 
 								im.getWidth(), 14 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]).draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(), 
 								this.getLocY() - camera.getLocationY() + 10 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);
@@ -290,7 +306,8 @@ public class CinematicActor
 						this.forceFacingMove = false;
 						
 						if (haltingMove)
-						{						
+						{				
+							System.out.println("STOP HALTING");
 							haltingMove = false;
 							cinematic.decreaseMoves();
 						}
@@ -378,11 +395,15 @@ public class CinematicActor
 	public void fallOnFace()
 	{
 		specialEffectType = SE_FALL_ON_FACE;
+		specialEffectDuration = -1;
+		specialEffectUpdate = 500;
 	}
 	
 	public void layOnSide()
 	{
 		specialEffectType = SE_LAY_ON_SIDE;
+		specialEffectDuration = -1;
+		specialEffectUpdate = 500;
 	}
 	
 	public void flash(int speed, int duration)

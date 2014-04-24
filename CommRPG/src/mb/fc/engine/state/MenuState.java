@@ -116,8 +116,8 @@ public class MenuState extends LoadableGameState implements StringListener
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
-			throws SlickException 
-	{
+			throws SlickException {
+		
 		if (!init)
 		{
 			mapNameMenu = new UninitializedStringMenu(gc, "Map name to start:", this);

@@ -2,6 +2,7 @@ package mb.fc.game.sprite;
 
 import java.util.ArrayList;
 
+import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.Message;
 import mb.fc.engine.message.SpriteContextMessage;
 import mb.fc.engine.state.StateInfo;
@@ -199,9 +200,7 @@ public class CombatSprite extends AnimatedSprite
 		{			
 			if (movementType != CombatSprite.MOVEMENT_FLYING)
 			{
-				Image i = (spriteAnims.getImageAtIndex(as.imageIndex)).getScaledCopy((spriteAnims.getImageAtIndex(as.imageIndex)).getWidth(), (int) ((spriteAnims.getImageAtIndex(as.imageIndex)).getHeight() * .65));
-				i.drawSheared(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX() - 40, 
-						this.getLocY() - camera.getLocationY() - stateInfo.getResourceManager().getMap().getTileRenderHeight() + stateInfo.getTileHeight() - i.getHeight(), 40, 0, SHADOW_COLOR);
+				AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), this.getLocX(), this.getLocY(), cont.getDisplayPaddingX(), camera, true);
 			}				
 			
 			graphics.drawImage(spriteAnims.getImageAtIndex(as.imageIndex), this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(), 

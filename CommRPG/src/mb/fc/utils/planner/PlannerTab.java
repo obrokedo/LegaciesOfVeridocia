@@ -105,9 +105,21 @@ public class PlannerTab extends JPanel implements ActionListener, ListSelectionL
 			this.remove(currentPCScroll);			
 		}
 		
+		System.out.println("SET NEW VALUES");
+		
 		if (currentPC != null && currentPC.getDefLine() != null)
 		{
-			this.remove(currentPC.getDefLine());
+			System.out.println("REMOVE DEF LINE");
+			this.remove(currentPC.getDefLine().getDefiningPanel());
+		}
+		
+		for (int i = 0; i < this.getComponentCount(); i++)
+		{
+			if (this.getComponent(i) instanceof PlannerTimeBarViewer)
+			{
+				this.remove(i);
+				i--;
+			}
 		}
 		if (currentPC != null)
 		{
@@ -119,13 +131,20 @@ public class PlannerTab extends JPanel implements ActionListener, ListSelectionL
 		if (list.getSelectedIndex() != -1)
 		{
 			currentPC = listPC.get(list.getSelectedIndex());
-			selectedPC = list.getSelectedIndex();			
+			selectedPC = list.getSelectedIndex();		
+			System.out.println("NEW VALUES");
 			currentPC.setupUI();			
 			JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 			panel.add(currentPC);
 			currentPCScroll = new JScrollPane(panel);
+			currentPCScroll.getVerticalScrollBar().setUnitIncrement(75);
 			this.add(currentPC.getDefLine().getDefiningPanel(), BorderLayout.PAGE_START);
 			this.add(currentPCScroll, BorderLayout.CENTER);
+			if (currentPC.getDefLine().getPlDef().getTag().equalsIgnoreCase("Cinematic") && currentPC.getPlannerGraph() != null &&
+					PlannerFrame.SHOW_CIN)
+			{
+				this.add(currentPC.getPlannerGraph(), BorderLayout.PAGE_END);
+			}
 			this.revalidate();
 		}
 		else

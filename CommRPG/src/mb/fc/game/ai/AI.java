@@ -157,7 +157,7 @@ public abstract class AI
 			ms.addMoveActionsToLocation(targetPoint.x, targetPoint.y, currentSprite, turnActions);
 			turnActions.add(new WaitAction());			
 			turnActions.add(new TargetSpriteAction(potentialAttackSpriteAction.getBattleCommand(), target.getCombatSprite()));
-			turnActions.add(new WaitAction());
+			turnActions.add(new WaitAction(25));
 			turnActions.add(potentialAttackSpriteAction);
 			attacking = true;
 		}	

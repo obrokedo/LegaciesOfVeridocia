@@ -6,8 +6,6 @@ import mb.fc.game.hudmenu.ChatPanel;
 import mb.fc.game.hudmenu.MapMoveMenu;
 import mb.fc.game.hudmenu.WaitPanel;
 
-import org.newdawn.slick.Input;
-
 public class PanelManager extends Manager {
 
 	private MapMoveMenu mapMoveMenu;
@@ -27,31 +25,8 @@ public class PanelManager extends Manager {
 		stateInfo.addPanel(chatMenu);
 	}
 
-	public void update() {
-		int mouseX = stateInfo.getGc().getInput().getMouseX();
-		int mouseY = stateInfo.getGc().getInput().getMouseY();
-
-		boolean mouseDownLeft = stateInfo.getGc().getInput()
-				.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON);
-		boolean mouseDownRight = stateInfo.getGc().getInput()
-				.isMouseButtonDown(Input.MOUSE_RIGHT_BUTTON);
-
-		if (System.currentTimeMillis() < stateInfo.getInputDelay())
-			mouseDownLeft = mouseDownRight = false;
-
-		int mapX = stateInfo.getCamera().getLocationX() + mouseX
-				- stateInfo.getGc().getDisplayPaddingX();
-		int mapY = stateInfo.getCamera().getLocationY() + mouseY;
-
-		for (int i = 0; i < stateInfo.getMouseListenersSize(); i++) {
-			boolean consumeClick = stateInfo.getMouseListener(i).mouseUpdate(
-					mouseX, mouseY, mapX, mapY, mouseDownLeft, mouseDownRight,
-					stateInfo);
-			if (consumeClick) {
-				mouseDownLeft = mouseDownRight = false;
-				stateInfo.setInputDelay(System.currentTimeMillis() + 200);
-			}
-		}
+	public void update() 
+	{
 
 		chatMenu.update(1);
 	}

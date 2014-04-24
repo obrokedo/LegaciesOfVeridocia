@@ -148,8 +148,9 @@ public class CommRPG extends StateBasedGame   {
 			container.setTargetFrameRate(60);
 			container.start();
 		}
-		catch (SlickException ex)
+		catch (Throwable ex)
 		{
+			System.out.println("POON");
 			ex.printStackTrace();
 		}
 	}

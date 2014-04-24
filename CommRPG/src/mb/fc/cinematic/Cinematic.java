@@ -152,7 +152,7 @@ public class Cinematic
 		{
 			case HALTING_MOVE:
 				actors.get(ce.getParam(3)).moveToLocation((int) ce.getParam(0), 
-						(int) ce.getParam(1), (int) ce.getParam(2), true, -1);
+						(int) ce.getParam(1), (float) ce.getParam(2), true, -1);
 				haltedMovers++;
 				break;
 			case MOVE:
@@ -168,8 +168,10 @@ public class Cinematic
 				actors.get((String) ce.getParam(0)).stopLoopMove();
 				break;
 			case CAMERA_MOVE:
-				cameraMoveToX = (int) ce.getParam(0) * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
-				cameraMoveToY = (int) ce.getParam(1) * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
+				cameraMoveToX = (int) ce.getParam(0) * 
+					CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] - stateInfo.getCamera().getViewportWidth() / 2;
+				cameraMoveToY = (int) ce.getParam(1) * 
+						CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] - stateInfo.getCamera().getViewportHeight() / 2;
 				int distance = Math.abs(stateInfo.getCamera().getLocationX() - cameraMoveToX);
 				distance += Math.abs(stateInfo.getCamera().getLocationY() - cameraMoveToY);
 				System.out.println((int) ce.getParam(2));
@@ -289,10 +291,10 @@ public class Cinematic
 		}				
 	}
 	
-	public void render(Graphics graphics, Camera camera, FCGameContainer cont)
+	public void render(Graphics graphics, Camera camera, FCGameContainer cont, StateInfo stateInfo)
 	{
 		for (CinematicActor ca : actors.values())
-			ca.render(graphics, camera, cont);		
+			ca.render(graphics, camera, cont, stateInfo);		
 	}
 	
 	public void renderMenus(FCGameContainer cont, Graphics g)

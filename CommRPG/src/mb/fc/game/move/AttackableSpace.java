@@ -27,6 +27,7 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 	private int[][] area;
 	private int rangeOffset;
 	private int areaOffset;
+	private int targetSelectX, targetSelectY;
 	private int selectX, selectY;
 	private int selectedTarget = 0;
 	private int spriteTileX, spriteTileY;
@@ -92,10 +93,13 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 			}
 		}
 		
+		selectX = currentSprite.getLocX();
+		selectY = currentSprite.getLocY();
+		
 		if (targetsInRange.size() > 0)
 		{
-			selectX = targetsInRange.get(0).getLocX();
-			selectY = targetsInRange.get(0).getLocY();
+			targetSelectX = targetsInRange.get(0).getLocX();
+			targetSelectY = targetsInRange.get(0).getLocY();
 			this.setTargetSprite(targetsInRange.get(0), stateInfo);
 		}
 		else
@@ -123,7 +127,7 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 			}
 		}
 		
-		if (selectX != -1)
+		if (targetSelectX != -1)
 		{
 			graphics.setColor(Color.white);
 			
@@ -143,82 +147,21 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 	public boolean mouseUpdate(int frameMX, int frameMY, int mapMX, int mapMY,
 			boolean leftClicked, boolean rightClicked, StateInfo stateInfo) 
 	{		
-		if (rightClicked)
-		{
-			stateInfo.sendMessage(Message.MESSAGE_HIDE_ATTACKABLE);									
-			stateInfo.unregisterMouseListener(this);
-			return true;
-		}
-				
-		int tw = stateInfo.getTileWidth();
-		int th = stateInfo.getTileHeight();
-		int mx = mapMX / tw;
-		int my = mapMY / th;	
-		
-		int rx = spriteTileX - mx + rangeOffset;
-		int ry = spriteTileY - my + rangeOffset;
-		
-		if (0 <= rx && rx < range.length && 0 <= ry && ry < range.length && range[rx][ry] == 1 && 
-				(targetsHero || rx != (range.length - 1) / 2 || ry != (range.length - 1) / 2))
-		{
-			// This extremely confusing code just makes sure that the cursor is directly on a tile
-			// as long as the mouse is on that tile, another option would be to subtract the mod from the amount
-			selectX = mapMX / tw * tw;
-			selectY = mapMY / th * th;
-			
-			if (leftClicked)
-			{
-				if (stateInfo.getCombatSpriteAtTile(mx, my, targetsHero) != null)
-				{
-					ArrayList<CombatSprite> sprites = new ArrayList<CombatSprite>();
-					for (int i = 0; i < area.length; i++)
-					{						
-						for (int j = 0; j < area[0].length; j++)
-						{
-							if (area[i][j] == 1)
-							{
-								CombatSprite cs = stateInfo.getCombatSpriteAtTile(mx + i - areaOffset, my + j - areaOffset, targetsHero);
-								if (cs != null)
-									sprites.add(cs);
-							}
-						}
-					}		
-					
-					if (sprites.size() > 0)
-					{						
-						// If the current sprite is a target, move it to the end of the list
-						if (sprites.remove(currentSprite))
-						{
-							sprites.add(currentSprite);
-						}
-						stateInfo.sendMessage(new MultiSpriteContextMessage(Message.MESSAGE_TARGET_SPRITE, sprites));
-						stateInfo.unregisterMouseListener(this);
-						
-						System.out.println("TARGETS -> " + sprites.size());
-						
-						return true;
-					}
-				}
-			}
-		}
-		else
-			selectX = selectY = -1;
-		
 		return false;
 	}		
 	
 	public void setTargetSprite(CombatSprite targetSprite, StateInfo stateInfo)
 	{
-		selectX = targetSprite.getLocX();
-		selectY = targetSprite.getLocY();
+		targetSelectX = targetSprite.getLocX();
+		targetSelectY = targetSprite.getLocY();
 		
-		if (selectX > currentSprite.getLocX())
+		if (targetSelectX > currentSprite.getLocX())
 			currentSprite.setFacing(Direction.RIGHT);
-		else if (selectX < currentSprite.getLocX())
+		else if (targetSelectX < currentSprite.getLocX())
 			currentSprite.setFacing(Direction.LEFT);
-		else if (selectY > currentSprite.getLocY())
+		else if (targetSelectY > currentSprite.getLocY())
 			currentSprite.setFacing(Direction.DOWN);
-		else if (selectY < currentSprite.getLocY())
+		else if (targetSelectY < currentSprite.getLocY())
 			currentSprite.setFacing(Direction.UP);
 		
 		stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "targetselect", 1f, false));
@@ -228,10 +171,25 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 	public int getZOrder() {
 		return MouseListener.ORDER_ATTACKABLE_SPACE;
 	}
+	
+	public void update(StateInfo stateInfo)
+	{
+		if (selectX > targetSelectX)
+			selectX -= stateInfo.getTileWidth() / 4;
+		else if (selectX < targetSelectX)
+			selectX += stateInfo.getTileWidth() / 4;
+		
+		if (selectY > targetSelectY)
+			selectY -= stateInfo.getTileHeight() / 4;
+		else if (selectY < targetSelectY)
+			selectY += stateInfo.getTileHeight() / 4;
+	}
 
 	@Override
 	public boolean handleKeyboardInput(FCInput input, StateInfo stateInfo) 
 	{				
+		update(stateInfo);
+		
 		if (input.isKeyDown(KeyMapping.BUTTON_1))
 		{
 			

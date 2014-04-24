@@ -102,6 +102,9 @@ public class TurnManager extends Manager implements KeyboardListener
 			{
 				processTurnActions(game);
 			}
+			
+			if (displayAttackable && !currentSprite.isHero())
+				as.update(stateInfo);
 		}
 	}
 	
@@ -419,7 +422,7 @@ public class TurnManager extends Manager implements KeyboardListener
 		
 		as = new AttackableSpace(stateInfo, currentSprite, targetsHero, range, area);
 		
-		if (playerAttacking)
+		if (playerAttacking)			
 			stateInfo.addKeyboardListener(as);
 		
 		displayAttackable = true;

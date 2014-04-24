@@ -83,6 +83,7 @@ public class TownState extends LoadableGameState
 		stateInfo.getResourceManager().reinitialize();		
 		stateInfo.setInitialized(false);
 		stateInfo.getInput().clear();
+		
 		super.leave(container, game);
 	}
 
@@ -104,8 +105,8 @@ public class TownState extends LoadableGameState
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
-			throws SlickException 	
-	{						
+			throws SlickException 
+	{					
 		stateInfo.processMessages();
 		if (stateInfo.isInitialized())
 		{				
