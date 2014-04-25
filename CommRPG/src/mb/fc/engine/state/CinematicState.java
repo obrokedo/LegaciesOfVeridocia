@@ -68,7 +68,7 @@ public class CinematicState extends LoadableGameState
 			cinematic.render(g, stateInfo.getCamera(), stateInfo.getGc(), stateInfo);
 			tileMapRenderer.renderForeground(stateInfo.getCamera(), g, stateInfo.getGc());
 			cinematic.renderMenus(stateInfo.getGc(), g);
-			cinematic.renderPostEffects(g);
+			cinematic.renderPostEffects(stateInfo.getGc(), g);
 		}
 		
 	}

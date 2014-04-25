@@ -62,10 +62,19 @@ public class PlannerContainer extends JPanel implements ActionListener
 				{
 					ArrayList<CinematicEvent> initEvents = new ArrayList<CinematicEvent>();
 					if (plannerGraph == null)
-						plannerGraph = new PlannerTimeBarViewer(TextParser.parseCinematicEvents(tas.get(0), initEvents));
+					{
+						ArrayList<CinematicEvent> ces = TextParser.parseCinematicEvents(tas.get(0), initEvents);
+						ces.addAll(0, initEvents);
+						plannerGraph = new PlannerTimeBarViewer(ces);
+					}
 					else
-						plannerGraph.generateGraph(TextParser.parseCinematicEvents(tas.get(0), initEvents));
+					{
+						ArrayList<CinematicEvent> ces = TextParser.parseCinematicEvents(tas.get(0), initEvents);
+						ces.addAll(0, initEvents);
+							
+						plannerGraph.generateGraph(ces);
 					// this.add(ptbv);
+					}
 				}
 			}
 			catch (Exception ex) {ex.printStackTrace();}

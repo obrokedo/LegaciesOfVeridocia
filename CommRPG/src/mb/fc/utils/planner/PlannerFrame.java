@@ -397,10 +397,14 @@ public class PlannerFrame extends JFrame implements ActionListener,
 					}
 
 					plannerLine.getValues().add(value);
-				} else
-					plannerLine.getValues()
-							.add(Integer.parseInt(ta.getParams().get(
-									pvd.getTag())) + 1);
+				} 
+				else
+				{
+					if (ta.getParams().containsKey(pvd.getTag()))					
+						plannerLine.getValues().add(Integer.parseInt(ta.getParams().get(pvd.getTag())) + 1);
+					else
+						plannerLine.getValues().add(0);
+				}
 			} else if (pvd.getValueType() == PlannerValueDef.TYPE_MULTI_INT) {
 				String newVals = "";
 
@@ -876,6 +880,11 @@ public class PlannerFrame extends JFrame implements ActionListener,
 						PlannerValueDef.TYPE_STRING, "name", false,
 						"Actor Name",
 						"The name of the actor that should perform the fall-on-face special effect"));
+		definingValues
+		.add(new PlannerValueDef(PlannerValueDef.REFERS_DIRECTION,
+				PlannerValueDef.TYPE_INT, "dir", false,
+				"Head Direction",
+				"The direction the sprites head should be facing"));
 
 		allowableLines
 				.add(new PlannerLineDef(
@@ -891,12 +900,37 @@ public class PlannerFrame extends JFrame implements ActionListener,
 						PlannerValueDef.TYPE_STRING, "name", false,
 						"Actor Name",
 						"The name of the actor that should perform the lay-on-side special effect"));
+		definingValues
+		.add(new PlannerValueDef(PlannerValueDef.REFERS_DIRECTION,
+				PlannerValueDef.TYPE_INT, "dir", false,
+				"Head Direction",
+				"The direction the sprites head should be facing"));
 
 		allowableLines
 				.add(new PlannerLineDef(
 						"layonside",
 						"Actor Lay on Side",
 						"Causes the specified actor to lay on their side. This effect will continue until a STOP SPECIAL EFFECT is issued for the actor. This is a 'special effect'. Only one special effect can be active on a given actor at any time. This will stop any current animations.",
+						definingValues));
+		
+		// Lay on Back
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues
+				.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+						PlannerValueDef.TYPE_STRING, "name", false,
+						"Actor Name",
+						"The name of the actor that should perform the lay-on-back special effect"));
+		definingValues
+		.add(new PlannerValueDef(PlannerValueDef.REFERS_DIRECTION,
+				PlannerValueDef.TYPE_INT, "dir", false,
+				"Head Direction",
+				"The direction the sprites head should be facing"));
+
+		allowableLines
+				.add(new PlannerLineDef(
+						"layonback",
+						"Actor Lay on Back",
+						"Causes the specified actor to lay on their back. This effect will continue until a STOP SPECIAL EFFECT is issued for the actor. This is a 'special effect'. Only one special effect can be active on a given actor at any time. This will stop any current animations.",
 						definingValues));
 
 		// Flash
@@ -1098,6 +1132,33 @@ public class PlannerFrame extends JFrame implements ActionListener,
 
 		allowableLines.add(new PlannerLineDef("playsound", "Play Sound",
 				"Plays sound at the specified volume.", definingValues));
+		
+		// Fade From Black
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_INT, "time", false, "Fade Time",
+				"The amount of time that the screen should be faded over"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_BOOLEAN, "halting", false, "Wait to Finish",
+				"If true, this will be a halting action"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_BOOLEAN, "init", false, "Intialize before cinematic",
+				"If true, this action will be intialized before the cinematic starts. If you intend to fade in to the scene then you should check this"));
+
+		allowableLines.add(new PlannerLineDef("fadein", "Fade in from black",
+				"Fades the screen in from black.", definingValues));
+		
+		// Fade To Black
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_INT, "time", false, "Fade Time",
+				"The amount of time that the screen should be faded over"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_BOOLEAN, "halting", false, "Wait to Finish",
+				"If true, this will be a halting action"));
+
+		allowableLines.add(new PlannerLineDef("fadeout", "Fade to black",
+				"Fades the screen in to black.", definingValues));
 
 		cinematicContainer = new PlannerContainerDef(definingLine,
 				allowableContainers, allowableLines, listOfLists,

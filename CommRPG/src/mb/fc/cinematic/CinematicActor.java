@@ -1,5 +1,7 @@
 package mb.fc.cinematic;
 
+import java.util.ArrayList;
+
 import mb.fc.engine.CommRPG;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.Camera;
@@ -24,10 +26,11 @@ public class CinematicActor
 	public static final int SE_GROW = 2;
 	public static final int SE_QUIVER = 3;
 	public static final int SE_FALL_ON_FACE = 4;
-	public static final int SE_LAY_ON_SIDE = 5;
+	public static final int SE_LAY_ON_SIDE = 5;	
 	public static final int SE_FLASH = 6;
 	public static final int SE_NOD = 7;
 	public static final int SE_HEAD_SHAKE = 8;
+	public static final int SE_LAY_ON_BACK = 9;
 	
 	private SpriteAnims spriteAnims;
 	private Animation currentAnim;
@@ -65,6 +68,7 @@ public class CinematicActor
 	private int specialEffectDelta;
 	private int specialEffectDuration;
 	private float specialEffectCounter;				
+	private Direction specialEffectDirection;
 	
 	private Color flashColor = new Color(255, 255, 255);
 	
@@ -196,24 +200,46 @@ public class CinematicActor
 			renderFaceDown(graphics, camera, cont);
 		else if (specialEffectType == SE_LAY_ON_SIDE)
 			renderOnSide(graphics, camera, cont);
+		else if (specialEffectType == SE_LAY_ON_BACK)
+			renderOnBack(graphics, camera, cont);
 	}
 
 	private void renderFaceDown(Graphics graphics, Camera camera, FCGameContainer cont)
 	{
-		for (AnimSprite as : spriteAnims.getAnimation("UnUp").frames.get(0).sprites)
-		{
-			Image im = spriteAnims.getImageAtIndex(as.imageIndex).getFlippedCopy(false, true);
-			graphics.drawImage(im, locX - camera.getLocationX() + cont.getDisplayPaddingX(), 
-					locY - camera.getLocationY());
-		}
+		renderOnDirection(spriteAnims.getAnimation("UnUp").frames.get(0).sprites, graphics, camera, cont);
+	}
+	
+	private void renderOnBack(Graphics graphics, Camera camera, FCGameContainer cont)
+	{
+		renderOnDirection(spriteAnims.getAnimation("UnDown").frames.get(0).sprites, graphics, camera, cont);		
 	}
 	
 	private void renderOnSide(Graphics graphics, Camera camera, FCGameContainer cont)
 	{
-		for (AnimSprite as : spriteAnims.getAnimation("UnDown").frames.get(0).sprites)
+		renderOnDirection(spriteAnims.getAnimation("UnLeft").frames.get(0).sprites, graphics, camera, cont);
+	}
+	
+	private void renderOnDirection(ArrayList<AnimSprite> sprites, Graphics graphics, Camera camera, FCGameContainer cont)
+	{
+		for (AnimSprite as : sprites)
 		{
 			Image im = spriteAnims.getImageAtIndex(as.imageIndex).copy();
-			im.rotate(90f);
+			switch (specialEffectDirection)
+			{
+				case UP:
+					break;
+				case RIGHT:
+					im.rotate(90f);
+					break;
+				case DOWN:
+					im.rotate(180f);
+					break;
+				case LEFT:
+					im.rotate(270f);
+					break;
+				
+			}
+			
 			graphics.drawImage(im, locX - camera.getLocationX() + cont.getDisplayPaddingX(), 
 					locY - camera.getLocationY());
 		}
@@ -392,18 +418,28 @@ public class CinematicActor
 		specialEffectCounter = 0;
 	}
 	
-	public void fallOnFace()
+	public void fallOnFace(Direction dir)
 	{
 		specialEffectType = SE_FALL_ON_FACE;
 		specialEffectDuration = -1;
 		specialEffectUpdate = 500;
+		specialEffectDirection = dir;
 	}
 	
-	public void layOnSide()
+	public void layOnBack(Direction dir)
+	{
+		specialEffectType = SE_LAY_ON_BACK;
+		specialEffectDuration = -1;
+		specialEffectUpdate = 500;
+		specialEffectDirection = dir;
+	}
+	
+	public void layOnSide(Direction dir)
 	{
 		specialEffectType = SE_LAY_ON_SIDE;
 		specialEffectDuration = -1;
 		specialEffectUpdate = 500;
+		specialEffectDirection = dir;
 	}
 	
 	public void flash(int speed, int duration)

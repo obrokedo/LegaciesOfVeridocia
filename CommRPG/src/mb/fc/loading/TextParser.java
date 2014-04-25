@@ -197,7 +197,9 @@ public class TextParser
 		for (TagArea childArea : tagArea.getChildren())
 		{					
 			// Add the event
-			events.add(parseCinematicEvent(childArea, initEvents));
+			CinematicEvent ce = parseCinematicEvent(childArea, initEvents);
+			if (ce != null)
+				events.add(ce);
 		}
 		
 		return events;
@@ -214,7 +216,10 @@ public class TextParser
 					area.getParams().get("name"), area.getParams().get("anim"), 
 					area.getParams().get("startanim"), Boolean.parseBoolean(area.getParams().get("visible"))); 
 			if (Boolean.parseBoolean(area.getParams().get("init")))
-				initEvents.add(ce);				
+			{
+				initEvents.add(ce);
+				return null;
+			}
 			return ce;
 		}
 		else if (type.equalsIgnoreCase("camerafollow"))
@@ -267,9 +272,11 @@ public class TextParser
 		else if (type.equalsIgnoreCase("quiver"))
 			return new CinematicEvent(CinematicEventType.QUIVER, area.getParams().get("name"));
 		else if (type.equalsIgnoreCase("fallonface"))
-			return new CinematicEvent(CinematicEventType.FALL_ON_FACE, area.getParams().get("name"));
+			return new CinematicEvent(CinematicEventType.FALL_ON_FACE, area.getParams().get("name"), Integer.parseInt(area.getParams().get("dir")));
 		else if (type.equalsIgnoreCase("layonside"))
-			return new CinematicEvent(CinematicEventType.LAY_ON_SIDE, area.getParams().get("name"));
+			return new CinematicEvent(CinematicEventType.LAY_ON_SIDE, area.getParams().get("name"), Integer.parseInt(area.getParams().get("dir")));
+		else if (type.equalsIgnoreCase("layonback"))
+			return new CinematicEvent(CinematicEventType.LAY_ON_BACK, area.getParams().get("name"), Integer.parseInt(area.getParams().get("dir")));
 		else if (type.equalsIgnoreCase("flash"))
 			return new CinematicEvent(CinematicEventType.FLASH, area.getParams().get("name"), 
 					Integer.parseInt(area.getParams().get("speed")), Integer.parseInt(area.getParams().get("time")));
@@ -294,6 +301,18 @@ public class TextParser
 			return new CinematicEvent(CinematicEventType.FADE_MUSIC, Integer.parseInt(area.getParams().get("duration")));
 		else if (type.equalsIgnoreCase("playsound"))
 			return new CinematicEvent(CinematicEventType.PLAY_SOUND, area.getParams().get("sound"), Integer.parseInt(area.getParams().get("volume")));
+		else if (type.equalsIgnoreCase("fadein"))	
+		{
+			CinematicEvent ce = new CinematicEvent(CinematicEventType.FADE_FROM_BLACK, Integer.parseInt(area.getParams().get("time")), Boolean.parseBoolean(area.getParams().get("halting"))); 
+			if (Boolean.parseBoolean(area.getParams().get("init")))
+			{
+				initEvents.add(ce);
+				return null;
+			}
+			return ce;
+		}
+		else if (type.equalsIgnoreCase("fadeout"))
+			return new CinematicEvent(CinematicEventType.FADE_TO_BLACK, Integer.parseInt(area.getParams().get("time")), Boolean.parseBoolean(area.getParams().get("halting")));
 		return null;
 	}
 }

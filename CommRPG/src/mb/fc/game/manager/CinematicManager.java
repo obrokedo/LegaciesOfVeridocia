@@ -41,7 +41,7 @@ public class CinematicManager extends Manager
 	public void renderPostEffects(Graphics g)
 	{
 		if (cinematic != null)
-			cinematic.renderPostEffects(g);
+			cinematic.renderPostEffects(stateInfo.getGc(), g);
 	}
 
 	@Override

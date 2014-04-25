@@ -35,6 +35,7 @@ public class CinematicEvent
 		QUIVER,
 		FALL_ON_FACE,
 		LAY_ON_SIDE,
+		LAY_ON_BACK,
 		STOP_SE,
 		VISIBLE,
 		SPEECH,
@@ -49,7 +50,9 @@ public class CinematicEvent
 		PAUSE_MUSIC,
 		RESUME_MUSIC,
 		FADE_MUSIC,
-		PLAY_SOUND
+		PLAY_SOUND,
+		FADE_TO_BLACK,
+		FADE_FROM_BLACK
 	}
 	
 	private CinematicEventType type;

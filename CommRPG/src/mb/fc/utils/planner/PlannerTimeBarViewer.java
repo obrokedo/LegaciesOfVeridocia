@@ -185,6 +185,15 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 					ab.indefiniteIntervals.put("layonside", zi);
 					ab.dt.addInterval(zi);
 					break;
+				case LAY_ON_BACK:
+					ab = rowsByName.get(ce.getParam(0));
+					
+					zi = new ZIntervalImpl("Lay on Back");
+					zi.setBegin(new JaretDate(currentTime));	
+					zi.setEnd(new JaretDate(currentTime + 1));
+					ab.indefiniteIntervals.put("layonback", zi);
+					ab.dt.addInterval(zi);
+					break;
 				case FALL_ON_FACE:
 					ab = rowsByName.get(ce.getParam(0));
 					
@@ -231,6 +240,7 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 					stopEffects(currentTime, ab, "flash");
 					stopEffects(currentTime, ab, "fallonface");
 					stopEffects(currentTime, ab, "layonside");
+					stopEffects(currentTime, ab, "layonback");
 					break;
 				
 				case VISIBLE:
@@ -414,6 +424,26 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 					zi.setEnd(new JaretDate(currentTime + 100));
 					soundRow.addInterval(zi);					
 					break;	
+				case FADE_FROM_BLACK:
+					zi = new ZIntervalImpl("Fade from black");
+					zi.setBegin(new JaretDate(currentTime));					
+					zi.setEnd(new JaretDate(currentTime + (int) ce.getParam(0)));
+					
+					if ((boolean) ce.getParam(1))
+						currentTime += (int) ce.getParam(0);
+					
+					systemRow.addInterval(zi);
+					break;
+				case FADE_TO_BLACK:
+					zi = new ZIntervalImpl("Fade to black");
+					zi.setBegin(new JaretDate(currentTime));					
+					zi.setEnd(new JaretDate(currentTime + (int) ce.getParam(0)));
+					
+					if ((boolean) ce.getParam(1))
+						currentTime += (int) ce.getParam(0);
+					
+					systemRow.addInterval(zi);
+					break;
 			}	
 		}
 		
