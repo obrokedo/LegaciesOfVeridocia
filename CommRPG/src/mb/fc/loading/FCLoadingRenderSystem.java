@@ -18,6 +18,7 @@ public class FCLoadingRenderSystem extends EntityProcessingSystem
 	private GameContainer gc;
 	@Mapper ComponentMapper<LoadingComp> loadingMapper;
 
+	@SuppressWarnings("unchecked")
 	public FCLoadingRenderSystem(GameContainer container) {
 		super(Aspect.getAspectForAll(LoadingComp.class));
 		graphics = container.getGraphics();

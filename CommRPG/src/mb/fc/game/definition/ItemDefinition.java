@@ -19,7 +19,6 @@ public class ItemDefinition
 	{
 		int attack = 0, defense = 0, speed = 0, style = 0, type=0, range = 0;
 		boolean equippable = false;
-		boolean singleUse = false;
 		ItemUse itemUse = null;
 		for (TagArea childTagArea : tagArea.getChildren())
 		{

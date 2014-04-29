@@ -14,18 +14,17 @@ import mb.fc.game.listener.MouseListener;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.ui.FCGameContainer;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 public class InitiativeManager extends Manager
 {	
 	private InitiativeMenu initMenu;
-	private static final Color TRANS = new Color(255, 255, 255, 180);
+	// private static final Color TRANS = new Color(255, 255, 255, 180);
 	
 	private class InitiativeMenu extends Panel implements MouseListener
 	{		
 		private boolean displayInit = true;	
-		ArrayList<CombatSprite> initOrder;
+		// ArrayList<CombatSprite> initOrder;
 		
 		public InitiativeMenu(StateInfo stateInfo) {
 			super(Panel.PANEL_INITIATIVE);
@@ -154,9 +153,11 @@ public class InitiativeManager extends Manager
 				System.out.println("NEXT TURN");
 				updateOnTurn();
 				break;
+			/*
 			case Message.MESSAGE_SET_INIT_ORDER:
 				initMenu.initOrder = ((MultiSpriteContextMessage) message).getSprites();
 				break;
+				*/
 			case Message.MESSAGE_INTIIALIZE:
 				initializeAfterSprites();
 				break;

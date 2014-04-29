@@ -8,8 +8,6 @@ import mb.fc.game.item.EquippableItem;
 import mb.fc.game.item.Item;
 import mb.fc.game.resource.ItemResource;
 import mb.fc.game.sprite.CombatSprite;
-import mb.fc.game.sprite.HeroProgression;
-import mb.fc.game.sprite.Progression;
 import mb.fc.utils.XMLParser.TagArea;
 
 public class EnemyDefinition 

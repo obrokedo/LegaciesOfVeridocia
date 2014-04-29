@@ -11,7 +11,6 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Set;
 
@@ -51,30 +50,6 @@ public class SpriteAnims implements Serializable
 					(int) r.getHeight());
 			subImage.setFilter(Image.FILTER_NEAREST);
 			images.add(subImage.getScaledCopy(magnify));
-		}
-	}
-	
-	private HashSet<Integer> getUnmagnifiedIndexes()
-	{
-		HashSet<Integer> unmagnified = new HashSet<Integer>();
-		addUnmagnifiedForAnimation(animations.get("UnLeft"), unmagnified);
-		addUnmagnifiedForAnimation(animations.get("UnRight"), unmagnified);
-		addUnmagnifiedForAnimation(animations.get("UnDown"), unmagnified);
-		addUnmagnifiedForAnimation(animations.get("UnUp"), unmagnified);
-		return unmagnified;
-	}
-	
-	private void addUnmagnifiedForAnimation(Animation a, HashSet<Integer> unmagnified)
-	{
-		if (a == null)
-			return;
-		
-		for (AnimFrame af : a.frames)
-		{
-			for (AnimSprite as : af.sprites)
-			{
-				unmagnified.add(as.imageIndex);
-			}
 		}
 	}
 	

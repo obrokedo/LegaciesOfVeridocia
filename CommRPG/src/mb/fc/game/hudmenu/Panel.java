@@ -66,6 +66,7 @@ public abstract class Panel
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	public static void intialize(FCResourceManager frm)
 	{
 		MENU_BORDER = frm.getSpriteSheets().get("menuborder");

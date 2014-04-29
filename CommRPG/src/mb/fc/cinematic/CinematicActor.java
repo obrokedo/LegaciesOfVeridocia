@@ -31,6 +31,7 @@ public class CinematicActor
 	public static final int SE_NOD = 7;
 	public static final int SE_HEAD_SHAKE = 8;
 	public static final int SE_LAY_ON_BACK = 9;
+	public static final int SE_TREMBLE = 10;
 	
 	private SpriteAnims spriteAnims;
 	private Animation currentAnim;
@@ -56,6 +57,8 @@ public class CinematicActor
 	private float startLoopX;
 	private float startLoopY;
 	private boolean forceFacingMove = false;
+	private boolean moveHorFirst;
+	private boolean moveDiag;
 	
 	// Rotate Params
 	private int spinSpeed;
@@ -193,6 +196,26 @@ public class CinematicActor
 						}
 						
 						break;
+					case SE_TREMBLE:
+						int trembleVal = 4 - (int) Math.abs(specialEffectCounter - 4);
+						if (trembleVal > 0)
+						{
+							im = spriteAnims.getImageAtIndex(as.imageIndex).getScaledCopy(
+									spriteAnims.getImageAtIndex(as.imageIndex).getWidth() - trembleVal * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], 
+									spriteAnims.getImageAtIndex(as.imageIndex).getHeight() - trembleVal * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);							
+						}
+						else
+						{
+							im = spriteAnims.getImageAtIndex(as.imageIndex);
+							trembleVal = 0;
+						}
+						
+						AnimatedSprite.drawShadow(im, (int) (this.getLocX() + (trembleVal * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]) / 2), 
+								(int) this.getLocY() + trembleVal * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], cont.getDisplayPaddingX(), camera, false);
+											
+						graphics.drawImage(im, locX - camera.getLocationX() + cont.getDisplayPaddingX() + (trembleVal * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]) / 2, 
+								locY - camera.getLocationY() + trembleVal * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);
+						break;
 				}
 			}
 		}
@@ -243,6 +266,34 @@ public class CinematicActor
 			graphics.drawImage(im, locX - camera.getLocationX() + cont.getDisplayPaddingX(), 
 					locY - camera.getLocationY());
 		}
+	}
+	
+	private boolean moveHorz()
+	{
+		if (locX != moveToLocX)
+		{
+			if (locX > moveToLocX)
+				setLocX(getLocX() - Math.min(moveSpeed, locX - moveToLocX));
+			else
+				setLocX(getLocX() + Math.min(moveSpeed, moveToLocX - locX));
+			return true;
+		}
+		else
+			return false;
+	}
+	
+	private boolean moveVert()
+	{
+		if (locY != moveToLocY)
+		{
+			if (locY > moveToLocY)
+				setLocY(getLocY() - Math.min(moveSpeed, locY - moveToLocY));
+			else
+				setLocY(getLocY() + Math.min(moveSpeed, moveToLocY - locY));
+			return true;
+		}
+		else
+			return false;
 	}
 	
 	public void update(int delta, Cinematic cinematic) 
@@ -309,22 +360,29 @@ public class CinematicActor
 			while (movingDelta > MOVE_UPDATE)
 			{
 				movingDelta -= MOVE_UPDATE;
-			
-				if (locX != moveToLocX)
+				boolean moved = false;
+				
+				if (moveDiag)
 				{
-					if (locX > moveToLocX)
-						setLocX(getLocX() - Math.min(moveSpeed, locX - moveToLocX));
-					else
-						setLocX(getLocX() + Math.min(moveSpeed, moveToLocX - locX));
-				}
-				else if (locY != moveToLocY)
-				{
-					if (locY > moveToLocY)
-						setLocY(getLocY() - Math.min(moveSpeed, locY - moveToLocY));
-					else
-						setLocY(getLocY() + Math.min(moveSpeed, moveToLocY - locY));
+					if (moveVert())
+						moved = true;
+					if (moveHorz())
+						moved = true;
 				}
 				else
+				{
+					if (moveHorFirst)
+						moved = moveHorz();
+					
+					if (!moved)
+						moved = moveVert();
+					
+					if (!moveHorFirst && !moved)
+						moved = moveHorz();
+				}
+						
+				
+				if (!moved)
 				{
 					if (!loopMoving)
 					{
@@ -375,6 +433,9 @@ public class CinematicActor
 					case SE_QUIVER:
 						specialEffectCounter = (specialEffectCounter + 1) % 4;
 						break;
+					case SE_TREMBLE:
+						specialEffectCounter = (specialEffectCounter + 1) % 19;
+						break;
 					case SE_FLASH:
 						if (specialEffectDuration == INDEFINITE_TIME || specialEffectDuration > 0)
 						{														
@@ -390,10 +451,14 @@ public class CinematicActor
 							specialEffectType = SE_NONE;
 					case SE_NOD:
 						specialEffectType = SE_NONE;
+						animUpdate = 500;
 						break;
 					case SE_HEAD_SHAKE:
 						if (specialEffectCounter + 1 == 10)
+						{
 							specialEffectType = SE_NONE;
+							animUpdate = 500;
+						}
 						else
 							specialEffectCounter++;
 						break;
@@ -402,12 +467,13 @@ public class CinematicActor
 		}
 	}
 	
-	public void shakeHead()
+	public void shakeHead(int speed)
 	{
 		specialEffectType = SE_HEAD_SHAKE;
 		specialEffectDelta = 0;
-		specialEffectUpdate = 75;
+		specialEffectUpdate = speed / 10;
 		specialEffectCounter = 0;
+		animUpdate = Long.MAX_VALUE;
 	}
 	
 	public void nodHead()
@@ -416,6 +482,7 @@ public class CinematicActor
 		specialEffectDelta = 0;
 		specialEffectUpdate = 500;
 		specialEffectCounter = 0;
+		animUpdate = Long.MAX_VALUE;
 	}
 	
 	public void fallOnFace(Direction dir)
@@ -424,6 +491,7 @@ public class CinematicActor
 		specialEffectDuration = -1;
 		specialEffectUpdate = 500;
 		specialEffectDirection = dir;
+		animUpdate = Long.MAX_VALUE;
 	}
 	
 	public void layOnBack(Direction dir)
@@ -432,6 +500,7 @@ public class CinematicActor
 		specialEffectDuration = -1;
 		specialEffectUpdate = 500;
 		specialEffectDirection = dir;
+		animUpdate = Long.MAX_VALUE;
 	}
 	
 	public void layOnSide(Direction dir)
@@ -440,6 +509,7 @@ public class CinematicActor
 		specialEffectDuration = -1;
 		specialEffectUpdate = 500;
 		specialEffectDirection = dir;
+		animUpdate = Long.MAX_VALUE;
 	}
 	
 	public void flash(int speed, int duration)
@@ -451,7 +521,8 @@ public class CinematicActor
 		specialEffectDuration = duration;
 		specialEffectDelta = 0;
 		specialEffectUpdate = speed / 102;
-		specialEffectCounter = 0;		
+		specialEffectCounter = 0;	
+		animUpdate = Long.MAX_VALUE;
 	}
 	
 	public void quiver()
@@ -461,6 +532,17 @@ public class CinematicActor
 		specialEffectDelta = 0;
 		specialEffectUpdate = 25;
 		specialEffectCounter = 0;
+		animUpdate = Long.MAX_VALUE;
+	}
+	
+	public void tremble()
+	{
+		specialEffectType = SE_TREMBLE;
+		specialEffectDuration = INDEFINITE_TIME;
+		specialEffectDelta = 0;
+		specialEffectUpdate = 13;
+		specialEffectCounter = 0;
+		animUpdate = Long.MAX_VALUE;
 	}
 	
 	public void shrink(int duration)
@@ -470,6 +552,7 @@ public class CinematicActor
 		specialEffectDelta = 0;
 		specialEffectUpdate = duration / 100;
 		specialEffectCounter = 1f;
+		animUpdate = Long.MAX_VALUE;
 	}
 	
 	public void grow(int duration)
@@ -479,6 +562,7 @@ public class CinematicActor
 		specialEffectDelta = 0;
 		specialEffectUpdate = duration / 100;
 		specialEffectCounter = 0f;
+		animUpdate = Long.MAX_VALUE;
 	}
 	
 	public void stopAnimation()
@@ -489,6 +573,7 @@ public class CinematicActor
 	public void stopSpecialEffect()
 	{
 		specialEffectType = SE_NONE;
+		animUpdate = 500;
 	}
 	
 	private void setLocX(float locX) {
@@ -572,15 +657,18 @@ public class CinematicActor
 		this.animUpdate = time / currentAnim.frames.size();		
 	}
 	
-	public void moveToLocation(int moveToLocX, int moveToLocY, float speed, boolean haltingMove, int direction)
+	public void moveToLocation(int moveToLocX, int moveToLocY, float speed, boolean haltingMove, int direction, boolean moveHorFirst, boolean moveDiag)
 	{
 		this.loopMoving = false;
 		this.moveToLocX = moveToLocX * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
 		this.moveToLocY = moveToLocY * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
 		this.haltingMove = haltingMove;
 		this.moveSpeed = speed * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
+		this.movingDelta = 0;
 		this.animDelta = 0;
 		this.animUpdate = (long) (469.875 / speed);
+		this.moveHorFirst = moveHorFirst;
+		this.moveDiag = moveDiag;
 		if (direction != -1)
 		{
 			this.setFacing(direction);
@@ -595,7 +683,7 @@ public class CinematicActor
 	{
 		this.startLoopX = this.locX;
 		this.startLoopY = this.locY;
-		moveToLocation(moveToLocX, moveToLocY, speed, haltingMove, -1);		
+		moveToLocation(moveToLocX, moveToLocY, speed, haltingMove, -1, false, false);		
 		this.loopMoving = true;
 	}
 	
@@ -622,5 +710,9 @@ public class CinematicActor
 
 	public void setVisible(boolean visible) {
 		this.visible = visible;
+	}
+
+	public AnimatedSprite getSprite() {
+		return sprite;
 	}
 }

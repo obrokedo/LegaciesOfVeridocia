@@ -2,7 +2,6 @@ package mb.fc.utils.planner;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
@@ -15,6 +14,8 @@ import mb.fc.utils.XMLParser.TagArea;
 
 public class PlannerContainer extends JPanel implements ActionListener
 {
+	private static final long serialVersionUID = 1L;
+	
 	private PlannerContainerDef pcdef;
 	private ArrayList<PlannerContainer> containers;
 	private ArrayList<PlannerLine> lines;
@@ -49,7 +50,7 @@ public class PlannerContainer extends JPanel implements ActionListener
 		
 		this.add(listPanel);
 		
-		if (pcdef.getDefiningLine().getTag().equalsIgnoreCase("Cinematic"))
+		if (PlannerFrame.SHOW_CIN && pcdef.getDefiningLine().getTag().equalsIgnoreCase("Cinematic"))
 		{
 			try
 			{

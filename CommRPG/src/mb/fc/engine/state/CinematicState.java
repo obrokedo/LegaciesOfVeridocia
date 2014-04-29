@@ -2,9 +2,7 @@ package mb.fc.engine.state;
 
 import mb.fc.cinematic.Cinematic;
 import mb.fc.engine.CommRPG;
-import mb.fc.game.Camera;
 import mb.fc.game.hudmenu.Panel;
-import mb.fc.game.input.FCInput;
 import mb.fc.game.manager.SoundManager;
 import mb.fc.loading.FCResourceManager;
 import mb.fc.renderer.TileMapRenderer;

@@ -4,7 +4,6 @@ import mb.fc.engine.state.StateInfo;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.input.FCInput;
 import mb.fc.game.listener.YesNoListener;
-import mb.fc.game.menu.Menu.MenuUpdate;
 import mb.fc.game.ui.Button;
 import mb.fc.game.ui.FCGameContainer;
 
@@ -18,7 +17,7 @@ public class YesNoMenu extends Menu
 	private String text;
 	private Button yesButton;
 	private Button noButton;
-	private YesNoListener listener;
+	// private YesNoListener listener;
 
 	public YesNoMenu(GameContainer gc, String text, YesNoListener listener) {
 		super(Panel.PANEL_YES_NO);
@@ -27,7 +26,7 @@ public class YesNoMenu extends Menu
 		x = (gc.getWidth() - width) / 2;		
 		yesButton = new Button(width / 3 - 20 + x, 355, 40, 20, "Yes");
 		noButton = new Button(width / 3 * 2- 20 + x, 355, 40, 20, "No");
-		this.listener = listener;
+		// this.listener = listener;
 	}
 
 	@Override

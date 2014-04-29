@@ -22,6 +22,8 @@ import javax.swing.text.NumberFormatter;
 
 public class PlannerLine extends JPanel
 {
+	private static final long serialVersionUID = 1L;
+	
 	private PlannerLineDef plDef;
 	private ArrayList<Component> components;
 	private ArrayList<Object> values;
@@ -64,6 +66,7 @@ public class PlannerLine extends JPanel
 			
 			if (definingPanel == null)
 			{
+				System.out.println("CREATE NEW DEFIINING PANEL");
 				Vector<String> allowableStrings = new Vector<String>();
 				for (PlannerLineDef pld : allowableValues)
 					allowableStrings.add(pld.getName());
@@ -140,7 +143,7 @@ public class PlannerLine extends JPanel
 						items.addAll(listOfLists.get(pv.getRefersTo() - 1));
 						c = new JComboBox<String>(items);
 						if (values.size() > 0)
-							((JComboBox) c).setSelectedIndex(((int) values.get(i)));
+							((JComboBox<?>) c).setSelectedIndex(((int) values.get(i)));
 					}
 					break;
 				case PlannerValueDef.TYPE_MULTI_INT:
@@ -191,7 +194,7 @@ public class PlannerLine extends JPanel
 						Vector<String> items = new Vector<String>(listOfLists.get(pv.getRefersTo() - 1));
 						c = new JComboBox<String>(items);
 						if (values.size() > 0)
-							((JComboBox) c).setSelectedItem(values.get(i));
+							((JComboBox<?>) c).setSelectedItem(values.get(i));
 					}
 					break;
 			}			
@@ -241,9 +244,9 @@ public class PlannerLine extends JPanel
 						else
 						{							
 							if (noValues)
-								values.add(((JComboBox) components.get(i)).getSelectedItem());
+								values.add(((JComboBox<?>) components.get(i)).getSelectedItem());
 							else
-								values.set(i, ((JComboBox) components.get(i)).getSelectedItem());		
+								values.set(i, ((JComboBox<?>) components.get(i)).getSelectedItem());		
 						}
 						break;
 					case PlannerValueDef.TYPE_INT:
@@ -257,9 +260,9 @@ public class PlannerLine extends JPanel
 						else
 						{
 							if (noValues)
-								values.add(((JComboBox) components.get(i)).getSelectedIndex());
+								values.add(((JComboBox<?>) components.get(i)).getSelectedIndex());
 							else
-								values.set(i, ((JComboBox) components.get(i)).getSelectedIndex());							
+								values.set(i, ((JComboBox<?>) components.get(i)).getSelectedIndex());							
 						}
 						break;
 					case PlannerValueDef.TYPE_MULTI_INT:
@@ -267,7 +270,7 @@ public class PlannerLine extends JPanel
 						MultiIntPanel mip = (MultiIntPanel) components.get(i);
 						for (int j = 2; j < mip.getComponentCount(); j++)
 						{
-							multi = multi + ((JComboBox)mip.getComponent(j)).getSelectedIndex();
+							multi = multi + ((JComboBox<?>)mip.getComponent(j)).getSelectedIndex();
 							if (j + 1 != mip.getComponentCount())
 								multi = multi + ",";
 						}

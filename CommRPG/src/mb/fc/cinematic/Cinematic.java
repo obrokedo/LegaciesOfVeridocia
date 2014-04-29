@@ -1,6 +1,7 @@
 package mb.fc.cinematic;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Hashtable;
 
 import mb.fc.cinematic.event.CinematicEvent;
@@ -25,9 +26,11 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
 public class Cinematic {
+	private static final CinematicActorComparator CIN_ACT_COMP = new CinematicActorComparator();
 	private ArrayList<CinematicEvent> initializeEvents;
 	private ArrayList<CinematicEvent> cinematicEvents;
 	private Hashtable<String, CinematicActor> actors;
+	private ArrayList<CinematicActor> sortedActors;
 	private SpeechMenu speechMenu;
 	private int haltedMovers;
 	private int haltedAnims;
@@ -58,6 +61,7 @@ public class Cinematic {
 		this.initializeEvents = initializeEvents;
 		this.cinematicEvents = cinematicEvents;
 		actors = new Hashtable<String, CinematicActor>();
+		this.sortedActors = new ArrayList<CinematicActor>();
 		this.haltedMovers = 0;
 		this.haltedAnims = 0;
 		this.waitTime = 0;
@@ -74,9 +78,7 @@ public class Cinematic {
 
 	public boolean update(int delta, Camera camera, FCInput input,
 			GameContainer gc, Map map, StateInfo stateInfo) {
-		for (CinematicActor ca : actors.values())
-			ca.update(delta, this);
-
+				
 		if (fadingColor != null)
 		{
 			fadeDelta += delta;
@@ -133,11 +135,18 @@ public class Cinematic {
 				}
 			}
 		}
-
-		if (cameraFollow != null) {
-			camera.centerOnPoint(cameraFollow.getLocX(),
-					cameraFollow.getLocY(), map);
+		
+		for (CinematicActor ca : sortedActors)
+		{
+			ca.update(delta, this);
+			if (ca == cameraFollow)
+			{
+				camera.centerOnPoint(cameraFollow.getLocX(),
+						cameraFollow.getLocY(), map);
+			}
 		}
+		
+		Collections.sort(sortedActors, CIN_ACT_COMP);
 
 		if (cameraShaking) {
 			cameraShakeDuration -= delta;
@@ -152,7 +161,8 @@ public class Cinematic {
 				lastCameraShake = newCameraShake;
 			} else
 				cameraShaking = false;
-		}
+		}				
+				
 
 		if (speechMenu != null
 				&& MenuUpdate.MENU_CLOSE == speechMenu.handleUserInput(input,
@@ -173,23 +183,29 @@ public class Cinematic {
 				&& cameraMoveToX == -1 && speechMenu == null
 				&& cinematicEvents.size() == 0;
 	}
+	
+	boolean debug = false;
 
 	private void handleEvent(CinematicEvent ce, StateInfo stateInfo) {
 		System.out.println("Handle event: " + ce.getType());
 		switch (ce.getType()) {
 		case HALTING_MOVE:
 			actors.get(ce.getParam(3)).moveToLocation((int) ce.getParam(0),
-					(int) ce.getParam(1), (float) ce.getParam(2), true, -1);
+					(int) ce.getParam(1), (float) ce.getParam(2), true, -1, (boolean) ce.getParam(4), (boolean) ce.getParam(5));
 			haltedMovers++;
 			break;
 		case MOVE:
+			if ((int) ce.getParam(0) == 480 && 
+					(int) ce.getParam(1) == 96 && (float) ce.getParam(2) == 2)
+				debug = true;
+				
 			actors.get(ce.getParam(3)).moveToLocation((int) ce.getParam(0),
-					(int) ce.getParam(1), (float) ce.getParam(2), false, -1);
+					(int) ce.getParam(1), (float) ce.getParam(2), false, -1, (boolean) ce.getParam(4), (boolean) ce.getParam(5));
 			break;
 		case MOVE_ENFORCE_FACING:
 			actors.get(ce.getParam(3)).moveToLocation((int) ce.getParam(0),
 					(int) ce.getParam(1), (float) ce.getParam(2), false,
-					(int) ce.getParam(4));
+					(int) ce.getParam(4), (boolean) ce.getParam(5), (boolean) ce.getParam(6));
 			break;
 		case LOOP_MOVE:
 			actors.get(ce.getParam(0)).loopMoveToLocation((int) ce.getParam(1),
@@ -209,7 +225,6 @@ public class Cinematic {
 					- cameraMoveToX);
 			distance += Math.abs(stateInfo.getCamera().getLocationY()
 					- cameraMoveToY);
-			System.out.println((int) ce.getParam(2));
 			cameraMoveSpeed = distance / ((int) ce.getParam(2) / CAMERA_UPDATE);
 			cameraFollow = null;
 			break;
@@ -239,14 +254,15 @@ public class Cinematic {
 			cameraShaking = true;
 			break;
 		case ADD_ACTOR:
+			CinematicActor ca = new CinematicActor(
+					stateInfo.getResourceManager()
+					.getSpriteAnimations()
+					.get((String) ce.getParam(3)), (String) ce
+					.getParam(4), (int) ce.getParam(0),
+			(int) ce.getParam(1), (boolean) ce.getParam(5));
 			actors.put(
-					(String) ce.getParam(2),
-					new CinematicActor(
-							stateInfo.getResourceManager()
-									.getSpriteAnimations()
-									.get((String) ce.getParam(3)), (String) ce
-									.getParam(4), (int) ce.getParam(0),
-							(int) ce.getParam(1), (boolean) ce.getParam(5)));
+					(String) ce.getParam(2), ca);
+			sortedActors.add(ca);
 			break;
 		case SPEECH:
 			speechMenu = new SpeechMenu((String) ce.getParam(0),
@@ -289,6 +305,9 @@ public class Cinematic {
 		case QUIVER:
 			actors.get((String) ce.getParam(0)).quiver();
 			break;
+		case TREMBLE:
+			actors.get((String) ce.getParam(0)).tremble();
+			break;
 		case LAY_ON_BACK:
 			actors.get((String) ce.getParam(0)).layOnBack(
 					getDirectionFromInt((int) ce.getParam(1)));
@@ -309,7 +328,7 @@ public class Cinematic {
 			actors.get((String) ce.getParam(0)).nodHead();
 			break;
 		case HEAD_SHAKE:
-			actors.get((String) ce.getParam(0)).shakeHead();
+			actors.get((String) ce.getParam(0)).shakeHead((int) ce.getParam(1));
 			break;
 		case STOP_SE:
 			actors.get((String) ce.getParam(0)).stopSpecialEffect();
@@ -319,7 +338,7 @@ public class Cinematic {
 					(boolean) ce.getParam(1));
 			break;
 		case REMOVE_ACTOR:
-			actors.remove((String) ce.getParam(0));
+			sortedActors.remove(actors.remove((String) ce.getParam(0)));
 			break;
 		case FACING:
 			int dir = (int) ce.getParam(1);
@@ -337,7 +356,6 @@ public class Cinematic {
 			}
 			break;
 		case PLAY_MUSIC:
-			System.out.println(((int) ce.getParam(1)) / 100.0f + " VOLUME");
 			stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_PLAY_MUSIC,
 					(String) ce.getParam(0), ((int) ce.getParam(1)) / 100.0f,
 					true));
@@ -376,13 +394,18 @@ public class Cinematic {
 			if ((boolean) ce.getParam(1))
 				this.waitTime = (int) ce.getParam(0);
 			break;
+			default:
+				break;
 		}
+		
 	}
 
 	public void render(Graphics graphics, Camera camera, FCGameContainer cont,
 			StateInfo stateInfo) {
-		for (CinematicActor ca : actors.values())
-			ca.render(graphics, camera, cont, stateInfo);
+		for (CinematicActor ca : sortedActors)
+		{
+			ca.render(graphics, camera, cont, stateInfo);			
+		}
 
 	}
 

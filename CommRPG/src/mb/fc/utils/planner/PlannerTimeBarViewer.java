@@ -170,10 +170,19 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 				case QUIVER:
 					ab = rowsByName.get(ce.getParam(0));
 					
-					zi = new ZIntervalImpl("Quiver");
+					zi = new ZIntervalImpl("Agitate");
 					zi.setBegin(new JaretDate(currentTime));		
 					zi.setEnd(new JaretDate(currentTime + 1));
 					ab.indefiniteIntervals.put("quiver", zi);
+					ab.dt.addInterval(zi);
+					break;
+				case TREMBLE:
+					ab = rowsByName.get(ce.getParam(0));
+					
+					zi = new ZIntervalImpl("Tremble");
+					zi.setBegin(new JaretDate(currentTime));		
+					zi.setEnd(new JaretDate(currentTime + 1));
+					ab.indefiniteIntervals.put("tremble", zi);
 					ab.dt.addInterval(zi);
 					break;
 				case LAY_ON_SIDE:
@@ -230,8 +239,8 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 					ab = rowsByName.get(ce.getParam(0));
 					
 					zi = new ZIntervalImpl("Head Shake");
-					zi.setBegin(new JaretDate(currentTime));					
-					zi.setEnd(new JaretDate(currentTime + 750));
+					zi.setBegin(new JaretDate(currentTime));			
+					zi.setEnd(new JaretDate(currentTime + (int) ce.getParam(1)));
 					ab.dt.addInterval(zi);
 					break;				
 				case STOP_SE:
@@ -241,6 +250,7 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 					stopEffects(currentTime, ab, "fallonface");
 					stopEffects(currentTime, ab, "layonside");
 					stopEffects(currentTime, ab, "layonback");
+					stopEffects(currentTime, ab, "tremble");
 					break;
 				
 				case VISIBLE:
@@ -443,6 +453,8 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 						currentTime += (int) ce.getParam(0);
 					
 					systemRow.addInterval(zi);
+					break;
+				default:
 					break;
 			}	
 		}

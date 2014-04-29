@@ -12,6 +12,7 @@ import mb.fc.engine.message.ShopMessage;
 import mb.fc.engine.message.SpeechMessage;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.ai.AI;
+import mb.fc.game.resource.HeroResource;
 import mb.fc.game.resource.ItemResource;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.sprite.Sprite;
@@ -199,6 +200,7 @@ public class TriggerEvent
 
 		@Override
 		public boolean perform(StateInfo stateInfo) {
+			stateInfo.getPsi().getHeroes().add(HeroResource.getHero(heroId, stateInfo));
 			return false;
 		}
 	}

@@ -2,6 +2,8 @@ package mb.fc.engine.message;
 
 public class AudioMessage extends Message
 {
+	private static final long serialVersionUID = 1L;
+	
 	private String audio;
 	private float volume;
 	private boolean loop;

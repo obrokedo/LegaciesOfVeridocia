@@ -10,6 +10,8 @@ import javax.swing.JPanel;
 
 public class MultiIntPanel extends JPanel implements ActionListener 
 {
+	private static final long serialVersionUID = 1L;
+	
 	public ArrayList<String> mitems;
 	
 	public MultiIntPanel(ArrayList<String> mitems) {

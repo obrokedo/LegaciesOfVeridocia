@@ -9,7 +9,6 @@ import mb.fc.game.constants.Direction;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.item.Item;
 
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
 public class ItemMenu extends QuadMenu

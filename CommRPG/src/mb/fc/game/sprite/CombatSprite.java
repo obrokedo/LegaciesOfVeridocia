@@ -2,7 +2,6 @@ package mb.fc.game.sprite;
 
 import java.util.ArrayList;
 
-import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.Message;
 import mb.fc.engine.message.SpriteContextMessage;
 import mb.fc.engine.state.StateInfo;

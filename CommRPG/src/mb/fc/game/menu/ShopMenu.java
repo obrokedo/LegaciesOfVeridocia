@@ -27,7 +27,7 @@ public class ShopMenu extends Menu implements YesNoListener
 	private Button switchViewButton;
 	
 	private ArrayList<Item> items;
-	private Rectangle itemSelectRect;
+	// private Rectangle itemSelectRect;
 	private Rectangle itemUpRect;
 	private Rectangle itemDownRect;
 	private int mouseOverItems = -1;
@@ -39,7 +39,7 @@ public class ShopMenu extends Menu implements YesNoListener
 	private int mouseOverHeroes = -1;
 	private Rectangle heroUpRect;
 	private Rectangle heroDownRect;
-	private Rectangle charSelectRect;
+	// private Rectangle charSelectRect;
 	private Button buyButton;	
 	private CombatSprite selectedHero = null;
 	
@@ -55,13 +55,13 @@ public class ShopMenu extends Menu implements YesNoListener
 		super(Panel.PANEL_SHOP);
 		x = (gc.getWidth() - 700) / 2;
 		switchViewButton = new Button(x + 100, 35, 140, 20, "Switch to sell");
-		itemSelectRect = new Rectangle(x + 15, 90, 655, 360);
+		// itemSelectRect = new Rectangle(x + 15, 90, 655, 360);
 		itemUpRect = new Rectangle(x + 670, 91, 15, 15);
 		itemDownRect = new Rectangle(x + 670, 435, 15, 15);
 		heroUpRect = new Rectangle(x + 670, 476, 15, 15);
 		heroDownRect = new Rectangle(x + 670, 650, 15, 15);
 		buyButton = new Button(x + 570, 680, 100, 20, "Buy");
-		charSelectRect = new Rectangle(x + 15, 475, 655, 180);
+		// charSelectRect = new Rectangle(x + 15, 475, 655, 180);
 		
 		this.heroes = stateInfo.getClientProfile().getHeroes();
 		this.gold = stateInfo.getClientProfile().getGold();

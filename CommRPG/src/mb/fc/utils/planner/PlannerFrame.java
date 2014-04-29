@@ -534,6 +534,25 @@ public class PlannerFrame extends JFrame implements ActionListener,
 						false,
 						"Move Speed",
 						"The amount of pixels that the actor will move every 20ms towards their destination. Normal movement is 2.4"));
+		
+		definingValues
+		.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_BOOLEAN,
+				"movehor",
+				false,
+				"Move Horizontal Before Vertical",
+				"The sprite will move horizontal before it takes vertical moves if this is checked. Otherwise it will move vertical first"));
+		
+		// Diagonal movement
+		definingValues
+		.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_BOOLEAN,
+				"movediag",
+				false,
+				"Allow Diagonal Movement",
+				"If checked then this sprite can move diagonally"));
 
 		allowableLines
 				.add(new PlannerLineDef(
@@ -561,12 +580,81 @@ public class PlannerFrame extends JFrame implements ActionListener,
 						false,
 						"Move Speed",
 						"The amount of pixels that the actor will move every 20ms towards their destination. Normal movement is 2.4"));
+		
+		definingValues
+		.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_BOOLEAN,
+				"movehor",
+				false,
+				"Move Horizontal Before Vertical",
+				"The sprite will move horizontal before it takes vertical moves if this is checked. Otherwise it will move vertical first"));
+		
+		// Diagonal movement
+		definingValues
+		.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_BOOLEAN,
+				"movediag",
+				false,
+				"Allow Diagonal Movement",
+				"If checked then this sprite can move diagonally"));
 
 		allowableLines
 				.add(new PlannerLineDef(
 						"move",
 						"Move",
 						"Orders the specified actor to move to the specified coordinate.",
+						definingValues));
+		
+		// Forced Facing Move
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_STRING, "name", false, "Actor Name",
+				"The name of the actor that should perform the action"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_INT, "x", false, "X Coordinate",
+				"The x coordinate (in pixels) that the actor should move to"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_INT, "y", false, "Y Coordinate",
+				"The y coordinate (in pixels) that the actor should move to"));
+		definingValues
+				.add(new PlannerValueDef(
+						PlannerValueDef.REFERS_NONE,
+						PlannerValueDef.TYPE_INT,
+						"speed",
+						false,
+						"Move Speed",
+						"The amount of pixels that the actor will move every 30ms towards their destination"));
+		definingValues
+				.add(new PlannerValueDef(PlannerValueDef.REFERS_DIRECTION,
+						PlannerValueDef.TYPE_INT, "facing", false, "Facing",
+						"The direction that the sprite should face for the duration of the move"));
+		
+		definingValues
+		.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_BOOLEAN,
+				"movehor",
+				false,
+				"Move Horizontal Before Vertical",
+				"The sprite will move horizontal before it takes vertical moves if this is checked. Otherwise it will move vertical first"));
+		
+		// Diagonal movement
+		definingValues
+		.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_BOOLEAN,
+				"movediag",
+				false,
+				"Allow Diagonal Movement",
+				"If checked then this sprite can move diagonally"));
+
+		allowableLines
+				.add(new PlannerLineDef(
+						"forcedmove",
+						"Move Forced Facing",
+						"Orders the specified actor to move to the specified coordinate. This actor will keep facing the same direction for the duration of the move",
 						definingValues));
 
 		// Halting Anim
@@ -864,13 +952,28 @@ public class PlannerFrame extends JFrame implements ActionListener,
 				.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
 						PlannerValueDef.TYPE_STRING, "name", false,
 						"Actor Name",
-						"The name of the actor that should perform the quiver special effect"));
+						"The name of the actor that should perform the tremble special effect"));
 
 		allowableLines
 				.add(new PlannerLineDef(
+						"tremble",
+						"Start Actor Trembling",
+						"Causes the specified actor to begin trembling. This effect will continue until a STOP SPECIAL EFFECT is issued for the actor. This is a 'special effect'. Only one special effect can be active on a given actor at any time. This will stop any current animations.",
+						definingValues));
+		
+		// Agitate
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues
+				.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+						PlannerValueDef.TYPE_STRING, "name", false,
+						"Actor Name",
+						"The name of the actor that should perform the agitate special effect"));
+	
+		allowableLines
+				.add(new PlannerLineDef(
 						"quiver",
-						"Start Actor Quivering",
-						"Causes the specified actor to begin quivering. This effect will continue until a STOP SPECIAL EFFECT is issued for the actor. This is a 'special effect'. Only one special effect can be active on a given actor at any time. This will stop any current animations.",
+						"Start Actor Agitate",
+						"Causes the specified actor to be 'Agitated'. This effect will continue until a STOP SPECIAL EFFECT is issued for the actor. This is a 'special effect'. Only one special effect can be active on a given actor at any time. This will stop any current animations.",
 						definingValues));
 
 		// Fall on Face
@@ -974,12 +1077,16 @@ public class PlannerFrame extends JFrame implements ActionListener,
 						PlannerValueDef.TYPE_STRING, "name", false,
 						"Actor Name",
 						"The name of the actor that should perform the shake head effect"));
+		definingValues
+		.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_INT, "time", false,
+				"Shake Duration", "The amount of time in ms that this head shake should take to perform"));
 
 		allowableLines
 				.add(new PlannerLineDef(
 						"shakehead",
 						"Actor Shake Head",
-						"Causes the specified actor to nod. This effect lasts 750ms. This is a 'special effect'. Only one special effect can be active on a given actor at any time. This will stop any current animations.",
+						"Causes the specified actor to nod. This is a 'special effect'. Only one special effect can be active on a given actor at any time. This will stop any current animations.",
 						definingValues));
 
 		// Loop Move
@@ -1038,37 +1145,6 @@ public class PlannerFrame extends JFrame implements ActionListener,
 						"camerashake",
 						"Shake Camera",
 						"Shakes the camera to simulate an earthquake effect. After the camera is done shaking it will return to it's original location",
-						definingValues));
-
-		// Forced Facing Move
-		definingValues = new ArrayList<PlannerValueDef>();
-		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
-				PlannerValueDef.TYPE_STRING, "name", false, "Actor Name",
-				"The name of the actor that should perform the action"));
-		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
-				PlannerValueDef.TYPE_INT, "x", false, "X Coordinate",
-				"The x coordinate (in pixels) that the actor should move to"));
-		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
-				PlannerValueDef.TYPE_INT, "y", false, "Y Coordinate",
-				"The y coordinate (in pixels) that the actor should move to"));
-		definingValues
-				.add(new PlannerValueDef(
-						PlannerValueDef.REFERS_NONE,
-						PlannerValueDef.TYPE_INT,
-						"speed",
-						false,
-						"Move Speed",
-						"The amount of pixels that the actor will move every 30ms towards their destination"));
-		definingValues
-				.add(new PlannerValueDef(PlannerValueDef.REFERS_DIRECTION,
-						PlannerValueDef.TYPE_INT, "facing", false, "Facing",
-						"The direction that the sprite should face for the duration of the move"));
-
-		allowableLines
-				.add(new PlannerLineDef(
-						"forcedmove",
-						"Move Forced Facing",
-						"Orders the specified actor to move to the specified coordinate. This actor will keep facing the same direction for the duration of the move",
 						definingValues));
 
 		// Play Music

@@ -1,6 +1,5 @@
 package mb.fc.game.item;
 
-import org.newdawn.slick.Image;
 
 public class EquippableItem extends Item
 {

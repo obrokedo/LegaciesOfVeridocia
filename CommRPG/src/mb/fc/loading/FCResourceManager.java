@@ -54,9 +54,6 @@ public class FCResourceManager extends ResourceManager {
 	private Map map = new Map();
 	
 	private Color transparent = new Color(255, 0, 255);
-	
-	private Music playingMusic = null;	
-	// private 
 
 	public static void main(String args[])
 	{
@@ -90,6 +87,7 @@ public class FCResourceManager extends ResourceManager {
 	*/
 	
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void addResource(String resource, Entity entity, int currentIndex,
 			int maxIndex) throws IOException, SlickException {

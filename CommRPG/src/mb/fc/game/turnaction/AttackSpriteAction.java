@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import mb.fc.game.battle.command.BattleCommand;
 import mb.fc.game.sprite.CombatSprite;
-import mb.fc.game.sprite.Sprite;
 
 public class AttackSpriteAction extends TurnAction 
 {

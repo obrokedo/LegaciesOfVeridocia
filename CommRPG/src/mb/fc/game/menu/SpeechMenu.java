@@ -74,10 +74,10 @@ public class SpeechMenu extends Menu
 			if (wordWidth + currentLineWidth <= maxTextWidth)
 			{	
 				boolean lineBreak = false;
-				if (splitText[i].contains("["))
+				if (splitText[i].contains(CHAR_LINE_BREAK))
 					lineBreak = true;
 				
-				currentLine += " " + splitText[i].replace("[", "");
+				currentLine += " " + splitText[i].replace(CHAR_LINE_BREAK, "");
 				currentLineWidth += wordWidth + spaceWidth;
 				
 				if (lineBreak)
@@ -169,9 +169,22 @@ public class SpeechMenu extends Menu
 				}
 				else if (nextLetter.equalsIgnoreCase(CHAR_SOFT_STOP))
 				{
-					textMoving = false;
-					waitUntil = System.currentTimeMillis() + 3000;
-					waitingOn = CHAR_SOFT_STOP;
+					textMoving = false;					
+					
+					String[] softSplit = panelText.get(textIndex).substring(textMovingIndex).split(" ");
+					
+					if (softSplit.length > 1 && softSplit[0].length() > 1)
+					{
+						waitUntil = System.currentTimeMillis() + Integer.parseInt(softSplit[0].substring(1));
+						waitingOn = softSplit[0];
+						System.out.println("WAITING ON SOFT");
+					}
+					else
+					{
+						waitUntil = System.currentTimeMillis() + 2500;
+						waitingOn = CHAR_SOFT_STOP;
+						System.out.println("WAITING ON SOFT UNSPEC");
+					}
 				}
 				else if (nextLetter.equalsIgnoreCase(CHAR_PAUSE))
 				{

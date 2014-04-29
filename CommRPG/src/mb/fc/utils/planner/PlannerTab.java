@@ -168,6 +168,28 @@ public class PlannerTab extends JPanel implements ActionListener, ListSelectionL
 	
 	public void clearValues(ArrayList<ArrayList<String>> listOfLists)
 	{
+		if (currentPCScroll != null)
+		{
+			this.remove(currentPCScroll);			
+		}
+		
+		System.out.println("SET NEW VALUES");
+		
+		if (currentPC != null && currentPC.getDefLine() != null)
+		{
+			System.out.println("REMOVE DEF LINE");
+			this.remove(currentPC.getDefLine().getDefiningPanel());
+		}
+		
+		for (int i = 0; i < this.getComponentCount(); i++)
+		{
+			if (this.getComponent(i) instanceof PlannerTimeBarViewer)
+			{
+				this.remove(i);
+				i--;
+			}
+		}
+		
 		this.currentPC = null;
 		this.listPC.clear();
 		listModel.clear();		

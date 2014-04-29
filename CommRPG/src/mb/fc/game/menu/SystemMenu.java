@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.input.FCInput;
-import mb.fc.game.menu.Menu.MenuUpdate;
 import mb.fc.game.ui.FCGameContainer;
 
 import org.newdawn.slick.GameContainer;
@@ -53,14 +52,12 @@ public class SystemMenu extends Menu
 		private int textX;
 		private String text;
 		private boolean mouseOver = false;
-		private int index;
 		
 		public SystemMenuMouseHandler(Rectangle rect, int textX, String text, int index) {
 			super();
 			this.rect = rect;
 			this.textX = textX;
 			this.text = text;
-			this.index = index;
 		}
 
 		public void render(GameContainer gc, Graphics graphics)
@@ -79,26 +76,6 @@ public class SystemMenu extends Menu
 				graphics.setColor(Panel.COLOR_FOREFRONT);
 				graphics.drawRect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());				
 				graphics.drawString(text, textX, rect.getY() + 15);
-			}
-		}
-		
-		public void checkMouseInput(int x, int y, boolean mouseLeftClick, StateInfo stateInfo)
-		{
-			mouseOver = rect.contains(x, y);
-			if (mouseOver && mouseLeftClick)
-			{
-				switch (index)
-				{
-					case 0:
-						
-						// stateInfo.removeMenu(Menu.MENU_SYSTEM);
-						break;
-					case 1:
-						break;
-					case 2:						
-						System.exit(0);
-						break;
-				}
 			}
 		}
 	}

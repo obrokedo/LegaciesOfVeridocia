@@ -2,12 +2,10 @@ package mb.fc.game.menu;
 
 import java.util.ArrayList;
 
-import mb.fc.engine.CommRPG;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.battle.spell.KnownSpell;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.input.FCInput;
-import mb.fc.game.item.EquippableItem;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.ui.Button;
 import mb.fc.game.ui.CellRenderer;
@@ -122,6 +120,7 @@ public class HeroesStatMenu extends Menu implements CellRenderer<CombatSprite>
 		return MenuUpdate.MENU_CLOSE;
 	}
 	
+	/*
 	private void reinitItems()
 	{
 		itemButtons.clear();
@@ -134,6 +133,7 @@ public class HeroesStatMenu extends Menu implements CellRenderer<CombatSprite>
 			itemButtons.get(i).displayBorder(false);
 		}
 	}
+	*/
 
 	@Override
 	public String getColumnValue(CombatSprite item, int column, Graphics graphics) {

@@ -32,6 +32,7 @@ public class CinematicEvent
 		FACING,
 		SHRINK,
 		GROW,
+		TREMBLE,
 		QUIVER,
 		FALL_ON_FACE,
 		LAY_ON_SIDE,

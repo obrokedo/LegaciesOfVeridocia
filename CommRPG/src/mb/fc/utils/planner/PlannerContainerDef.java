@@ -5,7 +5,6 @@ import java.util.ArrayList;
 public class PlannerContainerDef
 {
 	private PlannerLineDef definingLine;
-	private ArrayList<PlannerContainerDef> allowableContainers;
 	private ArrayList<PlannerLineDef> allowableLines;
 	private ArrayList<ArrayList<String>> listOfLists;
 	private int writeToIndex;
@@ -16,7 +15,6 @@ public class PlannerContainerDef
 			int writeToIndex) 
 	{		
 		this.definingLine = definingLine;
-		this.allowableContainers = allowableContainers;
 		this.allowableLines = allowableLines;
 		this.listOfLists = listOfLists;
 		this.writeToIndex = writeToIndex;

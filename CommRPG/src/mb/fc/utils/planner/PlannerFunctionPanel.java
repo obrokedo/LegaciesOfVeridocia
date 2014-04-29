@@ -12,6 +12,8 @@ import javax.swing.JTextField;
 
 public class PlannerFunctionPanel extends JPanel
 {
+	private static final long serialVersionUID = 1L;	
+	
 	private ArrayList<JTextField> textFields = new ArrayList<JTextField>();
 	
 	public PlannerFunctionPanel()

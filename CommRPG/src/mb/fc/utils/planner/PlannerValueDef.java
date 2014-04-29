@@ -1,6 +1,5 @@
 package mb.fc.utils.planner;
 
-import java.io.File;
 
 public class PlannerValueDef 
 {
