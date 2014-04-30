@@ -19,6 +19,8 @@ public class HeroStatMenu extends Menu
 	private int x;
 	private int y;
 	private String gold;
+	private long nextUpdate = 0;
+	private int animCount = 0;
 
 	public HeroStatMenu(GameContainer gc, CombatSprite selectedSprite, StateInfo stateInfo) {
 		super(Panel.PANEL_HEROS_STATS);
@@ -27,10 +29,18 @@ public class HeroStatMenu extends Menu
 		this.selectedSprite = selectedSprite;
 		if (selectedSprite.isHero())
 			this.gold = stateInfo.getClientProfile().getGold() + "";
+		
+		nextUpdate = System.currentTimeMillis() + 500;
 	}
 
 	@Override
-	public MenuUpdate handleUserInput(FCInput input, StateInfo stateInfo) {			
+	public MenuUpdate handleUserInput(FCInput input, StateInfo stateInfo) {
+		
+		if (System.currentTimeMillis() > nextUpdate)
+		{
+			animCount = (animCount + 1) % 2;
+			nextUpdate = System.currentTimeMillis() + 500;
+		}
 		if (input.isKeyDown(KeyMapping.BUTTON_2))
 			return MenuUpdate.MENU_CLOSE;
 		return MenuUpdate.MENU_NO_ACTION;
@@ -47,10 +57,10 @@ public class HeroStatMenu extends Menu
 		graphics.setColor(COLOR_FOREFRONT);
 		graphics.drawString(selectedSprite.getName(), x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 70, y + -3);
 		
-		graphics.drawString("LVL: " + selectedSprite.getLevel(), x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 75, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 13);
+		graphics.drawString("LV: " + selectedSprite.getLevel(), x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 75, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 13);
 		graphics.drawString("HP: " + selectedSprite.getCurrentHP() + " / " + selectedSprite.getMaxHP(), x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 75, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 28);
 		graphics.drawString("MP: " + selectedSprite.getCurrentMP() + " / " + selectedSprite.getMaxMP(), x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 75, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 43);		
-		graphics.drawString("EXP: " + selectedSprite.getExp(), x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 75, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 58);
+		graphics.drawString("XP: " + selectedSprite.getExp(), x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 75, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 58);
 		
 		graphics.drawString("ATK: " + selectedSprite.getCurrentAttack(), x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 152, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 13);
 		graphics.drawString("DEF: " + selectedSprite.getCurrentDefense(), x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 152, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 28);
@@ -113,7 +123,7 @@ public class HeroStatMenu extends Menu
 		/*****************************/
 		Panel.drawPanelBox(x, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 78, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 62, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 80, graphics);
 		graphics.setColor(Panel.COLOR_FOREFRONT);
-		graphics.drawImage(selectedSprite.getAnimationImageAtIndex(selectedSprite.getAnimation("UnDown").frames.get(0).sprites.get(0).imageIndex), 
+		graphics.drawImage(selectedSprite.getAnimationImageAtIndex(selectedSprite.getAnimation("UnDown").frames.get(animCount).sprites.get(0).imageIndex), 
 				x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 19, 
 				y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 82);
 		graphics.drawString("Kills", x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 7, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 100);		

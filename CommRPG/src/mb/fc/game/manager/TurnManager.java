@@ -68,6 +68,7 @@ public class TurnManager extends Manager implements KeyboardListener
 	private Rectangle cursor;
 	private int cursorTargetX, cursorTargetY;
 	private int updateDelta = 0;
+	private boolean resetSpriteLoc = false;
 	private static final int UPDATE_TIME = 20;
 	
 	// This describes the location and size of the moveable tiles array on the world
@@ -137,7 +138,8 @@ public class TurnManager extends Manager implements KeyboardListener
 					cursor.setX(cursor.getX() + stateInfo.getTileWidth() / 6);
 				else if (cursor.getX() > cursorTargetX)
 					cursor.setX(cursor.getX() - stateInfo.getTileWidth() / 6);
-				else if (cursor.getY() < cursorTargetY)
+				
+				if (cursor.getY() < cursorTargetY)
 					cursor.setY(cursor.getY() + stateInfo.getTileHeight() / 6);
 				else if (cursor.getY() > cursorTargetY)
 					cursor.setY(cursor.getY() - stateInfo.getTileHeight() / 6);
@@ -277,7 +279,16 @@ public class TurnManager extends Manager implements KeyboardListener
 			{
 				turnActions.remove(0);
 				if (turnActions.size() == 0)
+				{
 					ms.setCheckEvents(true);
+					if (resetSpriteLoc)
+					{
+						resetSpriteLoc = false;
+						currentSprite.setFacing(Direction.DOWN);
+						// If we are already reset then switch to cursor mode
+						setToCursorMode();
+					}
+				}
 				landEffectPanel.setLandEffect(stateInfo.getCurrentMap().getLandEffectByTile(currentSprite.getMovementType(), 
 						currentSprite.getTileX(), currentSprite.getTileY()));
 				movingSprite = null;
@@ -293,10 +304,19 @@ public class TurnManager extends Manager implements KeyboardListener
 		{
 			turnActions.remove(0);
 			if (turnActions.size() == 0)
+			{
 				ms.setCheckEvents(true);
+				if (resetSpriteLoc)
+				{
+					resetSpriteLoc = false;
+					currentSprite.setFacing(Direction.DOWN);
+					// If we are already reset then switch to cursor mode
+					setToCursorMode();
+				}
+			}
 			landEffectPanel.setLandEffect(stateInfo.getCurrentMap().getLandEffectByTile(currentSprite.getMovementType(), 
 					currentSprite.getTileX(), currentSprite.getTileY()));
-			movingSprite = null;
+			movingSprite = null;						
 		}
 	}
 	
@@ -427,6 +447,15 @@ public class TurnManager extends Manager implements KeyboardListener
 		
 		displayAttackable = true;
 	}
+	
+	private void setToCursorMode()
+	{
+		// If we are already reset then switch to cursor mode
+		displayMoveable = false;
+		displayCursor = true;
+		stateInfo.removePanel(landEffectPanel);
+		stateInfo.removeKeyboardListener();
+	}
 
 	@Override
 	public void recieveMessage(Message message) {		
@@ -493,15 +522,13 @@ public class TurnManager extends Manager implements KeyboardListener
 						spriteStartPoint.y == currentSprite.getTileY())
 				{
 					// If we are already reset then switch to cursor mode
-					displayMoveable = false;
-					displayCursor = true;
-					stateInfo.removePanel(landEffectPanel);
-					stateInfo.removeKeyboardListener();
+					setToCursorMode();
 				}
 				else
 				{
 					ms.setCheckEvents(false);
 					ms.addMoveActionsToLocation(spriteStartPoint.x, spriteStartPoint.y, currentSprite, turnActions);
+					this.resetSpriteLoc = true;
 				}
 				break;
 			case Message.MESSAGE_MOVETO_SPRITELOC:				
@@ -564,13 +591,16 @@ public class TurnManager extends Manager implements KeyboardListener
 					stateInfo.addMenu(new HeroStatMenu(stateInfo.getGc(), cs, stateInfo));
 					return true;
 				}
-			}
-			else if (input.isKeyDown(KeyMapping.BUTTON_UP))
+			}			
+			
+			cursorTargetX = (int) cursor.getX();
+			cursorTargetY = (int) cursor.getY();
+			
+			if (input.isKeyDown(KeyMapping.BUTTON_UP))
 			{
 				if (cursor.getY() > 0)
 				{
 					cursorTargetY = (int) (cursor.getY() - stateInfo.getTileHeight());
-					cursorTargetX = (int) cursor.getX();
 					moved = true;
 				}
 			}
@@ -579,16 +609,15 @@ public class TurnManager extends Manager implements KeyboardListener
 				if (cursor.getY() + stateInfo.getTileHeight() < stateInfo.getCurrentMap().getMapHeightInPixels())
 				{
 					cursorTargetY = (int) (cursor.getY() + stateInfo.getTileHeight());
-					cursorTargetX = (int) cursor.getX();
 					moved = true;
 				}
 			}
-			else if (input.isKeyDown(KeyMapping.BUTTON_LEFT))
+			
+			if (input.isKeyDown(KeyMapping.BUTTON_LEFT))
 			{
 				if (cursor.getX() > 0)
 				{
 					cursorTargetX = (int) (cursor.getX() - stateInfo.getTileWidth()); 
-					cursorTargetY = (int) cursor.getY();
 					moved = true;
 				}
 			}
@@ -597,7 +626,6 @@ public class TurnManager extends Manager implements KeyboardListener
 				if (cursor.getX() + stateInfo.getTileWidth() < stateInfo.getCurrentMap().getMapWidthInPixels())
 				{
 					cursorTargetX = (int) (cursor.getX() + stateInfo.getTileWidth()); 
-					cursorTargetY = (int) cursor.getY();
 					moved = true;
 				}
 			}

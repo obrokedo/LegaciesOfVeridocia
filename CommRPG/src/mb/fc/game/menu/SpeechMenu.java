@@ -173,7 +173,7 @@ public class SpeechMenu extends Menu
 					
 					String[] softSplit = panelText.get(textIndex).substring(textMovingIndex).split(" ");
 					
-					if (softSplit.length > 1 && softSplit[0].length() > 1)
+					if (softSplit.length > 1 && softSplit[0].length() > 1 && softSplit[0].replaceFirst("[0-9]", "").length() != softSplit[0].length())
 					{
 						waitUntil = System.currentTimeMillis() + Integer.parseInt(softSplit[0].substring(1));
 						waitingOn = softSplit[0];

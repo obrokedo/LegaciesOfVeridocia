@@ -9,7 +9,6 @@ import mb.fc.game.battle.command.BattleCommand;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.hudmenu.SpriteContextPanel;
 import mb.fc.game.input.FCInput;
-import mb.fc.game.input.KeyMapping;
 import mb.fc.game.menu.Menu.MenuUpdate;
 import mb.fc.game.menu.SpeechMenu;
 import mb.fc.game.sprite.CombatSprite;
@@ -189,7 +188,7 @@ public class AttackCinematicState extends LoadableGameState
 			{
 				// Draw the floor represented by the land underneath the hero unless it is a flying hero
 				if (targets.get(targetIndex).getMovementType() != CombatSprite.MOVEMENT_FLYING)
-					g.drawImage(heroFloorImage, xLoc + 230 * screenScale, bgYPos + backgroundImage.getHeight() - 28 * screenScale);
+					g.drawImage(heroFloorImage, xLoc + 220 * screenScale, bgYPos + backgroundImage.getHeight() - 15 * screenScale);
 			}
 			
 			for (AnimSprite as : targetAnim.frames.get(targetAnimIndex).sprites)
@@ -219,7 +218,7 @@ public class AttackCinematicState extends LoadableGameState
 				
 				// Draw the floor represented by the land underneath the hero unless it is a flying hero
 				if (targets.get(targetIndex).getMovementType() != CombatSprite.MOVEMENT_FLYING)
-					g.drawImage(heroFloorImage, xLoc + 230 * screenScale, bgYPos + backgroundImage.getHeight() - 28 * screenScale);
+					g.drawImage(heroFloorImage, xLoc + 220 * screenScale, bgYPos + backgroundImage.getHeight() - 15 * screenScale);
 			}
 			else
 			{
@@ -416,7 +415,7 @@ public class AttackCinematicState extends LoadableGameState
 			if (textMenu != null)
 				menuUpdate = textMenu.handleUserInput(input, null);
 			// If the enemy was the attacker then there will be no menu to check, in this case just look directly for the key down
-			else if (state == STATE_POST_ATTACK && container.getInput().isKeyDown(KeyMapping.BUTTON_3))
+			else if (state == STATE_POST_ATTACK)
 			{
 				container.getInput().removeAllKeyListeners();
 				game.enterState(CommRPG.STATE_GAME_BATTLE, new FadeOutTransition(Color.black, 250), new EmptyTransition());
@@ -529,7 +528,10 @@ public class AttackCinematicState extends LoadableGameState
 		targetIndex = 0;
 		deathFade = false;
 		Image bgIm = frm.getSpriteSheets().get("battlebg").getSprite(bgImagePoint.x, bgImagePoint.y);
+		System.out.println("ORIG " + bgIm.getWidth());
+		System.out.println("SCALE AMT " + (gc.getWidth() - gc.getDisplayPaddingX() * 2) / (float) bgIm.getWidth());
 		backgroundImage = bgIm.getScaledCopy((gc.getWidth() - gc.getDisplayPaddingX() * 2) / (float) bgIm.getWidth());
+		System.out.println("RESULT SCALE " + backgroundImage.getWidth());
 		
 		bgXPos = gc.getDisplayPaddingX();
 		bgYPos = (int) ((gc.getHeight() - backgroundImage.getHeight()) / 2);		
