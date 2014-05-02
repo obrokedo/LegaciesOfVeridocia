@@ -2,6 +2,7 @@ package mb.fc.engine;
 
 import java.util.Random;
 
+import mb.fc.engine.log.FileLogger;
 import mb.fc.engine.state.AttackCinematicState;
 import mb.fc.engine.state.MenuState;
 import mb.fc.engine.state.PersistentStateInfo;
@@ -11,12 +12,10 @@ import mb.fc.loading.FCResourceManager;
 import mb.gl2.loading.LoadableGameState;
 import mb.gl2.loading.LoadingState;
 
-import org.lwjgl.LWJGLException;
-import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.DisplayMode;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.util.Log;
 
 public class CommRPG extends StateBasedGame   {
 	/**
@@ -98,6 +97,7 @@ public class CommRPG extends StateBasedGame   {
 			fullScreenWidth = 0;
 			fullScreenHeight = Integer.MAX_VALUE;
 			
+			/*
 			try {
 				double ratio =  container.getScreenWidth() * 1.0 / container.getScreenHeight();
 				System.out.println(ratio);
@@ -124,19 +124,16 @@ public class CommRPG extends StateBasedGame   {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-			
-			// container.setDisplayMode(640, 480, true);
-			// container.setDisplayMode(640, 480, false);
-			// container.setDisplayMode(960, 720, false);
+			*/
+
 			fullScreenWidth = 0;
 			
 			if (fullScreenWidth == 0)
 			{			
 				System.out.println("Unable to enter full screen");
-				GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] = 3;
-				container.setDisplayPaddingX(0);
-				container.setDisplayMode(960, 720, false);
+				// GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] = 3;
+				container.setDisplayPaddingX(0);			
+				container.setDisplayMode(320 * GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], 240 * GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], false);
 			}
 			else
 				container.setDisplayMode(fullScreenWidth, fullScreenHeight, true);
@@ -158,7 +155,8 @@ public class CommRPG extends StateBasedGame   {
 	public CommRPG() 
 	{
 		super(GAME_TITLE);
-		DH =  new DEBUG_HOLDER(0);
+		DH =  new DEBUG_HOLDER(0);	
+		Log.setLogSystem(new FileLogger());
 	}
 	
 	/**

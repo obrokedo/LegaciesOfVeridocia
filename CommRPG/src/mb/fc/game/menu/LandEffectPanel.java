@@ -16,9 +16,11 @@ public class LandEffectPanel extends Panel
 
 	@Override
 	public void render(FCGameContainer gc, Graphics graphics) {
-		Panel.drawPanelBox(gc.getDisplayPaddingX() + 15, gc.getHeight() - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 25, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 112, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 20, graphics);
+		Panel.drawPanelBox(gc.getDisplayPaddingX() + 15, 15, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 57, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 43, graphics);
 		graphics.setColor(Panel.COLOR_FOREFRONT);
-		graphics.drawString("Land Effect:" + landEffect + "%", gc.getDisplayPaddingX() + 30, gc.getHeight() - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 29);
+		graphics.drawString("Land", gc.getDisplayPaddingX() +  CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 13 + 16, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 1);
+		graphics.drawString("Effect:", gc.getDisplayPaddingX() +  CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 6 + 15, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 13);
+		graphics.drawString(landEffect + "%", gc.getDisplayPaddingX() +  CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 17 + 20, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 26);
 	}
 
 	public void setLandEffect(int landEffect) {

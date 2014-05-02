@@ -11,6 +11,8 @@ import mb.fc.game.battle.spell.Spell;
 import mb.fc.game.item.Item;
 import mb.fc.game.item.ItemUse;
 import mb.fc.game.sprite.CombatSprite;
+import mb.jython.GlobalPythonFactory;
+import mb.jython.JBattleFunctions;
 
 public class BattleResults implements Serializable
 {
@@ -33,6 +35,8 @@ public class BattleResults implements Serializable
 	public static BattleResults determineBattleResults(CombatSprite attacker, 
 			ArrayList<CombatSprite> targets, BattleCommand battleCommand, StateInfo stateInfo)
 	{
+        JBattleFunctions jBattleFunctions = GlobalPythonFactory.createJBattleFunctions();
+		
 		BattleResults br = new BattleResults();
 		br.battleCommand = battleCommand;
 		br.targets = targets;
@@ -57,8 +61,9 @@ public class BattleResults implements Serializable
 			// If we are doing a simple attack command then we need to get the dodge chance and calculate damage dealt
 			if (battleCommand.getCommand() == BattleCommand.COMMAND_ATTACK)
 			{				
+				
 				// TODO This needs to take into effect other hitting modifiers.
-				int dodgeChance = Math.max(5, 5 + (target.getCurrentSpeed() - attacker.getCurrentSpeed()) / 5);
+				int dodgeChance = jBattleFunctions.getDodgePercent(attacker, target);
 				
 				
 				// TODO Critting, countering
@@ -68,9 +73,9 @@ public class BattleResults implements Serializable
 					br.hpDamage.add(0);
 					br.mpDamage.add(0);
 					if (target.isDodges())
-						text = target.getName() + " quickly dodged the attack!}";
+						text = jBattleFunctions.getDodgeText(attacker, target);
 					else
-						text = target.getName() + " blocked the attack!}";
+						text = jBattleFunctions.getBlockText(attacker, target);
 					br.targetEffects.add(null);
 					br.attackerHPDamage.add(0);
 					br.attackerMPDamage.add(0);
@@ -82,30 +87,21 @@ public class BattleResults implements Serializable
 					float landEffect = (100 + stateInfo.getResourceManager().getMap().getLandEffectByTile(target.getMovementType(), 
 							target.getTileX(), target.getTileY())) / 100.0f;
 					
-					int critChance = 3;
-					if (critChance >= CommRPG.RANDOM.nextInt(100))
+					if (jBattleFunctions.getCritPercent(attacker, target) >= CommRPG.RANDOM.nextInt(100))
 						br.critted = true;
 					// Multiply the attackers attack by .8 - 1.2 and the targets defense by .8 - 1.2 and then the difference
 					// between the two values is the damage dealt or 1 if result is less then 1.
-					int damage = -1 * Math.max(1, (int)(((
-							// A random number between .8 - 1.2
-							CommRPG.RANDOM.nextInt(40) + 80) / 100.0 *
-							// Attack
-							attacker.getCurrentAttack()) - 
-							// A random number between .8 - 1.2
-							((CommRPG.RANDOM.nextInt(40) + 80) / 100.0 * 
-									// Defense modified by land effect
-									+ landEffect * target.getCurrentDefense())));
+					int damage = jBattleFunctions.getDamageDealt(attacker, target, landEffect, CommRPG.RANDOM);
 					
 					if (br.critted)
 					{
-						br.hpDamage.add((int) (damage * 1.25));					
-						text = attacker.getName() + " inflicted a vicious blow dealing " + (damage * -1) + " damage.}";
+						br.hpDamage.add((int) (damage * jBattleFunctions.getCritDamageModifier(attacker, target)));					
+						text = jBattleFunctions.getCriticalAttackText(attacker, target, damage * -1);
 					}
 					else
 					{
 						br.hpDamage.add(damage);					
-						text = attacker.getName() + " dealt " + (damage * -1) + " damage.}";
+						text = jBattleFunctions.getNormalAttackText(attacker, target, damage * -1);
 					}
 					br.mpDamage.add(0);
 					br.targetEffects.add(null);
@@ -194,7 +190,7 @@ public class BattleResults implements Serializable
 			{
 				br.death = true;
 				text = text.replaceAll("}", "");
-				text = text + " " + target.getName() + " has been defeated...}";
+				text = text + " " +jBattleFunctions.getCombatantDeathText(attacker, target);
 			}
 			br.text.add(text);
 			index++;

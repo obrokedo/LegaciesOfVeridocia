@@ -19,6 +19,7 @@ import mb.fc.utils.Animation;
 import mb.fc.utils.SpriteAnims;
 import mb.gl2.loading.LoadableGameState;
 import mb.gl2.loading.ResourceManager;
+import mb.jython.GlobalPythonFactory;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -591,7 +592,7 @@ public class AttackCinematicState extends LoadableGameState
 		}
 		targetAnim = targets.get(targetIndex).getAnimation("UnStand");
 		
-		music = frm.getMusicByName("attack");
+		music = frm.getMusicByName(GlobalPythonFactory.createJMusicSelector().getAttackMusic(attacker, targetsAreAllies));
 		music.play();
 		
 		// Get the land tile image for the current target

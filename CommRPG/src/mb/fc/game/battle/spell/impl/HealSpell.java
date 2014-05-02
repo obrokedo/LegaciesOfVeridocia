@@ -29,7 +29,7 @@ public class HealSpell extends Spell
 	public int getExpGained(int level, CombatSprite attacker,
 			CombatSprite target) 
 	{		
-		double percent = Math.min(1, (target.getMaxHP() - target.getCurrentHP()) * 1.0 / damage[level]);
+		double percent = Math.max(0, (target.getMaxHP() - target.getCurrentHP()) * 1.0 / damage[level]);
 		return (int) (12 * percent);
 	}
 }

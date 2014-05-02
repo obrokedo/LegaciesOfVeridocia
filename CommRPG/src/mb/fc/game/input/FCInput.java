@@ -1,5 +1,6 @@
 package mb.fc.game.input;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 import org.newdawn.slick.Input;
@@ -8,14 +9,15 @@ import org.newdawn.slick.KeyListener;
 public class FCInput implements KeyListener
 {
 	private HashSet<Integer> keysPressed;
-	private HashSet<Integer> keysHeld;
+	private ArrayList<Integer> keysHeld;
 	private int updateDelta = 0;
 	private static final int UPDATE_TIME = 50;
+	private static final int DIRECTION_KEYS[] = {Input.KEY_RIGHT, Input.KEY_LEFT, Input.KEY_UP, Input.KEY_DOWN};
 	
 	public FCInput() {
 		super();
 		keysPressed = new HashSet<Integer>();
-		keysHeld = new HashSet<Integer>();
+		keysHeld = new ArrayList<Integer>();
 	}
 	
 	public void update(int delta)
@@ -36,13 +38,28 @@ public class FCInput implements KeyListener
 
 	public boolean isKeyDown(int keyCode)
 	{
-		return keysPressed.contains(keyCode) || keysHeld.contains(keyCode);
+		return keysHeld.contains(keyCode);
+	}
+	
+	public int getMostRecentDirection()
+	{
+		int recent = -1;
+		int recentIndex = -1;
+		for (int dir : DIRECTION_KEYS)
+		{
+			if (keysHeld.indexOf(dir) > recentIndex)
+			{
+				recentIndex = keysHeld.indexOf(dir);
+				recent = dir;
+			}
+		}
+		
+		return recent;
 	}
 
 	@Override
 	public void setInput(Input input) {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub		
 	}
 
 	@Override
@@ -68,6 +85,6 @@ public class FCInput implements KeyListener
 
 	@Override
 	public void keyReleased(int key, char c) {
-		keysHeld.remove(key);		
+		keysHeld.remove((Object) key);		
 	}
 }

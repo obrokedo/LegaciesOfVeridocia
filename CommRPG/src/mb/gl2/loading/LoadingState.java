@@ -3,8 +3,10 @@ package mb.gl2.loading;
 import java.util.ArrayList;
 import java.util.List;
 
+import mb.fc.game.hudmenu.Panel;
 import mb.fc.loading.FCResourceManager;
 import mb.fc.loading.LoadingComp;
+import mb.jython.GlobalPythonFactory;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -85,7 +87,7 @@ public class LoadingState extends BasicGameState
 					{
 						// If we are loading maps and resources then this is the first load before enter the actual game state.
 						// In this case initialize the default resources
-						allLines = FCResourceManager.readAllLines("/loader/Default");						
+						allLines = FCResourceManager.readAllLines("/loader/Default");				
 					}
 				
 					// Regardless of whether we are loading other resources, add the map and text files
@@ -131,6 +133,13 @@ public class LoadingState extends BasicGameState
 			
 		if (allLines.size() == 0)
 		{			
+			// This is the entry point into the actual game. Initialize static variables here
+			if (loadingMap && loadResources)
+			{					
+				GlobalPythonFactory.intialize();
+				Panel.intialize((FCResourceManager) resourceManager);
+			}
+			
 			// Only alert the loadable state if resources are being loaded. If they are not being loaded
 			// then map data will be updated in the current resource manager
 			if (loadResources)

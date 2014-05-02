@@ -54,7 +54,7 @@ public class Cinematic {
 	private int cameraShakeDuration;
 	private int cameraShakeSeverity;
 	private int lastCameraShake;
-	
+
 
 	public Cinematic(ArrayList<CinematicEvent> initializeEvents,
 			ArrayList<CinematicEvent> cinematicEvents, int cameraX, int cameraY) {
@@ -78,15 +78,15 @@ public class Cinematic {
 
 	public boolean update(int delta, Camera camera, FCInput input,
 			GameContainer gc, Map map, StateInfo stateInfo) {
-				
+
 		if (fadingColor != null)
 		{
 			fadeDelta += delta;
 			if (fadeDelta >= 50)
 			{
-				
+
 				fadeDelta -= 50;
-				
+
 				if (fadeIn)
 				{
 					fadingColor.a = Math.max(0, fadingColor.a - fadeSpeed);
@@ -101,7 +101,7 @@ public class Cinematic {
 				}
 			}
 		}
-		
+
 		if (waitTime > 0)
 			waitTime = Math.max(0, waitTime - delta);
 
@@ -135,7 +135,7 @@ public class Cinematic {
 				}
 			}
 		}
-		
+
 		for (CinematicActor ca : sortedActors)
 		{
 			ca.update(delta, this);
@@ -145,7 +145,7 @@ public class Cinematic {
 						cameraFollow.getLocY(), map);
 			}
 		}
-		
+
 		Collections.sort(sortedActors, CIN_ACT_COMP);
 
 		if (cameraShaking) {
@@ -161,8 +161,8 @@ public class Cinematic {
 				lastCameraShake = newCameraShake;
 			} else
 				cameraShaking = false;
-		}				
-				
+		}
+
 
 		if (speechMenu != null
 				&& MenuUpdate.MENU_CLOSE == speechMenu.handleUserInput(input,
@@ -183,7 +183,7 @@ public class Cinematic {
 				&& cameraMoveToX == -1 && speechMenu == null
 				&& cinematicEvents.size() == 0;
 	}
-	
+
 	boolean debug = false;
 
 	private void handleEvent(CinematicEvent ce, StateInfo stateInfo) {
@@ -195,10 +195,10 @@ public class Cinematic {
 			haltedMovers++;
 			break;
 		case MOVE:
-			if ((int) ce.getParam(0) == 480 && 
+			if ((int) ce.getParam(0) == 480 &&
 					(int) ce.getParam(1) == 96 && (float) ce.getParam(2) == 2)
 				debug = true;
-				
+
 			actors.get(ce.getParam(3)).moveToLocation((int) ce.getParam(0),
 					(int) ce.getParam(1), (float) ce.getParam(2), false, -1, (boolean) ce.getParam(4), (boolean) ce.getParam(5));
 			break;
@@ -212,7 +212,7 @@ public class Cinematic {
 					(int) ce.getParam(2), (float) ce.getParam(3));
 			break;
 		case STOP_LOOP_MOVE:
-			actors.get((String) ce.getParam(0)).stopLoopMove();
+			actors.get(ce.getParam(0)).stopLoopMove();
 			break;
 		case CAMERA_MOVE:
 			cameraMoveToX = (int) ce.getParam(0)
@@ -257,7 +257,7 @@ public class Cinematic {
 			CinematicActor ca = new CinematicActor(
 					stateInfo.getResourceManager()
 					.getSpriteAnimations()
-					.get((String) ce.getParam(3)), (String) ce
+					.get(ce.getParam(3)), (String) ce
 					.getParam(4), (int) ce.getParam(0),
 			(int) ce.getParam(1), (boolean) ce.getParam(5));
 			actors.put(
@@ -277,12 +277,12 @@ public class Cinematic {
 					(String) ce.getParam(1));
 			break;
 		case HALTING_ANIMATION:
-			actors.get((String) ce.getParam(0)).setAnimation(
+			actors.get(ce.getParam(0)).setAnimation(
 					(String) ce.getParam(1), (int) ce.getParam(2), true, false);
 			haltedAnims++;
 			break;
 		case ANIMATION:
-			actors.get((String) ce.getParam(0)).setAnimation(
+			actors.get(ce.getParam(0)).setAnimation(
 					(String) ce.getParam(1), (int) ce.getParam(2), false,
 					(boolean) ce.getParam(3));
 			break;
@@ -290,59 +290,59 @@ public class Cinematic {
 			waitTime = (int) ce.getParam(0);
 			break;
 		case SPIN:
-			actors.get((String) ce.getParam(0)).setSpinning(
+			actors.get(ce.getParam(0)).setSpinning(
 					(int) ce.getParam(1), (int) ce.getParam(2));
 			break;
 		case STOP_SPIN:
-			actors.get((String) ce.getParam(0)).stopSpinning();
+			actors.get(ce.getParam(0)).stopSpinning();
 			break;
 		case SHRINK:
-			actors.get((String) ce.getParam(0)).shrink((int) ce.getParam(1));
+			actors.get(ce.getParam(0)).shrink((int) ce.getParam(1));
 			break;
 		case GROW:
-			actors.get((String) ce.getParam(0)).grow((int) ce.getParam(1));
+			actors.get(ce.getParam(0)).grow((int) ce.getParam(1));
 			break;
 		case QUIVER:
-			actors.get((String) ce.getParam(0)).quiver();
+			actors.get(ce.getParam(0)).quiver();
 			break;
 		case TREMBLE:
-			actors.get((String) ce.getParam(0)).tremble();
+			actors.get(ce.getParam(0)).tremble();
 			break;
 		case LAY_ON_BACK:
-			actors.get((String) ce.getParam(0)).layOnBack(
+			actors.get(ce.getParam(0)).layOnBack(
 					getDirectionFromInt((int) ce.getParam(1)));
 			break;
 		case LAY_ON_SIDE:
-			actors.get((String) ce.getParam(0)).layOnSide(
+			actors.get(ce.getParam(0)).layOnSide(
 					getDirectionFromInt((int) ce.getParam(1)));
 			break;
 		case FALL_ON_FACE:
-			actors.get((String) ce.getParam(0)).fallOnFace(
+			actors.get(ce.getParam(0)).fallOnFace(
 					getDirectionFromInt((int) ce.getParam(1)));
 			break;
 		case FLASH:
-			actors.get((String) ce.getParam(0)).flash((int) ce.getParam(1),
+			actors.get(ce.getParam(0)).flash((int) ce.getParam(1),
 					(int) ce.getParam(2));
 			break;
 		case NOD:
-			actors.get((String) ce.getParam(0)).nodHead();
+			actors.get(ce.getParam(0)).nodHead();
 			break;
 		case HEAD_SHAKE:
-			actors.get((String) ce.getParam(0)).shakeHead((int) ce.getParam(1));
+			actors.get(ce.getParam(0)).shakeHead((int) ce.getParam(1));
 			break;
 		case STOP_SE:
-			actors.get((String) ce.getParam(0)).stopSpecialEffect();
+			actors.get(ce.getParam(0)).stopSpecialEffect();
 			break;
 		case VISIBLE:
-			actors.get((String) ce.getParam(0)).setVisible(
+			actors.get(ce.getParam(0)).setVisible(
 					(boolean) ce.getParam(1));
 			break;
 		case REMOVE_ACTOR:
-			sortedActors.remove(actors.remove((String) ce.getParam(0)));
+			sortedActors.remove(actors.remove(ce.getParam(0)));
 			break;
 		case FACING:
 			int dir = (int) ce.getParam(1);
-			actors.get((String) ce.getParam(0)).setFacing(dir);
+			actors.get(ce.getParam(0)).setFacing(dir);
 			break;
 		case ASSOCIATE_NPC_AS_ACTOR:
 			for (Sprite s : stateInfo.getSprites()) {
@@ -376,7 +376,7 @@ public class Cinematic {
 					((int) ce.getParam(1)) / 100.0f, true));
 			break;
 		case STOP_ANIMATION:
-			actors.get((String) ce.getParam(0)).stopAnimation();
+			actors.get(ce.getParam(0)).stopAnimation();
 			break;
 		case FADE_FROM_BLACK:
 			fadeIn = true;
@@ -397,14 +397,14 @@ public class Cinematic {
 			default:
 				break;
 		}
-		
+
 	}
 
 	public void render(Graphics graphics, Camera camera, FCGameContainer cont,
 			StateInfo stateInfo) {
 		for (CinematicActor ca : sortedActors)
 		{
-			ca.render(graphics, camera, cont, stateInfo);			
+			ca.render(graphics, camera, cont, stateInfo);
 		}
 
 	}
@@ -417,11 +417,11 @@ public class Cinematic {
 	public void renderPostEffects(FCGameContainer cont, Graphics g) {
 		if (fadingColor != null)
 		{
-			g.setColor(fadingColor);		
+			g.setColor(fadingColor);
 			g.fillRect(0, 0, cont.getWidth(), cont.getHeight());
 		}
-	
-			
+
+
 	}
 
 	public void decreaseMoves() {

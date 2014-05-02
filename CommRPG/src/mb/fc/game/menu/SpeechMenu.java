@@ -11,6 +11,7 @@ import mb.fc.game.input.FCInput;
 import mb.fc.game.input.KeyMapping;
 import mb.fc.game.ui.FCGameContainer;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
@@ -59,7 +60,7 @@ public class SpeechMenu extends Menu
 		width = gc.getWidth() - 100 - gc.getDisplayPaddingX() * 2;
 		x = 50 + gc.getDisplayPaddingX();
 		
-		int maxTextWidth = width - 10;		
+		int maxTextWidth = width;		
 		int spaceWidth = SPEECH_FONT.getWidth("_");
 		String[] splitText = text.split(" ");
 		int currentLineWidth = 0;
@@ -121,11 +122,15 @@ public class SpeechMenu extends Menu
 		for (int i = Math.max(0, textIndex - 2); i <= textIndex; i++)
 		{			
 			graphics.drawString((i == textIndex ? panelText.get(i).substring(0, textMovingIndex) : panelText.get(i)), x + 15, 
-					gc.getHeight() - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 60 + 5 + (i - textIndex + (textIndex >= 2 ? 2 : textIndex)) * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 15);
+					gc.getHeight() - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 60 + 10 +  (i - textIndex + (textIndex >= 2 ? 2 : textIndex)) * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 15);
 		}
 		
 		if (portrait != null)
-			graphics.drawImage(portrait, x, 25);
+		{
+			Panel.drawPanelBox(x, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 12, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 62, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 78, graphics, Color.black);
+			graphics.drawImage(portrait, x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 7, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 12 + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 7);
+			// graphics.drawImage(portrait, x, 25);
+		}
 	}
 
 	@Override
@@ -134,9 +139,11 @@ public class SpeechMenu extends Menu
 		if (!initialized)
 		{			
 			if (y <= 0)
+			{
 				initialized = true;
+			}
 			else
-				y -= CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 8;
+				y = Math.max(y - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 8, 0);
 			
 			return MenuUpdate.MENU_NO_ACTION;
 		}

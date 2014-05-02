@@ -7,6 +7,7 @@ import mb.fc.game.input.FCInput;
 import mb.fc.game.move.MovingSprite;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.ui.FCGameContainer;
+import mb.jython.GlobalPythonFactory;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -74,6 +75,11 @@ public class DebugMenu extends Menu
 			else if (splitText[0].equalsIgnoreCase("standanim"))
 			{
 				MovingSprite.STAND_ANIMATION_SPEED = Integer.parseInt(splitText[1]);
+			}
+			else if (splitText[0].equalsIgnoreCase("loadscripts"))
+			{
+				GlobalPythonFactory.intialize();
+				System.out.println("LOAD ");
 			}
 			
 			textField.deactivate();

@@ -383,14 +383,21 @@ public class MoveableSpace implements KeyboardListener, MouseListener, TileBased
 			stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menuback", 1f, false));
 			return true;
 		}
-		else if (input.isKeyDown(KeyMapping.BUTTON_UP))
-			return handleKeyboardMovement(stateInfo, 0, -1, Direction.UP);
-		else if (input.isKeyDown(KeyMapping.BUTTON_DOWN))
-			return handleKeyboardMovement(stateInfo, 0, 1, Direction.DOWN);
-		else if (input.isKeyDown(KeyMapping.BUTTON_LEFT))
-			return handleKeyboardMovement(stateInfo, -1, 0, Direction.LEFT);
-		else if (input.isKeyDown(KeyMapping.BUTTON_RIGHT))
-			return handleKeyboardMovement(stateInfo, 1, 0, Direction.RIGHT);
+		else
+		{
+			switch (input.getMostRecentDirection())
+			{
+				case KeyMapping.BUTTON_UP:
+					return handleKeyboardMovement(stateInfo, 0, -1, Direction.UP);
+				case KeyMapping.BUTTON_DOWN:
+					return handleKeyboardMovement(stateInfo, 0, 1, Direction.DOWN);
+				case KeyMapping.BUTTON_LEFT:
+					return handleKeyboardMovement(stateInfo, -1, 0, Direction.LEFT);
+				case KeyMapping.BUTTON_RIGHT:
+					return handleKeyboardMovement(stateInfo, 1, 0, Direction.RIGHT);
+			}
+		}
+			
 		return false;
 	}
 	

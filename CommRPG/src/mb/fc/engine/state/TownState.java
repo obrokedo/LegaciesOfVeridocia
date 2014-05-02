@@ -2,16 +2,15 @@ package mb.fc.engine.state;
 
 import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.Message;
-import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.manager.CinematicManager;
-import mb.fc.game.manager.PanelManager;
 import mb.fc.game.manager.MenuManager;
+import mb.fc.game.manager.PanelManager;
 import mb.fc.game.manager.SoundManager;
 import mb.fc.game.manager.SpriteManager;
 import mb.fc.game.manager.TownMoveManager;
 import mb.fc.loading.FCResourceManager;
-import mb.fc.renderer.PanelRenderer;
 import mb.fc.renderer.MenuRenderer;
+import mb.fc.renderer.PanelRenderer;
 import mb.fc.renderer.SpriteRenderer;
 import mb.fc.renderer.TileMapRenderer;
 import mb.gl2.loading.LoadableGameState;
@@ -166,8 +165,6 @@ public class TownState extends LoadableGameState
 
 	@Override
 	public void stateLoaded(ResourceManager resourceManager) {	
-		this.stateInfo.setResourceManager((FCResourceManager) resourceManager);
-		Panel.intialize(stateInfo.getResourceManager());
-		// Menu.menuBackground = this.stateInfo.getResourceManager().getImages().get("menubg");
+		this.stateInfo.setResourceManager((FCResourceManager) resourceManager);				
 	}
 }

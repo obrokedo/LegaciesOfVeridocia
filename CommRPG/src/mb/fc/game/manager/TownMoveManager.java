@@ -4,12 +4,11 @@ import java.util.ArrayList;
 
 import mb.fc.engine.message.Message;
 import mb.fc.game.constants.Direction;
+import mb.fc.game.input.KeyMapping;
 import mb.fc.game.move.MovingSprite;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.sprite.Sprite;
 import mb.fc.map.Map;
-
-import org.newdawn.slick.Input;
 
 public class TownMoveManager extends Manager
 {
@@ -42,34 +41,33 @@ public class TownMoveManager extends Manager
 				int sx = current.getTileX();
 				int sy = current.getTileY();
 				
-				if (stateInfo.getInput().isKeyDown(Input.KEY_RIGHT))
+				switch (stateInfo.getInput().getMostRecentDirection())
 				{
-					if (!blocked(stateInfo.getResourceManager().getMap(), sx + 1, sy))
-						setMoving(Direction.RIGHT, current);
-					else
-						current.setFacing(Direction.RIGHT);
-				}
-				else if (stateInfo.getInput().isKeyDown(Input.KEY_LEFT))
-				{
-					if (!blocked(stateInfo.getResourceManager().getMap(), sx - 1, sy))
-						setMoving(Direction.LEFT, current);
-					else
-						current.setFacing(Direction.LEFT);
-				}
-				else if (stateInfo.getInput().isKeyDown(Input.KEY_UP))
-				{
-					if (!blocked(stateInfo.getResourceManager().getMap(), sx, sy - 1))
-						setMoving(Direction.UP, current);
-					else
-						current.setFacing(Direction.UP);
-				}
-				else if (stateInfo.getInput().isKeyDown(Input.KEY_DOWN))
-				{
-					if (!blocked(stateInfo.getResourceManager().getMap(), sx, sy + 1))
-						setMoving(Direction.DOWN, current);
-					else
-						current.setFacing(Direction.DOWN);
-				}			
+					case KeyMapping.BUTTON_RIGHT:
+						if (!blocked(stateInfo.getResourceManager().getMap(), sx + 1, sy))
+							setMoving(Direction.RIGHT, current);
+						else
+							current.setFacing(Direction.RIGHT);
+						break;
+					case KeyMapping.BUTTON_LEFT:
+						if (!blocked(stateInfo.getResourceManager().getMap(), sx - 1, sy))
+							setMoving(Direction.LEFT, current);
+						else
+							current.setFacing(Direction.LEFT);
+						break;
+					case KeyMapping.BUTTON_UP:
+						if (!blocked(stateInfo.getResourceManager().getMap(), sx, sy - 1))
+							setMoving(Direction.UP, current);
+						else
+							current.setFacing(Direction.UP);
+						break;
+					case KeyMapping.BUTTON_DOWN:
+						if (!blocked(stateInfo.getResourceManager().getMap(), sx, sy + 1))
+							setMoving(Direction.DOWN, current);
+						else
+							current.setFacing(Direction.DOWN);
+						break;
+				}		
 			}
 			
 			for (int i = 0; i < movers.size(); i++)

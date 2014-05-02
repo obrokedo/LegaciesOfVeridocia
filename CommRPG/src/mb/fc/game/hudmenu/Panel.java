@@ -5,6 +5,8 @@ import java.awt.Font;
 import mb.fc.engine.CommRPG;
 import mb.fc.game.ui.FCGameContainer;
 import mb.fc.loading.FCResourceManager;
+import mb.jython.GlobalPythonFactory;
+import mb.jython.JPanelRender;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -53,6 +55,7 @@ public abstract class Panel
 	public static SpriteSheet MENU_BORDER;
 	protected static UnicodeFont PANEL_FONT;
 	protected static UnicodeFont SPEECH_FONT;
+	protected static JPanelRender renderer;
 	
 	
 	public Panel(int menuType) {
@@ -63,7 +66,7 @@ public abstract class Panel
 		{			
 			default:
 				break;
-		}
+		}				
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -87,6 +90,8 @@ public abstract class Panel
 		}
 		
 		// stateInfo.getGc().getGraphics().setFont(PANEL_FONT);
+
+        renderer =  GlobalPythonFactory.createJPanelRender();
 	}
 
 	public abstract void render(FCGameContainer gc, Graphics graphics);
@@ -104,6 +109,20 @@ public abstract class Panel
 		// graphics.drawImage(menuBackground.getSubImage(0, 0, width - 10, height - 10), x + 5, y + 5);
 		graphics.setFont(PANEL_FONT);
 		graphics.setColor(Color.blue);
+		
+		renderer.render(MENU_BORDER, x, y, width, height, graphics);
+	}
+	
+	public static void drawPanelBox(int x, int y, int width, int height, Graphics graphics, Color color)
+	{		
+		// graphics.setColor(Color.lightGray);
+		// graphics.fillRoundRect(x, y, width, height, 5);		
+		// graphics.drawImage(menuBackground.getSubImage(0, 0, width - 10, height - 10), x + 5, y + 5);
+		graphics.setFont(PANEL_FONT);
+		graphics.setColor(color);
+		
+		// renderer.render(MENU_BORDER, x, y, width, height, graphics);
+		
 		graphics.fillRect(x, y, width, height);
 		MENU_BORDER.getSprite(4, 0).draw(x, y + height - 12, x + width, y + height, 4, 0, 5, 12);
 		MENU_BORDER.getSprite(5, 0).draw(x, y, x + width, y + 12, 4, 0, 5, 12);

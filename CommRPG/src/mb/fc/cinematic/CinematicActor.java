@@ -11,6 +11,8 @@ import mb.fc.game.ui.FCGameContainer;
 import mb.fc.utils.AnimSprite;
 import mb.fc.utils.Animation;
 import mb.fc.utils.SpriteAnims;
+import mb.jython.GlobalPythonFactory;
+import mb.jython.JCinematicActor;
 
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.Color;
@@ -52,7 +54,6 @@ public class CinematicActor
 	private boolean haltingMove;
 	private float moveSpeed;
 	private int movingDelta;
-	private static final int MOVE_UPDATE = 20;
 	private boolean loopMoving = false;
 	private float startLoopX;
 	private float startLoopY;
@@ -77,8 +78,11 @@ public class CinematicActor
 	
 	private boolean moving;		
 	
+	public JCinematicActor jCinematicActor;
+	
 	public CinematicActor(SpriteAnims spriteAnims, String initialAnimation, int x, int y, boolean visible)
 	{
+		jCinematicActor = GlobalPythonFactory.createJCinematicActor();
 		this.facing = Direction.DOWN;
 		this.spriteAnims = spriteAnims;
 		currentAnim = this.spriteAnims.getAnimation(initialAnimation);
@@ -357,9 +361,9 @@ public class CinematicActor
 		if (moving)
 		{
 			movingDelta += delta;
-			while (movingDelta > MOVE_UPDATE)
+			while (movingDelta > jCinematicActor.getMoveUpdate())
 			{
-				movingDelta -= MOVE_UPDATE;
+				movingDelta -= jCinematicActor.getMoveUpdate();
 				boolean moved = false;
 				
 				if (moveDiag)
@@ -395,7 +399,7 @@ public class CinematicActor
 							haltingMove = false;
 							cinematic.decreaseMoves();
 						}
-						this.animUpdate = 500;
+						this.animUpdate = jCinematicActor.getAnimUpdateAfterSE();
 						// this.animUpdate = Long.MAX_VALUE;
 					}
 					else
@@ -451,13 +455,13 @@ public class CinematicActor
 							specialEffectType = SE_NONE;
 					case SE_NOD:
 						specialEffectType = SE_NONE;
-						animUpdate = 500;
+						animUpdate = jCinematicActor.getAnimUpdateAfterSE();
 						break;
 					case SE_HEAD_SHAKE:
 						if (specialEffectCounter + 1 == 10)
 						{
 							specialEffectType = SE_NONE;
-							animUpdate = 500;
+							animUpdate = jCinematicActor.getAnimUpdateAfterSE();
 						}
 						else
 							specialEffectCounter++;
@@ -480,7 +484,7 @@ public class CinematicActor
 	{
 		specialEffectType = SE_NOD;
 		specialEffectDelta = 0;
-		specialEffectUpdate = 500;
+		specialEffectUpdate = jCinematicActor.getNodHeadDuration();
 		specialEffectCounter = 0;
 		animUpdate = Long.MAX_VALUE;
 	}
@@ -530,7 +534,7 @@ public class CinematicActor
 		specialEffectType = SE_QUIVER;
 		specialEffectDuration = INDEFINITE_TIME;
 		specialEffectDelta = 0;
-		specialEffectUpdate = 25;
+		specialEffectUpdate = jCinematicActor.getQuiverUpdate();
 		specialEffectCounter = 0;
 		animUpdate = Long.MAX_VALUE;
 	}
@@ -540,7 +544,8 @@ public class CinematicActor
 		specialEffectType = SE_TREMBLE;
 		specialEffectDuration = INDEFINITE_TIME;
 		specialEffectDelta = 0;
-		specialEffectUpdate = 13;
+		System.out.println("TREMBLE " + jCinematicActor.getTrembleUpdate());
+		specialEffectUpdate = jCinematicActor.getTrembleUpdate();
 		specialEffectCounter = 0;
 		animUpdate = Long.MAX_VALUE;
 	}
@@ -573,7 +578,7 @@ public class CinematicActor
 	public void stopSpecialEffect()
 	{
 		specialEffectType = SE_NONE;
-		animUpdate = 500;
+		animUpdate = jCinematicActor.getAnimUpdateAfterSE();
 	}
 	
 	private void setLocX(float locX) {
@@ -666,7 +671,7 @@ public class CinematicActor
 		this.moveSpeed = speed * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
 		this.movingDelta = 0;
 		this.animDelta = 0;
-		this.animUpdate = (long) (469.875 / speed);
+		this.animUpdate = (long) jCinematicActor.getAnimSpeedForMoveSpeed(speed);
 		this.moveHorFirst = moveHorFirst;
 		this.moveDiag = moveDiag;
 		if (direction != -1)

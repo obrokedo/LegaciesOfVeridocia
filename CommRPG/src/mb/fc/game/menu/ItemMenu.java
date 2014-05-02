@@ -8,7 +8,9 @@ import mb.fc.engine.state.StateInfo;
 import mb.fc.game.constants.Direction;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.item.Item;
+import mb.fc.game.ui.FCGameContainer;
 
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
 public class ItemMenu extends QuadMenu
@@ -16,7 +18,7 @@ public class ItemMenu extends QuadMenu
 	private Image emptySpot;
 	
 	public ItemMenu(StateInfo stateInfo) {
-		super(Panel.PANEL_ITEM, stateInfo);
+		super(Panel.PANEL_ITEM, false, stateInfo);
 		emptySpot = stateInfo.getResourceManager().getSpriteSheets().get("items").getSprite(17, 1);
 		
 		this.enabled = new boolean[4];
@@ -48,6 +50,20 @@ public class ItemMenu extends QuadMenu
 				icons[i] = emptySpot;
 			}
 		}
+	}
+	
+	@Override
+	protected void renderTextBox(FCGameContainer gc, Graphics graphics)
+	{
+		Panel.drawPanelBox(CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 195 + gc.getDisplayPaddingX(), 
+				CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 195, 
+				getTextboxWidth(), 
+				CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 15 + 12, graphics);
+		
+		graphics.setColor(COLOR_FOREFRONT);
+		
+		graphics.drawString(getText(selected), CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 202 + gc.getDisplayPaddingX(),
+				CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 190 + 3);
 	}
 
 	@Override

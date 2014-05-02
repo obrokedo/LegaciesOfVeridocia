@@ -57,15 +57,21 @@ public class HeroStatMenu extends Menu
 		graphics.setColor(COLOR_FOREFRONT);
 		graphics.drawString(selectedSprite.getName(), x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 70, y + -3);
 		
-		graphics.drawString("LV: " + selectedSprite.getLevel(), x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 75, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 13);
-		graphics.drawString("HP: " + selectedSprite.getCurrentHP() + " / " + selectedSprite.getMaxHP(), x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 75, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 28);
-		graphics.drawString("MP: " + selectedSprite.getCurrentMP() + " / " + selectedSprite.getMaxMP(), x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 75, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 43);		
-		graphics.drawString("XP: " + selectedSprite.getExp(), x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 75, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 58);
+		if (selectedSprite.isPromoted())
+			graphics.drawString(selectedSprite.getHeroProgression().getPromotedProgression().getClassName(), x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 70 + graphics.getFont().getWidth(selectedSprite.getName()) + 10 *  CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], y + -3);
+		else
+			graphics.drawString(selectedSprite.getHeroProgression().getUnpromotedProgression().getClassName(), x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 70 + graphics.getFont().getWidth(selectedSprite.getName()) + 10 *  CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], y + -3);
+		
+		graphics.drawString("LV: " + selectedSprite.getLevel(), x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 75, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 13);		
+		graphics.drawString("XP: " + selectedSprite.getExp(), x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 75, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 28);
+		graphics.drawString("HP: " + selectedSprite.getCurrentHP() + "/" + selectedSprite.getMaxHP(), x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 75, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 43);
+		graphics.drawString("MP: " + selectedSprite.getCurrentMP() + "/" + selectedSprite.getMaxMP(), x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 75, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 58);
+		
 		
 		graphics.drawString("ATK: " + selectedSprite.getCurrentAttack(), x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 152, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 13);
-		graphics.drawString("DEF: " + selectedSprite.getCurrentDefense(), x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 152, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 28);
-		graphics.drawString("SPD: " + selectedSprite.getCurrentSpeed(), x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 152, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 43);
-		graphics.drawString("MOV: " + selectedSprite.getCurrentMove(), x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 152, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 58);
+		graphics.drawString("DEF: " + (selectedSprite.getCurrentDefense() < 10 ? " " : "") + selectedSprite.getCurrentDefense() , x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 152, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 28);
+		graphics.drawString("SPD: " + (selectedSprite.getCurrentDefense() < 10 ? " " : "") + selectedSprite.getCurrentSpeed(), x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 152, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 43);
+		graphics.drawString("MOV: " + (selectedSprite.getCurrentDefense() < 10 ? " " : "") + selectedSprite.getCurrentMove(), x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 152, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 58);
 		
 		// Draw Spells
 		graphics.drawString("MAGIC", x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 70, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 73);		
@@ -105,7 +111,7 @@ public class HeroStatMenu extends Menu
 			if (selectedSprite.getEquipped().get(i))
 			{
 				graphics.setColor(Color.pink);
-				graphics.drawString("EQPD", x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 155, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 97 + i * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 23);
+				graphics.drawString("EQ.", x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 155, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 97 + i * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 23);
 			}
 			
 		}	
@@ -115,7 +121,8 @@ public class HeroStatMenu extends Menu
 		/****************************/
 		if (selectedSprite.getPortraitImage() != null)
 		{
-			graphics.drawImage(selectedSprite.getPortraitImage(), x, y);
+			Panel.drawPanelBox(x, y, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 62, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 78, graphics, Color.black);
+			graphics.drawImage(selectedSprite.getPortraitImage(), x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 7, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 7);
 		}
 		
 		/*****************************/
@@ -126,17 +133,17 @@ public class HeroStatMenu extends Menu
 		graphics.drawImage(selectedSprite.getAnimationImageAtIndex(selectedSprite.getAnimation("UnDown").frames.get(animCount).sprites.get(0).imageIndex), 
 				x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 19, 
 				y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 82);
-		graphics.drawString("Kills", x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 7, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 100);		
-		graphics.drawString("Defeat", x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 7, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 125);
+		graphics.drawString("Kills", x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 13, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 100);		
+		graphics.drawString("Defeat", x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 10, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 125);
 		if (selectedSprite.isHero())
 		{
-			graphics.drawString(selectedSprite.getKills() + "", x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 15, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 110);
-			graphics.drawString(selectedSprite.getDefeat() + "", x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 15, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 135);
+			graphics.drawString(selectedSprite.getKills() + "", x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 28, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 110);
+			graphics.drawString(selectedSprite.getDefeat() + "", x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 28, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 135);
 		}
 		else
 		{
-			graphics.drawString("?", x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 15, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 110);
-			graphics.drawString("?", x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 15, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 135);
+			graphics.drawString("?", x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 28, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 110);
+			graphics.drawString("?", x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 28, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 135);
 		}
 		
 		/************************/
@@ -146,8 +153,8 @@ public class HeroStatMenu extends Menu
 		{			
 			Panel.drawPanelBox(x, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 158, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 62, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 34, graphics);
 			graphics.setColor(Panel.COLOR_FOREFRONT);
-			graphics.drawString("Gold", x + 15, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 155);
-			graphics.drawString(gold, x + 15, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 167);
+			graphics.drawString("Gold", x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 18, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 155);
+			graphics.drawString(gold, x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 30 - graphics.getFont().getWidth(gold) / 2, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 167);
 		}
 	}
 }
