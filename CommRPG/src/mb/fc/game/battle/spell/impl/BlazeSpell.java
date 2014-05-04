@@ -1,9 +1,10 @@
 package mb.fc.game.battle.spell.impl;
 
-import mb.fc.game.battle.spell.Spell;
 import mb.fc.game.battle.spell.KnownSpell;
+import mb.fc.game.battle.spell.Spell;
+import mb.fc.game.sprite.CombatSprite;
 
-public class BlazeSpell extends Spell 
+public class BlazeSpell extends Spell
 {
 	public BlazeSpell()
 	{
@@ -20,8 +21,8 @@ public class BlazeSpell extends Spell
 	}
 
 	@Override
-	public String getBattleText(String targetName, int spellLevel) 
+	public String getBattleText(CombatSprite target, int spellLevel)
 	{
-		return "Flame engulfs " + targetName + "'s body dealing " + -damage[spellLevel] + " damage!";
+		return "Flame engulfs " + target.getName() + "'s body dealing " + -damage[spellLevel] + " damage!";
 	}
 }

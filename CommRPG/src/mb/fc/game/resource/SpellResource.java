@@ -3,32 +3,36 @@ package mb.fc.game.resource;
 import java.util.Hashtable;
 
 import mb.fc.engine.state.StateInfo;
-import mb.fc.game.battle.spell.Spell;
 import mb.fc.game.battle.spell.KnownSpell;
-import mb.fc.game.battle.spell.impl.AuraSpell;
-import mb.fc.game.battle.spell.impl.BlazeSpell;
-import mb.fc.game.battle.spell.impl.HealSpell;
+import mb.fc.game.battle.spell.Spell;
 import mb.fc.loading.FCResourceManager;
+import mb.jython.GlobalPythonFactory;
 
-public class SpellResource 
+public class SpellResource
 {
 	public static Hashtable<Integer, Spell> spells;
-	
-	static
+
+	public static void initSpells(FCResourceManager frm)
 	{
 		spells = new Hashtable<Integer, Spell>();
-		spells.put(KnownSpell.ID_BLAZE, new BlazeSpell());
-		spells.put(KnownSpell.ID_HEAL, new HealSpell());
-		spells.put(KnownSpell.ID_AURA, new AuraSpell());
+		addSpell(KnownSpell.ID_BLAZE, frm);
+		addSpell(KnownSpell.ID_HEAL, frm);
+		addSpell(KnownSpell.ID_AURA, frm);
 	}
-	
+
+	private static void addSpell(int spellId, FCResourceManager frm)
+	{
+		Spell s =  GlobalPythonFactory.createSpell();
+		s.init(spellId);
+		s.setSpellIcon(frm.getSpriteSheets().get("spellicons").getSubImage(spellId, 0));
+		spells.put(spellId, s);
+	}
+
 	public static Spell getSpell(int spellId, FCResourceManager frm)
 	{
-		Spell spell = spells.get(spellId);
-		spell.setSpellIcon(frm.getSpriteSheets().get("spellicons").getSubImage(spellId, 0));
-		return spell;
+		return spells.get(spellId);
 	}
-	
+
 	public static Spell getSpell(int spellId, StateInfo stateInfo)
 	{
 		return getSpell(spellId, stateInfo.getResourceManager());

@@ -19,11 +19,11 @@ public class SpellMenu extends QuadMenu
 	private Image emptySpot;
 	private int selectedLevel = 0;
 	private boolean choseSpell = false;
-	
+
 	public SpellMenu(StateInfo stateInfo) {
-		super(Panel.PANEL_SPELL, false, stateInfo);		
+		super(Panel.PANEL_SPELL, false, stateInfo);
 		emptySpot = stateInfo.getResourceManager().getSpriteSheets().get("spellicons").getSubImage(15, 0);
-		
+
 		this.enabled = new boolean[4];
 		this.icons = new Image[4];
 		this.text = new String[4];
@@ -31,10 +31,10 @@ public class SpellMenu extends QuadMenu
 	}
 
 	@Override
-	public void initialize() 
+	public void initialize()
 	{
 		choseSpell = false;
-		
+
 		for (int i = 0; i < 4; i++)
 		{
 			if (i < stateInfo.getCurrentSprite().getSpellsDescriptors().size())
@@ -59,7 +59,7 @@ public class SpellMenu extends QuadMenu
 			choseSpell = false;
 			return MenuUpdate.MENU_ACTION_LONG;
 		}
-		else	
+		else
 		{
 			stateInfo.sendMessage(Message.MESSAGE_SHOW_BATTLEMENU);
 			return MenuUpdate.MENU_CLOSE;
@@ -86,50 +86,50 @@ public class SpellMenu extends QuadMenu
 		{
 			stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menuselect", 1f, false));
 			choseSpell = true;
-			selectedLevel = 0;			
+			selectedLevel = 0;
 			return MenuUpdate.MENU_ACTION_LONG;
-		}		
+		}
 	}
 
 	@Override
 	protected void renderTextBox(FCGameContainer gc, Graphics graphics) {
 		graphics.setColor(Panel.COLOR_FOREFRONT);
-		
-		Panel.drawPanelBox(CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 198 + gc.getDisplayPaddingX(), 
-				CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 200 - 40, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 75, 
-				CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 36 + 18, graphics);	
-		
+
+		Panel.drawPanelBox(CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 198 + gc.getDisplayPaddingX(),
+				CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 200 - 40, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 75,
+				CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 36 + 18, graphics);
+
 		KnownSpell overSpell = stateInfo.getCurrentSprite().getSpellsDescriptors().get(getSelectedInt());
-		
+
 		graphics.setColor(COLOR_FOREFRONT);
 		graphics.drawString(text[getSelectedInt()], CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 205 + gc.getDisplayPaddingX(), CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 195 - 35);
 		if (choseSpell)
 		{
 			graphics.setColor(Color.red);
 			graphics.drawRoundRect(CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 200 + 5 + gc.getDisplayPaddingX(),
-					CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 215 - 35, 
+					CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 215 - 35,
 					CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 64, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 7 + 10, 4);
 		}
 		else
 			selectedLevel = 0;
-		
+
 		for (int i = 0; i < overSpell.getMaxLevel(); i++)
 		{
 			if (i <= selectedLevel)
 			{
 				graphics.setColor(Color.yellow);
 				graphics.fillRoundRect(CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 200 + 10 + i * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 15 + gc.getDisplayPaddingX(),
-						CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 215 - 30, 
-						CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 14, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 7, 4);	
+						CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 215 - 30,
+						CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 14, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 7, 4);
 				graphics.setColor(COLOR_FOREFRONT);
-			}			
-			graphics.drawRoundRect(CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 200 + 10 + i * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 15 + gc.getDisplayPaddingX(), 
-					CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 215 - 30, 
-					CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 14, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 7, 4);					
+			}
+			graphics.drawRoundRect(CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 200 + 10 + i * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 15 + gc.getDisplayPaddingX(),
+					CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 215 - 30,
+					CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 14, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 7, 4);
 		}
 		// graphics.drawString(spellName, 410, 399);
 		graphics.drawString("Cost:", CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 205 + gc.getDisplayPaddingX(), CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 215 - 30);
-		
+
 		if (stateInfo.getCurrentSprite().getCurrentMP() < overSpell.getSpell().getCosts()[selectedLevel])
 			graphics.setColor(Color.red);
 		graphics.drawString(overSpell.getSpell().getCosts()[selectedLevel] + "", CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 245 + gc.getDisplayPaddingX(), CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 215 - 30);

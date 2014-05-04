@@ -1,7 +1,7 @@
 package mb.fc.game.battle.spell.impl;
 
-import mb.fc.game.battle.spell.Spell;
 import mb.fc.game.battle.spell.KnownSpell;
+import mb.fc.game.battle.spell.Spell;
 import mb.fc.game.sprite.CombatSprite;
 
 public class AuraSpell extends Spell
@@ -21,16 +21,15 @@ public class AuraSpell extends Spell
 	}
 
 	@Override
-	public String getBattleText(String targetName, int spellLevel) {
-		// TODO Auto-generated method stub
-		return "A healing aura washes over " + targetName + ". " + targetName + " is healed by " + damage[spellLevel] + "!";
+	public String getBattleText(CombatSprite target, int spellLevel) {
+		return "A healing aura washes over " + target.getName() + ". " + target.getName() + " is healed by " + Math.min(target.getMaxHP() - target.getCurrentHP(), damage[spellLevel]) + "!";
 	}
-	
+
 	@Override
 	public int getExpGained(int level, CombatSprite attacker,
-			CombatSprite target) 
-	{		
-		double percent = Math.min(1, (target.getMaxHP() - target.getCurrentHP()) * 1.0 / damage[level]);
+			CombatSprite target)
+	{
+		double percent = Math.max(0, (target.getMaxHP() - target.getCurrentHP()) * 1.0 / damage[level]);
 		return (int) (12 * percent);
 	}
 }

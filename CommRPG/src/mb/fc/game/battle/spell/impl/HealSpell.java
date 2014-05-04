@@ -1,7 +1,7 @@
 package mb.fc.game.battle.spell.impl;
 
-import mb.fc.game.battle.spell.Spell;
 import mb.fc.game.battle.spell.KnownSpell;
+import mb.fc.game.battle.spell.Spell;
 import mb.fc.game.sprite.CombatSprite;
 
 public class HealSpell extends Spell
@@ -21,14 +21,14 @@ public class HealSpell extends Spell
 	}
 
 	@Override
-	public String getBattleText(String targetName, int spellLevel) {
-		return targetName + "'s wounds close and scars fade. " + targetName + " is healed by " + damage[spellLevel] + "!";
+	public String getBattleText(CombatSprite target, int spellLevel) {
+		return target.getName() + "'s wounds close and scars fade. " + target.getName() + " is healed by " + Math.min(target.getMaxHP() - target.getCurrentHP(), damage[spellLevel]) + "!";
 	}
 
 	@Override
 	public int getExpGained(int level, CombatSprite attacker,
-			CombatSprite target) 
-	{		
+			CombatSprite target)
+	{
 		double percent = Math.max(0, (target.getMaxHP() - target.getCurrentHP()) * 1.0 / damage[level]);
 		return (int) (12 * percent);
 	}

@@ -14,14 +14,14 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
-public abstract class QuadMenu extends Menu 
+public abstract class QuadMenu extends Menu
 {
 	protected StateInfo stateInfo;
 	protected Direction selected = Direction.UP;
 	protected static final Color disabledColor = new Color(111, 111, 111);
 	protected int blinkDelta = 0;
 	protected boolean blink = false;
-	
+
 	protected Image[] icons;
 	protected String[] text;
 	protected boolean[] enabled;
@@ -35,7 +35,7 @@ public abstract class QuadMenu extends Menu
 	protected QuadMenu(int menuType, StateInfo stateInfo) {
 		this(menuType, true, stateInfo);
 	}
-	
+
 	protected QuadMenu(int menuType, boolean largeFlor, StateInfo stateInfo) {
 		super(menuType);
 		this.largeFlor = largeFlor;
@@ -50,7 +50,7 @@ public abstract class QuadMenu extends Menu
 	}
 
 	public abstract void initialize();
-	
+
 	protected Image getIconImage(Direction dir, boolean blink) {
 		switch (dir)
 		{
@@ -95,7 +95,7 @@ public abstract class QuadMenu extends Menu
 		}
 		return null;
 	}
-	
+
 	protected int getSelectedInt()
 	{
 		switch (selected)
@@ -111,40 +111,40 @@ public abstract class QuadMenu extends Menu
 		}
 		return 0;
 	}
-	
+
 	protected void renderTextBox(FCGameContainer gc, Graphics graphics)
 	{
-		Panel.drawPanelBox(CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 205 + gc.getDisplayPaddingX(), 
-				CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 195, 
-				getTextboxWidth(), 
+		Panel.drawPanelBox(CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 205 + gc.getDisplayPaddingX(),
+				CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 195,
+				getTextboxWidth(),
 				CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 15 + 12, graphics);
-		
+
 		graphics.setColor(COLOR_FOREFRONT);
-		
+
 		graphics.drawString(getText(selected), CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 212 + gc.getDisplayPaddingX(),
 				CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 190 + 3);
 	}
-	
+
 	@Override
-	public void render(FCGameContainer gc, Graphics graphics) 
+	public void render(FCGameContainer gc, Graphics graphics)
 	{
 		renderTextBox(gc, graphics);
-		
+
 		int iconWidth = getIconImage(Direction.UP, false).getWidth();
 		int iconHeight = getIconImage(Direction.UP, false).getHeight();
-		
+
 		int x = (gc.getWidth() - iconWidth) / 2;
-		int y = gc.getHeight() - iconHeight * 2 - 25;		
-				
+		int y = gc.getHeight() - iconHeight * 2 - 25;
+
 		if (isOptionEnabled(Direction.UP))
 		{
 			if (selected == Direction.UP)
 				graphics.drawImage(selectTop, (gc.getWidth() - selectTop.getWidth()) / 2, y - selectTop.getHeight() +  CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * selectCount);
-			drawImage(getIconImage(Direction.UP, (selected == Direction.UP ? blink : false)), x, y - (selected == Direction.UP ? CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * selectCount : 0), graphics, Direction.UP);			
+			drawImage(getIconImage(Direction.UP, (selected == Direction.UP ? blink : false)), x, y - (selected == Direction.UP ? CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * selectCount : 0), graphics, Direction.UP);
 		}
 		else
 			graphics.drawImage(getIconImage(Direction.UP, false), x, y, disabledColor);
-				
+
 		if (isOptionEnabled(Direction.LEFT))
 		{
 			if (selected == Direction.LEFT)
@@ -153,8 +153,8 @@ public abstract class QuadMenu extends Menu
 		}
 		else
 			graphics.drawImage(getIconImage(Direction.LEFT, false), x - iconWidth, (float) (y + iconHeight * .5), disabledColor);
-		
-		
+
+
 		if (isOptionEnabled(Direction.RIGHT))
 		{
 			if (selected == Direction.RIGHT)
@@ -164,25 +164,25 @@ public abstract class QuadMenu extends Menu
 		else
 			graphics.drawImage(getIconImage(Direction.RIGHT, false), x + iconWidth, (float) (y + iconHeight * .5), disabledColor);
 		graphics.drawImage(flourish.getFlippedCopy(false, true), x - flourish.getWidth(), y + iconHeight + flourish.getHeight());
-		
+
 		if (isOptionEnabled(Direction.DOWN))
 		{
 			if (selected == Direction.DOWN)
 				graphics.drawImage(selectTop.getFlippedCopy(false, true), (gc.getWidth() - selectTop.getWidth()) / 2, y + iconHeight * 2 -  CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * selectCount);
-			drawImage(getIconImage(Direction.DOWN, (selected == Direction.DOWN ? blink : false)), x, y + iconHeight + (selected == Direction.DOWN ? CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * selectCount : 0), graphics, Direction.DOWN);			
+			drawImage(getIconImage(Direction.DOWN, (selected == Direction.DOWN ? blink : false)), x, y + iconHeight + (selected == Direction.DOWN ? CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * selectCount : 0), graphics, Direction.DOWN);
 		}
 		else
 			graphics.drawImage(getIconImage(Direction.DOWN, false), x, y + iconHeight, disabledColor);
-		
-		graphics.drawImage(flourish, x - flourish.getWidth(), (float) (y + iconHeight * .5) - flourish.getHeight());		
+
+		graphics.drawImage(flourish, x - flourish.getWidth(), (float) (y + iconHeight * .5) - flourish.getHeight());
 		graphics.drawImage(flourish.getFlippedCopy(true, false), x + iconWidth, (float) (y + iconHeight * .5) - flourish.getHeight());
 		graphics.drawImage(flourish.getFlippedCopy(false, true), x - flourish.getWidth(), y + iconHeight + flourish.getHeight());
 		graphics.drawImage(flourish.getFlippedCopy(true, true), x + iconWidth, y + iconHeight + flourish.getHeight());
-					
+
 	}
-	
+
 	@Override
-	public MenuUpdate handleUserInput(FCInput input, StateInfo stateInfo) 
+	public MenuUpdate handleUserInput(FCInput input, StateInfo stateInfo)
 	{
 		blinkDelta++;
 		if (selectCount < 3)
@@ -193,13 +193,13 @@ public abstract class QuadMenu extends Menu
 				blink = !blink;
 			blinkDelta = 0;
 		}
-		
+
 		if (input.isKeyDown(KeyMapping.BUTTON_2))
 		{
 			return onBack();
 		}
 		else if (input.isKeyDown(KeyMapping.BUTTON_3) || input.isKeyDown(KeyMapping.BUTTON_1))
-		{			
+		{
 			return onConfirm();
 		}
 		else if (input.isKeyDown(KeyMapping.BUTTON_UP))
@@ -209,7 +209,7 @@ public abstract class QuadMenu extends Menu
 		else if (input.isKeyDown(KeyMapping.BUTTON_DOWN))
 		{
 			return onDown();
-		}		
+		}
 		else if (input.isKeyDown(KeyMapping.BUTTON_LEFT))
 		{
 			return onLeft();
@@ -219,32 +219,32 @@ public abstract class QuadMenu extends Menu
 			return onRight();
 		}
 		return MenuUpdate.MENU_NO_ACTION;
-	}	
+	}
 
 	protected MenuUpdate onUp()
 	{
 		return onDirection(Direction.UP);
 	}
-	
+
 	protected MenuUpdate onDown()
 	{
 		return onDirection(Direction.DOWN);
 	}
-	
+
 	protected MenuUpdate onLeft()
 	{
 		return onDirection(Direction.LEFT);
 	}
-	
+
 	protected MenuUpdate onRight()
 	{
 		return onDirection(Direction.RIGHT);
 	}
-	
+
 	protected abstract MenuUpdate onBack();
-	
+
 	protected abstract MenuUpdate onConfirm();
-	
+
 	protected MenuUpdate onDirection(Direction dir)
 	{
 		if (selected != dir && isOptionEnabled(dir))
@@ -258,12 +258,12 @@ public abstract class QuadMenu extends Menu
 		}
 		return MenuUpdate.MENU_ACTION_SHORT;
 	}
-	
+
 	protected int getTextboxWidth()
 	{
 		return CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 57;
 	}
-	
+
 	protected void drawImage(Image image, float x, float y, Graphics g, Direction dir)
 	{
 		g.drawImage(image, x, y);

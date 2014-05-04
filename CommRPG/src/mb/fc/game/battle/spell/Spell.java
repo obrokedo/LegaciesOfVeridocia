@@ -8,7 +8,7 @@ import org.newdawn.slick.Image;
 public abstract class Spell
 {
 	public static final int DEFAULT_EXP = -1;
-	
+
 	protected String name;
 	protected int[] costs;
 	protected boolean targetsEnemy;
@@ -18,9 +18,11 @@ public abstract class Spell
 	protected BattleEffect[] effects;
 	protected int[] range;
 	protected int[] area;
-	protected int id;	
+	protected int id;
 	protected Image spellIcon;
-	
+
+	public void init(int spellId) {}
+
 	public String getName() {
 		return name;
 	}
@@ -47,11 +49,11 @@ public abstract class Spell
 	}
 	public int[] getMpDamage() {
 		return mpDamage;
-	}	
+	}
 	public int getId() {
 		return id;
 	}
-	
+
 	public Image getSpellIcon() {
 		return spellIcon;
 	}
@@ -62,6 +64,36 @@ public abstract class Spell
 	{
 		return DEFAULT_EXP;
 	}
-	
-	public abstract String getBattleText(String targetName, int spellLevel);
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	public void setCosts(int[] costs) {
+		this.costs = costs;
+	}
+	public void setTargetsEnemy(boolean targetsEnemy) {
+		this.targetsEnemy = targetsEnemy;
+	}
+	public void setMaxLevel(int maxLevel) {
+		this.maxLevel = maxLevel;
+	}
+	public void setDamage(int[] damage) {
+		this.damage = damage;
+	}
+	public void setMpDamage(int[] mpDamage) {
+		this.mpDamage = mpDamage;
+	}
+	public void setEffects(BattleEffect[] effects) {
+		this.effects = effects;
+	}
+	public void setRange(int[] range) {
+		this.range = range;
+	}
+	public void setArea(int[] area) {
+		this.area = area;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public abstract String getBattleText(CombatSprite target, int spellLevel);
 }

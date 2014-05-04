@@ -14,78 +14,78 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
-public class AnimatedSprite extends Sprite 
+public class AnimatedSprite extends Sprite
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	public final transient static Color SHADOW_COLOR = new Color(0, 0, 0, 120);
 	protected final static int SHADOW_OFFSET = 8;
-	
+
 	protected transient int imageIndex;
 	protected transient int animationDelay = 0;
 	protected transient SpriteAnims spriteAnims;
 	protected transient Animation currentAnim;
 	protected String imageName;
-	private Direction facing;	
+	private Direction facing;
 	private int animationUpdate = 10;
-	
+
 	public AnimatedSprite(int locX, int locY, String imageName) {
 		super(locX, locY);
 		this.imageName = imageName;
 	}
-	
+
 	public Image getCurrentImage()
 	{
 		return spriteAnims.getImageAtIndex(currentAnim.frames.get(imageIndex).sprites.get(0).imageIndex);
-	}	
-	
+	}
+
 	@Override
 	public void render(Camera camera, Graphics graphics, FCGameContainer cont) {
 		for (AnimSprite as : currentAnim.frames.get(imageIndex).sprites)
-		{	
+		{
 			AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), this.getLocX(), this.getLocY(), cont.getDisplayPaddingX(), camera, true);
-											
-			graphics.drawImage(spriteAnims.getImageAtIndex(as.imageIndex), this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(), 
+
+			graphics.drawImage(spriteAnims.getImageAtIndex(as.imageIndex), this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(),
 					this.getLocY() - camera.getLocationY() - stateInfo.getResourceManager().getMap().getTileRenderHeight());
 		}
 	}
-	
+
 	public static void drawShadow(Image originalIm, int locX, int locY, int displayPadding, Camera camera, boolean tileOffset)
 	{
 		Image i = (originalIm).getScaledCopy(originalIm.getWidth(), (int) (originalIm.getHeight() * .65));
-		i.drawSheared(locX - camera.getLocationX() + displayPadding - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 13, 
-				locY - camera.getLocationY() - (tileOffset ? stateInfo.getResourceManager().getMap().getTileRenderHeight() : 0) + originalIm.getHeight() - 
-					i.getHeight(), CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 13,
+		i.drawSheared((int) (locX - camera.getLocationX() + displayPadding - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 13 * (1.0 * originalIm.getHeight() / stateInfo.getTileHeight())),
+				locY - camera.getLocationY() - (tileOffset ? stateInfo.getResourceManager().getMap().getTileRenderHeight() : 0) + originalIm.getHeight() -
+					i.getHeight(), (int) (CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 13 * (1.0 * originalIm.getHeight() / stateInfo.getTileHeight())),
 				0, SHADOW_COLOR);
 	}
 
 	@Override
 	public void initializeSprite(StateInfo stateInfo) {
 		super.initializeSprite(stateInfo);
-		
+
 		imageIndex = 0;
 		spriteAnims = stateInfo.getResourceManager().getSpriteAnimations().get(imageName);
 		currentAnim = spriteAnims.getAnimation("UnDown");
 		facing = Direction.DOWN;
 		animationUpdate = MovingSprite.STAND_ANIMATION_SPEED;
 	}
-	
+
 	@Override
-	public void update() 
-	{		
+	public void update()
+	{
 		animationDelay++;
 		if (animationDelay >= animationUpdate)
 		{
-			
+
 			if (imageIndex % 2 == 1)
-				imageIndex--;		
+				imageIndex--;
 			else
 				imageIndex++;
-			
+
 			animationDelay = 0;
 		}
 	}
-	
+
 	@Override
 	public void setLocX(float locX) {
 		// Moving right
@@ -107,13 +107,13 @@ public class AnimatedSprite extends Sprite
 			setFacing(Direction.UP);
 		super.setLocY(locY);
 	}
-		
+
 	public void setFacing(Direction dir)
 	{
 		switch (dir)
 		{
 			case UP:
-				currentAnim = spriteAnims.getAnimation("UnUp");			
+				currentAnim = spriteAnims.getAnimation("UnUp");
 				break;
 			case DOWN:
 				currentAnim = spriteAnims.getAnimation("UnDown");
@@ -127,10 +127,10 @@ public class AnimatedSprite extends Sprite
 		}
 		facing = dir;
 	}
-	
+
 	/**
 	 * Sets the location of the sprite
-	 * 
+	 *
 	 * @param locX
 	 * @param locY
 	 */
@@ -146,5 +146,5 @@ public class AnimatedSprite extends Sprite
 
 	public void setAnimationUpdate(int animationUpdate) {
 		this.animationUpdate = animationUpdate;
-	}	
+	}
 }

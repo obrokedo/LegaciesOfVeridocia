@@ -19,22 +19,22 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
-public class CinematicActor 
+public class CinematicActor
 {
 	private static final int INDEFINITE_TIME = -1;
-	
+
 	public static final int SE_NONE = 0;
 	public static final int SE_SHRINK = 1;
 	public static final int SE_GROW = 2;
 	public static final int SE_QUIVER = 3;
 	public static final int SE_FALL_ON_FACE = 4;
-	public static final int SE_LAY_ON_SIDE = 5;	
+	public static final int SE_LAY_ON_SIDE = 5;
 	public static final int SE_FLASH = 6;
 	public static final int SE_NOD = 7;
 	public static final int SE_HEAD_SHAKE = 8;
 	public static final int SE_LAY_ON_BACK = 9;
 	public static final int SE_TREMBLE = 10;
-	
+
 	private SpriteAnims spriteAnims;
 	private Animation currentAnim;
 	private int imageIndex;
@@ -45,7 +45,7 @@ public class CinematicActor
 	private boolean animHalting;
 	private AnimatedSprite sprite;
 	private boolean visible = true;
-	
+
 	// Moving location
 	private float locX;
 	private float locY;
@@ -60,26 +60,26 @@ public class CinematicActor
 	private boolean forceFacingMove = false;
 	private boolean moveHorFirst;
 	private boolean moveDiag;
-	
+
 	// Rotate Params
 	private int spinSpeed;
 	private int spinDuration;
 	private int spinDelta;
 	private boolean spinning = false;
-	
+
 	private int specialEffectType;
 	private int specialEffectUpdate;
 	private int specialEffectDelta;
 	private int specialEffectDuration;
-	private float specialEffectCounter;				
+	private float specialEffectCounter;
 	private Direction specialEffectDirection;
-	
+
 	private Color flashColor = new Color(255, 255, 255);
-	
-	private boolean moving;		
-	
+
+	private boolean moving;
+
 	public JCinematicActor jCinematicActor;
-	
+
 	public CinematicActor(SpriteAnims spriteAnims, String initialAnimation, int x, int y, boolean visible)
 	{
 		jCinematicActor = GlobalPythonFactory.createJCinematicActor();
@@ -91,17 +91,17 @@ public class CinematicActor
 		this.locY = y * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
 		this.visible = visible;
 	}
-	
+
 	public CinematicActor(AnimatedSprite sprite)
 	{
 		this.sprite = sprite;
 	}
-	
+
 	public void render(Graphics graphics, Camera camera, FCGameContainer cont, StateInfo stateInfo)
 	{
 		if (!visible)
 			return;
-		
+
 		if (specialEffectType != SE_FALL_ON_FACE && specialEffectType != SE_LAY_ON_SIDE)
 		{
 			for (AnimSprite as : currentAnim.frames.get(imageIndex).sprites)
@@ -110,34 +110,35 @@ public class CinematicActor
 				switch (specialEffectType)
 				{
 					case SE_NONE:
-					
+
 						AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), (int) this.getLocX(), (int) this.getLocY(), cont.getDisplayPaddingX(), camera, false);
-						
-						graphics.drawImage(im, locX - camera.getLocationX() + cont.getDisplayPaddingX(), 
+
+						graphics.drawImage(im, locX - camera.getLocationX() + cont.getDisplayPaddingX(),
 								locY - camera.getLocationY());
 						break;
 					case SE_GROW:
 					case SE_SHRINK:
 						Image scaled = im.getScaledCopy(specialEffectCounter);
-						
-						AnimatedSprite.drawShadow(scaled, (int) this.getLocX(), (int) this.getLocY(), cont.getDisplayPaddingX(), camera, false);
-						
-						scaled.draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX() + im.getWidth() - scaled.getWidth(), 
+
+						AnimatedSprite.drawShadow(scaled, (int) (this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX() + (im.getWidth() - scaled.getWidth()) / 2),
+								(int) (this.getLocY() - camera.getLocationY() + im.getHeight() - scaled.getHeight()), cont.getDisplayPaddingX(), camera, false);
+
+						scaled.draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX() + (im.getWidth() - scaled.getWidth()) / 2,
 								this.getLocY() - camera.getLocationY() + im.getHeight() - scaled.getHeight());
 						break;
 					case SE_QUIVER:
-						
-						AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), (int) (this.getLocX() + (specialEffectCounter % 2 == 0 ? 0 : (-2 + specialEffectCounter) * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()])), 
+
+						AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), (int) (this.getLocX() + (specialEffectCounter % 2 == 0 ? 0 : (-2 + specialEffectCounter) * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()])),
 								(int) this.getLocY(), cont.getDisplayPaddingX(), camera, false);
-											
-						graphics.drawImage(im, locX - camera.getLocationX() + cont.getDisplayPaddingX() + (specialEffectCounter % 2 == 0 ? 0 : (-2 + specialEffectCounter) * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]), 
+
+						graphics.drawImage(im, locX - camera.getLocationX() + cont.getDisplayPaddingX() + (specialEffectCounter % 2 == 0 ? 0 : (-2 + specialEffectCounter) * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]),
 								locY - camera.getLocationY());
 						break;
 					case SE_FLASH:
 						AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), (int) this.getLocX(), (int) this.getLocY(), cont.getDisplayPaddingX(), camera, false);
-						
+
 						Image whiteIm = im.copy();
-						
+
 						// 1. bind the sprite sheet
 						whiteIm.bind();
 
@@ -150,7 +151,7 @@ public class CinematicActor
 
 						// 4. bind any colors, draw any sprites
 						flashColor.bind();
-						whiteIm.drawEmbedded(locX - camera.getLocationX() + cont.getDisplayPaddingX(), 
+						whiteIm.drawEmbedded(locX - camera.getLocationX() + cont.getDisplayPaddingX(),
 								locY - camera.getLocationY(), whiteIm.getWidth(), whiteIm.getHeight());
 
 						// 5. stop rendering the sprite sheet
@@ -159,65 +160,67 @@ public class CinematicActor
 						// 6. reset the texture environment
 						GL11.glTexEnvi(GL11.GL_TEXTURE_ENV,
 								GL11.GL_TEXTURE_ENV_MODE, GL11.GL_MODULATE);
-								
+
 						/*
-						graphics.drawImage(im, locX - camera.getLocationX() + cont.getDisplayPaddingX(), 
+						graphics.drawImage(im, locX - camera.getLocationX() + cont.getDisplayPaddingX(),
 								locY - camera.getLocationY());
-						graphics.drawImage(whiteIm, locX - camera.getLocationX() + cont.getDisplayPaddingX(), 
+						graphics.drawImage(whiteIm, locX - camera.getLocationX() + cont.getDisplayPaddingX(),
 								locY - camera.getLocationY(), flashColor);
 								*/
 						break;
 					case SE_NOD:
 						AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), (int) this.getLocX(), (int) this.getLocY(), cont.getDisplayPaddingX(), camera, false);
-						
-						im.getSubImage(0, 10 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], im.getWidth(), 14 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]).draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(), 
-								this.getLocY() - camera.getLocationY() + 10);
-						im.getSubImage(0, 0, im.getWidth(), 10 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]).draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(), 
+
+						// This is the lower portion of the sprite
+						im.getSubImage(0, 10 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], im.getWidth(), 14 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]).draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(),
+								this.getLocY() - camera.getLocationY() + 10 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);
+						// This is the head of the sprite
+						im.getSubImage(0, 0, im.getWidth(), 10 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]).draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(),
 								this.getLocY() - camera.getLocationY() + 1 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);
 						break;
 					case SE_HEAD_SHAKE:
 						AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), (int) this.getLocX(), (int) this.getLocY(), cont.getDisplayPaddingX(), camera, false);
-						
-						im.getSubImage(0, 10 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], 
-								im.getWidth(), 14 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]).draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(), 
+
+						im.getSubImage(0, 10 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()],
+								im.getWidth(), 14 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]).draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(),
 								this.getLocY() - camera.getLocationY() + 10 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);
-						
+
 						switch ((int) specialEffectCounter % 4)
 						{
 							case 0:
 							case 2:
-								im.getSubImage(0, 0, im.getWidth(), 10 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]).draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(), 
+								im.getSubImage(0, 0, im.getWidth(), 10 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]).draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(),
 									this.getLocY() - camera.getLocationY());
 								break;
 							case 1:
-								im.getSubImage(0, 0, im.getWidth(), 10 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]).draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX() + 1 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], 
+								im.getSubImage(0, 0, im.getWidth(), 10 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]).draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX() + 1 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()],
 										this.getLocY() - camera.getLocationY());
 								break;
 							case 3:
-								im.getSubImage(0, 0, im.getWidth(), 10 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]).draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX() - 1 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], 
+								im.getSubImage(0, 0, im.getWidth(), 10 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]).draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX() - 1 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()],
 										this.getLocY() - camera.getLocationY());
 								break;
 						}
-						
+
 						break;
 					case SE_TREMBLE:
 						int trembleVal = 4 - (int) Math.abs(specialEffectCounter - 4);
 						if (trembleVal > 0)
 						{
 							im = spriteAnims.getImageAtIndex(as.imageIndex).getScaledCopy(
-									spriteAnims.getImageAtIndex(as.imageIndex).getWidth() - trembleVal * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], 
-									spriteAnims.getImageAtIndex(as.imageIndex).getHeight() - trembleVal * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);							
+									spriteAnims.getImageAtIndex(as.imageIndex).getWidth() - trembleVal * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()],
+									spriteAnims.getImageAtIndex(as.imageIndex).getHeight() - trembleVal * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);
 						}
 						else
 						{
 							im = spriteAnims.getImageAtIndex(as.imageIndex);
 							trembleVal = 0;
 						}
-						
-						AnimatedSprite.drawShadow(im, (int) (this.getLocX() + (trembleVal * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]) / 2), 
+
+						AnimatedSprite.drawShadow(im, (int) (this.getLocX() + (trembleVal * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]) / 2),
 								(int) this.getLocY() + trembleVal * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], cont.getDisplayPaddingX(), camera, false);
-											
-						graphics.drawImage(im, locX - camera.getLocationX() + cont.getDisplayPaddingX() + (trembleVal * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]) / 2, 
+
+						graphics.drawImage(im, locX - camera.getLocationX() + cont.getDisplayPaddingX() + (trembleVal * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]) / 2,
 								locY - camera.getLocationY() + trembleVal * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);
 						break;
 				}
@@ -235,17 +238,17 @@ public class CinematicActor
 	{
 		renderOnDirection(spriteAnims.getAnimation("UnUp").frames.get(0).sprites, graphics, camera, cont);
 	}
-	
+
 	private void renderOnBack(Graphics graphics, Camera camera, FCGameContainer cont)
 	{
-		renderOnDirection(spriteAnims.getAnimation("UnDown").frames.get(0).sprites, graphics, camera, cont);		
+		renderOnDirection(spriteAnims.getAnimation("UnDown").frames.get(0).sprites, graphics, camera, cont);
 	}
-	
+
 	private void renderOnSide(Graphics graphics, Camera camera, FCGameContainer cont)
 	{
 		renderOnDirection(spriteAnims.getAnimation("UnLeft").frames.get(0).sprites, graphics, camera, cont);
 	}
-	
+
 	private void renderOnDirection(ArrayList<AnimSprite> sprites, Graphics graphics, Camera camera, FCGameContainer cont)
 	{
 		for (AnimSprite as : sprites)
@@ -264,14 +267,14 @@ public class CinematicActor
 				case LEFT:
 					im.rotate(270f);
 					break;
-				
+
 			}
-			
-			graphics.drawImage(im, locX - camera.getLocationX() + cont.getDisplayPaddingX(), 
+
+			graphics.drawImage(im, locX - camera.getLocationX() + cont.getDisplayPaddingX(),
 					locY - camera.getLocationY());
 		}
 	}
-	
+
 	private boolean moveHorz()
 	{
 		if (locX != moveToLocX)
@@ -285,7 +288,7 @@ public class CinematicActor
 		else
 			return false;
 	}
-	
+
 	private boolean moveVert()
 	{
 		if (locY != moveToLocY)
@@ -299,9 +302,9 @@ public class CinematicActor
 		else
 			return false;
 	}
-	
-	public void update(int delta, Cinematic cinematic) 
-	{	
+
+	public void update(int delta, Cinematic cinematic)
+	{
 		animDelta += delta;
 		while (animDelta > animUpdate)
 		{
@@ -323,16 +326,16 @@ public class CinematicActor
 				}
 			}
 			else
-				imageIndex++;										
+				imageIndex++;
 		}
-		
+
 		if (spinning)
 		{
 			spinDelta += delta;
 			while (spinDelta > spinSpeed)
 			{
 				spinDelta -= spinSpeed;
-				
+
 				switch (facing)
 				{
 					case UP:
@@ -348,7 +351,7 @@ public class CinematicActor
 						setFacing(Direction.UP);
 						break;
 				}
-				
+
 				if (spinDuration != INDEFINITE_TIME)
 				{
 					spinDuration = Math.max(0, spinDuration - spinSpeed);
@@ -356,8 +359,8 @@ public class CinematicActor
 						spinning = false;
 				}
 			}
-		}		
-		
+		}
+
 		if (moving)
 		{
 			movingDelta += delta;
@@ -365,7 +368,7 @@ public class CinematicActor
 			{
 				movingDelta -= jCinematicActor.getMoveUpdate();
 				boolean moved = false;
-				
+
 				if (moveDiag)
 				{
 					if (moveVert())
@@ -377,24 +380,24 @@ public class CinematicActor
 				{
 					if (moveHorFirst)
 						moved = moveHorz();
-					
+
 					if (!moved)
 						moved = moveVert();
-					
+
 					if (!moveHorFirst && !moved)
 						moved = moveHorz();
 				}
-						
-				
+
+
 				if (!moved)
 				{
 					if (!loopMoving)
 					{
 						moving = false;
 						this.forceFacingMove = false;
-						
+
 						if (haltingMove)
-						{				
+						{
 							System.out.println("STOP HALTING");
 							haltingMove = false;
 							cinematic.decreaseMoves();
@@ -411,17 +414,17 @@ public class CinematicActor
 				}
 			}
 		}
-		
+
 		if (specialEffectType != SE_NONE)
 		{
 			specialEffectDelta += delta;
 			if (specialEffectDuration != INDEFINITE_TIME)
 				specialEffectDuration -= delta;
-			
+
 			while (specialEffectDelta > specialEffectUpdate)
 			{
 				specialEffectDelta -= specialEffectUpdate;
-				
+
 				switch (specialEffectType)
 				{
 					case SE_SHRINK:
@@ -442,9 +445,9 @@ public class CinematicActor
 						break;
 					case SE_FLASH:
 						if (specialEffectDuration == INDEFINITE_TIME || specialEffectDuration > 0)
-						{														
+						{
 							specialEffectCounter = (specialEffectCounter + 5) % 510;
-							
+
 							if (specialEffectCounter <= 255)
 								flashColor.r = flashColor.g =  flashColor.b = specialEffectCounter / 255;
 							else
@@ -470,7 +473,7 @@ public class CinematicActor
 			}
 		}
 	}
-	
+
 	public void shakeHead(int speed)
 	{
 		specialEffectType = SE_HEAD_SHAKE;
@@ -479,7 +482,7 @@ public class CinematicActor
 		specialEffectCounter = 0;
 		animUpdate = Long.MAX_VALUE;
 	}
-	
+
 	public void nodHead()
 	{
 		specialEffectType = SE_NOD;
@@ -488,7 +491,7 @@ public class CinematicActor
 		specialEffectCounter = 0;
 		animUpdate = Long.MAX_VALUE;
 	}
-	
+
 	public void fallOnFace(Direction dir)
 	{
 		specialEffectType = SE_FALL_ON_FACE;
@@ -497,7 +500,7 @@ public class CinematicActor
 		specialEffectDirection = dir;
 		animUpdate = Long.MAX_VALUE;
 	}
-	
+
 	public void layOnBack(Direction dir)
 	{
 		specialEffectType = SE_LAY_ON_BACK;
@@ -506,7 +509,7 @@ public class CinematicActor
 		specialEffectDirection = dir;
 		animUpdate = Long.MAX_VALUE;
 	}
-	
+
 	public void layOnSide(Direction dir)
 	{
 		specialEffectType = SE_LAY_ON_SIDE;
@@ -515,7 +518,7 @@ public class CinematicActor
 		specialEffectDirection = dir;
 		animUpdate = Long.MAX_VALUE;
 	}
-	
+
 	public void flash(int speed, int duration)
 	{
 		flashColor.r = 0;
@@ -525,10 +528,10 @@ public class CinematicActor
 		specialEffectDuration = duration;
 		specialEffectDelta = 0;
 		specialEffectUpdate = speed / 102;
-		specialEffectCounter = 0;	
+		specialEffectCounter = 0;
 		animUpdate = Long.MAX_VALUE;
 	}
-	
+
 	public void quiver()
 	{
 		specialEffectType = SE_QUIVER;
@@ -538,7 +541,7 @@ public class CinematicActor
 		specialEffectCounter = 0;
 		animUpdate = Long.MAX_VALUE;
 	}
-	
+
 	public void tremble()
 	{
 		specialEffectType = SE_TREMBLE;
@@ -549,7 +552,7 @@ public class CinematicActor
 		specialEffectCounter = 0;
 		animUpdate = Long.MAX_VALUE;
 	}
-	
+
 	public void shrink(int duration)
 	{
 		specialEffectType = SE_SHRINK;
@@ -559,7 +562,7 @@ public class CinematicActor
 		specialEffectCounter = 1f;
 		animUpdate = Long.MAX_VALUE;
 	}
-	
+
 	public void grow(int duration)
 	{
 		specialEffectType = SE_GROW;
@@ -569,18 +572,18 @@ public class CinematicActor
 		specialEffectCounter = 0f;
 		animUpdate = Long.MAX_VALUE;
 	}
-	
+
 	public void stopAnimation()
 	{
 		animUpdate = Long.MAX_VALUE;
 	}
-	
+
 	public void stopSpecialEffect()
 	{
 		specialEffectType = SE_NONE;
 		animUpdate = jCinematicActor.getAnimUpdateAfterSE();
 	}
-	
+
 	private void setLocX(float locX) {
 		if (!this.forceFacingMove)
 		{
@@ -606,7 +609,7 @@ public class CinematicActor
 		}
 		this.locY = locY;
 	}
-	
+
 	public void setSpinning(int spinSpeed, int spinDuration)
 	{
 		this.spinSpeed = spinSpeed;
@@ -615,18 +618,18 @@ public class CinematicActor
 		this.spinDelta = 0;
 		spinning = true;
 	}
-	
+
 	public void stopSpinning()
 	{
 		this.spinning = false;
 	}
-		
+
 	public void setFacing(Direction dir)
 	{
 		switch (dir)
 		{
 			case UP:
-				currentAnim = spriteAnims.getAnimation("UnUp");			
+				currentAnim = spriteAnims.getAnimation("UnUp");
 				break;
 			case DOWN:
 				currentAnim = spriteAnims.getAnimation("UnDown");
@@ -640,7 +643,7 @@ public class CinematicActor
 		}
 		facing = dir;
 	}
-	
+
 	public void setFacing(int dir)
 	{
 		if (dir == 0)
@@ -652,16 +655,16 @@ public class CinematicActor
 		else if (dir == 3)
 			setFacing(Direction.RIGHT);
 	}
-	
+
 	public void setAnimation(String animation, int time, boolean halting, boolean looping)
 	{
 		this.animHalting = halting;
 		this.animationLooping = looping;
 		this.currentAnim = spriteAnims.getAnimation(animation);
 		this.animDelta = 0;
-		this.animUpdate = time / currentAnim.frames.size();		
+		this.animUpdate = time / currentAnim.frames.size();
 	}
-	
+
 	public void moveToLocation(int moveToLocX, int moveToLocY, float speed, boolean haltingMove, int direction, boolean moveHorFirst, boolean moveDiag)
 	{
 		this.loopMoving = false;
@@ -683,15 +686,15 @@ public class CinematicActor
 			this.forceFacingMove = false;
 		moving = true;
 	}
-	
+
 	public void loopMoveToLocation(int moveToLocX, int moveToLocY, float speed)
 	{
 		this.startLoopX = this.locX;
 		this.startLoopY = this.locY;
-		moveToLocation(moveToLocX, moveToLocY, speed, haltingMove, -1, false, false);		
+		moveToLocation(moveToLocX, moveToLocY, speed, haltingMove, -1, false, false);
 		this.loopMoving = true;
 	}
-	
+
 	public void stopLoopMove()
 	{
 		this.loopMoving = false;

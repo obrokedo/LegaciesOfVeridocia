@@ -16,7 +16,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
 public class SpeechMenu extends Menu
-{	
+{
 	private int x;
 	private int y = 60 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
 	private int width;
@@ -24,107 +24,108 @@ public class SpeechMenu extends Menu
 	private int textIndex = 0;
 	private int triggerId = -1;
 	private Image portrait;
-	private boolean initialized = false;	
-	
+	private boolean initialized = false;
+
 	private boolean textMoving = true;
 	private int textMovingIndex = 0;
 	private boolean attackCin = false;
-	
+
 	private long waitUntil = -1;
 	private String waitingOn = null;
 	private static final String CHAR_PAUSE = "{";
 	private static final String CHAR_SOFT_STOP = "}";
 	private static final String CHAR_HARD_STOP = "]";
 	private static final String CHAR_LINE_BREAK = "[";
-	
-	public SpeechMenu(String text, FCGameContainer gc, boolean attackCin) 
+
+	public SpeechMenu(String text, FCGameContainer gc, boolean attackCin)
 	{
 		this(text, gc, -1, -1, null);
-		this.attackCin = attackCin;		
+		this.attackCin = attackCin;
 		if (attackCin)
 		{
 			y = 0;
 			this.textIndex = panelText.size() - 1;
 		}
 	}
-	
-	public SpeechMenu(String text, FCGameContainer gc, int portraitId, StateInfo stateInfo) 
+
+	public SpeechMenu(String text, FCGameContainer gc, int portraitId, StateInfo stateInfo)
 	{
 		this(text, gc, -1, portraitId, stateInfo);
 	}
-	
-	public SpeechMenu(String text, FCGameContainer gc, int triggerId, 
-			int portraitId, StateInfo stateInfo) 
+
+	public SpeechMenu(String text, FCGameContainer gc, int triggerId,
+			int portraitId, StateInfo stateInfo)
 	{
 		super(Panel.PANEL_SPEECH);
 		width = gc.getWidth() - 100 - gc.getDisplayPaddingX() * 2;
 		x = 50 + gc.getDisplayPaddingX();
-		
-		int maxTextWidth = width;		
+
+		int maxTextWidth = width;
 		int spaceWidth = SPEECH_FONT.getWidth("_");
 		String[] splitText = text.split(" ");
 		int currentLineWidth = 0;
 		String currentLine = "";
-		
+
 		panelText = new ArrayList<String>();
-						
+
 		for (int i = 0; i < splitText.length; i++)
 		{
 			int wordWidth = SPEECH_FONT.getWidth(splitText[i]);
-						
+
 			if (wordWidth + currentLineWidth <= maxTextWidth)
-			{	
+			{
 				boolean lineBreak = false;
 				if (splitText[i].contains(CHAR_LINE_BREAK))
 					lineBreak = true;
-				
+
 				currentLine += " " + splitText[i].replace(CHAR_LINE_BREAK, "");
 				currentLineWidth += wordWidth + spaceWidth;
-				
+
 				if (lineBreak)
 				{
-					currentLineWidth = 0;				
+					currentLineWidth = 0;
 					panelText.add(currentLine);
-					currentLine = "";		
+					currentLine = "";
 				}
 			}
 			else
 			{
 				i--;
-				currentLineWidth = 0;				
+				currentLineWidth = 0;
 				panelText.add(currentLine);
-				currentLine = "";				
+				currentLine = "";
 			}
 		}
-		
+
 		if (currentLineWidth > 0)
 			panelText.add(currentLine);
-		
+
 		this.triggerId = triggerId;
 
 		if (portraitId != -1)
-			portrait = stateInfo.getResourceManager().getSpriteSheets().get("portraits").getSprite(portraitId, 0);		
+			portrait = stateInfo.getResourceManager().getSpriteSheets().get("portraits").getSprite(portraitId, 0);
 		else
-			portrait = null;				
+			portrait = null;
 	}
 
+	@Override
 	public void render(FCGameContainer gc, Graphics graphics)
 	{
 		Panel.drawPanelBox(x, gc.getHeight() - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 60 + y, width , CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 60 - 5, graphics);
-		
+
 		if (!initialized)
 			return;
-		
+
 		graphics.setFont(SPEECH_FONT);
 		graphics.setColor(Panel.COLOR_FOREFRONT);
 		// graphics.setFont(ufont);
-	
+
 		for (int i = Math.max(0, textIndex - 2); i <= textIndex; i++)
-		{			
-			graphics.drawString((i == textIndex ? panelText.get(i).substring(0, textMovingIndex) : panelText.get(i)), x + 15, 
+		{
+			graphics.drawString((i == textIndex ? panelText.get(i).substring(0, textMovingIndex) : panelText.get(i)), x + 15,
 					gc.getHeight() - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 60 + 10 +  (i - textIndex + (textIndex >= 2 ? 2 : textIndex)) * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 15);
 		}
-		
+
 		if (portrait != null)
 		{
 			Panel.drawPanelBox(x, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 12, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 62, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 78, graphics, Color.black);
@@ -134,20 +135,20 @@ public class SpeechMenu extends Menu
 	}
 
 	@Override
-	public MenuUpdate handleUserInput(FCInput input, StateInfo stateInfo) 
+	public MenuUpdate handleUserInput(FCInput input, StateInfo stateInfo)
 	{
 		if (!initialized)
-		{			
+		{
 			if (y <= 0)
 			{
 				initialized = true;
 			}
 			else
 				y = Math.max(y - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 8, 0);
-			
+
 			return MenuUpdate.MENU_NO_ACTION;
 		}
-		
+
 		if (textMoving)
 		{
 			if (textMovingIndex + 1 > panelText.get(textIndex).length())
@@ -163,7 +164,7 @@ public class SpeechMenu extends Menu
 						stateInfo.getResourceManager().getTriggerEventById(triggerId).perform(stateInfo);
 					return MenuUpdate.MENU_CLOSE;
 				}
-				// textMoving = false;				
+				// textMoving = false;
 			}
 			else
 			{
@@ -176,21 +177,20 @@ public class SpeechMenu extends Menu
 				}
 				else if (nextLetter.equalsIgnoreCase(CHAR_SOFT_STOP))
 				{
-					textMoving = false;					
-					
+					textMoving = false;
+
+
 					String[] softSplit = panelText.get(textIndex).substring(textMovingIndex).split(" ");
-					
-					if (softSplit.length > 1 && softSplit[0].length() > 1 && softSplit[0].replaceFirst("[0-9]", "").length() != softSplit[0].length())
+
+					if (softSplit[0].length() > 1 && softSplit[0].replaceFirst("[0-9]", "").length() != softSplit[0].length())
 					{
 						waitUntil = System.currentTimeMillis() + Integer.parseInt(softSplit[0].substring(1));
 						waitingOn = softSplit[0];
-						System.out.println("WAITING ON SOFT");
 					}
 					else
 					{
 						waitUntil = System.currentTimeMillis() + 2500;
 						waitingOn = CHAR_SOFT_STOP;
-						System.out.println("WAITING ON SOFT UNSPEC");
 					}
 				}
 				else if (nextLetter.equalsIgnoreCase(CHAR_PAUSE))
@@ -199,7 +199,7 @@ public class SpeechMenu extends Menu
 					waitUntil = System.currentTimeMillis() + 400;
 					waitingOn = CHAR_PAUSE;
 				}
-				
+
 				if (textMoving)
 					textMovingIndex += 1;
 				else
@@ -211,7 +211,7 @@ public class SpeechMenu extends Menu
 					stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "speechblip", .15f, false));
 			}
 		}
-		
+
 		if (input.isKeyDown(KeyMapping.BUTTON_3))
 		{
 			if (waitingOn != null)
@@ -221,13 +221,13 @@ public class SpeechMenu extends Menu
 				textMoving = true;
 			}
 		}
-		
+
 		if (waitUntil != -1 && waitUntil <= System.currentTimeMillis())
 		{
 			textMoving = true;
 			waitUntil = -1;
 		}
-			
+
 		return MenuUpdate.MENU_NO_ACTION;
 	}
 }

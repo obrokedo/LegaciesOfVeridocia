@@ -9,8 +9,10 @@ import mb.fc.renderer.TileMapRenderer;
 import mb.gl2.loading.LoadableGameState;
 import mb.gl2.loading.ResourceManager;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -19,9 +21,10 @@ public class CinematicState extends LoadableGameState
 	private TileMapRenderer tileMapRenderer;
 	private SoundManager soundManager;
 	private Cinematic cinematic;
+	private float cinematicSpeed = 1;
 
 	private StateInfo stateInfo;
-	
+
 	public CinematicState(PersistentStateInfo psi)
 	{
 		this.stateInfo = new StateInfo(psi, false, true);
@@ -30,7 +33,7 @@ public class CinematicState extends LoadableGameState
 		this.soundManager = new SoundManager();
 		stateInfo.registerManager(soundManager);
 	}
-	
+
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
@@ -41,11 +44,11 @@ public class CinematicState extends LoadableGameState
 	public void enter(GameContainer container, StateBasedGame game)
 			throws SlickException {
 		super.enter(container, game);
-		
+
 		// Get the first cinematic
 		cinematic = stateInfo.getResourceManager().getCinematicById(0);
 		cinematic.initialize(stateInfo);
-		stateInfo.setInitialized(true);				
+		stateInfo.setInitialized(true);
 	}
 
 	@Override
@@ -54,11 +57,11 @@ public class CinematicState extends LoadableGameState
 		super.leave(container, game);
 		stateInfo.setInitialized(false);
 		stateInfo.getResourceManager().reinitialize();
-	}	
+	}
 
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
-			throws SlickException 
+			throws SlickException
 	{
 		if (stateInfo.isInitialized())
 		{
@@ -67,8 +70,13 @@ public class CinematicState extends LoadableGameState
 			tileMapRenderer.renderForeground(stateInfo.getCamera(), g, stateInfo.getGc());
 			cinematic.renderMenus(stateInfo.getGc(), g);
 			cinematic.renderPostEffects(stateInfo.getGc(), g);
+			if (cinematicSpeed != 1)
+			{
+				g.setColor(Color.red);
+				g.drawString("Cinematic speed: " + cinematicSpeed, 15, 15);
+			}
 		}
-		
+
 	}
 
 	@Override
@@ -77,7 +85,21 @@ public class CinematicState extends LoadableGameState
 		if (stateInfo.isInitialized())
 		{
 			stateInfo.processMessages();
-			cinematic.update(delta, stateInfo.getCamera(), stateInfo.getInput(), stateInfo.getGc(), stateInfo.getResourceManager().getMap(), stateInfo);
+			cinematic.update((int) (delta * cinematicSpeed), stateInfo.getCamera(), stateInfo.getInput(), stateInfo.getGc(), stateInfo.getResourceManager().getMap(), stateInfo);
+
+			if (System.currentTimeMillis() > stateInfo.getInputDelay())
+			{
+				if (stateInfo.getInput().isKeyDown(Input.KEY_F11))
+				{
+					cinematicSpeed /= 2;
+					stateInfo.setInputDelay(System.currentTimeMillis() + 200);
+				}
+				else if (stateInfo.getInput().isKeyDown(Input.KEY_F12))
+				{
+					cinematicSpeed *= 2;
+					stateInfo.setInputDelay(System.currentTimeMillis() + 200);
+				}
+			}
 		}
 		stateInfo.getInput().update(delta);
 	}
