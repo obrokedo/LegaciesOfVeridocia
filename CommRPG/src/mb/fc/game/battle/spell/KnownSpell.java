@@ -8,7 +8,7 @@ import mb.fc.game.resource.SpellResource;
 public class KnownSpell implements Serializable
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	// These ids are directly linked to the icons index in the spell images
 	public static final int ID_HEAL = 0;
 	public static final int ID_AURA = 1;
@@ -29,24 +29,31 @@ public class KnownSpell implements Serializable
 	public static final int ID_APOLLO = 22;
 	public static final int ID_NEPTUNE = 23;
 	public static final int ID_ATLAS = 24;
-	
+
 	private int spellId;
 	private byte maxLevel;
 	private transient Spell spell;
-	
+
 	/**
 	 * A constructor to add spell descriptors to add spells to a CombatSprite before resources have been loaded.
 	 * The spell field of this object will be null until the spell has been intitialized on resource load. This can
 	 * be used when creating initial heroes before the game has started or giving spells to enemies as they will be
 	 * intialized after the spells have been added
-	 * 
+	 *
 	 * @param spellId The spell id of the spell to create
 	 * @param maxLevel The max level that the caster knows of this spell
 	 */
 	public KnownSpell(int spellId, byte maxLevel) {
 		super();
 		this.spellId = spellId;
-		this.maxLevel = maxLevel;		
+		this.maxLevel = maxLevel;
+	}
+
+	public KnownSpell(int spellId, byte maxLevel, Spell spell) {
+		super();
+		this.spellId = spellId;
+		this.maxLevel = maxLevel;
+		this.spell = spell;
 	}
 
 	public int getSpellId() {
@@ -64,7 +71,7 @@ public class KnownSpell implements Serializable
 	public Spell getSpell() {
 		return spell;
 	}
-	
+
 	public void initializeFromLoad(StateInfo stateInfo)
 	{
 		this.spell = SpellResource.getSpell(spellId, stateInfo);

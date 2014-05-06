@@ -25,7 +25,7 @@ import org.newdawn.slick.Image;
 public class CombatSprite extends AnimatedSprite
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	public static final int MOVEMENT_WALKING = 0;
 	public static final int MOVEMENT_HORSES_CENTAURS = 1;
 	public static final int MOVEMENT_ANIMALS_BEASTMEN = 2;
@@ -33,26 +33,26 @@ public class CombatSprite extends AnimatedSprite
 	public static final int MOVEMENT_FLYING = 4;
 	public static final int MOVEMENT_HOVERING = 5;
 	public static final int MOVEMENT_SWIMMING = 6;
-	public static final int MOVEMENT_ELVES = 7;	
-	
-	private transient Color fadeColor = new Color(255, 255, 255, 255);	
-	
-	private int currentHP, maxHP, 
-				currentMP, maxMP, 
-				currentInit, 
-				currentSpeed, maxSpeed, 
-				currentMove, maxMove, 
+	public static final int MOVEMENT_ELVES = 7;
+
+	private transient Color fadeColor = new Color(255, 255, 255, 255);
+
+	private int currentHP, maxHP,
+				currentMP, maxMP,
+				currentInit,
+				currentSpeed, maxSpeed,
+				currentMove, maxMove,
 				currentAttack, maxAttack,
 				currentDefense, maxDefense,
 				level, exp;
-	
-	private transient AI ai;	
+
+	private transient AI ai;
 	private transient Image portraitImage;
-	
+
 	private boolean isHero = false;
 	private boolean isLeader = false;
 	private boolean isPromoted = false;
-	
+
 	// This value provides a mean of differentiating between multiple enemies of the same name,
 	// in addition this value can be user speified for enemies so that they may be the target
 	// of triggers
@@ -61,35 +61,35 @@ public class CombatSprite extends AnimatedSprite
 	private ArrayList<Item> items;
 	private ArrayList<Boolean> equipped;
 	private int[] usuableWeapons;
-	private int[] usuableArmor;	
+	private int[] usuableArmor;
 	private HeroProgression heroProgression;
-	private int movementType;	
+	private int movementType;
 	private int portraitIndex;
 	private int kills;
 	private int defeat;
-	
-	
+
+
 	/**
 	 * A boolean indicating whether the combat sprite dodges or blocks attacks, dodges if true, blocks if false
 	 */
 	private boolean dodges;
-	
+
 	public CombatSprite(boolean isLeader,
-			String name, String imageName, int hp, int mp, int attack, int defense, int speed, int move, 
-				int movementType, int level, int id, int portraitIndex, ArrayList<KnownSpell> spells) 
+			String name, String imageName, int hp, int mp, int attack, int defense, int speed, int move,
+				int movementType, int level, int id, int portraitIndex, ArrayList<KnownSpell> spells)
 	{
 		this(isLeader, name, imageName, null, hp, mp, attack, defense, speed, move, movementType, level, 0, portraitIndex, spells);
 		this.uniqueEnemyId = id;
-		this.ai = new ClericAI(AI.APPROACH_REACTIVE);	
+		this.ai = new ClericAI(AI.APPROACH_REACTIVE);
 		this.isHero = false;
 	}
-	
+
 	public CombatSprite(boolean isLeader,
 			String name, String imageName, HeroProgression heroProgression, int hp, int mp, int attack,
-			int defense, int speed, int move, int movementType, int level, int exp, int portraitIndex, ArrayList<KnownSpell> spells) 
+			int defense, int speed, int move, int movementType, int level, int exp, int portraitIndex, ArrayList<KnownSpell> spells)
 	{
 		super(0, 0, imageName);
-		
+
 		currentHP = hp;
 		maxHP = hp;
 		currentMP = mp;
@@ -98,16 +98,16 @@ public class CombatSprite extends AnimatedSprite
 		currentSpeed = speed;
 		currentMove = move;
 		maxMove = move;
-		this.movementType = movementType; 
+		this.movementType = movementType;
 		currentAttack = attack;
 		maxAttack = attack;
 		currentDefense = defense;
 		maxDefense = defense;
 		dodges = true;
-		
+
 		this.level = level;
-		this.exp = exp;
-		
+		this.exp = 0;
+
 		this.isHero = true;
 		this.isLeader = isLeader;
 		this.name = name;
@@ -130,37 +130,38 @@ public class CombatSprite extends AnimatedSprite
 			}
 		}
 		this.spells = spells;
-		
+
 		this.spriteType = Sprite.TYPE_COMBAT;
 	}
-	
+
+	@Override
 	public void initializeSprite(StateInfo stateInfo)
-	{	
+	{
 		super.initializeSprite(stateInfo);
-		
+
 		if (isHero)
 		{
 			super.setLocX(-1);
 			super.setLocY(-1);
-		}		
-		
+		}
+
 		if (portraitIndex != -1)
-			portraitImage = stateInfo.getResourceManager().getSpriteSheets().get("portraits").getSprite(portraitIndex, 0);			
-		
+			portraitImage = stateInfo.getResourceManager().getSpriteSheets().get("portraits").getSprite(portraitIndex, 0);
+
 		if (spells != null && spells.size() > 0)
 		{
 			for (KnownSpell sd : spells)
 				sd.initializeFromLoad(stateInfo);
 		}
-		
+
 		int itemsSize = items.size();
 		for (int i = 0; i < itemsSize; i++)
 		{
-			Item item = ItemResource.getItem(items.get(0).getItemId(), stateInfo);			
-			items.add(item);			
+			Item item = ItemResource.getItem(items.get(0).getItemId(), stateInfo);
+			items.add(item);
 			items.remove(0);
 		}
-		
+
 		this.currentAttack = this.maxAttack;
 		this.currentDefense = this.maxDefense;
 		this.currentSpeed = this.maxSpeed;
@@ -174,63 +175,63 @@ public class CombatSprite extends AnimatedSprite
 			currentHP = 0;
 			currentMP = 0;
 		}
-		
+
 		this.currentMove = this.maxMove;
-		
+
 		fadeColor = new Color(255, 255, 255, 255);
 	}
 
 	@Override
-	public void update() 
+	public void update()
 	{
 		super.update();
-		
+
 		if (currentHP <= 0)
 		{
 			currentHP -= 25;
 			fadeColor.a = (255 + currentHP) / 255.0f;
 		}
 	}
-	
+
 	@Override
-	public void render(Camera camera, Graphics graphics, FCGameContainer cont) 
+	public void render(Camera camera, Graphics graphics, FCGameContainer cont)
 	{
 		for (AnimSprite as : currentAnim.frames.get(imageIndex).sprites)
-		{			
+		{
 			if (movementType != CombatSprite.MOVEMENT_FLYING)
 			{
 				AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), this.getLocX(), this.getLocY(), cont.getDisplayPaddingX(), camera, true);
-			}				
-			
-			graphics.drawImage(spriteAnims.getImageAtIndex(as.imageIndex), this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(), 
+			}
+
+			graphics.drawImage(spriteAnims.getImageAtIndex(as.imageIndex), this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(),
 					this.getLocY() - camera.getLocationY() - stateInfo.getResourceManager().getMap().getTileRenderHeight(), fadeColor);
 		}
 	}
-	
+
 	/************************/
 	/* Handle item stuff	*/
 	/************************/
 	public Item getItem(int i) {
 		return items.get(i);
 	}
-	
+
 	public int getItemsSize() {
 		return items.size();
 	}
-	
+
 	public void removeItem(Item item)
 	{
 		int indexOf = items.indexOf(item);
 		items.remove(indexOf);
 		equipped.remove(indexOf);
 	}
-	
+
 	public void addItem(Item item)
 	{
 		items.add(item);
 		equipped.add(false);
 	}
-	
+
 	public EquippableItem getEquippedWeapon()
 	{
 		for (int i = 0; i < items.size(); i++)
@@ -242,7 +243,7 @@ public class CombatSprite extends AnimatedSprite
 		}
 		return null;
 	}
-	
+
 	public EquippableItem getEquippedArmor()
 	{
 		for (int i = 0; i < items.size(); i++)
@@ -254,7 +255,7 @@ public class CombatSprite extends AnimatedSprite
 		}
 		return null;
 	}
-	
+
 	public EquippableItem getEquippedRing()
 	{
 		for (int i = 0; i < items.size(); i++)
@@ -266,7 +267,7 @@ public class CombatSprite extends AnimatedSprite
 		}
 		return null;
 	}
-	
+
 	public boolean isEquippable(EquippableItem item)
 	{
 		if (EquippableItem.TYPE_WEAPON == item.getItemType())
@@ -289,7 +290,7 @@ public class CombatSprite extends AnimatedSprite
 	public ArrayList<Boolean> getEquipped() {
 		return equipped;
 	}
-	
+
 	public EquippableItem equipItem(EquippableItem item)
 	{
 		EquippableItem oldItem = null;
@@ -305,7 +306,7 @@ public class CombatSprite extends AnimatedSprite
 				oldItem = getEquippedWeapon();
 				break;
 		}
-		
+
 		if (oldItem != null)
 		{
 			this.currentAttack -= oldItem.getAttack();
@@ -316,9 +317,9 @@ public class CombatSprite extends AnimatedSprite
 			this.maxSpeed -= oldItem.getSpeed();
 			int index = items.indexOf(oldItem);
 			this.equipped.set(index, false);
-			
+
 		}
-		
+
 		this.currentAttack += item.getAttack();
 		this.currentDefense += item.getDefense();
 		this.currentSpeed += item.getSpeed();
@@ -327,10 +328,10 @@ public class CombatSprite extends AnimatedSprite
 		this.maxSpeed += item.getSpeed();
 		int index = items.indexOf(item);
 		this.equipped.set(index, true);
-		
+
 		return oldItem;
 	}
-	
+
 	public void unequipItem(EquippableItem item)
 	{
 		this.currentAttack -= item.getAttack();
@@ -340,9 +341,9 @@ public class CombatSprite extends AnimatedSprite
 		this.maxDefense -= item.getDefense();
 		this.maxSpeed -= item.getSpeed();
 		int index = items.indexOf(item);
-		this.equipped.set(index, false);		
+		this.equipped.set(index, false);
 	}
-	
+
 	public int getAttackRange()
 	{
 		EquippableItem equippedWeapon = this.getEquippedWeapon();
@@ -350,14 +351,14 @@ public class CombatSprite extends AnimatedSprite
 			return equippedWeapon.getRange();
 		return 1;
 	}
-	
+
 	/*******************************************/
 	/* MUTATOR AND ACCESSOR METHODS START HERE */
 	/*******************************************/
 	/*
 	 * Gets the image portrait of this combat sprite. This will return NULL if the combat sprite does not
 	 * have a portrait.
-	 * 
+	 *
 	 * @return the image portrait of this combat sprite. This will return NULL if the combat sprite does not
 	 * have a portrait.
 	 */
@@ -390,12 +391,12 @@ public class CombatSprite extends AnimatedSprite
 	public void setCurrentMP(int currentMP) {
 		this.currentMP = currentMP;
 	}
-	
+
 	public void modifyCurrentHP(int amount)
 	{
 		currentHP = Math.min(maxHP, Math.max(0, currentHP + amount));
 	}
-	
+
 	public void modifyCurrentMP(int amount)
 	{
 		currentMP = Math.min(maxMP, Math.max(0, currentMP + amount));
@@ -432,7 +433,7 @@ public class CombatSprite extends AnimatedSprite
 	public void setMaxSpeed(int maxSpeed) {
 		this.maxSpeed = maxSpeed;
 	}
-	
+
 	public int getMaxAttack() {
 		return maxAttack;
 	}
@@ -492,7 +493,7 @@ public class CombatSprite extends AnimatedSprite
 	public AI getAi() {
 		return ai;
 	}
-	
+
 	public void setAi(AI ai)
 	{
 		this.ai = ai;
@@ -524,31 +525,31 @@ public class CombatSprite extends AnimatedSprite
 
 	public boolean isHero() {
 		return isHero;
-	}	
+	}
 
 	public Animation getAnimation(String animation)
 	{
 		return spriteAnims.getAnimation(animation);
 	}
-	
+
 	public Image getAnimationImageAtIndex(int index)
 	{
 		return spriteAnims.getImageAtIndex(index);
 	}
-	
+
 	public int getUniqueEnemyId()
 	{
 		return this.uniqueEnemyId;
 	}
-	
+
 	public void setUniqueEnemyId(int id)
 	{
 		this.uniqueEnemyId = id;
 	}
-	
+
 	public boolean isLeader() {
 		return isLeader;
-	}	
+	}
 
 	/************************/
 	/* Handle Progression	*/
@@ -571,8 +572,8 @@ public class CombatSprite extends AnimatedSprite
 
 	public ArrayList<KnownSpell> getSpellsDescriptors() {
 		return spells;
-	}	
-	
+	}
+
 	public void setSpells(ArrayList<KnownSpell> spells) {
 		this.spells = spells;
 	}
@@ -588,13 +589,13 @@ public class CombatSprite extends AnimatedSprite
 	public HeroProgression getHeroProgression() {
 		return heroProgression;
 	}
-	
-	
+
+
 	public void triggerButton1Event(StateInfo stateInfo)
 	{
 		stateInfo.sendMessage(new SpriteContextMessage(Message.MESSAGE_SHOW_HERO, this));
 	}
-	
+
 	public void triggerOverEvent(StateInfo stateInfo)
 	{
 		stateInfo.addPanel(new SpriteContextPanel(Panel.PANEL_HEALTH_BAR, this, stateInfo.getGc()));

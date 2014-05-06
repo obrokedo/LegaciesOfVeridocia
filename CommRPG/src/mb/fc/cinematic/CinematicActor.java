@@ -111,7 +111,7 @@ public class CinematicActor
 				{
 					case SE_NONE:
 
-						AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), (int) this.getLocX(), (int) this.getLocY(), cont.getDisplayPaddingX(), camera, false);
+						AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), (int) this.getLocX(), (int) this.getLocY(), cont.getDisplayPaddingX(), camera, false, stateInfo);
 
 						graphics.drawImage(im, locX - camera.getLocationX() + cont.getDisplayPaddingX(),
 								locY - camera.getLocationY());
@@ -121,7 +121,7 @@ public class CinematicActor
 						Image scaled = im.getScaledCopy(specialEffectCounter);
 
 						AnimatedSprite.drawShadow(scaled, (int) (this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX() + (im.getWidth() - scaled.getWidth()) / 2),
-								(int) (this.getLocY() - camera.getLocationY() + im.getHeight() - scaled.getHeight()), cont.getDisplayPaddingX(), camera, false);
+								(int) (this.getLocY() - camera.getLocationY() + im.getHeight() - scaled.getHeight()), cont.getDisplayPaddingX(), camera, false, stateInfo);
 
 						scaled.draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX() + (im.getWidth() - scaled.getWidth()) / 2,
 								this.getLocY() - camera.getLocationY() + im.getHeight() - scaled.getHeight());
@@ -129,15 +129,15 @@ public class CinematicActor
 					case SE_QUIVER:
 
 						AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), (int) (this.getLocX() + (specialEffectCounter % 2 == 0 ? 0 : (-2 + specialEffectCounter) * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()])),
-								(int) this.getLocY(), cont.getDisplayPaddingX(), camera, false);
+								(int) this.getLocY(), cont.getDisplayPaddingX(), camera, false, stateInfo);
 
 						graphics.drawImage(im, locX - camera.getLocationX() + cont.getDisplayPaddingX() + (specialEffectCounter % 2 == 0 ? 0 : (-2 + specialEffectCounter) * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]),
 								locY - camera.getLocationY());
 						break;
 					case SE_FLASH:
-						AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), (int) this.getLocX(), (int) this.getLocY(), cont.getDisplayPaddingX(), camera, false);
+						AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), (int) this.getLocX(), (int) this.getLocY(), cont.getDisplayPaddingX(), camera, false, stateInfo);
 
-						Image whiteIm = im.copy();
+						Image whiteIm = im;
 
 						// 1. bind the sprite sheet
 						whiteIm.bind();
@@ -169,7 +169,7 @@ public class CinematicActor
 								*/
 						break;
 					case SE_NOD:
-						AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), (int) this.getLocX(), (int) this.getLocY(), cont.getDisplayPaddingX(), camera, false);
+						AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), (int) this.getLocX(), (int) this.getLocY(), cont.getDisplayPaddingX(), camera, false, stateInfo);
 
 						// This is the lower portion of the sprite
 						im.getSubImage(0, 10 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], im.getWidth(), 14 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]).draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(),
@@ -179,7 +179,7 @@ public class CinematicActor
 								this.getLocY() - camera.getLocationY() + 1 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);
 						break;
 					case SE_HEAD_SHAKE:
-						AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), (int) this.getLocX(), (int) this.getLocY(), cont.getDisplayPaddingX(), camera, false);
+						AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), (int) this.getLocX(), (int) this.getLocY(), cont.getDisplayPaddingX(), camera, false, stateInfo);
 
 						im.getSubImage(0, 10 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()],
 								im.getWidth(), 14 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]).draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(),
@@ -218,7 +218,7 @@ public class CinematicActor
 						}
 
 						AnimatedSprite.drawShadow(im, (int) (this.getLocX() + (trembleVal * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]) / 2),
-								(int) this.getLocY() + trembleVal * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], cont.getDisplayPaddingX(), camera, false);
+								(int) this.getLocY() + trembleVal * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], cont.getDisplayPaddingX(), camera, false, stateInfo);
 
 						graphics.drawImage(im, locX - camera.getLocationX() + cont.getDisplayPaddingX() + (trembleVal * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]) / 2,
 								locY - camera.getLocationY() + trembleVal * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);

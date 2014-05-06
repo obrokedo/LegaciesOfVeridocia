@@ -11,21 +11,20 @@ import mb.fc.game.menu.PriestMenu;
 import mb.fc.game.menu.ShopMenu;
 import mb.fc.game.menu.SpeechMenu;
 import mb.fc.game.menu.SystemMenu;
-import mb.fc.game.sprite.CombatSprite;
 
 public class MenuManager extends Manager
-{	
+{
 	@Override
-	public void initialize() 
-	{		
-		
+	public void initialize()
+	{
+
 	}
 
 	public boolean isBlocking()
 	{
 		return stateInfo.areMenusDisplayed();
 	}
-	
+
 	public void update()
 	{
 		if (stateInfo.areMenusDisplayed())
@@ -45,18 +44,20 @@ public class MenuManager extends Manager
 						break;
 					case MENU_NO_ACTION:
 						break;
+					default:
+						break;
 				}
 		}
 	}
 
 	@Override
-	public void recieveMessage(Message message) 
+	public void recieveMessage(Message message)
 	{
 		switch (message.getMessageType())
 		{
-			case Message.MESSAGE_SPEECH:			
+			case Message.MESSAGE_SPEECH:
 				SpeechMessage spm = (SpeechMessage) message;
-				stateInfo.addMenu(new SpeechMenu(spm.getText(), 
+				stateInfo.addMenu(new SpeechMenu(spm.getText(),
 						stateInfo.getGc(), spm.getTriggerId(), spm.getPortraitId(), stateInfo));
 				break;
 			case Message.MESSAGE_SHOW_SYSTEM_MENU:
@@ -70,7 +71,7 @@ public class MenuManager extends Manager
 				stateInfo.addSingleInstanceMenu(new HeroesStatMenu(stateInfo.getGc(), stateInfo.getClientProfile().getHeroes()));
 				break;
 			case Message.MESSAGE_SHOW_HERO:
-				stateInfo.addMenu(new HeroStatMenu(stateInfo.getGc(), (CombatSprite) ((SpriteContextMessage) message).getSprite(), stateInfo));
+				stateInfo.addMenu(new HeroStatMenu(stateInfo.getGc(), ((SpriteContextMessage) message).getSprite(), stateInfo));
 				break;
 			case Message.MESSAGE_SHOW_PRIEST:
 				stateInfo.addMenu(new PriestMenu(stateInfo, stateInfo.getGc(), stateInfo.getClientProfile().getHeroes()));

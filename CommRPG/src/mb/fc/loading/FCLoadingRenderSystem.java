@@ -30,6 +30,18 @@ public class FCLoadingRenderSystem extends EntityProcessingSystem
 		LoadingComp loading = loadingMapper.get(e);
 		graphics.setColor(Color.white);
 		graphics.drawString(CommRPG.GAME_TITLE, 15, gc.getHeight() - 30);
-		graphics.drawString("LOADING: " + loading.currentIndex + " / " + loading.maxIndex, gc.getWidth() - 185, gc.getHeight() - 30);
-	}	
+
+		/*
+		if (loading.maxIndex > 0)
+		{
+			graphics.setColor(new Color(1 - 1 * (1.0f * loading.currentIndex / loading.maxIndex), (1.0f * loading.currentIndex / loading.maxIndex), 0));
+			System.out.println(255 - 255 * (1.0f * loading.currentIndex / loading.maxIndex) + " " + 255 * (1.0f * loading.currentIndex / loading.maxIndex));
+			graphics.fillRect(gc.getWidth() - 190, gc.getHeight() - 52, (float) (160 * (1.0 * loading.currentIndex / loading.maxIndex)), 20);
+		}
+		graphics.setColor(Color.white);
+		graphics.drawRect(gc.getWidth() - 190, gc.getHeight() - 50, 160, 15);
+		*/
+
+		graphics.drawString("LOADING: " + loading.currentIndex + " / " + loading.maxIndex, gc.getWidth() - 185, gc.getHeight() - 50);
+	}
 }

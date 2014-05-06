@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.Message;
+import mb.fc.engine.state.CinematicState;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.input.FCInput;
@@ -36,6 +37,7 @@ public class SpeechMenu extends Menu
 	private static final String CHAR_SOFT_STOP = "}";
 	private static final String CHAR_HARD_STOP = "]";
 	private static final String CHAR_LINE_BREAK = "[";
+	private static final String CHAR_NEXT_CIN = "|";
 
 	public SpeechMenu(String text, FCGameContainer gc, boolean attackCin)
 	{
@@ -149,66 +151,74 @@ public class SpeechMenu extends Menu
 			return MenuUpdate.MENU_NO_ACTION;
 		}
 
-		if (textMoving)
+		for (int i = 0; i < (CinematicState.cinematicSpeed > 1 ? CinematicState.cinematicSpeed : 1); i++)
 		{
-			if (textMovingIndex + 1 > panelText.get(textIndex).length())
+			if (textMoving)
 			{
-				textMovingIndex = panelText.get(textIndex).length();
-				textMovingIndex = 0;
-				if (textIndex + 1 < panelText.size())
-					textIndex++;
-				else
+				if (textMovingIndex + 1 > panelText.get(textIndex).length())
 				{
-					System.out.println("SEND TRIGGER " + triggerId);
-					if (triggerId != -1)
-						stateInfo.getResourceManager().getTriggerEventById(triggerId).perform(stateInfo);
-					return MenuUpdate.MENU_CLOSE;
-				}
-				// textMoving = false;
-			}
-			else
-			{
-				String nextLetter = panelText.get(textIndex).substring(textMovingIndex, textMovingIndex + 1);
-				if (nextLetter.equalsIgnoreCase(CHAR_HARD_STOP))
-				{
-					textMoving = false;
-					waitingOn = CHAR_HARD_STOP;
-					System.out.println("HARD STOP");
-				}
-				else if (nextLetter.equalsIgnoreCase(CHAR_SOFT_STOP))
-				{
-					textMoving = false;
-
-
-					String[] softSplit = panelText.get(textIndex).substring(textMovingIndex).split(" ");
-
-					if (softSplit[0].length() > 1 && softSplit[0].replaceFirst("[0-9]", "").length() != softSplit[0].length())
-					{
-						waitUntil = System.currentTimeMillis() + Integer.parseInt(softSplit[0].substring(1));
-						waitingOn = softSplit[0];
-					}
+					textMovingIndex = panelText.get(textIndex).length();
+					textMovingIndex = 0;
+					if (textIndex + 1 < panelText.size())
+						textIndex++;
 					else
 					{
-						waitUntil = System.currentTimeMillis() + 2500;
-						waitingOn = CHAR_SOFT_STOP;
+						System.out.println("SEND TRIGGER " + triggerId);
+						if (triggerId != -1)
+							stateInfo.getResourceManager().getTriggerEventById(triggerId).perform(stateInfo);
+						return MenuUpdate.MENU_CLOSE;
 					}
+					// textMoving = false;
 				}
-				else if (nextLetter.equalsIgnoreCase(CHAR_PAUSE))
-				{
-					textMoving = false;
-					waitUntil = System.currentTimeMillis() + 400;
-					waitingOn = CHAR_PAUSE;
-				}
-
-				if (textMoving)
-					textMovingIndex += 1;
 				else
-					panelText.set(textIndex, panelText.get(textIndex).replaceFirst("\\" + waitingOn, ""));
-				// This is a bit of a kludge, when we are in the attack cinematic we want the text to scroll but we don't
-				// want the :talking" sound effect. Really this should probably be a different boolean rather then just
-				// checking to see if the state info is not null
-				if (!attackCin && textMovingIndex % 6 == 0 && stateInfo != null)
-					stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "speechblip", .15f, false));
+				{
+					String nextLetter = panelText.get(textIndex).substring(textMovingIndex, textMovingIndex + 1);
+					if (nextLetter.equalsIgnoreCase(CHAR_HARD_STOP))
+					{
+						textMoving = false;
+						waitingOn = CHAR_HARD_STOP;
+						System.out.println("HARD STOP");
+					}
+					else if (nextLetter.equalsIgnoreCase(CHAR_SOFT_STOP))
+					{
+						textMoving = false;
+
+
+						String[] softSplit = panelText.get(textIndex).substring(textMovingIndex).split(" ");
+
+						if (softSplit[0].replaceFirst("[0-9]", "").length() != softSplit[0].length())
+						{
+							waitUntil = System.currentTimeMillis() + Integer.parseInt(softSplit[0].substring(1));
+							waitingOn = softSplit[0];
+						}
+						else
+						{
+							waitUntil = System.currentTimeMillis() + 2500;
+							waitingOn = CHAR_SOFT_STOP;
+						}
+					}
+					else if (nextLetter.equalsIgnoreCase(CHAR_PAUSE))
+					{
+						textMoving = false;
+						waitUntil = System.currentTimeMillis() + 400;
+						waitingOn = CHAR_PAUSE;
+					}
+					else if (nextLetter.equalsIgnoreCase(CHAR_NEXT_CIN))
+					{
+						panelText.set(textIndex, panelText.get(textIndex).replaceFirst("\\" + CHAR_NEXT_CIN, ""));
+						return MenuUpdate.MENU_NEXT_CIN;
+					}
+
+					if (textMoving)
+						textMovingIndex += 1;
+					else
+						panelText.set(textIndex, panelText.get(textIndex).replaceFirst("\\" + waitingOn, ""));
+					// This is a bit of a kludge, when we are in the attack cinematic we want the text to scroll but we don't
+					// want the :talking" sound effect. Really this should probably be a different boolean rather then just
+					// checking to see if the state info is not null
+					if (!attackCin && textMovingIndex % 6 == 0 && stateInfo != null)
+						stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "speechblip", .15f, false));
+				}
 			}
 		}
 

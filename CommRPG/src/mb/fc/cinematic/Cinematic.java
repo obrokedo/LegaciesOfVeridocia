@@ -164,10 +164,16 @@ public class Cinematic {
 		}
 
 
-		if (speechMenu != null
-				&& MenuUpdate.MENU_CLOSE == speechMenu.handleUserInput(input,
-						stateInfo)) {
-			speechMenu = null;
+		if (speechMenu != null)
+		{
+			MenuUpdate mu = speechMenu.handleUserInput(input, stateInfo);
+			if (mu == MenuUpdate.MENU_CLOSE)
+				speechMenu = null;
+			else if (mu == MenuUpdate.MENU_NEXT_CIN)
+			{
+				CinematicEvent ce = cinematicEvents.remove(0);
+				handleEvent(ce, stateInfo);
+			}
 		}
 
 		// If nothing is currently blocking then continue processing the

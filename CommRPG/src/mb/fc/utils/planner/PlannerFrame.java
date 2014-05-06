@@ -69,13 +69,13 @@ public class PlannerFrame extends JFrame implements ActionListener,
 		openTriggersItem.addActionListener(this);
 		openTriggersItem.setActionCommand("open");
 		fileMenu.add(openTriggersItem);
-		
+
 		JMenuItem reloadTriggersItem = new JMenuItem(
 				"Reload Triggers/Speech/Cinematic");
 		reloadTriggersItem.addActionListener(this);
 		reloadTriggersItem.setActionCommand("reload");
 		fileMenu.add(reloadTriggersItem);
-		
+
 		JMenu optionsMenu = new JMenu("Options");
 		JMenuItem showCinItem = new JMenuItem(
 				"Show Cinematic Timeline");
@@ -87,7 +87,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 		hideCinItem.addActionListener(this);
 		hideCinItem.setActionCommand("hidecin");
 		optionsMenu.add(hideCinItem);
-		
+
 		/*
 		 * JMenuItem createTriggersItem = new
 		 * JMenuItem("Create Triggers Based on Map");
@@ -237,7 +237,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 		{
 			System.out.println(s);
 		}
-		
+
 		Path path = Paths.get(pathToFile);
 		try {
 			if (append)
@@ -250,7 +250,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static ArrayList<String> export(ArrayList<PlannerContainer> containers)
 	{
 		ArrayList<String> buffer = new ArrayList<String>();
@@ -397,10 +397,10 @@ public class PlannerFrame extends JFrame implements ActionListener,
 					}
 
 					plannerLine.getValues().add(value);
-				} 
+				}
 				else
 				{
-					if (ta.getParams().containsKey(pvd.getTag()))					
+					if (ta.getParams().containsKey(pvd.getTag()))
 						plannerLine.getValues().add(Integer.parseInt(ta.getParams().get(pvd.getTag())) + 1);
 					else
 						plannerLine.getValues().add(0);
@@ -534,7 +534,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 						false,
 						"Move Speed",
 						"The amount of pixels that the actor will move every 20ms towards their destination. Normal movement is 2.4"));
-		
+
 		definingValues
 		.add(new PlannerValueDef(
 				PlannerValueDef.REFERS_NONE,
@@ -543,7 +543,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 				false,
 				"Move Horizontal Before Vertical",
 				"The sprite will move horizontal before it takes vertical moves if this is checked. Otherwise it will move vertical first"));
-		
+
 		// Diagonal movement
 		definingValues
 		.add(new PlannerValueDef(
@@ -580,7 +580,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 						false,
 						"Move Speed",
 						"The amount of pixels that the actor will move every 20ms towards their destination. Normal movement is 2.4"));
-		
+
 		definingValues
 		.add(new PlannerValueDef(
 				PlannerValueDef.REFERS_NONE,
@@ -589,7 +589,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 				false,
 				"Move Horizontal Before Vertical",
 				"The sprite will move horizontal before it takes vertical moves if this is checked. Otherwise it will move vertical first"));
-		
+
 		// Diagonal movement
 		definingValues
 		.add(new PlannerValueDef(
@@ -606,7 +606,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 						"Move",
 						"Orders the specified actor to move to the specified coordinate.",
 						definingValues));
-		
+
 		// Forced Facing Move
 		definingValues = new ArrayList<PlannerValueDef>();
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
@@ -630,7 +630,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 				.add(new PlannerValueDef(PlannerValueDef.REFERS_DIRECTION,
 						PlannerValueDef.TYPE_INT, "facing", false, "Facing",
 						"The direction that the sprite should face for the duration of the move"));
-		
+
 		definingValues
 		.add(new PlannerValueDef(
 				PlannerValueDef.REFERS_NONE,
@@ -639,7 +639,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 				false,
 				"Move Horizontal Before Vertical",
 				"The sprite will move horizontal before it takes vertical moves if this is checked. Otherwise it will move vertical first"));
-		
+
 		// Diagonal movement
 		definingValues
 		.add(new PlannerValueDef(
@@ -746,7 +746,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 		definingValues = new ArrayList<PlannerValueDef>();
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
 				PlannerValueDef.TYPE_STRING, "text", false, "Text",
-				"The text that should be displayed"));
+				"The text that should be displayed. Using the { character will cause a short pause, the } character will do a soft stop and the } chararacter will do a hard stop. Using a | will cause the action after this one to be ran"));
 		definingValues
 				.add(new PlannerValueDef(
 						PlannerValueDef.REFERS_NONE,
@@ -960,7 +960,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 						"Start Actor Trembling",
 						"Causes the specified actor to begin trembling. This effect will continue until a STOP SPECIAL EFFECT is issued for the actor. This is a 'special effect'. Only one special effect can be active on a given actor at any time. This will stop any current animations.",
 						definingValues));
-		
+
 		// Agitate
 		definingValues = new ArrayList<PlannerValueDef>();
 		definingValues
@@ -968,7 +968,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 						PlannerValueDef.TYPE_STRING, "name", false,
 						"Actor Name",
 						"The name of the actor that should perform the agitate special effect"));
-	
+
 		allowableLines
 				.add(new PlannerLineDef(
 						"quiver",
@@ -1015,7 +1015,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 						"Actor Lay on Side",
 						"Causes the specified actor to lay on their side. This effect will continue until a STOP SPECIAL EFFECT is issued for the actor. This is a 'special effect'. Only one special effect can be active on a given actor at any time. This will stop any current animations.",
 						definingValues));
-		
+
 		// Lay on Back
 		definingValues = new ArrayList<PlannerValueDef>();
 		definingValues
@@ -1208,7 +1208,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 
 		allowableLines.add(new PlannerLineDef("playsound", "Play Sound",
 				"Plays sound at the specified volume.", definingValues));
-		
+
 		// Fade From Black
 		definingValues = new ArrayList<PlannerValueDef>();
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
@@ -1223,7 +1223,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 
 		allowableLines.add(new PlannerLineDef("fadein", "Fade in from black",
 				"Fades the screen in from black.", definingValues));
-		
+
 		// Fade To Black
 		definingValues = new ArrayList<PlannerValueDef>();
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,

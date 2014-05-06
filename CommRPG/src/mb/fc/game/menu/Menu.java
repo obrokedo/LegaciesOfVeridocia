@@ -18,11 +18,12 @@ public abstract class Menu extends Panel
 		MENU_CLOSE,
 		MENU_ACTION_SHORT,
 		MENU_ACTION_LONG,
+		MENU_NEXT_CIN
 	}
-	
+
 	public Menu(int menuType) {
 		super(menuType);
 	}
-	
+
 	public abstract MenuUpdate handleUserInput(FCInput input, StateInfo stateInfo);
 }

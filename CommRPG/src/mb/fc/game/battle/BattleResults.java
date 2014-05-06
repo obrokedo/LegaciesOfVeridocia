@@ -205,6 +205,7 @@ public class BattleResults implements Serializable
 			br.attackOverText = attacker.getName() + " gained " + expGained +  " experience. }";
 			if (attacker.getExp() >= 100)
 			{
+				br.attackOverText += "[ ";
 				br.levelUpResult = attacker.getHeroProgression().getLevelUpResults(attacker, stateInfo);
 				br.attackOverText += br.levelUpResult.text;
 			}

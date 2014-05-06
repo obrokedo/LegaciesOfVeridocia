@@ -52,6 +52,11 @@ public class AnimatedSprite extends Sprite
 
 	public static void drawShadow(Image originalIm, int locX, int locY, int displayPadding, Camera camera, boolean tileOffset)
 	{
+		drawShadow(originalIm, locX, locY, displayPadding, camera, tileOffset, stateInfo);
+	}
+
+	public static void drawShadow(Image originalIm, int locX, int locY, int displayPadding, Camera camera, boolean tileOffset, StateInfo stateInfo)
+	{
 		Image i = (originalIm).getScaledCopy(originalIm.getWidth(), (int) (originalIm.getHeight() * .65));
 		i.drawSheared((int) (locX - camera.getLocationX() + displayPadding - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 13 * (1.0 * originalIm.getHeight() / stateInfo.getTileHeight())),
 				locY - camera.getLocationY() - (tileOffset ? stateInfo.getResourceManager().getMap().getTileRenderHeight() : 0) + originalIm.getHeight() -

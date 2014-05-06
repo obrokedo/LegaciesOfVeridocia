@@ -234,11 +234,13 @@ public class AttackCinematicState extends LoadableGameState
 		if (spellAnimIndex != -1)
 		{
 			for (AnimSprite as : spellAnim.frames.get(spellAnimIndex).sprites)
+			{
 				if (as.imageIndex != -1)
 				{
 					g.drawImage(spellAnims.getImageAtIndex(as.imageIndex),
-							cont.getDisplayPaddingX() + (targets.get(0).isHero() ? 226 * screenScale : 0) + as.x * screenScale, bgYPos + backgroundImage.getHeight() + as.y * screenScale);
+							cont.getDisplayPaddingX() + (targets.get(0).isHero() ? 276 * screenScale : 50 * screenScale) + as.x * screenScale, bgYPos + backgroundImage.getHeight() + as.y * screenScale);
 				}
+			}
 		}
 
 
@@ -326,10 +328,8 @@ public class AttackCinematicState extends LoadableGameState
 					textMenu = new SpeechMenu(battleResults.text.get(targetIndex), (FCGameContainer) container, true);
 
 					// TODO WHAT IS THIS FOR?
-					/*
 					if (spellAnim != null)
 						spellAnimIndex = 0;
-						*/
 
 					performBattleResult();
 					if (!targetsAreAllies && dealtDamage)
@@ -556,12 +556,12 @@ public class AttackCinematicState extends LoadableGameState
 
 		if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_SPELL)
 		{
-			/*
-			spellAnims = frm.getSpriteAnimations().get(battleResults.battleCommand.getSpell().getName().toLowerCase());
-			spellAnim = spellAnims.getAnimation(battleResults.battleCommand.getSpell().getName().toLowerCase());
-			*/
-			spellAnims = frm.getSpriteAnimations().get("blaze");
-			spellAnim = spellAnims.getAnimation("blaze");
+
+			spellAnims = frm.getSpriteAnimations().get(battleResults.battleCommand.getSpell().getName());
+			spellAnim = spellAnims.getAnimation(battleResults.battleCommand.getLevel() + "");
+
+			// spellAnims = frm.getSpriteAnimations().get("blaze");
+			// spellAnim = spellAnims.getAnimation("blaze");
 		}
 		else
 			spellAnim = null;

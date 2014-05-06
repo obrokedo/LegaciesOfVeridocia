@@ -21,7 +21,9 @@ public class CinematicState extends LoadableGameState
 	private TileMapRenderer tileMapRenderer;
 	private SoundManager soundManager;
 	private Cinematic cinematic;
-	private float cinematicSpeed = 1;
+
+	// TODO THIS IS A DEBUG TOOL
+	public static float cinematicSpeed = 1;
 
 	private StateInfo stateInfo;
 
@@ -49,6 +51,7 @@ public class CinematicState extends LoadableGameState
 		cinematic = stateInfo.getResourceManager().getCinematicById(0);
 		cinematic.initialize(stateInfo);
 		stateInfo.setInitialized(true);
+		stateInfo.getInput().clear();
 	}
 
 	@Override

@@ -10,6 +10,7 @@ import mb.fc.game.input.FCInput;
 import mb.fc.game.input.KeyMapping;
 import mb.fc.game.ui.FCGameContainer;
 
+import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -31,6 +32,8 @@ public abstract class QuadMenu extends Menu
 	protected Image selectSide;
 	protected Image selectTop;
 	protected int selectCount = 3;
+	protected int flashCount = -5;
+	protected Color flashColor = new Color(100, 100, 100);
 
 	protected QuadMenu(int menuType, StateInfo stateInfo) {
 		this(menuType, true, stateInfo);
@@ -185,8 +188,19 @@ public abstract class QuadMenu extends Menu
 	public MenuUpdate handleUserInput(FCInput input, StateInfo stateInfo)
 	{
 		blinkDelta++;
+		flashCount += 1;
+
+		if (flashCount >= 50)
+			flashCount = -50;
+
+		flashColor.r = (50 - Math.abs(flashCount)) / 255.0f;
+		flashColor.g = (50 - Math.abs(flashCount)) / 255.0f;
+		flashColor.b = (50 - Math.abs(flashCount)) / 255.0f;
+
 		if (selectCount < 3)
 			selectCount++;
+
+
 		if (blinkDelta == 20)
 		{
 			if (!paintSelectionCursor)
@@ -249,7 +263,8 @@ public abstract class QuadMenu extends Menu
 	{
 		if (selected != dir && isOptionEnabled(dir))
 		{
-			selectCount = 0;
+			selectCount = 2;
+			flashCount = -5;
 			stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menumove", 1f, false));
 			selected = dir;
 			if (!paintSelectionCursor)
@@ -266,12 +281,40 @@ public abstract class QuadMenu extends Menu
 
 	protected void drawImage(Image image, float x, float y, Graphics g, Direction dir)
 	{
-		g.drawImage(image, x, y);
 		if (paintSelectionCursor && dir == selected)
 		{
+			Image whiteIm = image;
+
+			// 1. bind the sprite sheet
+			whiteIm.bind();
+
+			// 2. change texture environment
+			GL11.glTexEnvi(GL11.GL_TEXTURE_ENV,
+					GL11.GL_TEXTURE_ENV_MODE, GL11.GL_ADD);
+
+			// 3. start rendering the sprite sheet
+			whiteIm.startUse();
+
+			// 4. bind any colors, draw any sprites
+			flashColor.bind();
+			whiteIm.drawEmbedded(x, y, image.getWidth(), image.getHeight());
+
+			// 5. stop rendering the sprite sheet
+			whiteIm.endUse();
+
+			// 6. reset the texture environment
+			GL11.glTexEnvi(GL11.GL_TEXTURE_ENV,
+					GL11.GL_TEXTURE_ENV_MODE, GL11.GL_MODULATE);
+
+
+			/*
 			g.setColor(Color.red);
 			g.drawRect(x + 1, y + 1, image.getWidth() - 2, image.getHeight() - 2);
 			g.drawRect(x + 2, y + 2, image.getWidth() - 4, image.getHeight() - 4);
+			*/
 		}
+		else
+			g.drawImage(image, x, y);
+
 	}
 }

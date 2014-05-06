@@ -140,6 +140,8 @@ public class LoadingState extends BasicGameState
 				GlobalPythonFactory.intialize();
 				Panel.intialize((FCResourceManager) resourceManager);
 				SpellResource.initSpells((FCResourceManager) resourceManager);
+
+				loadIndex = loadAmount;
 			}
 
 			// Only alert the loadable state if resources are being loaded. If they are not being loaded
