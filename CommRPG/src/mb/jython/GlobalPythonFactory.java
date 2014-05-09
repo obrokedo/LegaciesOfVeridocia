@@ -3,9 +3,11 @@ package mb.jython;
 import java.io.File;
 
 import mb.fc.game.battle.spell.Spell;
+import mb.gl2.loading.LoadingState;
 
 import org.python.core.Py;
 import org.python.core.PyString;
+import org.python.core.PySystemState;
 
 public class GlobalPythonFactory
 {
@@ -17,17 +19,38 @@ public class GlobalPythonFactory
 
 	public static void intialize()
 	{
-		JythonObjectFactory.sys  = Py.getSystemState();
-		JythonObjectFactory.sys.path.append(new PyString(JythonObjectFactory.sys.getPath("scripts")));
-		File scriptsFolder = new File(JythonObjectFactory.sys.getPath("scripts"));
-		for (File file : scriptsFolder.listFiles())
+		// UNCOMMENT THIS FOR SINGLE JAR
+		if (LoadingState.inJar)
 		{
-			if (file.getName().endsWith(".class"))
-				file.delete();
+			String jarPath = JythonObjectFactory.class.getProtectionDomain().getCodeSource().getLocation() .getPath();
+			PySystemState state = new PySystemState();
+			state.path.insert(0,Py.newString(jarPath + java.io.File.separator + "scripts"));
+			Py.setSystemState(state);
 		}
 
-		if (panelRendererFact != null)
-			createJPanelRender().reload();
+		JythonObjectFactory.sys  = Py.getSystemState();
+		System.out.println("Path");
+		System.out.println(JythonObjectFactory.sys.path);
+
+		// BEGIN COMMENTING HERE FOR SINGLE JAR
+		if (!LoadingState.inJar)
+		{
+			JythonObjectFactory.sys.path.append(new PyString(JythonObjectFactory.sys.getPath("scripts")));
+
+
+			File scriptsFolder = new File(JythonObjectFactory.sys.getPath("scripts"));
+			for (File file : scriptsFolder.listFiles())
+			{
+				if (file.getName().endsWith(".class"))
+					file.delete();
+			}
+
+
+			if (panelRendererFact != null)
+				createJPanelRender().reload();
+		}
+
+		// END COMMENTING HERE FOR SINGLE JAR
 
         panelRendererFact = new JythonObjectFactory(JPanelRender.class, "PanelRender", "PanelRender");
         battleFunctionsFact = new JythonObjectFactory(JBattleFunctions.class, "BattleFunctions", "BattleFunctions");

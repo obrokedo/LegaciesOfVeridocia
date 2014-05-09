@@ -26,36 +26,36 @@ import de.jaret.util.ui.timebars.swing.renderer.DefaultTimeBarRenderer;
 public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentListener
 {
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 	private ArrayList<TimeBarMarkerImpl> markers;
 
 	public PlannerTimeBarViewer(ArrayList<CinematicEvent> ces)
-	{		
+	{
 		this.markers = new ArrayList<TimeBarMarkerImpl>();
 		generateGraph(ces);
-		
+
 		setDrawOverlapping(false);
 		setRowHeight(50);
-		
+
 		// int duration = (int) (currentTime / 1000) + 1;
 		this.setInitialDisplayRange(new JaretDate(0), 8);
-		this.setTimeBarRenderer(new ZTimeBarRenderer());	
+		this.setTimeBarRenderer(new ZTimeBarRenderer());
 		this.setOptimizeScrolling(true);
 		this._xScrollBar.addAdjustmentListener(this);
 		this._xScrollBar.setUnitIncrement(50);
 		this._xScrollBar.setBlockIncrement(50);
 		this._xScrollBar.getModel().addChangeListener(new Listen());
 	}
-	
+
 	@Override
 	public void adjustmentValueChanged(AdjustmentEvent arg0) {
 		System.out.println("ADJUST");
 		this.validate();
-		this.repaint();		
+		this.repaint();
 		System.out.println(this.getSize());
-	}		
+	}
 
 	public void generateGraph(ArrayList<CinematicEvent> ces)
 	{
@@ -64,16 +64,16 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 		DefaultTimeBarRowModel systemRow = new DefaultTimeBarRowModel(new DefaultRowHeader("System"));
 		DefaultTimeBarRowModel soundRow = new DefaultTimeBarRowModel(new DefaultRowHeader("Sound"));
 		ZIntervalImpl soundInterval = null;
-		
-		for (TimeBarMarkerImpl m : markers)			
+
+		for (TimeBarMarkerImpl m : markers)
 			this.remMarker(m);
-		
+
 		markers.clear();
-		
+
 		Hashtable<String, ActorBar> rowsByName = new Hashtable<String, ActorBar>();
-		
+
 		long currentTime = 0;
-		
+
 		for (CinematicEvent ce : ces)
 		{
 			switch (ce.getType())
@@ -82,8 +82,8 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 				case ADD_ACTOR:
 					DefaultTimeBarRowModel dt = new DefaultTimeBarRowModel(new DefaultRowHeader("Actor: " + (String) ce.getParam(2)));
 					ActorBar ab = new ActorBar(dt, (int) ce.getParam(0), (int) ce.getParam(1));
-					rowsByName.put((String) ce.getParam(2), ab);					
-					
+					rowsByName.put((String) ce.getParam(2), ab);
+
 					// Check invisible
 					if (!(boolean) ce.getParam(5))
 					{
@@ -93,7 +93,7 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 						ab.indefiniteIntervals.put("invisible", zi);
 						ab.dt.addInterval(zi);
 					}
-					
+
 					if (currentTime != 0)
 					{
 						ZIntervalImpl zi = new ZIntervalImpl("Not in scene");
@@ -108,12 +108,12 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 				case MOVE_ENFORCE_FACING:
 					handleMove(currentTime, ce, rowsByName, "Move Face Enforced ");
 					break;
-				case HALTING_MOVE:										
+				case HALTING_MOVE:
 					currentTime += handleMove(currentTime, ce, rowsByName, "Halting Move to ");
-					break;	
+					break;
 				case LOOP_MOVE:
 					 ab = rowsByName.get(ce.getParam(0));
-					
+
 					ZIntervalImpl zi = new ZIntervalImpl("Loop Move " + (int) ce.getParam(1) + " " + (int) ce.getParam(2));
 					zi.setBegin(new JaretDate(currentTime));
 					zi.setEnd(new JaretDate(currentTime + 1));
@@ -122,18 +122,18 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 					break;
 				case STOP_LOOP_MOVE:
 					ab = rowsByName.get(ce.getParam(0));
-											
+
 					zi = ab.indefiniteIntervals.get("loopmove");
 					zi.setEnd(new JaretDate(currentTime));
 					ab.indefiniteIntervals.remove("loopmove");
 					break;
-					
+
 				case SPIN:
 					ab = rowsByName.get(ce.getParam(0));
-						
+
 					zi = new ZIntervalImpl("Spin");
 					zi.setBegin(new JaretDate(currentTime));
-					
+
 					if ((int) ce.getParam(2) != -1)
 						zi.setEnd(new JaretDate(currentTime + (int) ce.getParam(2)));
 					else
@@ -145,79 +145,79 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 					break;
 				case STOP_SPIN:
 					ab = rowsByName.get(ce.getParam(0));
-					
+
 					zi = ab.indefiniteIntervals.get("spin");
 					zi.setEnd(new JaretDate(currentTime));
 					ab.indefiniteIntervals.remove("spin");
 					break;
-				
+
 				case SHRINK:
 					ab = rowsByName.get(ce.getParam(0));
-					
+
 					zi = new ZIntervalImpl("Shrink");
-					zi.setBegin(new JaretDate(currentTime));					
+					zi.setBegin(new JaretDate(currentTime));
 					zi.setEnd(new JaretDate(currentTime + (int) ce.getParam(1)));
 					ab.dt.addInterval(zi);
 					break;
 				case GROW:
 					ab = rowsByName.get(ce.getParam(0));
-					
+
 					zi = new ZIntervalImpl("Grow");
-					zi.setBegin(new JaretDate(currentTime));					
+					zi.setBegin(new JaretDate(currentTime));
 					zi.setEnd(new JaretDate(currentTime + (int) ce.getParam(1)));
 					ab.dt.addInterval(zi);
 					break;
 				case QUIVER:
 					ab = rowsByName.get(ce.getParam(0));
-					
+
 					zi = new ZIntervalImpl("Agitate");
-					zi.setBegin(new JaretDate(currentTime));		
+					zi.setBegin(new JaretDate(currentTime));
 					zi.setEnd(new JaretDate(currentTime + 1));
 					ab.indefiniteIntervals.put("quiver", zi);
 					ab.dt.addInterval(zi);
 					break;
 				case TREMBLE:
 					ab = rowsByName.get(ce.getParam(0));
-					
+
 					zi = new ZIntervalImpl("Tremble");
-					zi.setBegin(new JaretDate(currentTime));		
+					zi.setBegin(new JaretDate(currentTime));
 					zi.setEnd(new JaretDate(currentTime + 1));
 					ab.indefiniteIntervals.put("tremble", zi);
 					ab.dt.addInterval(zi);
 					break;
 				case LAY_ON_SIDE:
 					ab = rowsByName.get(ce.getParam(0));
-					
+
 					zi = new ZIntervalImpl("Lay on Side");
-					zi.setBegin(new JaretDate(currentTime));	
+					zi.setBegin(new JaretDate(currentTime));
 					zi.setEnd(new JaretDate(currentTime + 1));
 					ab.indefiniteIntervals.put("layonside", zi);
 					ab.dt.addInterval(zi);
 					break;
 				case LAY_ON_BACK:
 					ab = rowsByName.get(ce.getParam(0));
-					
+
 					zi = new ZIntervalImpl("Lay on Back");
-					zi.setBegin(new JaretDate(currentTime));	
+					zi.setBegin(new JaretDate(currentTime));
 					zi.setEnd(new JaretDate(currentTime + 1));
 					ab.indefiniteIntervals.put("layonback", zi);
 					ab.dt.addInterval(zi);
 					break;
 				case FALL_ON_FACE:
 					ab = rowsByName.get(ce.getParam(0));
-					
+
 					zi = new ZIntervalImpl("Fall on Face");
-					zi.setBegin(new JaretDate(currentTime));			
+					zi.setBegin(new JaretDate(currentTime));
 					zi.setEnd(new JaretDate(currentTime + 1));
 					ab.indefiniteIntervals.put("fallonface", zi);
 					ab.dt.addInterval(zi);
 					break;
 				case FLASH:
 					ab = rowsByName.get(ce.getParam(0));
-					
+
 					zi = new ZIntervalImpl("Flash");
 					zi.setBegin(new JaretDate(currentTime));
-					
+
 					if ((int) ce.getParam(2) != -1)
 						zi.setEnd(new JaretDate(currentTime + (int) ce.getParam(2)));
 					else
@@ -229,20 +229,20 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 					break;
 				case NOD:
 					ab = rowsByName.get(ce.getParam(0));
-					
+
 					zi = new ZIntervalImpl("Nod");
-					zi.setBegin(new JaretDate(currentTime));					
+					zi.setBegin(new JaretDate(currentTime));
 					zi.setEnd(new JaretDate(currentTime + 500));
 					ab.dt.addInterval(zi);
 					break;
 				case HEAD_SHAKE:
 					ab = rowsByName.get(ce.getParam(0));
-					
+
 					zi = new ZIntervalImpl("Head Shake");
-					zi.setBegin(new JaretDate(currentTime));			
+					zi.setBegin(new JaretDate(currentTime));
 					zi.setEnd(new JaretDate(currentTime + (int) ce.getParam(1)));
 					ab.dt.addInterval(zi);
-					break;				
+					break;
 				case STOP_SE:
 					ab = rowsByName.get(ce.getParam(0));
 					stopEffects(currentTime, ab, "quiver");
@@ -252,7 +252,7 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 					stopEffects(currentTime, ab, "layonback");
 					stopEffects(currentTime, ab, "tremble");
 					break;
-				
+
 				case VISIBLE:
 					ab = rowsByName.get(ce.getParam(0));
 					if ((boolean) ce.getParam(1))
@@ -271,7 +271,7 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 						zi.setEnd(new JaretDate(currentTime + 1));
 						ab.indefiniteIntervals.put("invisible", zi);
 						ab.dt.addInterval(zi);
-					}					
+					}
 					break;
 				case REMOVE_ACTOR:
 					ab = rowsByName.get(ce.getParam(0));
@@ -283,83 +283,83 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 					break;
 				case FACING:
 					ab = rowsByName.get(ce.getParam(0));
-					
+
 					zi = new ZIntervalImpl("Set Facing");
-					zi.setBegin(new JaretDate(currentTime));					
+					zi.setBegin(new JaretDate(currentTime));
 					zi.setEnd(new JaretDate(currentTime + 100));
 					ab.dt.addInterval(zi);
 					break;
-				
+
 				case STOP_ANIMATION:
 					ab = rowsByName.get(ce.getParam(0));
-					
+
 					zi = new ZIntervalImpl("Stop Animating");
-					zi.setBegin(new JaretDate(currentTime));					
+					zi.setBegin(new JaretDate(currentTime));
 					zi.setEnd(new JaretDate(currentTime + 100));
 					ab.dt.addInterval(zi);
 					break;
-				case HALTING_ANIMATION:	
+				case HALTING_ANIMATION:
 					ab = rowsByName.get(ce.getParam(0));
-					
+
 					zi = new ZIntervalImpl("Halting Animating " + (String) ce.getParam(1));
-					zi.setBegin(new JaretDate(currentTime));					
+					zi.setBegin(new JaretDate(currentTime));
 					currentTime += (int) ce.getParam(2);
-					zi.setEnd(new JaretDate(currentTime));					
-					ab.dt.addInterval(zi);
-					break;
-				case ANIMATION:	
-					ab = rowsByName.get(ce.getParam(0));
-					
-					zi = new ZIntervalImpl("Animation " + (String) ce.getParam(1));
-					zi.setBegin(new JaretDate(currentTime));					
 					zi.setEnd(new JaretDate(currentTime));
 					ab.dt.addInterval(zi);
-					break;	
-				
-				
+					break;
+				case ANIMATION:
+					ab = rowsByName.get(ce.getParam(0));
+
+					zi = new ZIntervalImpl("Animation " + (String) ce.getParam(1));
+					zi.setBegin(new JaretDate(currentTime));
+					zi.setEnd(new JaretDate(currentTime));
+					ab.dt.addInterval(zi);
+					break;
+
+
 				// Camera Stuff
 				case CAMERA_MOVE:
 					if (cameraInterval != null)
 						cameraInterval.setEnd(new JaretDate(currentTime));
-					
+
 					zi = new ZIntervalImpl("Move Camera to  " + (int) ce.getParam(0) + " " + (int) ce.getParam(1));
-					zi.setBegin(new JaretDate(currentTime));					
+					zi.setBegin(new JaretDate(currentTime));
 					zi.setEnd(new JaretDate(currentTime + (int) ce.getParam(2)));
 					cameraInterval = zi;
-					cameraRow.addInterval(zi);										
+					cameraRow.addInterval(zi);
 					break;
-				
+
 				case CAMERA_CENTER:
 					if (cameraInterval != null)
 						cameraInterval.setEnd(new JaretDate(currentTime));
-					
+
 					zi = new ZIntervalImpl("Center Camera  " + (int) ce.getParam(0) + " " + (int) ce.getParam(1));
-					zi.setBegin(new JaretDate(currentTime));					
+					zi.setBegin(new JaretDate(currentTime));
 					zi.setEnd(new JaretDate(currentTime + 100));
 					cameraInterval = zi;
-					cameraRow.addInterval(zi);			
+					cameraRow.addInterval(zi);
 					break;
-				
+
 				case CAMERA_FOLLOW:
 					if (cameraInterval != null)
 						cameraInterval.setEnd(new JaretDate(currentTime));
-					
+
 					zi = new ZIntervalImpl("Camera Follow  " + (String) ce.getParam(0));
-					zi.setBegin(new JaretDate(currentTime));					
+					zi.setBegin(new JaretDate(currentTime));
 					zi.setEnd(new JaretDate(currentTime + 100));
 					cameraInterval = zi;
-					cameraRow.addInterval(zi);							
+					cameraRow.addInterval(zi);
 					break;
-				
+
 				case CAMERA_SHAKE:
 					zi = new ZIntervalImpl("Camera Shake");
-					zi.setBegin(new JaretDate(currentTime));					
+					zi.setBegin(new JaretDate(currentTime));
 					zi.setEnd(new JaretDate(currentTime + (int) ce.getParam(0)));
 					cameraInterval = zi;
-					cameraRow.addInterval(zi);		
-					
-					break;	
-				
+					cameraRow.addInterval(zi);
+
+					break;
+
 				// System Stuff
 				case SPEECH:
 					zi = new ZIntervalImpl("Speech");
@@ -371,17 +371,16 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 					tb = new TimeBarMarkerImpl(false, new JaretDate(currentTime));
 					this.markers.add(tb);
 					addMarker(tb);
-					zi.setEnd(new JaretDate(currentTime));					
-					systemRow.addInterval(zi);		
-					
-					break;			
+					zi.setEnd(new JaretDate(currentTime));
+					systemRow.addInterval(zi);
+
+					break;
 				case WAIT:
 					zi = new ZIntervalImpl("Wait");
 					zi.setBegin(new JaretDate(currentTime));
 					currentTime += (int) ce.getParam(0);
 					zi.setEnd(new JaretDate(currentTime));
 					systemRow.addInterval(zi);
-					
 					break;
 					/*
 				case ASSOCIATE_NPC_AS_ACTOR:
@@ -394,13 +393,13 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 						}
 					}
 					break;
-					
+
 				// Music stuff
 				 */
 				case PLAY_MUSIC:
 					if (soundInterval != null)
 						soundInterval.setEnd(new JaretDate(currentTime));
-					
+
 					zi = new ZIntervalImpl("Play Music " + (String) ce.getParam(0));
 					zi.setBegin(new JaretDate(currentTime));
 					zi.setEnd(new JaretDate(currentTime));
@@ -410,11 +409,11 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 				case PAUSE_MUSIC:
 					if (soundInterval != null)
 						soundInterval.setEnd(new JaretDate(currentTime));
-									
+
 					soundInterval = null;
-					
+
 					break;
-				case RESUME_MUSIC:					
+				case RESUME_MUSIC:
 					zi = new ZIntervalImpl("Resume Music");
 					zi.setBegin(new JaretDate(currentTime));
 					zi.setEnd(new JaretDate(currentTime));
@@ -422,73 +421,80 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 					soundRow.addInterval(zi);
 					break;
 				case FADE_MUSIC:
-					
+
 					zi = new ZIntervalImpl("Fade Music");
 					zi.setBegin(new JaretDate(currentTime));
 					zi.setEnd(new JaretDate(currentTime + (int) ce.getParam(0)));
-					soundRow.addInterval(zi);					
+					soundRow.addInterval(zi);
 					break;
 				case PLAY_SOUND:
 					zi = new ZIntervalImpl("Play Music");
 					zi.setBegin(new JaretDate(currentTime));
 					zi.setEnd(new JaretDate(currentTime + 100));
-					soundRow.addInterval(zi);					
-					break;	
+					soundRow.addInterval(zi);
+					break;
 				case FADE_FROM_BLACK:
 					zi = new ZIntervalImpl("Fade from black");
-					zi.setBegin(new JaretDate(currentTime));					
+					zi.setBegin(new JaretDate(currentTime));
 					zi.setEnd(new JaretDate(currentTime + (int) ce.getParam(0)));
-					
+
 					if ((boolean) ce.getParam(1))
 						currentTime += (int) ce.getParam(0);
-					
+
 					systemRow.addInterval(zi);
 					break;
 				case FADE_TO_BLACK:
 					zi = new ZIntervalImpl("Fade to black");
-					zi.setBegin(new JaretDate(currentTime));					
+					zi.setBegin(new JaretDate(currentTime));
 					zi.setEnd(new JaretDate(currentTime + (int) ce.getParam(0)));
-					
+
 					if ((boolean) ce.getParam(1))
 						currentTime += (int) ce.getParam(0);
-					
+
+					systemRow.addInterval(zi);
+					break;
+				case FLASH_SCREEN:
+					zi = new ZIntervalImpl("Flash Screen");
+					zi.setBegin(new JaretDate(currentTime));
+					zi.setEnd(new JaretDate(currentTime + (int) ce.getParam(0)));
+
 					systemRow.addInterval(zi);
 					break;
 				default:
 					break;
-			}	
+			}
 		}
-		
+
 		DefaultTimeBarModel model = new DefaultTimeBarModel();
 		model.addRow(systemRow);
 		model.addRow(cameraRow);
 		model.addRow(soundRow);
-		
-		
+
+
 		for (ActorBar ab : rowsByName.values())
 		{
 			for (ZIntervalImpl zi : ab.indefiniteIntervals.values())
 			{
 				zi.setEnd(new JaretDate(currentTime));
 			}
-			
+
 			model.addRow(ab.dt);
 		}
-		
+
 		if (soundInterval != null)
 			soundInterval.setEnd(new JaretDate(currentTime));
-		
+
 		if (cameraInterval != null)
 			cameraInterval.setEnd(new JaretDate(currentTime));
-		
-		
-		this.setModel(model);	
+
+
+		this.setModel(model);
 		setHeaderRenderer(new ZHeaderRenderer());
 		this.setSecondsDisplayed(8, false);
-		this.repaint();		
-		
+		this.repaint();
+
 	}
-	
+
 	private void stopEffects(long currentTime, ActorBar ab, String command)
 	{
 		ZIntervalImpl zi = ab.indefiniteIntervals.get(command);
@@ -498,39 +504,39 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 			ab.indefiniteIntervals.remove(command);
 		}
 	}
-	
+
 	private long handleMove(long currentTime, CinematicEvent ce, Hashtable<String, ActorBar> rowsByName, String title)
 	{
-		
+
 		ActorBar ab = rowsByName.get(ce.getParam(3));
-		
+
 		int xDistance = Math.abs(ab.locX - (int) ce.getParam(0));
 		int yDistance = Math.abs(ab.locY - (int) ce.getParam(1));
 		long duration = ((int) (Math.ceil(xDistance / (float) ce.getParam(2))) + (int) (Math.ceil(yDistance / (float) ce.getParam(2)))) * 20;
-		
+
 		ab.locX = (int) ce.getParam(0);
 		ab.locY = (int) ce.getParam(1);
-		
+
 		ZIntervalImpl zi = new ZIntervalImpl(title + (int) ce.getParam(0) + " " + (int) ce.getParam(1));
 		zi.setBegin(new JaretDate(currentTime));
-		
+
 		zi.setEnd(new JaretDate(currentTime + duration));
 		ab.dt.addInterval(zi);
 		return duration;
 	}
-	
+
 	public class ZHeaderRenderer extends DefaultHeaderRenderer
     {
 		@Override
 		public int getWidth() {
 			return 200;
-		}	    				
+		}
     }
-    
+
     public class ZIntervalImpl extends IntervalImpl
     {
     	public String title;
-    	
+
     	public ZIntervalImpl(String title)
     	{
     		this.title = title;
@@ -540,9 +546,9 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 		public String toString() {
 			// TODO Auto-generated method stub
 			return title;
-		}	    	
+		}
     }
-    
+
     public class ActorBar
     {
     	public DefaultTimeBarRowModel dt;
@@ -551,7 +557,7 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
     	public float moveSpeed;
     	public long startMove;
     	public Hashtable<String, ZIntervalImpl> indefiniteIntervals;
-    	
+
 		public ActorBar(DefaultTimeBarRowModel dt, int locX, int locY) {
 			super();
 			this.dt = dt;
@@ -560,7 +566,7 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 			indefiniteIntervals = new Hashtable<String, ZIntervalImpl>();
 		}
     }
-    
+
     public class ZTimeBarMarker extends TimeBarMarkerImpl
     {
 
@@ -573,9 +579,9 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 			// TODO Auto-generated method stub
 			return "Can you see me";
 		}
-    	
+
     }
-    
+
     public class ZMarkerRenderer extends DefaultMarkerRenderer
     {
 
@@ -583,17 +589,17 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 		public void renderMarker(TimeBarViewerDelegate delegate,
 				Graphics graphics, TimeBarMarker marker, int x,
 				boolean isDragged) {
-			// TODO Auto-generated method stub 
+			// TODO Auto-generated method stub
 			super.renderMarker(delegate, graphics, marker, x, isDragged);
 		}
-    	
+
     }
-    
+
     public class ZTimeBarRenderer extends DefaultTimeBarRenderer
     {
-    
+
     }
-    
+
     public class Listen implements ChangeListener
     {
     	@Override

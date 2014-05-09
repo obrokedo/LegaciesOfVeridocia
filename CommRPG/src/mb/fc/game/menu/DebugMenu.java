@@ -1,5 +1,6 @@
 package mb.fc.game.menu;
 
+import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.ChatMessage;
 import mb.fc.engine.message.Message;
 import mb.fc.engine.state.StateInfo;
@@ -18,7 +19,7 @@ import org.newdawn.slick.gui.TextField;
 public class DebugMenu extends Menu
 {
 	private TextField textField;
-	
+
 	public DebugMenu(GameContainer gc) {
 		super(Menu.PANEL_DEBUG);
 		textField = new TextField(gc, gc.getDefaultFont(), 60, gc.getHeight() - 45, gc.getWidth() - 120, 30);
@@ -27,7 +28,7 @@ public class DebugMenu extends Menu
 	@Override
 	public MenuUpdate handleUserInput(FCInput input, StateInfo stateInfo) {
 		textField.setFocus(true);
-		
+
 		if (stateInfo.getGc().getInput().isKeyDown(Input.KEY_ENTER))
 		{
 			String text = textField.getText();
@@ -81,16 +82,20 @@ public class DebugMenu extends Menu
 				GlobalPythonFactory.intialize();
 				System.out.println("LOAD ");
 			}
-			
+			else if (splitText[0].equalsIgnoreCase("play"))
+			{
+				stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_PLAY_MUSIC, splitText[1], 1, true));
+			}
+
 			textField.deactivate();
 			return MenuUpdate.MENU_CLOSE;
 		}
-		
+
 		return MenuUpdate.MENU_NO_ACTION;
 	}
 
 	@Override
-	public void render(FCGameContainer gc, Graphics graphics) {	
+	public void render(FCGameContainer gc, Graphics graphics) {
 		graphics.setColor(Color.white);
 		graphics.fillRect(50, gc.getHeight() - 50, gc.getWidth() - 100, 40);
 		textField.render(gc, graphics);

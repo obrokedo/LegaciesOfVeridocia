@@ -9,23 +9,23 @@ import org.newdawn.slick.Graphics;
 public class CinematicManager extends Manager
 {
 	private Cinematic cinematic;
-	
+
 	@Override
 	public void initialize() {
-		
+
 	}
-	
+
 	public void update(int delta)
 	{
-		if (cinematic != null && cinematic.update(delta, stateInfo.getCamera(), stateInfo.getInput(), 
+		if (cinematic != null && cinematic.update(delta, stateInfo.getCamera(), stateInfo.getInput(),
 				stateInfo.getGc(), stateInfo.getCurrentMap(), stateInfo))
 		{
 			cinematic = null;
 			stateInfo.getCamera().centerOnSprite(stateInfo.getCurrentSprite(), stateInfo.getCurrentMap());
 		}
-			
+
 	}
-	
+
 	public void render(Graphics g)
 	{
 		if (cinematic != null)
@@ -37,15 +37,15 @@ public class CinematicManager extends Manager
 		if (cinematic != null)
 			cinematic.renderMenus(stateInfo.getGc(), g);
 	}
-	
+
 	public void renderPostEffects(Graphics g)
 	{
 		if (cinematic != null)
-			cinematic.renderPostEffects(stateInfo.getGc(), g);
+			cinematic.renderPostEffects(g, stateInfo.getCamera(), stateInfo.getGc(), stateInfo);
 	}
 
 	@Override
-	public void recieveMessage(Message message) 
+	public void recieveMessage(Message message)
 	{
 		switch (message.getMessageType())
 		{
@@ -56,7 +56,7 @@ public class CinematicManager extends Manager
 				break;
 		}
 	}
-	
+
 	public boolean isBlocking()
 	{
 		return cinematic != null;

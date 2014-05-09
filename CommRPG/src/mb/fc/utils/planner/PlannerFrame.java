@@ -1236,6 +1236,33 @@ public class PlannerFrame extends JFrame implements ActionListener,
 		allowableLines.add(new PlannerLineDef("fadeout", "Fade to black",
 				"Fades the screen in to black.", definingValues));
 
+		// Flash Screen
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_INT, "time", false, "Flash Time",
+				"The amount of time that the screen should flash over"));
+
+		allowableLines.add(new PlannerLineDef("flashscreen", "Flash Screen",
+				"Flashes the screen white.", definingValues));
+
+		// Move char to forefront
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_STRING, "name", false, "Actor Name",
+				"The name of the actor that should be displayed on top of all terrain layers"));
+
+		allowableLines.add(new PlannerLineDef("rendertop", "Render on Top",
+				"Causes the selected actor to be rendered on top of all of the terrain layers. This will continue until a 'Render on Normal' command is called for the actor.", definingValues));
+
+		// Remove char from forefront
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_STRING, "name", false, "Actor Name",
+				"The name of the actor that should stop their looping move"));
+
+		allowableLines.add(new PlannerLineDef("rendernormal", "Render on Normal",
+				"Causes the selected actor to be rendered in normal layer postion. This should be used to end the 'Render on Top' action.", definingValues));
+
 		cinematicContainer = new PlannerContainerDef(definingLine,
 				allowableContainers, allowableLines, listOfLists,
 				PlannerValueDef.REFERS_CINEMATIC - 1);

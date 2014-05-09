@@ -42,6 +42,6 @@ public class FCLoadingRenderSystem extends EntityProcessingSystem
 		graphics.drawRect(gc.getWidth() - 190, gc.getHeight() - 50, 160, 15);
 		*/
 
-		graphics.drawString("LOADING: " + loading.currentIndex + " / " + loading.maxIndex, gc.getWidth() - 185, gc.getHeight() - 50);
+		graphics.drawString("LOADING: " + loading.currentIndex + " / " + loading.maxIndex, gc.getWidth() - 185, gc.getHeight() - 30);
 	}
 }

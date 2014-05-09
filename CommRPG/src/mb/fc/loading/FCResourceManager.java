@@ -46,13 +46,13 @@ public class FCResourceManager extends ResourceManager {
 	private Hashtable<String, Music> musicByTitle = new Hashtable<String, Music>();
 	private Hashtable<String, Sound> soundByTitle = new Hashtable<String, Sound>();
 	private Hashtable<String, UnicodeFont> unicodeFonts = new Hashtable<String, UnicodeFont>();
-	
+
 	// These values need to be initialized each time a map is loaded
 	private Hashtable<Integer, ArrayList<Speech>> speechesById = new Hashtable<Integer, ArrayList<Speech>>();
 	private Hashtable<Integer, TriggerEvent> triggerEventById = new Hashtable<Integer, TriggerEvent>();
 	private Hashtable<Integer, Cinematic> cinematicById = new Hashtable<Integer, Cinematic>();
 	private Map map = new Map();
-	
+
 	private Color transparent = new Color(255, 0, 255);
 
 	public static void main(String args[])
@@ -61,7 +61,7 @@ public class FCResourceManager extends ResourceManager {
 		for (File s : f.listFiles())
 			System.out.println("ss," + s.getName().replaceAll(".png", "") + "," + s.getAbsolutePath() + ",24,24");
 	}
-	
+
 	public void reinitialize()
 	{
 		map.reinitalize();
@@ -69,14 +69,14 @@ public class FCResourceManager extends ResourceManager {
 		triggerEventById.clear();
 		cinematicById.clear();
 	}
-	
+
 	/*
 	public void getNewMap(String mapName) throws IOException, SlickException
 	{
 		map.reinitalize();
 		MapParser.parseMap("/map/" + mapName + ".tmx", getMap());
 	}
-	
+
 	public void getNewText(String text) throws IOException
 	{
 		speechesById.clear();
@@ -85,8 +85,8 @@ public class FCResourceManager extends ResourceManager {
 		TextParser.parseText("/text/" + text, speechesById, triggerEventById, cinematicById);
 	}
 	*/
-	
-	
+
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public void addResource(String resource, Entity entity, int currentIndex,
@@ -95,13 +95,14 @@ public class FCResourceManager extends ResourceManager {
 		if (split[0].equalsIgnoreCase("image"))
 		{
 			System.out.println("Load image " + split[2]);
-			Image nImage = new Image((LoadingState.inJar ? "" : "bin/") + split[2], transparent);
+			Image nImage = new Image(split[2], transparent);
 			nImage.setFilter(Image.FILTER_NEAREST);
-			images.put(split[1], nImage.getScaledCopy(split.length == 4 ? Float.parseFloat(split[3]) * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] : CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]));
+			images.put(split[1], nImage.getScaledCopy(split.length == 4 ?
+					Float.parseFloat(split[3]) * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] : CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]));
 		}
 		else if (split[0].equalsIgnoreCase("ss"))
 		{
-			
+
 			float scale = CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
 			if (split.length == 7)
 			{
@@ -110,23 +111,35 @@ public class FCResourceManager extends ResourceManager {
 				else
 					scale *= Float.parseFloat(split[6]);
 			}
-			Image ssIm = new Image((LoadingState.inJar ? "" : "bin/") + split[2], transparent);
+			Image ssIm = new Image(split[2], transparent);
 			ssIm.setFilter(Image.FILTER_NEAREST);
 			ssIm = ssIm.getScaledCopy(scale);
-			spriteSheets.put(split[1], new SpriteSheet(ssIm, 
-					(int) (Integer.parseInt(split[3]) * scale), (int) (Integer.parseInt(split[4])  * scale), 
+			spriteSheets.put(split[1], new SpriteSheet(ssIm,
+					(int) (Integer.parseInt(split[3]) * scale), (int) (Integer.parseInt(split[4])  * scale),
 					(int) ((split.length >= 6 ? Integer.parseInt(split[5]) : 0)  * scale)));
 		}
 		else if (split[0].equalsIgnoreCase("map"))
-		{			
+		{
 			System.out.println("Load map: " + split[2]);
 			MapParser.parseMap(split[2], map);
 		}
 		else if (split[0].equalsIgnoreCase("anim"))
 		{
 			SpriteAnims sa = SpriteAnims.deserializeFromFile(split[2]);
-			sa.initialize(images.get(sa.getSpriteSheet()), 1.88f);	
-			spriteAnimations.put(split[1], sa);	
+			sa.initialize(images.get(sa.getSpriteSheet()), 1.88f);
+			spriteAnimations.put(split[1], sa);
+		}
+		else if (split[0].equalsIgnoreCase("animsheet"))
+		{
+			Image nImage = new Image(split[2], transparent);
+			nImage.setFilter(Image.FILTER_NEAREST);
+			images.put(split[1], nImage);
+		}
+		else if (split[0].equalsIgnoreCase("fsa"))
+		{
+			SpriteAnims sa = SpriteAnims.deserializeFromFile(split[2]);
+			sa.initialize(images.get(sa.getSpriteSheet()), CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);// 1.88f);
+			spriteAnimations.put(split[1], sa);
 		}
 		else if (split[0].equalsIgnoreCase("text"))
 		{
@@ -136,49 +149,53 @@ public class FCResourceManager extends ResourceManager {
 		{
 			ArrayList<TagArea> tagAreas = XMLParser.process(split[1]);
 			Hashtable<Integer, HeroDefinition> heroDefinitionsById = new Hashtable<Integer, HeroDefinition>();
-			
+
 			for (TagArea ta : tagAreas)
 			{
 				HeroDefinition hd = HeroDefinition.parseHeroDefinition(ta);
 				heroDefinitionsById.put(hd.getId(), hd);
 			}
-			
+
 			HeroResource.initialize(heroDefinitionsById);
 		}
 		else if (split[0].equalsIgnoreCase("itemdefs"))
 		{
 			ArrayList<TagArea> tagAreas = XMLParser.process(split[1]);
 			Hashtable<Integer, ItemDefinition> itemDefinitionsById = new Hashtable<Integer, ItemDefinition>();
-			
+
 			for (TagArea ta : tagAreas)
 			{
 				ItemDefinition id = ItemDefinition.parseItemDefinition(ta);
 				itemDefinitionsById.put(id.getId(), id);
 			}
-			
+
 			ItemResource.initialize(itemDefinitionsById);
-		}	
+		}
 		else if (split[0].equalsIgnoreCase("enemydefs"))
 		{
 			ArrayList<TagArea> tagAreas = XMLParser.process(split[1]);
 			Hashtable<Integer, EnemyDefinition> enemyDefinitionsById = new Hashtable<Integer, EnemyDefinition>();
-			
+
 			for (TagArea ta : tagAreas)
 			{
 				EnemyDefinition ed = EnemyDefinition.parseEnemyDefinition(ta);
 				enemyDefinitionsById.put(ed.getId(), ed);
 			}
-			
+
 			EnemyResource.initialize(enemyDefinitionsById);
-		}	
+		}
 		else if (split[0].equalsIgnoreCase("music"))
 		{
-			musicByTitle.put(split[1], new Music(split[2]));
+			musicByTitle.put(split[1], new Music(split[2], false));
+		}
+		else if (split[0].equalsIgnoreCase("sound"))
+		{
+			soundByTitle.put(split[1], new Sound(split[2]));
 		}
 		else if (split[0].equalsIgnoreCase("font"))
 		{
-			InputStream inputStream	= ResourceLoader.getResourceAsStream(split[2]);			 
-			try 
+			InputStream inputStream	= ResourceLoader.getResourceAsStream(split[2]);
+			try
 			{
 				Font awtFont = Font.createFont(Font.TRUETYPE_FONT, inputStream);
 				UnicodeFont ufont = new UnicodeFont(awtFont, Integer.parseInt(split[3]) * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], false, false);
@@ -186,30 +203,30 @@ public class FCResourceManager extends ResourceManager {
 				ufont.addAsciiGlyphs();
 				ufont.addGlyphs(400, 600);
 				ufont.loadGlyphs();
-				unicodeFonts.put(split[1], ufont);								
+				unicodeFonts.put(split[1], ufont);
 			} catch (FontFormatException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 		}
 		else if (split[0].equalsIgnoreCase("herodir") || split[0].equalsIgnoreCase("enemydir") || split[0].equalsIgnoreCase("npcdir"))
 		{
-			File dir = new File((LoadingState.inJar ? "" : "bin/") + split[1]);
+			File dir = new File(split[1]);
 			for (File file : dir.listFiles())
 			{
 				if (file.getName().endsWith(".png"))
 				{
 					Image im = new Image(file.getPath(), transparent);
 					im.setFilter(Image.FILTER_NEAREST);
-					spriteSheets.put(file.getName().replace(".png", ""), new SpriteSheet(im, 
+					spriteSheets.put(file.getName().replace(".png", ""), new SpriteSheet(im,
 						Integer.parseInt(split[3]), Integer.parseInt(split[3])));
 				}
 			}
 		}
 		else if (split[0].equalsIgnoreCase("musicdir"))
 		{
-			File dir = new File((LoadingState.inJar ? "" : "bin/") + split[1]);
+			File dir = new File(split[1]);
 			for (File file : dir.listFiles())
 			{
 				if (file.getName().endsWith(".ogg"))
@@ -220,7 +237,7 @@ public class FCResourceManager extends ResourceManager {
 		}
 		else if (split[0].equalsIgnoreCase("sounddir"))
 		{
-			File dir = new File((LoadingState.inJar ? "" : "bin/") + split[1]);
+			File dir = new File(split[1]);
 			for (File file : dir.listFiles())
 			{
 				if (file.getName().endsWith(".ogg"))
@@ -231,7 +248,7 @@ public class FCResourceManager extends ResourceManager {
 		}
 		else if (split[0].equalsIgnoreCase("animsheetdir"))
 		{
-			File dir = new File((LoadingState.inJar ? "" : "bin/") + split[1]);
+			File dir = new File(split[1]);
 			for (File file : dir.listFiles())
 			{
 				if (file.getName().endsWith(".png"))
@@ -243,7 +260,7 @@ public class FCResourceManager extends ResourceManager {
 		}
 		else if (split[0].equalsIgnoreCase("spritedir"))
 		{
-			File dir = new File((LoadingState.inJar ? "" : "bin/") + split[1]);
+			File dir = new File(split[1]);
 			for (File file : dir.listFiles())
 			{
 				if (file.getName().endsWith(".png"))
@@ -256,14 +273,14 @@ public class FCResourceManager extends ResourceManager {
 		}
 		else if (split[0].equalsIgnoreCase("animfsadir"))
 		{
-			File dir = new File((LoadingState.inJar ? "" : "bin/") + split[1]);
+			File dir = new File(split[1]);
 			for (File file : dir.listFiles())
 			{
 				if (file.getName().endsWith(".fsa"))
 				{
 					System.out.println(file.getName());
 					SpriteAnims sa = SpriteAnims.deserializeFromFile(file.getPath());
-					sa.initialize(images.get(sa.getSpriteSheet()), CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);// 1.88f);			
+					sa.initialize(images.get(sa.getSpriteSheet()), CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);// 1.88f);
 					spriteAnimations.put(file.getName().replace(".fsa", ""), sa);
 				}
 			}
@@ -271,11 +288,11 @@ public class FCResourceManager extends ResourceManager {
 		LoadingComp lc = entity.getComponent(LoadingComp.class);
 		lc.currentIndex = currentIndex;
 		lc.maxIndex = maxIndex;
-	}		
+	}
 
 	@Override
 	public void initializeLoadingComp(Entity entity) {
-		
+
 	}
 
 	public Hashtable<String, Image> getImages() {
@@ -289,7 +306,7 @@ public class FCResourceManager extends ResourceManager {
 	public Hashtable<String, SpriteAnims> getSpriteAnimations() {
 		return spriteAnimations;
 	}
-	
+
 	public UnicodeFont getFontByName(String name)
 	{
 		return unicodeFonts.get(name);
@@ -299,7 +316,7 @@ public class FCResourceManager extends ResourceManager {
 	{
 		return soundByTitle.get(name);
 	}
-	
+
 	public Music getMusicByName(String name)
 	{
 		return musicByTitle.get(name);
@@ -309,31 +326,35 @@ public class FCResourceManager extends ResourceManager {
 	{
 		return map;
 	}
-	
+
 	public ArrayList<Speech> getSpeechesById(int id)
 	{
 		return speechesById.get(id);
 	}
-	
+
 	public TriggerEvent getTriggerEventById(int id)
 	{
 		return triggerEventById.get(id);
 	}
-	
+
 	public Cinematic getCinematicById(int id)
 	{
 		return cinematicById.get(id);
 	}
-	
+
 	public static ArrayList<String> readAllLines(String file) throws IOException
 	{
-		System.out.println("Read all lines " + file);		
-		BufferedReader br = new BufferedReader(new InputStreamReader(ResourceLoader.getResourceAsStream(file)));
+		System.out.println("Read all lines " + file);
+		BufferedReader br = null;
+		if (LoadingState.inJar)
+			br = new BufferedReader(new InputStreamReader(LoadingState.MY_CLASS.getResourceAsStream(file)));
+		else
+			br = new BufferedReader(new InputStreamReader(ResourceLoader.getResourceAsStream(file)));
 		ArrayList<String> allLines = new ArrayList<String>();
 		String line;
 		while ((line = br.readLine()) != null) {
             allLines.add(line);
-        }				
+        }
 		br.close();
 		return allLines;
 	}

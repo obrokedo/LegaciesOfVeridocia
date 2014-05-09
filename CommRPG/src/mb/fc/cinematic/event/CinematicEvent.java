@@ -2,7 +2,7 @@ package mb.fc.cinematic.event;
 
 import java.util.ArrayList;
 
-public class CinematicEvent 
+public class CinematicEvent
 {
 	public enum CinematicEventType
 	{
@@ -53,17 +53,20 @@ public class CinematicEvent
 		FADE_MUSIC,
 		PLAY_SOUND,
 		FADE_TO_BLACK,
-		FADE_FROM_BLACK
+		FADE_FROM_BLACK,
+		FLASH_SCREEN,
+		MOVE_TO_FOREFRONT,
+		MOVE_FROM_FOREFRONT
 	}
-	
+
 	private CinematicEventType type;
 	private ArrayList<Object> params;
-	
+
 	public CinematicEvent(CinematicEventType type, Object... params)
 	{
 		this.type = type;
 		this.params = new ArrayList<Object>();
-		
+
 		for (Object o : params)
 			this.params.add(o);
 	}
@@ -71,7 +74,7 @@ public class CinematicEvent
 	public CinematicEventType getType() {
 		return type;
 	}
-	
+
 	public Object getParam(int i)
 	{
 		return params.get(i);

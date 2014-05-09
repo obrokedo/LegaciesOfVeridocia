@@ -12,7 +12,7 @@ import mb.fc.game.trigger.TriggerEvent;
 import mb.fc.utils.XMLParser;
 import mb.fc.utils.XMLParser.TagArea;
 
-public class TextParser 
+public class TextParser
 {
 	public static void parseText(String file, Hashtable<Integer, ArrayList<Speech>> speechesById,
 			Hashtable<Integer, TriggerEvent> triggerEventById, Hashtable<Integer, Cinematic> cinematicById) throws IOException
@@ -24,7 +24,7 @@ public class TextParser
 			{
 				int id = Integer.parseInt(tagArea.getParams().get("id"));
 				ArrayList<Speech> speeches = new ArrayList<Speech>();
-				
+
 				for (TagArea childTagArea : tagArea.getChildren())
 				{
 					int triggerId = -1;
@@ -35,7 +35,7 @@ public class TextParser
 					String trigger = childTagArea.getParams().get("trigger");
 					String portrait = childTagArea.getParams().get("portrait");
 					int[] requireIds = null;
-					
+
 					if (requires != null)
 					{
 						String[] splitReq = requires.split(",");
@@ -43,10 +43,10 @@ public class TextParser
 						for (int i = 0; i < splitReq.length; i++)
 							requireIds[i] = Integer.parseInt(splitReq[i]);
 					}
-					
-					
+
+
 					int[] excludeIds = null;
-					
+
 					if (excludes != null)
 					{
 						String[] splitEx = excludes.split(",");
@@ -54,14 +54,14 @@ public class TextParser
 						for (int i = 0; i < splitEx.length; i++)
 							excludeIds[i] = Integer.parseInt(splitEx[i]);
 					}
-															
-					
+
+
 					if (trigger != null)
 						triggerId = Integer.parseInt(trigger);
-					
+
 					if (portrait != null)
 						portraitId = Integer.parseInt(portrait);
-					
+
 					speeches.add(new Speech(message, requireIds, excludeIds, triggerId, portraitId));
 				}
 				speechesById.put(id, speeches);
@@ -77,10 +77,10 @@ public class TextParser
 					nonRetrig = Boolean.parseBoolean(tagArea.getParams().get("nonretrig"));
 				if (tagArea.getParams().containsKey("retrigonenter"))
 					retrigOnEnter = Boolean.parseBoolean(tagArea.getParams().get("retrigonenter"));
-				
+
 				String requires = tagArea.getParams().get("require");
 				String excludes = tagArea.getParams().get("exclude");
-				
+
 				if (requires != null)
 				{
 					String[] splitReq = requires.split(",");
@@ -88,7 +88,7 @@ public class TextParser
 					for (int i = 0; i < splitReq.length; i++)
 						requireIds[i] = Integer.parseInt(splitReq[i]);
 				}
-				
+
 				if (excludes != null)
 				{
 					String[] splitEx = excludes.split(",");
@@ -96,14 +96,14 @@ public class TextParser
 					for (int i = 0; i < splitEx.length; i++)
 						excludeIds[i] = Integer.parseInt(splitEx[i]);
 				}
-				
+
 				TriggerEvent te = new TriggerEvent(id, retrigOnEnter, nonRetrig, requireIds, excludeIds);
 				if (tagArea.getChildren().size() > 0)
 				{
 					for (int k = 0; k < tagArea.getChildren().size(); k++)
 					{
 						Hashtable<String, String> actionParams = tagArea.getChildren().get(k).getParams();
-						
+
 						if (tagArea.getChildren().get(k).getTagType().equalsIgnoreCase("completequest"))
 						{
 							te.addTriggerType(te.new TriggerCompleteQuest(Integer.parseInt(actionParams.get("questid"))));
@@ -138,7 +138,7 @@ public class TextParser
 						}
 						else if (tagArea.getChildren().get(k).getTagType().equalsIgnoreCase("changeai"))
 						{
-							te.addTriggerType(te.new TriggerChangeAI(actionParams.get("aitype"), 
+							te.addTriggerType(te.new TriggerChangeAI(actionParams.get("aitype"),
 									actionParams.get("id"), actionParams.get("targetid"), actionParams.get("x"), actionParams.get("y")));
 						}
 						else if (tagArea.getChildren().get(k).getTagType().equalsIgnoreCase("showtext"))
@@ -170,8 +170,8 @@ public class TextParser
 							te.addTriggerType(te.new TriggerAddItem(Integer.parseInt(actionParams.get("itemid"))));
 						}
 					}
-				}				
-				
+				}
+
 				triggerEventById.put(id, te);
 			}
 			else if (tagArea.getTagType().equalsIgnoreCase("cinematic"))
@@ -179,42 +179,42 @@ public class TextParser
 				int cinematicId = Integer.parseInt(tagArea.getParams().get("id"));
 				int cameraX = Integer.parseInt(tagArea.getParams().get("camerax"));
 				int cameraY = Integer.parseInt(tagArea.getParams().get("cameray"));
-				
+
 				ArrayList<CinematicEvent> initEvents = new ArrayList<CinematicEvent>();
 				ArrayList<CinematicEvent> events = parseCinematicEvents(tagArea, initEvents);
-				
-				
+
+
 				cinematicById.put(cinematicId, new Cinematic(initEvents, events, cameraX, cameraY));
 				System.out.println();
 			}
 		}
 	}
-	
+
 	public static ArrayList<CinematicEvent> parseCinematicEvents(TagArea tagArea, ArrayList<CinematicEvent> initEvents)
 	{
 		ArrayList<CinematicEvent> events = new ArrayList<CinematicEvent>();
-		
+
 		for (TagArea childArea : tagArea.getChildren())
-		{					
+		{
 			// Add the event
 			CinematicEvent ce = parseCinematicEvent(childArea, initEvents);
 			if (ce != null)
 				events.add(ce);
 		}
-		
+
 		return events;
 	}
-	
+
 	private static CinematicEvent parseCinematicEvent(TagArea area, ArrayList<CinematicEvent> initEvents)
 	{
 		String type = area.getTagType();
-		
+
 		if (type.equalsIgnoreCase("addactor"))
 		{
-			CinematicEvent ce = new CinematicEvent(CinematicEventType.ADD_ACTOR, Integer.parseInt(area.getParams().get("x")), 
-					Integer.parseInt(area.getParams().get("y")), 
-					area.getParams().get("name"), area.getParams().get("anim"), 
-					area.getParams().get("startanim"), Boolean.parseBoolean(area.getParams().get("visible"))); 
+			CinematicEvent ce = new CinematicEvent(CinematicEventType.ADD_ACTOR, Integer.parseInt(area.getParams().get("x")),
+					Integer.parseInt(area.getParams().get("y")),
+					area.getParams().get("name"), area.getParams().get("anim"),
+					area.getParams().get("startanim"), Boolean.parseBoolean(area.getParams().get("visible")));
 			if (Boolean.parseBoolean(area.getParams().get("init")))
 			{
 				initEvents.add(ce);
@@ -225,29 +225,29 @@ public class TextParser
 		else if (type.equalsIgnoreCase("camerafollow"))
 			return new CinematicEvent(CinematicEventType.CAMERA_FOLLOW, area.getParams().get("name"));
 		else if (type.equalsIgnoreCase("haltingmove"))
-			return new CinematicEvent(CinematicEventType.HALTING_MOVE, Integer.parseInt(area.getParams().get("x")), 
+			return new CinematicEvent(CinematicEventType.HALTING_MOVE, Integer.parseInt(area.getParams().get("x")),
 					Integer.parseInt(area.getParams().get("y")), Float.parseFloat(area.getParams().get("speed")), area.getParams().get("name"),
 					Boolean.parseBoolean(area.getParams().get("movehor")), Boolean.parseBoolean(area.getParams().get("movediag")));
 		else if (type.equalsIgnoreCase("move"))
-			return new CinematicEvent(CinematicEventType.MOVE, Integer.parseInt(area.getParams().get("x")), 
+			return new CinematicEvent(CinematicEventType.MOVE, Integer.parseInt(area.getParams().get("x")),
 					Integer.parseInt(area.getParams().get("y")), Float.parseFloat(area.getParams().get("speed")), area.getParams().get("name"),
 					Boolean.parseBoolean(area.getParams().get("movehor")), Boolean.parseBoolean(area.getParams().get("movediag")));
 		else if (type.equalsIgnoreCase("forcedmove"))
-			return new CinematicEvent(CinematicEventType.MOVE_ENFORCE_FACING, Integer.parseInt(area.getParams().get("x")), 
+			return new CinematicEvent(CinematicEventType.MOVE_ENFORCE_FACING, Integer.parseInt(area.getParams().get("x")),
 					Integer.parseInt(area.getParams().get("y")), Float.parseFloat(area.getParams().get("speed")), area.getParams().get("name"),
 						Integer.parseInt(area.getParams().get("facing")),
 						Boolean.parseBoolean(area.getParams().get("movehor")), Boolean.parseBoolean(area.getParams().get("movediag")));
 		else if (type.equalsIgnoreCase("haltinganim"))
-			return new CinematicEvent(CinematicEventType.HALTING_ANIMATION, area.getParams().get("name"), 
+			return new CinematicEvent(CinematicEventType.HALTING_ANIMATION, area.getParams().get("name"),
 					area.getParams().get("anim"), Integer.parseInt(area.getParams().get("time")));
 		else if (type.equalsIgnoreCase("anim"))
-			return new CinematicEvent(CinematicEventType.ANIMATION, area.getParams().get("name"), 
-					area.getParams().get("anim"), Integer.parseInt(area.getParams().get("time")), 
+			return new CinematicEvent(CinematicEventType.ANIMATION, area.getParams().get("name"),
+					area.getParams().get("anim"), Integer.parseInt(area.getParams().get("time")),
 					Boolean.parseBoolean(area.getParams().get("loops")));
 		else if (type.equalsIgnoreCase("stopanim"))
 			return new CinematicEvent(CinematicEventType.STOP_ANIMATION, area.getParams().get("name"));
 		else if (type.equalsIgnoreCase("cameramove"))
-			return new CinematicEvent(CinematicEventType.CAMERA_MOVE, Integer.parseInt(area.getParams().get("x")), 
+			return new CinematicEvent(CinematicEventType.CAMERA_MOVE, Integer.parseInt(area.getParams().get("x")),
 					Integer.parseInt(area.getParams().get("y")), Integer.parseInt(area.getParams().get("time")));
 		else if (type.equalsIgnoreCase("speech"))
 			return new CinematicEvent(CinematicEventType.SPEECH, area.getParams().get("text"), Integer.parseInt(area.getParams().get("portrait")));
@@ -256,7 +256,7 @@ public class TextParser
 		else if (type.equalsIgnoreCase("wait"))
 			return new CinematicEvent(CinematicEventType.WAIT, Integer.parseInt(area.getParams().get("time")));
 		else if (type.equalsIgnoreCase("spin"))
-			return new CinematicEvent(CinematicEventType.SPIN, area.getParams().get("name"), Integer.parseInt(area.getParams().get("speed")), 
+			return new CinematicEvent(CinematicEventType.SPIN, area.getParams().get("name"), Integer.parseInt(area.getParams().get("speed")),
 					Integer.parseInt(area.getParams().get("time")));
 		else if (type.equalsIgnoreCase("stopspin"))
 			return new CinematicEvent(CinematicEventType.STOP_SPIN, area.getParams().get("name"));
@@ -283,14 +283,14 @@ public class TextParser
 		else if (type.equalsIgnoreCase("layonback"))
 			return new CinematicEvent(CinematicEventType.LAY_ON_BACK, area.getParams().get("name"), Integer.parseInt(area.getParams().get("dir")));
 		else if (type.equalsIgnoreCase("flash"))
-			return new CinematicEvent(CinematicEventType.FLASH, area.getParams().get("name"), 
+			return new CinematicEvent(CinematicEventType.FLASH, area.getParams().get("name"),
 					Integer.parseInt(area.getParams().get("speed")), Integer.parseInt(area.getParams().get("time")));
 		else if (type.equalsIgnoreCase("nod"))
 			return new CinematicEvent(CinematicEventType.NOD, area.getParams().get("name"));
 		else if (type.equalsIgnoreCase("shakehead"))
 			return new CinematicEvent(CinematicEventType.HEAD_SHAKE, area.getParams().get("name"), Integer.parseInt(area.getParams().get("time")));
 		else if (type.equalsIgnoreCase("loopmove"))
-			return new CinematicEvent(CinematicEventType.LOOP_MOVE, area.getParams().get("name"), Integer.parseInt(area.getParams().get("x")), 
+			return new CinematicEvent(CinematicEventType.LOOP_MOVE, area.getParams().get("name"), Integer.parseInt(area.getParams().get("x")),
 					Integer.parseInt(area.getParams().get("y")), Float.parseFloat(area.getParams().get("speed")));
 		else if (type.equalsIgnoreCase("stoploopmove"))
 			return new CinematicEvent(CinematicEventType.STOP_LOOP_MOVE, area.getParams().get("name"));
@@ -306,9 +306,9 @@ public class TextParser
 			return new CinematicEvent(CinematicEventType.FADE_MUSIC, Integer.parseInt(area.getParams().get("duration")));
 		else if (type.equalsIgnoreCase("playsound"))
 			return new CinematicEvent(CinematicEventType.PLAY_SOUND, area.getParams().get("sound"), Integer.parseInt(area.getParams().get("volume")));
-		else if (type.equalsIgnoreCase("fadein"))	
+		else if (type.equalsIgnoreCase("fadein"))
 		{
-			CinematicEvent ce = new CinematicEvent(CinematicEventType.FADE_FROM_BLACK, Integer.parseInt(area.getParams().get("time")), Boolean.parseBoolean(area.getParams().get("halting"))); 
+			CinematicEvent ce = new CinematicEvent(CinematicEventType.FADE_FROM_BLACK, Integer.parseInt(area.getParams().get("time")), Boolean.parseBoolean(area.getParams().get("halting")));
 			if (Boolean.parseBoolean(area.getParams().get("init")))
 			{
 				initEvents.add(ce);
@@ -318,6 +318,12 @@ public class TextParser
 		}
 		else if (type.equalsIgnoreCase("fadeout"))
 			return new CinematicEvent(CinematicEventType.FADE_TO_BLACK, Integer.parseInt(area.getParams().get("time")), Boolean.parseBoolean(area.getParams().get("halting")));
+		else if (type.equalsIgnoreCase("flashscreen"))
+			return new CinematicEvent(CinematicEventType.FLASH_SCREEN, Integer.parseInt(area.getParams().get("time")));
+		else if (type.equalsIgnoreCase("rendertop"))
+			return new CinematicEvent(CinematicEventType.MOVE_TO_FOREFRONT, area.getParams().get("name"));
+		else if (type.equalsIgnoreCase("rendernormal"))
+			return new CinematicEvent(CinematicEventType.MOVE_FROM_FOREFRONT, area.getParams().get("name"));
 		return null;
 	}
 }

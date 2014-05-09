@@ -169,14 +169,25 @@ public class CinematicActor
 								*/
 						break;
 					case SE_NOD:
-						AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), (int) this.getLocX(), (int) this.getLocY(), cont.getDisplayPaddingX(), camera, false, stateInfo);
+						// Only draw the nod if we are on SE counter 1
+						if (specialEffectCounter == 1)
+						{
+							AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), (int) this.getLocX(), (int) this.getLocY(), cont.getDisplayPaddingX(), camera, false, stateInfo);
 
-						// This is the lower portion of the sprite
-						im.getSubImage(0, 10 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], im.getWidth(), 14 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]).draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(),
-								this.getLocY() - camera.getLocationY() + 10 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);
-						// This is the head of the sprite
-						im.getSubImage(0, 0, im.getWidth(), 10 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]).draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(),
-								this.getLocY() - camera.getLocationY() + 1 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);
+							// This is the lower portion of the sprite
+							im.getSubImage(0, 10 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], im.getWidth(), 14 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]).draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(),
+									this.getLocY() - camera.getLocationY() + 10 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);
+							// This is the head of the sprite
+							im.getSubImage(0, 0, im.getWidth(), 10 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]).draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(),
+									this.getLocY() - camera.getLocationY() + 1 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);
+						}
+						else
+						{
+							AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), (int) this.getLocX(), (int) this.getLocY(), cont.getDisplayPaddingX(), camera, false, stateInfo);
+
+							graphics.drawImage(im, locX - camera.getLocationX() + cont.getDisplayPaddingX(),
+									locY - camera.getLocationY());
+						}
 						break;
 					case SE_HEAD_SHAKE:
 						AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), (int) this.getLocX(), (int) this.getLocY(), cont.getDisplayPaddingX(), camera, false, stateInfo);
@@ -421,7 +432,7 @@ public class CinematicActor
 			if (specialEffectDuration != INDEFINITE_TIME)
 				specialEffectDuration -= delta;
 
-			while (specialEffectDelta > specialEffectUpdate)
+			while (specialEffectDelta > specialEffectUpdate && specialEffectType != SE_NONE)
 			{
 				specialEffectDelta -= specialEffectUpdate;
 
@@ -456,9 +467,14 @@ public class CinematicActor
 						}
 						else
 							specialEffectType = SE_NONE;
+						break;
 					case SE_NOD:
-						specialEffectType = SE_NONE;
-						animUpdate = jCinematicActor.getAnimUpdateAfterSE();
+						specialEffectCounter++;
+						if (specialEffectCounter == 3)
+						{
+							specialEffectType = SE_NONE;
+							animUpdate = jCinematicActor.getAnimUpdateAfterSE();
+						}
 						break;
 					case SE_HEAD_SHAKE:
 						if (specialEffectCounter + 1 == 10)
@@ -486,6 +502,7 @@ public class CinematicActor
 	public void nodHead()
 	{
 		specialEffectType = SE_NOD;
+		specialEffectCounter = 0;
 		specialEffectDelta = 0;
 		specialEffectUpdate = jCinematicActor.getNodHeadDuration();
 		specialEffectCounter = 0;
@@ -527,7 +544,7 @@ public class CinematicActor
 		specialEffectType = SE_FLASH;
 		specialEffectDuration = duration;
 		specialEffectDelta = 0;
-		specialEffectUpdate = speed / 102;
+		specialEffectUpdate = Math.max(1, speed / 102);
 		specialEffectCounter = 0;
 		animUpdate = Long.MAX_VALUE;
 	}
