@@ -23,14 +23,14 @@ import javax.swing.text.NumberFormatter;
 public class PlannerLine extends JPanel
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	private PlannerLineDef plDef;
 	private ArrayList<Component> components;
 	private ArrayList<Object> values;
 	private boolean isDefining;
 	private JComboBox<String> box;
 	private JPanel definingPanel;
-	
+
 	public PlannerLine(PlannerLineDef plDef, boolean isDefining)
 	{
 		super();
@@ -40,8 +40,8 @@ public class PlannerLine extends JPanel
 		this.values = new ArrayList<Object>();
 		this.isDefining = isDefining;
 	}
-	
-	public void setupUI(ArrayList<PlannerLineDef> allowableValues, ActionListener aListener, 
+
+	public void setupUI(ArrayList<PlannerLineDef> allowableValues, ActionListener aListener,
 			int index, ArrayList<ArrayList<String>> listOfLists)
 	{
 		this.commitChanges();
@@ -59,11 +59,11 @@ public class PlannerLine extends JPanel
 			headDescPanel.setBackground(Color.LIGHT_GRAY);
 		}
 		JLabel headerLabel = new JLabel(plDef.getTag().toUpperCase());
-		headerPanel.add(headerLabel);		
+		headerPanel.add(headerLabel);
 		if (isDefining)
 		{
 			headerLabel.setForeground(Color.WHITE);
-			
+
 			if (definingPanel == null)
 			{
 				System.out.println("CREATE NEW DEFIINING PANEL");
@@ -71,13 +71,14 @@ public class PlannerLine extends JPanel
 				for (PlannerLineDef pld : allowableValues)
 					allowableStrings.add(pld.getName());
 				box = new JComboBox<String>(allowableStrings);
+				box.setMaximumRowCount(30);
 				headerPanel.add(box);
-				
+
 				JButton addLineButton = new JButton("Add line");
 				addLineButton.setActionCommand("addline");
 				addLineButton.addActionListener(aListener);
-				headerPanel.add(addLineButton);				
-				
+				headerPanel.add(addLineButton);
+
 				if (plDef.getTag().equalsIgnoreCase("Cinematic"))
 				{
 					JButton refreshButton = new JButton("Refresh");
@@ -102,18 +103,18 @@ public class PlannerLine extends JPanel
 			movedownButton.setActionCommand("movedown " + index);
 			movedownButton.addActionListener(aListener);
 			headerPanel.add(movedownButton);
-						
+
 			headDescPanel.add(headerPanel.add(new JLabel(this.plDef.getDescription())), BorderLayout.PAGE_END);
 			headDescPanel.add(headerPanel, BorderLayout.CENTER);
 			this.add(headDescPanel);
 		}
-		
-		
-		
-		
+
+
+
+
 		JPanel valuePanel = new JPanel();
 		valuePanel.setLayout(new BoxLayout(valuePanel, BoxLayout.PAGE_AXIS));
-		
+
 		for (int i = 0; i < plDef.getPlannerValues().size(); i++)
 		{
 			PlannerValueDef pv = plDef.getPlannerValues().get(i);
@@ -127,13 +128,13 @@ public class PlannerLine extends JPanel
 					if (pv.getRefersTo() == PlannerValueDef.REFERS_NONE)
 					{
 						SpinnerNumberModel snm = null;
-						
+
 						snm = new SpinnerNumberModel(0, -1, Integer.MAX_VALUE, 1);
-						
+
 						if (values.size() > 0)
 							snm.setValue(values.get(i));
 						c = new JSpinner(snm);
-						
+
 						((NumberFormatter) ((JSpinner.NumberEditor) ((JSpinner) c).getEditor()).getTextField().getFormatter()).setAllowsInvalid(false);
 					}
 					else
@@ -150,13 +151,13 @@ public class PlannerLine extends JPanel
 					Vector<String> mitems = new Vector<String>();
 					mitems.add("No value selected");
 					mitems.addAll(listOfLists.get(pv.getRefersTo() - 1));
-					
+
 					c = new MultiIntPanel(listOfLists.get(pv.getRefersTo() - 1));
 					JButton ab = new JButton("Add Item");
 					ab.addActionListener((MultiIntPanel) c);
 					ab.setActionCommand("ADD");
 					c.add(ab);
-					
+
 					JButton rb = new JButton("Remove Last Item");
 					rb.addActionListener((MultiIntPanel) c);
 					rb.setActionCommand("REMOVE");
@@ -164,7 +165,7 @@ public class PlannerLine extends JPanel
 					if (values.size() > 0)
 					{
 						String[] vals = ((String) values.get(i)).split(",");
-						
+
 						for (String s : vals)
 						{
 							JComboBox<String> jcb = new JComboBox<String>(mitems);
@@ -175,10 +176,10 @@ public class PlannerLine extends JPanel
 					}
 					else
 						c.add(new JComboBox<String>(mitems));
-					
+
 					break;
-				case PlannerValueDef.TYPE_BOOLEAN:					
-					c = new JCheckBox();					
+				case PlannerValueDef.TYPE_BOOLEAN:
+					c = new JCheckBox();
 					if (values.size() > 0)
 						((JCheckBox) c).setSelected((boolean) values.get(i));
 					break;
@@ -197,22 +198,22 @@ public class PlannerLine extends JPanel
 							((JComboBox<?>) c).setSelectedItem(values.get(i));
 					}
 					break;
-			}			
-			
+			}
+
 			label.setToolTipText(pv.getDisplayDescription());
 			c.setToolTipText(pv.getDisplayDescription());
-			panel.add(c);					
+			panel.add(c);
 			components.add(c);
 			valuePanel.add(panel);
 		}
 		this.add(valuePanel);
 	}
-	
+
 	public JPanel getDefiningPanel()
 	{
 		return definingPanel;
 	}
-	
+
 	public void commitChanges()
 	{
 		if (components.size() > 0)
@@ -220,18 +221,18 @@ public class PlannerLine extends JPanel
 			boolean noValues = false;
 			if (values.size() == 0)
 				noValues = true;
-			
+
 			for (int i = 0; i < plDef.getPlannerValues().size(); i++)
-			{				
+			{
 				PlannerValueDef pv = plDef.getPlannerValues().get(i);
-				
+
 				switch (pv.getValueType())
 				{
 					case PlannerValueDef.TYPE_BOOLEAN:
 						if (noValues)
 							values.add(((JCheckBox) components.get(i)).isSelected());
 						else
-							values.set(i, ((JCheckBox) components.get(i)).isSelected());									
+							values.set(i, ((JCheckBox) components.get(i)).isSelected());
 						break;
 					case PlannerValueDef.TYPE_STRING:
 						if (pv.getRefersTo() == PlannerValueDef.REFERS_NONE)
@@ -242,11 +243,11 @@ public class PlannerLine extends JPanel
 								values.set(i, ((JTextField) components.get(i)).getText());
 						}
 						else
-						{							
+						{
 							if (noValues)
 								values.add(((JComboBox<?>) components.get(i)).getSelectedItem());
 							else
-								values.set(i, ((JComboBox<?>) components.get(i)).getSelectedItem());		
+								values.set(i, ((JComboBox<?>) components.get(i)).getSelectedItem());
 						}
 						break;
 					case PlannerValueDef.TYPE_INT:
@@ -262,7 +263,7 @@ public class PlannerLine extends JPanel
 							if (noValues)
 								values.add(((JComboBox<?>) components.get(i)).getSelectedIndex());
 							else
-								values.set(i, ((JComboBox<?>) components.get(i)).getSelectedIndex());							
+								values.set(i, ((JComboBox<?>) components.get(i)).getSelectedIndex());
 						}
 						break;
 					case PlannerValueDef.TYPE_MULTI_INT:
@@ -275,20 +276,20 @@ public class PlannerLine extends JPanel
 								multi = multi + ",";
 						}
 						System.out.println("Multi: " + multi);
-						
+
 						if (noValues)
 							values.add(multi);
 						else
 							values.set(i, multi);
-						
+
 						break;
 				}
 			}
-			
+
 			components.clear();
 		}
 	}
-	
+
 	public ArrayList<Component> getPlannerLineComponents() {
 		return components;
 	}

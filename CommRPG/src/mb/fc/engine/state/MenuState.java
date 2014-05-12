@@ -31,7 +31,7 @@ public class MenuState extends LoadableGameState implements StringListener
 	private UninitializedStringMenu mapNameMenu;
 	private FCInput input;
 	private GameContainer gc;
-	private String version = "0.01";
+	private String version = "0.03";
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game)

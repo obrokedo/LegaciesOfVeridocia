@@ -39,7 +39,7 @@ public class DebugMenu extends Menu
 			}
 			else if (splitText[0].equalsIgnoreCase("loadbattle"))
 			{
-				stateInfo.getPsi().loadBattle(splitText[1], splitText[2]);
+				stateInfo.getPsi().loadBattle(splitText[1], splitText[2], splitText[3]);
 			}
 			else if (splitText[0].equalsIgnoreCase("loadcin"))
 			{

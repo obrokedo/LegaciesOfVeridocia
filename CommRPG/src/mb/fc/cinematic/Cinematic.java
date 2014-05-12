@@ -289,7 +289,7 @@ public class Cinematic {
 				break;
 			case LOAD_BATTLE:
 				stateInfo.getPsi().loadBattle((String) ce.getParam(0),
-						(String) ce.getParam(1));
+						(String) ce.getParam(1), (String) ce.getParam(2));
 				break;
 			case HALTING_ANIMATION:
 				actors.get(ce.getParam(0)).setAnimation(

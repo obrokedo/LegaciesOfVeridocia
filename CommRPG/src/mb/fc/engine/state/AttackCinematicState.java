@@ -327,8 +327,8 @@ public class AttackCinematicState extends LoadableGameState
 
 					textMenu = new SpeechMenu(battleResults.text.get(targetIndex), (FCGameContainer) container, true);
 
-					// TODO WHAT IS THIS FOR?
-					if (spellAnim != null)
+					// Check to see if we are casting a spell on someone besides an ally, in this case case display the spell
+					if (spellAnim != null && (!targetsAreAllies || targetSelf))
 						spellAnimIndex = 0;
 
 					performBattleResult();
@@ -376,7 +376,9 @@ public class AttackCinematicState extends LoadableGameState
 					// If we are transtioning out then all we need to do is change the state to climax
 					// and everything will show as needed
 					if (state == STATE_TRANSITION_ATTACKER_OUT)
+					{
 						state = STATE_ATTACK_CLIMAX;
+					}
 					// If we are transitioning and we are already at the last target then that means we are actually transitioning in
 					// the attacker, so we need to set the end of battle state
 					else if (state == STATE_TRANSITION_ATTACKER_IN)
@@ -406,6 +408,9 @@ public class AttackCinematicState extends LoadableGameState
 			}
 			else if (transitionIndex == 20)
 			{
+				// Check to see if we are casting a spell on an ally, in this case we want to start displaying the spell now
+				if (spellAnim != null && (targetsAreAllies && !targetSelf) && state == STATE_ATTACK_CLIMAX)
+					spellAnimIndex = 0;
 				transitionIndex = 0;
 				transitionX = 0;
 				if (!targetsAreAllies && dealtDamage)
@@ -445,7 +450,22 @@ public class AttackCinematicState extends LoadableGameState
 				{
 					state = STATE_ATTACKING;
 					attackerAnimIndex = 0;
-					attackerAnim = attacker.getAnimation("UnAttack");
+					if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_ATTACK)
+						attackerAnim = attacker.getAnimation("UnAttack");
+					else if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_SPELL)
+					{
+						if (attacker.getAnimation("UnSpell") != null)
+							attackerAnim = attacker.getAnimation("UnSpell");
+						else
+							attackerAnim = attacker.getAnimation("UnAttack");
+					}
+					else if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_ITEM)
+					{
+						if (attacker.getAnimation("UnItem") != null)
+							attackerAnim = attacker.getAnimation("UnItem");
+						else
+							attackerAnim = attacker.getAnimation("UnAttack");
+					}
 				}
 				// If the user clicks after the attack then return to the battle game-state
 				else if (state == STATE_POST_ATTACK)

@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class TurnAction implements Serializable
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	public static final int ACTION_MOVE_TO = 1;
 	public static final int ACTION_WAIT = 2;
 	public static final int ACTION_END_TURN = 3;
@@ -16,8 +16,9 @@ public class TurnAction implements Serializable
 	public static final int ACTION_TARGET_SPRITE = 8;
 	public static final int ACTION_MOVE_CURSOR_TO_ACTOR = 9;
 	public static final int ACTION_MANUAL_MOVE_CURSOR = 10;
+	public static final int ACTION_DISPLAY_SPEECH = 11;
 	public int action;
-	
+
 	public TurnAction(int action) {
 		super();
 		this.action = action;

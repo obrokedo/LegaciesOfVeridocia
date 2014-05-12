@@ -110,7 +110,8 @@ public class TextParser
 						}
 						else if (tagArea.getChildren().get(k).getTagType().equalsIgnoreCase("startbattle"))
 						{
-							te.addTriggerType(te.new TriggerStartBattle(actionParams.get("battletriggers"), actionParams.get("battlemap")));
+							te.addTriggerType(te.new TriggerStartBattle(actionParams.get("battletriggers"),
+									actionParams.get("battlemap"), actionParams.get("entrance")));
 						}
 						else if (tagArea.getChildren().get(k).getTagType().equalsIgnoreCase("loadmap"))
 						{
@@ -253,6 +254,8 @@ public class TextParser
 			return new CinematicEvent(CinematicEventType.SPEECH, area.getParams().get("text"), Integer.parseInt(area.getParams().get("portrait")));
 		else if (type.equalsIgnoreCase("loadmap"))
 			return new CinematicEvent(CinematicEventType.LOAD_MAP, area.getParams().get("map"), area.getParams().get("enter"));
+		else if (type.equalsIgnoreCase("loadbattle"))
+			return new CinematicEvent(CinematicEventType.LOAD_BATTLE, area.getParams().get("textfile"), area.getParams().get("map"), area.getParams().get("entrance"));
 		else if (type.equalsIgnoreCase("wait"))
 			return new CinematicEvent(CinematicEventType.WAIT, Integer.parseInt(area.getParams().get("time")));
 		else if (type.equalsIgnoreCase("spin"))

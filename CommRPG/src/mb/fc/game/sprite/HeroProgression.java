@@ -15,10 +15,12 @@ public class HeroProgression implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 
-	public static final int STAT_WEAK = 0;
-	public static final int STAT_AVERAGE = 1;
-	public static final int STAT_STRONG = 2;
-	public static final int STAT_VERY_STRONG = 3;
+	public static final int STAT_NONE = 0;
+	public static final int STAT_WEAK = 1;
+	public static final int STAT_AVERAGE = 2;
+	public static final int STAT_STRONG = 3;
+	public static final int STAT_VERY_STRONG = 4;
+
 
 	private int spellLevels[][];
 	private Progression unpromotedProgression;
@@ -100,10 +102,8 @@ public class HeroProgression implements Serializable
 		cs.setCurrentSpeed(cs.getCurrentSpeed() + level.speedGain);
 		cs.setMaxSpeed(cs.getMaxSpeed() + level.speedGain);
 
-		cs.setCurrentHP(cs.getCurrentHP() + level.hitpointGain);
 		cs.setMaxHP(cs.getMaxHP() + level.hitpointGain);
 
-		cs.setCurrentMP(cs.getCurrentMP() + level.magicpointGain);
 		cs.setMaxMP(cs.getMaxMP() + level.magicpointGain);
 
 		for (int i = 0; i < spellLevels.length; i++)
@@ -154,6 +154,8 @@ public class HeroProgression implements Serializable
 				return CommRPG.RANDOM.nextInt(3) + 1;
 			case STAT_VERY_STRONG:
 				return CommRPG.RANDOM.nextInt(4) + 1;
+			case STAT_NONE:
+				return 0;
 		}
 
 		return 0;

@@ -24,7 +24,7 @@ public class HeroStatMenu extends Menu
 
 	public HeroStatMenu(GameContainer gc, CombatSprite selectedSprite, StateInfo stateInfo) {
 		super(Panel.PANEL_HEROS_STATS);
-		x = (gc.getWidth() - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 212) / 2;
+		x = (gc.getWidth() - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 230) / 2;
 		y = (gc.getHeight() - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 192) / 2;
 		this.selectedSprite = selectedSprite;
 		if (selectedSprite.isHero())
@@ -52,7 +52,8 @@ public class HeroStatMenu extends Menu
 		/*****************************/
 		/* Draw the main stat window */
 		/*****************************/
-		Panel.drawPanelBox(x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 62, y, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 150,
+		Panel.drawPanelBox(x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 62,
+				y, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 168,
 				CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 192, graphics);
 		graphics.setColor(COLOR_FOREFRONT);
 		graphics.drawString(selectedSprite.getName(), x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 70, y + -3);

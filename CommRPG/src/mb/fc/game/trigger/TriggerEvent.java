@@ -19,7 +19,7 @@ import mb.fc.game.sprite.Sprite;
 import mb.fc.game.sprite.StaticSprite;
 import mb.fc.game.text.Speech;
 
-public class TriggerEvent 
+public class TriggerEvent
 {
 	private ArrayList<TriggerType> triggerTypes = new ArrayList<TriggerType>();
 	private boolean retrigOnEnter;
@@ -27,7 +27,7 @@ public class TriggerEvent
 	private int[] requires;
 	private int[] excludes;
 	private int id;
-	
+
 	public TriggerEvent(int id, boolean retrigOnEnter, boolean nonRetrig, int[] requires, int[] excludes) {
 		super();
 		this.retrigOnEnter = retrigOnEnter;
@@ -41,30 +41,30 @@ public class TriggerEvent
 	{
 		triggerTypes.add(tt);
 	}
-	
+
 	public void perform(StateInfo stateInfo)
-	{		
+	{
 		// Check to see if this trigger meets all required quests
 		if (requires != null)
-		{			
+		{
 			for (int i : requires)
 			{
 				if (i != -1 && !stateInfo.isQuestComplete(i))
 					return;
 			}
 		}
-		
+
 		// Check to see if the excludes quests have been completed, if so
 		// then we can't use this trigger
 		if (excludes != null)
 		{
 			for (int i : excludes)
-			{						
+			{
 				if (i != -1 && stateInfo.isQuestComplete(i))
 					return;
 			}
 		}
-		
+
 		if (nonRetrig)
 		{
 			if (stateInfo.getClientProgress().isNonretriggableTrigger(id))
@@ -80,26 +80,26 @@ public class TriggerEvent
 			else
 				stateInfo.getClientProgress().addNonretriggerableByMap(id);
 		}
-		
+
 		if (retrigOnEnter && !stateInfo.getClientProgress().isPreviouslyTriggered(id))
 			stateInfo.getClientProgress().addRetriggerableByMap(id);
-		
+
 		performTriggerImpl(stateInfo);
 	}
-	
+
 	private void performTriggerImpl(StateInfo stateInfo)
 	{
 		Iterator<TriggerType> tt = triggerTypes.iterator();
-		
+
 		while (tt.hasNext())
 			if (tt.next().perform(stateInfo))
 				tt.remove();
 	}
-	
+
 	public class TriggerCompleteQuest extends TriggerType
 	{
 		private int questId;
-		
+
 		public TriggerCompleteQuest(int questId) {
 			super();
 			this.questId = questId;
@@ -115,12 +115,12 @@ public class TriggerEvent
 			return false;
 		}
 	}
-	
+
 	public class TriggerEnter extends TriggerType
 	{
 		private String map;
 		private String location;
-		
+
 		public TriggerEnter(String map, String location) {
 			super();
 			this.map = map;
@@ -128,45 +128,47 @@ public class TriggerEvent
 		}
 
 		@Override
-		public boolean perform(StateInfo stateInfo) 
+		public boolean perform(StateInfo stateInfo)
 		{
 			stateInfo.sendMessage(new LoadMapMessage(Message.MESSAGE_LOAD_MAP, map, null, location));
 			return false;
 		}
 	}
-	
+
 	public class TriggerStartBattle extends TriggerType
 	{
 		private String battle;
 		private String map;
-		
-		public TriggerStartBattle(String battle, String map) {
+		private String entrance;
+
+		public TriggerStartBattle(String battle, String map, String entrance) {
 			super();
 			this.battle = battle;
 			this.map = map;
+			this.entrance = entrance;
 		}
 
 		@Override
-		public boolean perform(StateInfo stateInfo) 
+		public boolean perform(StateInfo stateInfo)
 		{
-			stateInfo.sendMessage(new LoadMapMessage(Message.MESSAGE_START_BATTLE, map, battle, null));
+			stateInfo.sendMessage(new LoadMapMessage(Message.MESSAGE_START_BATTLE, map, battle, entrance));
 			return false;
 		}
 	}
-	
+
 	public class TriggerShowShop extends TriggerType
 	{
 		private double buyPercent;
 		private double sellPercent;
 		private int[] itemIds;
-		
+
 		public TriggerShowShop(String params)
 		{
 			String[] split = params.split(",");
 			sellPercent = Double.parseDouble(split[0]);
 			buyPercent = Double.parseDouble(split[1]);
 			itemIds = new int[split.length - 2];
-			
+
 			for (int i = 2; i < split.length; i++)
 			{
 				itemIds[i - 2] = Integer.parseInt(split[i]);
@@ -174,12 +176,12 @@ public class TriggerEvent
 		}
 
 		@Override
-		public boolean perform(StateInfo stateInfo) {			
+		public boolean perform(StateInfo stateInfo) {
 			stateInfo.sendMessage(new ShopMessage(buyPercent, sellPercent, itemIds));
 			return false;
 		}
 	}
-	
+
 	public class TriggerShowPriest extends TriggerType
 	{
 		@Override
@@ -188,11 +190,11 @@ public class TriggerEvent
 			return false;
 		}
 	}
-	
+
 	public class TriggerAddHero extends TriggerType
 	{
 		private int heroId;
-		
+
 		public TriggerAddHero(int heroId)
 		{
 			this.heroId = heroId;
@@ -204,11 +206,11 @@ public class TriggerEvent
 			return false;
 		}
 	}
-	
+
 	public class TriggerById extends TriggerType
 	{
 		private int triggerId;
-		
+
 		public TriggerById(int triggerId)
 		{
 			this.triggerId = triggerId;
@@ -220,11 +222,11 @@ public class TriggerEvent
 			return false;
 		}
 	}
-	
+
 	public class TriggerPlayMusic extends TriggerType
 	{
 		private String song;
-		
+
 		public TriggerPlayMusic(String song)
 		{
 			this.song = song;
@@ -236,12 +238,12 @@ public class TriggerEvent
 			return false;
 		}
 	}
-	
+
 	public class TriggerPlaySound extends TriggerType
 	{
 		private String song;
 		private int volume;
-		
+
 		public TriggerPlaySound(String song, int volume)
 		{
 			this.song = song;
@@ -254,11 +256,11 @@ public class TriggerEvent
 			return false;
 		}
 	}
-	
+
 	public class TriggerShowCinematic extends TriggerType
 	{
 		private int cinematicId;
-		
+
 		public TriggerShowCinematic(int id)
 		{
 			cinematicId = id;
@@ -270,18 +272,18 @@ public class TriggerEvent
 			return false;
 		}
 	}
-	
+
 	public class TriggerShowText extends TriggerType
 	{
 		private int textId;
-		
+
 		public TriggerShowText(int textId)
 		{
 			this.textId = textId;
 		}
 
 		@Override
-		public boolean perform(StateInfo stateInfo) 
+		public boolean perform(StateInfo stateInfo)
 		{
 			SPEECHLOOP: for (Speech s : stateInfo.getResourceManager().getSpeechesById(textId))
 			{
@@ -294,59 +296,66 @@ public class TriggerEvent
 							continue SPEECHLOOP;
 					}
 				}
-				
+
 				// Check to see if the excludes quests have been completed, if so
 				// then we can't use this message
 				if (s.getExcludes() != null && s.getExcludes().length > 0)
 				{
 					for (int i : s.getExcludes())
-					{						
+					{
 						if (i != -1 && stateInfo.isQuestComplete(i))
 							continue SPEECHLOOP;
 					}
 				}
-				
+
 				stateInfo.sendMessage(new SpeechMessage(Message.MESSAGE_SPEECH, s.getMessage(), s.getTriggerId(), s.getPortraitId()));
 				break;
 			}
-			
+
 			return false;
 		}
 	}
-	
+
 	public class TriggerChangeAI extends TriggerType
 	{
 		private int speed;
 		private int id;
 		private int targetId;
 		private Point p = null;
-		
+
 		public TriggerChangeAI(String speed, String id, String targetId, String x, String y)
 		{
-			this.id = Integer.parseInt(id);			
+			this.id = Integer.parseInt(id);
 			if (targetId != null)
 				this.targetId = Integer.parseInt(targetId);
-			
+
 			if (x != null && y != null)
 			{
 				p = new Point(Integer.parseInt(x), Integer.parseInt(y));
 			}
-			
-			if (speed.equalsIgnoreCase("fast"))
-				this.speed = AI.APPROACH_KAMIKAZEE;
-			else if (speed.equalsIgnoreCase("slow"))
-				this.speed = AI.APPROACH_HESITANT;
-			else if (speed.equalsIgnoreCase("wait"))
-				this.speed = AI.APPROACH_REACTIVE;
-			else if (speed.equalsIgnoreCase("follow"))
-				this.speed = AI.APPROACH_FOLLOW;
-			else if (speed.equalsIgnoreCase("moveto"))
-				this.speed = AI.APPROACH_MOVE_TO_POINT;
+
+			try
+			{
+				this.speed = Integer.parseInt(speed);
+			}
+			catch (NumberFormatException ex)
+			{
+				if (speed.equalsIgnoreCase("fast"))
+					this.speed = AI.APPROACH_KAMIKAZEE;
+				else if (speed.equalsIgnoreCase("slow"))
+					this.speed = AI.APPROACH_HESITANT;
+				else if (speed.equalsIgnoreCase("wait"))
+					this.speed = AI.APPROACH_REACTIVE;
+				else if (speed.equalsIgnoreCase("follow"))
+					this.speed = AI.APPROACH_FOLLOW;
+				else if (speed.equalsIgnoreCase("moveto"))
+					this.speed = AI.APPROACH_MOVE_TO_POINT;
+			}
 		}
 
 		@Override
-		public boolean perform(StateInfo stateInfo) 
-		{			
+		public boolean perform(StateInfo stateInfo)
+		{
 			for (CombatSprite s : stateInfo.getCombatSprites())
 			{
 				if (s.getUniqueEnemyId() == id)
@@ -363,13 +372,13 @@ public class TriggerEvent
 									break;
 								}
 							}
-							
+
 							if (targetSprite != null)
 							{
 								s.getAi().setApproachType(speed, targetSprite);
 								System.out.println("Follow sprite " + targetSprite.getName());
 							}
-							
+
 							break;
 						case AI.APPROACH_MOVE_TO_POINT:
 							System.out.println("Move to point " + p);
@@ -379,20 +388,20 @@ public class TriggerEvent
 							s.getAi().setApproachType(speed);
 							break;
 					}
-					
+
 					break;
 				}
 			}
-			
+
 			return true;
 		}
 	}
-	
+
 	public class TriggerToggleRoof extends TriggerType
 	{
 		private int roofId;
 		private boolean show;
-		
+
 		public TriggerToggleRoof(int id, boolean showRoof)
 		{
 			roofId = id;
@@ -405,11 +414,11 @@ public class TriggerEvent
 			return false;
 		}
 	}
-	
+
 	public class TriggerRemoveSprite extends TriggerType
 	{
 		private String spriteName;
-		
+
 		public TriggerRemoveSprite(String spriteName) {
 			super();
 			this.spriteName = spriteName;
@@ -421,7 +430,7 @@ public class TriggerEvent
 			while (spriteIt.hasNext())
 			{
 				Sprite s = spriteIt.next();
-				
+
 				if (s.getName() != null && s.getName().equalsIgnoreCase(spriteName))
 				{
 					spriteIt.remove();
@@ -431,12 +440,12 @@ public class TriggerEvent
 			return false;
 		}
 	}
-	
+
 	public class TriggerChangeSprite extends TriggerType
 	{
 		private String spriteName;
 		private String newImage;
-		
+
 		public TriggerChangeSprite(String spriteName, String newImage) {
 			super();
 			this.spriteName = spriteName;
@@ -449,7 +458,7 @@ public class TriggerEvent
 			while (spriteIt.hasNext())
 			{
 				Sprite s = spriteIt.next();
-				
+
 				if (s.getName() != null && s.getName().equalsIgnoreCase(spriteName))
 				{
 					StaticSprite ss = (StaticSprite) s;
@@ -460,11 +469,11 @@ public class TriggerEvent
 			return false;
 		}
 	}
-	
+
 	public class TriggerAddItem extends TriggerType
 	{
 		private int itemId;
-		
+
 		public TriggerAddItem(int itemId) {
 			super();
 		}
@@ -479,7 +488,7 @@ public class TriggerEvent
 					break;
 				}
 			}
-			
+
 			return false;
 		}
 	}

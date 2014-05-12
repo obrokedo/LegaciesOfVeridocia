@@ -95,8 +95,9 @@ public class BattleResults implements Serializable
 
 					if (br.critted)
 					{
-						br.hpDamage.add((int) (damage * jBattleFunctions.getCritDamageModifier(attacker, target)));
-						text = jBattleFunctions.getCriticalAttackText(attacker, target, damage * -1);
+						int critDamage = (int) (damage * jBattleFunctions.getCritDamageModifier(attacker, target));
+						br.hpDamage.add(critDamage);
+						text = jBattleFunctions.getCriticalAttackText(attacker, target, critDamage * -1);
 					}
 					else
 					{

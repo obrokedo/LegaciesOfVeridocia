@@ -35,18 +35,18 @@ import org.newdawn.slick.Music;
 public class StateInfo
 {
 	private static final SpriteZComparator SPRITE_Z_ORDER_COMPARATOR = new SpriteZComparator();
-	
+
 	/*************************************************************/
 	/* These values are created specifically for this state info */
-	/*************************************************************/	
+	/*************************************************************/
 	private ArrayList<Manager> managers;
 	private ArrayList<Message> messagesToProcess;
 	private ArrayList<Message> newMessages;
-	private boolean initialized = false;		
+	private boolean initialized = false;
 	private boolean isCombat = false;
 	private boolean isCinematic = false;
 	private PersistentStateInfo psi;
-	
+
 	// These values need to be reinitialized each time a map is loaded
 	private ArrayList<TriggerLocation> triggers;
 	private ArrayList<Sprite> sprites;
@@ -56,27 +56,27 @@ public class StateInfo
 	private ArrayList<MouseListener> mouseListeners;
 	private Stack<KeyboardListener> keyboardListeners;
 	private FCInput fcInput;
-	
-	private CombatSprite currentSprite;	
-	
+
+	private CombatSprite currentSprite;
+
 	private long inputDelay = 0;
-	
+
 	/**************************************************/
 	/* These values are retrieved from the persistent */
 	/* state info									  */
-	/**************************************************/	 
-	private Camera camera;	
+	/**************************************************/
+	private Camera camera;
 	private FCGameContainer gc;
 	private Graphics graphics;
 	private ArrayList<CombatSprite> heroes;
 	private boolean showAttackCinematic = false;
-	
+
 	private Music playingMusic = null;
 	private float playingMusicPostion;
 	private String playingMusicName;
-	
+
 	private String currentMap;
-	
+
 	public StateInfo(PersistentStateInfo psi, boolean isCombat, boolean isCinematic)
 	{
 		this.psi = psi;
@@ -89,27 +89,27 @@ public class StateInfo
 		mouseListeners = new ArrayList<MouseListener>();
 		keyboardListeners = new Stack<KeyboardListener>();
 		this.managers = new ArrayList<Manager>();
-		this.messagesToProcess = new ArrayList<Message>();		
+		this.messagesToProcess = new ArrayList<Message>();
 		this.newMessages = new ArrayList<Message>();
 		this.triggers = new ArrayList<TriggerLocation>();
 		this.fcInput = new FCInput();
-		
+
 		camera = psi.getCamera();
 		gc = psi.getGc();
 		graphics = psi.getGraphics();
 		heroes = psi.getHeroes();
-		
+
 		this.currentMap = psi.getClientProgress().getMap();
 	}
-	
+
 	/************************/
 	/* State Initialization */
 	/************************/
 	public void initState()
-	{		
-		System.out.println("Initialize State");		
+	{
+		System.out.println("Initialize State");
 		this.initialized = false;
-		
+
 		// Add starting heroes if they haven't been added yet
 		if (psi.getClientProfile().getStartingHeroIds() != null)
 		{
@@ -117,27 +117,27 @@ public class StateInfo
 				psi.getClientProfile().getHeroes().add(HeroResource.getHero(heroId, this));
 			psi.getClientProfile().setStartingHeroIds(null);
 		}
-		
+
 		initializeSystems();
 		if (isCombat)
 			this.heroes.addAll(getClientProfile().getHeroes());
 		else
 			this.heroes.addAll(getClientProfile().getLeaderList());
 		sendMessage(Message.MESSAGE_INTIIALIZE);
-		
+
 		if (this.getClientProgress().getRetriggerablesByMap() != null)
 			for (Integer triggerId : this.getClientProgress().getRetriggerablesByMap())
 				getResourceManager().getTriggerEventById(triggerId).perform(this);
-				
+
 		gc.getInput().addKeyListener(fcInput);
-		
+
 		this.initialized = true;
-		
+
 		if (isCombat)
 			// Start the whole battle
 			sendMessage(Message.MESSAGE_NEXT_TURN);
 	}
-	
+
 	private void initializeSystems()
 	{
 		triggers.clear();
@@ -150,21 +150,21 @@ public class StateInfo
 		keyboardListeners.clear();
 		messagesToProcess.clear();
 		newMessages.clear();
-		
-		
+
+
 		for (Manager m : managers)
 			m.initializeSystem(this);
-		initializeMapObjects();	
-		
+		initializeMapObjects();
+
 		this.currentMap = psi.getClientProgress().getMap();
-		
+
 		if (!isCinematic)
 		{
 			System.out.println("Perform first trigger");
 			psi.getResourceManager().getTriggerEventById(0).perform(this);
 		}
 	}
-	
+
 	private void initializeMapObjects()
 	{
 		for (MapObject mo : getResourceManager().getMap().getMapObjects())
@@ -183,47 +183,47 @@ public class StateInfo
 			}
 		}
 	}
-	
+
 	public void registerManager(Manager m)
 	{
 		managers.add(m);
 	}
-	
+
 	public String getEntranceLocation() {
 		return psi.getEntranceLocation();
 	}
-	
+
 	/************************/
 	/* Message Management	*/
 	/************************/
 	public void sendMessage(Message message)
-	{		
+	{
 		if (message.isImmediate())
 			sendMessageImpl(message);
 		else
 			newMessages.add(message);
 	}
-	
+
 	/**
 	 * Covenience method to send a generic message that requires no parameters aside from the message
-	 * 
+	 *
 	 * @param messageType The type of the message to be sent
 	 */
 	public void sendMessage(int messageType)
-	{		
+	{
 		Message message = new Message(messageType);
 		if (message.isImmediate())
 			sendMessageImpl(message);
 		else
 			newMessages.add(message);
 	}
-	
+
 	private void sendMessageImpl(Message message)
 	{
 		for (Manager m : managers)
 			m.recieveMessage(message);
 	}
-	
+
 	public void processMessages()
 	{
 		messagesToProcess.addAll(newMessages);
@@ -232,7 +232,7 @@ public class StateInfo
 		{
 			Message m = messagesToProcess.remove(i);
 			switch (m.getMessageType())
-			{			
+			{
 				case Message.MESSAGE_LOAD_MAP:
 					LoadMapMessage lmm = (LoadMapMessage) m;
 					psi.loadMap(lmm.getMap(), lmm.getLocation());
@@ -244,7 +244,7 @@ public class StateInfo
 					break MESSAGES;
 				case Message.MESSAGE_START_BATTLE:
 					LoadMapMessage lmb = (LoadMapMessage) m;
-					psi.loadBattle(lmb.getBattle(), lmb.getMap());
+					psi.loadBattle(lmb.getBattle(), lmb.getMap(), lmb.getLocation());
 					if (playingMusic != null)
 					{
 						playingMusic.stop();
@@ -258,13 +258,13 @@ public class StateInfo
 				case Message.MESSAGE_COMPLETE_QUEST:
 					this.setQuestComplete(((IntMessage) m).getValue());
 					break;
-				default:						
+				default:
 					sendMessageImpl(m);
 					break;
-			}				
+			}
 		}
 	}
-	
+
 	/********************************/
 	/* Panel and Menu management	*/
 	/********************************/
@@ -275,45 +275,53 @@ public class StateInfo
 			if (m.getPanelType() == panel.getPanelType())
 				return;
 		}
-		
+
 		panels.add(panel);
 	}
-	
+
 	public void addPanel(Panel panel)
 	{
 		panels.add(panel);
 	}
-	
+
 	public void addMenu(Menu menu)
 	{
 		menus.add(menu);
 	}
-	
+
 	public Menu getTopMenu()
 	{
 		return menus.get(menus.size() - 1);
 	}
-	
+
 	public void removeTopMenu()
 	{
 		menus.remove(menus.size() - 1);
 	}
-	
+
 	public boolean arePanelsDisplayed()
 	{
 		return panels.size() > 0;
 	}
-	
+
+	public boolean isMenuDisplayed(int panelType)
+	{
+		for (Menu m : menus)
+			if (m.getPanelType() == panelType)
+				return true;
+		return false;
+	}
+
 	public boolean areMenusDisplayed()
 	{
 		return menus.size() > 0;
 	}
-	
+
 	public void removePanel(Panel panel)
 	{
 		panels.remove(panel);
 	}
-	
+
 	public void removePanel(int panelType)
 	{
 		for (Panel m : panels)
@@ -323,7 +331,7 @@ public class StateInfo
 				break;
 			}
 	}
-	
+
 	public void removeMenu(int menuType)
 	{
 		for (Menu m : menus)
@@ -333,12 +341,12 @@ public class StateInfo
 				break;
 			}
 	}
-	
+
 	public void removeMenu(Menu menu)
 	{
 		menus.remove(menu);
 	}
-	
+
 	public void addSingleInstanceMenu(Menu menu)
 	{
 		for (Panel m : menus)
@@ -346,29 +354,29 @@ public class StateInfo
 			if (m.getPanelType() == menu.getPanelType())
 				return;
 		}
-		
+
 		menus.add(menu);
 	}
-	
+
 	public Iterable<Panel> getPanels()
 	{
 		return panels;
 	}
-	
+
 	public Iterable<Menu> getMenus()
 	{
 		return menus;
 	}
-	
+
 	/****************************************/
-	/* Manage Mouse and Keyboard Listeners	*/ 
+	/* Manage Mouse and Keyboard Listeners	*/
 	/****************************************/
 	public void registerMouseListener(MouseListener ml)
 	{
 		mouseListeners.add(ml);
 		Collections.sort(mouseListeners, new MouseListenerComparator());
 	}
-	
+
 	public void unregisterMouseListener(MouseListener ml)
 	{
 		mouseListeners.remove(ml);
@@ -381,39 +389,39 @@ public class StateInfo
 			return m1.getZOrder() - m2.getZOrder();
 		}
 	}
-	
+
 	public int getMouseListenersSize()
 	{
 		return mouseListeners.size();
 	}
-	
+
 	public MouseListener getMouseListener(int index)
 	{
 		return mouseListeners.get(index);
 	}
-	
+
 	public KeyboardListener getKeyboardListener()
 	{
 		if (keyboardListeners.empty())
 			return null;
 		return keyboardListeners.peek();
 	}
-	
+
 	public void removeKeyboardListener()
 	{
 		keyboardListeners.pop();
 	}
-	
+
 	public void removeKeyboardListeners()
 	{
 		keyboardListeners.clear();
 	}
-	
+
 	public void addKeyboardListener(KeyboardListener kl)
 	{
 		keyboardListeners.add(kl);
 	}
-	
+
 	/****************************/
 	/* Plot Progression Methods	*/
 	/****************************/
@@ -427,17 +435,17 @@ public class StateInfo
 			}
 		}
 	}
-	
+
 	public void setQuestComplete(int id)
 	{
 		psi.setQuestComplete(id);
 	}
-	
+
 	public boolean isQuestComplete(int questId)
 	{
 		return psi.isQuestCompelte(questId);
 	}
-	
+
 	/*********************/
 	/* Convience Methods */
 	/*********************/
@@ -446,21 +454,21 @@ public class StateInfo
 		return psi.getResourceManager().getMap().getTileEffectiveWidth();
 		// return psi.getResourceManager().getMap().getTileWidth();
 	}
-	
+
 	public int getTileHeight()
 	{
 		return psi.getResourceManager().getMap().getTileEffectiveHeight();
 		// return psi.getResourceManager().getMap().getTileHeight();
 	}
-	
+
 	public Map getCurrentMap()
 	{
 		return psi.getResourceManager().getMap();
 	}
-	
+
 	/**
 	 * Gets the CombatSprite that is located at the specified tile location.
-	 * 
+	 *
 	 * @param tileX The x location of the specified tile to check
 	 * @param tileY The y location of the specified tile to check
 	 * @param targetsHero A boolean indicating whether we should only return a hero or enemy. If true only a hero
@@ -472,13 +480,13 @@ public class StateInfo
 	{
 		for (CombatSprite s : combatSprites)
 			if ((targetsHero == null || s.isHero() == targetsHero) && s.getTileX() == tileX && s.getTileY() == tileY)
-				return s;		
+				return s;
 		return null;
 	}
-	
+
 	/**
 	 * Gets the CombatSprite that is located at the specified map location.
-	 * 
+	 *
 	 * @param mapX The x location on the map to check
 	 * @param mapY The y location on the map to check
 	 * @param targetsHero A boolean indicating whether we should only return a hero or enemy. If true only a hero
@@ -490,36 +498,36 @@ public class StateInfo
 	{
 		for (CombatSprite s : combatSprites)
 			if ((targetsHero == null || s.isHero() == targetsHero) && s.getLocX() == mapX && s.getLocY() == mapY)
-				return s;		
+				return s;
 		return null;
 	}
-	
+
 	/****************************/
 	/* General Mutator Methods	*/
 	/****************************/
 	// Special care needs to be taken to ensure that the sprites and combat sprites are in sync with each other.
 	// Thus the actual lists should never be directly exposed
-		
+
 	public Iterable<Sprite> getSprites() {
 		return sprites;
 	}
-	
+
 	public Iterable<CombatSprite> getCombatSprites() {
 		return combatSprites;
 	}
-	
+
 	/**
 	 * Returns an iterator that allows traversal and modification of the sprites lists. NOTE:  When deleting
 	 * a sprite via this iterator, if the sprite is a CombatSprite then you must also call the
 	 * removeCombatSprite method to ensure that the combat sprite is also removed from that list as well.
-	 * 
+	 *
 	 * @return An iterator for the sprites list
 	 */
 	public Iterator<Sprite> getSpriteIterator()
 	{
 		return sprites.iterator();
 	}
-	
+
 	public void sortSprites()
 	{
 		Collections.sort(sprites, SPRITE_Z_ORDER_COMPARATOR);
@@ -531,25 +539,25 @@ public class StateInfo
 		if (s.getSpriteType() == Sprite.TYPE_COMBAT)
 			combatSprites.add((CombatSprite) s);
 	}
-	
+
 	// I hate that this has to be here, but I don't have a good way of knowing when a sprite has been removed via an iterator
 	// so I need to have it removed programatically
-	
+
 	public void removeCombatSprite(CombatSprite cs)
 	{
 		combatSprites.remove(cs);
 	}
-	
+
 	public void addAllCombatSprites(Collection<CombatSprite> ss)
 	{
 		sprites.addAll(ss);
 		combatSprites.addAll(ss);
 	}
-	
+
 	public void addAllSprites(Collection<Sprite> ss)
 	{
 		sprites.addAll(ss);
-		
+
 		for (Sprite s : ss)
 			if (s.getSpriteType() == Sprite.TYPE_COMBAT)
 				combatSprites.add((CombatSprite) s);
@@ -570,7 +578,7 @@ public class StateInfo
 	public boolean isInitialized() {
 		return initialized;
 	}
-	
+
 	public void setInitialized(boolean initialized) {
 		this.initialized = initialized;
 	}
@@ -586,7 +594,7 @@ public class StateInfo
 	public Graphics getGraphics() {
 		return graphics;
 	}
-	
+
 	public boolean isCombat() {
 		return isCombat;
 	}
@@ -606,11 +614,11 @@ public class StateInfo
 	public void setInputDelay(long inputDelay) {
 		this.inputDelay = inputDelay;
 	}
-	
+
 	public ClientProfile getClientProfile() {
 		return psi.getClientProfile();
 	}
-	
+
 	public ClientProgress getClientProgress() {
 		return psi.getClientProgress();
 	}
@@ -622,7 +630,7 @@ public class StateInfo
 	public void setShowAttackCinematic(boolean showAttackCinematic) {
 		this.showAttackCinematic = showAttackCinematic;
 	}
-		
+
 	public CombatSprite getCurrentSprite() {
 		return currentSprite;
 	}
@@ -657,5 +665,5 @@ public class StateInfo
 
 	public void setPlayingMusicPostion(float playingMusicPostion) {
 		this.playingMusicPostion = playingMusicPostion;
-	}	
+	}
 }

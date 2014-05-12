@@ -19,7 +19,7 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 
 public class PersistentStateInfo
 {
-	private Camera camera;	
+	private Camera camera;
 	private CommRPG game;
 	private FCGameContainer gc;
 	private Graphics graphics;
@@ -28,8 +28,8 @@ public class PersistentStateInfo
 	private ClientProgress clientProgress;
 	private FCResourceManager resourceManager;
 	private String entranceLocation = "priest";
-	
-	public PersistentStateInfo(ClientProfile clientProfile, ClientProgress clientProgress, CommRPG game, Camera camera, 
+
+	public PersistentStateInfo(ClientProfile clientProfile, ClientProgress clientProgress, CommRPG game, Camera camera,
 			GameContainer gc, Graphics graphics, int clientId)
 	{
 		this.game = game;
@@ -41,8 +41,8 @@ public class PersistentStateInfo
 		this.clientProgress = clientProgress;
 		this.heroes.addAll(clientProfile.getHeroes());
 	}
-	
-	public PersistentStateInfo(ClientProfile clientProfile, ClientProgress clientProgress, CommRPG game, Camera camera, 
+
+	public PersistentStateInfo(ClientProfile clientProfile, ClientProgress clientProgress, CommRPG game, Camera camera,
 			GameContainer gc, Graphics graphics, boolean isHost)
 	{
 		this.game = game;
@@ -55,38 +55,40 @@ public class PersistentStateInfo
 		this.heroes.addAll(clientProfile.getHeroes());
 		this.entranceLocation = getClientProgress().getLocation();
 	}
-	
+
 	/********************/
 	/* Map Management	*/
-	/********************/	
+	/********************/
 	public void loadMap(String map, String entrance)
-	{				
+	{
 		this.entranceLocation = entrance;
-		
+
 		gc.getInput().removeAllKeyListeners();
-		
-		getClientProgress().setMap(map);		
-		
+
+		getClientProgress().setMap(map);
+
 		getGame().setLoadingInfo(map, map,
 				(LoadableGameState) getGame().getState(CommRPG.STATE_GAME_TOWN),
 					getResourceManager());
 		getGame().enterState(CommRPG.STATE_GAME_LOADING, new FadeOutTransition(Color.black, 250), new EmptyTransition());
 	}
-	
-	public void loadBattle(String text, String map)
-	{			
+
+	public void loadBattle(String text, String map, String entrance)
+	{
+		this.entranceLocation = entrance;
+
 		gc.getInput().removeAllKeyListeners();
-		
-		getGame().setLoadingInfo(text, map, 
+
+		getGame().setLoadingInfo(text, map,
 				(LoadableGameState) getGame().getState(CommRPG.STATE_GAME_BATTLE),
 					getResourceManager());
 		getGame().enterState(CommRPG.STATE_GAME_LOADING, new FadeOutTransition(Color.black, 250), new EmptyTransition());
-	}	
-	
+	}
+
 	public void loadCinematic(String map)
 	{
 		gc.getInput().removeAllKeyListeners();
-		
+
 		getGame().setLoadingInfo(map, map,
 				(LoadableGameState) getGame().getState(CommRPG.STATE_GAME_CINEMATIC),
 					getResourceManager());
@@ -100,7 +102,7 @@ public class PersistentStateInfo
 	public FCGameContainer getGc() {
 		return gc;
 	}
-	
+
 	public Graphics getGraphics() {
 		return graphics;
 	}
@@ -108,12 +110,12 @@ public class PersistentStateInfo
 	public ArrayList<CombatSprite> getHeroes() {
 		return heroes;
 	}
-	
+
 	public void setQuestComplete(int id)
 	{
 		this.clientProgress.setQuestComplete(id);
 	}
-	
+
 	public boolean isQuestCompelte(int questId)
 	{
 		return this.clientProgress.isQuestComplete(questId);
@@ -126,7 +128,7 @@ public class PersistentStateInfo
 	public ClientProfile getClientProfile() {
 		return clientProfile;
 	}
-	
+
 	public ClientProgress getClientProgress() {
 		return clientProgress;
 	}

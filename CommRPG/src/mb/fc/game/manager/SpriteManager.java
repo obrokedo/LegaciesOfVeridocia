@@ -13,13 +13,13 @@ public class SpriteManager extends Manager
 {
 	private int updateDelta = 0;
 	private static final int UPDATE_TIME = 50;
-	
+
 	@Override
-	public void initialize() 
-	{		
-		
+	public void initialize()
+	{
+
 	}
-	
+
 	private void initializeAfterSprites()
 	{
 		// If we are not in combat then get this clients main character and set them as the current sprite
@@ -31,15 +31,15 @@ public class SpriteManager extends Manager
 					stateInfo.setCurrentSprite(cs);
 					stateInfo.addSprite(cs);
 				}
-				
+
 			// Even though this is not the leader, the sprites need to be initialized so we can
 			// view items, spells and pictures
 			for (CombatSprite cs : stateInfo.getClientProfile().getHeroes())
 				cs.initializeSprite(stateInfo);
-			
+
 			boolean foundStart = false;
 			MapObject defaultEntrance = null;
-			
+
 			// Get any npcs from the map
 			for (MapObject mo : stateInfo.getResourceManager().getMap().getMapObjects())
 			{
@@ -56,12 +56,12 @@ public class SpriteManager extends Manager
 					}
 					else
 						defaultEntrance = mo;
-				}				
+				}
 			}
-			
+
 			if (!foundStart)
 				defaultEntrance.getStartLocation(stateInfo);
-			
+
 			stateInfo.getCamera().centerOnSprite(stateInfo.getCurrentSprite(), stateInfo.getCurrentMap());
 		}
 		// Otherwise just add all of the heroes
@@ -69,15 +69,15 @@ public class SpriteManager extends Manager
 		{
 			for (CombatSprite cs : stateInfo.getHeroes())
 				cs.initializeSprite(stateInfo);
-			
-			stateInfo.addAllCombatSprites(stateInfo.getHeroes());				
-			
-			
+
+			stateInfo.addAllCombatSprites(stateInfo.getHeroes());
+
+
 			// Get any npcs from the map
 			for (MapObject mo : stateInfo.getResourceManager().getMap().getMapObjects())
 			{
 				// TODO This should automatically start the "BATTLE START"
-				if (mo.getKey().equalsIgnoreCase("start") && mo.getParam("exit").equalsIgnoreCase("battle"))
+				if (mo.getKey().equalsIgnoreCase("start") && mo.getParam("exit").equalsIgnoreCase(stateInfo.getEntranceLocation()))
 				{
 					mo.getStartLocation(stateInfo);
 				}
@@ -88,7 +88,7 @@ public class SpriteManager extends Manager
 			}
 		}
 	}
-	
+
 	public void update(int delta)
 	{
 		updateDelta += delta;
@@ -96,11 +96,11 @@ public class SpriteManager extends Manager
 		{
 			updateDelta -= UPDATE_TIME;
 			boolean isEnemyAlive = false;
-	
+
 			// TODO Is this to cumbersome, could move it when people move around the map?
 			stateInfo.sortSprites();
 			Iterator<Sprite> spriteItr = stateInfo.getSpriteIterator();
-					
+
 			while (spriteItr.hasNext())
 			{
 				Sprite s = spriteItr.next();
@@ -111,31 +111,31 @@ public class SpriteManager extends Manager
 					{
 						stateInfo.removeCombatSprite((CombatSprite) s);
 						s.destroy(stateInfo);
-						spriteItr.remove();					
+						spriteItr.remove();
 					}
-					// If the sprite did not die, then check to see if it is an enemy, if so the battle is not over 
+					// If the sprite did not die, then check to see if it is an enemy, if so the battle is not over
 					else if (!((CombatSprite) s).isHero())
 						isEnemyAlive = true;
 				}
 			}
-			
+
 			if (!isEnemyAlive && stateInfo.isCombat())
 				stateInfo.getResourceManager().getTriggerEventById(1).perform(stateInfo);
 		}
 	}
 
 	@Override
-	public void recieveMessage(Message message) 
+	public void recieveMessage(Message message)
 	{
 		switch (message.getMessageType())
-		{			
+		{
 			case Message.MESSAGE_INTIIALIZE:
 				initializeAfterSprites();
 				break;
 			case Message.MESSAGE_INVESTIGATE:
 				int checkX = stateInfo.getCurrentSprite().getTileX();
 				int checkY = stateInfo.getCurrentSprite().getTileY();
-				
+
 				switch (stateInfo.getCurrentSprite().getFacing())
 				{
 					case UP:
@@ -151,7 +151,7 @@ public class SpriteManager extends Manager
 						checkX++;
 						break;
 				}
-				
+
 				for (Sprite s : stateInfo.getSprites())
 				{
 					if (s.getSpriteType() == Sprite.TYPE_NPC)
@@ -163,7 +163,7 @@ public class SpriteManager extends Manager
 							npc.triggerButton1Event(stateInfo);
 							break;
 						}
-						
+
 					}
 					else if (s.getSpriteType() == Sprite.TYPE_STATIC_SPRITE)
 					{

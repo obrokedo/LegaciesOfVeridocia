@@ -45,7 +45,7 @@ import org.newdawn.slick.state.transition.EmptyTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 public class TurnManager extends Manager implements KeyboardListener
-{		
+{
 	/**
 	 * So if AI is command people it just manually adds entries to the turn actions that determine
 	 * what type of battle command should be contained in the AttackSpriteAction. If this is being controlled
@@ -54,12 +54,12 @@ public class TurnManager extends Manager implements KeyboardListener
 	private ArrayList<TurnAction> turnActions;
 	private MoveableSpace ms;
 	private AttackableSpace as;
-	private CombatSprite currentSprite;	
+	private CombatSprite currentSprite;
 	private MovingSprite movingSprite;
 	private Point spriteStartPoint;
 	private boolean ownsSprite;
 	private BattleResults battleResults;
-	private BattleCommand battleCommand;	
+	private BattleCommand battleCommand;
 	private SpellMenu spellMenu;
 	private ItemMenu itemMenu;
 	private ItemOptionMenu itemOptionMenu;
@@ -70,28 +70,28 @@ public class TurnManager extends Manager implements KeyboardListener
 	private int updateDelta = 0;
 	private boolean resetSpriteLoc = false;
 	private static final int UPDATE_TIME = 20;
-	
+
 	// This describes the location and size of the moveable tiles array on the world
 	private boolean displayMoveable = false;
-	
+
 	// Trying to draw attack coordinates
 	private boolean displayAttackable = false;
-	
+
 	private boolean displayCursor = false;
-	
+
 	@Override
 	public void initialize() {
-		turnActions = new ArrayList<TurnAction>();	
+		turnActions = new ArrayList<TurnAction>();
 		battleActionsMenu = new BattleActionsMenu(stateInfo);
 		spellMenu = new SpellMenu(stateInfo);
 		itemMenu = new ItemMenu(stateInfo);
 		itemOptionMenu = new ItemOptionMenu(stateInfo);
 		landEffectPanel = new LandEffectPanel();
 		movingSprite = null;
-		
+
 		cursor = new Rectangle(0, 0, stateInfo.getTileWidth(), stateInfo.getTileHeight());
 	}
-	
+
 	public void update(StateBasedGame game, int delta)
 	{
 		updateDelta += delta;
@@ -103,54 +103,54 @@ public class TurnManager extends Manager implements KeyboardListener
 			{
 				processTurnActions(game);
 			}
-			
+
 			if (displayAttackable && !currentSprite.isHero())
 				as.update(stateInfo);
 		}
 	}
-	
+
 	public void render(Graphics graphics)
 	{
-		
+
 		if (displayMoveable)
 			ms.renderMoveable(stateInfo.getGc(), stateInfo.getCamera(), graphics);
-		
+
 		if (displayAttackable)
 			as.render(stateInfo.getGc(), stateInfo.getCamera(), graphics);
-		
+
 		if (displayCursor)
 		{
 			graphics.setColor(Color.white);
 			graphics.drawRect(cursor.getX() - stateInfo.getCamera().getLocationX() + stateInfo.getGc().getDisplayPaddingX(),
-					cursor.getY() - stateInfo.getCamera().getLocationY(), 
+					cursor.getY() - stateInfo.getCamera().getLocationY(),
 						stateInfo.getTileWidth() - 1, stateInfo.getTileHeight() - 1);
 		}
 	}
-	
+
 	private void processTurnActions(StateBasedGame game)
-	{		
+	{
 		TurnAction a = turnActions.get(0);
 		switch (a.action)
 		{
 			case TurnAction.ACTION_MANUAL_MOVE_CURSOR:
-				
+
 				if (cursor.getX() < cursorTargetX)
 					cursor.setX(cursor.getX() + stateInfo.getTileWidth() / 6);
 				else if (cursor.getX() > cursorTargetX)
 					cursor.setX(cursor.getX() - stateInfo.getTileWidth() / 6);
-				
+
 				if (cursor.getY() < cursorTargetY)
 					cursor.setY(cursor.getY() + stateInfo.getTileHeight() / 6);
 				else if (cursor.getY() > cursorTargetY)
 					cursor.setY(cursor.getY() - stateInfo.getTileHeight() / 6);
-				
+
 				stateInfo.getCamera().centerOnPoint((int) cursor.getX(), (int) cursor.getY(), stateInfo.getCurrentMap());
-								
+
 				if (cursorTargetX == cursor.getX() && cursorTargetY == cursor.getY())
-				{				
+				{
 					// Get any combat sprite at the cursors location
 					CombatSprite cs = stateInfo.getCombatSpriteAtMapLocation((int) cursor.getX(), (int) cursor.getY(), null);
-					
+
 					// if there is a combat sprite here display it's health panel
 					if (cs != null)
 						cs.triggerOverEvent(stateInfo);
@@ -161,34 +161,34 @@ public class TurnManager extends Manager implements KeyboardListener
 				if (cursor.getX() == currentSprite.getLocX() &&
 					cursor.getY() == currentSprite.getLocY())
 				{
-					if (ownsSprite)	
+					if (ownsSprite)
 					{
 						stateInfo.addKeyboardListener(ms);
 					}
-					landEffectPanel.setLandEffect(stateInfo.getCurrentMap().getLandEffectByTile(currentSprite.getMovementType(), 
-							currentSprite.getTileX(), currentSprite.getTileY()));					
+					landEffectPanel.setLandEffect(stateInfo.getCurrentMap().getLandEffectByTile(currentSprite.getMovementType(),
+							currentSprite.getTileX(), currentSprite.getTileY()));
 					stateInfo.addSingleInstancePanel(landEffectPanel);
 					displayMoveable = true;
 					// The display cursor will toggled via the wait
-					turnActions.remove(0);	
-					
+					turnActions.remove(0);
+
 					stateInfo.removePanel(Panel.PANEL_HEALTH_BAR);
 					currentSprite.triggerOverEvent(stateInfo);
-					
+
 					if (turnActions.size() == 0)
 						displayCursor = false;
 				}
-				
+
 				if (cursor.getX() < currentSprite.getLocX())
 					cursor.setX(cursor.getX() + stateInfo.getTileWidth() / 4);
 				else if (cursor.getX() > currentSprite.getLocX())
 					cursor.setX(cursor.getX() - stateInfo.getTileWidth() / 4);
-				
+
 				if (cursor.getY() < currentSprite.getLocY())
 					cursor.setY(cursor.getY() + stateInfo.getTileHeight() / 4);
 				else if (cursor.getY() > currentSprite.getLocY())
 					cursor.setY(cursor.getY() - stateInfo.getTileHeight() / 4);
-				
+
 				stateInfo.getCamera().centerOnPoint((int) cursor.getX(), (int) cursor.getY(), stateInfo.getCurrentMap());
 				break;
 			case TurnAction.ACTION_MOVE_TO:
@@ -205,22 +205,17 @@ public class TurnManager extends Manager implements KeyboardListener
 					displayCursor = false;
 					turnActions.remove(0);
 				}
-				break; 
+				break;
 			case TurnAction.ACTION_END_TURN:
 				// This moveable space is no longer needed to destroy it
 				turnActions.remove(0);
 				currentSprite.setFacing(Direction.DOWN);
+
 				if (currentSprite.isHero())
 				{
 					stateInfo.checkTriggers(currentSprite.getLocX(), currentSprite.getLocY());
 				}
-				turnActions.clear();
-				stateInfo.removePanel(landEffectPanel);
-				// stateInfo.removeKeyboardListeners();
-				displayAttackable = false;
-				displayMoveable = false;
-				cursor.setLocation(currentSprite.getLocX(), currentSprite.getLocY());
-				stateInfo.sendMessage(Message.MESSAGE_NEXT_TURN);				
+				turnActions.add(new TurnAction(TurnAction.ACTION_DISPLAY_SPEECH));
 				break;
 			case TurnAction.ACTION_HIDE_MOVE_AREA:
 				displayMoveable = false;
@@ -235,7 +230,7 @@ public class TurnManager extends Manager implements KeyboardListener
 				turnActions.remove(0);
 				break;
 			case TurnAction.ACTION_ATTACK_SPRITE:
-				stateInfo.sendMessage(new BattleResultsMessage(BattleResults.determineBattleResults(currentSprite, 
+				stateInfo.sendMessage(new BattleResultsMessage(BattleResults.determineBattleResults(currentSprite,
 					((AttackSpriteAction) a).getTargets(),
 					((AttackSpriteAction) a).getBattleCommand(), stateInfo)));
 				displayAttackable = false;
@@ -243,32 +238,48 @@ public class TurnManager extends Manager implements KeyboardListener
 				break;
 			case TurnAction.ACTION_PERFORM_ATTACK:
 				stateInfo.removePanel(Panel.PANEL_HEALTH_BAR);
+				stateInfo.removePanel(Panel.PANEL_ENEMY_HEALTH_BAR);
 				stateInfo.setShowAttackCinematic(true);
 				AttackCinematicState acs = (AttackCinematicState) game.getState(CommRPG.STATE_GAME_BATTLE_ANIM);
-				acs.setBattleInfo(currentSprite, stateInfo.getResourceManager(), 
-					new Point(2, 0), battleResults, stateInfo.getGc());			
-				game.enterState(CommRPG.STATE_GAME_BATTLE_ANIM, new FadeOutTransition(Color.black, 250), new EmptyTransition());				
-				turnActions.remove(0);				
+				acs.setBattleInfo(currentSprite, stateInfo.getResourceManager(),
+					new Point(2, 0), battleResults, stateInfo.getGc());
+				game.enterState(CommRPG.STATE_GAME_BATTLE_ANIM, new FadeOutTransition(Color.black, 250), new EmptyTransition());
+				turnActions.remove(0);
 				break;
-			case TurnAction.ACTION_CHECK_DEATH:				
+			case TurnAction.ACTION_CHECK_DEATH:
 				if (battleResults.death)
 					turnActions.add(new WaitAction(1500 / UPDATE_TIME));
 				turnActions.add(new TurnAction(TurnAction.ACTION_END_TURN));
 				turnActions.remove(0);
 				break;
+			case TurnAction.ACTION_DISPLAY_SPEECH:
+				if (!stateInfo.isMenuDisplayed(Panel.PANEL_SPEECH))
+				{
+					System.out.println("NOT DISPLAYED");
+					turnActions.remove(0);
+					stateInfo.removePanel(landEffectPanel);
+					stateInfo.removePanel(Panel.PANEL_HEALTH_BAR);
+					stateInfo.removePanel(Panel.PANEL_ENEMY_HEALTH_BAR);
+					// stateInfo.removeKeyboardListeners();
+					displayAttackable = false;
+					displayMoveable = false;
+					cursor.setLocation(currentSprite.getLocX(), currentSprite.getLocY());
+					stateInfo.sendMessage(Message.MESSAGE_NEXT_TURN);
+				}
+				break;
 		}
 	}
-	
+
 	private void handleSpriteMovement(TurnAction turnAction)
 	{
 		if (movingSprite == null)
 		{
 			MoveToTurnAction move = (MoveToTurnAction) turnAction;
-			
+
 			Direction dir = Direction.UP;
-			
+
 			if (move.locX > currentSprite.getLocX())
-				dir = Direction.RIGHT;				
+				dir = Direction.RIGHT;
 			else if (move.locX < currentSprite.getLocX())
 				dir = Direction.LEFT;
 			else if (move.locY > currentSprite.getLocY())
@@ -289,15 +300,15 @@ public class TurnManager extends Manager implements KeyboardListener
 						setToCursorMode();
 					}
 				}
-				landEffectPanel.setLandEffect(stateInfo.getCurrentMap().getLandEffectByTile(currentSprite.getMovementType(), 
+				landEffectPanel.setLandEffect(stateInfo.getCurrentMap().getLandEffectByTile(currentSprite.getMovementType(),
 						currentSprite.getTileX(), currentSprite.getTileY()));
 				movingSprite = null;
 				return;
 			}
-			
+
 			movingSprite = new MovingSprite(currentSprite, dir, stateInfo);
 		}
-		
+
 		// Check to see if we have arrived at our destination, if so
 		// then we just remove this action and allow input for the moveablespace
 		if (movingSprite.update())
@@ -314,79 +325,79 @@ public class TurnManager extends Manager implements KeyboardListener
 					setToCursorMode();
 				}
 			}
-			landEffectPanel.setLandEffect(stateInfo.getCurrentMap().getLandEffectByTile(currentSprite.getMovementType(), 
+			landEffectPanel.setLandEffect(stateInfo.getCurrentMap().getLandEffectByTile(currentSprite.getMovementType(),
 					currentSprite.getTileX(), currentSprite.getTileY()));
-			movingSprite = null;						
+			movingSprite = null;
 		}
 	}
-	
+
 	private void determineMoveableSpaces()
 	{
 		ms = MoveableSpace.determineMoveableSpace(stateInfo, currentSprite, this.ownsSprite);
 	}
-	
+
 	private void initializeCombatantTurn(CombatSprite sprite)
-	{				
+	{
 		stateInfo.removeKeyboardListeners();
-		currentSprite = sprite;						
+		currentSprite = sprite;
 		stateInfo.setCurrentSprite(currentSprite);
-		
+
 		as = null;
 		this.battleResults = null;
 		if (ms != null)
 			ms.destroy(stateInfo);
-		
+
 		spriteStartPoint = new Point(sprite.getTileX(),
-				sprite.getTileY());		
-		
+				sprite.getTileY());
+
 		ownsSprite = false;
-		
+
 		// This is the first combatant to act in the battle, the cursor will
 		// not have been set to any location yet, so set it on the current sprite
 		if (ms == null)
 			cursor.setLocation(currentSprite.getLocX(), currentSprite.getLocY());
-		
+
 		if (sprite.getAi() == null)
-		{			
+		{
 			// stateInfo.sendMessage(new Message(Message.MESSAGE_SHOW_BATTLEMENU));
 			this.ownsSprite = true;
 		}
-		
+
 		determineMoveableSpaces();
-		
-		// If we own this sprite then we add keyboard input listener 
+
+		// If we own this sprite then we add keyboard input listener
 		if (ownsSprite)
 			stateInfo.addKeyboardListener(this);
-		
+
 		turnActions.add(new TurnAction(TurnAction.ACTION_MOVE_CURSOR_TO_ACTOR));
 		turnActions.add(new WaitAction(150 / UPDATE_TIME));
-		
+
 		if (sprite.getAi() != null)
 			turnActions.addAll(sprite.getAi().performAI(stateInfo, ms, currentSprite));
-		
+
 		displayCursor = true;
-		
+
 	}
-	
+
 	private void determineAttackbleSpace(boolean playerAttacking)
-	{	
-		displayMoveable = false;		
-		
+	{
+		displayMoveable = false;
+
 		// Determine how big the range should be
 		int[][] range = null;
 		int[][] area = null;
 		boolean targetsHero = !currentSprite.isHero();
 		int declaredRange = 0;
-		
+
 		if (battleCommand.getCommand() == BattleCommand.COMMAND_ATTACK)
-		{	
+		{
 			declaredRange = currentSprite.getAttackRange();
 			area = AttackableSpace.RANGE_0;
 		}
 		else if (battleCommand.getCommand() == BattleCommand.COMMAND_SPELL)
 		{
-			declaredRange = battleCommand.getSpell().getRange()[battleCommand.getLevel() - 1];			
-			
+			declaredRange = battleCommand.getSpell().getRange()[battleCommand.getLevel() - 1];
+
 			switch (battleCommand.getSpell().getArea()[battleCommand.getLevel() - 1])
 			{
 				case 1:
@@ -399,14 +410,14 @@ public class TurnManager extends Manager implements KeyboardListener
 					area = AttackableSpace.RANGE_2;
 					break;
 			}
-			
+
 			if (!battleCommand.getSpell().isTargetsEnemy())
-				targetsHero = currentSprite.isHero();																			
+				targetsHero = currentSprite.isHero();
 		}
 		else if (battleCommand.getCommand() == BattleCommand.COMMAND_ITEM)
 		{
-			declaredRange = battleCommand.getItem().getItemUse().getRange();			
-			
+			declaredRange = battleCommand.getItem().getItemUse().getRange();
+
 			switch (battleCommand.getItem().getItemUse().getArea())
 			{
 				case 1:
@@ -419,11 +430,11 @@ public class TurnManager extends Manager implements KeyboardListener
 					area = AttackableSpace.RANGE_2;
 					break;
 			}
-			
+
 			if (!battleCommand.getItem().getItemUse().isTargetsEnemy())
-				targetsHero = currentSprite.isHero();																	
+				targetsHero = currentSprite.isHero();
 		}
-		
+
 		switch (declaredRange)
 		{
 			case 1:
@@ -439,15 +450,15 @@ public class TurnManager extends Manager implements KeyboardListener
 				range = AttackableSpace.RANGE_2_1;
 				break;
 		}
-		
+
 		as = new AttackableSpace(stateInfo, currentSprite, targetsHero, range, area);
-		
-		if (playerAttacking)			
+
+		if (playerAttacking)
 			stateInfo.addKeyboardListener(as);
-		
+
 		displayAttackable = true;
 	}
-	
+
 	private void setToCursorMode()
 	{
 		// If we are already reset then switch to cursor mode
@@ -458,12 +469,12 @@ public class TurnManager extends Manager implements KeyboardListener
 	}
 
 	@Override
-	public void recieveMessage(Message message) {		
+	public void recieveMessage(Message message) {
 		switch (message.getMessageType())
 		{
 			case Message.MESSAGE_SHOW_BATTLEMENU:
 				displayMoveable = false;
-				displayAttackable = false;		
+				displayAttackable = false;
 				battleActionsMenu.initialize();
 				stateInfo.addMenu(battleActionsMenu);
 				break;
@@ -478,47 +489,47 @@ public class TurnManager extends Manager implements KeyboardListener
 				itemMenu.initialize();
 				stateInfo.addMenu(itemMenu);
 				break;
-			case Message.MESSAGE_SHOW_ITEM_OPTION_MENU:				
+			case Message.MESSAGE_SHOW_ITEM_OPTION_MENU:
 				itemOptionMenu.initialize(((IntMessage) message).getValue());
 				stateInfo.addMenu(itemOptionMenu);
 				break;
 			// THIS IS SENT BY THE OWNER
 			case Message.MESSAGE_ATTACK_PRESSED:
 				battleCommand = new BattleCommand(BattleCommand.COMMAND_ATTACK);
-				determineAttackbleSpace(true);				
+				determineAttackbleSpace(true);
 				break;
 			// This message should never be sent by AI
 			// THIS IS SENT BY THE OWNER
 			case Message.MESSAGE_TARGET_SPRITE:
 				displayAttackable = false;
-				displayMoveable = true;				
-				
+				displayMoveable = true;
+
 				// At this point we know who we intend to target, but we need to inject the BattleCommand.
 				// Only the owner will have a value for the battle command so they will have to be
 				// the one to send the BattleResults
-				turnActions.add(new AttackSpriteAction(TurnAction.ACTION_ATTACK_SPRITE, 
+				turnActions.add(new AttackSpriteAction(TurnAction.ACTION_ATTACK_SPRITE,
 						((MultiSpriteContextMessage) message).getSprites(), battleCommand));
 				break;
 			// THIS IS SENT BY THE OWNER
 			case Message.MESSAGE_SELECT_SPELL:
 				BattleSelectionMessage bsm = (BattleSelectionMessage) message;
-				battleCommand = new BattleCommand(BattleCommand.COMMAND_SPELL, 
-						currentSprite.getSpellsDescriptors().get(bsm.getSelectionIndex()).getSpell(), bsm.getLevel());				
+				battleCommand = new BattleCommand(BattleCommand.COMMAND_SPELL,
+						currentSprite.getSpellsDescriptors().get(bsm.getSelectionIndex()).getSpell(), bsm.getLevel());
 				determineAttackbleSpace(true);
 				break;
 			case Message.MESSAGE_SELECT_ITEM:
 				BattleSelectionMessage ibsm = (BattleSelectionMessage) message;
-				battleCommand = new BattleCommand(BattleCommand.COMMAND_ITEM, 
-						currentSprite.getItem(ibsm.getSelectionIndex()));				
+				battleCommand = new BattleCommand(BattleCommand.COMMAND_ITEM,
+						currentSprite.getItem(ibsm.getSelectionIndex()));
 				determineAttackbleSpace(true);
 				break;
 			case Message.MESSAGE_COMBATANT_TURN:
-				initializeCombatantTurn((CombatSprite) ((SpriteContextMessage) message).getSprite());
+				initializeCombatantTurn(((SpriteContextMessage) message).getSprite());
 				break;
-			case Message.MESSAGE_RESET_SPRITELOC:				
+			case Message.MESSAGE_RESET_SPRITELOC:
 				// This right here is my biggest fear using the keyboard, while holding button 2 in battle
-				// it's possible for 
-				if (spriteStartPoint.x == currentSprite.getTileX() && 
+				// it's possible for
+				if (spriteStartPoint.x == currentSprite.getTileX() &&
 						spriteStartPoint.y == currentSprite.getTileY())
 				{
 					// If we are already reset then switch to cursor mode
@@ -531,24 +542,24 @@ public class TurnManager extends Manager implements KeyboardListener
 					this.resetSpriteLoc = true;
 				}
 				break;
-			case Message.MESSAGE_MOVETO_SPRITELOC:				
+			case Message.MESSAGE_MOVETO_SPRITELOC:
 				ms.setCheckEvents(false);
-				
-				MoveToTurnAction mtta = new MoveToTurnAction(((LocationMessage) message).locX, 
+
+				MoveToTurnAction mtta = new MoveToTurnAction(((LocationMessage) message).locX,
 						((LocationMessage) message).locY);
-				
+
 				turnActions.add(mtta);
-				
+
 				// Grab the final TurnAction, it should be a MoveToTurnAction. Process the first move
 				handleSpriteMovement(turnActions.get(turnActions.size() - 1));
 				break;
 			case Message.MESSAGE_HIDE_ATTACKABLE:
 				displayAttackable = false;
 				displayMoveable = true;
-				
+
 				if (ownsSprite)
 					stateInfo.sendMessage(Message.MESSAGE_SHOW_BATTLEMENU);
-				break;			
+				break;
 			case Message.MESSAGE_BATTLE_RESULTS:
 				battleResults = ((BattleResultsMessage) message).getBattleResults();
 				stateInfo.setPlayingMusicPostion(stateInfo.getPlayingMusic().getPosition());
@@ -556,24 +567,24 @@ public class TurnManager extends Manager implements KeyboardListener
 				System.out.println("PLAYING POSITION " + stateInfo.getPlayingMusicPostion());
 				// turnActions.add(new WaitAction(15));
 				turnActions.add(new AttackSpriteAction(TurnAction.ACTION_PERFORM_ATTACK, battleResults.targets, battleResults.battleCommand));
-				turnActions.add(new TurnAction(TurnAction.ACTION_CHECK_DEATH));								
+				turnActions.add(new TurnAction(TurnAction.ACTION_CHECK_DEATH));
 				break;
 			case Message.MESSAGE_PLAYER_END_TURN:
 				turnActions.add(new TurnAction(TurnAction.ACTION_END_TURN));
 				break;
-			
+
 		}
 	}
 
 	@Override
-	public boolean handleKeyboardInput(FCInput input, StateInfo stateInfo) 
+	public boolean handleKeyboardInput(FCInput input, StateInfo stateInfo)
 	{
 		if (turnActions.size() == 0)
 		{
 			boolean moved = false;
 			if (input.isKeyDown(KeyMapping.BUTTON_1))
 			{
-				
+
 			}
 			else if (input.isKeyDown(KeyMapping.BUTTON_2))
 			{
@@ -584,18 +595,18 @@ public class TurnManager extends Manager implements KeyboardListener
 			{
 				// Get any combat sprite at the cursors location
 				CombatSprite cs = stateInfo.getCombatSpriteAtMapLocation((int) cursor.getX(), (int) cursor.getY(), null);
-				
+
 				// if there is a combat sprite here display it's health panel
 				if (cs != null)
 				{
 					stateInfo.addMenu(new HeroStatMenu(stateInfo.getGc(), cs, stateInfo));
 					return true;
 				}
-			}			
-			
+			}
+
 			cursorTargetX = (int) cursor.getX();
 			cursorTargetY = (int) cursor.getY();
-			
+
 			if (input.isKeyDown(KeyMapping.BUTTON_UP))
 			{
 				if (cursor.getY() > 0)
@@ -612,12 +623,18 @@ public class TurnManager extends Manager implements KeyboardListener
 					moved = true;
 				}
 			}
-			
+
+			if (!stateInfo.getResourceManager().getMap().isInBattleRegion(cursorTargetX, cursorTargetY))
+			{
+				cursorTargetY = (int) cursor.getY();
+				moved = false;
+			}
+
 			if (input.isKeyDown(KeyMapping.BUTTON_LEFT))
 			{
 				if (cursor.getX() > 0)
 				{
-					cursorTargetX = (int) (cursor.getX() - stateInfo.getTileWidth()); 
+					cursorTargetX = (int) (cursor.getX() - stateInfo.getTileWidth());
 					moved = true;
 				}
 			}
@@ -625,11 +642,17 @@ public class TurnManager extends Manager implements KeyboardListener
 			{
 				if (cursor.getX() + stateInfo.getTileWidth() < stateInfo.getCurrentMap().getMapWidthInPixels())
 				{
-					cursorTargetX = (int) (cursor.getX() + stateInfo.getTileWidth()); 
+					cursorTargetX = (int) (cursor.getX() + stateInfo.getTileWidth());
 					moved = true;
 				}
 			}
-			
+
+			if (!stateInfo.getResourceManager().getMap().isInBattleRegion(cursorTargetX, cursorTargetY))
+			{
+				cursorTargetX = (int) cursor.getX();
+				moved = false;
+			}
+
 			if (moved)
 			{
 				turnActions.add(new TurnAction(TurnAction.ACTION_MANUAL_MOVE_CURSOR));
@@ -637,7 +660,7 @@ public class TurnManager extends Manager implements KeyboardListener
 				stateInfo.removePanel(Panel.PANEL_HEALTH_BAR);
 			}
 		}
-		
+
 		return false;
 	}
 }
