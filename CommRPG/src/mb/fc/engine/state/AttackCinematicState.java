@@ -20,6 +20,7 @@ import mb.fc.utils.SpriteAnims;
 import mb.gl2.loading.LoadableGameState;
 import mb.gl2.loading.ResourceManager;
 import mb.jython.GlobalPythonFactory;
+import mb.jython.JMusicSelector;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -27,6 +28,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.EmptyTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
@@ -78,6 +80,7 @@ public class AttackCinematicState extends LoadableGameState
 	private final byte STATE_ATTACK_CLIMAX = 3;
 	private final byte STATE_TRANSITION_ATTACKER_IN = 4;
 	private final byte STATE_POST_ATTACK = 5;
+	private final byte STATE_CASTING_SPELL = 6;
 
 	/**
 	 * The background environment image
@@ -123,14 +126,15 @@ public class AttackCinematicState extends LoadableGameState
 	private int transitionIndex = 0;
 	private boolean deathFade = false;
 	private int damageFade = -1;
-	private Color damageColor = new Color(255, 0, 0, 200);
+	private Color damageColor = new Color(204, 102, 0, 200);
 	private Color deathColor = new Color(255, 255, 255, 255);
-	private boolean dealtDamage = false;
+	private JMusicSelector musicSelector;
 
 	private SpriteAnims spellAnims;
 	private Animation spellAnim;
 	private int spellAnimIndex = 0;
 	private long spellDelta = 0;
+	private int castingDelta = 0;
 
 	private float screenScale = CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];// 1.88f; // (640 * 1024 / 3)
 
@@ -156,7 +160,10 @@ public class AttackCinematicState extends LoadableGameState
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
-		g.setColor(Color.black);
+		if (castingDelta % 6 < 3)
+			g.setColor(Color.black);
+		else
+			g.setColor(Color.white);
 		g.fillRect(0, 0, container.getWidth(), container.getHeight());
 		g.drawImage(backgroundImage, bgXPos, bgYPos);
 
@@ -202,7 +209,7 @@ public class AttackCinematicState extends LoadableGameState
 				else if (damageFade != -1)
 				{
 					g.drawImage(targets.get(targetIndex).getAnimationImageAtIndex(as.imageIndex),
-							xLoc + as.x * screenScale + CommRPG.RANDOM.nextInt(20) - 10, yLoc + as.y * screenScale + CommRPG.RANDOM.nextInt(20) - 10, damageColor);
+							xLoc + as.x * screenScale + (CommRPG.RANDOM.nextInt(20) - 10) * screenScale, yLoc + as.y * screenScale + (CommRPG.RANDOM.nextInt(20) - 10) * screenScale , damageColor);
 				}
 				else
 				{
@@ -325,16 +332,23 @@ public class AttackCinematicState extends LoadableGameState
 				if (state == STATE_ATTACKING && attackerAnimIndex == attackerAnim.frames.size() - 1)
 				{
 
-					textMenu = new SpeechMenu(battleResults.text.get(targetIndex), (FCGameContainer) container, true);
-
-					// Check to see if we are casting a spell on someone besides an ally, in this case case display the spell
-					if (spellAnim != null && (!targetsAreAllies || targetSelf))
-						spellAnimIndex = 0;
-
-					performBattleResult();
-					if (!targetsAreAllies && dealtDamage)
+					if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_SPELL)
 					{
-						damageFade = 5;
+						state = STATE_CASTING_SPELL;
+						castingDelta = 0;
+						String sound = musicSelector.getCastSpellSoundEffect(attacker.isHero(), battleResults.battleCommand.getSpell().getName());
+
+						if (sound != null)
+						{
+							Sound snd = frm.getSoundByName(sound);
+							snd.play();
+						}
+
+					}
+					else
+					{
+						textMenu = new SpeechMenu(battleResults.text.get(targetIndex), (FCGameContainer) container, true, true);
+						performBattleResult();
 					}
 				}
 			}
@@ -378,6 +392,7 @@ public class AttackCinematicState extends LoadableGameState
 					if (state == STATE_TRANSITION_ATTACKER_OUT)
 					{
 						state = STATE_ATTACK_CLIMAX;
+
 					}
 					// If we are transitioning and we are already at the last target then that means we are actually transitioning in
 					// the attacker, so we need to set the end of battle state
@@ -385,9 +400,7 @@ public class AttackCinematicState extends LoadableGameState
 					{
 						if (battleResults.attackOverText != null)
 						{
-							textMenu = new SpeechMenu(battleResults.attackOverText, (FCGameContainer) container, true);
-							if (battleResults.levelUpResult != null)
-								attacker.getHeroProgression().levelUp(attacker, battleResults.levelUpResult, frm);
+							textMenu = new SpeechMenu(battleResults.attackOverText, (FCGameContainer) container, true, true);
 						}
 						else
 							textMenu = null;
@@ -400,21 +413,20 @@ public class AttackCinematicState extends LoadableGameState
 					{
 						deathFade = false;
 						targetAnim = targets.get(++targetIndex).getAnimation("UnStand");
-						textMenu = new SpeechMenu(battleResults.text.get(targetIndex), (FCGameContainer) container, true);
-						performBattleResult();
-
 					}
 				}
 			}
 			else if (transitionIndex == 20)
 			{
 				// Check to see if we are casting a spell on an ally, in this case we want to start displaying the spell now
-				if (spellAnim != null && (targetsAreAllies && !targetSelf) && state == STATE_ATTACK_CLIMAX)
+				if (spellAnim != null && (targetsAreAllies || targetIndex > 0) && state == STATE_ATTACK_CLIMAX)
+				{
 					spellAnimIndex = 0;
+					textMenu = new SpeechMenu(battleResults.text.get(targetIndex), (FCGameContainer) container, true, true);
+					performBattleResult();
+				}
 				transitionIndex = 0;
 				transitionX = 0;
-				if (!targetsAreAllies && dealtDamage)
-					damageFade = 5;
 			}
 			else
 			{
@@ -431,6 +443,7 @@ public class AttackCinematicState extends LoadableGameState
 		if (stateDelta > 25)
 		{
 			MenuUpdate menuUpdate = MenuUpdate.MENU_NO_ACTION;
+
 			if (textMenu != null)
 				menuUpdate = textMenu.handleUserInput(input, null);
 			// If the enemy was the attacker then there will be no menu to check, in this case just look directly for the key down
@@ -439,6 +452,17 @@ public class AttackCinematicState extends LoadableGameState
 				container.getInput().removeAllKeyListeners();
 				game.enterState(CommRPG.STATE_GAME_BATTLE, new FadeOutTransition(Color.black, 250), new EmptyTransition());
 				music.fade(250, 0f, true);
+			}
+
+			if (menuUpdate == MenuUpdate.MENU_NEXT_ACTION)
+			{
+				if (battleResults.levelUpResult != null)
+				{
+					attacker.getHeroProgression().levelUp(attacker, battleResults.levelUpResult, frm);
+					String sound = musicSelector.getLevelUpSoundEffect(attacker);
+					if (sound != null)
+						frm.getSoundByName(sound).play();
+				}
 			}
 
 			if (menuUpdate == MenuUpdate.MENU_CLOSE)
@@ -476,38 +500,62 @@ public class AttackCinematicState extends LoadableGameState
 				}
 				else if (state == STATE_ATTACK_CLIMAX)
 				{
-					System.out.println("CLICKED CLIMAX");
 					// This is the final target, switch off multiple targets so the battle can end
 					if (targetIndex + 1 == targets.size())
 					{
-						spellAnimIndex = -1;
-						// If this action is targeting allies and the attacker is not a target then we need to transition them back in.
-						if (targetsAreAllies && !targetSelf)
+						if (transitionIndex == 0)
 						{
-							state = STATE_TRANSITION_ATTACKER_IN;
-							transitionIndex = 1;
-						}
-						else
-						{
-							attackerAnim = attacker.getAnimation("UnStand");
-							targetAnim = targets.get(targetIndex).getAnimation("UnStand");
-							attackerAnimIndex = 0;
-
-							if (battleResults.attackOverText != null)
+							spellAnimIndex = -1;
+							// If this action is targeting allies and the attacker is not a target then we need to transition them back in.
+							if (targetsAreAllies && !targetSelf)
 							{
-								textMenu = new SpeechMenu(battleResults.attackOverText, (FCGameContainer) container, false);
-								if (battleResults.levelUpResult != null)
-									attacker.getHeroProgression().levelUp(attacker, battleResults.levelUpResult, frm);
+								state = STATE_TRANSITION_ATTACKER_IN;
+								transitionIndex = 1;
 							}
 							else
-								textMenu = null;
+							{
+								attackerAnim = attacker.getAnimation("UnStand");
+								targetAnim = targets.get(targetIndex).getAnimation("UnStand");
+								attackerAnimIndex = 0;
 
-							state = STATE_POST_ATTACK;
+								if (battleResults.attackOverText != null)
+								{
+									textMenu = new SpeechMenu(battleResults.attackOverText, (FCGameContainer) container, true, true);
+								}
+								else
+									textMenu = null;
+
+								state = STATE_POST_ATTACK;
+							}
 						}
 					}
-					else
+					//TODO What the fuck is going on here that I need to do this, some
+					// how the transition index is fucked up
+					else if (transitionIndex == 0 || transitionIndex > 20)
 					{
 						transitionIndex = 1;
+					}
+				}
+				// Check to see if we are in the casting spell state, in this case we want to flash the screen.
+				// Once the screen flash is done then need to potentially show the spell and perform the results.
+				// Finally move back to the attacking state so we can get back to the climax state
+				else if (state == STATE_CASTING_SPELL)
+				{
+					castingDelta++;
+
+					if (castingDelta >= 24)
+					{
+						castingDelta = 0;
+
+						// Check to see if we are casting a spell on someone besides an ally, in this case case display the spell
+						if (!targetsAreAllies || (targetSelf && targets.size() == 1))
+						{
+							spellAnimIndex = 0;
+							textMenu = new SpeechMenu(battleResults.text.get(targetIndex), (FCGameContainer) container, true, true);
+							performBattleResult();
+						}
+
+						state = STATE_ATTACKING;
 					}
 				}
 			}
@@ -524,14 +572,36 @@ public class AttackCinematicState extends LoadableGameState
 			targetAnim = targets.get(targetIndex).getAnimation("UnDodge");
 		}
 
+		String sound = null;
+		if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_ATTACK)
+		{
+			if (attacker.getEquippedWeapon() != null)
+				sound = musicSelector.getAttackHitSoundEffect(attacker.isHero(), battleResults.critted, battleResults.dodged, attacker.getEquippedWeapon().getItemStyle());
+			else
+				sound = musicSelector.getAttackHitSoundEffect(attacker.isHero(), battleResults.critted, battleResults.dodged, -1);
+		}
+		else if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_ITEM)
+			sound = musicSelector.getUseItemSoundEffect(attacker.isHero(), targetsAreAllies, battleResults.battleCommand.getItem().getName());
+		else if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_SPELL)
+			sound = musicSelector.getSpellHitSoundEffect(attacker.isHero(), targetsAreAllies, battleResults.battleCommand.getSpell().getName());
+
+		if (sound != null)
+		{
+			Sound snd = frm.getSoundByName(sound);
+			snd.play();
+		}
+
 		CombatSprite target = targets.get(targetIndex);
 
 		target.modifyCurrentHP(battleResults.hpDamage.get(targetIndex));
 		// Set the dealt damage flag if the action does damage
+		boolean dealtDamage = false;
+
 		if (battleResults.hpDamage.get(targetIndex) < 0)
 			dealtDamage = true;
-		else
-			dealtDamage = false;
+
+		if (!targetsAreAllies && dealtDamage)
+			damageFade = 8;
 
 		target.modifyCurrentMP(battleResults.mpDamage.get(targetIndex));
 		attacker.modifyCurrentHP(battleResults.attackerHPDamage.get(targetIndex));
@@ -559,7 +629,10 @@ public class AttackCinematicState extends LoadableGameState
 		input.clear();
 		gc.getInput().addKeyListener(input);
 
+		screenScale = CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
+
 		targetIndex = 0;
+		transitionIndex = 0;
 		deathFade = false;
 		Image bgIm = frm.getSpriteSheets().get("battlebg").getSprite(bgImagePoint.x, bgImagePoint.y);
 		System.out.println("ORIG " + bgIm.getWidth());
@@ -593,12 +666,12 @@ public class AttackCinematicState extends LoadableGameState
 		this.battleResults = battleResults;
 
 		if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_ATTACK)
-			textMenu = new SpeechMenu(attacker.getName() + " Attacks!}", gc, true);
+			textMenu = new SpeechMenu(attacker.getName() + " Attacks!}", gc, true, true);
 		else if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_SPELL)
 			textMenu = new SpeechMenu(attacker.getName() + " casts " + battleResults.battleCommand.getSpell().getName() + " "
-					+ (battleResults.battleCommand.getLevel() + "}"), gc, true);
+					+ (battleResults.battleCommand.getLevel() + "}"), gc, true, true);
 		else if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_ITEM)
-			textMenu = new SpeechMenu(attacker.getName() + " uses the " + battleResults.battleCommand.getItem().getName() + "}", gc, true);
+			textMenu = new SpeechMenu(attacker.getName() + " uses the " + battleResults.battleCommand.getItem().getName() + "}", gc, true, true);
 		state = 0;
 		stateDelta = 0;
 
@@ -625,8 +698,9 @@ public class AttackCinematicState extends LoadableGameState
 		}
 		targetAnim = targets.get(targetIndex).getAnimation("UnStand");
 
-		music = frm.getMusicByName(GlobalPythonFactory.createJMusicSelector().getAttackMusic(attacker, targetsAreAllies));
-		music.play();
+		musicSelector = GlobalPythonFactory.createJMusicSelector();
+		music = frm.getMusicByName(musicSelector.getAttackMusic(attacker, targetsAreAllies));
+		music.loop();
 
 		// Get the land tile image for the current target
 		// TODO Change this on a by-target basis

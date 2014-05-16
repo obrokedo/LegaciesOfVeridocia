@@ -169,7 +169,7 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 		stateInfo.removePanel(Panel.PANEL_ENEMY_HEALTH_BAR);
 		stateInfo.addPanel(new SpriteContextPanel(Panel.PANEL_ENEMY_HEALTH_BAR, targetsInRange.get(selectedTarget), stateInfo.getGc()));
 
-		stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "targetselect", 1f, false));
+		stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menumove", 1f, false));
 	}
 
 	@Override
@@ -250,15 +250,16 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 		}
 		else if (input.isKeyDown(KeyMapping.BUTTON_UP) || input.isKeyDown(KeyMapping.BUTTON_LEFT))
 		{
-			if (targetsInRange.size() == 0)
+			if (targetsInRange.size() <= 1)
 				return false;
+
 			selectedTarget = (selectedTarget + 1) % targetsInRange.size();
 			setTargetSprite(targetsInRange.get(selectedTarget), stateInfo);
 			return true;
 		}
 		else if (input.isKeyDown(KeyMapping.BUTTON_DOWN) || input.isKeyDown(KeyMapping.BUTTON_RIGHT))
 		{
-			if (targetsInRange.size() == 0)
+			if (targetsInRange.size() <= 1)
 				return false;
 
 			if (selectedTarget > 0)

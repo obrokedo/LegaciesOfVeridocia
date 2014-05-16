@@ -43,7 +43,10 @@ public class DebugMenu extends Menu
 			}
 			else if (splitText[0].equalsIgnoreCase("loadcin"))
 			{
-				stateInfo.getPsi().loadCinematic(splitText[1]);
+				if (splitText.length == 2)
+					stateInfo.getPsi().loadCinematic(splitText[1], 0);
+				else
+					stateInfo.getPsi().loadCinematic(splitText[1], Integer.parseInt(splitText[2]));
 			}
 			else if (splitText[0].equalsIgnoreCase("mute"))
 			{
@@ -85,6 +88,16 @@ public class DebugMenu extends Menu
 			else if (splitText[0].equalsIgnoreCase("play"))
 			{
 				stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_PLAY_MUSIC, splitText[1], 1, true));
+			}
+			else if (splitText[0].equalsIgnoreCase("gainlevel"))
+			{
+				for (CombatSprite cs : stateInfo.getHeroes())
+					cs.setExp(100);
+			}
+			else if (splitText[0].equalsIgnoreCase("setone"))
+			{
+				for (CombatSprite cs : stateInfo.getHeroes())
+					cs.setCurrentHP(1);
 			}
 
 			textField.deactivate();

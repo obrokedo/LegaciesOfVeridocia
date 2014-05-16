@@ -18,6 +18,7 @@ import mb.fc.game.turnaction.MoveToTurnAction;
 import mb.fc.game.turnaction.TurnAction;
 import mb.fc.game.ui.FCGameContainer;
 import mb.fc.map.Map;
+import mb.jython.GlobalPythonFactory;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -31,7 +32,7 @@ import org.newdawn.slick.util.pathfinding.TileBasedMap;
  * Displays the possible moveable range for the currently acting CombatSprite, this also
  * handle user input to move around this area. Although this behaves much like a "Menu"
  * (is rendered, takes user input) it cannot be treated as such due to the location
- * it needs to be rendered (under the sprites) and the fact that there are cases 
+ * it needs to be rendered (under the sprites) and the fact that there are cases
  * when input should not be recieved even though the menu is visible. This is the
  * case when the acting CombatSprite is moving. This means its' input and display
  * must be managed by some other entity
@@ -49,12 +50,12 @@ public class MoveableSpace implements KeyboardListener, MouseListener, TileBased
 	private static final int UNMOVEABLE_TILE = 99;
 	private final Color MOVEABLE_COLOR = new Color(0, 0, 255, 70);
 	private boolean checkMoveable = true;
-	
+
 	public static MoveableSpace determineMoveableSpace(StateInfo stateInfo, CombatSprite currentSprite, boolean ownsSprite)
-	{		
+	{
 		MoveableSpace ms = new MoveableSpace();
-		
-		ms.owner = ownsSprite;		
+
+		ms.owner = ownsSprite;
 		ms.map = stateInfo.getResourceManager().getMap();
 		ms.mapWidth = ms.map.getMapEffectiveWidth();
 		ms.mapHeight = ms.map.getMapEffectiveHeight();
@@ -70,33 +71,33 @@ public class MoveableSpace implements KeyboardListener, MouseListener, TileBased
 		ms.spriteMovementType = currentSprite.getMovementType();
 		ms.topX = mapSpriteX - currentSprite.getCurrentMove();
 		ms.topY = mapSpriteY - currentSprite.getCurrentMove();
-		
+
 		// Check to see if there are any sprites in your moveable area that you will not be able to move through
 		Rectangle checkMoveableRect = new Rectangle(ms.topX,  ms.topY, ms.moveableTiles.length + 1, ms.moveableTiles.length + 1);
 		for (Sprite s : stateInfo.getSprites())
 		{
 			if (s == currentSprite)
 				continue;
-			
+
 			int sX = s.getTileX();
-			int sY = s.getTileY();			
-			
+			int sY = s.getTileY();
+
 			// If this sprite is an ally then it will not block the mover
 			if (s.getSpriteType() == Sprite.TYPE_COMBAT)
 				if (((CombatSprite) s).isHero() == currentSprite.isHero())
 					continue;
-			
+
 			// A sprite was found in your moveable area, in this case set it to the special 99 value because it will not be moveable
 			if (checkMoveableRect.contains(sX + 1, sY + 1))
 				ms.moveableTiles[sY - ms.topY][sX - ms.topX] = UNMOVEABLE_TILE;
 		}
-		
+
 		// Add the move cost of the current tile as it will be subtracted from the sprites move. Use 10 as the lowest cost so tha we can
 		// have half-values (1.5, 2.5) without making the cost a double
-		ms.determineMoveableSpacesRecursive(currentSprite.getCurrentMove()  * 10 + ms.map.getMovementCostByType(currentSprite.getMovementType(), 
-				mapSpriteX, mapSpriteY), currentSprite.getCurrentMove(), 
-					currentSprite.getCurrentMove(), mapSpriteX, mapSpriteY);		
-		
+		ms.determineMoveableSpacesRecursive(currentSprite.getCurrentMove()  * 10 + ms.map.getMovementCostByType(currentSprite.getMovementType(),
+				mapSpriteX, mapSpriteY), currentSprite.getCurrentMove(),
+					currentSprite.getCurrentMove(), mapSpriteX, mapSpriteY);
+
 		// For any spaces that had sprites in them change the special place holder 99 that makes them unmovable
 		// to -1 so they aren't shown as moveable
 		for (int i = 0; i < ms.moveableTiles.length; i++)
@@ -107,32 +108,32 @@ public class MoveableSpace implements KeyboardListener, MouseListener, TileBased
 					ms.moveableTiles[i][j] = -1;
 			}
 		}
-		
+
 		for (Sprite s : stateInfo.getSprites())
 		{
 			if (s == currentSprite)
 				continue;
-			
+
 			int sX = s.getTileX();
-			int sY = s.getTileY();			
-			
+			int sY = s.getTileY();
+
 			// If this sprite is an ally then set it's location to the special non moveable
 			// value. The allies will be able to move through this spot but not end there.
 			if (s.getSpriteType() == Sprite.TYPE_COMBAT && ((CombatSprite) s).isHero() == currentSprite.isHero()
 					&& checkMoveableRect.contains(sX + 1, sY + 1) && ms.canEndMoveHere(sX, sY))
 						ms.moveableTiles[sY - ms.topY][sX - ms.topX] = UNMOVEABLE_TILE;
 		}
-		
+
 		stateInfo.registerMouseListener(ms);
-		
+
 		return ms;
 	}
-	
-	public void renderMoveable(FCGameContainer gc, Camera camera, Graphics graphics) 
-	{			
+
+	public void renderMoveable(FCGameContainer gc, Camera camera, Graphics graphics)
+	{
 		int camX = camera.getLocationX();
 		int camY = camera.getLocationY();
-		
+
 		for (int i = 0; i < moveableTiles.length; i++)
 		{
 			for (int j = 0; j <moveableTiles[0].length; j++)
@@ -140,22 +141,22 @@ public class MoveableSpace implements KeyboardListener, MouseListener, TileBased
 				if (moveableTiles[j][i] != -1)
 				{
 					graphics.setColor(MOVEABLE_COLOR);
-					graphics.fillRect((i + topX) * tileWidth - camX + gc.getDisplayPaddingX(), 
-							(j + topY) * tileHeight - camY, 
+					graphics.fillRect((i + topX) * tileWidth - camX + gc.getDisplayPaddingX(),
+							(j + topY) * tileHeight - camY,
 							tileWidth - 1, tileHeight - 1);
 				}
 			}
-		}		
+		}
 	}
-	
+
 	private void determineMoveableSpacesRecursive(int remainingMove, int spriteX, int spriteY, int mapX, int mapY)
 	{
-		int cost = map.getMovementCostByType(spriteMovementType, mapX, mapY);		
-				
-		remainingMove -= cost;						
-		
+		int cost = map.getMovementCostByType(spriteMovementType, mapX, mapY);
+
+		remainingMove -= cost;
+
 		if (remainingMove >= 0 && remainingMove > moveableTiles[spriteY][spriteX])
-		{					
+		{
 			moveableTiles[spriteY][spriteX] = remainingMove;
 			// UP
 			if (mapY - 1 >= 0)
@@ -171,10 +172,10 @@ public class MoveableSpace implements KeyboardListener, MouseListener, TileBased
 				determineMoveableSpacesRecursive(remainingMove, spriteX + 1, spriteY, mapX + 1, mapY);
 		}
 	}
-	
+
 	/**
 	 * Returns a boolean indicating whether a combat sprite can end their turn at the specified tile cooridinates
-	 * 
+	 *
 	 * @param tileX x tile index
 	 * @param tileY y tile index
 	 * @return a boolean indicating whether a combat sprite can end their turn at the specified tile cooridinates
@@ -188,10 +189,10 @@ public class MoveableSpace implements KeyboardListener, MouseListener, TileBased
 		else
 			return false;
 	}
-	
+
 	/**
 	 * Returns a boolean indicating whether a combat sprite can move through the tile at the specified tile cooridinates
-	 * 
+	 *
 	 * @param tileX x tile index
 	 * @param tileY y tile index
 	 * @return a boolean indicating whether a combat sprite can move through the tile at the specified tile cooridinates
@@ -199,49 +200,61 @@ public class MoveableSpace implements KeyboardListener, MouseListener, TileBased
 	public boolean canMoveHere(int tileX, int tileY)
 	{
 		if (tileX >= topX && tileX < topX + moveableTiles.length &&
-				tileY >= topY && tileY < topY + moveableTiles.length && 
+				tileY >= topY && tileY < topY + moveableTiles.length &&
 				moveableTiles[tileY - topY][tileX - topX] >= 0)
 			return true;
 		else
 			return false;
 	}
-	
+
 	public void addMoveActionsToLocation(int mapX, int mapY, Sprite currentSprite,
 			ArrayList<TurnAction> turnActions)
 	{
 		AStarPathFinder pathFinder = new AStarPathFinder(this, 18, false);
-		
+
 		Path path = pathFinder.findPath(
-				null, currentSprite.getTileX() - this.getTopX(), 
+				null, currentSprite.getTileX() - this.getTopX(),
 					currentSprite.getTileY() - this.getTopY(), mapX - this.getTopX(), mapY - this.getTopY());
-		
+
 		if (path != null)
 			for (int i = 0; i < path.getLength(); i++)
-				turnActions.add(new MoveToTurnAction((path.getX(i) + this.getTopX()) * tileWidth, (path.getY(i) + this.getTopY()) * tileHeight));		
+				turnActions.add(new MoveToTurnAction((path.getX(i) + this.getTopX()) * tileWidth, (path.getY(i) + this.getTopY()) * tileHeight));
 	}
-	
+
 	/**
-	 * 
-	 * @param mapX The X location on the map (Not tile X) of the destination 
+	 *
+	 * @param mapX The X location on the map (Not tile X) of the destination
 	 * @param mapY The Y location on the map (Not tile X) of the destination
 	 * @param currentSprite
 	 * @param turnActions
 	 */
 	public void addMoveActionsAlongPath(int mapX, int mapY, Sprite currentSprite, ArrayList<TurnAction> turnActions)
 	{
+		addMoveActionsAlongPath(mapX, mapY, currentSprite, turnActions, 9);
+	}
+
+	/**
+	 *
+	 * @param mapX The X location on the map (Not tile X) of the destination
+	 * @param mapY The Y location on the map (Not tile X) of the destination
+	 * @param currentSprite
+	 * @param turnActions
+	 */
+	public void addMoveActionsAlongPath(int mapX, int mapY, Sprite currentSprite, ArrayList<TurnAction> turnActions, int maxMove)
+	{
 		checkMoveable = false;
 		AStarPathFinder pathFinder = new AStarPathFinder(this, 1000, false);
-				
+
 		Path path = pathFinder.findPath(
-				null, currentSprite.getTileX(), 
+				null, currentSprite.getTileX(),
 					currentSprite.getTileY(), mapX / tileWidth, mapY / tileHeight);
 		checkMoveable = true;
-		
-		// If we found a path then traverse the path to find the last spot we can move to 
+
+		// If we found a path then traverse the path to find the last spot we can move to
 		if (path != null)
 		{
 			ArrayList<TurnAction> uncommitedActions = new ArrayList<TurnAction>();
-			for (int i = 0; i < Math.min(9, path.getLength()); i++)
+			for (int i = 0; i < Math.min(maxMove, path.getLength()); i++)
 			{
 				if (canEndMoveHere(path.getX(i), path.getY(i)))
 				{
@@ -253,6 +266,19 @@ public class MoveableSpace implements KeyboardListener, MouseListener, TileBased
 					uncommitedActions.add(new MoveToTurnAction(path.getX(i) * tileWidth, path.getY(i) * tileHeight));
 			}
 		}
+	}
+
+	public boolean isTileWithinMove(int mapX, int mapY, Sprite currentSprite, int maxMove)
+	{
+		checkMoveable = false;
+		AStarPathFinder pathFinder = new AStarPathFinder(this, maxMove, false);
+
+		Path path = pathFinder.findPath(
+				null, currentSprite.getTileX(),
+					currentSprite.getTileY(), mapX / tileWidth, mapY / tileHeight);
+		checkMoveable = true;
+
+		return path != null;
 	}
 
 	public int[][] getMoveableTiles() {
@@ -288,11 +314,11 @@ public class MoveableSpace implements KeyboardListener, MouseListener, TileBased
 
 	@Override
 	public boolean blocked(PathFindingContext context, int tx, int ty) {
-		if (checkMoveable)			
+		if (checkMoveable)
 			return moveableTiles[ty][tx] < 0;
 		else
 		{
-			if (map.getMapEffectiveHeight() > ty && map.getMapEffectiveWidth() > tx)		
+			if (map.getMapEffectiveHeight() > ty && map.getMapEffectiveWidth() > tx)
 				return !map.isMarkedMoveable(tx, ty);
 			return true;
 		}
@@ -310,11 +336,11 @@ public class MoveableSpace implements KeyboardListener, MouseListener, TileBased
 	public int getTileHeight() {
 		return tileHeight;
 	}
-	
+
 	/**
 	 * Whether the moveable space should check for user input. This should only be used when the
 	 * MoveableSpace is visible and the target of user input.
-	 * 
+	 *
 	 * @param checkEvents A boolean indicating whether user input should be checked on update
 	 */
 	public void setCheckEvents(boolean checkEvents) {
@@ -331,16 +357,16 @@ public class MoveableSpace implements KeyboardListener, MouseListener, TileBased
 
 	@Override
 	public boolean mouseUpdate(int frameMX, int frameMY, int mapMX, int mapMY,
-			boolean leftClicked, boolean rightClicked, StateInfo stateInfo) 
+			boolean leftClicked, boolean rightClicked, StateInfo stateInfo)
 	{
 		if (!owner || !checkEvents)
 			return false;
-		
+
 		int tw = stateInfo.getTileWidth();
 		int th = stateInfo.getTileHeight();
 		int mx = mapMX / tw;
-		int my = mapMY / th;					
-		
+		int my = mapMY / th;
+
 		if (rightClicked)
 		{
 			stateInfo.sendMessage(Message.MESSAGE_RESET_SPRITELOC);
@@ -349,7 +375,7 @@ public class MoveableSpace implements KeyboardListener, MouseListener, TileBased
 		else if (leftClicked)
 		{
 			if (canEndMoveHere(mx, my))
-			{				
+			{
 				stateInfo.sendMessage(new LocationMessage(Message.MESSAGE_MOVETO_SPRITELOC, mx, my));
 				return true;
 			}
@@ -363,11 +389,11 @@ public class MoveableSpace implements KeyboardListener, MouseListener, TileBased
 	}
 
 	@Override
-	public boolean handleKeyboardInput(FCInput input, StateInfo stateInfo) 
+	public boolean handleKeyboardInput(FCInput input, StateInfo stateInfo)
 	{
 		if (!checkEvents)
 			return false;
-		
+
 		if (input.isKeyDown(KeyMapping.BUTTON_1) || input.isKeyDown(KeyMapping.BUTTON_3))
 		{
 			if (canEndMoveHere(stateInfo.getCurrentSprite().getTileX(), stateInfo.getCurrentSprite().getTileY()))
@@ -375,6 +401,11 @@ public class MoveableSpace implements KeyboardListener, MouseListener, TileBased
 				stateInfo.sendMessage(Message.MESSAGE_SHOW_BATTLEMENU);
 				stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menuselect", 1f, false));
 				return true;
+			}
+			else
+			{
+				stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT,
+						GlobalPythonFactory.createJMusicSelector().getInvalidActionSoundEffect(), 1f, false));
 			}
 		}
 		else if (input.isKeyDown(KeyMapping.BUTTON_2))
@@ -397,15 +428,15 @@ public class MoveableSpace implements KeyboardListener, MouseListener, TileBased
 					return handleKeyboardMovement(stateInfo, 1, 0, Direction.RIGHT);
 			}
 		}
-			
+
 		return false;
 	}
-	
+
 	private boolean handleKeyboardMovement(StateInfo stateInfo, int x, int y, Direction direction)
 	{
 		int sx = stateInfo.getCurrentSprite().getTileX() + x;
-		int sy = stateInfo.getCurrentSprite().getTileY() + y;				
-		
+		int sy = stateInfo.getCurrentSprite().getTileY() + y;
+
 		if (canMoveHere(sx, sy))
 		{
 			stateInfo.sendMessage(new LocationMessage(Message.MESSAGE_MOVETO_SPRITELOC, sx * stateInfo.getTileWidth(), sy * stateInfo.getTileHeight()));

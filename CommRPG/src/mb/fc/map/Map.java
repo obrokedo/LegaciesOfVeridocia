@@ -146,7 +146,6 @@ public class Map
 	}
 
 	public void addMapObject(MapObject mo) {
-		System.out.println("MAP OBJECT " + mo.getKey());
 		if (mo.getKey().equalsIgnoreCase("terrain"))
 		{
 			for (int x = mo.getX(); x < mo.getX() + mo.getWidth(); x += getTileEffectiveWidth())

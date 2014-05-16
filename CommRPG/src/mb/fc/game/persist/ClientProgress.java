@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
 public class ClientProgress implements Serializable
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	private HashSet<Integer> questsCompleted;
 	private Hashtable<String, ArrayList<Integer>> retriggerablesPerMap;
 	private Hashtable<String, ArrayList<Integer>> nonretriggerablesPerMap;
@@ -29,7 +29,9 @@ public class ClientProgress implements Serializable
 	private String name;
 	private transient long lastSaveTime;
 	private long timePlayed;
-	
+	private boolean isBattle;
+	private static final String BATTLE_PREFIX = "!!";
+
 	public ClientProgress(String name)
 	{
 		questsCompleted = new HashSet<Integer>();
@@ -38,24 +40,24 @@ public class ClientProgress implements Serializable
 		this.name = name;
 		lastSaveTime = System.currentTimeMillis();
 	}
-	
+
 	public void setQuestComplete(int questId)
 	{
 		questsCompleted.add(questId);
 	}
-	
+
 	public boolean isQuestComplete(int questId)
 	{
 		return questsCompleted.contains(questId);
 	}
-	
+
 	public void serializeToFile(String map, String location)
 	{
 		this.map = map;
 		this.location = location;
 		this.timePlayed += (System.currentTimeMillis() - lastSaveTime);
 		this.lastSaveTime = System.currentTimeMillis();
-		try 
+		try
 		{
 			OutputStream file = new FileOutputStream(name + ".progress");
 			OutputStream buffer = new BufferedOutputStream(file);
@@ -75,7 +77,7 @@ public class ClientProgress implements Serializable
 	      InputStream file = new FileInputStream(profile);
 	      InputStream buffer = new BufferedInputStream(file);
 	      ObjectInput input = new ObjectInputStream (buffer);
-	      
+
 	      ClientProgress cp = (ClientProgress) input.readObject();
 	      cp.lastSaveTime = System.currentTimeMillis();
 	      file.close();
@@ -85,7 +87,7 @@ public class ClientProgress implements Serializable
 	    {
 	    	ex.printStackTrace();
 	    }
-	    
+
 	    return null;
 	}
 
@@ -93,8 +95,15 @@ public class ClientProgress implements Serializable
 		return map;
 	}
 
-	public void setMap(String map) {
+	public void setMap(String map, boolean isBattle) {
 		this.map = map;
+		if (isBattle)
+		{
+			this.isBattle = isBattle;
+
+			if (nonretriggerablesPerMap.containsKey(BATTLE_PREFIX + map))
+				nonretriggerablesPerMap.get(BATTLE_PREFIX + map).clear();
+		}
 	}
 
 	public String getLocation() {
@@ -106,41 +115,41 @@ public class ClientProgress implements Serializable
 	            TimeUnit.MILLISECONDS.toMinutes(timePlayed) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(timePlayed)),
 	            TimeUnit.MILLISECONDS.toSeconds(timePlayed) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(timePlayed)));
 	}
-	
+
 	public ArrayList<Integer> getRetriggerablesByMap()
 	{
 		if (!retriggerablesPerMap.containsKey(map))
 			return null;
 		return retriggerablesPerMap.get(map);
 	}
-	
+
 	public void addRetriggerableByMap(int triggerId)
 	{
 		if (!retriggerablesPerMap.containsKey(map))
 			retriggerablesPerMap.put(map, new ArrayList<Integer>());
 		retriggerablesPerMap.get(map).add(triggerId);
 	}
-	
+
 	public boolean isPreviouslyTriggered(int triggerId)
 	{
 		if (!retriggerablesPerMap.containsKey(map))
 			return false;
 		return retriggerablesPerMap.get(map).contains(triggerId);
 	}
-		
+
 	public void addNonretriggerableByMap(int triggerId)
 	{
-		System.out.println("Add non retrig " + triggerId + " " + map);
-		if (!nonretriggerablesPerMap.containsKey(map))
-			nonretriggerablesPerMap.put(map, new ArrayList<Integer>());
-		nonretriggerablesPerMap.get(map).add(triggerId);
+		System.out.println("Add non retrig " + triggerId + " " + (isBattle ? BATTLE_PREFIX + map : map));
+		if (!nonretriggerablesPerMap.containsKey((isBattle ? BATTLE_PREFIX + map : map)))
+			nonretriggerablesPerMap.put((isBattle ? BATTLE_PREFIX + map : map), new ArrayList<Integer>());
+		nonretriggerablesPerMap.get((isBattle ? BATTLE_PREFIX + map : map)).add(triggerId);
 	}
-	
+
 	public boolean isNonretriggableTrigger(int triggerId)
 	{
-		if (!nonretriggerablesPerMap.containsKey(map))
+		if (!nonretriggerablesPerMap.containsKey((isBattle ? BATTLE_PREFIX + map : map)))
 			return false;
-		
-		return nonretriggerablesPerMap.get(map).contains(triggerId);
+
+		return nonretriggerablesPerMap.get((isBattle ? BATTLE_PREFIX + map : map)).contains(triggerId);
 	}
 }

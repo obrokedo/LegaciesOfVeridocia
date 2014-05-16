@@ -178,7 +178,7 @@ public class Cinematic {
 			MenuUpdate mu = speechMenu.handleUserInput(input, stateInfo);
 			if (mu == MenuUpdate.MENU_CLOSE)
 				speechMenu = null;
-			else if (mu == MenuUpdate.MENU_NEXT_CIN)
+			else if (mu == MenuUpdate.MENU_NEXT_ACTION)
 			{
 				CinematicEvent ce = cinematicEvents.remove(0);
 				handleEvent(ce, stateInfo);

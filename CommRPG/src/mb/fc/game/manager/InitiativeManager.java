@@ -8,28 +8,20 @@ import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.Message;
 import mb.fc.engine.message.MultiSpriteContextMessage;
 import mb.fc.engine.message.SpriteContextMessage;
-import mb.fc.engine.state.StateInfo;
-import mb.fc.game.hudmenu.Panel;
-import mb.fc.game.listener.MouseListener;
 import mb.fc.game.sprite.CombatSprite;
-import mb.fc.game.ui.FCGameContainer;
-
-import org.newdawn.slick.Graphics;
 
 public class InitiativeManager extends Manager
-{	
-	private InitiativeMenu initMenu;
-	// private static final Color TRANS = new Color(255, 255, 255, 180);
-	
+{
+	/*
 	private class InitiativeMenu extends Panel implements MouseListener
-	{		
-		private boolean displayInit = true;	
+	{
+		private boolean displayInit = true;
 		// ArrayList<CombatSprite> initOrder;
-		
+
 		public InitiativeMenu(StateInfo stateInfo) {
 			super(Panel.PANEL_INITIATIVE);
 			stateInfo.registerMouseListener(this);
-			
+
 		}
 
 		@Override
@@ -43,26 +35,27 @@ public class InitiativeManager extends Manager
 				for (int i = 0; i < 10; i++)
 				{
 					graphics.drawRect(20, 40 + i * 38, 30, 30);
-					graphics.drawImage(initOrder.get(i % initOrder.size()).getCurrentImage(), 24, 42 + i * 38, TRANS); 
+					graphics.drawImage(initOrder.get(i % initOrder.size()).getCurrentImage(), 24, 42 + i * 38, TRANS);
 				}
 			}
 			else
 				graphics.drawString("v", 28, 18);
 				*/
-		}		
-		
+		/* }
+
+
 		@Override
 		public boolean mouseUpdate(int frameMX, int frameMY, int mapMX,
 				int mapMY, boolean leftClicked, boolean rightClicked,
-				StateInfo stateInfo) 
-		{				
-			if (leftClicked && Panel.contains(20, 50, 
+				StateInfo stateInfo)
+		{
+			if (leftClicked && Panel.contains(20, 50,
 					frameMX, 20, 34, frameMY))
 			{
 				displayInit = !displayInit;
 				return true;
 			}
-							
+
 			return false;
 		}
 
@@ -70,8 +63,8 @@ public class InitiativeManager extends Manager
 		public int getZOrder() {
 			return MouseListener.ORDER_INIT;
 		}
-	}
-	
+	} */
+
 	private class InitComparator implements Comparator<CombatSprite>
 	{
 		@Override
@@ -79,35 +72,35 @@ public class InitiativeManager extends Manager
 			return c2.getCurrentInit() - c1.getCurrentInit() ;
 		}
 	}
-	
+
 	@Override
 	public void initialize() {
-	
+
 	}
 
 	private void initializeAfterSprites()
 	{
-		initMenu = new InitiativeMenu(stateInfo);
+		// initMenu = new InitiativeMenu(stateInfo);
 		// The host will initialize the turn order, so check to see if you are the host
 		initializeInitOrder();
-		stateInfo.addPanel(initMenu);
+		// stateInfo.addPanel(initMenu);
 	}
-	
+
 	public void updateOnTurn()
 	{
 		getNextTurn();
 	}
-	
+
 	private void getNextTurn()
 	{
 		ArrayList<CombatSprite> initOrder = new ArrayList<CombatSprite>();
 		for (CombatSprite s : stateInfo.getCombatSprites())
-		{							
+		{
 			initOrder.add(s);
 		}
-		
+
 		CombatSprite nextTurn = null;
-		
+
 		while (nextTurn == null)
 		{
 			for (CombatSprite cs : initOrder)
@@ -117,31 +110,31 @@ public class InitiativeManager extends Manager
 				if (cs.getCurrentInit() >= 100)
 				{
 					if (nextTurn == null || cs.getCurrentInit() > nextTurn.getCurrentInit() ||
-						(cs.getCurrentInit() == nextTurn.getCurrentInit() && 
+						(cs.getCurrentInit() == nextTurn.getCurrentInit() &&
 							cs.getCurrentSpeed() > nextTurn.getCurrentInit()))
-							nextTurn = cs; 
+							nextTurn = cs;
 				}
 			}
-		}	
-		
+		}
+
 		nextTurn.setCurrentInit(0);
 		stateInfo.sendMessage(new SpriteContextMessage(Message.MESSAGE_COMBATANT_TURN, nextTurn));
-		
+
 		Collections.sort(initOrder, new InitComparator());
-		
-		stateInfo.sendMessage(new MultiSpriteContextMessage(Message.MESSAGE_SET_INIT_ORDER, initOrder));		
+
+		stateInfo.sendMessage(new MultiSpriteContextMessage(Message.MESSAGE_SET_INIT_ORDER, initOrder));
 	}
-	
+
 	public void initializeInitOrder()
 	{
 		ArrayList<CombatSprite> initOrder = new ArrayList<CombatSprite>();
 		for (CombatSprite s : stateInfo.getCombatSprites())
 		{
 			s.setCurrentInit(s.getMaxSpeed());
-			
+
 			initOrder.add(s);
-		}		
-		
+		}
+
 		stateInfo.sendMessage(new MultiSpriteContextMessage(Message.MESSAGE_SET_INIT_ORDER, initOrder));
 	}
 
@@ -162,5 +155,5 @@ public class InitiativeManager extends Manager
 				initializeAfterSprites();
 				break;
 		}
-	}	
+	}
 }

@@ -38,7 +38,7 @@ public class ItemMenu extends QuadMenu
 				Item item = stateInfo.getCurrentSprite().getItem(i);
 				enabled[i] = true;
 				if (stateInfo.getCurrentSprite().getEquipped().get(i))
-					text[i] = item.getName() + " (EQ)";
+					text[i] = item.getName() + "(EQ)";
 				else
 					text[i] = item.getName();
 
@@ -55,15 +55,20 @@ public class ItemMenu extends QuadMenu
 	@Override
 	protected void renderTextBox(FCGameContainer gc, Graphics graphics)
 	{
+		String[] split = getText(selected).split(" ", 2);
+
 		Panel.drawPanelBox(CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 195 + gc.getDisplayPaddingX(),
-				CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 195,
-				getTextboxWidth(),
-				CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 15 + 12, graphics);
+			CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 195 - 7 * (split.length == 1 ? 0 : 1),
+			getTextboxWidth(),
+			CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 15 * (split.length == 1 ? 1 : 2) + 12, graphics);
 
 		graphics.setColor(COLOR_FOREFRONT);
 
-		graphics.drawString(getText(selected), CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 202 + gc.getDisplayPaddingX(),
-				CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 190 + 3);
+		graphics.drawString(split[0], CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 202 + gc.getDisplayPaddingX(),
+				CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 190 + 3 - 7 * (split.length == 1 ? 0 : 1));
+		if (split.length > 1)
+			graphics.drawString(split[1], CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 202 + gc.getDisplayPaddingX(),
+				CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 205 + 3 - 7);
 	}
 
 	@Override
@@ -83,6 +88,6 @@ public class ItemMenu extends QuadMenu
 	@Override
 	public int getTextboxWidth()
 	{
-		return CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 120;
+		return CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 95;
 	}
 }

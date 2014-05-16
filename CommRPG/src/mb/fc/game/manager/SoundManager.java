@@ -16,33 +16,35 @@ public class SoundManager extends Manager
 
 	@Override
 	public void initialize() {
-		
+
 	}
-	
+
 	public void playSoundByName(String name, float volume)
-	{		
-		Sound sound = stateInfo.getResourceManager().getSoundByName(name); 
+	{
+		if (name == null)
+			return;
+		Sound sound = stateInfo.getResourceManager().getSoundByName(name);
 		sound.play(1f, volume);
 	}
-	
+
 	public void playMusicByName(String name)
 	{
 		Music playingMusic = stateInfo.getResourceManager().getMusicByName(name);
 		playingMusic.loop(1, 0);
 		stateInfo.setPlayingMusic(playingMusic);
 	}
-	
+
 	public void playMusicByName(String name, float volume, float position)
 	{
 		Music playingMusic = stateInfo.getResourceManager().getMusicByName(name);
 		playingMusic.stop();
-		playingMusic.setPosition(position);		
+		playingMusic.setPosition(position);
 		playingMusic.loop(1, 0);
 		playingMusic.fade(2000, volume, false);
 		stateInfo.setPlayingMusic(playingMusic);
-		stateInfo.setPlayingMusicName(name);		
+		stateInfo.setPlayingMusicName(name);
 	}
-	
+
 
 	public void playMusicByName(String name, float volume)
 	{
@@ -51,19 +53,19 @@ public class SoundManager extends Manager
 		stateInfo.setPlayingMusic(playingMusic);
 		stateInfo.setPlayingMusicName(name);
 	}
-	
+
 	public void pauseMusic()
 	{
 		if (stateInfo.getPlayingMusic() != null)
 			stateInfo.getPlayingMusic().pause();
 	}
-	
+
 	public void resumeMusic()
 	{
 		if (stateInfo.getPlayingMusic() != null)
 			stateInfo.getPlayingMusic().resume();
 	}
-	
+
 	public void stopMusic()
 	{
 		if (stateInfo.getPlayingMusic() != null)
@@ -72,15 +74,15 @@ public class SoundManager extends Manager
 			stateInfo.setPlayingMusic(null);
 		}
 	}
-	
+
 	public void fadeMusic(int duration)
 	{
 		if (stateInfo.getPlayingMusic() != null)
 			stateInfo.getPlayingMusic().fade(duration, 0f, true);
-	}	
+	}
 
 	@Override
-	public void recieveMessage(Message message) 
+	public void recieveMessage(Message message)
 	{
 		switch (message.getMessageType())
 		{

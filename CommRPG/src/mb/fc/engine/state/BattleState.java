@@ -3,7 +3,6 @@ package mb.fc.engine.state;
 import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.Message;
-import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.manager.InitiativeManager;
 import mb.fc.game.manager.KeyboardManager;
 import mb.fc.game.manager.MenuManager;
@@ -26,25 +25,25 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class BattleState extends LoadableGameState
-{	
+{
 	private TileMapRenderer tileMapRenderer;
 	private SpriteRenderer spriteRenderer;
-	private PanelRenderer panelRenderer;	
-	private MenuRenderer menuRenderer;	
+	private PanelRenderer panelRenderer;
+	private MenuRenderer menuRenderer;
 	private SpriteManager spriteManager;
 	private PanelManager panelManager;
 	private MenuManager menuManager;
 	private KeyboardManager keyboardManager;
 	private SoundManager soundManager;
-	
+
 	private InitiativeManager initManager;
 	private TurnManager turnManager;
-	
+
 	private StateInfo stateInfo;
-	
+
 	private float musicVolume = 0;
 	private String music = null;
-	
+
 	public BattleState(PersistentStateInfo psi)
 	{
 		this.stateInfo = new StateInfo(psi, true, false);
@@ -55,7 +54,7 @@ public class BattleState extends LoadableGameState
 		this.panelRenderer = new PanelRenderer();
 		stateInfo.registerManager(panelRenderer);
 		this.menuRenderer = new MenuRenderer();
-		stateInfo.registerManager(menuRenderer);		
+		stateInfo.registerManager(menuRenderer);
 		this.spriteManager = new SpriteManager();
 		stateInfo.registerManager(spriteManager);
 		this.panelManager = new PanelManager();
@@ -71,17 +70,17 @@ public class BattleState extends LoadableGameState
 		this.soundManager = new SoundManager();
 		stateInfo.registerManager(soundManager);
 	}
-	
+
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
-			throws SlickException 
-	{	
-		stateInfo.initState();	
+			throws SlickException
+	{
+		stateInfo.initState();
 	}
-	
+
 	@Override
 	public void enter(GameContainer container, StateBasedGame game)
-			throws SlickException {		
+			throws SlickException {
 		super.enter(container, game);
 
 		if (stateInfo.isShowAttackCinematic())
@@ -95,7 +94,7 @@ public class BattleState extends LoadableGameState
 				stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_PLAY_MUSIC, music, .5f, stateInfo.getPlayingMusicPostion(), true));
 				System.out.println("MUSIC ENTER " + musicVolume + " " + stateInfo.getPlayingMusicPostion() + " " + music);
 			}
-		}			
+		}
 	}
 
 	@Override
@@ -103,17 +102,17 @@ public class BattleState extends LoadableGameState
 			throws SlickException {
 		if (!stateInfo.isShowAttackCinematic())
 		{
-			stateInfo.getResourceManager().reinitialize();		
+			stateInfo.getResourceManager().reinitialize();
 			stateInfo.setInitialized(false);
 			stateInfo.getInput().clear();
-		}		
+		}
 		else
 		{
 			musicVolume = stateInfo.getPlayingMusic().getVolume();
 			music = stateInfo.getPlayingMusicName();
 			System.out.println("MUSIC EXIT " + musicVolume + " " + stateInfo.getPlayingMusicPostion() + " " + music + " " + stateInfo);
 		}
-		
+
 		super.leave(container, game);
 	}
 
@@ -133,8 +132,8 @@ public class BattleState extends LoadableGameState
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
-			throws SlickException 	
-	{				
+			throws SlickException
+	{
 		stateInfo.processMessages();
 		if (stateInfo.isInitialized())
 		{
@@ -148,12 +147,12 @@ public class BattleState extends LoadableGameState
 			turnManager.update(game, delta);
 			spriteManager.update(delta);
 			soundManager.update(delta);
-			
-			
+
+
 			if (System.currentTimeMillis() > stateInfo.getInputDelay())
 			{
 				if (container.getInput().isKeyDown(Input.KEY_ENTER))
-				{					
+				{
 					stateInfo.sendMessage(Message.MESSAGE_SHOW_DEBUG);
 					stateInfo.setInputDelay(System.currentTimeMillis() + 200);
 				}
@@ -164,20 +163,19 @@ public class BattleState extends LoadableGameState
 					stateInfo.setInputDelay(System.currentTimeMillis() + 200);
 				}*/
 				else if (container.getInput().isKeyDown(Input.KEY_F7))
-				{					
+				{
 					((CommRPG) game).toggleFullScreen();
 				}
 			}
-			
-			
+
+
 			stateInfo.getInput().update(delta);
-		}		
+		}
 	}
 
 	@Override
 	public void stateLoaded(ResourceManager resourceManager) {
 		this.stateInfo.setResourceManager((FCResourceManager) resourceManager);
-		Panel.intialize(stateInfo.getResourceManager());
 	}
 
 	@Override

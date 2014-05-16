@@ -147,7 +147,7 @@ public class HeroProgression implements Serializable
 		switch (type)
 		{
 			case STAT_WEAK:
-				return CommRPG.RANDOM.nextInt(1);
+				return CommRPG.RANDOM.nextInt(2);
 			case STAT_AVERAGE:
 				return CommRPG.RANDOM.nextInt(3);
 			case STAT_STRONG:

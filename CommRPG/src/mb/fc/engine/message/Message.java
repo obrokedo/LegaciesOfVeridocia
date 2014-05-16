@@ -5,11 +5,11 @@ import java.io.Serializable;
 public class Message implements Serializable
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	public static final int MESSAGE_NEXT_TURN = 0;
 	public static final int MESSAGE_COMBATANT_TURN = 1;
 
-	
+
 	public static final int MESSAGE_ATTACK_PRESSED = 4;
 	public static final int MESSAGE_HIDE_ATTACKABLE = 5;
 	public static final int MESSAGE_SHOW_MOVEABLE = 6;
@@ -58,13 +58,14 @@ public class Message implements Serializable
 	public static final int MESSAGE_PLAY_MUSIC = 50;
 	public static final int MESSAGE_FADE_MUSIC = 51;
 	public static final int MESSAGE_SHOW_DEBUG = 52;
+	public static final int MESSAGE_LOAD_CINEMATIC = 53;
 	private int messageType;
 	private boolean immediate = false;
-	
+
 	public Message(int messageType) {
 		super();
 		this.messageType = messageType;
-		
+
 		if (messageType == MESSAGE_INTIIALIZE || messageType == MESSAGE_MOVETO_SPRITELOC)
 		{
 			immediate = true;

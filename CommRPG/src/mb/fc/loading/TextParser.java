@@ -146,9 +146,13 @@ public class TextParser
 						{
 							te.addTriggerType(te.new TriggerShowText(Integer.parseInt(actionParams.get("textid"))));
 						}
-						else if (tagArea.getChildren().get(k).getTagType().equalsIgnoreCase("cinematic"))
+						else if (tagArea.getChildren().get(k).getTagType().equalsIgnoreCase("showcin"))
 						{
-							te.addTriggerType(te.new TriggerShowCinematic(Integer.parseInt(actionParams.get("cinematicid"))));
+							te.addTriggerType(te.new TriggerShowCinematic(Integer.parseInt(actionParams.get("cinid"))));
+						}
+						else if (tagArea.getChildren().get(k).getTagType().equalsIgnoreCase("loadcin"))
+						{
+							te.addTriggerType(te.new TriggerLoadCinematic(actionParams.get("map"), Integer.parseInt(actionParams.get("cinid"))));
 						}
 						else if (tagArea.getChildren().get(k).getTagType().equalsIgnoreCase("showroof"))
 						{

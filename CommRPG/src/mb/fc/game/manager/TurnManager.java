@@ -153,7 +153,14 @@ public class TurnManager extends Manager implements KeyboardListener
 
 					// if there is a combat sprite here display it's health panel
 					if (cs != null)
+					{
 						cs.triggerOverEvent(stateInfo);
+						landEffectPanel.setLandEffect(stateInfo.getCurrentMap().getLandEffectByTile(cs.getMovementType(),
+								cs.getTileX(), cs.getTileY()));
+						stateInfo.addSingleInstancePanel(landEffectPanel);
+					}
+					else
+						stateInfo.removePanel(landEffectPanel);
 					turnActions.remove(0);
 				}
 				break;
@@ -311,7 +318,7 @@ public class TurnManager extends Manager implements KeyboardListener
 
 		// Check to see if we have arrived at our destination, if so
 		// then we just remove this action and allow input for the moveablespace
-		if (movingSprite.update())
+		if (movingSprite.update(resetSpriteLoc))
 		{
 			turnActions.remove(0);
 			if (turnActions.size() == 0)
@@ -527,8 +534,6 @@ public class TurnManager extends Manager implements KeyboardListener
 				initializeCombatantTurn(((SpriteContextMessage) message).getSprite());
 				break;
 			case Message.MESSAGE_RESET_SPRITELOC:
-				// This right here is my biggest fear using the keyboard, while holding button 2 in battle
-				// it's possible for
 				if (spriteStartPoint.x == currentSprite.getTileX() &&
 						spriteStartPoint.y == currentSprite.getTileY())
 				{

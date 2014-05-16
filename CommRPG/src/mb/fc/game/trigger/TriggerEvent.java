@@ -273,6 +273,23 @@ public class TriggerEvent
 		}
 	}
 
+	public class TriggerLoadCinematic extends TriggerType
+	{
+		private String map;
+		private int cinematicId;
+		public TriggerLoadCinematic(String map, int id)
+		{
+			this.map = map;
+			cinematicId = id;
+		}
+
+		@Override
+		public boolean perform(StateInfo stateInfo) {
+			stateInfo.sendMessage(new LoadMapMessage(Message.MESSAGE_LOAD_CINEMATIC, map, cinematicId));
+			return false;
+		}
+	}
+
 	public class TriggerShowText extends TriggerType
 	{
 		private int textId;

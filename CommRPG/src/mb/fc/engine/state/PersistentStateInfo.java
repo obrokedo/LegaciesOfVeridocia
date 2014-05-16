@@ -28,6 +28,7 @@ public class PersistentStateInfo
 	private ClientProgress clientProgress;
 	private FCResourceManager resourceManager;
 	private String entranceLocation = "priest";
+	private int cinematicID = 0;
 
 	public PersistentStateInfo(ClientProfile clientProfile, ClientProgress clientProgress, CommRPG game, Camera camera,
 			GameContainer gc, Graphics graphics, int clientId)
@@ -65,7 +66,7 @@ public class PersistentStateInfo
 
 		gc.getInput().removeAllKeyListeners();
 
-		getClientProgress().setMap(map);
+		getClientProgress().setMap(map, false);
 
 		getGame().setLoadingInfo(map, map,
 				(LoadableGameState) getGame().getState(CommRPG.STATE_GAME_TOWN),
@@ -79,15 +80,19 @@ public class PersistentStateInfo
 
 		gc.getInput().removeAllKeyListeners();
 
+		getClientProgress().setMap(map, true);
+
 		getGame().setLoadingInfo(text, map,
 				(LoadableGameState) getGame().getState(CommRPG.STATE_GAME_BATTLE),
 					getResourceManager());
 		getGame().enterState(CommRPG.STATE_GAME_LOADING, new FadeOutTransition(Color.black, 250), new EmptyTransition());
 	}
 
-	public void loadCinematic(String map)
+	public void loadCinematic(String map, int cinematicID)
 	{
 		gc.getInput().removeAllKeyListeners();
+
+		this.cinematicID = cinematicID;
 
 		getGame().setLoadingInfo(map, map,
 				(LoadableGameState) getGame().getState(CommRPG.STATE_GAME_CINEMATIC),
@@ -143,5 +148,9 @@ public class PersistentStateInfo
 
 	public String getEntranceLocation() {
 		return entranceLocation;
+	}
+
+	public int getCinematicID() {
+		return cinematicID;
 	}
 }

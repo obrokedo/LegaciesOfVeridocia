@@ -190,6 +190,14 @@ public class BattleResults implements Serializable
 			if (target.getCurrentHP() + br.hpDamage.get(index) <= 0)
 			{
 				br.death = true;
+				int idx = text.lastIndexOf("}");
+				if (idx != -1)
+					text = text.substring(0, idx);
+
+				idx = text.lastIndexOf("]");
+				if (idx != -1)
+					text = text.substring(0, idx);
+
 				text = text.replaceAll("}", "");
 				text = text + " " +jBattleFunctions.getCombatantDeathText(attacker, target);
 			}
@@ -203,10 +211,10 @@ public class BattleResults implements Serializable
 		if (attacker.isHero())
 		{
 			attacker.setExp(attacker.getExp() + expGained);
-			br.attackOverText = attacker.getName() + " gained " + expGained +  " experience. }";
+			br.attackOverText = attacker.getName() + " gained " + expGained +  " experience.}";
 			if (attacker.getExp() >= 100)
 			{
-				br.attackOverText += "[ ";
+				br.attackOverText += " |[ ";
 				br.levelUpResult = attacker.getHeroProgression().getLevelUpResults(attacker, stateInfo);
 				br.attackOverText += br.levelUpResult.text;
 			}

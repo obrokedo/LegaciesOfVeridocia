@@ -18,7 +18,7 @@ public abstract class Menu extends Panel
 		MENU_CLOSE,
 		MENU_ACTION_SHORT,
 		MENU_ACTION_LONG,
-		MENU_NEXT_CIN
+		MENU_NEXT_ACTION
 	}
 
 	public Menu(int menuType) {

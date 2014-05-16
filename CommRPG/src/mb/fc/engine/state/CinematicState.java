@@ -2,7 +2,6 @@ package mb.fc.engine.state;
 
 import mb.fc.cinematic.Cinematic;
 import mb.fc.engine.CommRPG;
-import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.manager.SoundManager;
 import mb.fc.loading.FCResourceManager;
 import mb.fc.renderer.TileMapRenderer;
@@ -48,7 +47,7 @@ public class CinematicState extends LoadableGameState
 		super.enter(container, game);
 
 		// Get the first cinematic
-		cinematic = stateInfo.getResourceManager().getCinematicById(0);
+		cinematic = stateInfo.getResourceManager().getCinematicById(stateInfo.getPsi().getCinematicID());
 		cinematic.initialize(stateInfo);
 		stateInfo.setInitialized(true);
 		stateInfo.getInput().clear();
@@ -110,7 +109,6 @@ public class CinematicState extends LoadableGameState
 	@Override
 	public void stateLoaded(ResourceManager resourceManager) {
 		stateInfo.setResourceManager((FCResourceManager) resourceManager);
-		Panel.intialize(stateInfo.getResourceManager());
 	}
 
 	@Override

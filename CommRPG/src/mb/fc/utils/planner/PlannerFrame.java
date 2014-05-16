@@ -1785,7 +1785,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 						PlannerValueDef.TYPE_STRING, "entrance", false,
 						"Entrance location",
 						"The name of the map location that the force will be placed at when the map loads"));
-		allowableLines.add(new PlannerLineDef("startbattle", "Start Battle",
+		allowableLines.add(new PlannerLineDef("startbattle", "Load Battle",
 				"Starts the battle with the given triggers and map",
 				definingValues));
 
@@ -1808,6 +1808,18 @@ public class PlannerFrame extends JFrame implements ActionListener,
 						"Load Map",
 						"Loads the given map and places the hero at the given location",
 						definingValues));
+
+		// Show Cinematic
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_STRING, "map", false, "Map Name",
+				"The name of the map that should be loaded"));
+		definingValues.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT,
+				"cinid", false, "Cinematic ID",
+				"The ID of the cinematic that should be shown"));
+		allowableLines.add(new PlannerLineDef("loadcin", "Load Cinematic",
+				"Loads the specified map and text file with the same name and then runs the specified cinematic.", definingValues));
 
 		// Show priest
 		definingValues = new ArrayList<PlannerValueDef>();
@@ -1872,8 +1884,8 @@ public class PlannerFrame extends JFrame implements ActionListener,
 				PlannerValueDef.REFERS_CINEMATIC, PlannerValueDef.TYPE_INT,
 				"cinid", false, "Cinematic ID",
 				"The ID of the cinematic that should be shown"));
-		allowableLines.add(new PlannerLineDef("showcin", "Show Cinematic",
-				"Shows the specified cinematic", definingValues));
+		allowableLines.add(new PlannerLineDef("showcin", "Show Map Event",
+				"CURRENTLY UNSUPPORTED! Shows the specified cinematic on the current map", definingValues));
 
 		// Show Shop
 		definingValues = new ArrayList<PlannerValueDef>();

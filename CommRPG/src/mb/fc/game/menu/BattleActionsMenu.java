@@ -13,41 +13,41 @@ import org.newdawn.slick.Image;
 
 
 public class BattleActionsMenu extends QuadMenu
-{	
+{
 	public BattleActionsMenu(StateInfo stateInfo) {
 		super(Panel.PANEL_BATTLE, stateInfo);
-		
+
 		icons = new Image[8];
-		
+
 		for (int i = 0; i < icons.length; i++)
 			icons[i] = stateInfo.getResourceManager().getSpriteSheets().get("actionicons").getSubImage(i % 4, i / 4);
-		
+
 		text = new String[] {"Attack", "Magic", "Items", "Stay"};
 		enabled = new boolean[4];
 		enabled[3] = true;
-	}	
+	}
 
 	@Override
 	public void initialize() {
 		this.selected = Direction.DOWN;
 		CombatSprite currentSprite = stateInfo.getCurrentSprite();
-		
+
 		if (currentSprite.getSpellsDescriptors() != null && stateInfo.getCurrentSprite().getSpellsDescriptors().size() > 0)
 			enabled[1] = true;
 		else
 			enabled[1] = false;
-		
+
 		if (currentSprite.getItemsSize() > 0)
 			enabled[2] = true;
 		else
 			enabled[2] = false;
-		
+
 		/**************************************************/
 		/* Determine if there are enemies in attack range */
 		/**************************************************/
 		int declaredRange = currentSprite.getAttackRange();
 		int range[][] = null;
-		
+
 		switch (declaredRange)
 		{
 			case 1:
@@ -63,18 +63,18 @@ public class BattleActionsMenu extends QuadMenu
 				range = AttackableSpace.RANGE_2_1;
 				break;
 		}
-		
+
 		int rangeOffset = (range.length - 1) / 2;
-		
+
 		enabled[0] = false;
-		
+
 		OUTER: for (int i = 0; i < range.length; i++)
 		{
 			for (int j = 0; j < range[0].length; j++)
 			{
 				if (range[i][j] == 1)
 				{
-					CombatSprite targetable = stateInfo.getCombatSpriteAtTile(currentSprite.getTileX() - rangeOffset + i, 
+					CombatSprite targetable = stateInfo.getCombatSpriteAtTile(currentSprite.getTileX() - rangeOffset + i,
 							currentSprite.getTileY() - rangeOffset + j, false);
 					if (targetable != null)
 					{
@@ -84,7 +84,7 @@ public class BattleActionsMenu extends QuadMenu
 					}
 				}
 			}
-		}		
+		}
 	}
 
 	@Override
@@ -100,7 +100,6 @@ public class BattleActionsMenu extends QuadMenu
 		{
 			case UP:
 				stateInfo.sendMessage(Message.MESSAGE_ATTACK_PRESSED);
-				stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "targetselect", 1f, false));
 				break;
 			case LEFT:
 				stateInfo.sendMessage(Message.MESSAGE_SHOW_SPELLMENU);
@@ -115,9 +114,13 @@ public class BattleActionsMenu extends QuadMenu
 				stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menuselect", 1f, false));
 				break;
 		}
-		
+
 		return MenuUpdate.MENU_CLOSE;
 	}
 
-	
+	@Override
+	public boolean makeAddAndRemoveSounds()
+	{
+		return true;
+	}
 }

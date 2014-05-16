@@ -3,9 +3,13 @@ package mb.fc.game.hudmenu;
 import java.awt.Font;
 
 import mb.fc.engine.CommRPG;
+import mb.fc.engine.message.AudioMessage;
+import mb.fc.engine.message.Message;
+import mb.fc.engine.state.StateInfo;
 import mb.fc.game.ui.FCGameContainer;
 import mb.fc.loading.FCResourceManager;
 import mb.jython.GlobalPythonFactory;
+import mb.jython.JMusicSelector;
 import mb.jython.JPanelRender;
 
 import org.newdawn.slick.Color;
@@ -19,9 +23,9 @@ import org.newdawn.slick.geom.Rectangle;
 /**
  * A container to display information to the screen that does not generally need to be interacted with.
  */
-public abstract class Panel 
+public abstract class Panel
 {
-	public static final int PANEL_HEALTH_BAR = 0;	
+	public static final int PANEL_HEALTH_BAR = 0;
 	public static final int PANEL_LAND_EFFECT = 1;
 	public static final int PANEL_STATS = 2;
 	public static final int PANEL_INITIATIVE = 3;
@@ -47,40 +51,42 @@ public abstract class Panel
 	public static final int PANEL_ITEM = 23;
 	public static final int PANEL_ITEM_OPTIONS = 24;
 	public static final int PANEL_DEBUG = 25;
-	
-	protected int panelType;	
+
+	protected int panelType;
 	public final static Color COLOR_MOUSE_OVER = new Color(0, 0, 153);
 	public final static Color COLOR_FOREFRONT = Color.white;
-	
+	protected static JMusicSelector MUSIC_SELECTOR;
+
 	public static SpriteSheet MENU_BORDER;
 	protected static UnicodeFont PANEL_FONT;
 	protected static UnicodeFont SPEECH_FONT;
 	protected static JPanelRender renderer;
-	
-	
+
+
 	public Panel(int menuType) {
 		super();
 		this.panelType = menuType;
-		
+
 		switch (menuType)
-		{			
+		{
 			default:
 				break;
-		}				
+		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public static void intialize(FCResourceManager frm)
 	{
 		MENU_BORDER = frm.getSpriteSheets().get("menuborder");
 		PANEL_FONT = frm.getFontByName("menufont");
-		
+		MUSIC_SELECTOR = GlobalPythonFactory.createJMusicSelector();
+
 		Font awtFont = new Font("Times New Roman", Font.ITALIC, 24);
 		UnicodeFont ufont = new UnicodeFont(awtFont, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 15, false, true);
 		ufont.getEffects().add(new ColorEffect(java.awt.Color.WHITE));
 		ufont.addAsciiGlyphs();
 		ufont.addGlyphs(400, 600);
-		try 
+		try
 		{
 			ufont.loadGlyphs();
 			SPEECH_FONT = ufont;
@@ -88,72 +94,89 @@ public abstract class Panel
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		// stateInfo.getGc().getGraphics().setFont(PANEL_FONT);
 
         renderer =  GlobalPythonFactory.createJPanelRender();
 	}
 
 	public abstract void render(FCGameContainer gc, Graphics graphics);
-	
-	// public boolean 
+
+	// public boolean
 
 	public int getPanelType() {
 		return panelType;
 	}
-	
+
 	public static void drawPanelBox(int x, int y, int width, int height, Graphics graphics)
-	{		
+	{
 		// graphics.setColor(Color.lightGray);
-		// graphics.fillRoundRect(x, y, width, height, 5);		
+		// graphics.fillRoundRect(x, y, width, height, 5);
 		// graphics.drawImage(menuBackground.getSubImage(0, 0, width - 10, height - 10), x + 5, y + 5);
 		graphics.setFont(PANEL_FONT);
-		graphics.setColor(Color.blue);
-		
+		graphics.setColor(new Color(0, 32, 96));
+
 		renderer.render(MENU_BORDER, x, y, width, height, graphics);
 	}
-	
+
 	public static void drawPanelBox(int x, int y, int width, int height, Graphics graphics, Color color)
-	{		
+	{
 		// graphics.setColor(Color.lightGray);
-		// graphics.fillRoundRect(x, y, width, height, 5);		
+		// graphics.fillRoundRect(x, y, width, height, 5);
 		// graphics.drawImage(menuBackground.getSubImage(0, 0, width - 10, height - 10), x + 5, y + 5);
 		graphics.setFont(PANEL_FONT);
 		graphics.setColor(color);
-		
+
 		// renderer.render(MENU_BORDER, x, y, width, height, graphics);
-		
+
 		graphics.fillRect(x, y, width, height);
 		MENU_BORDER.getSprite(4, 0).draw(x, y + height - 12, x + width, y + height, 4, 0, 5, 12);
 		MENU_BORDER.getSprite(5, 0).draw(x, y, x + width, y + 12, 4, 0, 5, 12);
 		MENU_BORDER.getSprite(6, 0).draw(x, y + 12, 12, height - 24);
 		MENU_BORDER.getSprite(7, 0).draw(x + width - 12, y + 12, 12, height - 24);
-		
+
 		MENU_BORDER.getSprite(0, 0).draw(x, y + height - 12);
-		MENU_BORDER.getSprite(1, 0).draw(x, y);		
+		MENU_BORDER.getSprite(1, 0).draw(x, y);
 		MENU_BORDER.getSprite(2, 0).draw(x + width - 12, y + height - 12);
-		MENU_BORDER.getSprite(3, 0).draw(x + width - 12, y);		
+		MENU_BORDER.getSprite(3, 0).draw(x + width - 12, y);
 	}
-	
+
 	public static void drawRect(Rectangle rect, Graphics graphics)
 	{
 		graphics.drawRect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
 	}
-	
+
 	public static void fillRect(Rectangle rect, Graphics graphics)
 	{
 		graphics.fillRect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
 	}
-	
+
 	public static boolean contains(int lowX, int highX, int valX, int lowY, int highY, int valY)
 	{
 		return (between(lowX, highX, valX) && between(lowY, highY, valY));
 	}
-	
+
 	public static boolean between(int low, int high, int val)
 	{
 		if (val >= low && val < high)
 			return true;
+		return false;
+	}
+
+	public void panelRemoved(StateInfo stateInfo)
+	{
+		if (makeAddAndRemoveSounds())
+			stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, MUSIC_SELECTOR.getMenuRemovedSoundEffect(), 1f, false));
+	}
+
+	public void panelAdded(StateInfo stateInfo)
+	{
+		if (makeAddAndRemoveSounds())
+			stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, MUSIC_SELECTOR.getMenuAddedSoundEffect(), 1f, false));
+	}
+
+	public boolean makeAddAndRemoveSounds()
+	{
 		return false;
 	}
 }

@@ -251,6 +251,15 @@ public class StateInfo
 						playingMusic = null;
 					}
 					break MESSAGES;
+				case Message.MESSAGE_LOAD_CINEMATIC:
+					LoadMapMessage lmc = (LoadMapMessage) m;
+					psi.loadCinematic(lmc.getMap(), lmc.getCinematicID());
+					if (playingMusic != null)
+					{
+						playingMusic.stop();
+						playingMusic = null;
+					}
+					break;
 				case Message.MESSAGE_SAVE:
 					getClientProfile().serializeToFile();
 					getClientProgress().serializeToFile(currentMap, "priest");
@@ -277,16 +286,19 @@ public class StateInfo
 		}
 
 		panels.add(panel);
+		panel.panelAdded(this);
 	}
 
 	public void addPanel(Panel panel)
 	{
 		panels.add(panel);
+		panel.panelAdded(this);
 	}
 
 	public void addMenu(Menu menu)
 	{
 		menus.add(menu);
+		menu.panelAdded(this);
 	}
 
 	public Menu getTopMenu()
@@ -296,7 +308,7 @@ public class StateInfo
 
 	public void removeTopMenu()
 	{
-		menus.remove(menus.size() - 1);
+		menus.remove(menus.size() - 1).panelRemoved(this);
 	}
 
 	public boolean arePanelsDisplayed()
@@ -320,6 +332,7 @@ public class StateInfo
 	public void removePanel(Panel panel)
 	{
 		panels.remove(panel);
+		panel.panelRemoved(this);
 	}
 
 	public void removePanel(int panelType)
@@ -328,6 +341,7 @@ public class StateInfo
 			if (m.getPanelType() == panelType)
 			{
 				panels.remove(m);
+				m.panelRemoved(this);
 				break;
 			}
 	}
@@ -338,6 +352,7 @@ public class StateInfo
 			if (m.getPanelType() == menuType)
 			{
 				menus.remove(m);
+				m.panelRemoved(this);
 				break;
 			}
 	}
@@ -345,6 +360,7 @@ public class StateInfo
 	public void removeMenu(Menu menu)
 	{
 		menus.remove(menu);
+		menu.panelRemoved(this);
 	}
 
 	public void addSingleInstanceMenu(Menu menu)
@@ -356,6 +372,7 @@ public class StateInfo
 		}
 
 		menus.add(menu);
+		menu.panelAdded(this);
 	}
 
 	public Iterable<Panel> getPanels()

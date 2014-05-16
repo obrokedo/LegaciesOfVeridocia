@@ -1,5 +1,7 @@
 package mb.fc.game.move;
 
+import mb.fc.engine.message.AudioMessage;
+import mb.fc.engine.message.Message;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.constants.Direction;
 import mb.fc.game.sprite.CombatSprite;
@@ -11,18 +13,18 @@ public class MovingSprite
 	private Direction direction;
 	private int endX, endY;
 	private StateInfo stateInfo;
-	public static int MOVE_SPEED = 10; 
+	public static int MOVE_SPEED = 11;
 	public static int STAND_ANIMATION_SPEED = 10;
 	public static int WALK_ANIMATION_SPEED = 4;
-	
+
 	public MovingSprite(CombatSprite combatSprite, Direction dir, StateInfo stateInfo) {
 		super();
 		this.combatSprite = combatSprite;
-		this.direction = dir;	
+		this.direction = dir;
 		this.stateInfo = stateInfo;
-		
+
 		combatSprite.setAnimationUpdate(WALK_ANIMATION_SPEED);
-		
+
 		switch (direction)
 		{
 			case UP:
@@ -43,11 +45,11 @@ public class MovingSprite
 				break;
 		}
 	}
-	
-	public boolean update()
+
+	public boolean update(boolean fastMove)
 	{
 		int moveSpeed = MOVE_SPEED;
-		if (!combatSprite.isHero())
+		if (!combatSprite.isHero() || fastMove)
 			moveSpeed /= 2;
 		switch (direction)
 		{
@@ -62,7 +64,7 @@ public class MovingSprite
 						// 2 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]));
 				break;
 			case LEFT:
-				combatSprite.setLocX(combatSprite.getAbsLocX() - 
+				combatSprite.setLocX(combatSprite.getAbsLocX() -
 						1.0f * stateInfo.getTileWidth() / moveSpeed);
 						// 2 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]));
 				break;
@@ -72,30 +74,37 @@ public class MovingSprite
 						// 2 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]));
 				break;
 		}
-		
+		if (stateInfo.isCombat() && moveIndex == 0)
+			stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "step", 1f, false));
+
 		if (combatSprite == stateInfo.getCurrentSprite())
 			stateInfo.getCamera().centerOnSprite(combatSprite, stateInfo.getCurrentMap());
-		
+
 		moveIndex++;
-		
+
 		if (moveIndex == moveSpeed)
-		{				
+		{
 			combatSprite.setLocation(endX, endY);
 			stateInfo.getCamera().centerOnSprite(combatSprite, stateInfo.getCurrentMap());
 			combatSprite.setAnimationUpdate(STAND_ANIMATION_SPEED);
 			return true;
-		}	
+		}
 		return false;
+	}
+
+	public boolean update()
+	{
+		return update(false);
 	}
 
 	public int getEndX() {
 		return endX;
 	}
-	
+
 	public int getEndY() {
 		return endY;
 	}
-	
+
 	public CombatSprite getCombatSprite() {
 		return combatSprite;
 	}
