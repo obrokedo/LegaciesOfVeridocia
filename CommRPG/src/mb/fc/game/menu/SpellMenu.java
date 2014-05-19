@@ -71,7 +71,6 @@ public class SpellMenu extends QuadMenu
 		{
 			if (stateInfo.getCurrentSprite().getSpellsDescriptors().get(getSelectedInt()).getSpell().getCosts()[selectedLevel] <= stateInfo.getCurrentSprite().getCurrentMP())
 			{
-				stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menuselect", 1f, false));
 				stateInfo.sendMessage(new BattleSelectionMessage(Message.MESSAGE_SELECT_SPELL, getSelectedInt(), selectedLevel + 1));
 				return MenuUpdate.MENU_CLOSE;
 			}
@@ -156,7 +155,10 @@ public class SpellMenu extends QuadMenu
 		if (!choseSpell)
 			return super.onLeft();
 		else if (selectedLevel > 0)
+		{
+			stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menumove", 1f, false));
 			selectedLevel--;
+		}
 		return MenuUpdate.MENU_ACTION_LONG;
 	}
 
@@ -165,7 +167,10 @@ public class SpellMenu extends QuadMenu
 		if (!choseSpell)
 			return super.onRight();
 		else if (selectedLevel + 1 < stateInfo.getCurrentSprite().getSpellsDescriptors().get(getSelectedInt()).getMaxLevel())
+		{
+			stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menumove", 1f, false));
 			selectedLevel++;
+		}
 		return MenuUpdate.MENU_ACTION_LONG;
 	}
 }

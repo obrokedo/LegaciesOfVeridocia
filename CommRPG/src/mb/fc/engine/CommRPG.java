@@ -6,6 +6,7 @@ import mb.fc.engine.log.FileLogger;
 import mb.fc.engine.state.AttackCinematicState;
 import mb.fc.engine.state.MenuState;
 import mb.fc.engine.state.PersistentStateInfo;
+import mb.fc.engine.state.TestState;
 import mb.fc.game.ui.FCGameContainer;
 import mb.fc.loading.FCLoadingRenderSystem;
 import mb.fc.loading.FCResourceManager;
@@ -41,6 +42,8 @@ public class CommRPG extends StateBasedGame   {
 	 * State in which the game is actually being played
 	 */
 	public static final int STATE_GAME_BATTLE_ANIM = 6;
+
+	public static final int STATE_GAME_TEST = 7;
 
 	/**
 	 * A global random number generator
@@ -201,6 +204,17 @@ public class CommRPG extends StateBasedGame   {
 		this.addState(new AttackCinematicState());
 		this.addState(loadingState);
 
+		this.addState(new TestState());
+
+		/*
+		loadingState.setLoadingInfo("/loader/Test", null, false, true,
+				new FCResourceManager(),
+					(LoadableGameState) this.getState(STATE_GAME_TEST),
+						new FCLoadingRenderSystem(gameContainer));
+						*/
+
+
+
 		// TODO Creating a "New Game" will automatically create a new save info with the current map set to the first level
 		// Subsequent loads will be from wherever the user left off
 		/*
@@ -209,10 +223,13 @@ public class CommRPG extends StateBasedGame   {
 				(LoadableGameState) this.getState(STATE_GAME_TOWN),
 				new FCLoadingRenderSystem(gameContainer));
 				*/
+
+
 		loadingState.setLoadingInfo("/menu/MainMenu", null, false, true,
 				new FCResourceManager(),
 					(LoadableGameState) this.getState(STATE_GAME_MENU),
 						new FCLoadingRenderSystem(gameContainer));
+
 
 		this.enterState(STATE_GAME_LOADING);
 	}

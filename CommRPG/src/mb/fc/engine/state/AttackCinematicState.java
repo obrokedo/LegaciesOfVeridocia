@@ -251,10 +251,14 @@ public class AttackCinematicState extends LoadableGameState
 		}
 
 
+		/*
 		if (state == STATE_PRE_ATTACK || state == STATE_ATTACK_CLIMAX)
 			textMenu.render(cont, g);
 
 		if (state == STATE_POST_ATTACK && textMenu != null)
+			textMenu.render(cont, g);
+			*/
+		if (textMenu != null)
 			textMenu.render(cont, g);
 	}
 

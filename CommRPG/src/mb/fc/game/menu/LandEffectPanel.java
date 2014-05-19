@@ -1,10 +1,10 @@
 package mb.fc.game.menu;
 
-import org.newdawn.slick.Graphics;
-
 import mb.fc.engine.CommRPG;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.ui.FCGameContainer;
+
+import org.newdawn.slick.Graphics;
 
 public class LandEffectPanel extends Panel
 {
@@ -25,5 +25,10 @@ public class LandEffectPanel extends Panel
 
 	public void setLandEffect(int landEffect) {
 		this.landEffect = landEffect;
+	}
+
+	@Override
+	public boolean makeAddAndRemoveSounds() {
+		return true;
 	}
 }

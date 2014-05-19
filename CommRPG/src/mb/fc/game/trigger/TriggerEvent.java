@@ -509,4 +509,14 @@ public class TriggerEvent
 			return false;
 		}
 	}
+
+	public class TriggerExit extends TriggerType
+	{
+		@Override
+		public boolean perform(StateInfo stateInfo) {
+			System.exit(0);
+			return false;
+		}
+
+	}
 }

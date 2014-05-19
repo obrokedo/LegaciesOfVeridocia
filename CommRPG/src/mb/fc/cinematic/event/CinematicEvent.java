@@ -35,7 +35,8 @@ public class CinematicEvent
 		TREMBLE,
 		QUIVER,
 		FALL_ON_FACE,
-		LAY_ON_SIDE,
+		LAY_ON_SIDE_RIGHT,
+		LAY_ON_SIDE_LEFT,
 		LAY_ON_BACK,
 		STOP_SE,
 		VISIBLE,
@@ -56,7 +57,8 @@ public class CinematicEvent
 		FADE_FROM_BLACK,
 		FLASH_SCREEN,
 		MOVE_TO_FOREFRONT,
-		MOVE_FROM_FOREFRONT
+		MOVE_FROM_FOREFRONT,
+		EXIT_GAME
 	}
 
 	private CinematicEventType type;

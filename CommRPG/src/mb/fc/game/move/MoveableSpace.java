@@ -399,7 +399,7 @@ public class MoveableSpace implements KeyboardListener, MouseListener, TileBased
 			if (canEndMoveHere(stateInfo.getCurrentSprite().getTileX(), stateInfo.getCurrentSprite().getTileY()))
 			{
 				stateInfo.sendMessage(Message.MESSAGE_SHOW_BATTLEMENU);
-				stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menuselect", 1f, false));
+				stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, GlobalPythonFactory.createJMusicSelector().getMenuAddedSoundEffect(), 1f, false));
 				return true;
 			}
 			else

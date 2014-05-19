@@ -934,10 +934,18 @@ public class PlannerFrame extends JFrame implements ActionListener,
 
 		allowableLines
 				.add(new PlannerLineDef(
-						"layonside",
-						"Actor Lay on Side",
+						"layonsideright",
+						"Actor Lay on Side Right",
 						"Causes the specified actor to lay on their side. This effect will continue until a STOP SPECIAL EFFECT is issued for the actor. This is a 'special effect'. Only one special effect can be active on a given actor at any time. This will stop any current animations.",
 						definingValues));
+
+		// Lay on side left
+		allowableLines
+		.add(new PlannerLineDef(
+				"layonsideleft",
+				"Actor Lay on Side Left",
+				"Causes the specified actor to lay on their side. This effect will continue until a STOP SPECIAL EFFECT is issued for the actor. This is a 'special effect'. Only one special effect can be active on a given actor at any time. This will stop any current animations.",
+				definingValues));
 
 		// Lay on Back
 		definingValues = new ArrayList<PlannerValueDef>();
@@ -1284,6 +1292,12 @@ public class PlannerFrame extends JFrame implements ActionListener,
 
 		allowableLines.add(new PlannerLineDef("loadbattle", "Start Battle",
 				"Starts the battle with the given triggers and map",
+				definingValues));
+
+		// Exit Game
+		definingValues = new ArrayList<PlannerValueDef>();
+		allowableLines.add(new PlannerLineDef("exit", "Exit Game",
+				"Causes the game to exit",
 				definingValues));
 
 
@@ -1957,6 +1971,15 @@ public class PlannerFrame extends JFrame implements ActionListener,
 						"additem",
 						"Add Item to Group",
 						"Gives the specified item to the first person with room in the group.",
+						definingValues));
+
+		// Exit Game
+		definingValues = new ArrayList<PlannerValueDef>();
+		allowableLines
+				.add(new PlannerLineDef(
+						"exit",
+						"Exit Game",
+						"Causes the game to exit.",
 						definingValues));
 
 		// TODO SHOW SHOP

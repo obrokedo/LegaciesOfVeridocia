@@ -185,7 +185,8 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 					ab.indefiniteIntervals.put("tremble", zi);
 					ab.dt.addInterval(zi);
 					break;
-				case LAY_ON_SIDE:
+				case LAY_ON_SIDE_LEFT:
+				case LAY_ON_SIDE_RIGHT:
 					ab = rowsByName.get(ce.getParam(0));
 
 					zi = new ZIntervalImpl("Lay on Side");

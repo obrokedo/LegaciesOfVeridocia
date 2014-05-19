@@ -174,6 +174,11 @@ public class TextParser
 						{
 							te.addTriggerType(te.new TriggerAddItem(Integer.parseInt(actionParams.get("itemid"))));
 						}
+						else if (tagArea.getChildren().get(k).getTagType().equalsIgnoreCase("exit"))
+						{
+							te.addTriggerType(te.new TriggerExit());
+						}
+
 					}
 				}
 
@@ -285,8 +290,10 @@ public class TextParser
 			return new CinematicEvent(CinematicEventType.TREMBLE, area.getParams().get("name"));
 		else if (type.equalsIgnoreCase("fallonface"))
 			return new CinematicEvent(CinematicEventType.FALL_ON_FACE, area.getParams().get("name"), Integer.parseInt(area.getParams().get("dir")));
-		else if (type.equalsIgnoreCase("layonside"))
-			return new CinematicEvent(CinematicEventType.LAY_ON_SIDE, area.getParams().get("name"), Integer.parseInt(area.getParams().get("dir")));
+		else if (type.equalsIgnoreCase("layonsideright"))
+			return new CinematicEvent(CinematicEventType.LAY_ON_SIDE_RIGHT, area.getParams().get("name"), Integer.parseInt(area.getParams().get("dir")));
+		else if (type.equalsIgnoreCase("layonsideleft"))
+			return new CinematicEvent(CinematicEventType.LAY_ON_SIDE_LEFT, area.getParams().get("name"), Integer.parseInt(area.getParams().get("dir")));
 		else if (type.equalsIgnoreCase("layonback"))
 			return new CinematicEvent(CinematicEventType.LAY_ON_BACK, area.getParams().get("name"), Integer.parseInt(area.getParams().get("dir")));
 		else if (type.equalsIgnoreCase("flash"))
@@ -331,6 +338,8 @@ public class TextParser
 			return new CinematicEvent(CinematicEventType.MOVE_TO_FOREFRONT, area.getParams().get("name"));
 		else if (type.equalsIgnoreCase("rendernormal"))
 			return new CinematicEvent(CinematicEventType.MOVE_FROM_FOREFRONT, area.getParams().get("name"));
+		else if (type.equalsIgnoreCase("exit"))
+			return new CinematicEvent(CinematicEventType.EXIT_GAME);
 		return null;
 	}
 }

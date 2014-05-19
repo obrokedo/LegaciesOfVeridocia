@@ -49,7 +49,13 @@ public class SpriteContextPanel extends Panel
 		int mpWidth = (int) (sprite.getMaxMP() * .75 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);
 		width = Math.max(width, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 57 + healthWidth);
 		width = Math.max(width, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 57 + mpWidth);
-		width = Math.max(width, PANEL_FONT.getWidth(sprite.getName()) + 10 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);
+		if (sprite.isHero())
+		{
+			width = Math.max(width, PANEL_FONT.getWidth(sprite.getName() + " Lv " +
+					sprite.getLevel()) + 10 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);
+		}
+		else
+			width = Math.max(width, PANEL_FONT.getWidth(sprite.getName()) + 10 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);
 		int height = CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 27 + (sprite.getMaxMP() != 0 ? CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 10 : 0);
 		int x = 0;
 		int y = 0;
@@ -67,7 +73,11 @@ public class SpriteContextPanel extends Panel
 
 		Panel.drawPanelBox(x, y, width, height, graphics);
 		graphics.setColor(Panel.COLOR_FOREFRONT);
-		graphics.drawString(sprite.getName(), x + 10, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * -7 + 2);
+		if (sprite.isHero())
+			graphics.drawString(sprite.getName() + " Lv " +
+					sprite.getLevel(), x + 10, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * -7 + 2);
+		else
+			graphics.drawString(sprite.getName(), x + 10, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * -7 + 2);
 		graphics.drawString("HP", x + 10, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 4 - 1);
 		graphics.drawString(sprite.getCurrentHP() + "/" + sprite.getMaxHP(),
 				x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 22 + healthWidth,

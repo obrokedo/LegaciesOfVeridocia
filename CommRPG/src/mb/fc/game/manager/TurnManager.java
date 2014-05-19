@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 
 import mb.fc.engine.CommRPG;
+import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.BattleResultsMessage;
 import mb.fc.engine.message.BattleSelectionMessage;
 import mb.fc.engine.message.IntMessage;
@@ -36,6 +37,7 @@ import mb.fc.game.turnaction.MoveToTurnAction;
 import mb.fc.game.turnaction.TargetSpriteAction;
 import mb.fc.game.turnaction.TurnAction;
 import mb.fc.game.turnaction.WaitAction;
+import mb.jython.GlobalPythonFactory;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -69,6 +71,8 @@ public class TurnManager extends Manager implements KeyboardListener
 	private int cursorTargetX, cursorTargetY;
 	private int updateDelta = 0;
 	private boolean resetSpriteLoc = false;
+	private boolean turnManagerHasFocus = false;
+	private int activeCharFlashDelta = 0;
 	private static final int UPDATE_TIME = 20;
 
 	// This describes the location and size of the moveable tiles array on the world
@@ -106,6 +110,17 @@ public class TurnManager extends Manager implements KeyboardListener
 
 			if (displayAttackable && !currentSprite.isHero())
 				as.update(stateInfo);
+		}
+
+		if (turnManagerHasFocus)
+		{
+			activeCharFlashDelta += delta;
+
+			if (activeCharFlashDelta > 500)
+			{
+				activeCharFlashDelta -= 500;
+				currentSprite.setVisible(!currentSprite.isVisible());
+			}
 		}
 	}
 
@@ -154,13 +169,18 @@ public class TurnManager extends Manager implements KeyboardListener
 					// if there is a combat sprite here display it's health panel
 					if (cs != null)
 					{
+						stateInfo.removePanel(Panel.PANEL_HEALTH_BAR);
 						cs.triggerOverEvent(stateInfo);
 						landEffectPanel.setLandEffect(stateInfo.getCurrentMap().getLandEffectByTile(cs.getMovementType(),
 								cs.getTileX(), cs.getTileY()));
 						stateInfo.addSingleInstancePanel(landEffectPanel);
 					}
 					else
+					{
 						stateInfo.removePanel(landEffectPanel);
+						// Remove any health bar panels that may have been displayed from a sprite that we were previously over
+						stateInfo.removePanel(Panel.PANEL_HEALTH_BAR);
+					}
 					turnActions.remove(0);
 				}
 				break;
@@ -237,6 +257,8 @@ public class TurnManager extends Manager implements KeyboardListener
 				turnActions.remove(0);
 				break;
 			case TurnAction.ACTION_ATTACK_SPRITE:
+				if (!currentSprite.isHero())
+					stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menuselect", 1f, false));
 				stateInfo.sendMessage(new BattleResultsMessage(BattleResults.determineBattleResults(currentSprite,
 					((AttackSpriteAction) a).getTargets(),
 					((AttackSpriteAction) a).getBattleCommand(), stateInfo)));
@@ -471,8 +493,9 @@ public class TurnManager extends Manager implements KeyboardListener
 		// If we are already reset then switch to cursor mode
 		displayMoveable = false;
 		displayCursor = true;
-		stateInfo.removePanel(landEffectPanel);
+		stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, GlobalPythonFactory.createJMusicSelector().getMenuAddedSoundEffect(), 1f, false));
 		stateInfo.removeKeyboardListener();
+		this.turnManagerHasFocus = true;
 	}
 
 	@Override
@@ -593,7 +616,11 @@ public class TurnManager extends Manager implements KeyboardListener
 			}
 			else if (input.isKeyDown(KeyMapping.BUTTON_2))
 			{
+				this.turnManagerHasFocus = false;
+				currentSprite.setVisible(true);
 				turnActions.add(new TurnAction(TurnAction.ACTION_MOVE_CURSOR_TO_ACTOR));
+				stateInfo.removePanel(landEffectPanel);
+				stateInfo.removePanel(Panel.PANEL_HEALTH_BAR);
 				return true;
 			}
 			else if (input.isKeyDown(KeyMapping.BUTTON_3))
@@ -661,8 +688,6 @@ public class TurnManager extends Manager implements KeyboardListener
 			if (moved)
 			{
 				turnActions.add(new TurnAction(TurnAction.ACTION_MANUAL_MOVE_CURSOR));
-				// Remove any health bar panels that may have been displayed from a sprite that we were previously over
-				stateInfo.removePanel(Panel.PANEL_HEALTH_BAR);
 			}
 		}
 

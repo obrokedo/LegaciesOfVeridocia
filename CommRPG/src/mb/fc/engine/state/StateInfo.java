@@ -331,8 +331,8 @@ public class StateInfo
 
 	public void removePanel(Panel panel)
 	{
-		panels.remove(panel);
-		panel.panelRemoved(this);
+		if (panels.remove(panel))
+			panel.panelRemoved(this);
 	}
 
 	public void removePanel(int panelType)
@@ -359,8 +359,8 @@ public class StateInfo
 
 	public void removeMenu(Menu menu)
 	{
-		menus.remove(menu);
-		menu.panelRemoved(this);
+		if (menus.remove(menu))
+			menu.panelRemoved(this);
 	}
 
 	public void addSingleInstanceMenu(Menu menu)

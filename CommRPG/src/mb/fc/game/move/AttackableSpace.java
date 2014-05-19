@@ -214,7 +214,7 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 				return false;
 
 			stateInfo.removePanel(Panel.PANEL_ENEMY_HEALTH_BAR);
-			stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "targetselect", 1f, false));
+			stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menuselect", 1f, false));
 
 			ArrayList<CombatSprite> sprites = new ArrayList<CombatSprite>();
 			for (int i = 0; i < area.length; i++)

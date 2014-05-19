@@ -22,10 +22,6 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class MenuState extends LoadableGameState implements StringListener
 {
-
-	private ClientProfile clientProfile = null;
-	private ClientProgress clientProgress = null;
-
 	private StateBasedGame game;
 	private boolean init = false;
 	private UninitializedStringMenu mapNameMenu;
@@ -55,41 +51,7 @@ public class MenuState extends LoadableGameState implements StringListener
 
 	public void start(GameContainer gc, boolean cin, String map)
 	{
-		clientProgress = null;
-		File file = new File(".");
-		for (String s : file.list())
-		{
-			if (s.endsWith(".profile"))
-			{
-				clientProfile = ClientProfile.deserializeFromFile(s);
-			}
-			else if (s.endsWith(".progress"))
-			{
-				clientProgress =  ClientProgress.deserializeFromFile(s);
-			}
-		}
-
-		if (clientProfile == null)
-		{
-			clientProfile = new ClientProfile("Test");
-			// clientProfile.serializeToFile();
-			System.out.println("CREATE AND SAVE PROFILE");
-		}
-
-		if (clientProgress == null)
-		{
-			System.out.println("CREATE PROGRESS");
-			clientProgress = new ClientProgress("Quest");
-			clientProgress.serializeToFile(map, "north");
-		}
-
-		PersistentStateInfo persistentStateInfo =
-				new PersistentStateInfo(clientProfile, clientProgress, (CommRPG) game, new Camera(gc.getWidth() - ((FCGameContainer) gc).getDisplayPaddingX() * 2,
-						gc.getHeight()), gc, gc.getGraphics(), true);
-
-		game.addState(new BattleState(persistentStateInfo));
-		game.addState(new TownState(persistentStateInfo));
-		game.addState(new CinematicState(persistentStateInfo));
+		gameSetup(game, gc);
 
 		if (cin)
 			((CommRPG) game).setLoadingInfo(map, map,
@@ -152,5 +114,47 @@ public class MenuState extends LoadableGameState implements StringListener
 	public void stringEntered(String string, String action) {
 		gc.getInput().removeKeyListener(input);
 		start(game.getContainer(), action.equalsIgnoreCase("CIN"), string);
+	}
+
+	public static void gameSetup(StateBasedGame game, GameContainer gc)
+	{
+		ClientProgress clientProgress = null;
+		ClientProfile clientProfile = null;
+		String map = "";
+
+		File file = new File(".");
+		for (String s : file.list())
+		{
+			if (s.endsWith(".profile"))
+			{
+				clientProfile = ClientProfile.deserializeFromFile(s);
+			}
+			else if (s.endsWith(".progress"))
+			{
+				clientProgress =  ClientProgress.deserializeFromFile(s);
+			}
+		}
+
+		if (clientProfile == null)
+		{
+			clientProfile = new ClientProfile("Test");
+			// clientProfile.serializeToFile();
+			System.out.println("CREATE AND SAVE PROFILE");
+		}
+
+		if (clientProgress == null)
+		{
+			System.out.println("CREATE PROGRESS");
+			clientProgress = new ClientProgress("Quest");
+			clientProgress.serializeToFile(map, "north");
+		}
+
+		PersistentStateInfo persistentStateInfo =
+				new PersistentStateInfo(clientProfile, clientProgress, (CommRPG) game, new Camera(gc.getWidth() - ((FCGameContainer) gc).getDisplayPaddingX() * 2,
+						gc.getHeight()), gc, gc.getGraphics(), true);
+
+		game.addState(new BattleState(persistentStateInfo));
+		game.addState(new TownState(persistentStateInfo));
+		game.addState(new CinematicState(persistentStateInfo));
 	}
 }

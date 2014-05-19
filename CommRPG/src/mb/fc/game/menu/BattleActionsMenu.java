@@ -111,16 +111,9 @@ public class BattleActionsMenu extends QuadMenu
 				break;
 			case DOWN:
 				stateInfo.sendMessage(Message.MESSAGE_PLAYER_END_TURN);
-				stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menuselect", 1f, false));
 				break;
 		}
 
 		return MenuUpdate.MENU_CLOSE;
-	}
-
-	@Override
-	public boolean makeAddAndRemoveSounds()
-	{
-		return true;
 	}
 }

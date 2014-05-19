@@ -327,8 +327,12 @@ public class Cinematic {
 				actors.get(ce.getParam(0)).layOnBack(
 						getDirectionFromInt((int) ce.getParam(1)));
 				break;
-			case LAY_ON_SIDE:
-				actors.get(ce.getParam(0)).layOnSide(
+			case LAY_ON_SIDE_RIGHT:
+				actors.get(ce.getParam(0)).layOnSideRight(
+						getDirectionFromInt((int) ce.getParam(1)));
+				break;
+			case LAY_ON_SIDE_LEFT:
+				actors.get(ce.getParam(0)).layOnSideLeft(
 						getDirectionFromInt((int) ce.getParam(1)));
 				break;
 			case FALL_ON_FACE:
@@ -425,6 +429,9 @@ public class Cinematic {
 			case MOVE_FROM_FOREFRONT:
 				sortedActors.add(actors.get(ce.getParam(0)));
 				forefrontActors.remove(actors.get(ce.getParam(0)));
+				break;
+			case EXIT_GAME:
+				System.exit(0);
 				break;
 			default:
 				break;

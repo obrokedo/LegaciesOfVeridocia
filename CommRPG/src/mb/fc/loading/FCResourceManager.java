@@ -334,6 +334,14 @@ public class FCResourceManager extends ResourceManager {
 
 	public TriggerEvent getTriggerEventById(int id)
 	{
+		// TODO This is just to exit the game on hero death
+		if (id == -2)
+		{
+			TriggerEvent te = new TriggerEvent(-2, false, false, null, null);
+			te.addTriggerType(te.new TriggerExit());
+			return te;
+		}
+
 		return triggerEventById.get(id);
 	}
 

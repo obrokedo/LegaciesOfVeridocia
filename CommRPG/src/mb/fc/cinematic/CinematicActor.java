@@ -28,12 +28,13 @@ public class CinematicActor
 	public static final int SE_GROW = 2;
 	public static final int SE_QUIVER = 3;
 	public static final int SE_FALL_ON_FACE = 4;
-	public static final int SE_LAY_ON_SIDE = 5;
+	public static final int SE_LAY_ON_SIDE_LEFT = 5;
 	public static final int SE_FLASH = 6;
 	public static final int SE_NOD = 7;
 	public static final int SE_HEAD_SHAKE = 8;
 	public static final int SE_LAY_ON_BACK = 9;
 	public static final int SE_TREMBLE = 10;
+	public static final int SE_LAY_ON_SIDE_RIGHT = 11;
 
 	private SpriteAnims spriteAnims;
 	private Animation currentAnim;
@@ -102,7 +103,7 @@ public class CinematicActor
 		if (!visible)
 			return;
 
-		if (specialEffectType != SE_FALL_ON_FACE && specialEffectType != SE_LAY_ON_SIDE)
+		if (specialEffectType != SE_FALL_ON_FACE && specialEffectType != SE_LAY_ON_SIDE_RIGHT && specialEffectType != SE_LAY_ON_SIDE_LEFT)
 		{
 			for (AnimSprite as : currentAnim.frames.get(imageIndex).sprites)
 			{
@@ -239,8 +240,10 @@ public class CinematicActor
 		}
 		else if (specialEffectType == SE_FALL_ON_FACE)
 			renderFaceDown(graphics, camera, cont);
-		else if (specialEffectType == SE_LAY_ON_SIDE)
-			renderOnSide(graphics, camera, cont);
+		else if (specialEffectType == SE_LAY_ON_SIDE_RIGHT)
+			renderOnSideRight(graphics, camera, cont);
+		else if (specialEffectType == SE_LAY_ON_SIDE_LEFT)
+			renderOnSideLeft(graphics, camera, cont);
 		else if (specialEffectType == SE_LAY_ON_BACK)
 			renderOnBack(graphics, camera, cont);
 	}
@@ -255,9 +258,14 @@ public class CinematicActor
 		renderOnDirection(spriteAnims.getAnimation("UnDown").frames.get(0).sprites, graphics, camera, cont);
 	}
 
-	private void renderOnSide(Graphics graphics, Camera camera, FCGameContainer cont)
+	private void renderOnSideLeft(Graphics graphics, Camera camera, FCGameContainer cont)
 	{
 		renderOnDirection(spriteAnims.getAnimation("UnLeft").frames.get(0).sprites, graphics, camera, cont);
+	}
+
+	private void renderOnSideRight(Graphics graphics, Camera camera, FCGameContainer cont)
+	{
+		renderOnDirection(spriteAnims.getAnimation("UnRight").frames.get(0).sprites, graphics, camera, cont);
 	}
 
 	private void renderOnDirection(ArrayList<AnimSprite> sprites, Graphics graphics, Camera camera, FCGameContainer cont)
@@ -430,7 +438,10 @@ public class CinematicActor
 		{
 			specialEffectDelta += delta;
 			if (specialEffectDuration != INDEFINITE_TIME)
-				specialEffectDuration -= delta;
+			{
+				specialEffectDuration = Math.max(0, specialEffectDuration - delta);
+				// if (specialEffectDuration == IN)
+			}
 
 			while (specialEffectDelta > specialEffectUpdate && specialEffectType != SE_NONE)
 			{
@@ -440,12 +451,12 @@ public class CinematicActor
 				{
 					case SE_SHRINK:
 						specialEffectCounter -= .01f;
-						if (specialEffectDuration != INDEFINITE_TIME && specialEffectCounter < .01f)
+						if (specialEffectDuration == 0 && specialEffectCounter < .01f)
 							specialEffectType = SE_NONE;
 						break;
 					case SE_GROW:
 						specialEffectCounter += .01f;
-						if (specialEffectDuration != INDEFINITE_TIME && specialEffectCounter > .99f)
+						if (specialEffectDuration == 0 && specialEffectCounter > .99f)
 							specialEffectType = SE_NONE;
 						break;
 					case SE_QUIVER:
@@ -527,9 +538,18 @@ public class CinematicActor
 		animUpdate = Long.MAX_VALUE;
 	}
 
-	public void layOnSide(Direction dir)
+	public void layOnSideRight(Direction dir)
 	{
-		specialEffectType = SE_LAY_ON_SIDE;
+		specialEffectType = SE_LAY_ON_SIDE_RIGHT;
+		specialEffectDuration = -1;
+		specialEffectUpdate = 500;
+		specialEffectDirection = dir;
+		animUpdate = Long.MAX_VALUE;
+	}
+
+	public void layOnSideLeft(Direction dir)
+	{
+		specialEffectType = SE_LAY_ON_SIDE_LEFT;
 		specialEffectDuration = -1;
 		specialEffectUpdate = 500;
 		specialEffectDirection = dir;

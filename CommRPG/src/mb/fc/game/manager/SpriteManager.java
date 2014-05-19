@@ -3,6 +3,7 @@ package mb.fc.game.manager;
 import java.util.Iterator;
 
 import mb.fc.engine.message.Message;
+import mb.fc.engine.message.SpeechMessage;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.sprite.NPCSprite;
 import mb.fc.game.sprite.Sprite;
@@ -107,11 +108,22 @@ public class SpriteManager extends Manager
 				s.update();
 				if (s.getSpriteType() == Sprite.TYPE_COMBAT)
 				{
-					if (((CombatSprite) s).getCurrentHP() < -255)
+					CombatSprite cs = (CombatSprite) s;
+					if (cs.getCurrentHP() < -255)
 					{
-						stateInfo.removeCombatSprite((CombatSprite) s);
+						stateInfo.removeCombatSprite(cs);
 						s.destroy(stateInfo);
 						spriteItr.remove();
+
+						if (cs.isLeader())
+						{
+							if (cs.isHero())
+							{
+								stateInfo.sendMessage(new SpeechMessage(Message.MESSAGE_SPEECH, "You have been defeated...]", -2, -1));
+							}
+							else
+								stateInfo.getResourceManager().getTriggerEventById(1).perform(stateInfo);
+						}
 					}
 					// If the sprite did not die, then check to see if it is an enemy, if so the battle is not over
 					else if (!((CombatSprite) s).isHero())
