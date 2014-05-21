@@ -39,7 +39,7 @@ public class LoadingState extends BasicGameState
 	private int loadAmount;
 	private boolean loadingMap;
 	private String errorMessage = null;
-	public static final boolean inJar = false;
+	public static final boolean inJar = true;
 	public static Class<?> MY_CLASS;
 
 	public LoadingState(int stateId)

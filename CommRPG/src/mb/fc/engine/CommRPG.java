@@ -13,6 +13,9 @@ import mb.fc.loading.FCResourceManager;
 import mb.gl2.loading.LoadableGameState;
 import mb.gl2.loading.LoadingState;
 
+import org.lwjgl.LWJGLException;
+import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.DisplayMode;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
@@ -100,7 +103,7 @@ public class CommRPG extends StateBasedGame   {
 			fullScreenWidth = 0;
 			fullScreenHeight = Integer.MAX_VALUE;
 
-			/*
+
 			try {
 				double ratio =  container.getScreenWidth() * 1.0 / container.getScreenHeight();
 				System.out.println(ratio);
@@ -120,16 +123,14 @@ public class CommRPG extends StateBasedGame   {
 				System.out.println(fullScreenWidth + " " +fullScreenHeight);
 
 				GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] = fullScreenHeight / 240;
-				container.setDisplayPaddingX((int) ((fullScreenWidth - (GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 320)) / 2));
+				container.setDisplayPaddingX((fullScreenWidth - (GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 320)) / 2);
 
 
 			} catch (LWJGLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			*/
 
-			fullScreenWidth = 0;
 
 			if (fullScreenWidth == 0)
 			{

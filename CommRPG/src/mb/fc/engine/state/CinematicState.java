@@ -101,6 +101,11 @@ public class CinematicState extends LoadableGameState
 					cinematicSpeed *= 2;
 					stateInfo.setInputDelay(System.currentTimeMillis() + 200);
 				}
+				else if (container.getInput().isKeyDown(Input.KEY_F7))
+				{
+					((CommRPG) game).toggleFullScreen();
+					stateInfo.setInputDelay(System.currentTimeMillis() + 200);
+				}
 			}
 		}
 		stateInfo.getInput().update(delta);
