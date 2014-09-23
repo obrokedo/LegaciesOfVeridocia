@@ -51,6 +51,7 @@ public abstract class Panel
 	public static final int PANEL_ITEM = 23;
 	public static final int PANEL_ITEM_OPTIONS = 24;
 	public static final int PANEL_DEBUG = 25;
+	public static final int PANEL_TARGET_HEALTH_BAR = 26;
 
 	protected int panelType;
 	public final static Color COLOR_MOUSE_OVER = new Color(0, 0, 153);
@@ -113,10 +114,9 @@ public abstract class Panel
 		// graphics.setColor(Color.lightGray);
 		// graphics.fillRoundRect(x, y, width, height, 5);
 		// graphics.drawImage(menuBackground.getSubImage(0, 0, width - 10, height - 10), x + 5, y + 5);
-		graphics.setFont(PANEL_FONT);
-		graphics.setColor(new Color(0, 32, 96));
+		drawPanelBox(x, y, width, height, graphics, new Color(0, 32, 96));
 
-		renderer.render(MENU_BORDER, x, y, width, height, graphics);
+		// renderer.render(MENU_BORDER, x, y, width, height, graphics);
 	}
 
 	public static void drawPanelBox(int x, int y, int width, int height, Graphics graphics, Color color)
@@ -130,6 +130,18 @@ public abstract class Panel
 		// renderer.render(MENU_BORDER, x, y, width, height, graphics);
 
 		graphics.fillRect(x, y, width, height);
+
+		MENU_BORDER.getSprite(4, 0).draw(x, y + height - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 4, x + width, y + height, 4, 0, 5, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 4);
+		MENU_BORDER.getSprite(5, 0).draw(x, y, x + width, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 4, 4, 0, 5, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 4);
+		MENU_BORDER.getSprite(6, 0).draw(x, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 4, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 4, height - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 8);
+		MENU_BORDER.getSprite(7, 0).draw(x + width - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 4, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 4, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 4, height - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 8);
+
+		MENU_BORDER.getSprite(0, 0).draw(x, y + height - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 4);
+		MENU_BORDER.getSprite(1, 0).draw(x, y);
+		MENU_BORDER.getSprite(2, 0).draw(x + width - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 4, y + height - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 4);
+		MENU_BORDER.getSprite(3, 0).draw(x + width - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 4, y);
+
+		/*
 		MENU_BORDER.getSprite(4, 0).draw(x, y + height - 12, x + width, y + height, 4, 0, 5, 12);
 		MENU_BORDER.getSprite(5, 0).draw(x, y, x + width, y + 12, 4, 0, 5, 12);
 		MENU_BORDER.getSprite(6, 0).draw(x, y + 12, 12, height - 24);
@@ -139,6 +151,7 @@ public abstract class Panel
 		MENU_BORDER.getSprite(1, 0).draw(x, y);
 		MENU_BORDER.getSprite(2, 0).draw(x + width - 12, y + height - 12);
 		MENU_BORDER.getSprite(3, 0).draw(x + width - 12, y);
+		*/
 	}
 
 	public static void drawRect(Rectangle rect, Graphics graphics)

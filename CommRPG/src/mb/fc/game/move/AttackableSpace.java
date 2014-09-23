@@ -20,6 +20,7 @@ import mb.fc.game.ui.FCGameContainer;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 
 public class AttackableSpace implements KeyboardListener, MouseListener
 {
@@ -35,6 +36,7 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 	private int spriteTileX, spriteTileY;
 	private int tileWidth, tileHeight;
 	private ArrayList<CombatSprite> targetsInRange = new ArrayList<CombatSprite>();
+	private Image cursorImage;
 	private final Color ATTACKABLE_COLOR = new Color(255, 0, 0, 70);
 
 	public static final int[][] RANGE_0 = {{1}};
@@ -109,6 +111,8 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 
 		if (currentSprite.isHero())
 			stateInfo.registerMouseListener(this);
+
+		cursorImage = stateInfo.getResourceManager().getImages().get("battlecursor");
 	}
 
 	/**
@@ -138,8 +142,8 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 				for (int j = 0; j < area[0].length; j++)
 				{
 					if (area[i][j] == 1)
-						graphics.drawRect(selectX + (tileWidth * (i - areaOffset)) - camera.getLocationX() + gc.getDisplayPaddingX(),
-								selectY + (tileHeight * (j - areaOffset)) - camera.getLocationY(), tileWidth, tileHeight);
+						cursorImage.draw(selectX + (tileWidth * (i - areaOffset)) - camera.getLocationX() + gc.getDisplayPaddingX(),
+								selectY + (tileHeight * (j - areaOffset)) - camera.getLocationY());
 				}
 			}
 		}

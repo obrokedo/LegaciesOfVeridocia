@@ -26,4 +26,9 @@ public abstract class Menu extends Panel
 	}
 
 	public abstract MenuUpdate handleUserInput(FCInput input, StateInfo stateInfo);
+
+	public MenuUpdate update(long delta, StateInfo stateInfo)
+	{
+		return MenuUpdate.MENU_NO_ACTION;
+	}
 }

@@ -223,6 +223,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 		setupItemDefinitions();
 		setupQuestDefinitions();
 		setupCinematicDefinitions();
+		setupMapDefinitions();
 
 		initUI();
 
@@ -426,6 +427,8 @@ public class PlannerFrame extends JFrame implements ActionListener,
 
 		}
 	}
+
+
 
 	private void setupCinematicDefinitions() {
 		PlannerContainerDef cinematicContainer;
@@ -1764,6 +1767,16 @@ public class PlannerFrame extends JFrame implements ActionListener,
 						false,
 						"Retrigger Each Enter",
 						"If true, indicates that each time the map has been entered that this trigger should be reactivated"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_BOOLEAN, "triggeronce", false,
+				"Trigger Once Per Map",
+				"If true, indicates that this trigger can only be executed once per map"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_BOOLEAN, "triggerimmediately", false,
+				"Trigger Immediately",
+				"If true, indicates that this trigger should be executed as soon as a unit begins moving onto this space. "
+				+ "If unchecked, the tirgger will only take effect once the unit has stopped moving. Checking this will have "
+				+ "no effect during battle"));
 		PlannerLineDef definingLine = new PlannerLineDef("trigger", "Trigger",
 				"", definingValues);
 
@@ -1799,6 +1812,10 @@ public class PlannerFrame extends JFrame implements ActionListener,
 						PlannerValueDef.TYPE_STRING, "entrance", false,
 						"Entrance location",
 						"The name of the map location that the force will be placed at when the map loads"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_HERO,
+				PlannerValueDef.TYPE_MULTI_INT, "templeader", true,
+				"Temporary Leaders. If killed battle ends ",
+				"The ID of the quest that must be complete for this to be shown"));
 		allowableLines.add(new PlannerLineDef("startbattle", "Load Battle",
 				"Starts the battle with the given triggers and map",
 				definingValues));
@@ -1991,6 +2008,81 @@ public class PlannerFrame extends JFrame implements ActionListener,
 		containersByName.put("trigger", triggerContainer);
 	}
 
+	private void setupMapDefinitions() {
+		PlannerContainerDef itemContainer;
+
+		// Setup defining line
+		ArrayList<PlannerValueDef> definingValues = new ArrayList<PlannerValueDef>();
+		PlannerLineDef definingLine = new PlannerLineDef("start", "Item", "",
+				definingValues);
+
+		// Setup allowable containers
+		ArrayList<PlannerContainerDef> allowableContainers = new ArrayList<PlannerContainerDef>();
+
+		// Setup available types
+		ArrayList<PlannerLineDef> allowableLines = new ArrayList<PlannerLineDef>();
+
+		// Map Start Location
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_STRING, "entrance", false, "Map Entrance Name",
+				"The name of the entrance to the map."));
+		allowableLines.add(new PlannerLineDef("Map Entrance", "Map Entrance",
+				"This is used to determine where the hero starts when it enters the map. This is used in conjunction with the 'Load Map' trigger action",
+				definingValues));
+
+		// Use
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues
+				.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+						PlannerValueDef.TYPE_BOOLEAN, "targetsenemy", false,
+						"Targets Enemy",
+						"Whether this item can be used on enemies, otherwise it is used on allies"));
+		definingValues
+				.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+						PlannerValueDef.TYPE_INT, "damage", false,
+						"Damage Dealt",
+						"The amount of damage this item will deal on use (positive values will heal)"));
+		definingValues
+				.add(new PlannerValueDef(
+						PlannerValueDef.REFERS_NONE,
+						PlannerValueDef.TYPE_INT,
+						"mpdamage",
+						false,
+						"MP Damage Dealt",
+						"The amount of damage this item will deal to the targets MP on use (positive values will heal)"));
+		definingValues
+				.add(new PlannerValueDef(PlannerValueDef.REFERS_ITEM_RANGE,
+						PlannerValueDef.TYPE_INT, "range", false, "Item Range",
+						"The range this can be used from"));
+		definingValues.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_ITEM_AREA, PlannerValueDef.TYPE_INT,
+				"area", false, "Item Area of Effect",
+				"The area that this item can effect"));
+		definingValues
+				.add(new PlannerValueDef(
+						PlannerValueDef.REFERS_NONE,
+						PlannerValueDef.TYPE_STRING,
+						"text",
+						false,
+						"Item Use Text",
+						"The text that will be appended after the targets name in the attack cinematic. An example value would be 'is healed for 10'. "
+								+ "This would cause the battle text to become 'Noah is healed for 10'"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_BOOLEAN, "singleuse", false,
+				"Single Use Item",
+				"If true, the item will be removed after it has been used. "));
+
+		allowableLines.add(new PlannerLineDef("use", "Usuable Item",
+				"Marks this item as usuable and defines its' use",
+				definingValues));
+
+		itemContainer = new PlannerContainerDef(definingLine,
+				allowableContainers, allowableLines, listOfLists,
+				PlannerValueDef.REFERS_MAP - 1);
+		containersByName.put("map", itemContainer);
+	}
+
 	private void initUI() {
 		jtp = new JTabbedPane();
 		jtp.addTab("Triggers", new PlannerTab(containersByName,
@@ -2010,6 +2102,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 		jtp.addTab("Quests", new PlannerTab(containersByName,
 				new String[] { "quest" }, PlannerValueDef.REFERS_QUEST, this));
 		jtp.addTab("Battle Functions", new PlannerFunctionPanel());
+		jtp.addTab("Map Triggers", new MapTriggerPanel(containersByName));
 		jtp.addChangeListener(this);
 		jtp.setEnabledAt(TAB_TRIGGER, false);
 		jtp.setEnabledAt(TAB_CIN, false);
@@ -2080,7 +2173,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 			if (triggerFile != null)
 				openFile(triggerFile);
 		} else if (arg0.getActionCommand().equalsIgnoreCase("save")) {
-			for (int i = 0; i < jtp.getTabCount() - 1; i++)
+			for (int i = 0; i < jtp.getTabCount() - 2; i++)
 				((PlannerTab) jtp.getComponent(i)).setNewValues();
 
 			saveTriggers();
@@ -2163,7 +2256,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 	}
 
 	public void removeReferences(int referenceType, int referenceIndex) {
-		for (int i = 0; i < jtp.getTabCount() - 1; i++) {
+		for (int i = 0; i < jtp.getTabCount() - 2; i++) {
 			for (PlannerContainer pcs : ((PlannerTab) jtp.getComponent(i))
 					.getListPC()) {
 				for (PlannerLine pl : pcs.getLines()) {
@@ -2188,7 +2281,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 
 	@Override
 	public void stateChanged(ChangeEvent arg0) {
-		for (int i = 0; i < jtp.getTabCount() - 1; i++)
+		for (int i = 0; i < jtp.getTabCount() - 2; i++)
 			((PlannerTab) jtp.getComponent(i)).setNewValues();
 	}
 }

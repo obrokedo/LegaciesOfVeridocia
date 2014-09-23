@@ -5,8 +5,6 @@ import java.io.File;
 import mb.fc.engine.CommRPG;
 import mb.fc.game.Camera;
 import mb.fc.game.input.FCInput;
-import mb.fc.game.listener.StringListener;
-import mb.fc.game.menu.UninitializedStringMenu;
 import mb.fc.game.persist.ClientProfile;
 import mb.fc.game.persist.ClientProgress;
 import mb.fc.game.ui.FCGameContainer;
@@ -18,23 +16,24 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class MenuState extends LoadableGameState implements StringListener
+public class MenuState extends LoadableGameState
 {
-	private StateBasedGame game;
-	private UninitializedStringMenu mapNameMenu;
-	private FCInput input;
-	private GameContainer gc;
-	private String version = "0.03";
-	private Font font;
-	private Font smallFont;
-	private boolean initialized = false;
-	private int stateIndex = 0;
-	private int menuIndex = 0;
-	private int updateDelta = 0;
+	protected StateBasedGame game;
+	protected GameContainer gc;
+	protected String version = "DEMO";
+	protected Font font;
+	protected boolean initialized = false;
+	protected FCInput input;
+	protected int stateIndex = 0;
+	protected int menuIndex = 0;
+	protected int updateDelta = 0;
+	protected PersistentStateInfo persistentStateInfo;
+	private Image bgImage;
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
@@ -42,111 +41,91 @@ public class MenuState extends LoadableGameState implements StringListener
 
 		this.game = game;
 		this.gc = container;
+		input = new FCInput();
+		container.getInput().addKeyListener(input);
 	}
 
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException
 	{
-		if (mapNameMenu != null)
-		{
-			mapNameMenu.render((FCGameContainer) container, g);
-		}
-
 		if (initialized)
 		{
+			// g.setColor(new Color(171, 194, 208));
+			// g.fillRect(0, 0, gc.getWidth(), gc.getHeight());
+			// g.drawImage(bgImage, 0, 0);
+			bgImage.draw(((FCGameContainer) gc).getDisplayPaddingX(), 0, 1.25f);
 			if (stateIndex == 0)
 			{
 				if (menuIndex == 0)
 					g.setColor(Color.red);
 				else
-					g.setColor(Color.white);
-				g.drawString("Press Enter to Start Demo", (container.getWidth() - g.getFont().getWidth("Press Enter to Start Demo")) / 2, container.getHeight() * .33f + 90);
+					g.setColor(Color.black);
+				g.drawString("Press Enter to Start Demo", (container.getWidth() - g.getFont().getWidth("Press Enter to Start Demo")) / 2, container.getHeight() * .005f + 90);
 
 				if (menuIndex == 1)
 					g.setColor(Color.red);
 				else
-					g.setColor(Color.white);
-				g.drawString("Credits", (container.getWidth() - g.getFont().getWidth("Credits")) / 2, container.getHeight() * .33f + 120);
+					g.setColor(Color.black);
+				g.drawString("Credits", (container.getWidth() - g.getFont().getWidth("Credits")) / 2, container.getHeight() * .005f + 120);
 
 				if (menuIndex == 2)
 					g.setColor(Color.red);
 				else
-					g.setColor(Color.white);
-				g.drawString("Exit", (container.getWidth() - g.getFont().getWidth("Exit")) / 2, container.getHeight() * .33f + 150);
+					g.setColor(Color.black);
+				g.drawString("Exit", (container.getWidth() - g.getFont().getWidth("Exit")) / 2, container.getHeight() * .005f + 150);
 			}
 			else if (stateIndex == 1)
 			{
-				g.setColor(Color.lightGray);
-				g.drawString("Thanks to Musical Contributions from Newgrounds:", (container.getWidth() - g.getFont().getWidth("Thanks to Musical Contributions from Newgrounds:")) / 2, container.getHeight() * .33f + 90);
-				g.setColor(Color.white);
-				g.drawString("Remote Attack by dem0lecule", (container.getWidth() - g.getFont().getWidth("Remote Attack by dem0lecule")) / 2, container.getHeight() * .33f + 120);
-				g.drawString("The Tense Battle by Sephirot24", (container.getWidth() - g.getFont().getWidth("The Tense Battle by Sephirot24")) / 2, container.getHeight() * .33f + 150);
-				g.drawString("Shark Patrol by Ben Tibbetts", (container.getWidth() - g.getFont().getWidth("Shark Patrol by Ben Tibbetts")) / 2, container.getHeight() * .33f + 180);
-				g.drawString("Hero Music by Benmode", (container.getWidth() - g.getFont().getWidth("Hero Music by Benmode")) / 2, container.getHeight() * .33f + 210);
-				g.setColor(Color.lightGray);
-				g.drawString("Special Thanks to Everyone at SFC!", (container.getWidth() - g.getFont().getWidth("Special Thanks to Everyone at SFC!")) / 2, container.getHeight() * .33f + 270);
+				g.setColor(Color.black);
+				g.drawString("Thanks to Musical Contributions from Newgrounds:", (container.getWidth() - g.getFont().getWidth("Thanks to Musical Contributions from Newgrounds:")) / 2, container.getHeight() * .005f + 90);
+				g.setColor(Color.yellow);
+				g.drawString("Remote Attack by dem0lecule", (container.getWidth() - g.getFont().getWidth("Remote Attack by dem0lecule")) / 2, container.getHeight() * .005f + 120);
+				g.drawString("The Tense Battle by Sephirot24", (container.getWidth() - g.getFont().getWidth("The Tense Battle by Sephirot24")) / 2, container.getHeight() * .005f + 150);
+				g.drawString("Shark Patrol by Ben Tibbetts", (container.getWidth() - g.getFont().getWidth("Shark Patrol by Ben Tibbetts")) / 2, container.getHeight() * .005f + 180);
+				g.drawString("Hero Music by Benmode", (container.getWidth() - g.getFont().getWidth("Hero Music by Benmode")) / 2, container.getHeight() * .005f + 210);
+				g.setColor(Color.black);
+				g.drawString("Special Thanks to Everyone at SFC!", (container.getWidth() - g.getFont().getWidth("Special Thanks to Everyone at SFC!")) / 2, container.getHeight() * .005f + 270);
 				g.setColor(Color.red);
-				g.drawString("Back", (container.getWidth() - g.getFont().getWidth("Back")) / 2, container.getHeight() * .33f + 330);
+				g.drawString("Back", (container.getWidth() - g.getFont().getWidth("Back")) / 2, container.getHeight() * .005f + 330);
 			}
 
 			g.setColor(Color.white);
 			g.drawString("Version: " + version, 15, container.getHeight() - 30);
 			g.setFont(font);
-			g.drawString(CommRPG.GAME_TITLE, (container.getWidth() - font.getWidth(CommRPG.GAME_TITLE)) / 2, container.getHeight() * .33f);
+			g.drawString(CommRPG.GAME_TITLE, (container.getWidth() - font.getWidth(CommRPG.GAME_TITLE)) / 2, container.getHeight() * .005f - 15);
 		}
 	}
 
-	public void start(GameContainer gc, boolean cin, String map)
+	public void start(GameContainer gc, int load, String map, String text, String entrance)
 	{
 		gameSetup(game, gc);
 
-		if (cin)
-			((CommRPG) game).setLoadingInfo(map, map,
+		persistentStateInfo.setEntranceLocation(entrance);
+
+		if (load == 1)
+			((CommRPG) game).setLoadingInfo(text, map,
 				(LoadableGameState) game.getState(CommRPG.STATE_GAME_CINEMATIC));
-		else
+		else if (load == 0)
 		{
-			((CommRPG) game).setLoadingInfo(map, map,
+			((CommRPG) game).setLoadingInfo(text, map,
 					(LoadableGameState) game.getState(CommRPG.STATE_GAME_TOWN));
+		}
+		else if (load == 2)
+		{
+			((CommRPG) game).setLoadingInfo(text, map,
+					(LoadableGameState) game.getState(CommRPG.STATE_GAME_BATTLE));
 		}
 
 		if (gc.isFullscreen())
 			gc.setMouseGrabbed(true);
 
 		game.enterState(CommRPG.STATE_GAME_LOADING);
-
-		/*
-		((CommRPG) game).setLoadingInfo("GHLand1", "GHLand1",
-				(LoadableGameState) game.getState(CommRPG.STATE_GAME_TOWN), true);
-		game.enterState(CommRPG.STATE_GAME_LOADING);
-
-
-
-		((CommRPG) game).setLoadingInfo("Town1", "Town1",
-				(LoadableGameState) game.getState(CommRPG.STATE_GAME_TOWN), true);
-		game.enterState(CommRPG.STATE_GAME_LOADING);
-		*/
 	}
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
-
-		/*
-		if (!init)
-		{
-			mapNameMenu = new UninitializedStringMenu(gc, "Map name to start:", this);
-			init = true;
-			input = new FCInput();
-			container.getInput().addKeyListener(input);
-		}
-		else
-		{
-			mapNameMenu.handleMouseInput(container.getInput().getMouseX(), container.getInput().getMouseY(),
-					container.getInput().isMouseButtonDown(Input.MOUSE_LEFT_BUTTON));
-		}
-		*/
-
 		if (initialized)
 		{
 			if (updateDelta != 0)
@@ -155,10 +134,10 @@ public class MenuState extends LoadableGameState implements StringListener
 				return;
 			}
 
-			if (container.getInput().isKeyDown(Input.KEY_ENTER))
+			if (input.isKeyDown(Input.KEY_ENTER))
 			{
 				if (menuIndex == 0 && stateIndex == 0)
-					start(container, true, "eriumcastle");
+					start(container, 1, "eriumcastle", "eriumcastle", null);
 				else if (menuIndex == 0 && stateIndex == 1)
 				{
 					stateIndex = 0;
@@ -174,17 +153,17 @@ public class MenuState extends LoadableGameState implements StringListener
 				else if (menuIndex == 2)
 					System.exit(0);
 			}
-			else if (container.getInput().isKeyDown(Input.KEY_F7))
+			else if (input.isKeyDown(Input.KEY_F7))
 			{
 				((CommRPG) game).toggleFullScreen();
 				updateDelta = 200;
 			}
-			else if (container.getInput().isKeyDown(Input.KEY_UP) && menuIndex > 0)
+			else if (input.isKeyDown(Input.KEY_UP) && menuIndex > 0)
 			{
 				menuIndex--;
 				updateDelta = 200;
 			}
-			else if (container.getInput().isKeyDown(Input.KEY_DOWN) && menuIndex < 2)
+			else if (input.isKeyDown(Input.KEY_DOWN) && menuIndex < 2)
 			{
 				menuIndex++;
 				updateDelta = 200;
@@ -195,7 +174,7 @@ public class MenuState extends LoadableGameState implements StringListener
 	@Override
 	public void stateLoaded(ResourceManager resourceManager) {
 		font = ((FCResourceManager) resourceManager).getFontByName("menufont");
-		smallFont = ((FCResourceManager) resourceManager).getFontByName("smallfont");
+		bgImage = ((FCResourceManager) resourceManager).getImages().get("mainbg");
 		initialized = true;
 
 	}
@@ -206,13 +185,7 @@ public class MenuState extends LoadableGameState implements StringListener
 		return CommRPG.STATE_GAME_MENU;
 	}
 
-	@Override
-	public void stringEntered(String string, String action) {
-		gc.getInput().removeKeyListener(input);
-		start(game.getContainer(), action.equalsIgnoreCase("CIN"), string);
-	}
-
-	public static void gameSetup(StateBasedGame game, GameContainer gc)
+	public void gameSetup(StateBasedGame game, GameContainer gc)
 	{
 		ClientProgress clientProgress = null;
 		ClientProfile clientProfile = null;
@@ -245,7 +218,7 @@ public class MenuState extends LoadableGameState implements StringListener
 			clientProgress.serializeToFile(map, "north");
 		}
 
-		PersistentStateInfo persistentStateInfo =
+		persistentStateInfo =
 				new PersistentStateInfo(clientProfile, clientProgress, (CommRPG) game, new Camera(gc.getWidth() - ((FCGameContainer) gc).getDisplayPaddingX() * 2,
 						gc.getHeight()), gc, gc.getGraphics(), true);
 

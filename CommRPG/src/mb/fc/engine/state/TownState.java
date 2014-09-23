@@ -26,17 +26,17 @@ public class TownState extends LoadableGameState
 {
 	private TileMapRenderer tileMapRenderer;
 	private SpriteRenderer spriteRenderer;
-	private PanelRenderer panelRenderer;	
-	private MenuRenderer menuRenderer;	
+	private PanelRenderer panelRenderer;
+	private MenuRenderer menuRenderer;
 	private SpriteManager spriteManager;
 	private PanelManager panelManager;
 	private MenuManager menuManager;
 	private TownMoveManager townMoveManager;
 	private CinematicManager cinematicManager;
 	private SoundManager soundManager;
-	
+
 	private StateInfo stateInfo;
-	
+
 	public TownState(PersistentStateInfo psi)
 	{
 		this.stateInfo = new StateInfo(psi, false, false);
@@ -47,7 +47,7 @@ public class TownState extends LoadableGameState
 		this.panelRenderer = new PanelRenderer();
 		stateInfo.registerManager(panelRenderer);
 		this.menuRenderer = new MenuRenderer();
-		stateInfo.registerManager(menuRenderer);		
+		stateInfo.registerManager(menuRenderer);
 		this.spriteManager = new SpriteManager();
 		stateInfo.registerManager(spriteManager);
 		this.panelManager = new PanelManager();
@@ -61,28 +61,28 @@ public class TownState extends LoadableGameState
 		this.soundManager = new SoundManager();
 		stateInfo.registerManager(soundManager);
 	}
-	
+
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
-			throws SlickException 
+			throws SlickException
 	{
 		stateInfo.initState();
 	}
-	
+
 	@Override
 	public void enter(GameContainer container, StateBasedGame game)
-			throws SlickException {		
+			throws SlickException {
 		super.enter(container, game);
-	}		
+	}
 
 	@Override
 	public void leave(GameContainer container, StateBasedGame game)
 			throws SlickException {
-	
-		stateInfo.getResourceManager().reinitialize();		
+
+		stateInfo.getResourceManager().reinitialize();
 		stateInfo.setInitialized(false);
 		stateInfo.getInput().clear();
-		
+
 		super.leave(container, game);
 	}
 
@@ -104,21 +104,21 @@ public class TownState extends LoadableGameState
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
-			throws SlickException 
-	{					
+			throws SlickException
+	{
 		stateInfo.processMessages();
 		if (stateInfo.isInitialized())
-		{				
-			menuManager.update();
+		{
+			menuManager.update(delta);
 			cinematicManager.update(delta);
 			if (!menuManager.isBlocking() && !cinematicManager.isBlocking())
 			{
 				panelManager.update();
 				townMoveManager.update(delta);
 			}
-			spriteManager.update(delta);	
+			spriteManager.update(delta);
 			soundManager.update(delta);
-			
+
 			if (System.currentTimeMillis() > stateInfo.getInputDelay())
 			{
 				if (container.getInput().isKeyDown(Input.KEY_ESCAPE))
@@ -144,18 +144,18 @@ public class TownState extends LoadableGameState
 					stateInfo.setInputDelay(System.currentTimeMillis() + 200);
 				}
 				else if (container.getInput().isKeyDown(Input.KEY_ENTER))
-				{					
+				{
 					stateInfo.sendMessage(Message.MESSAGE_SHOW_DEBUG);
 					stateInfo.setInputDelay(System.currentTimeMillis() + 200);
 				}
 				else if (container.getInput().isKeyDown(Input.KEY_F7))
-				{					
+				{
 					((CommRPG) game).toggleFullScreen();
 				}
 			}
-			
+
 			stateInfo.getInput().update(delta);
-		}		
+		}
 	}
 
 	@Override
@@ -164,7 +164,7 @@ public class TownState extends LoadableGameState
 	}
 
 	@Override
-	public void stateLoaded(ResourceManager resourceManager) {	
-		this.stateInfo.setResourceManager((FCResourceManager) resourceManager);				
+	public void stateLoaded(ResourceManager resourceManager) {
+		this.stateInfo.setResourceManager((FCResourceManager) resourceManager);
 	}
 }

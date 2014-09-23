@@ -2,9 +2,11 @@ package mb.fc.engine;
 
 import java.util.Random;
 
+import javax.swing.JOptionPane;
+
 import mb.fc.engine.log.FileLogger;
 import mb.fc.engine.state.AttackCinematicState;
-import mb.fc.engine.state.MenuState;
+import mb.fc.engine.state.DevelMenuState;
 import mb.fc.engine.state.PersistentStateInfo;
 import mb.fc.engine.state.TestState;
 import mb.fc.game.ui.FCGameContainer;
@@ -47,6 +49,8 @@ public class CommRPG extends StateBasedGame   {
 	public static final int STATE_GAME_BATTLE_ANIM = 6;
 
 	public static final int STATE_GAME_TEST = 7;
+
+	public static final int STATE_GAME_MENU_DEVEL = 8;
 
 	/**
 	 * A global random number generator
@@ -97,7 +101,6 @@ public class CommRPG extends StateBasedGame   {
 		{
 			CommRPG fc = new CommRPG();
 			FCGameContainer container = new FCGameContainer(fc);
-			container.setShowFPS(true);
 
 			// TODO We want to keep the same screen resolution ratio but then just expand the vertical black bars. Potentially put menus in the bars
 			fullScreenWidth = 0;
@@ -131,27 +134,39 @@ public class CommRPG extends StateBasedGame   {
 				e.printStackTrace();
 			}
 
+			fullScreenWidth = 0;
 
 			if (fullScreenWidth == 0)
 			{
 				System.out.println("Unable to enter full screen");
-				// GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] = 3;
+				for (DisplayMode dm : Display.getAvailableDisplayModes())
+					System.out.println(dm);
+				GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] = 3;
 				container.setDisplayPaddingX(0);
-				container.setDisplayMode(320 * GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], 240 * GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], false);
+				try
+				{
+					container.setDisplayMode(320 * GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], 240 * GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], false);
+				}
+				catch (SlickException se)
+				{
+					GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] = 2;
+					container.setDisplayMode(320 * GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], 240 * GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], false);
+				}
 			}
 			else
 				container.setDisplayMode(fullScreenWidth, fullScreenHeight, true);
 			// container.setDisplayPaddingX(100);
 			// container.setDisplayMode(200 + 320 * GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], 240 * GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], false);
 
+			container.setShowFPS(false);
 			container.setVSync(true);
-			container.setAlwaysRender(true);
+			container.setAlwaysRender(false);
 			container.setTargetFrameRate(60);
 			container.start();
 		}
 		catch (Throwable ex)
 		{
-			System.out.println("POON");
+			JOptionPane.showMessageDialog(null, "An error has occurred: " + ex.getMessage());
 			ex.printStackTrace();
 		}
 	}
@@ -159,7 +174,7 @@ public class CommRPG extends StateBasedGame   {
 	public CommRPG()
 	{
 		super(GAME_TITLE);
-		DH =  new DEBUG_HOLDER(0);
+		DH =  new DEBUG_HOLDER(1);
 		Log.setLogSystem(new FileLogger());
 	}
 
@@ -200,7 +215,8 @@ public class CommRPG extends StateBasedGame   {
 
 		LoadingState.loading = true;
 		loadingState = new LoadingState(STATE_GAME_LOADING);
-		this.addState(new MenuState());
+		// this.addState(new MenuState());
+		this.addState(new DevelMenuState());
 
 		this.addState(new AttackCinematicState());
 		this.addState(loadingState);
@@ -228,7 +244,7 @@ public class CommRPG extends StateBasedGame   {
 
 		loadingState.setLoadingInfo("/menu/MainMenu", null, false, true,
 				new FCResourceManager(),
-					(LoadableGameState) this.getState(STATE_GAME_MENU),
+					(LoadableGameState) this.getState(STATE_GAME_MENU_DEVEL),
 						new FCLoadingRenderSystem(gameContainer));
 
 

@@ -442,13 +442,13 @@ public class StateInfo
 	/****************************/
 	/* Plot Progression Methods	*/
 	/****************************/
-	public void checkTriggers(int mapX, int mapY)
+	public void checkTriggers(int mapX, int mapY, boolean immediate)
 	{
 		for (TriggerLocation trigger : triggers)
 		{
 			if (trigger.contains(mapX, mapY))
 			{
-				trigger.perform(this);
+				trigger.perform(this, immediate);
 			}
 		}
 	}

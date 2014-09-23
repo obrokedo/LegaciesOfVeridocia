@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 
 import mb.fc.engine.CommRPG;
+import mb.fc.game.Timer;
 import mb.fc.game.battle.BattleResults;
 import mb.fc.game.battle.command.BattleCommand;
 import mb.fc.game.hudmenu.Panel;
@@ -121,7 +122,6 @@ public class AttackCinematicState extends LoadableGameState
 	private boolean targetsAreAllies = false;
 	private boolean targetSelf = false;
 	private byte state = 0;
-	private int stateDelta = 0;
 	private int transitionX = 0;
 	private int transitionIndex = 0;
 	private boolean deathFade = false;
@@ -129,7 +129,8 @@ public class AttackCinematicState extends LoadableGameState
 	private Color damageColor = new Color(204, 102, 0, 200);
 	private Color deathColor = new Color(255, 255, 255, 255);
 	private JMusicSelector musicSelector;
-
+	private Timer damageTimer;
+	private Timer spellTimer;
 	private SpriteAnims spellAnims;
 	private Animation spellAnim;
 	private int spellAnimIndex = 0;
@@ -361,8 +362,13 @@ public class AttackCinematicState extends LoadableGameState
 
 	private void handleTargetUpdate(GameContainer container, int delta)
 	{
+
 		if (damageFade > -1)
-			damageFade--;
+		{
+			damageTimer.update(delta);
+			while (damageFade > -1 && damageTimer.perform())
+				damageFade--;
+		}
 
 		targetDelta += delta;
 		if (targetDelta > targetAnim.frames.get(targetAnimIndex).delay)
@@ -396,7 +402,7 @@ public class AttackCinematicState extends LoadableGameState
 					if (state == STATE_TRANSITION_ATTACKER_OUT)
 					{
 						state = STATE_ATTACK_CLIMAX;
-
+						System.out.println("SET STATE CLIMAX 1");
 					}
 					// If we are transitioning and we are already at the last target then that means we are actually transitioning in
 					// the attacker, so we need to set the end of battle state
@@ -409,12 +415,15 @@ public class AttackCinematicState extends LoadableGameState
 						else
 							textMenu = null;
 
+						System.out.println("SET STATE POST ATTACK");
+
 						state = STATE_POST_ATTACK;
 						this.attackerAnimIndex = 0;
 						attackerAnim = attacker.getAnimation("UnStand");
 					}
 					else
 					{
+						System.out.println("TRANSITION AT 10, NO STATE");
 						deathFade = false;
 						targetAnim = targets.get(++targetIndex).getAnimation("UnStand");
 					}
@@ -441,126 +450,123 @@ public class AttackCinematicState extends LoadableGameState
 
 	private void handleStateUpdate(GameContainer container, StateBasedGame game, int delta)
 	{
-		stateDelta += delta;
+		MenuUpdate menuUpdate = MenuUpdate.MENU_NO_ACTION;
+		if (textMenu != null)
+			menuUpdate = textMenu.update(delta, null);
 
-		// Handle use input based on the current state
-		if (stateDelta > 25)
+		if (textMenu != null)
+			textMenu.handleUserInput(input, null);
+		// If the enemy was the attacker then there will be no menu to check, in this case just look directly for the key down
+		else if (state == STATE_POST_ATTACK)
 		{
-			MenuUpdate menuUpdate = MenuUpdate.MENU_NO_ACTION;
+			container.getInput().removeAllKeyListeners();
+			game.enterState(CommRPG.STATE_GAME_BATTLE, new FadeOutTransition(Color.black, 250), new EmptyTransition());
+			music.fade(250, 0f, true);
+		}
 
-			if (textMenu != null)
-				menuUpdate = textMenu.handleUserInput(input, null);
-			// If the enemy was the attacker then there will be no menu to check, in this case just look directly for the key down
+		if (menuUpdate == MenuUpdate.MENU_NEXT_ACTION)
+		{
+			if (battleResults.levelUpResult != null)
+			{
+				attacker.getHeroProgression().levelUp(attacker, battleResults.levelUpResult, frm);
+				String sound = musicSelector.getLevelUpSoundEffect(attacker);
+				if (sound != null)
+					frm.getSoundByName(sound).play();
+			}
+		}
+
+		if (menuUpdate == MenuUpdate.MENU_CLOSE)
+		{
+			// If the user clicks pre-attack then start the attack sequence
+			if (state == STATE_PRE_ATTACK)
+			{
+				state = STATE_ATTACKING;
+				attackerAnimIndex = 0;
+				if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_ATTACK)
+					attackerAnim = attacker.getAnimation("UnAttack");
+				else if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_SPELL)
+				{
+					if (attacker.getAnimation("UnSpell") != null)
+						attackerAnim = attacker.getAnimation("UnSpell");
+					else
+						attackerAnim = attacker.getAnimation("UnAttack");
+				}
+				else if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_ITEM)
+				{
+					if (attacker.getAnimation("UnItem") != null)
+						attackerAnim = attacker.getAnimation("UnItem");
+					else
+						attackerAnim = attacker.getAnimation("UnAttack");
+				}
+			}
+			// If the user clicks after the attack then return to the battle game-state
 			else if (state == STATE_POST_ATTACK)
 			{
 				container.getInput().removeAllKeyListeners();
 				game.enterState(CommRPG.STATE_GAME_BATTLE, new FadeOutTransition(Color.black, 250), new EmptyTransition());
 				music.fade(250, 0f, true);
 			}
-
-			if (menuUpdate == MenuUpdate.MENU_NEXT_ACTION)
+			else if (state == STATE_ATTACK_CLIMAX)
 			{
-				if (battleResults.levelUpResult != null)
+				// This is the final target, switch off multiple targets so the battle can end
+				if (targetIndex + 1 == targets.size())
 				{
-					attacker.getHeroProgression().levelUp(attacker, battleResults.levelUpResult, frm);
-					String sound = musicSelector.getLevelUpSoundEffect(attacker);
-					if (sound != null)
-						frm.getSoundByName(sound).play();
-				}
-			}
-
-			if (menuUpdate == MenuUpdate.MENU_CLOSE)
-			{
-				stateDelta = 0;
-
-				// If the user clicks pre-attack then start the attack sequence
-				if (state == STATE_PRE_ATTACK)
-				{
-					state = STATE_ATTACKING;
-					attackerAnimIndex = 0;
-					if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_ATTACK)
-						attackerAnim = attacker.getAnimation("UnAttack");
-					else if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_SPELL)
+					if (transitionIndex == 0)
 					{
-						if (attacker.getAnimation("UnSpell") != null)
-							attackerAnim = attacker.getAnimation("UnSpell");
-						else
-							attackerAnim = attacker.getAnimation("UnAttack");
-					}
-					else if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_ITEM)
-					{
-						if (attacker.getAnimation("UnItem") != null)
-							attackerAnim = attacker.getAnimation("UnItem");
-						else
-							attackerAnim = attacker.getAnimation("UnAttack");
-					}
-				}
-				// If the user clicks after the attack then return to the battle game-state
-				else if (state == STATE_POST_ATTACK)
-				{
-					container.getInput().removeAllKeyListeners();
-					game.enterState(CommRPG.STATE_GAME_BATTLE, new FadeOutTransition(Color.black, 250), new EmptyTransition());
-					music.fade(250, 0f, true);
-				}
-				else if (state == STATE_ATTACK_CLIMAX)
-				{
-					// This is the final target, switch off multiple targets so the battle can end
-					if (targetIndex + 1 == targets.size())
-					{
-						if (transitionIndex == 0)
+						spellAnimIndex = -1;
+						// If this action is targeting allies and the attacker is not a target then we need to transition them back in.
+						if (targetsAreAllies && !targetSelf)
 						{
-							spellAnimIndex = -1;
-							// If this action is targeting allies and the attacker is not a target then we need to transition them back in.
-							if (targetsAreAllies && !targetSelf)
+							state = STATE_TRANSITION_ATTACKER_IN;
+							transitionIndex = 1;
+						}
+						else
+						{
+							attackerAnim = attacker.getAnimation("UnStand");
+							targetAnim = targets.get(targetIndex).getAnimation("UnStand");
+							attackerAnimIndex = 0;
+
+							if (battleResults.attackOverText != null)
 							{
-								state = STATE_TRANSITION_ATTACKER_IN;
-								transitionIndex = 1;
+								textMenu = new SpeechMenu(battleResults.attackOverText, (FCGameContainer) container, true, true);
 							}
 							else
-							{
-								attackerAnim = attacker.getAnimation("UnStand");
-								targetAnim = targets.get(targetIndex).getAnimation("UnStand");
-								attackerAnimIndex = 0;
+								textMenu = null;
 
-								if (battleResults.attackOverText != null)
-								{
-									textMenu = new SpeechMenu(battleResults.attackOverText, (FCGameContainer) container, true, true);
-								}
-								else
-									textMenu = null;
-
-								state = STATE_POST_ATTACK;
-							}
+							state = STATE_POST_ATTACK;
 						}
-					}
-					//TODO What the fuck is going on here that I need to do this, some
-					// how the transition index is fucked up
-					else if (transitionIndex == 0 || transitionIndex > 20)
-					{
-						transitionIndex = 1;
 					}
 				}
-				// Check to see if we are in the casting spell state, in this case we want to flash the screen.
-				// Once the screen flash is done then need to potentially show the spell and perform the results.
-				// Finally move back to the attacking state so we can get back to the climax state
-				else if (state == STATE_CASTING_SPELL)
+				//TODO What the fuck is going on here that I need to do this, some
+				// how the transition index is fucked up
+				else if (transitionIndex == 0 || transitionIndex > 20)
 				{
+					transitionIndex = 1;
+				}
+			}
+			// Check to see if we are in the casting spell state, in this case we want to flash the screen.
+			// Once the screen flash is done then need to potentially show the spell and perform the results.
+			// Finally move back to the attacking state so we can get back to the climax state
+			else if (state == STATE_CASTING_SPELL)
+			{
+				spellTimer.update(delta);
+
+				while (spellTimer.perform())
 					castingDelta++;
 
-					if (castingDelta >= 24)
+				if (castingDelta >= 24)
+				{
+					castingDelta = 0;
+
+					// Check to see if we are casting a spell on someone besides an ally, in this case case display the spell
+					if (!targetsAreAllies || (targetSelf && targets.size() == 1))
 					{
-						castingDelta = 0;
-
-						// Check to see if we are casting a spell on someone besides an ally, in this case case display the spell
-						if (!targetsAreAllies || (targetSelf && targets.size() == 1))
-						{
-							spellAnimIndex = 0;
-							textMenu = new SpeechMenu(battleResults.text.get(targetIndex), (FCGameContainer) container, true, true);
-							performBattleResult();
-						}
-
-						state = STATE_ATTACKING;
+						spellAnimIndex = 0;
+						textMenu = new SpeechMenu(battleResults.text.get(targetIndex), (FCGameContainer) container, true, true);
+						performBattleResult();
 					}
+
+					state = STATE_ATTACKING;
 				}
 			}
 		}
@@ -648,14 +654,16 @@ public class AttackCinematicState extends LoadableGameState
 		bgYPos = (gc.getHeight() - backgroundImage.getHeight()) / 2;
 
 		this.attacker = attacker;
-		attackerMenu = new SpriteContextPanel((attacker.isHero() ? Panel.PANEL_HEALTH_BAR : Panel.PANEL_ENEMY_HEALTH_BAR), attacker, gc);
+		attackerMenu = new SpriteContextPanel((attacker.isHero() ? Panel.PANEL_HEALTH_BAR : Panel.PANEL_TARGET_HEALTH_BAR), attacker, gc);
 		attackerAnim = attacker.getAnimation("UnStand");
 
 		if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_SPELL)
 		{
 
 			spellAnims = frm.getSpriteAnimations().get(battleResults.battleCommand.getSpell().getName());
-			spellAnim = spellAnims.getAnimation(battleResults.battleCommand.getLevel() + "");
+
+			spellAnim = spellAnims.getAnimation(1 + "");
+			// spellAnim = spellAnims.getAnimation(battleResults.battleCommand.getLevel() + "");
 
 			// spellAnims = frm.getSpriteAnimations().get("blaze");
 			// spellAnim = spellAnims.getAnimation("blaze");
@@ -677,8 +685,6 @@ public class AttackCinematicState extends LoadableGameState
 		else if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_ITEM)
 			textMenu = new SpeechMenu(attacker.getName() + " uses the " + battleResults.battleCommand.getItem().getName() + "}", gc, true, true);
 		state = 0;
-		stateDelta = 0;
-
 		/********************/
 		/* Handle targets	*/
 		/********************/
@@ -698,7 +704,7 @@ public class AttackCinematicState extends LoadableGameState
 		this.targetMenus = new ArrayList<Panel>();
 		for (CombatSprite cs : targets)
 		{
-			targetMenus.add(new SpriteContextPanel((targets.get(0).isHero() ? Panel.PANEL_HEALTH_BAR : Panel.PANEL_ENEMY_HEALTH_BAR), cs, gc));
+			targetMenus.add(new SpriteContextPanel((targets.get(0).isHero() ? Panel.PANEL_HEALTH_BAR : Panel.PANEL_TARGET_HEALTH_BAR), cs, gc));
 		}
 		targetAnim = targets.get(targetIndex).getAnimation("UnStand");
 
@@ -709,6 +715,9 @@ public class AttackCinematicState extends LoadableGameState
 		// Get the land tile image for the current target
 		// TODO Change this on a by-target basis
 		heroFloorImage = frm.getImages().get("attackplatform");
+
+		damageTimer = new Timer(16);
+		spellTimer = new Timer(25);
 	}
 
 	@Override

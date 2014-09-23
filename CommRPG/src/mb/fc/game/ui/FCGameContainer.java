@@ -8,11 +8,11 @@ import org.newdawn.slick.Game;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.util.Log;
 
-public class FCGameContainer extends AppGameContainer 
+public class FCGameContainer extends AppGameContainer
 {
 	private int displayPaddingX;
 
-	public FCGameContainer(Game game) throws SlickException 
+	public FCGameContainer(Game game) throws SlickException
 	{
 		super(game);
 	}
@@ -24,14 +24,15 @@ public class FCGameContainer extends AppGameContainer
 	public void setDisplayPaddingX(int displayPaddingX) {
 		this.displayPaddingX = displayPaddingX;
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Strategy for overloading game loop context handling
-	 * 
+	 *
 	 * @throws SlickException Indicates a game failure
 	 */
+	@Override
 	protected void gameLoop() throws SlickException {
 		int delta = getDelta();
 		if (!Display.isVisible() && updateOnlyOnVisible) {
@@ -41,10 +42,13 @@ public class FCGameContainer extends AppGameContainer
 				updateAndRender(delta);
 			} catch (Throwable e) {
 				Log.error(e);
+
 				running = false;
-				
+				// ((CommRPG) game).enterState(CommRPG.STATE_GAME_MENU_DEVEL);
+
+
 				JOptionPane.showMessageDialog(null, "An error occurred during execution: " + e.getMessage());
-				
+
 				return;
 			}
 		}
@@ -52,7 +56,7 @@ public class FCGameContainer extends AppGameContainer
 		updateFPS();
 
 		Display.update();
-		
+
 		if (Display.isCloseRequested()) {
 			if (game.closeRequested()) {
 				running = false;

@@ -1,7 +1,7 @@
 package mb.fc.utils.planner;
 
 
-public class PlannerValueDef 
+public class PlannerValueDef
 {
 	public static final int REFERS_NONE = 0;
 	public static final int REFERS_TRIGGER = 1;
@@ -16,28 +16,29 @@ public class PlannerValueDef
 	public static final int REFERS_ITEM_STYLE = 10;
 	public static final int REFERS_ITEM_TYPE = 11;
 	public static final int REFERS_ITEM_RANGE = 12;
-	public static final int REFERS_MOVE_TYPE = 13;	
+	public static final int REFERS_MOVE_TYPE = 13;
 	public static final int REFERS_SPELL = 14;
 	public static final int REFERS_ITEM_AREA = 15;
 	public static final int REFERS_DIRECTION = 16;
-	public static final int REFERS_ANIMATIONS = 17;	
-	
+	public static final int REFERS_ANIMATIONS = 17;
+	public static final int REFERS_MAP = 18;
+
 	public static final int TYPE_STRING = 0;
 	public static final int TYPE_INT = 1;
 	public static final int TYPE_BOOLEAN = 2;
 	public static final int TYPE_MULTI_INT = 3;
-	
+
 	// Refers to
 	private int refersTo;
-	
+
 	// Value type
 	private int valueType;
-	
+
 	// Variable output
 	private String tag;
-	
+
 	private boolean optional = false;
-	
+
 	private String displayTag;
 	private String displayDescription;
 

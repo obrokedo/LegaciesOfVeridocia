@@ -153,4 +153,8 @@ public class PersistentStateInfo
 	public int getCinematicID() {
 		return cinematicID;
 	}
+
+	public void setEntranceLocation(String entranceLocation) {
+		this.entranceLocation = entranceLocation;
+	}
 }

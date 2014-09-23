@@ -137,7 +137,7 @@ public class BattleState extends LoadableGameState
 		stateInfo.processMessages();
 		if (stateInfo.isInitialized())
 		{
-			menuManager.update();
+			menuManager.update(delta);
 			if (!menuManager.isBlocking())
 			{
 				//hudMenuManager.update();

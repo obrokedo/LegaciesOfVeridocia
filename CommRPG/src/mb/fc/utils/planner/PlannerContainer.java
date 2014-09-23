@@ -15,29 +15,29 @@ import mb.fc.utils.XMLParser.TagArea;
 public class PlannerContainer extends JPanel implements ActionListener
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	private PlannerContainerDef pcdef;
 	private ArrayList<PlannerContainer> containers;
 	private ArrayList<PlannerLine> lines;
 	private PlannerLine defLine;
 	private PlannerTimeBarViewer plannerGraph = null;
-	
+
 	public PlannerContainer(PlannerContainerDef pcdef) {
 		super();
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		this.pcdef = pcdef;
-				
-		this.defLine = new PlannerLine(pcdef.getDefiningLine(), true);		
+
+		this.defLine = new PlannerLine(pcdef.getDefiningLine(), true);
 		this.containers = new ArrayList<PlannerContainer>();
 		this.lines = new ArrayList<PlannerLine>();
 	}
-	
+
 	public void setupUI()
 	{
 		this.removeAll();
 		defLine.setupUI(pcdef.getAllowableLines(), this, 0, pcdef.getListOfLists());
 		this.add(defLine);
-		
+
 		JPanel listPanel = new JPanel();
 		listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.PAGE_AXIS));
 		int i = 1;
@@ -47,9 +47,9 @@ public class PlannerContainer extends JPanel implements ActionListener
 			listPanel.add(line);
 			i++;
 		}
-		
+
 		this.add(listPanel);
-		
+
 		if (PlannerFrame.SHOW_CIN && pcdef.getDefiningLine().getTag().equalsIgnoreCase("Cinematic"))
 		{
 			try
@@ -57,7 +57,7 @@ public class PlannerContainer extends JPanel implements ActionListener
 				ArrayList<PlannerContainer> pcs = new ArrayList<PlannerContainer>();
 				pcs.add(this);
 				ArrayList<String> results = PlannerFrame.export(pcs);
-				
+
 				ArrayList<TagArea> tas = XMLParser.process(results);
 				if (tas.size() > 0)
 				{
@@ -72,23 +72,23 @@ public class PlannerContainer extends JPanel implements ActionListener
 					{
 						ArrayList<CinematicEvent> ces = TextParser.parseCinematicEvents(tas.get(0), initEvents);
 						ces.addAll(0, initEvents);
-							
+
 						plannerGraph.generateGraph(ces);
 					// this.add(ptbv);
 					}
 				}
 			}
 			catch (Exception ex) {ex.printStackTrace();}
-			
+
 		}
 		// this.add(new JScrollPane(listPanel));
 	}
-	
+
 	public void addLine(PlannerLine line)
 	{
 		this.lines.add(line);
 	}
-	
+
 	public void addContainer(PlannerContainer container)
 	{
 		this.containers.add(container);
@@ -97,11 +97,11 @@ public class PlannerContainer extends JPanel implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent a) {
 		String action = a.getActionCommand();
-		System.out.println("ACTION PERFORMED");
+		System.out.println("ACTION PERFORMED " + action);
 		if (action.equalsIgnoreCase("addline"))
 		{
 			int index = defLine.getSelectedItem();
-			this.lines.add(new PlannerLine(pcdef.getAllowableLines().get(index), false));			
+			this.lines.add(new PlannerLine(pcdef.getAllowableLines().get(index), false));
 			setupUI();
 			this.revalidate();
 			this.repaint();
@@ -144,8 +144,18 @@ public class PlannerContainer extends JPanel implements ActionListener
 				this.repaint();
 			}
 		}
+		else if (action.startsWith("duplicate"))
+		{
+			int index = Integer.parseInt(action.split(" ")[1]) - 1;
+			PlannerLine pl = lines.get(index);
+			System.out.println("DUPLICATE");
+			lines.add(index + 1, new PlannerLine(pl));
+			setupUI();
+			this.revalidate();
+			this.repaint();
+		}
 	}
-	
+
 	public void commitChanges()
 	{
 		defLine.commitChanges();
@@ -156,7 +166,7 @@ public class PlannerContainer extends JPanel implements ActionListener
 	public PlannerContainerDef getPcdef() {
 		return pcdef;
 	}
-	
+
 	public String getDescription()
 	{
 		return (String) defLine.getValues().get(0);

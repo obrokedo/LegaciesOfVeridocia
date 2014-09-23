@@ -2,6 +2,9 @@ package mb.fc.game.turnaction;
 
 import java.io.Serializable;
 
+import mb.fc.engine.state.StateInfo;
+import mb.fc.game.manager.TurnManager;
+
 public class TurnAction implements Serializable
 {
 	private static final long serialVersionUID = 1L;
@@ -23,4 +26,6 @@ public class TurnAction implements Serializable
 		super();
 		this.action = action;
 	}
+
+	public boolean perform(TurnManager turnManager, StateInfo stateInfo) {return false;}
 }

@@ -7,6 +7,7 @@ import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.Message;
 import mb.fc.engine.state.CinematicState;
 import mb.fc.engine.state.StateInfo;
+import mb.fc.game.Timer;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.input.FCInput;
 import mb.fc.game.input.KeyMapping;
@@ -32,6 +33,7 @@ public class SpeechMenu extends Menu
 	private int textMovingIndex = 0;
 	private long waitUntil = -1;
 	private String waitingOn = null;
+	private Timer timer;
 	private static final String CHAR_PAUSE = "{";
 	private static final String CHAR_SOFT_STOP = "}";
 	private static final String CHAR_HARD_STOP = "]";
@@ -108,6 +110,8 @@ public class SpeechMenu extends Menu
 			portrait = stateInfo.getResourceManager().getSpriteSheets().get("portraits").getSprite(portraitId, 0);
 		else
 			portrait = null;
+
+		timer = new Timer(16);
 	}
 
 	@Override
@@ -129,7 +133,7 @@ public class SpeechMenu extends Menu
 		for (int i = Math.max(0, textIndex - posY); i <= textIndex; i++)
 		{
 			graphics.drawString((i == textIndex ? panelText.get(i).substring(0, textMovingIndex) : panelText.get(i)), x + 15,
-					gc.getHeight() - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * (posY + 1) * 20 + 10 +  (i - textIndex + (textIndex >= posY ? posY : textIndex)) * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 15);
+					gc.getHeight() - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * (posY + 1) * 20 + 10 +  (i - textIndex + (textIndex >= posY ? posY : textIndex)) * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 15 - (posY == 1 ? 5 : 0));
 		}
 
 		if (portrait != null)
@@ -141,91 +145,108 @@ public class SpeechMenu extends Menu
 	}
 
 	@Override
-	public MenuUpdate handleUserInput(FCInput input, StateInfo stateInfo)
-	{
-		if (!initialized)
-		{
-			if (y <= 0)
-			{
-				initialized = true;
-			}
-			else
-				y = Math.max(y - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 8, 0);
+	public MenuUpdate update(long delta, StateInfo stateInfo) {
+		super.update(delta, stateInfo);
 
-			return MenuUpdate.MENU_NO_ACTION;
-		}
-
-		for (int i = 0; i < (CinematicState.cinematicSpeed > 1 ? CinematicState.cinematicSpeed : 1); i++)
+		timer.update(delta);
+		while (timer.perform())
 		{
-			if (textMoving)
+			if (!initialized)
 			{
-				if (textMovingIndex + 1 > panelText.get(textIndex).length())
+				if (y <= 0)
 				{
-					if (textIndex + 1 < panelText.size())
-					{
-						textMovingIndex = panelText.get(textIndex).length();
-						textMovingIndex = 0;
-						textIndex++;
-					}
-					else
-					{
-						// System.out.println("SEND TRIGGER " + triggerId);
-						if (triggerId != -1)
-							stateInfo.getResourceManager().getTriggerEventById(triggerId).perform(stateInfo);
-						return MenuUpdate.MENU_CLOSE;
-					}
-					// textMoving = false;
+					initialized = true;
 				}
 				else
+					y = Math.max(y - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 8, 0);
+			}
+
+			for (int i = 0; i < (CinematicState.cinematicSpeed > 1 ? CinematicState.cinematicSpeed : 1); i++)
+			{
+				if (textMoving)
 				{
-					String nextLetter = panelText.get(textIndex).substring(textMovingIndex, textMovingIndex + 1);
-					if (nextLetter.equalsIgnoreCase(CHAR_HARD_STOP))
+					if (textMovingIndex + 1 > panelText.get(textIndex).length())
 					{
-						textMoving = false;
-						waitingOn = CHAR_HARD_STOP;
-					}
-					else if (nextLetter.equalsIgnoreCase(CHAR_SOFT_STOP))
-					{
-						textMoving = false;
-
-
-						String[] softSplit = panelText.get(textIndex).substring(textMovingIndex).split(" ");
-
-						if (softSplit[0].replaceFirst("[0-9]", "").length() != softSplit[0].length())
+						if (textIndex + 1 < panelText.size())
 						{
-							waitUntil = System.currentTimeMillis() + Integer.parseInt(softSplit[0].substring(1));
-							waitingOn = softSplit[0];
+							textMovingIndex = panelText.get(textIndex).length();
+							textMovingIndex = 0;
+							textIndex++;
 						}
 						else
 						{
-							waitUntil = System.currentTimeMillis() + 2500;
-							waitingOn = CHAR_SOFT_STOP;
+							// System.out.println("SEND TRIGGER " + triggerId);
+							if (triggerId != -1)
+								stateInfo.getResourceManager().getTriggerEventById(triggerId).perform(stateInfo);
+							return MenuUpdate.MENU_CLOSE;
 						}
+						// textMoving = false;
 					}
-					else if (nextLetter.equalsIgnoreCase(CHAR_PAUSE))
-					{
-						textMoving = false;
-						waitUntil = System.currentTimeMillis() + 400;
-						waitingOn = CHAR_PAUSE;
-					}
-					else if (nextLetter.equalsIgnoreCase(CHAR_NEXT_CIN))
-					{
-						panelText.set(textIndex, panelText.get(textIndex).replaceFirst("\\" + CHAR_NEXT_CIN, ""));
-						return MenuUpdate.MENU_NEXT_ACTION;
-					}
-
-					if (textMoving)
-						textMovingIndex += 1;
 					else
-						panelText.set(textIndex, panelText.get(textIndex).replaceFirst("\\" + waitingOn, ""));
-					// This is a bit of a kludge, when we are in the attack cinematic we want the text to scroll but we don't
-					// want the "talking" sound effect. Really this should probably be a different boolean rather then just
-					// checking to see if the state info is not null
-					if (textMovingIndex % 6 == 0 && !isAttackCinematic)
-						stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "speechblip", .15f, false));
+					{
+						String nextLetter = panelText.get(textIndex).substring(textMovingIndex, textMovingIndex + 1);
+						if (nextLetter.equalsIgnoreCase(CHAR_HARD_STOP))
+						{
+							textMoving = false;
+							waitingOn = CHAR_HARD_STOP;
+						}
+						else if (nextLetter.equalsIgnoreCase(CHAR_SOFT_STOP))
+						{
+							textMoving = false;
+
+							String[] softSplit = panelText.get(textIndex).substring(textMovingIndex).split(" ");
+
+							if (softSplit[0].replaceFirst("[0-9]", "").length() != softSplit[0].length())
+							{
+								waitUntil = System.currentTimeMillis() + Integer.parseInt(softSplit[0].substring(1));
+								waitingOn = softSplit[0];
+							}
+							else
+							{
+								waitUntil = System.currentTimeMillis() + 2500;
+								waitingOn = CHAR_SOFT_STOP;
+							}
+						}
+						else if (nextLetter.equalsIgnoreCase(CHAR_PAUSE))
+						{
+							textMoving = false;
+							waitUntil = System.currentTimeMillis() + 400;
+							waitingOn = CHAR_PAUSE;
+						}
+						else if (nextLetter.equalsIgnoreCase(CHAR_NEXT_CIN))
+						{
+							panelText.set(textIndex, panelText.get(textIndex).replaceFirst("\\" + CHAR_NEXT_CIN, ""));
+							return MenuUpdate.MENU_NEXT_ACTION;
+						}
+
+						if (textMoving)
+							textMovingIndex += 1;
+						else
+							panelText.set(textIndex, panelText.get(textIndex).replaceFirst("\\" + waitingOn, ""));
+						// This is a bit of a kludge, when we are in the attack cinematic we want the text to scroll but we don't
+						// want the "talking" sound effect. Really this should probably be a different boolean rather then just
+						// checking to see if the state info is not null
+						if (textMovingIndex % 6 == 0 && !isAttackCinematic)
+							stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "speechblip", .15f, false));
+					}
 				}
 			}
+
+			if (waitUntil != -1 && waitUntil <= System.currentTimeMillis())
+			{
+				textMoving = true;
+				waitUntil = -1;
+			}
 		}
+
+		return MenuUpdate.MENU_NO_ACTION;
+	}
+
+	@Override
+	public MenuUpdate handleUserInput(FCInput input, StateInfo stateInfo)
+	{
+		if (!initialized)
+			return MenuUpdate.MENU_NO_ACTION;
 
 		if (input.isKeyDown(KeyMapping.BUTTON_3))
 		{
@@ -235,12 +256,6 @@ public class SpeechMenu extends Menu
 				waitUntil = -1;
 				textMoving = true;
 			}
-		}
-
-		if (waitUntil != -1 && waitUntil <= System.currentTimeMillis())
-		{
-			textMoving = true;
-			waitUntil = -1;
 		}
 
 		return MenuUpdate.MENU_NO_ACTION;

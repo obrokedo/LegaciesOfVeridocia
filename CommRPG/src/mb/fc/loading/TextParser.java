@@ -71,12 +71,18 @@ public class TextParser
 				int id = Integer.parseInt(tagArea.getParams().get("id"));
 				boolean nonRetrig = false;
 				boolean retrigOnEnter = false;
+				boolean triggerOnce = false;
+				boolean triggerImmediately = false;
 				int[] requireIds = null;
 				int[] excludeIds = null;
 				if (tagArea.getParams().containsKey("nonretrig"))
 					nonRetrig = Boolean.parseBoolean(tagArea.getParams().get("nonretrig"));
 				if (tagArea.getParams().containsKey("retrigonenter"))
 					retrigOnEnter = Boolean.parseBoolean(tagArea.getParams().get("retrigonenter"));
+				if (tagArea.getParams().containsKey("triggeronce"))
+					triggerOnce = Boolean.parseBoolean(tagArea.getParams().get("triggeronce"));
+				if (tagArea.getParams().containsKey("triggerimmediately"))
+					triggerImmediately = Boolean.parseBoolean(tagArea.getParams().get("triggerimmediately"));
 
 				String requires = tagArea.getParams().get("require");
 				String excludes = tagArea.getParams().get("exclude");
@@ -97,7 +103,7 @@ public class TextParser
 						excludeIds[i] = Integer.parseInt(splitEx[i]);
 				}
 
-				TriggerEvent te = new TriggerEvent(id, retrigOnEnter, nonRetrig, requireIds, excludeIds);
+				TriggerEvent te = new TriggerEvent(id, retrigOnEnter, nonRetrig, triggerOnce, triggerImmediately, requireIds, excludeIds);
 				if (tagArea.getChildren().size() > 0)
 				{
 					for (int k = 0; k < tagArea.getChildren().size(); k++)

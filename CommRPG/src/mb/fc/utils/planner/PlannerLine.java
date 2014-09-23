@@ -41,6 +41,18 @@ public class PlannerLine extends JPanel
 		this.isDefining = isDefining;
 	}
 
+	public PlannerLine(PlannerLine plannerLine)
+	{
+		super();
+		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+		this.plDef = plannerLine.plDef;
+		this.components = new ArrayList<Component>();
+		this.values = new ArrayList<Object>();
+		for (Object o : plannerLine.values)
+			this.values.add(o);
+		this.isDefining = plannerLine.isDefining;
+	}
+
 	public void setupUI(ArrayList<PlannerLineDef> allowableValues, ActionListener aListener,
 			int index, ArrayList<ArrayList<String>> listOfLists)
 	{
@@ -103,6 +115,10 @@ public class PlannerLine extends JPanel
 			movedownButton.setActionCommand("movedown " + index);
 			movedownButton.addActionListener(aListener);
 			headerPanel.add(movedownButton);
+			JButton copyButton = new JButton("Duplicate");
+			copyButton.setActionCommand("duplicate " + index);
+			copyButton.addActionListener(aListener);
+			headerPanel.add(copyButton);
 
 			headDescPanel.add(headerPanel.add(new JLabel(this.plDef.getDescription())), BorderLayout.PAGE_END);
 			headDescPanel.add(headerPanel, BorderLayout.CENTER);

@@ -15,17 +15,17 @@ public class TownMoveManager extends Manager
 	private ArrayList<MovingSprite> movers;
 	private boolean moving = false;
 	private int updateDelta = 0;
-	public static int UPDATE_TIME = 20;	
+	public static int UPDATE_TIME = 20;
 
 	@Override
-	public void initialize() {		
+	public void initialize() {
 		// new OverlandMove(stateInfo);
 		movers = new ArrayList<MovingSprite>();
 		moving = false;
 	}
-	
+
 	public void update(int delta)
-	{		
+	{
 		updateDelta += delta;
 		if (updateDelta >= UPDATE_TIME)
 		{
@@ -34,13 +34,13 @@ public class TownMoveManager extends Manager
 			/* Handle movement for the players Leader */
 			/******************************************/
 			CombatSprite current = stateInfo.getCurrentSprite();
-			
+
 			// Check to see if we are done moving
 			if (!moving)
 			{
 				int sx = current.getTileX();
 				int sy = current.getTileY();
-				
+
 				switch (stateInfo.getInput().getMostRecentDirection())
 				{
 					case KeyMapping.BUTTON_RIGHT:
@@ -67,35 +67,37 @@ public class TownMoveManager extends Manager
 						else
 							current.setFacing(Direction.DOWN);
 						break;
-				}		
+				}
 			}
-			
+
 			for (int i = 0; i < movers.size(); i++)
 			{
 				MovingSprite ms = movers.get(i);
-				
+
+				if(ms.isFirstMove())
+					stateInfo.checkTriggers(stateInfo.getCurrentSprite().getLocX(), stateInfo.getCurrentSprite().getLocY(), true);
 				if (ms.update())
 				{
 					movers.remove(i);
 					i--;
 					if (stateInfo.getCurrentSprite() == ms.getCombatSprite())
 					{
-						stateInfo.checkTriggers(stateInfo.getCurrentSprite().getLocX(), stateInfo.getCurrentSprite().getLocY());
+						stateInfo.checkTriggers(stateInfo.getCurrentSprite().getLocX(), stateInfo.getCurrentSprite().getLocY(), false);
 						moving = false;
 					}
 				}
 			}
 		}
 	}
-	
+
 	private void setMoving(Direction direction, CombatSprite current)
 	{
-		if (current == stateInfo.getCurrentSprite())		
+		if (current == stateInfo.getCurrentSprite())
 			moving = true;
 		movers.add(new MovingSprite(current, direction, stateInfo));
 	}
-	
-	private boolean blocked(Map map, int tx, int ty) 
+
+	private boolean blocked(Map map, int tx, int ty)
 	{
 		if (tx >= 0 && ty >= 0 && map.getMapEffectiveHeight() > ty && map.getMapEffectiveWidth() > tx && map.isMarkedMoveable(tx, ty))
 		{
@@ -104,34 +106,34 @@ public class TownMoveManager extends Manager
 				if (s.getTileX() == tx && s.getTileY() == ty)
 					return true;
 			}
-			
+
 			return false;
 		}
 		return true;
 	}
 
 	@Override
-	public void recieveMessage(Message message) 
+	public void recieveMessage(Message message)
 	{
 		/*
 		switch (message.getMessageType())
 		{
 			case Message.MESSAGE_OVERLAND_MOVE_MESSAGE:
 				CombatSprite cs = (CombatSprite) ((OverlandMoveMessage) message).getSprite();
-				
-				MovingSprite ms = new MovingSprite(cs, 
+
+				MovingSprite ms = new MovingSprite(cs,
 						((OverlandMoveMessage) message).getPath());
-				
+
 				for (int i = 0; i < movers.size(); i++)
 				{
 					if (movers.get(i).getCombatSprite() == cs)
 					{
-						movers.remove(i);	
+						movers.remove(i);
 						ms.setMoveIndex(1);
 						break;
 					}
 				}
-				
+
 				movers.add(ms);
 				break;
 		}

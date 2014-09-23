@@ -3,7 +3,6 @@ package mb.fc.game.manager;
 import java.awt.Point;
 import java.util.ArrayList;
 
-import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.BattleResultsMessage;
 import mb.fc.engine.message.BattleSelectionMessage;
@@ -12,7 +11,6 @@ import mb.fc.engine.message.LocationMessage;
 import mb.fc.engine.message.Message;
 import mb.fc.engine.message.MultiSpriteContextMessage;
 import mb.fc.engine.message.SpriteContextMessage;
-import mb.fc.engine.state.AttackCinematicState;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.battle.BattleResults;
 import mb.fc.game.battle.command.BattleCommand;
@@ -34,17 +32,16 @@ import mb.fc.game.move.MovingSprite;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.turnaction.AttackSpriteAction;
 import mb.fc.game.turnaction.MoveToTurnAction;
+import mb.fc.game.turnaction.PerformAttackAction;
 import mb.fc.game.turnaction.TargetSpriteAction;
 import mb.fc.game.turnaction.TurnAction;
 import mb.fc.game.turnaction.WaitAction;
 import mb.jython.GlobalPythonFactory;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.state.transition.EmptyTransition;
-import org.newdawn.slick.state.transition.FadeOutTransition;
 
 public class TurnManager extends Manager implements KeyboardListener
 {
@@ -67,6 +64,7 @@ public class TurnManager extends Manager implements KeyboardListener
 	private ItemOptionMenu itemOptionMenu;
 	private BattleActionsMenu battleActionsMenu;
 	private LandEffectPanel landEffectPanel;
+	private Image cursorImage;
 	private Rectangle cursor;
 	private int cursorTargetX, cursorTargetY;
 	private int updateDelta = 0;
@@ -93,6 +91,7 @@ public class TurnManager extends Manager implements KeyboardListener
 		landEffectPanel = new LandEffectPanel();
 		movingSprite = null;
 
+		cursorImage = stateInfo.getResourceManager().getImages().get("battlecursor");
 		cursor = new Rectangle(0, 0, stateInfo.getTileWidth(), stateInfo.getTileHeight());
 	}
 
@@ -135,10 +134,14 @@ public class TurnManager extends Manager implements KeyboardListener
 
 		if (displayCursor)
 		{
+			cursorImage.draw(cursor.getX() - stateInfo.getCamera().getLocationX() + stateInfo.getGc().getDisplayPaddingX(),
+					cursor.getY() - stateInfo.getCamera().getLocationY());
+			/*
 			graphics.setColor(Color.white);
 			graphics.drawRect(cursor.getX() - stateInfo.getCamera().getLocationX() + stateInfo.getGc().getDisplayPaddingX(),
 					cursor.getY() - stateInfo.getCamera().getLocationY(),
 						stateInfo.getTileWidth() - 1, stateInfo.getTileHeight() - 1);
+						*/
 		}
 	}
 
@@ -240,7 +243,7 @@ public class TurnManager extends Manager implements KeyboardListener
 
 				if (currentSprite.isHero())
 				{
-					stateInfo.checkTriggers(currentSprite.getLocX(), currentSprite.getLocY());
+					stateInfo.checkTriggers(currentSprite.getLocX(), currentSprite.getLocY(), false);
 				}
 				turnActions.add(new TurnAction(TurnAction.ACTION_DISPLAY_SPEECH));
 				break;
@@ -257,22 +260,11 @@ public class TurnManager extends Manager implements KeyboardListener
 				turnActions.remove(0);
 				break;
 			case TurnAction.ACTION_ATTACK_SPRITE:
-				if (!currentSprite.isHero())
-					stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menuselect", 1f, false));
-				stateInfo.sendMessage(new BattleResultsMessage(BattleResults.determineBattleResults(currentSprite,
-					((AttackSpriteAction) a).getTargets(),
-					((AttackSpriteAction) a).getBattleCommand(), stateInfo)));
-				displayAttackable = false;
-				turnActions.remove(0);
+				if (a.perform(this, stateInfo))
+					turnActions.remove(0);
 				break;
 			case TurnAction.ACTION_PERFORM_ATTACK:
-				stateInfo.removePanel(Panel.PANEL_HEALTH_BAR);
-				stateInfo.removePanel(Panel.PANEL_ENEMY_HEALTH_BAR);
-				stateInfo.setShowAttackCinematic(true);
-				AttackCinematicState acs = (AttackCinematicState) game.getState(CommRPG.STATE_GAME_BATTLE_ANIM);
-				acs.setBattleInfo(currentSprite, stateInfo.getResourceManager(),
-					new Point(2, 0), battleResults, stateInfo.getGc());
-				game.enterState(CommRPG.STATE_GAME_BATTLE_ANIM, new FadeOutTransition(Color.black, 250), new EmptyTransition());
+				a.perform(this, stateInfo);
 				turnActions.remove(0);
 				break;
 			case TurnAction.ACTION_CHECK_DEATH:
@@ -537,8 +529,7 @@ public class TurnManager extends Manager implements KeyboardListener
 				// At this point we know who we intend to target, but we need to inject the BattleCommand.
 				// Only the owner will have a value for the battle command so they will have to be
 				// the one to send the BattleResults
-				turnActions.add(new AttackSpriteAction(TurnAction.ACTION_ATTACK_SPRITE,
-						((MultiSpriteContextMessage) message).getSprites(), battleCommand));
+				turnActions.add(new AttackSpriteAction(((MultiSpriteContextMessage) message).getSprites(), battleCommand));
 				break;
 			// THIS IS SENT BY THE OWNER
 			case Message.MESSAGE_SELECT_SPELL:
@@ -594,7 +585,7 @@ public class TurnManager extends Manager implements KeyboardListener
 				stateInfo.getPlayingMusic().fade(250, 0f, true);
 				System.out.println("PLAYING POSITION " + stateInfo.getPlayingMusicPostion());
 				// turnActions.add(new WaitAction(15));
-				turnActions.add(new AttackSpriteAction(TurnAction.ACTION_PERFORM_ATTACK, battleResults.targets, battleResults.battleCommand));
+				turnActions.add(new PerformAttackAction(battleResults));
 				turnActions.add(new TurnAction(TurnAction.ACTION_CHECK_DEATH));
 				break;
 			case Message.MESSAGE_PLAYER_END_TURN:
@@ -692,5 +683,13 @@ public class TurnManager extends Manager implements KeyboardListener
 		}
 
 		return false;
+	}
+
+	public CombatSprite getCurrentSprite() {
+		return currentSprite;
+	}
+
+	public void setDisplayAttackable(boolean displayAttackable) {
+		this.displayAttackable = displayAttackable;
 	}
 }

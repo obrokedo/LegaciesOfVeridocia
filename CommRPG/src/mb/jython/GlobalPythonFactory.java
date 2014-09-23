@@ -22,7 +22,8 @@ public class GlobalPythonFactory
 		// UNCOMMENT THIS FOR SINGLE JAR
 		if (LoadingState.inJar)
 		{
-			String jarPath = JythonObjectFactory.class.getProtectionDomain().getCodeSource().getLocation() .getPath();
+			String jarPath = JythonObjectFactory.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+			jarPath = jarPath.replaceAll("%20", " ");
 			PySystemState state = new PySystemState();
 			state.path.insert(0,Py.newString(jarPath + java.io.File.separator + "scripts"));
 			Py.setSystemState(state);

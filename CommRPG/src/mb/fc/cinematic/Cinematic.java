@@ -9,6 +9,7 @@ import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.IntMessage;
 import mb.fc.engine.message.Message;
+import mb.fc.engine.state.CinematicState;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.Camera;
 import mb.fc.game.constants.Direction;
@@ -86,9 +87,8 @@ public class Cinematic {
 		if (fadingColor != null)
 		{
 			fadeDelta += delta;
-			if (fadeDelta >= 50)
+			while (fadingColor != null && fadeDelta >= 50)
 			{
-
 				fadeDelta -= 50;
 
 				if (fadeIn)
@@ -117,7 +117,7 @@ public class Cinematic {
 		if (cameraMoveToX != -1) {
 			cameraMoveDelta += delta;
 
-			if (cameraMoveDelta > CAMERA_UPDATE) {
+			while (cameraMoveToX != -1 && cameraMoveDelta > CAMERA_UPDATE) {
 				cameraMoveDelta -= CAMERA_UPDATE;
 				float xDel = 0;
 				float yDel = 0;
@@ -175,7 +175,8 @@ public class Cinematic {
 
 		if (speechMenu != null)
 		{
-			MenuUpdate mu = speechMenu.handleUserInput(input, stateInfo);
+			speechMenu.handleUserInput(input, stateInfo);
+			MenuUpdate mu = speechMenu.update(delta, stateInfo);
 			if (mu == MenuUpdate.MENU_CLOSE)
 				speechMenu = null;
 			else if (mu == MenuUpdate.MENU_NEXT_ACTION)
@@ -286,10 +287,12 @@ public class Cinematic {
 			case LOAD_MAP:
 				stateInfo.getPsi().loadMap((String) ce.getParam(0),
 						(String) ce.getParam(1));
+				CinematicState.cinematicSpeed = 1;
 				break;
 			case LOAD_BATTLE:
 				stateInfo.getPsi().loadBattle((String) ce.getParam(0),
 						(String) ce.getParam(1), (String) ce.getParam(2));
+				CinematicState.cinematicSpeed = 1;
 				break;
 			case HALTING_ANIMATION:
 				actors.get(ce.getParam(0)).setAnimation(

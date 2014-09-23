@@ -7,11 +7,11 @@ import mb.fc.map.MapObject;
 
 import org.newdawn.slick.geom.Shape;
 
-public class TriggerLocation 
+public class TriggerLocation
 {
 	private Shape triggerLocation;
-	private ArrayList<TriggerEvent> events;	
-	
+	private ArrayList<TriggerEvent> events;
+
 	public TriggerLocation(StateInfo stateInfo, MapObject mo)
 	{
 		triggerLocation = mo.getShape();
@@ -19,7 +19,7 @@ public class TriggerLocation
 		if (mo.getParam("enter") != null)
 		{
 			String map = mo.getParam("enter");
-			event = new TriggerEvent(-1, false, false, null, null);
+			event = new TriggerEvent(-1, false, false, false, false, null, null);
 			event.addTriggerType(event.new TriggerEnter(map, mo.getParam("exit")));
 			events = new ArrayList<TriggerEvent>();
 			events.add(event);
@@ -27,24 +27,24 @@ public class TriggerLocation
 		else if (mo.getParam("triggerid") != null)
 		{
 			events = new ArrayList<TriggerEvent>();
-			
+
 			for (String trig : mo.getParam("triggerid").split(","))
 			{
-				event = new TriggerEvent(-1, false, false, null, null);
+				event = new TriggerEvent(-1, false, false, false, false, null, null);
 				event.addTriggerType(event.new TriggerById(Integer.parseInt(trig)));
 				events.add(event);
 			}
-		}		
+		}
 	}
-	
+
 	public boolean contains(int mapX, int mapY)
 	{
 		return triggerLocation.contains(mapX + 1, mapY + 1);
 	}
-	
-	public void perform(StateInfo stateInfo)
+
+	public void perform(StateInfo stateInfo, boolean immediate)
 	{
 		for (TriggerEvent ev : events)
-			ev.perform(stateInfo);
+			ev.perform(stateInfo, immediate);
 	}
 }

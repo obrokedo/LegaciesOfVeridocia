@@ -7,6 +7,7 @@ import mb.fc.engine.message.SpriteContextMessage;
 import mb.fc.game.menu.DebugMenu;
 import mb.fc.game.menu.HeroStatMenu;
 import mb.fc.game.menu.HeroesStatMenu;
+import mb.fc.game.menu.Menu.MenuUpdate;
 import mb.fc.game.menu.PriestMenu;
 import mb.fc.game.menu.ShopMenu;
 import mb.fc.game.menu.SpeechMenu;
@@ -25,28 +26,31 @@ public class MenuManager extends Manager
 		return stateInfo.areMenusDisplayed();
 	}
 
-	public void update()
+	public void update(long delta)
 	{
-		if (stateInfo.areMenusDisplayed())
+		if (stateInfo.areMenusDisplayed() && stateInfo.areMenusDisplayed())
+			handleMenuUpdate(stateInfo.getTopMenu().update(delta, stateInfo));
+
+		if (stateInfo.areMenusDisplayed() && System.currentTimeMillis() > stateInfo.getInputDelay())
+			handleMenuUpdate(stateInfo.getTopMenu().handleUserInput(stateInfo.getInput(), stateInfo));
+	}
+
+	private void handleMenuUpdate(MenuUpdate menuUpdate)
+	{
+		switch (menuUpdate)
 		{
-			if (System.currentTimeMillis() > stateInfo.getInputDelay())
-				switch (stateInfo.getTopMenu().handleUserInput(stateInfo.getInput(), stateInfo))
-				{
-					case MENU_CLOSE:
-						stateInfo.removeTopMenu();
-						stateInfo.setInputDelay(System.currentTimeMillis() + 200);
-						break;
-					case MENU_ACTION_SHORT:
-						stateInfo.setInputDelay(System.currentTimeMillis() + 75);
-						break;
-					case MENU_ACTION_LONG:
-						stateInfo.setInputDelay(System.currentTimeMillis() + 200);
-						break;
-					case MENU_NO_ACTION:
-						break;
-					default:
-						break;
-				}
+			case MENU_CLOSE:
+				stateInfo.removeTopMenu();
+				stateInfo.setInputDelay(System.currentTimeMillis() + 200);
+				break;
+			case MENU_ACTION_SHORT:
+				stateInfo.setInputDelay(System.currentTimeMillis() + 75);
+				break;
+			case MENU_ACTION_LONG:
+				stateInfo.setInputDelay(System.currentTimeMillis() + 200);
+				break;
+			default:
+				break;
 		}
 	}
 

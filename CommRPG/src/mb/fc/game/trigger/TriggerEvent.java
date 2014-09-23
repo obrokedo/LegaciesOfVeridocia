@@ -24,14 +24,20 @@ public class TriggerEvent
 	private ArrayList<TriggerType> triggerTypes = new ArrayList<TriggerType>();
 	private boolean retrigOnEnter;
 	private boolean nonRetrig;
+	private boolean triggerOnce;
+	private boolean triggerImmediately;
+	private boolean triggered = false;
 	private int[] requires;
 	private int[] excludes;
 	private int id;
 
-	public TriggerEvent(int id, boolean retrigOnEnter, boolean nonRetrig, int[] requires, int[] excludes) {
+	public TriggerEvent(int id, boolean retrigOnEnter, boolean nonRetrig,
+			boolean triggerOnce, boolean triggerImmediately, int[] requires, int[] excludes) {
 		super();
 		this.retrigOnEnter = retrigOnEnter;
 		this.nonRetrig = nonRetrig;
+		this.triggerOnce = triggerOnce;
+		this.triggerImmediately = triggerImmediately;
 		this.id = id;
 		this.requires = requires;
 		this.excludes = excludes;
@@ -44,6 +50,14 @@ public class TriggerEvent
 
 	public void perform(StateInfo stateInfo)
 	{
+		perform(stateInfo, false);
+	}
+
+	public void perform(StateInfo stateInfo, boolean immediate)
+	{
+		if (triggerImmediately != immediate)
+			return;
+
 		// Check to see if this trigger meets all required quests
 		if (requires != null)
 		{
@@ -79,6 +93,14 @@ public class TriggerEvent
 			}
 			else
 				stateInfo.getClientProgress().addNonretriggerableByMap(id);
+		}
+
+		if (triggerOnce)
+		{
+			if (triggered)
+				return;
+			else
+				triggered = true;
 		}
 
 		if (retrigOnEnter && !stateInfo.getClientProgress().isPreviouslyTriggered(id))

@@ -2,6 +2,7 @@ package mb.fc.game.menu;
 
 import mb.fc.engine.CommRPG;
 import mb.fc.engine.state.StateInfo;
+import mb.fc.game.Timer;
 import mb.fc.game.battle.spell.KnownSpell;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.input.FCInput;
@@ -19,8 +20,8 @@ public class HeroStatMenu extends Menu
 	private int x;
 	private int y;
 	private String gold;
-	private long nextUpdate = 0;
 	private int animCount = 0;
+	private Timer timer;
 
 	public HeroStatMenu(GameContainer gc, CombatSprite selectedSprite, StateInfo stateInfo) {
 		super(Panel.PANEL_HEROS_STATS);
@@ -30,17 +31,23 @@ public class HeroStatMenu extends Menu
 		if (selectedSprite.isHero())
 			this.gold = stateInfo.getClientProfile().getGold() + "";
 
-		nextUpdate = System.currentTimeMillis() + 500;
+		timer = new Timer(500);
+	}
+
+	@Override
+	public MenuUpdate update(long delta, StateInfo stateInfo) {
+		super.update(delta, stateInfo);
+
+		timer.update(delta);
+
+		while (timer.perform())
+			animCount = (animCount + 1) % 2;
+
+		return MenuUpdate.MENU_NO_ACTION;
 	}
 
 	@Override
 	public MenuUpdate handleUserInput(FCInput input, StateInfo stateInfo) {
-
-		if (System.currentTimeMillis() > nextUpdate)
-		{
-			animCount = (animCount + 1) % 2;
-			nextUpdate = System.currentTimeMillis() + 500;
-		}
 		if (input.isKeyDown(KeyMapping.BUTTON_2))
 			return MenuUpdate.MENU_CLOSE;
 		return MenuUpdate.MENU_NO_ACTION;

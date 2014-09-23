@@ -35,6 +35,9 @@ public class SpriteContextPanel extends Panel
 			case Panel.PANEL_ENEMY_HEALTH_BAR:
 				displayHealth(gc, graphics, 1);
 				break;
+			case Panel.PANEL_TARGET_HEALTH_BAR:
+				displayHealth(gc, graphics, 2);
+				break;
 			case Panel.PANEL_STATS:
 				displayStatPanel(gc, graphics);
 				break;
@@ -65,10 +68,15 @@ public class SpriteContextPanel extends Panel
 			x = gc.getWidth() - gc.getDisplayPaddingX() - width - 5;
 			y = 5;
 		}
-		else
+		else if (position == 1)
 		{
 			x = 5;
 			y = gc.getHeight() - height - 5;
+		}
+		else if (position == 2)
+		{
+			x = 5;
+			y = 5;
 		}
 
 		Panel.drawPanelBox(x, y, width, height, graphics);

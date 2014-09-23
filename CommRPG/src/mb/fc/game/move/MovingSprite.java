@@ -13,6 +13,7 @@ public class MovingSprite
 	private Direction direction;
 	private int endX, endY;
 	private StateInfo stateInfo;
+	private boolean isFirstMove = true;
 	public static int MOVE_SPEED = 11;
 	public static int STAND_ANIMATION_SPEED = 10;
 	public static int WALK_ANIMATION_SPEED = 4;
@@ -48,6 +49,7 @@ public class MovingSprite
 
 	public boolean update(boolean fastMove)
 	{
+		isFirstMove = false;
 		int moveSpeed = MOVE_SPEED;
 		if (!combatSprite.isHero() || fastMove)
 			moveSpeed /= 2;
@@ -90,6 +92,10 @@ public class MovingSprite
 			return true;
 		}
 		return false;
+	}
+
+	public boolean isFirstMove() {
+		return isFirstMove;
 	}
 
 	public boolean update()

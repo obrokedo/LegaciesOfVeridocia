@@ -4,6 +4,7 @@ import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.Message;
 import mb.fc.engine.state.StateInfo;
+import mb.fc.game.Timer;
 import mb.fc.game.constants.Direction;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.input.FCInput;
@@ -34,6 +35,7 @@ public abstract class QuadMenu extends Menu
 	protected int selectCount = 3;
 	protected int flashCount = -5;
 	protected Color flashColor = new Color(100, 100, 100);
+	protected Timer timer;
 
 	protected QuadMenu(int menuType, StateInfo stateInfo) {
 		this(menuType, true, stateInfo);
@@ -50,6 +52,7 @@ public abstract class QuadMenu extends Menu
 		this.selectTop = stateInfo.getResourceManager().getImages().get("selecttop");
 		this.stateInfo = stateInfo;
 		this.paintSelectionCursor = false;
+		this.timer = new Timer(16);
 	}
 
 	public abstract void initialize();
@@ -185,29 +188,40 @@ public abstract class QuadMenu extends Menu
 	}
 
 	@Override
-	public MenuUpdate handleUserInput(FCInput input, StateInfo stateInfo)
-	{
-		blinkDelta++;
-		flashCount += 1;
+	public MenuUpdate update(long delta, StateInfo stateInfo) {
+		super.update(delta, stateInfo);
+		timer.update(delta);
 
-		if (flashCount >= 50)
-			flashCount = -50;
-
-		flashColor.r = (50 - Math.abs(flashCount)) / 255.0f;
-		flashColor.g = (50 - Math.abs(flashCount)) / 255.0f;
-		flashColor.b = (50 - Math.abs(flashCount)) / 255.0f;
-
-		if (selectCount < 3)
-			selectCount++;
-
-
-		if (blinkDelta == 20)
+		while (timer.perform())
 		{
-			if (!paintSelectionCursor)
-				blink = !blink;
-			blinkDelta = 0;
+			blinkDelta++;
+			flashCount += 1;
+
+			if (flashCount >= 50)
+				flashCount = -50;
+
+			flashColor.r = (50 - Math.abs(flashCount)) / 255.0f;
+			flashColor.g = (50 - Math.abs(flashCount)) / 255.0f;
+			flashColor.b = (50 - Math.abs(flashCount)) / 255.0f;
+
+			if (selectCount < 3)
+				selectCount++;
+
+
+			if (blinkDelta == 20)
+			{
+				if (!paintSelectionCursor)
+					blink = !blink;
+				blinkDelta = 0;
+			}
 		}
 
+		return MenuUpdate.MENU_NO_ACTION;
+	}
+
+	@Override
+	public MenuUpdate handleUserInput(FCInput input, StateInfo stateInfo)
+	{
 		if (input.isKeyDown(KeyMapping.BUTTON_2))
 		{
 			return onBack();
