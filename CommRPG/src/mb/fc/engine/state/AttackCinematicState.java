@@ -203,19 +203,18 @@ public class AttackCinematicState extends LoadableGameState
 
 			for (AnimSprite as : targetAnim.frames.get(targetAnimIndex).sprites)
 			{
+				Image im = getRotatedImageIfNeeded(targets.get(targetIndex).getAnimationImageAtIndex(as.imageIndex), as);
 				if (deathFade)
 				{
-					g.drawImage(targets.get(targetIndex).getAnimationImageAtIndex(as.imageIndex), xLoc + as.x * screenScale, yLoc + as.y * screenScale, deathColor);
+					g.drawImage(im, xLoc + as.x * screenScale, yLoc + as.y * screenScale, deathColor);
 				}
 				else if (damageFade != -1)
 				{
-					g.drawImage(targets.get(targetIndex).getAnimationImageAtIndex(as.imageIndex),
-							xLoc + as.x * screenScale + (CommRPG.RANDOM.nextInt(20) - 10) * screenScale, yLoc + as.y * screenScale + (CommRPG.RANDOM.nextInt(20) - 10) * screenScale , damageColor);
+					g.drawImage(im, xLoc + as.x * screenScale + (CommRPG.RANDOM.nextInt(20) - 10) * screenScale, yLoc + as.y * screenScale + (CommRPG.RANDOM.nextInt(20) - 10) * screenScale , damageColor);
 				}
 				else
 				{
-					g.drawImage(targets.get(targetIndex).getAnimationImageAtIndex(as.imageIndex),
-							xLoc + as.x * screenScale, yLoc + as.y * screenScale);
+					g.drawImage(im, xLoc + as.x * screenScale, yLoc + as.y * screenScale);
 				}
 			}
 		}
@@ -236,7 +235,7 @@ public class AttackCinematicState extends LoadableGameState
 			}
 
 			for (AnimSprite as : attackerAnim.frames.get(attackerAnimIndex).sprites)
-				g.drawImage(attacker.getAnimationImageAtIndex(as.imageIndex), xLoc + as.x * screenScale, yLoc + as.y * screenScale);
+				g.drawImage(getRotatedImageIfNeeded(attacker.getAnimationImageAtIndex(as.imageIndex), as), xLoc + as.x * screenScale, yLoc + as.y * screenScale);
 		}
 
 		if (spellAnimIndex != -1)
@@ -245,7 +244,7 @@ public class AttackCinematicState extends LoadableGameState
 			{
 				if (as.imageIndex != -1)
 				{
-					g.drawImage(spellAnims.getImageAtIndex(as.imageIndex),
+					g.drawImage(getRotatedImageIfNeeded(spellAnims.getImageAtIndex(as.imageIndex), as),
 							cont.getDisplayPaddingX() + (targets.get(0).isHero() ? 276 * screenScale : 50 * screenScale) + as.x * screenScale, bgYPos + backgroundImage.getHeight() + as.y * screenScale);
 				}
 			}
@@ -261,6 +260,18 @@ public class AttackCinematicState extends LoadableGameState
 			*/
 		if (textMenu != null)
 			textMenu.render(cont, g);
+	}
+
+	private Image getRotatedImageIfNeeded(Image image, AnimSprite as)
+	{
+		Image im = image;
+		System.out.println(as.angle);
+		if (as.angle != 0)
+		{
+			im = image.copy();
+			im.rotate(as.angle);
+		}
+		return im;
 	}
 
 	@Override

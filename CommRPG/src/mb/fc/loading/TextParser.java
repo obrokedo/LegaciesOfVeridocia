@@ -119,6 +119,21 @@ public class TextParser
 							te.addTriggerType(te.new TriggerStartBattle(actionParams.get("battletriggers"),
 									actionParams.get("battlemap"), actionParams.get("entrance")));
 						}
+						else if (tagArea.getChildren().get(k).getTagType().equalsIgnoreCase("setbattlecond"))
+						{
+							String leaders = actionParams.get("templeader");
+							int[] leaderIds = null;
+
+							if (leaders != null)
+							{
+								String[] splitLeader = leaders.split(",");
+								leaderIds = new int[splitLeader.length];
+								for (int i = 0; i < splitLeader.length; i++)
+									leaderIds[i] = Integer.parseInt(splitLeader[i]);
+							}
+
+							te.addTriggerType(te.new TriggerBattleCond(leaderIds, Boolean.parseBoolean(actionParams.get("allleaders"))));
+						}
 						else if (tagArea.getChildren().get(k).getTagType().equalsIgnoreCase("loadmap"))
 						{
 							te.addTriggerType(te.new TriggerEnter(actionParams.get("map"), actionParams.get("enter")));
@@ -146,7 +161,8 @@ public class TextParser
 						else if (tagArea.getChildren().get(k).getTagType().equalsIgnoreCase("changeai"))
 						{
 							te.addTriggerType(te.new TriggerChangeAI(actionParams.get("aitype"),
-									actionParams.get("id"), actionParams.get("targetid"), actionParams.get("x"), actionParams.get("y")));
+									actionParams.get("id"), actionParams.get("targetid"), actionParams.get("heroid"),
+									actionParams.get("x"), actionParams.get("y")));
 						}
 						else if (tagArea.getChildren().get(k).getTagType().equalsIgnoreCase("showtext"))
 						{

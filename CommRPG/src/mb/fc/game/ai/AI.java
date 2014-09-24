@@ -28,6 +28,7 @@ public abstract class AI
 	public final static int APPROACH_HESITANT = 2;
 	public final static int APPROACH_FOLLOW = 3;
 	public final static int APPROACH_MOVE_TO_POINT = 4;
+	public final static int APPROACH_TARGET = 5;
 
 	private int approachType;
 	private boolean canHeal;
@@ -85,6 +86,11 @@ public abstract class AI
 			{
 				if (as.getCombatSprite().isHero())
 				{
+					// If we have a target approach type then we want to ignore any heo who is not the target,
+					// however we will still perform actions on our allies and self.
+					if (approachType == AI.APPROACH_TARGET && as.getCombatSprite() != targetCS)
+						continue;
+
 					foundHero = true;
 				}
 
@@ -148,6 +154,9 @@ public abstract class AI
 				case AI.APPROACH_MOVE_TO_POINT:
 					performMoveToApproach(stateInfo, tileWidth, tileHeight, currentSprite, ms, turnActions);
 					break;
+				case AI.APPROACH_TARGET:
+					performFollowApproach(stateInfo, tileWidth, tileHeight, currentSprite, ms, turnActions);
+					break;
 			}
 		}
 
@@ -174,13 +183,13 @@ public abstract class AI
 
 	private void performKamikazeeApproach(StateInfo stateInfo, int tileWidth, int tileHeight, CombatSprite currentSprite, MoveableSpace ms, ArrayList<TurnAction> turnActions)
 	{
-		CombatSprite target = this.getMostIsolatedHero(stateInfo, tileWidth, tileHeight, currentSprite);
+		CombatSprite target = this.getMostIsolatedHero(stateInfo, tileWidth, tileHeight, currentSprite, ms);
 		ms.addMoveActionsAlongPath(target.getLocX(), target.getLocY(), currentSprite, turnActions);
 	}
 
 	private void performHesitantApproach(StateInfo stateInfo, int tileWidth, int tileHeight, CombatSprite currentSprite, MoveableSpace ms, ArrayList<TurnAction> turnActions)
 	{
-		CombatSprite target = this.getMostIsolatedHero(stateInfo, tileWidth, tileHeight, currentSprite);
+		CombatSprite target = this.getMostIsolatedHero(stateInfo, tileWidth, tileHeight, currentSprite, ms);
 		int move = 3;
 		int rand = CommRPG.RANDOM.nextInt(5);
 		if (rand == 0)
@@ -206,14 +215,14 @@ public abstract class AI
 		ms.addMoveActionsAlongPath(targetPoint.x, targetPoint.y, currentSprite, turnActions);
 	}
 
-	protected CombatSprite getMostIsolatedHero(StateInfo stateInfo, int tileWidth, int tileHeight, CombatSprite currentSprite)
+	protected CombatSprite getMostIsolatedHero(StateInfo stateInfo, int tileWidth, int tileHeight, CombatSprite currentSprite, MoveableSpace ms)
 	{
 		int leastAmt = Integer.MAX_VALUE;
-		CombatSprite mostIsolatedCS = null;
+		CombatSprite mostIsolatedCS = currentSprite;
 		for (CombatSprite cs : stateInfo.getHeroes())
 		{
 			int amt = getNearbySpriteAmount(stateInfo, true, tileWidth, tileHeight, new Point(cs.getTileX(), cs.getTileY()), 5, currentSprite);
-			if (amt < leastAmt)
+			if (amt < leastAmt && ms.doesPathExist(currentSprite.getTileX(), currentSprite.getTileY(), cs.getTileX(), cs.getTileY()))
 			{
 				leastAmt = amt;
 				mostIsolatedCS = cs;

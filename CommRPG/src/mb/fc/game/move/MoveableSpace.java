@@ -236,7 +236,7 @@ public class MoveableSpace implements KeyboardListener, MouseListener, TileBased
 	/**
 	 *
 	 * @param mapX The X location on the map (Not tile X) of the destination
-	 * @param mapY The Y location on the map (Not tile X) of the destination
+	 * @param mapY The Y location on the map (Not tile Y) of the destination
 	 * @param currentSprite
 	 * @param turnActions
 	 */
@@ -266,6 +266,18 @@ public class MoveableSpace implements KeyboardListener, MouseListener, TileBased
 					uncommitedActions.add(new MoveToTurnAction(path.getX(i) * tileWidth, path.getY(i) * tileHeight));
 			}
 		}
+	}
+
+	public boolean doesPathExist(int startTileX, int startTileY, int endTileX, int endTileY)
+	{
+		checkMoveable = false;
+		AStarPathFinder pathFinder = new AStarPathFinder(this, 1000, false);
+
+		Path path = pathFinder.findPath(
+				null, startTileX,
+					startTileY, endTileX, endTileY);
+		checkMoveable = true;
+		return path != null;
 	}
 
 	public boolean isTileWithinMove(int mapX, int mapY, Sprite currentSprite, int maxMove)

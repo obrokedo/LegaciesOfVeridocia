@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import mb.fc.engine.message.AudioMessage;
+import mb.fc.engine.message.BattleCondMessage;
 import mb.fc.engine.message.IntMessage;
 import mb.fc.engine.message.LoadMapMessage;
 import mb.fc.engine.message.Message;
@@ -174,6 +175,24 @@ public class TriggerEvent
 		public boolean perform(StateInfo stateInfo)
 		{
 			stateInfo.sendMessage(new LoadMapMessage(Message.MESSAGE_START_BATTLE, map, battle, entrance));
+			return false;
+		}
+	}
+
+	public class TriggerBattleCond extends TriggerType
+	{
+		private int[] leaderIds;
+		private boolean killAllLeaders;
+
+		public TriggerBattleCond(int[] leaderIds, boolean killAllLeaders) {
+			super();
+			this.leaderIds = leaderIds;
+			this.killAllLeaders = killAllLeaders;
+		}
+
+		@Override
+		public boolean perform(StateInfo stateInfo) {
+			stateInfo.sendMessage(new BattleCondMessage(leaderIds, killAllLeaders));
 			return false;
 		}
 	}
@@ -360,13 +379,16 @@ public class TriggerEvent
 		private int speed;
 		private int id;
 		private int targetId;
+		private int heroTargetId;
 		private Point p = null;
 
-		public TriggerChangeAI(String speed, String id, String targetId, String x, String y)
+		public TriggerChangeAI(String speed, String id, String targetId, String heroTargetId, String x, String y)
 		{
 			this.id = Integer.parseInt(id);
 			if (targetId != null)
 				this.targetId = Integer.parseInt(targetId);
+			if (heroTargetId != null)
+				this.heroTargetId = Integer.parseInt(heroTargetId);
 
 			if (x != null && y != null)
 			{
@@ -418,6 +440,14 @@ public class TriggerEvent
 								System.out.println("Follow sprite " + targetSprite.getName());
 							}
 
+							break;
+							// TODO MAY NEED TO COME BACK TO THIS AS THE PLANNER ALLOWS AN ARBITRARY NUMBER HERE, HOW USUABLE IS THIS?
+						case AI.APPROACH_TARGET:
+							if (heroTargetId < stateInfo.getHeroes().size() && stateInfo.getHeroes().get(heroTargetId).getCurrentHP() > 0)
+							{
+								s.getAi().setApproachType(speed, stateInfo.getHeroes().get(heroTargetId));
+								System.out.println("Target sprite " + stateInfo.getHeroes().get(heroTargetId).getName());
+							}
 							break;
 						case AI.APPROACH_MOVE_TO_POINT:
 							System.out.println("Move to point " + p);

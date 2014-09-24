@@ -1812,12 +1812,22 @@ public class PlannerFrame extends JFrame implements ActionListener,
 						PlannerValueDef.TYPE_STRING, "entrance", false,
 						"Entrance location",
 						"The name of the map location that the force will be placed at when the map loads"));
+		allowableLines.add(new PlannerLineDef("startbattle", "Load Battle",
+				"Starts the battle with the given triggers and map",
+				definingValues));
+
+		// Set Battle Conditions
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_BOOLEAN, "allleaders", false,
+				"Defeat when all leaders killed ",
+				"If true, then battle will only end in defeat if all of the leaders have been killed"));
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_HERO,
 				PlannerValueDef.TYPE_MULTI_INT, "templeader", true,
 				"Temporary Leaders. If killed battle ends ",
 				"The ID of the quest that must be complete for this to be shown"));
-		allowableLines.add(new PlannerLineDef("startbattle", "Load Battle",
-				"Starts the battle with the given triggers and map",
+		allowableLines.add(new PlannerLineDef("setbattlecond", "Set Battle Conditions",
+				"Set conditions for the battle, should only be called during battle initialization",
 				definingValues));
 
 		// Load map
@@ -1889,6 +1899,9 @@ public class PlannerFrame extends JFrame implements ActionListener,
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
 				PlannerValueDef.TYPE_INT, "id", false, "Unit",
 				"The unit whose AI should be changed"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_INT, "heroid", true, "Hero",
+				"The index of the hero that should be targeted"));
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
 				PlannerValueDef.TYPE_INT, "targetid", true, "Target Unit",
 				"The target unit (enemy) that this enemy should follow"));

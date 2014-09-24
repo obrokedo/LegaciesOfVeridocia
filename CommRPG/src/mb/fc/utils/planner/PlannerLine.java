@@ -70,7 +70,7 @@ public class PlannerLine extends JPanel
 			headerPanel.setBackground(Color.LIGHT_GRAY);
 			headDescPanel.setBackground(Color.LIGHT_GRAY);
 		}
-		JLabel headerLabel = new JLabel(plDef.getTag().toUpperCase());
+		JLabel headerLabel = new JLabel(plDef.getName().toUpperCase());
 		headerPanel.add(headerLabel);
 		if (isDefining)
 		{

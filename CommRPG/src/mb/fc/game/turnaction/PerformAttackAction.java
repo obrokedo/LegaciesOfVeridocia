@@ -15,6 +15,8 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 
 public class PerformAttackAction extends TurnAction
 {
+	private static final long serialVersionUID = 1L;
+
 	private BattleResults battleResults;
 
 	public PerformAttackAction(BattleResults battleResults) {

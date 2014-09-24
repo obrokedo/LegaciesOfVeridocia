@@ -1,7 +1,9 @@
 package mb.fc.game.manager;
 
+import java.util.HashSet;
 import java.util.Iterator;
 
+import mb.fc.engine.message.BattleCondMessage;
 import mb.fc.engine.message.Message;
 import mb.fc.engine.message.SpeechMessage;
 import mb.fc.game.sprite.CombatSprite;
@@ -14,6 +16,8 @@ public class SpriteManager extends Manager
 {
 	private int updateDelta = 0;
 	private static final int UPDATE_TIME = 50;
+	private HashSet<CombatSprite> heroLeaders;
+	private boolean killAllHeroLeaders = false;
 
 	@Override
 	public void initialize()
@@ -68,8 +72,14 @@ public class SpriteManager extends Manager
 		// Otherwise just add all of the heroes
 		else
 		{
+			heroLeaders = new HashSet<CombatSprite>();
+			killAllHeroLeaders = false;
 			for (CombatSprite cs : stateInfo.getHeroes())
+			{
 				cs.initializeSprite(stateInfo);
+				if (cs.isLeader())
+					heroLeaders.add(cs);
+			}
 
 			stateInfo.addAllCombatSprites(stateInfo.getHeroes());
 
@@ -115,14 +125,17 @@ public class SpriteManager extends Manager
 						s.destroy(stateInfo);
 						spriteItr.remove();
 
-						if (cs.isLeader())
+						if (cs.isHero())
 						{
-							if (cs.isHero())
+							if (heroLeaders.remove(cs))
 							{
-								stateInfo.sendMessage(new SpeechMessage(Message.MESSAGE_SPEECH, "You have been defeated...]", -2, -1));
+								if (heroLeaders.size() == 0 || !killAllHeroLeaders)
+									stateInfo.sendMessage(new SpeechMessage(Message.MESSAGE_SPEECH, "You have been defeated...]", -2, -1));
 							}
-							else
-								stateInfo.getResourceManager().getTriggerEventById(1).perform(stateInfo);
+						}
+						else if (cs.isLeader())
+						{
+							stateInfo.getResourceManager().getTriggerEventById(1).perform(stateInfo);
 						}
 					}
 					// If the sprite did not die, then check to see if it is an enemy, if so the battle is not over
@@ -186,6 +199,17 @@ public class SpriteManager extends Manager
 							ss.triggerButton1Event(stateInfo);
 							break;
 						}
+					}
+				}
+				break;
+			case Message.MESSAGE_BATTLE_COND:
+				BattleCondMessage bcm = (BattleCondMessage) message;
+				this.killAllHeroLeaders = bcm.isKillAllLeaders();
+				for (Integer i : bcm.getLeaderIds())
+				{
+					if (i > 0)
+					{
+						this.heroLeaders.add(stateInfo.getHeroes().get(i));
 					}
 				}
 				break;
