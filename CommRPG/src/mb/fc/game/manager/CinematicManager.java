@@ -20,8 +20,9 @@ public class CinematicManager extends Manager
 		if (cinematic != null && cinematic.update(delta, stateInfo.getCamera(), stateInfo.getInput(),
 				stateInfo.getGc(), stateInfo.getCurrentMap(), stateInfo))
 		{
+			cinematic.endCinematic(stateInfo);
 			cinematic = null;
-			stateInfo.getCamera().centerOnSprite(stateInfo.getCurrentSprite(), stateInfo.getCurrentMap());
+			// stateInfo.getCamera().centerOnSprite(stateInfo.getCurrentSprite(), stateInfo.getCurrentMap());
 		}
 
 	}

@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Hashtable;
 
+import mb.fc.engine.CommRPG;
 import mb.fc.game.sprite.CombatSprite;
 
 import org.newdawn.slick.Image;
@@ -63,10 +64,10 @@ public class Map
 	 * A value of 0 in any given layer means that no tile was selected at this location.
 	 */
 	private ArrayList<int[][]> mapLayer = new ArrayList<int[][]>();
-	private int tileWidth, tileHeight;
-	private ArrayList<TileSet> tileSets = new ArrayList<TileSet>();
+	protected int tileWidth, tileHeight;
+	protected ArrayList<TileSet> tileSets = new ArrayList<TileSet>();
 	private ArrayList<MapObject> mapObjects = new ArrayList<MapObject>();
-	private Hashtable<Integer, Integer> landEffectByTileId = new Hashtable<Integer, Integer>();
+	protected Hashtable<Integer, Integer> landEffectByTileId = new Hashtable<Integer, Integer>();
 	private Hashtable<TerrainTypeIndicator, Integer> overriddenTerrain = new Hashtable<TerrainTypeIndicator, Integer>();
 	private Hashtable<Integer, Roof> roofsById = new Hashtable<Integer, Roof>();
 	private Shape battleRegion = null;
@@ -274,17 +275,18 @@ public class Map
 		return mapLayer.get(3)[tileY * TILE_RATIO][tileX * TILE_RATIO] != 0;
 	}
 
-	private class TileSet
+	protected class TileSet
 	{
 		private SpriteSheet spriteSheet;
-		private int startIndex;
+		protected int startIndex;
 		private int ssWidth;
 
 		public TileSet(SpriteSheet spriteSheet, int startIndex) {
 			super();
 			this.spriteSheet = spriteSheet;
 			this.startIndex = startIndex;
-			this.ssWidth = spriteSheet.getHorizontalCount();
+			if (spriteSheet != null)
+				this.ssWidth = spriteSheet.getHorizontalCount();
 		}
 
 		public Image getSprite(int index) {
@@ -296,7 +298,7 @@ public class Map
 		}
 	}
 
-	private class TileSetComparator implements Comparator<TileSet>
+	public class TileSetComparator implements Comparator<TileSet>
 	{
 		@Override
 		public int compare(TileSet ts0, TileSet ts1)
@@ -315,6 +317,7 @@ public class Map
 			this.tileX = tileX;
 			this.tileY = tileY;
 		}
+
 		@Override
 		public int hashCode() {
 			final int prime = 31;
@@ -324,6 +327,7 @@ public class Map
 			result = prime * result + tileY;
 			return result;
 		}
+
 		@Override
 		public boolean equals(Object obj) {
 			if (this == obj)
@@ -354,5 +358,10 @@ public class Map
 	public Roof getRoofById(int id)
 	{
 		return roofsById.get(id);
+	}
+
+	public int getTileScale()
+	{
+		return CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
 	}
 }

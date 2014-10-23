@@ -1,30 +1,40 @@
 package mb.fc.utils.planner;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
+import javax.activation.ActivationDataFlavor;
+import javax.activation.DataHandler;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.DropMode;
 import javax.swing.JComboBox;
-import javax.swing.JLabel;
+import javax.swing.JComponent;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.TransferHandler;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-public class PlannerTab extends JPanel implements ActionListener, ListSelectionListener
+public class PlannerTab extends JPanel implements ActionListener, ItemListener, ListSelectionListener
 {
 	protected static final long serialVersionUID = 1L;
 
 	protected Hashtable<String, PlannerContainerDef> containersByName;
 	protected String[] containers;
-	protected JList<String> list;
-	protected DefaultListModel<String> listModel;
+	protected JComboBox<String> list;
+	protected DefaultComboBoxModel<String> listModel;
 	protected ArrayList<PlannerContainer> listPC;
 	protected PlannerContainer currentPC;
 	protected int selectedPC;
@@ -32,42 +42,38 @@ public class PlannerTab extends JPanel implements ActionListener, ListSelectionL
 	protected JComboBox<String> typeComboBox;
 	protected int refersTo;
 	protected PlannerFrame plannerFrame;
+	protected JList<String> attributeList;
+	protected DefaultListModel<String> attributeListModel;
+	protected JScrollPane attributeScrollPane;
+	private JPanel listPanel;
 
 	public PlannerTab(Hashtable<String, PlannerContainerDef> containersByName,
 			String[] containers, int refersTo, PlannerFrame plannerFrame)
 	{
-		this(containersByName, containers, refersTo, plannerFrame, true);
-	}
-
-	public PlannerTab(Hashtable<String, PlannerContainerDef> containersByName,
-			String[] containers, int refersTo, PlannerFrame plannerFrame, boolean displayList)
-	{
 		super(new BorderLayout());
 
-		JPanel listPanel = new JPanel(new BorderLayout());
-		listModel = new DefaultListModel<String>();
-		list = new JList<String>(listModel);
-		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		list.addListSelectionListener(this);
+		listPanel = new JPanel();
+		listModel = new DefaultComboBoxModel<String>();
+		list = new JComboBox<String>(listModel);
+		list.addItemListener(this);
+
 		listPC = new ArrayList<PlannerContainer>();
 
 		this.containersByName = containersByName;
 		this.containers = containers;
 
-		this.add(list, BorderLayout.LINE_START);
-		listPanel.add(new JLabel("Entries"), BorderLayout.PAGE_START);
-		listPanel.add(new JScrollPane(list), BorderLayout.CENTER);
+		listPanel.add(list);
+
+
+
+		listPanel.add(PlannerFrame.createActionButton("Add", "add", this));
+		listPanel.add(PlannerFrame.createActionButton("Remove", "remove", this));
+
+		// this.add(listPanel, BorderLayout.LINE_START);
+		this.add(listPanel, BorderLayout.PAGE_START);
 
 		typeComboBox = new JComboBox<String>(containers);
 
-		JPanel buttonPanel = new JPanel();
-		buttonPanel.add(typeComboBox);
-		buttonPanel.add(PlannerFrame.createActionButton("Add", "add", this));
-		buttonPanel.add(PlannerFrame.createActionButton("Remove", "remove", this));
-		listPanel.add(buttonPanel, BorderLayout.PAGE_END);
-
-		if (displayList)
-			this.add(listPanel, BorderLayout.LINE_START);
 		this.refersTo = refersTo;
 		this.plannerFrame = plannerFrame;
 	}
@@ -79,13 +85,14 @@ public class PlannerTab extends JPanel implements ActionListener, ListSelectionL
 		if (command.equalsIgnoreCase("add"))
 		{
 			String type = containers[typeComboBox.getSelectedIndex()];
-			listModel.addElement(type);
-			listPC.add(new PlannerContainer(containersByName.get(type)));
-
+			listPC.add(new PlannerContainer(containersByName.get(type), this));
 			PlannerContainerDef pcd = containersByName.get(type);
 			pcd.getDataLines().add("");
 
-			list.setSelectedIndex(listModel.size() - 1);
+			System.out.println("ADD ELEMENT");
+			listModel.addElement("(ID: " + listModel.getSize() + ") " + type);
+			System.out.println("AFTER ADD ELEMENT");
+			list.setSelectedIndex(listModel.getSize() - 1);
 		}
 		else if (command.equalsIgnoreCase("remove"))
 		{
@@ -93,27 +100,29 @@ public class PlannerTab extends JPanel implements ActionListener, ListSelectionL
 			plannerFrame.removeReferences(refersTo, selected);
 			currentPC.getPcdef().getDataLines().remove(selected);
 			currentPC = null;
-			listModel.remove(selected);
+			listModel.removeElementAt(selected);
 			listPC.remove(selected);
 		}
 	}
 
-	@Override
-	public void valueChanged(ListSelectionEvent e) {
-		if (!e.getValueIsAdjusting())
+	public void commitChanges()
+	{
+		if (currentPC != null)
 		{
-			setNewValues();
+			currentPC.commitChanges();
+			updateAttributeList(-1);
 		}
 	}
 
 	public void setNewValues()
 	{
+		System.out.println("SET NEW VALUES");
+
+		list.removeItemListener(this);
 		if (currentPCScroll != null)
 		{
 			this.remove(currentPCScroll);
 		}
-
-		System.out.println("SET NEW VALUES");
 
 		if (currentPC != null && currentPC.getDefLine() != null)
 		{
@@ -132,8 +141,11 @@ public class PlannerTab extends JPanel implements ActionListener, ListSelectionL
 		if (currentPC != null)
 		{
 			currentPC.commitChanges();
-			listModel.set(selectedPC, "(ID: " + (selectedPC) + ") " + currentPC.getDescription());
+			listModel.removeElementAt(selectedPC);
+			listModel.insertElementAt("(ID: " + (selectedPC) + ") " + currentPC.getDescription(), selectedPC);
 			currentPC.getPcdef().getDataLines().set(selectedPC, currentPC.getDescription());
+			if (list.getSelectedIndex() == -1)
+				list.setSelectedIndex(0);
 		}
 
 		if (list.getSelectedIndex() != -1)
@@ -146,14 +158,20 @@ public class PlannerTab extends JPanel implements ActionListener, ListSelectionL
 			panel.add(currentPC);
 			currentPCScroll = new JScrollPane(panel);
 			currentPCScroll.getVerticalScrollBar().setUnitIncrement(75);
-			this.add(currentPC.getDefLine().getDefiningPanel(), BorderLayout.PAGE_START);
+
+			this.add(currentPC.getDefLine().getDefiningPanel(), BorderLayout.PAGE_END);
 			this.add(currentPCScroll, BorderLayout.CENTER);
+
 			if (currentPC.getDefLine().getPlDef().getTag().equalsIgnoreCase("Cinematic") && currentPC.getPlannerGraph() != null &&
 					PlannerFrame.SHOW_CIN)
 			{
 				this.add(currentPC.getPlannerGraph(), BorderLayout.PAGE_END);
 			}
-			this.revalidate();
+
+			updateAttributeList(0);
+
+			currentPCScroll.revalidate();
+			this.repaint();
 		}
 		else
 		{
@@ -162,6 +180,37 @@ public class PlannerTab extends JPanel implements ActionListener, ListSelectionL
 			this.add(currentPCScroll, BorderLayout.CENTER);
 			this.revalidate();
 		}
+
+		list.addItemListener(this);
+	}
+
+	public void updateAttributeList(int index)
+	{
+		if (attributeScrollPane != null)
+		{
+			this.remove(attributeScrollPane);
+			attributeList.removeListSelectionListener(this);
+		}
+
+		attributeListModel = new DefaultListModel<String>();
+		for (PlannerLine pl : currentPC.getLines())
+		{
+			attributeListModel.addElement(pl.getPlDef().getName());
+		}
+		attributeList = new JList<String>(attributeListModel);
+		attributeScrollPane = new JScrollPane(attributeList);
+		this.add(attributeScrollPane, BorderLayout.LINE_START);
+		attributeList.setPreferredSize(new Dimension(150, 100));
+		attributeList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		attributeList.addListSelectionListener(this);
+		attributeList.setTransferHandler(new AttributeTransferHandler());
+		attributeList.setDropMode(DropMode.INSERT);
+		attributeList.setDragEnabled(true);
+
+		if (attributeListModel.size() > index && index >= 0)
+			attributeList.setSelectedIndex(index);
+
+		this.validate();
 	}
 
 	public void addPlannerContainer(PlannerContainer pc)
@@ -174,8 +223,16 @@ public class PlannerTab extends JPanel implements ActionListener, ListSelectionL
 		return listPC;
 	}
 
-	public void clearValues(ArrayList<ArrayList<String>> listOfLists)
+	public void clearValues()
 	{
+		list.removeItemListener(this);
+		listModel.removeAllElements();
+		this.currentPC = null;
+		this.listPC.clear();
+		System.out.println("CLEAR VALUES");
+		this.removeAll();
+		this.add(listPanel, BorderLayout.PAGE_START);
+		/*
 		if (currentPCScroll != null)
 		{
 			this.remove(currentPCScroll);
@@ -197,9 +254,121 @@ public class PlannerTab extends JPanel implements ActionListener, ListSelectionL
 				i--;
 			}
 		}
+		*/
+		this.revalidate();
+		this.repaint();
+		list.addItemListener(this);
+		System.out.println("CLEARED CURRENT PC " + currentPC);
+	}
 
-		this.currentPC = null;
-		this.listPC.clear();
-		listModel.clear();
+	public boolean setSelectedListItem(int index)
+	{
+		System.out.println("SET SELECTED LIST ITEM " + index);
+		if (index < list.getModel().getSize())
+		{
+			this.list.setSelectedIndex(index);
+			System.out.println("NOW SELECTED " + this.list.getSelectedIndex());
+			return true;
+		}
+		return false;
+
+
+	}
+
+	@Override
+	public void itemStateChanged(ItemEvent e) {
+		System.out.println("COMBO BOX SELECTED CHANGED");
+		if (e.getStateChange() == ItemEvent.SELECTED)
+			setNewValues();
+	}
+
+	@Override
+	public void valueChanged(ListSelectionEvent e) {
+		if (!e.getValueIsAdjusting())
+		{
+			if (currentPC != null)
+			{
+				currentPC.setupUI(attributeList.getSelectedIndex());
+				currentPCScroll.revalidate();
+			}
+		}
+	}
+
+	public class AttributeTransferHandler extends TransferHandler
+	{
+		private static final long serialVersionUID = 1L;
+		private final DataFlavor localObjectFlavor;
+		private String transferedObjects = null;
+		private int index;
+
+		public AttributeTransferHandler() {
+			super();
+			localObjectFlavor = new ActivationDataFlavor(
+				      String.class, DataFlavor.javaJVMLocalObjectMimeType, "Item");
+		}
+
+		@Override
+		public boolean canImport(TransferSupport arg0) {
+			return true;
+		}
+
+		@Override
+		protected Transferable createTransferable(JComponent c) {
+			JList<?> list = (JList<?>) c;
+		    index = list.getSelectedIndex();
+		    transferedObjects = (String) list.getSelectedValue();
+		    return new DataHandler(transferedObjects, localObjectFlavor.getMimeType());
+		}
+
+		@Override
+		protected void exportDone(JComponent arg0, Transferable arg1, int arg2) {
+			super.exportDone(arg0, arg1, arg2);
+		}
+
+		@Override
+		public int getSourceActions(JComponent arg0) {
+			return TransferHandler.MOVE;
+		}
+
+		@Override
+		public boolean importData(TransferSupport ts) {
+
+			JList.DropLocation dl = (JList.DropLocation)ts.getDropLocation();
+			if (index != dl.getIndex())
+			{
+				if (currentPC == null)
+					return false;
+
+				ArrayList<PlannerLine> pls = currentPC.getLines();
+				int newIndex = dl.getIndex();
+				if (dl.getIndex() < index)
+				{
+					pls.add(dl.getIndex(), pls.remove(index));
+				}
+				else
+				{
+					pls.add(--newIndex, pls.remove(index));
+				}
+
+				updateAttributeList(newIndex);
+				return true;
+			}
+			System.out.println(dl.getIndex() + " " + index);
+
+			return false;
+		}
+	}
+
+	public PlannerContainerDef getPlannerContainerDef()
+	{
+		return containersByName.get(containers[typeComboBox.getSelectedIndex()]);
+	}
+
+	public PlannerContainer getCurrentPC() {
+		return currentPC;
+	}
+
+	public JComboBox<String> getItemList() {
+		return list;
 	}
 }

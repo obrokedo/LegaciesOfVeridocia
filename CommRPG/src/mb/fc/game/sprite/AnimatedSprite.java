@@ -24,6 +24,7 @@ public class AnimatedSprite extends Sprite
 	protected transient int imageIndex;
 	protected transient int animationDelay = 0;
 	protected transient SpriteAnims spriteAnims;
+
 	protected transient Animation currentAnim;
 	protected String imageName;
 	private Direction facing;
@@ -151,5 +152,13 @@ public class AnimatedSprite extends Sprite
 
 	public void setAnimationUpdate(int animationUpdate) {
 		this.animationUpdate = animationUpdate;
+	}
+
+	public SpriteAnims getSpriteAnims() {
+		return spriteAnims;
+	}
+
+	public Animation getCurrentAnim() {
+		return currentAnim;
 	}
 }

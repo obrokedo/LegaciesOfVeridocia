@@ -36,13 +36,14 @@ public class PlannerFrame extends JFrame implements ActionListener,
 	private File triggerFile;
 	public static boolean SHOW_CIN = false;
 
-	private static final int TAB_TRIGGER = 0;
-	private static final int TAB_CIN = 1;
-	private static final int TAB_TEXT = 2;
-	private static final int TAB_HERO = 3;
-	private static final int TAB_ENEMY = 4;
-	private static final int TAB_ITEM = 5;
-	private static final int TAB_QUEST = 6;
+	public static final int TAB_TRIGGER = 0;
+	public static final int TAB_CIN = 1;
+	public static final int TAB_TEXT = 2;
+	public static final int TAB_HERO = 3;
+	public static final int TAB_ENEMY = 4;
+	public static final int TAB_ITEM = 5;
+	public static final int TAB_QUEST = 6;
+	public static final int TAB_MAP = 7;
 
 	private static String PATH_ENEMIES = "definitions/Enemies";
 	private static String PATH_HEROES = "definitions/Heroes";
@@ -69,6 +70,11 @@ public class PlannerFrame extends JFrame implements ActionListener,
 		openTriggersItem.addActionListener(this);
 		openTriggersItem.setActionCommand("open");
 		fileMenu.add(openTriggersItem);
+		JMenuItem openMapItem = new JMenuItem(
+				"Open Map");
+		openMapItem.addActionListener(this);
+		openMapItem.setActionCommand("openmap");
+		fileMenu.add(openMapItem);
 
 		JMenuItem reloadTriggersItem = new JMenuItem(
 				"Reload Triggers/Speech/Cinematic");
@@ -228,6 +234,8 @@ public class PlannerFrame extends JFrame implements ActionListener,
 		initUI();
 
 		getSavedData();
+
+		stateChanged(null);
 	}
 
 	private void exportDataToFile(ArrayList<PlannerContainer> containers,
@@ -353,7 +361,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 				continue;
 			System.out.println(ta.getTagType());
 			PlannerContainerDef pcd = containersByName.get(ta.getTagType());
-			PlannerContainer plannerContainer = new PlannerContainer(pcd);
+			PlannerContainer plannerContainer = new PlannerContainer(pcd, ((PlannerTab) this.jtp.getComponent(tabIndex)));
 			PlannerLine plannerLine = plannerContainer.getDefLine();
 			parseLine(plannerLine, pcd.getDefiningLine(), ta);
 			pcd.getDataLines().add(plannerContainer.getDescription());
@@ -517,6 +525,20 @@ public class PlannerFrame extends JFrame implements ActionListener,
 						"Add Actor",
 						"Adds an actor to the cinematic, this actor can be accessed in the future by its' name",
 						definingValues));
+
+		// Associate Actor With Sprite
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING,
+				"name", false, "Actor Name",
+				"The name that will be used to reference the actor in the cinematic"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_INT, "npcid", true, "NPC ID",
+				"The ID of the NPC that should become a cinematic actor"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_BOOLEAN, "hero", true, "Associate Hero Leader",
+				"If true then the players hero will be established as a cinematic actor. This should not be used in battles"));
+		allowableLines.add(new PlannerLineDef("assactor", "Establish Sprite as Actor",
+						"Establishes a Sprite (NPC, Enemy, Hero) as an actor.", definingValues));
 
 		// Remove Actor
 		definingValues = new ArrayList<PlannerValueDef>();
@@ -1929,7 +1951,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 				"cinid", false, "Cinematic ID",
 				"The ID of the cinematic that should be shown"));
 		allowableLines.add(new PlannerLineDef("showcin", "Show Map Event",
-				"CURRENTLY UNSUPPORTED! Shows the specified cinematic on the current map", definingValues));
+				"Shows the specified cinematic on the current map", definingValues));
 
 		// Show Shop
 		definingValues = new ArrayList<PlannerValueDef>();
@@ -2114,12 +2136,14 @@ public class PlannerFrame extends JFrame implements ActionListener,
 				new String[] { "item" }, PlannerValueDef.REFERS_ITEM, this));
 		jtp.addTab("Quests", new PlannerTab(containersByName,
 				new String[] { "quest" }, PlannerValueDef.REFERS_QUEST, this));
-		jtp.addTab("Battle Functions", new PlannerFunctionPanel());
-		jtp.addTab("Map Triggers", new MapTriggerPanel(containersByName));
+		jtp.addTab("Map", new MapPanel(jtp));
+		// jtp.addTab("Battle Functions", new PlannerFunctionPanel());
+		// jtp.addTab("Map Triggers", new MapTriggerPanel(containersByName));
 		jtp.addChangeListener(this);
 		jtp.setEnabledAt(TAB_TRIGGER, false);
 		jtp.setEnabledAt(TAB_CIN, false);
 		jtp.setEnabledAt(TAB_TEXT, false);
+		jtp.setEnabledAt(TAB_MAP, false);
 		jtp.setSelectedIndex(TAB_HERO);
 		this.setContentPane(jtp);
 
@@ -2151,11 +2175,11 @@ public class PlannerFrame extends JFrame implements ActionListener,
 							.clear();
 
 					((PlannerTab) jtp.getComponent(TAB_TRIGGER))
-							.clearValues(listOfLists);
+							.clearValues();
 					((PlannerTab) jtp.getComponent(TAB_CIN))
-							.clearValues(listOfLists);
+							.clearValues();
 					((PlannerTab) jtp.getComponent(TAB_TEXT))
-							.clearValues(listOfLists);
+							.clearValues();
 				}
 
 				triggerFile = fc.getSelectedFile();
@@ -2181,6 +2205,16 @@ public class PlannerFrame extends JFrame implements ActionListener,
 				triggerFile = fc.getSelectedFile();
 
 				openFile(triggerFile);
+			}
+		} else if (arg0.getActionCommand().equalsIgnoreCase("openmap")) {
+			JFileChooser fc = new JFileChooser(new File("."));
+			int returnVal = fc.showOpenDialog(this);
+
+			if (returnVal == JFileChooser.APPROVE_OPTION) {
+				MapPanel mp = ((MapPanel) jtp.getComponent(TAB_MAP));
+				mp.loadMap(fc.getSelectedFile().getAbsolutePath());
+				jtp.setEnabledAt(TAB_MAP, true);
+				jtp.setSelectedIndex(TAB_MAP);
 			}
 		} else if (arg0.getActionCommand().equalsIgnoreCase("reload")) {
 			if (triggerFile != null)
@@ -2224,9 +2258,9 @@ public class PlannerFrame extends JFrame implements ActionListener,
 		listOfLists.get(PlannerValueDef.REFERS_TEXT - 1).clear();
 		listOfLists.get(PlannerValueDef.REFERS_CINEMATIC - 1).clear();
 
-		((PlannerTab) jtp.getComponent(TAB_TRIGGER)).clearValues(listOfLists);
-		((PlannerTab) jtp.getComponent(TAB_CIN)).clearValues(listOfLists);
-		((PlannerTab) jtp.getComponent(TAB_TEXT)).clearValues(listOfLists);
+		((PlannerTab) jtp.getComponent(TAB_TRIGGER)).clearValues();
+		((PlannerTab) jtp.getComponent(TAB_CIN)).clearValues();
+		((PlannerTab) jtp.getComponent(TAB_TEXT)).clearValues();
 
 		this.setTitle("Planner: " + triggerFile.getName());
 
@@ -2293,8 +2327,15 @@ public class PlannerFrame extends JFrame implements ActionListener,
 	}
 
 	@Override
-	public void stateChanged(ChangeEvent arg0) {
+	public void stateChanged(ChangeEvent e) {
 		for (int i = 0; i < jtp.getTabCount() - 2; i++)
-			((PlannerTab) jtp.getComponent(i)).setNewValues();
+			((PlannerTab) jtp.getComponent(i)).commitChanges();
+			// ((PlannerTab) jtp.getComponent(i)).setNewValues();
+
+		if (jtp.getSelectedIndex() == TAB_MAP)
+		{
+			MapPanel mp = (MapPanel) jtp.getSelectedComponent();
+			mp.reloadCinematicItem();
+		}
 	}
 }

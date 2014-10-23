@@ -121,6 +121,10 @@ public class MapObject
 		return params.get(param);
 	}
 
+	public Hashtable<String, String> getParams() {
+		return params;
+	}
+
 	public void getStartLocation(StateInfo stateInfo)
 	{
 		int startX = 0;
@@ -163,6 +167,8 @@ public class MapObject
 		int imageId = Integer.parseInt(params.get("imageid"));
 		ArrayList<Speech> speeches = stateInfo.getResourceManager().getSpeechesById(Integer.parseInt(params.get("textid")));
 		NPCSprite npc = NPCResource.getNPC(imageId, speeches);
+		if (params.get("npcid") != null)
+			npc.setUniqueNPCId(Integer.parseInt(params.get("npcid")));
 		npc.initializeSprite(stateInfo);
 		npc.setLocX(x);
 		npc.setLocY(y);

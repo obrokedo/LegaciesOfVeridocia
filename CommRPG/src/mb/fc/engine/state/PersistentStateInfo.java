@@ -31,20 +31,7 @@ public class PersistentStateInfo
 	private int cinematicID = 0;
 
 	public PersistentStateInfo(ClientProfile clientProfile, ClientProgress clientProgress, CommRPG game, Camera camera,
-			GameContainer gc, Graphics graphics, int clientId)
-	{
-		this.game = game;
-		this.camera = camera;
-		this.gc = (FCGameContainer) gc;
-		this.graphics = graphics;
-		this.heroes = new ArrayList<CombatSprite>();
-		this.clientProfile = clientProfile;
-		this.clientProgress = clientProgress;
-		this.heroes.addAll(clientProfile.getHeroes());
-	}
-
-	public PersistentStateInfo(ClientProfile clientProfile, ClientProgress clientProgress, CommRPG game, Camera camera,
-			GameContainer gc, Graphics graphics, boolean isHost)
+			GameContainer gc, Graphics graphics)
 	{
 		this.game = game;
 		this.camera = camera;

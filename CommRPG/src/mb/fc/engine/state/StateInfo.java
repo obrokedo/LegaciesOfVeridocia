@@ -108,6 +108,7 @@ public class StateInfo
 	public void initState()
 	{
 		System.out.println("Initialize State");
+
 		this.initialized = false;
 
 		// Add starting heroes if they haven't been added yet
@@ -119,10 +120,13 @@ public class StateInfo
 		}
 
 		initializeSystems();
+
 		if (isCombat)
 			this.heroes.addAll(getClientProfile().getHeroes());
 		else
 			this.heroes.addAll(getClientProfile().getLeaderList());
+
+
 		sendMessage(Message.MESSAGE_INTIIALIZE);
 
 		if (this.getClientProgress().getRetriggerablesByMap() != null)
@@ -140,6 +144,8 @@ public class StateInfo
 
 	private void initializeSystems()
 	{
+		System.out.println("Initialize Systems");
+
 		triggers.clear();
 		sprites.clear();
 		combatSprites.clear();
@@ -569,15 +575,6 @@ public class StateInfo
 	{
 		sprites.addAll(ss);
 		combatSprites.addAll(ss);
-	}
-
-	public void addAllSprites(Collection<Sprite> ss)
-	{
-		sprites.addAll(ss);
-
-		for (Sprite s : ss)
-			if (s.getSpriteType() == Sprite.TYPE_COMBAT)
-				combatSprites.add((CombatSprite) s);
 	}
 
 	public FCInput getInput() {

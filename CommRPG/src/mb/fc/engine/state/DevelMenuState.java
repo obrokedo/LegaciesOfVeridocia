@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 
 import mb.fc.engine.CommRPG;
 import mb.fc.loading.MapParser;
+import mb.fc.loading.TilesetParser;
 import mb.fc.map.Map;
 import mb.fc.map.MapObject;
 import mb.gl2.loading.ResourceManager;
@@ -214,7 +215,7 @@ public class DevelMenuState extends MenuState
 							Map map = new Map();
 							entrances.clear();
 							try {
-								MapParser.parseMap("map/" + mapFiles.get(selectedItem), map);
+								MapParser.parseMap("map/" + mapFiles.get(selectedItem), map, new TilesetParser());
 
 
 								for (MapObject mo : map.getMapObjects())

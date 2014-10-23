@@ -33,7 +33,7 @@ public class MapTriggerPanel extends JPanel implements ActionListener
 		this.add(buttonPanel, BorderLayout.PAGE_START);
 		generatedText = new JTextArea(100, 10);
 
-		currentPC = new PlannerContainer(containersByName.get("map"));
+		// currentPC = new PlannerContainer(containersByName.get("map"));
 		System.out.println(currentPC.getDefLine().getDefiningPanel());
 
 		currentPC.setupUI();

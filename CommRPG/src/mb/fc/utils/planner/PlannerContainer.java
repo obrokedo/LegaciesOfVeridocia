@@ -17,36 +17,49 @@ public class PlannerContainer extends JPanel implements ActionListener
 	private static final long serialVersionUID = 1L;
 
 	private PlannerContainerDef pcdef;
-	private ArrayList<PlannerContainer> containers;
 	private ArrayList<PlannerLine> lines;
 	private PlannerLine defLine;
 	private PlannerTimeBarViewer plannerGraph = null;
+	private PlannerTab parentTab;
 
-	public PlannerContainer(PlannerContainerDef pcdef) {
+	public PlannerContainer(PlannerContainerDef pcdef, PlannerTab parentTab) {
 		super();
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		this.pcdef = pcdef;
 
 		this.defLine = new PlannerLine(pcdef.getDefiningLine(), true);
-		this.containers = new ArrayList<PlannerContainer>();
 		this.lines = new ArrayList<PlannerLine>();
+		this.parentTab = parentTab;
 	}
 
 	public void setupUI()
 	{
+		setupUI(0);
+	}
+
+	public void setupUI(int index)
+	{
 		this.removeAll();
-		defLine.setupUI(pcdef.getAllowableLines(), this, 0, pcdef.getListOfLists());
+		this.validate();
+
+		defLine.setupUI(pcdef.getAllowableLines(), this, 0, pcdef.getListOfLists(), parentTab);
 		this.add(defLine);
 
 		JPanel listPanel = new JPanel();
 		listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.PAGE_AXIS));
-		int i = 1;
+		if (index < lines.size())
+		{
+			lines.get(index).setupUI(pcdef.getAllowableLines(), this, index + 1, pcdef.getListOfLists(), parentTab);
+			listPanel.add(lines.get(index));
+		}
+
+		/*
 		for (PlannerLine line : lines)
 		{
 			line.setupUI(pcdef.getAllowableLines(), this, i, pcdef.getListOfLists());
 			listPanel.add(line);
 			i++;
-		}
+		} */
 
 		this.add(listPanel);
 
@@ -66,14 +79,14 @@ public class PlannerContainer extends JPanel implements ActionListener
 					{
 						ArrayList<CinematicEvent> ces = TextParser.parseCinematicEvents(tas.get(0), initEvents);
 						ces.addAll(0, initEvents);
-						plannerGraph = new PlannerTimeBarViewer(ces);
+						plannerGraph = new PlannerTimeBarViewer(ces, new CinematicTimeline(), Integer.parseInt(tas.get(0).getParams().get("camerax")), Integer.parseInt(tas.get(0).getParams().get("cameray")));
 					}
 					else
 					{
 						ArrayList<CinematicEvent> ces = TextParser.parseCinematicEvents(tas.get(0), initEvents);
 						ces.addAll(0, initEvents);
 
-						plannerGraph.generateGraph(ces);
+						plannerGraph.generateGraph(ces, new CinematicTimeline(), Integer.parseInt(tas.get(0).getParams().get("camerax")), Integer.parseInt(tas.get(0).getParams().get("cameray")));
 					// this.add(ptbv);
 					}
 				}
@@ -81,6 +94,9 @@ public class PlannerContainer extends JPanel implements ActionListener
 			catch (Exception ex) {ex.printStackTrace();}
 
 		}
+
+		this.validate();
+		this.repaint();
 		// this.add(new JScrollPane(listPanel));
 	}
 
@@ -89,9 +105,9 @@ public class PlannerContainer extends JPanel implements ActionListener
 		this.lines.add(line);
 	}
 
-	public void addContainer(PlannerContainer container)
+	public void addLine(PlannerLine line, int addIndex)
 	{
-		this.containers.add(container);
+		this.lines.add(addIndex, line);
 	}
 
 	@Override
@@ -102,7 +118,8 @@ public class PlannerContainer extends JPanel implements ActionListener
 		{
 			int index = defLine.getSelectedItem();
 			this.lines.add(new PlannerLine(pcdef.getAllowableLines().get(index), false));
-			setupUI();
+			parentTab.updateAttributeList(lines.size() - 1);
+			// setupUI();
 			this.revalidate();
 			this.repaint();
 		}
@@ -116,18 +133,21 @@ public class PlannerContainer extends JPanel implements ActionListener
 		{
 			int index = Integer.parseInt(action.split(" ")[1]) - 1;
 			lines.remove(index);
-			setupUI();
+			parentTab.updateAttributeList(Math.max(0, index - 1));
+			// setupUI();
 			this.revalidate();
 			this.repaint();
 		}
 		else if (action.startsWith("moveup"))
 		{
 			int index = Integer.parseInt(action.split(" ")[1]) - 1;
+			System.out.println("MY INDEX " + index);
 			if (index != 0)
 			{
 				PlannerLine pl = lines.remove(index);
 				lines.add(index - 1, pl);
-				setupUI();
+				parentTab.updateAttributeList(index - 1);
+				// setupUI();
 				this.revalidate();
 				this.repaint();
 			}
@@ -139,7 +159,8 @@ public class PlannerContainer extends JPanel implements ActionListener
 			{
 				PlannerLine pl = lines.remove(index);
 				lines.add(index + 1, pl);
-				setupUI();
+				parentTab.updateAttributeList(index + 1);
+				// setupUI();
 				this.revalidate();
 				this.repaint();
 			}
@@ -150,7 +171,8 @@ public class PlannerContainer extends JPanel implements ActionListener
 			PlannerLine pl = lines.get(index);
 			System.out.println("DUPLICATE");
 			lines.add(index + 1, new PlannerLine(pl));
-			setupUI();
+			parentTab.updateAttributeList(index + 1);
+			// setupUI();
 			this.revalidate();
 			this.repaint();
 		}

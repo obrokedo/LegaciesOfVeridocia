@@ -121,7 +121,7 @@ public class FCResourceManager extends ResourceManager {
 		else if (split[0].equalsIgnoreCase("map"))
 		{
 			System.out.println("Load map: " + split[2]);
-			MapParser.parseMap(split[2], map);
+			MapParser.parseMap(split[2], map, new TilesetParser());
 		}
 		else if (split[0].equalsIgnoreCase("anim"))
 		{

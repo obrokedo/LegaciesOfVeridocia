@@ -93,9 +93,16 @@ public class CinematicActor
 		this.visible = visible;
 	}
 
-	public CinematicActor(AnimatedSprite sprite)
+	public CinematicActor(AnimatedSprite sprite, StateInfo stateInfo)
 	{
+		jCinematicActor = GlobalPythonFactory.createJCinematicActor();
+		sprite.setVisible(false);
 		this.sprite = sprite;
+		this.spriteAnims = sprite.getSpriteAnims();
+		currentAnim = sprite.getCurrentAnim();
+		this.facing = sprite.getFacing();
+		this.locX = sprite.getLocX();
+		this.locY = sprite.getLocY() - stateInfo.getResourceManager().getMap().getTileRenderHeight();
 	}
 
 	public void render(Graphics graphics, Camera camera, FCGameContainer cont, StateInfo stateInfo)
@@ -759,5 +766,16 @@ public class CinematicActor
 
 	public AnimatedSprite getSprite() {
 		return sprite;
+	}
+
+	public void resetSprite(StateInfo stateInfo)
+	{
+		if (sprite != null)
+		{
+			sprite.setLocX(locX);
+			sprite.setLocY(locY + stateInfo.getResourceManager().getMap().getTileRenderHeight());
+			sprite.setFacing(facing);
+			sprite.setVisible(true);
+		}
 	}
 }

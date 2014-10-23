@@ -366,13 +366,39 @@ public class Cinematic {
 				int dir = (int) ce.getParam(1);
 				actors.get(ce.getParam(0)).setFacing(dir);
 				break;
+			case ASSOCIATE_AS_ACTOR:
+				ca = null;
+				if ((boolean) ce.getParam(2))
+				{
+					ca = new CinematicActor(stateInfo.getCurrentSprite(), stateInfo);
+				}
+				else if (((int) ce.getParam(1)) != 0)
+				{
+					for (Sprite s : stateInfo.getSprites()) {
+						if (s.getSpriteType() == Sprite.TYPE_NPC
+								&& ((NPCSprite) s).getUniqueNPCId() == (int) ce
+										.getParam(1)) {
+							ca = new CinematicActor(
+									(AnimatedSprite) s, stateInfo);
+							break;
+						}
+					}
+				}
+
+				if (ca != null)
+				{
+					actors.put((String) ce.getParam(0), ca);
+					sortedActors.add(ca);
+				}
+
+				break;
 			case ASSOCIATE_NPC_AS_ACTOR:
 				for (Sprite s : stateInfo.getSprites()) {
 					if (s.getSpriteType() == Sprite.TYPE_NPC
 							&& ((NPCSprite) s).getUniqueNPCId() == (int) ce
 									.getParam(0)) {
 						actors.put((String) ce.getParam(1), new CinematicActor(
-								(AnimatedSprite) s));
+								(AnimatedSprite) s, stateInfo));
 						break;
 					}
 				}
@@ -498,5 +524,11 @@ public class Cinematic {
 		else if (dir == 3)
 			return Direction.RIGHT;
 		return null;
+	}
+
+	public void endCinematic(StateInfo stateInfo)
+	{
+		for (CinematicActor ca : actors.values())
+			ca.resetSprite(stateInfo);
 	}
 }

@@ -220,7 +220,7 @@ public class MenuState extends LoadableGameState
 
 		persistentStateInfo =
 				new PersistentStateInfo(clientProfile, clientProgress, (CommRPG) game, new Camera(gc.getWidth() - ((FCGameContainer) gc).getDisplayPaddingX() * 2,
-						gc.getHeight()), gc, gc.getGraphics(), true);
+						gc.getHeight()), gc, gc.getGraphics());
 
 		game.addState(new BattleState(persistentStateInfo));
 		game.addState(new TownState(persistentStateInfo));

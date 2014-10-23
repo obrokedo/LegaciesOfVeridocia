@@ -254,6 +254,9 @@ public class TextParser
 			}
 			return ce;
 		}
+		else if (type.equalsIgnoreCase("assactor"))
+			return new CinematicEvent(CinematicEventType.ASSOCIATE_AS_ACTOR, area.getParams().get("name"),
+					Integer.parseInt(area.getParams().get("npcid")), Boolean.parseBoolean(area.getParams().get("hero")));
 		else if (type.equalsIgnoreCase("camerafollow"))
 			return new CinematicEvent(CinematicEventType.CAMERA_FOLLOW, area.getParams().get("name"));
 		else if (type.equalsIgnoreCase("haltingmove"))

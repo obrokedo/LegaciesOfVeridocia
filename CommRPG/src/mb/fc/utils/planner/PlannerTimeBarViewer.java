@@ -31,10 +31,10 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 	private static final long serialVersionUID = 1L;
 	private ArrayList<TimeBarMarkerImpl> markers;
 
-	public PlannerTimeBarViewer(ArrayList<CinematicEvent> ces)
+	public PlannerTimeBarViewer(ArrayList<CinematicEvent> ces, CinematicTimeline ct, int cameraStartX, int cameraStartY)
 	{
 		this.markers = new ArrayList<TimeBarMarkerImpl>();
-		generateGraph(ces);
+		generateGraph(ces, ct, cameraStartX, cameraStartY);
 
 		setDrawOverlapping(false);
 		setRowHeight(50);
@@ -57,12 +57,22 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 		System.out.println(this.getSize());
 	}
 
-	public void generateGraph(ArrayList<CinematicEvent> ces)
+	public void generateGraph(ArrayList<CinematicEvent> ces, CinematicTimeline cinematicTimeline, int cameraStartX, int cameraStartY)
 	{
 		DefaultTimeBarRowModel cameraRow = new DefaultTimeBarRowModel(new DefaultRowHeader("Camera"));
 		ZIntervalImpl cameraInterval = null;
 		DefaultTimeBarRowModel systemRow = new DefaultTimeBarRowModel(new DefaultRowHeader("System"));
 		DefaultTimeBarRowModel soundRow = new DefaultTimeBarRowModel(new DefaultRowHeader("Sound"));
+		ArrayList<Long> cinematicTime = new ArrayList<Long>();
+		ArrayList<CameraLocation> cameraLocations = new ArrayList<>();
+		CameraLocation cl = new CameraLocation();
+		cl.locX = cameraStartX;
+		cl.locY = cameraStartY;
+		cl.time = 0;
+		cameraLocations.add(cl);
+
+		cinematicTimeline.cinematicTime = cinematicTime;
+
 		ZIntervalImpl soundInterval = null;
 
 		for (TimeBarMarkerImpl m : markers)
@@ -76,11 +86,14 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 
 		for (CinematicEvent ce : ces)
 		{
+			cinematicTime.add(currentTime);
+
 			switch (ce.getType())
 			{
 				// Actor Stuff
 				case ADD_ACTOR:
 					DefaultTimeBarRowModel dt = new DefaultTimeBarRowModel(new DefaultRowHeader("Actor: " + (String) ce.getParam(2)));
+					System.out.println("ADD ACTOR " + ce.getParam(2) + " " + ce.getParam(0) + " " + ce.getParam(1));
 					ActorBar ab = new ActorBar(dt, (int) ce.getParam(0), (int) ce.getParam(1));
 					rowsByName.put((String) ce.getParam(2), ab);
 
@@ -103,13 +116,13 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 					}
 					break;
 				case MOVE:
-					handleMove(currentTime, ce, rowsByName, "Move ");
+					handleMove(currentTime, ce, rowsByName, "Move ", false);
 					break;
 				case MOVE_ENFORCE_FACING:
-					handleMove(currentTime, ce, rowsByName, "Move Face Enforced ");
+					handleMove(currentTime, ce, rowsByName, "Move Face Enforced ", true);
 					break;
 				case HALTING_MOVE:
-					currentTime += handleMove(currentTime, ce, rowsByName, "Halting Move to ");
+					currentTime += handleMove(currentTime, ce, rowsByName, "Halting Move to ", false);
 					break;
 				case LOOP_MOVE:
 					 ab = rowsByName.get(ce.getParam(0));
@@ -147,7 +160,14 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 					ab = rowsByName.get(ce.getParam(0));
 
 					zi = ab.indefiniteIntervals.get("spin");
-					zi.setEnd(new JaretDate(currentTime));
+					try
+					{
+						zi.setEnd(new JaretDate(currentTime));
+					}
+					catch (Throwable t)
+					{
+						System.out.println("Error on " + ce.getParam(0));
+					}
 					ab.indefiniteIntervals.remove("spin");
 					break;
 
@@ -328,28 +348,55 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 					zi.setEnd(new JaretDate(currentTime + (int) ce.getParam(2)));
 					cameraInterval = zi;
 					cameraRow.addInterval(zi);
+
+					cl = new CameraLocation();
+					CameraLocation oldLoc = cameraLocations.get(cameraLocations.size() - 1);
+					cl.locX = oldLoc.locX;
+					cl.locY = oldLoc.locY;
+					cl.endLocX = (int) ce.getParam(0);
+					cl.endLocY = (int) ce.getParam(1);
+					cl.time = currentTime;
+					cl.duration = (int) ce.getParam(2);
+					cameraLocations.add(cl);
+
+					cl = new CameraLocation();
+					cl.locX = (int) ce.getParam(0);
+					cl.locY = (int) ce.getParam(1);
+					cl.time = currentTime + (int) ce.getParam(2);
+					cameraLocations.add(cl);
 					break;
 
 				case CAMERA_CENTER:
 					if (cameraInterval != null)
 						cameraInterval.setEnd(new JaretDate(currentTime));
 
-					zi = new ZIntervalImpl("Center Camera  " + (int) ce.getParam(0) + " " + (int) ce.getParam(1));
+					zi = new ZIntervalImpl("Center Camera " + (int) ce.getParam(0) + " " + (int) ce.getParam(1));
 					zi.setBegin(new JaretDate(currentTime));
 					zi.setEnd(new JaretDate(currentTime + 100));
 					cameraInterval = zi;
 					cameraRow.addInterval(zi);
+
+					cl = new CameraLocation();
+					cl.locX = (int) ce.getParam(0);
+					cl.locY = (int) ce.getParam(1);
+					cl.time = currentTime;
+					cameraLocations.add(cl);
 					break;
 
 				case CAMERA_FOLLOW:
 					if (cameraInterval != null)
 						cameraInterval.setEnd(new JaretDate(currentTime));
 
-					zi = new ZIntervalImpl("Camera Follow  " + (String) ce.getParam(0));
+					zi = new ZIntervalImpl("Camera Follow " + (String) ce.getParam(0));
 					zi.setBegin(new JaretDate(currentTime));
 					zi.setEnd(new JaretDate(currentTime + 100));
 					cameraInterval = zi;
 					cameraRow.addInterval(zi);
+
+					cl = new CameraLocation();
+					cl.time = currentTime;
+					cl.following = (String) ce.getParam(0);
+					cameraLocations.add(cl);
 					break;
 
 				case CAMERA_SHAKE:
@@ -467,10 +514,10 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 		}
 
 		DefaultTimeBarModel model = new DefaultTimeBarModel();
+
 		model.addRow(systemRow);
 		model.addRow(cameraRow);
 		model.addRow(soundRow);
-
 
 		for (ActorBar ab : rowsByName.values())
 		{
@@ -478,6 +525,8 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 			{
 				zi.setEnd(new JaretDate(currentTime));
 			}
+
+			ab.changeLocations(ab.locX, ab.locY, currentTime);
 
 			model.addRow(ab.dt);
 		}
@@ -494,6 +543,22 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 		this.setSecondsDisplayed(8, false);
 		this.repaint();
 
+		cinematicTimeline.cameraRow = cameraRow;
+		cinematicTimeline.systemRow = systemRow;
+		cinematicTimeline.soundRow = soundRow;
+		cinematicTimeline.markers = markers;
+		cinematicTimeline.rowsByName = rowsByName;
+		cinematicTimeline.duration = (int) currentTime;
+		cinematicTimeline.cameraLocations = cameraLocations;
+	}
+
+	public class CameraLocation
+	{
+		public int locX, locY;
+		public int endLocX = -1, endLocY = -1;
+		public String following;
+		public long time;
+		public long duration;
 	}
 
 	private void stopEffects(long currentTime, ActorBar ab, String command)
@@ -506,23 +571,36 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 		}
 	}
 
-	private long handleMove(long currentTime, CinematicEvent ce, Hashtable<String, ActorBar> rowsByName, String title)
+	private long handleMove(long currentTime, CinematicEvent ce, Hashtable<String, ActorBar> rowsByName, String title, boolean enforced)
 	{
 
 		ActorBar ab = rowsByName.get(ce.getParam(3));
 
 		int xDistance = Math.abs(ab.locX - (int) ce.getParam(0));
 		int yDistance = Math.abs(ab.locY - (int) ce.getParam(1));
+
+		boolean moveHor = false;
+		boolean moveDiag = false;
+
+		if (enforced)
+		{
+			moveHor = (boolean) ce.getParam(5);
+			moveDiag = (boolean) ce.getParam(6);
+		}
+		else
+		{
+			moveHor = (boolean) ce.getParam(4);
+			moveDiag = (boolean) ce.getParam(5);
+		}
 		long duration = ((int) (Math.ceil(xDistance / (float) ce.getParam(2))) + (int) (Math.ceil(yDistance / (float) ce.getParam(2)))) * 20;
 
-		ab.locX = (int) ce.getParam(0);
-		ab.locY = (int) ce.getParam(1);
-
-		ZIntervalImpl zi = new ZIntervalImpl(title + (int) ce.getParam(0) + " " + (int) ce.getParam(1));
+		ZIntervalImpl zi = new ZMoveIntervalImpl(title + (int) ce.getParam(0) + " " + (int) ce.getParam(1), ab.locX, ab.locY, (int) ce.getParam(0), (int) ce.getParam(1),
+				currentTime, duration, moveHor, moveDiag);
 		zi.setBegin(new JaretDate(currentTime));
 
 		zi.setEnd(new JaretDate(currentTime + duration));
 		ab.dt.addInterval(zi);
+		ab.changeLocations((int) ce.getParam(0), (int) ce.getParam(1), currentTime + duration);
 		return duration;
 	}
 
@@ -548,16 +626,98 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 			// TODO Auto-generated method stub
 			return title;
 		}
+
+		public boolean isMove()
+		{
+			return false;
+		}
+    }
+
+    public class ZLocationImpl extends IntervalImpl
+    {
+    	public int locX, locY;
+
+		public ZLocationImpl(int locX, int locY) {
+			super();
+			this.locX = locX;
+			this.locY = locY;
+		}
+
+		public int getLocX() {
+			return locX;
+		}
+
+		public int getLocY() {
+			return locY;
+		}
+    }
+
+    public class ZMoveIntervalImpl extends ZIntervalImpl
+    {
+    	private int startX, startY, endX, endY;
+    	private long duration, currentTime;
+    	private boolean moveHor, moveDiag;
+
+		public ZMoveIntervalImpl(String title, int startX, int startY,
+				int endX, int endY, long currentTime, long duration, boolean moveHor, boolean moveDiag) {
+			super(title);
+			this.startX = startX;
+			this.startY = startY;
+			this.endX = endX;
+			this.endY = endY;
+			this.duration = duration;
+			this.currentTime = currentTime;
+			this.moveHor = moveHor;
+			this.moveDiag = moveDiag;
+		}
+
+		@Override
+		public boolean isMove()
+		{
+			return true;
+		}
+
+		public int getStartX() {
+			return startX;
+		}
+
+		public int getStartY() {
+			return startY;
+		}
+
+		public int getEndX() {
+			return endX;
+		}
+
+		public int getEndY() {
+			return endY;
+		}
+
+		public long getDuration() {
+			return duration;
+		}
+
+		public long getCurrentTime() {
+			return currentTime;
+		}
+
+		public boolean isMoveHor() {
+			return moveHor;
+		}
+
+		public boolean isMoveDiag() {
+			return moveDiag;
+		}
     }
 
     public class ActorBar
     {
     	public DefaultTimeBarRowModel dt;
+    	public DefaultTimeBarRowModel movementRowModel;
     	public int locX;
     	public int locY;
-    	public float moveSpeed;
-    	public long startMove;
     	public Hashtable<String, ZIntervalImpl> indefiniteIntervals;
+    	public long lastMoveTime = 0;
 
 		public ActorBar(DefaultTimeBarRowModel dt, int locX, int locY) {
 			super();
@@ -565,6 +725,18 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 			this.locX = locX;
 			this.locY = locY;
 			indefiniteIntervals = new Hashtable<String, ZIntervalImpl>();
+			movementRowModel = new DefaultTimeBarRowModel();
+		}
+
+		public void changeLocations(int locX, int locY, long currentTime)
+		{
+			ZLocationImpl zi = new ZLocationImpl(this.locX, this.locY);
+			zi.setBegin(new JaretDate(lastMoveTime));
+			zi.setEnd(new JaretDate(currentTime));
+			movementRowModel.addInterval(zi);
+			this.lastMoveTime = currentTime;
+			this.locX = locX;
+			this.locY = locY;
 		}
     }
 
