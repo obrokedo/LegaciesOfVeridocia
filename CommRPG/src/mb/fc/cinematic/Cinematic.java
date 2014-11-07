@@ -361,9 +361,6 @@ public class Cinematic {
 				haltedMovers++;
 				break;
 			case MOVE:
-				if ((int) ce.getParam(0) == 480 &&
-						(int) ce.getParam(1) == 96 && (float) ce.getParam(2) == 2)
-
 				actors.get(ce.getParam(3)).moveToLocation((int) ce.getParam(0),
 						(int) ce.getParam(1), (float) ce.getParam(2), false, -1, (boolean) ce.getParam(4), (boolean) ce.getParam(5));
 				break;
