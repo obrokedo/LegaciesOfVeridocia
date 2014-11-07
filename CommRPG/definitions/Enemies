@@ -1,5 +1,6 @@
-<enemy id=0 name="Rat" hp=12 mp=0 attack=9 defense=5 speed=4 level=1 move=4 movementtype=2 portrait=-1 animations="rat" leader=false>
+<enemy id=0 name="Darkling Ooze" hp=8 mp=0 attack=9 defense=4 speed=4 level=0 move=4 movementtype=0 portrait=-1 animations="Darkling Ooze" leader=false>
 </enemy>
 <enemy id=1 name="Rat Wizard" hp=12 mp=8 attack=9 defense=5 speed=4 level=1 move=4 movementtype=2 portrait=-1 animations="rat" leader=false>
 	<spell spellid=11 level=1/>
+	<item itemid=-1 equipped=false/>
 </enemy>

@@ -1,0 +1,85 @@
+<trigger id=0 description="MapStart" require=-1, exclude=-1, nonretrig=false retrigonenter=false>
+	<playmusic music="battle1"/>
+</trigger>
+<trigger id=1 description="End Battle" require=-1, exclude=-1, nonretrig=false retrigonenter=false>
+	<loadmap map="Courtyard" enter="north"/>
+</trigger>
+<trigger id=2 description="Start Battle" require=-1, exclude=-1, nonretrig=false retrigonenter=false>
+	<startbattle battletriggers="Courtyard" battlemap="Courtyard"/>
+</trigger>
+<trigger id=3 description="Show Roof" require=-1, exclude=-1, nonretrig=false retrigonenter=false>
+	<showroof roofid=0/>
+</trigger>
+<trigger id=4 description="Hide Roof" require=-1, exclude=-1, nonretrig=false retrigonenter=false>
+	<hideroof roofid=0/>
+</trigger>
+<trigger id=5 description="Remove Door1" require=-1, exclude=-1, nonretrig=true retrigonenter=true>
+	<removesprite name="door1"/>
+</trigger>
+<trigger id=6 description="Open Chest" require=-1, exclude=-1, nonretrig=true retrigonenter=true>
+	<changesprite name="chest" image="openchest"/>
+</trigger>
+<trigger id=7 description="Get Chest Item" require=0, exclude=-1, nonretrig=true retrigonenter=false>
+	<showtext textid=1/>
+	<additem itemid=0/>
+	<playsound sound="targetselect" volume=100/>
+</trigger>
+<trigger id=8 description="Complete Mom Quest" require=-1, exclude=-1, nonretrig=true retrigonenter=false>
+	<completequest questid=0/>
+</trigger>
+<trigger id=9 description="Open Chest 2" require=-1, exclude=0, nonretrig=true retrigonenter=false>
+	<showtext textid=1/>
+</trigger>
+<text id=0 description="Oops I dropped my pocket">
+	<string message="Oops[ I dropped my pocket.} I'm going to look around for it, but unfortunately my eyes don't work as well they used to.{.{.{ I'll have you know that I used to be a man of great reknown; a warrior in truth. I'm certaintly a better fighter now then you could ever hope to be. If you let me hold your sword I can show you a thing or two.]" require=-1, exclude=-1, trigger=8 portrait=1/>
+</text>
+<text id=1 description="Open Chest">
+	<string message="Stupid empty chests.]" require=-1, exclude=-1, trigger=-1 portrait=-1/>
+</text>
+<cinematic id=0 description="LoadMap" camerax=0 cameray=0>
+	<playmusic music="battle1" volume=50/>
+	<addactor x=240 y=128 name="Bob" anim="Huun" startanim="UnDown" visible=true init=true/>
+	<addactor x=240 y=96 name="George" anim="Sharna" startanim="UnDown" visible=true init=false/>
+	<fadein time=3000 halting=false init=true/>
+	<wait time=2000/>
+	<cameramove x=240 y=128 time=1000/>
+	<stopanim name="Bob"/>
+	<shakehead name="Bob" time=0/>
+	<wait time=1000/>
+	<camerafollow name="Bob"/>
+	<anim name="Bob" time=1000 anim="UnDown" loops=true/>
+	<move name="George" x=480 y=96 speed="2" movehor=false movediag=false/>
+	<haltingmove name="Bob" x=480 y=128 speed="2" movehor=false movediag=false/>
+	<camerafollow name="George"/>
+	<move name="George" x=0 y=96 speed="2" movehor=false movediag=false/>
+	<haltingmove name="Bob" x=0 y=128 speed="2" movehor=false movediag=false/>
+	<camerafollow name="Bob"/>
+	<move name="George" x=480 y=96 speed="2" movehor=false movediag=false/>
+	<haltingmove name="Bob" x=480 y=128 speed="2" movehor=false movediag=false/>
+	<camerafollow name="George"/>
+	<move name="George" x=480 y=320 speed="2" movehor=false movediag=false/>
+	<haltingmove name="Bob" x=480 y=352 speed="2" movehor=false movediag=false/>
+	<camerafollow name="Bob"/>
+	<move name="George" x=480 y=96 speed="2" movehor=false movediag=false/>
+	<haltingmove name="Bob" x=480 y=128 speed="2" movehor=false movediag=false/>
+	<camerafollow name="George"/>
+	<move name="George" x=480 y=320 speed="2" movehor=false movediag=false/>
+	<haltingmove name="Bob" x=480 y=352 speed="2" movehor=false movediag=false/>
+	<camerafollow name="Bob"/>
+	<move name="George" x=480 y=96 speed="2" movehor=false movediag=false/>
+	<haltingmove name="Bob" x=480 y=128 speed="2" movehor=false movediag=false/>
+	<fallonface name="Bob" dir=2/>
+	<wait time=2000/>
+	<stopse name="Bob"/>
+	<wait time=2000/>
+	<speech text="I love talking as well]" portrait=2/>
+	<layonside name="Bob" dir=1/>
+	<speech text="I don't]" portrait=1/>
+	<wait time=2000/>
+	<stopse name="Bob"/>
+	<pausemusic/>
+	<wait time=2000/>
+	<wait time=10/>
+	<fadeout time=3000 halting=true/>
+	<loadmap map="Courtyard" enter="north"/>
+</cinematic>

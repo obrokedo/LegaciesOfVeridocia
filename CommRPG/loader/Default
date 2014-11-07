@@ -1,0 +1,31 @@
+// Load all music
+musicdir,music
+// Load all sound
+sounddir,sound
+// Load all animation sheets
+animsheetdir,animations/animationsheets
+// Load all fsa animation files
+animfsadir,animations/fsa
+// Load all of the static sprites
+spritedir,sprite
+// Load item images
+ss,items,image/Items.png,16,24
+// Load Battle Resources
+ss,battlebg,image/BattleBackgrounds.png,256,96,2
+// TYPE,NAME,PATH,WIDTH,HEIGHT,SPRITESPACING,SCALE
+ss,actionicons,image/ActionIcons.png,24,24,2
+ss,spellicons,image/SpellIcons.png,16,24,2
+// A scale value of -1 means the image is NOT scaled to the game engine proportions
+ss,menuborder,image/MenuBorder.png,12,12,0,.3333333333
+// TYPE,NAME,PATH,SCALE
+image,battlecursor,image/battlecursor.gif
+image,smallflor,image/smflor.png
+image,largeflor,image/lgflor.png
+image,attackplatform,image/CastleFloor.png
+image,selectside,image/selectside.png
+image,selecttop,image/selecttop.png
+font,menufont,font/MenuFont.ttf,18
+ss,portraits,image/Portraits.png,48,64,0
+herodefs,/definitions/Heroes
+itemdefs,/definitions/Items
+enemydefs,/definitions/Enemies

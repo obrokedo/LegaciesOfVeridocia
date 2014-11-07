@@ -1,0 +1,14 @@
+<trigger id=0 description="On Load" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+</trigger>
+<trigger id=1 description="Step on thing" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<showcin cinid=0/>
+</trigger>
+<text id=0 description="Testing">
+	<string message="Testing]" require=-1, exclude=-1, trigger=-1 portrait=-1/>
+</text>
+<cinematic id=0 description="TestAss" camerax=0 cameray=0>
+	<assactor name="Noah" npcid=0 hero=true/>
+	<cameramove x=256 y=128 time=1000/>
+	<haltingmove name="Noah" x=0 y=12 speed=".8" movehor=false movediag=false/>
+	<camerafollow name="Noah"/>
+</cinematic>

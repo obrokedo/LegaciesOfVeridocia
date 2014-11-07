@@ -1,0 +1,7 @@
+<! Triggered on map entry />
+<trigger id=0 nonretrig=false retrigonenter=false>
+	<playmusic music=overland/>
+</trigger>
+<trigger id=1 nonretrig=false retrigonenter=false>
+	<startbattle battletriggers=GHBattle1 battlemap=GHLand1/>
+</trigger>

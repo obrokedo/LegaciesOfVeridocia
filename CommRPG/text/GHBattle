@@ -1,0 +1,16 @@
+<text id=0>
+	<string trigger=-1 require=-1 exclude=-1 message="Victory!"/>
+</text>
+<! Triggered on battle start />
+<trigger id=0 nonretrig=false retrigonenter=false>
+	<playmusic music="battle"/>
+</trigger>
+<! Triggered on battle end />
+<! <loadmap map=GHLand1 enter=west/> />
+<trigger id=1 nonretrig=false retrigonenter=false>
+	<showtext text=0>
+</trigger>
+<trigger id=2 nonretrig=true retrigonenter=false>
+	<changeai aitype=moveto id=1 targetid=0 x=48 y=11/>
+	<changeai aitype=follow id=2 targetid=1 x=0 y=0/>
+</trigger>

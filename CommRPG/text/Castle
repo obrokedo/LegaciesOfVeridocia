@@ -1,0 +1,10 @@
+<cinematic id=0 camerax=0 cameray=0>
+	<addactor name="bob" anim="bowie" startanim="UnDown" x=160 y=128 visible=true init=true/> 
+	<camerafollow name="bob"/>
+	<haltingmove name="bob" x=512 y=128 speed=4/>
+	<flash name="bob" time=5000 speed=750/>
+	<wait time=5000/>
+	<loopmove name="bob" x=544 y=128 speed=4/>
+	<speech text="Hello world!"/>
+	<stoploopmove name="bob"/>
+</cinematic>

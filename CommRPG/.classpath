@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry kind="lib" path="/GameLib/Jars/Artemis/artemis-a609b2076aacc0ef5ecf0b390205d01bb88ceae2.jar" sourcepath="/GameLib/Jars/Artemis/artemis-a609b2076aacc0ef5ecf0b390205d01bb88ceae2-src.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre7"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Slick2D"/>
 	<classpathentry kind="lib" path="/GameLib/Jars/exp4j-0.3.11.jar"/>
+	<classpathentry kind="lib" path="/GameLib/Jars/jaretutil-0.32.jar"/>
+	<classpathentry kind="lib" path="/GameLib/Jars/timebars-1.49.jar" sourcepath="C:/Users/Broked/Downloads/timebars-1.49-src"/>
+	<classpathentry kind="lib" path="/GameLib/Jars/Jython/jython-standalone-2.7-b1.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/GameLib/Jars/Jython/jython-standalone-2.7-b1-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

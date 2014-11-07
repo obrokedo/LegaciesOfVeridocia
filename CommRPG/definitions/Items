@@ -1,9 +1,12 @@
-<item id=0 name="Short Sword" description="A short sword" cost=50 imageindexx=0 imageindexy=1>
-	<equippable attack=5 defense=0 speed=0 type=0 style=2 range=1/>
+<item id=0 name="Guard's Blade" description="Worn but sturdy blade carried by Erium soldiers" cost=50 imageindexx=0 imageindexy=1>
+	<equippable attack=3 defense=0 speed=0 type=0 style=2 range=1/>
 </item>
-<item id=1 name="Long Sword" description="A long sword" cost=150 imageindexx=1 imageindexy=1>
-	<equippable attack=9 defense=0 speed=0 type=0 style=2 range=1/>
+<item id=1 name="Healer's Cane" description="Wooden staff wielded by all Erium healers." cost=50 imageindexx=0 imageindexy=0>
+	<equippable attack=3 defense=0 speed=0 type=0 style=3 range=1/>
 </item>
 <item id=2 name="Medical Herb" description="Heals for 10 hp" cost=10 imageindexx=17 imageindexy=2>
 	<use targetsenemy=false damage=10 mpdamage=0 range=1 area=1 text="is healed for 10" singleuse=true/>
+</item>
+<item id=3 name="Sniper's Arrow" description="Cheap but effective ammunition for Erium archers." cost=50 imageindexx=0 imageindexy=3>
+	<equippable attack=3 defense=0 speed=0 type=0 style=4 range=4/>
 </item>
