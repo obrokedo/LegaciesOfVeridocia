@@ -1,7 +1,7 @@
 package mb.fc.game.menu;
 
 import mb.fc.engine.message.AudioMessage;
-import mb.fc.engine.message.ChatMessage;
+import mb.fc.engine.message.InfoMessage;
 import mb.fc.engine.message.Message;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.input.FCInput;
@@ -39,7 +39,7 @@ public class DebugMenu extends Menu
 			}
 			else if (splitText[0].equalsIgnoreCase("loadbattle"))
 			{
-				stateInfo.getPsi().loadBattle(splitText[1], splitText[2], splitText[3]);
+				stateInfo.getPsi().loadBattle(splitText[1], splitText[2], splitText[3], (splitText.length > 3 ? Integer.parseInt(splitText[4]) : 0));
 			}
 			else if (splitText[0].equalsIgnoreCase("loadcin"))
 			{
@@ -56,9 +56,9 @@ public class DebugMenu extends Menu
 			else if (splitText[0].equalsIgnoreCase("printmusic"))
 			{
 				if (stateInfo.getPlayingMusic() == null)
-					stateInfo.sendMessage(new ChatMessage(Message.MESSAGE_SEND_INTERNAL_MESSAGE, "SYSTEM", "Playing music: NULL"));
+					stateInfo.sendMessage(new InfoMessage("SYSTEM", "Playing music: NULL"));
 				else
-					stateInfo.sendMessage(new ChatMessage(Message.MESSAGE_SEND_INTERNAL_MESSAGE, "SYSTEM", "Playing music: " + stateInfo.getPlayingMusic().toString()));
+					stateInfo.sendMessage(new InfoMessage("SYSTEM", "Playing music: " + stateInfo.getPlayingMusic().toString()));
 			}
 			else if (splitText[0].equalsIgnoreCase("heal"))
 			{

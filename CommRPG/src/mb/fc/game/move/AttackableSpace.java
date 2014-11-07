@@ -3,9 +3,9 @@ package mb.fc.game.move;
 import java.util.ArrayList;
 
 import mb.fc.engine.message.AudioMessage;
-import mb.fc.engine.message.ChatMessage;
+import mb.fc.engine.message.InfoMessage;
 import mb.fc.engine.message.Message;
-import mb.fc.engine.message.MultiSpriteContextMessage;
+import mb.fc.engine.message.SpriteContextMessage;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.Camera;
 import mb.fc.game.constants.Direction;
@@ -107,7 +107,7 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 			this.setTargetSprite(targetsInRange.get(0), stateInfo);
 		}
 		else
-			stateInfo.sendMessage(new ChatMessage(Message.MESSAGE_SEND_INTERNAL_MESSAGE, null, "No targets in range!"));
+			stateInfo.sendMessage(new InfoMessage(null, "No targets in range!"));
 
 		if (currentSprite.isHero())
 			stateInfo.registerMouseListener(this);
@@ -242,7 +242,7 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 				{
 					sprites.add(currentSprite);
 				}
-				stateInfo.sendMessage(new MultiSpriteContextMessage(Message.MESSAGE_TARGET_SPRITE, sprites));
+				stateInfo.sendMessage(new SpriteContextMessage(Message.MESSAGE_TARGET_SPRITE, sprites));
 
 				// Once we've targeted a sprite there can not be anymore keyboard input
 				stateInfo.removeKeyboardListeners();

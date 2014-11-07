@@ -6,28 +6,17 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
-import com.artemis.Aspect;
-import com.artemis.ComponentMapper;
-import com.artemis.Entity;
-import com.artemis.annotations.Mapper;
-import com.artemis.systems.EntityProcessingSystem;
-
-public class FCLoadingRenderSystem extends EntityProcessingSystem
+public class FCLoadingRenderSystem
 {
 	private Graphics graphics;
 	private GameContainer gc;
-	@Mapper ComponentMapper<LoadingComp> loadingMapper;
 
-	@SuppressWarnings("unchecked")
 	public FCLoadingRenderSystem(GameContainer container) {
-		super(Aspect.getAspectForAll(LoadingComp.class));
 		graphics = container.getGraphics();
 		this.gc = container;
 	}
 
-	@Override
-	protected void process(Entity e) {
-		LoadingComp loading = loadingMapper.get(e);
+	public void update(LoadingStatus loading) {
 		graphics.setColor(Color.white);
 		graphics.drawString(CommRPG.GAME_TITLE, 15, gc.getHeight() - 30);
 

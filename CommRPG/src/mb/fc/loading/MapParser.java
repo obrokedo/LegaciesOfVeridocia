@@ -3,6 +3,7 @@ package mb.fc.loading;
 import java.awt.Point;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Hashtable;
 
 import mb.fc.map.Map;
@@ -15,16 +16,19 @@ import org.newdawn.slick.SlickException;
 
 public class MapParser
 {
-	public static void parseMap(String mapFile, Map map, TilesetParser tilesetParser) throws IOException, SlickException
+	public static void parseMap(String mapFile, Map map, TilesetParser tilesetParser,
+			FCResourceManager frm) throws IOException, SlickException
 	{
+		HashSet<String> spriteToLoad = new HashSet<String>();
+		new HashSet<String>();
 		ArrayList<TagArea> tagAreas = XMLParser.process(mapFile);
 
 		TagArea tagArea = tagAreas.get(0);
 
-		int width = Integer.parseInt(tagArea.getParams().get("width"));
-		int height = Integer.parseInt(tagArea.getParams().get("height"));
-		int tileWidth = Integer.parseInt(tagArea.getParams().get("tilewidth")) * map.getTileScale();
-		int tileHeight = Integer.parseInt(tagArea.getParams().get("tileheight")) * map.getTileScale();
+		int width = Integer.parseInt(tagArea.getAttribute("width"));
+		int height = Integer.parseInt(tagArea.getAttribute("height"));
+		int tileWidth = Integer.parseInt(tagArea.getAttribute("tilewidth")) * map.getTileScale();
+		int tileHeight = Integer.parseInt(tagArea.getAttribute("tileheight")) * map.getTileScale();
 		System.out.println("TILE " + tileWidth  + " " + tileHeight);
 		String tileSet = null;
 
@@ -32,9 +36,9 @@ public class MapParser
 		{
 			if (childArea.getTagType().equalsIgnoreCase("tileset"))
 			{
-				tileSet = childArea.getChildren().get(0).getParams().get("source");
-				String trans = childArea.getChildren().get(0).getParams().get("trans");
-				int startIndex = Integer.parseInt(childArea.getParams().get("firstgid"));
+				tileSet = childArea.getChildren().get(0).getAttribute("source");
+				String trans = childArea.getChildren().get(0).getAttribute("trans");
+				int startIndex = Integer.parseInt(childArea.getAttribute("firstgid"));
 				String[] tsSplit = tileSet.split(",")[0].split("/");
 
 				Hashtable<Integer, Integer> landEffectByTileId = new Hashtable<Integer, Integer>();
@@ -43,8 +47,8 @@ public class MapParser
 				{
 					if (tile.getTagType().equalsIgnoreCase("tile"))
 					{
-						int id = Integer.parseInt(tile.getParams().get("id"));
-						int landEffect = Integer.parseInt(tile.getChildren().get(0).getChildren().get(0).getParams().get("value"));
+						int id = Integer.parseInt(tile.getAttribute("id"));
+						int landEffect = Integer.parseInt(tile.getChildren().get(0).getChildren().get(0).getAttribute("value"));
 						landEffectByTileId.put(id, landEffect);
 					}
 				}
@@ -60,7 +64,7 @@ public class MapParser
 				int index = 0;
 				for (TagArea tileTag : childArea.getChildren().get(0).getChildren())
 				{
-					layer[index / width][index % width] = Integer.parseInt(tileTag.getParams().get("gid"));
+					layer[index / width][index % width] = Integer.parseInt(tileTag.getAttribute("gid"));
 					index++;
 				}
 
@@ -71,23 +75,34 @@ public class MapParser
 				for (TagArea objectTag : childArea.getChildren())
 				{
 					MapObject mapObject = new MapObject();
-					mapObject.setName(objectTag.getParams().get("name"));
-					mapObject.setX(map.getTileScale() * Integer.parseInt(objectTag.getParams().get("x")));
-					mapObject.setY(map.getTileScale() * Integer.parseInt(objectTag.getParams().get("y")));
-					if (objectTag.getParams().containsKey("width"))
-						mapObject.setWidth(map.getTileScale() * Integer.parseInt(objectTag.getParams().get("width")));
-					if (objectTag.getParams().containsKey("height"))
-						mapObject.setHeight(map.getTileScale() * Integer.parseInt(objectTag.getParams().get("height")));
+					mapObject.setName(objectTag.getAttribute("name"));
+					mapObject.setX(map.getTileScale() * Integer.parseInt(objectTag.getAttribute("x")));
+					mapObject.setY(map.getTileScale() * Integer.parseInt(objectTag.getAttribute("y")));
+					if (objectTag.getAttribute("width") != null)
+						mapObject.setWidth(map.getTileScale() * Integer.parseInt(objectTag.getAttribute("width")));
+					if (objectTag.getAttribute("height") != null)
+						mapObject.setHeight(map.getTileScale() * Integer.parseInt(objectTag.getAttribute("height")));
 					for (TagArea propArea : objectTag.getChildren())
 					{
 						if (propArea.getTagType().equalsIgnoreCase("properties"))
 						{
-							mapObject.setKey(propArea.getChildren().get(0).getParams().get("name"));
-							mapObject.setValue(propArea.getChildren().get(0).getParams().get("value"));
+							mapObject.setKey(propArea.getChildren().get(0).getAttribute("name"));
+							mapObject.setValue(propArea.getChildren().get(0).getAttribute("value"));
+
+							if (mapObject.getKey().equalsIgnoreCase("sprite"))
+							{
+								String image = mapObject.getParam("image");
+								if (image != null)
+									spriteToLoad.add(image);
+							}
+							else if (mapObject.getKey().equalsIgnoreCase("enemy"))
+							{
+								Integer.parseInt(mapObject.getParam("enemyid"));
+							}
 						}
 						else if (propArea.getTagType().equalsIgnoreCase("polyline"))
 						{
-							String[] points = propArea.getParams().get("points").split(" ");
+							String[] points = propArea.getAttribute("points").split(" ");
 							ArrayList<Point> pointList = new ArrayList<Point>();
 							for (String point : points)
 							{
@@ -104,5 +119,11 @@ public class MapParser
 
 			}
 		}
+
+		/*
+		for (String resource : spriteToLoad)
+			frm.addSpriteResource(resource);
+		for (String resource : animToLoad)
+			frm.addAnimResource(resource);*/
 	}
 }

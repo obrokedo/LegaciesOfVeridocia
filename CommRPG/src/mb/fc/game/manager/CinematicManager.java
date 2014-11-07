@@ -17,8 +17,8 @@ public class CinematicManager extends Manager
 
 	public void update(int delta)
 	{
-		if (cinematic != null && cinematic.update(delta, stateInfo.getCamera(), stateInfo.getInput(),
-				stateInfo.getGc(), stateInfo.getCurrentMap(), stateInfo))
+		if (cinematic != null && cinematic.update(delta, stateInfo.getCamera(),
+				stateInfo.getInput(), stateInfo.getCurrentMap(), stateInfo))
 		{
 			cinematic.endCinematic(stateInfo);
 			cinematic = null;

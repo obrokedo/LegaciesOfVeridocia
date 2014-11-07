@@ -6,15 +6,15 @@ import mb.fc.game.item.Item;
 import mb.fc.game.item.ItemUse;
 import mb.fc.utils.XMLParser.TagArea;
 
-public class ItemDefinition 
+public class ItemDefinition
 {
 	private Item item;
 	private int imageX;
 	private int imageY;
 	private int id;
-	
+
 	private ItemDefinition() {}
-	
+
 	public static ItemDefinition parseItemDefinition(TagArea tagArea)
 	{
 		int attack = 0, defense = 0, speed = 0, style = 0, type=0, range = 0;
@@ -25,38 +25,38 @@ public class ItemDefinition
 			if (childTagArea.getTagType().equalsIgnoreCase("equippable"))
 			{
 				equippable = true;
-				attack = Integer.parseInt(childTagArea.getParams().get("attack"));
-				defense = Integer.parseInt(childTagArea.getParams().get("defense"));
-				speed = Integer.parseInt(childTagArea.getParams().get("speed"));
-				style = Integer.parseInt(childTagArea.getParams().get("style"));
-				type = Integer.parseInt(childTagArea.getParams().get("type"));
-				range = Integer.parseInt(childTagArea.getParams().get("range"));
+				attack = Integer.parseInt(childTagArea.getAttribute("attack"));
+				defense = Integer.parseInt(childTagArea.getAttribute("defense"));
+				speed = Integer.parseInt(childTagArea.getAttribute("speed"));
+				style = Integer.parseInt(childTagArea.getAttribute("style"));
+				type = Integer.parseInt(childTagArea.getAttribute("type"));
+				range = Integer.parseInt(childTagArea.getAttribute("range"));
 			}
 			else if (childTagArea.getTagType().equalsIgnoreCase("use"))
 			{
-				itemUse = new ItemUse(Boolean.parseBoolean(childTagArea.getParams().get("targetsenemy")), Integer.parseInt(childTagArea.getParams().get("damage")), 
-						Integer.parseInt(childTagArea.getParams().get("mpdamage")), null,  Integer.parseInt(childTagArea.getParams().get("range")), 
-						Integer.parseInt(childTagArea.getParams().get("area")),  childTagArea.getParams().get("text"), Boolean.parseBoolean(childTagArea.getParams().get("singleuse")));
+				itemUse = new ItemUse(Boolean.parseBoolean(childTagArea.getAttribute("targetsenemy")), Integer.parseInt(childTagArea.getAttribute("damage")),
+						Integer.parseInt(childTagArea.getAttribute("mpdamage")), null,  Integer.parseInt(childTagArea.getAttribute("range")),
+						Integer.parseInt(childTagArea.getAttribute("area")),  childTagArea.getAttribute("text"), Boolean.parseBoolean(childTagArea.getAttribute("singleuse")));
 			}
 		}
-		
+
 		ItemDefinition id = new ItemDefinition();
-		
-		id.id = Integer.parseInt(tagArea.getParams().get("id"));
-		
+
+		id.id = Integer.parseInt(tagArea.getAttribute("id"));
+
 		if (equippable)
-			id.item = new EquippableItem(tagArea.getParams().get("name"), Integer.parseInt(tagArea.getParams().get("cost")), tagArea.getParams().get("description"), 
+			id.item = new EquippableItem(tagArea.getAttribute("name"), Integer.parseInt(tagArea.getAttribute("cost")), tagArea.getAttribute("description"),
 					itemUse, id.id, attack, defense, speed, range, type, style);
 		else
-			id.item = new Item(tagArea.getParams().get("name"), Integer.parseInt(tagArea.getParams().get("cost")), tagArea.getParams().get("description"), 
+			id.item = new Item(tagArea.getAttribute("name"), Integer.parseInt(tagArea.getAttribute("cost")), tagArea.getAttribute("description"),
 						itemUse, false, id.id);
-		
-		id.imageX = Integer.parseInt(tagArea.getParams().get("imageindexx"));
-		id.imageY = Integer.parseInt(tagArea.getParams().get("imageindexy"));
-		
+
+		id.imageX = Integer.parseInt(tagArea.getAttribute("imageindexx"));
+		id.imageY = Integer.parseInt(tagArea.getAttribute("imageindexy"));
+
 		return id;
 	}
-	
+
 	public Item getItem(StateInfo stateInfo)
 	{
 		item.setImage(stateInfo.getResourceManager().getSpriteSheets().get("items").getSprite(imageX, imageY));

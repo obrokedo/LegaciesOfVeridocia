@@ -6,7 +6,6 @@ import java.util.Comparator;
 
 import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.Message;
-import mb.fc.engine.message.MultiSpriteContextMessage;
 import mb.fc.engine.message.SpriteContextMessage;
 import mb.fc.game.sprite.CombatSprite;
 
@@ -122,7 +121,7 @@ public class InitiativeManager extends Manager
 
 		Collections.sort(initOrder, new InitComparator());
 
-		stateInfo.sendMessage(new MultiSpriteContextMessage(Message.MESSAGE_SET_INIT_ORDER, initOrder));
+		stateInfo.sendMessage(new SpriteContextMessage(Message.MESSAGE_SET_INIT_ORDER, initOrder));
 	}
 
 	public void initializeInitOrder()
@@ -135,7 +134,7 @@ public class InitiativeManager extends Manager
 			initOrder.add(s);
 		}
 
-		stateInfo.sendMessage(new MultiSpriteContextMessage(Message.MESSAGE_SET_INIT_ORDER, initOrder));
+		stateInfo.sendMessage(new SpriteContextMessage(Message.MESSAGE_SET_INIT_ORDER, initOrder));
 	}
 
 	@Override

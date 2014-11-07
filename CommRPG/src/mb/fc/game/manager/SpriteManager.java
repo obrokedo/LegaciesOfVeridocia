@@ -130,7 +130,7 @@ public class SpriteManager extends Manager
 							if (heroLeaders.remove(cs))
 							{
 								if (heroLeaders.size() == 0 || !killAllHeroLeaders)
-									stateInfo.sendMessage(new SpeechMessage(Message.MESSAGE_SPEECH, "You have been defeated...]", -2, -1));
+									stateInfo.sendMessage(new SpeechMessage("You have been defeated...]", -2, -1));
 							}
 						}
 						else if (cs.isLeader())

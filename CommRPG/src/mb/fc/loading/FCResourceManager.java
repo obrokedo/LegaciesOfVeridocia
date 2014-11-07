@@ -24,8 +24,6 @@ import mb.fc.map.Map;
 import mb.fc.utils.SpriteAnims;
 import mb.fc.utils.XMLParser;
 import mb.fc.utils.XMLParser.TagArea;
-import mb.gl2.loading.LoadingState;
-import mb.gl2.loading.ResourceManager;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
@@ -37,9 +35,7 @@ import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.util.ResourceLoader;
 
-import com.artemis.Entity;
-
-public class FCResourceManager extends ResourceManager {
+public class FCResourceManager {
 	private Hashtable<String, Image> images = new Hashtable<String, Image>();
 	private Hashtable<String, SpriteSheet> spriteSheets = new Hashtable<String, SpriteSheet>();
 	private Hashtable<String, SpriteAnims> spriteAnimations = new Hashtable<String, SpriteAnims>();
@@ -86,10 +82,8 @@ public class FCResourceManager extends ResourceManager {
 	}
 	*/
 
-
 	@SuppressWarnings("unchecked")
-	@Override
-	public void addResource(String resource, Entity entity, int currentIndex,
+	public void addResource(String resource, LoadingStatus loadingStatus, int currentIndex,
 			int maxIndex) throws IOException, SlickException {
 		String[] split = resource.split(",");
 		if (split[0].equalsIgnoreCase("image"))
@@ -121,7 +115,7 @@ public class FCResourceManager extends ResourceManager {
 		else if (split[0].equalsIgnoreCase("map"))
 		{
 			System.out.println("Load map: " + split[2]);
-			MapParser.parseMap(split[2], map, new TilesetParser());
+			MapParser.parseMap(split[2], map, new TilesetParser(), this);
 		}
 		else if (split[0].equalsIgnoreCase("anim"))
 		{
@@ -143,7 +137,7 @@ public class FCResourceManager extends ResourceManager {
 		}
 		else if (split[0].equalsIgnoreCase("text"))
 		{
-			TextParser.parseText(split[1], speechesById, triggerEventById, cinematicById);
+			TextParser.parseText(split[1], speechesById, triggerEventById, cinematicById, this);
 		}
 		else if (split[0].equalsIgnoreCase("herodefs"))
 		{
@@ -285,14 +279,24 @@ public class FCResourceManager extends ResourceManager {
 				}
 			}
 		}
-		LoadingComp lc = entity.getComponent(LoadingComp.class);
-		lc.currentIndex = currentIndex;
-		lc.maxIndex = maxIndex;
+		loadingStatus.currentIndex = currentIndex;
+		loadingStatus.maxIndex = maxIndex;
 	}
 
-	@Override
-	public void initializeLoadingComp(Entity entity) {
+	public void addSpriteResource(String spriteName) throws SlickException
+	{
+		Image nIm = new Image("sprite/" + spriteName, transparent);
+		nIm.setFilter(Image.FILTER_NEAREST);
+		images.put(spriteName.replace(".png", ""), nIm.getScaledCopy(CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]));
+	}
 
+
+	public void addSoundResource(String soundName) throws SlickException
+	{
+		if (soundName.endsWith(".ogg"))
+			soundByTitle.put(soundName.replace(".ogg", ""), new Sound("sound/" + soundName));
+		else if (soundName.endsWith(".wav"))
+			soundByTitle.put(soundName.replace(".wav", ""), new Sound("sound/" + soundName));
 	}
 
 	public Hashtable<String, Image> getImages() {

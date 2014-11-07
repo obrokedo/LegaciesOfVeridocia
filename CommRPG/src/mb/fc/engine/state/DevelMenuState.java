@@ -6,11 +6,11 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import mb.fc.engine.CommRPG;
+import mb.fc.loading.FCResourceManager;
 import mb.fc.loading.MapParser;
 import mb.fc.loading.TilesetParser;
 import mb.fc.map.Map;
 import mb.fc.map.MapObject;
-import mb.gl2.loading.ResourceManager;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -19,6 +19,12 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+/**
+ * Development menu state that allows loading maps programatically
+ *
+ * @author Broked
+ *
+ */
 public class DevelMenuState extends MenuState
 {
 	private ResourceSelector mapSelector, textSelector, entranceSelector;
@@ -110,7 +116,7 @@ public class DevelMenuState extends MenuState
 	}
 
 	@Override
-	public void stateLoaded(ResourceManager resourceManager) {
+	public void stateLoaded(FCResourceManager resourceManager) {
 
 	}
 
@@ -215,7 +221,7 @@ public class DevelMenuState extends MenuState
 							Map map = new Map();
 							entrances.clear();
 							try {
-								MapParser.parseMap("map/" + mapFiles.get(selectedItem), map, new TilesetParser());
+								MapParser.parseMap("map/" + mapFiles.get(selectedItem), map, new TilesetParser(), null);
 
 
 								for (MapObject mo : map.getMapObjects())

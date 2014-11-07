@@ -15,7 +15,7 @@ public class TilesetParser
 	public void parseTileset(String image, Color trans, int tileWidth, int tileHeight,
 			int startIndex, Map map, Hashtable<Integer, Integer> landEffectByTileId) throws SlickException
 	{
-		Image tileSheetImage = new Image("image/" + image, trans);
+		Image tileSheetImage = new Image(image, trans);
 		System.out.println("LOAD TILESET " + tileSheetImage);
 		tileSheetImage.setFilter(Image.FILTER_NEAREST);
 		SpriteSheet ss = new SpriteSheet(tileSheetImage.getScaledCopy(CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]), tileWidth, tileHeight);

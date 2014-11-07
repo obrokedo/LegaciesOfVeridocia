@@ -9,8 +9,7 @@ import mb.fc.game.persist.ClientProfile;
 import mb.fc.game.persist.ClientProgress;
 import mb.fc.game.ui.FCGameContainer;
 import mb.fc.loading.FCResourceManager;
-import mb.gl2.loading.LoadableGameState;
-import mb.gl2.loading.ResourceManager;
+import mb.fc.loading.LoadableGameState;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
@@ -21,6 +20,12 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+/**
+ * State that handles the main menu
+ *
+ * @author Broked
+ *
+ */
 public class MenuState extends LoadableGameState
 {
 	protected StateBasedGame game;
@@ -172,9 +177,9 @@ public class MenuState extends LoadableGameState
 	}
 
 	@Override
-	public void stateLoaded(ResourceManager resourceManager) {
-		font = ((FCResourceManager) resourceManager).getFontByName("menufont");
-		bgImage = ((FCResourceManager) resourceManager).getImages().get("mainbg");
+	public void stateLoaded(FCResourceManager resourceManager) {
+		font = resourceManager.getFontByName("menufont");
+		bgImage = resourceManager.getImages().get("mainbg");
 		initialized = true;
 
 	}

@@ -9,12 +9,11 @@ import mb.fc.game.manager.SoundManager;
 import mb.fc.game.manager.SpriteManager;
 import mb.fc.game.manager.TownMoveManager;
 import mb.fc.loading.FCResourceManager;
+import mb.fc.loading.LoadableGameState;
 import mb.fc.renderer.MenuRenderer;
 import mb.fc.renderer.PanelRenderer;
 import mb.fc.renderer.SpriteRenderer;
 import mb.fc.renderer.TileMapRenderer;
-import mb.gl2.loading.LoadableGameState;
-import mb.gl2.loading.ResourceManager;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -22,6 +21,13 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+/**
+ * State that handles movement in town/overland, NPCs and
+ * town menus
+ *
+ * @author Broked
+ *
+ */
 public class TownState extends LoadableGameState
 {
 	private TileMapRenderer tileMapRenderer;
@@ -164,7 +170,7 @@ public class TownState extends LoadableGameState
 	}
 
 	@Override
-	public void stateLoaded(ResourceManager resourceManager) {
-		this.stateInfo.setResourceManager((FCResourceManager) resourceManager);
+	public void stateLoaded(FCResourceManager resourceManager) {
+		this.stateInfo.setResourceManager(resourceManager);
 	}
 }

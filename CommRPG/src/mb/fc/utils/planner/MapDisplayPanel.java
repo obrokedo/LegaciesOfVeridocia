@@ -12,6 +12,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map.Entry;
 
@@ -39,6 +40,8 @@ import de.jaret.util.date.JaretDate;
 
 public class MapDisplayPanel extends JPanel implements ActionListener, MouseListener, MouseMotionListener
 {
+	private static final long serialVersionUID = 1L;
+
 	private PlannerMap plannerMap;
 	private MapObject selectedMO;
 	private MapPanel mapPanel;
@@ -115,7 +118,7 @@ public class MapDisplayPanel extends JPanel implements ActionListener, MouseList
 		this.mapPanel = mapPanel;
 
 		try {
-			MapParser.parseMap(mapFile, plannerMap, new PlannerTilesetParser());
+			MapParser.parseMap(mapFile, plannerMap, new PlannerTilesetParser(), null);
 		} catch (IOException | SlickException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -518,7 +521,8 @@ public class MapDisplayPanel extends JPanel implements ActionListener, MouseList
 			if (tas.size() > 0)
 			{
 				ArrayList<CinematicEvent> initEvents = new ArrayList<CinematicEvent>();
-				ArrayList<CinematicEvent> ces = TextParser.parseCinematicEvents(tas.get(0), initEvents);
+				ArrayList<CinematicEvent> ces = TextParser.parseCinematicEvents(tas.get(0), initEvents,
+						new HashSet<String>(), new HashSet<String>(), new HashSet<String>());
 				ces.addAll(0, initEvents);
 				timeline = new CinematicTimeline();
 				new PlannerTimeBarViewer(ces, timeline, Integer.parseInt(tas.get(0).getParams().get("camerax")), Integer.parseInt(tas.get(0).getParams().get("cameray")));

@@ -4,8 +4,8 @@ import java.awt.Point;
 import java.util.ArrayList;
 
 import mb.fc.engine.state.StateInfo;
-import mb.fc.game.battle.spell.Spell;
 import mb.fc.game.sprite.CombatSprite;
+import mb.jython.JSpell;
 
 public class WizardAI extends CasterAI
 {	
@@ -14,7 +14,7 @@ public class WizardAI extends CasterAI
 	}
 	
 	@Override
-	protected void handleSpell(Spell spell, int i, int tileWidth, int tileHeight, CombatSprite currentSprite, 
+	protected void handleSpell(JSpell spell, int i, int tileWidth, int tileHeight, CombatSprite currentSprite, 
 			CombatSprite targetSprite, StateInfo stateInfo, int baseConfidence, int cost, Point attackPoint, int distance)
 	{
 		// Check to see if this spell does damage, if so then use the damage to determine the confidence

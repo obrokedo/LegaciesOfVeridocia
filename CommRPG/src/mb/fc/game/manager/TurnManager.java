@@ -9,7 +9,6 @@ import mb.fc.engine.message.BattleSelectionMessage;
 import mb.fc.engine.message.IntMessage;
 import mb.fc.engine.message.LocationMessage;
 import mb.fc.engine.message.Message;
-import mb.fc.engine.message.MultiSpriteContextMessage;
 import mb.fc.engine.message.SpriteContextMessage;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.battle.BattleResults;
@@ -529,7 +528,7 @@ public class TurnManager extends Manager implements KeyboardListener
 				// At this point we know who we intend to target, but we need to inject the BattleCommand.
 				// Only the owner will have a value for the battle command so they will have to be
 				// the one to send the BattleResults
-				turnActions.add(new AttackSpriteAction(((MultiSpriteContextMessage) message).getSprites(), battleCommand));
+				turnActions.add(new AttackSpriteAction(((SpriteContextMessage) message).getSprites(), battleCommand));
 				break;
 			// THIS IS SENT BY THE OWNER
 			case Message.MESSAGE_SELECT_SPELL:

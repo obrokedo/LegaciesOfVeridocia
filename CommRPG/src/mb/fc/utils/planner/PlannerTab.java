@@ -1,6 +1,7 @@
 package mb.fc.utils.planner;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.datatransfer.DataFlavor;
@@ -64,8 +65,7 @@ public class PlannerTab extends JPanel implements ActionListener, ItemListener, 
 
 		listPanel.add(list);
 
-
-
+		listPanel.setBackground(Color.DARK_GRAY);
 		listPanel.add(PlannerFrame.createActionButton("Add", "add", this));
 		listPanel.add(PlannerFrame.createActionButton("Remove", "remove", this));
 
@@ -200,7 +200,7 @@ public class PlannerTab extends JPanel implements ActionListener, ItemListener, 
 		attributeList = new JList<String>(attributeListModel);
 		attributeScrollPane = new JScrollPane(attributeList);
 		this.add(attributeScrollPane, BorderLayout.LINE_START);
-		attributeList.setPreferredSize(new Dimension(150, 100));
+		attributeList.setPreferredSize(new Dimension(150, attributeList.getPreferredSize().height));
 		attributeList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		attributeList.addListSelectionListener(this);
 		attributeList.setTransferHandler(new AttributeTransferHandler());

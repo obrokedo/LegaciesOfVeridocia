@@ -3,11 +3,10 @@ package mb.fc.engine.state;
 import mb.fc.engine.CommRPG;
 import mb.fc.game.ui.FCGameContainer;
 import mb.fc.loading.FCResourceManager;
+import mb.fc.loading.LoadableGameState;
 import mb.fc.utils.AnimSprite;
 import mb.fc.utils.Animation;
 import mb.fc.utils.SpriteAnims;
-import mb.gl2.loading.LoadableGameState;
-import mb.gl2.loading.ResourceManager;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -101,8 +100,8 @@ public class TestState extends LoadableGameState
 	}
 
 	@Override
-	public void stateLoaded(ResourceManager resourceManager) {
-		frm = (FCResourceManager) resourceManager;
+	public void stateLoaded(FCResourceManager resourceManager) {
+		frm = resourceManager;
 		Image bgIm = frm.getSpriteSheets().get("battlebg").getSprite(0,  0);
 
 		backgroundImage = bgIm.getScaledCopy((gc.getWidth() - gc.getDisplayPaddingX() * 2) / (float) bgIm.getWidth());

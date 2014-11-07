@@ -3,6 +3,7 @@ package mb.fc.utils.planner;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
@@ -77,16 +78,18 @@ public class PlannerContainer extends JPanel implements ActionListener
 					ArrayList<CinematicEvent> initEvents = new ArrayList<CinematicEvent>();
 					if (plannerGraph == null)
 					{
-						ArrayList<CinematicEvent> ces = TextParser.parseCinematicEvents(tas.get(0), initEvents);
+						ArrayList<CinematicEvent> ces = TextParser.parseCinematicEvents(tas.get(0), initEvents,
+								new HashSet<String>(), new HashSet<String>(), new HashSet<String>());
 						ces.addAll(0, initEvents);
-						plannerGraph = new PlannerTimeBarViewer(ces, new CinematicTimeline(), Integer.parseInt(tas.get(0).getParams().get("camerax")), Integer.parseInt(tas.get(0).getParams().get("cameray")));
+						plannerGraph = new PlannerTimeBarViewer(ces, new CinematicTimeline(), Integer.parseInt(tas.get(0).getAttribute("camerax")), Integer.parseInt(tas.get(0).getAttribute("cameray")));
 					}
 					else
 					{
-						ArrayList<CinematicEvent> ces = TextParser.parseCinematicEvents(tas.get(0), initEvents);
+						ArrayList<CinematicEvent> ces = TextParser.parseCinematicEvents(tas.get(0), initEvents,
+								new HashSet<String>(), new HashSet<String>(), new HashSet<String>());
 						ces.addAll(0, initEvents);
 
-						plannerGraph.generateGraph(ces, new CinematicTimeline(), Integer.parseInt(tas.get(0).getParams().get("camerax")), Integer.parseInt(tas.get(0).getParams().get("cameray")));
+						plannerGraph.generateGraph(ces, new CinematicTimeline(), Integer.parseInt(tas.get(0).getAttribute("camerax")), Integer.parseInt(tas.get(0).getAttribute("cameray")));
 					// this.add(ptbv);
 					}
 				}

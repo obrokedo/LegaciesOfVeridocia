@@ -9,7 +9,7 @@ import mb.fc.game.persist.ClientProgress;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.ui.FCGameContainer;
 import mb.fc.loading.FCResourceManager;
-import mb.gl2.loading.LoadableGameState;
+import mb.fc.loading.LoadableGameState;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -17,6 +17,12 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.transition.EmptyTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
+/**
+ * Contains information that should be shared across all game states
+ *
+ * @author Broked
+ *
+ */
 public class PersistentStateInfo
 {
 	private Camera camera;
@@ -61,9 +67,11 @@ public class PersistentStateInfo
 		getGame().enterState(CommRPG.STATE_GAME_LOADING, new FadeOutTransition(Color.black, 250), new EmptyTransition());
 	}
 
-	public void loadBattle(String text, String map, String entrance)
+	public void loadBattle(String text, String map, String entrance, int battleBGIndex)
 	{
 		this.entranceLocation = entrance;
+
+		((AttackCinematicState) game.getState(CommRPG.STATE_GAME_BATTLE_ANIM)).setBattleBGIndex(battleBGIndex);
 
 		gc.getInput().removeAllKeyListeners();
 

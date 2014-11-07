@@ -57,19 +57,19 @@ public class HeroDefinition
 
 		HeroDefinition hd = new HeroDefinition();
 
-		hd.name = tagArea.getParams().get("name");
-		hd.id = Integer.parseInt(tagArea.getParams().get("id"));
-		hd.hp = Integer.parseInt(tagArea.getParams().get("hp"));
-		hd.mp = Integer.parseInt(tagArea.getParams().get("mp"));
-		hd.attack = Integer.parseInt(tagArea.getParams().get("attack"));
-		hd.defense = Integer.parseInt(tagArea.getParams().get("defense"));
-		hd.speed = Integer.parseInt(tagArea.getParams().get("speed"));
-		hd.promoted = Boolean.parseBoolean(tagArea.getParams().get("promoted"));
-		hd.level = Integer.parseInt(tagArea.getParams().get("level"));
-		hd.animations = tagArea.getParams().get("animations");
+		hd.name = tagArea.getAttribute("name");
+		hd.id = Integer.parseInt(tagArea.getAttribute("id"));
+		hd.hp = Integer.parseInt(tagArea.getAttribute("hp"));
+		hd.mp = Integer.parseInt(tagArea.getAttribute("mp"));
+		hd.attack = Integer.parseInt(tagArea.getAttribute("attack"));
+		hd.defense = Integer.parseInt(tagArea.getAttribute("defense"));
+		hd.speed = Integer.parseInt(tagArea.getAttribute("speed"));
+		hd.promoted = Boolean.parseBoolean(tagArea.getAttribute("promoted"));
+		hd.level = Integer.parseInt(tagArea.getAttribute("level"));
+		hd.animations = tagArea.getAttribute("animations");
 
-		if (tagArea.getParams().containsKey("leader"))
-			hd.leader = Boolean.parseBoolean(tagArea.getParams().get("leader"));
+		if (tagArea.getAttribute("leader") != null)
+			hd.leader = Boolean.parseBoolean(tagArea.getAttribute("leader"));
 
 		// Set up unpromoted progression
 		if(!hd.promoted)
@@ -108,18 +108,18 @@ public class HeroDefinition
 		{
 			if (childTagArea.getTagType().equalsIgnoreCase("spellprogression"))
 			{
-				String[] splitSpell = childTagArea.getParams().get("gained").split(",");
+				String[] splitSpell = childTagArea.getAttribute("gained").split(",");
 				int[] splitLevel = new int[splitSpell.length + 1];
-				splitLevel[0] = Integer.parseInt(childTagArea.getParams().get("spellid"));
+				splitLevel[0] = Integer.parseInt(childTagArea.getAttribute("spellid"));
 				for (int i = 0; i < splitSpell.length; i++)
 					splitLevel[i + 1] = Integer.parseInt(splitSpell[i]);
 				hd.spellsPerLevel.add(splitLevel);
 			}
 			else if (childTagArea.getTagType().equalsIgnoreCase("item"))
 			{
-				hd.items.add(Integer.parseInt(childTagArea.getParams().get("itemid")));
-				if (childTagArea.getParams().containsKey("equipped"))
-					hd.itemsEquipped.add(Boolean.parseBoolean(childTagArea.getParams().get("equipped")));
+				hd.items.add(Integer.parseInt(childTagArea.getAttribute("itemid")));
+				if (childTagArea.getAttribute("equipped") != null)
+					hd.itemsEquipped.add(Boolean.parseBoolean(childTagArea.getAttribute("equipped")));
 				else
 					hd.itemsEquipped.add(false);
 			}
@@ -127,19 +127,19 @@ public class HeroDefinition
 			{
 				int index = 0;
 				if (!hd.promoted)
-					index = (Boolean.parseBoolean(childTagArea.getParams().get("promoted")) ? 1 : 0);
+					index = (Boolean.parseBoolean(childTagArea.getAttribute("promoted")) ? 1 : 0);
 
-				hd.move[index] = Integer.parseInt(childTagArea.getParams().get("move"));
-				hd.movementType[index] = Integer.parseInt(childTagArea.getParams().get("movementtype"));
-				hd.attackGain[index] = Integer.parseInt(childTagArea.getParams().get("attack"));
-				hd.defenseGain[index] = Integer.parseInt(childTagArea.getParams().get("defense"));
-				hd.speedGain[index] = Integer.parseInt(childTagArea.getParams().get("speed"));
-				hd.hpGain[index] = Integer.parseInt(childTagArea.getParams().get("hp"));
-				hd.mpGain[index] = Integer.parseInt(childTagArea.getParams().get("mp"));
-				hd.portrait[index] = Integer.parseInt(childTagArea.getParams().get("portrait"));
-				hd.className[index] = childTagArea.getParams().get("class");
+				hd.move[index] = Integer.parseInt(childTagArea.getAttribute("move"));
+				hd.movementType[index] = Integer.parseInt(childTagArea.getAttribute("movementtype"));
+				hd.attackGain[index] = Integer.parseInt(childTagArea.getAttribute("attack"));
+				hd.defenseGain[index] = Integer.parseInt(childTagArea.getAttribute("defense"));
+				hd.speedGain[index] = Integer.parseInt(childTagArea.getAttribute("speed"));
+				hd.hpGain[index] = Integer.parseInt(childTagArea.getAttribute("hp"));
+				hd.mpGain[index] = Integer.parseInt(childTagArea.getAttribute("mp"));
+				hd.portrait[index] = Integer.parseInt(childTagArea.getAttribute("portrait"));
+				hd.className[index] = childTagArea.getAttribute("class");
 
-				String[] splitItems = childTagArea.getParams().get("usuableitems").split(",");
+				String[] splitItems = childTagArea.getAttribute("usuableitems").split(",");
 				int[] splitIds = new int[splitItems.length];
 				for (int i = 0; i < splitItems.length; i++)
 					splitIds[i] = Integer.parseInt(splitItems[i]);

@@ -2,6 +2,13 @@ package mb.fc.engine.message;
 
 import java.io.Serializable;
 
+/**
+ * Superclass that defines messages types that can be sent and
+ * can be used to send a message that requires no additional parameters
+ *
+ * @author Broked
+ *
+ */
 public class Message implements Serializable
 {
 	private static final long serialVersionUID = 1L;

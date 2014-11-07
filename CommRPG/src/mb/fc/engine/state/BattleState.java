@@ -11,12 +11,11 @@ import mb.fc.game.manager.SoundManager;
 import mb.fc.game.manager.SpriteManager;
 import mb.fc.game.manager.TurnManager;
 import mb.fc.loading.FCResourceManager;
+import mb.fc.loading.LoadableGameState;
 import mb.fc.renderer.MenuRenderer;
 import mb.fc.renderer.PanelRenderer;
 import mb.fc.renderer.SpriteRenderer;
 import mb.fc.renderer.TileMapRenderer;
-import mb.gl2.loading.LoadableGameState;
-import mb.gl2.loading.ResourceManager;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -24,6 +23,13 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+/**
+ * State that drives and renders battle movement and menus. This does not
+ * handle attack cinematics
+ *
+ * @author Broked
+ *
+ */
 public class BattleState extends LoadableGameState
 {
 	private TileMapRenderer tileMapRenderer;
@@ -174,8 +180,8 @@ public class BattleState extends LoadableGameState
 	}
 
 	@Override
-	public void stateLoaded(ResourceManager resourceManager) {
-		this.stateInfo.setResourceManager((FCResourceManager) resourceManager);
+	public void stateLoaded(FCResourceManager resourceManager) {
+		this.stateInfo.setResourceManager(resourceManager);
 	}
 
 	@Override

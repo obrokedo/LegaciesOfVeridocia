@@ -2,24 +2,58 @@ package mb.jython;
 
 import java.io.File;
 
-import mb.fc.game.battle.spell.Spell;
-import mb.gl2.loading.LoadingState;
+import mb.fc.loading.LoadingState;
 
 import org.python.core.Py;
 import org.python.core.PyString;
 import org.python.core.PySystemState;
 
+/**
+ * Factory to create Jython objects that are backed by the corresponding Python script. Methods
+ * called on these objects will use the results as determined by the script.
+ * NOTE: Currently the scripts can be re-loaded via the debug menu, which means subsequent calls
+ * to the creation methods contained herein may result in objects whose methods return different values
+ *
+ * @TODO When we make it to a point where we don't want to be able to reload the Python scripts for testing purposes
+ * then we should make this a "singleton" class that can only be initialized once
+ *
+ * @see /mb/fc/game/menu/DebugMenu
+ * @see /scripts/
+ *
+ * @author Broked
+ *
+ */
 public class GlobalPythonFactory
 {
-	private static JythonObjectFactory panelRendererFact = null;
-	private static JythonObjectFactory battleFunctionsFact;
-	private static JythonObjectFactory cinematicActorFact;
-	private static JythonObjectFactory musicScriptFact;
-	private static JythonObjectFactory spellFact;
+	/**
+	 * Hold an instance of each of the Jython objects that correspond with a Python script
+	 */
+	private static JCinematicActor cinematicActor = null;
+	private static JBattleFunctions battleFunctions = null;
+	private static JPanelRender panelRender = null;
+	private static JMusicSelector musicSelector = null;
+	private static JSpell spell = null;
 
+	/**
+	 * A boolean flag indicating whether this factory has been initialized.
+	 * Creation methods will not work unless this value is set true
+	 */
+
+	private static boolean initialized = false;
+
+	/**
+	 * Initializes the GlobalPythonFactory by loading all of the python scripts and
+	 * storing a copy
+	 */
 	public static void intialize()
 	{
-		// UNCOMMENT THIS FOR SINGLE JAR
+		initialized = true;
+
+		/************************************************************************/
+		/* Depending on whether this is being built for a single jar or not; 	*/
+		/* single jar or not scripts will be loaded differently				  	*/
+		/************************************************************************/
+		// The build is being done for one large JAR that contains all resources
 		if (LoadingState.inJar)
 		{
 			String jarPath = JythonObjectFactory.class.getProtectionDomain().getCodeSource().getLocation().getPath();
@@ -30,10 +64,8 @@ public class GlobalPythonFactory
 		}
 
 		JythonObjectFactory.sys  = Py.getSystemState();
-		System.out.println("Path");
-		System.out.println(JythonObjectFactory.sys.path);
 
-		// BEGIN COMMENTING HERE FOR SINGLE JAR
+		// The build is being done for a jar that does not contain all of the resources
 		if (!LoadingState.inJar)
 		{
 			JythonObjectFactory.sys.path.append(new PyString(JythonObjectFactory.sys.getPath("scripts")));
@@ -45,43 +77,89 @@ public class GlobalPythonFactory
 				if (file.getName().endsWith(".class"))
 					file.delete();
 			}
-
-
-			if (panelRendererFact != null)
-				createJPanelRender().reload();
 		}
 
-		// END COMMENTING HERE FOR SINGLE JAR
-
-        panelRendererFact = new JythonObjectFactory(JPanelRender.class, "PanelRender", "PanelRender");
-        battleFunctionsFact = new JythonObjectFactory(JBattleFunctions.class, "BattleFunctions", "BattleFunctions");
-        cinematicActorFact  = new JythonObjectFactory(JCinematicActor.class, "CinematicActor", "CinematicActor");
-        musicScriptFact  = new JythonObjectFactory(JMusicSelector.class, "MusicScript", "MusicScript");
-        spellFact  = new JythonObjectFactory(Spell.class, "Spells", "Spells");
+		// There should only ever be a single instance of this class, so set all of the
+		// values so they can be accessed in a static way
+        panelRender = (JPanelRender) (new JythonObjectFactory(JPanelRender.class, "PanelRender", "PanelRender")).createObject();
+        battleFunctions = (JBattleFunctions) (new JythonObjectFactory(JBattleFunctions.class, "BattleFunctions", "BattleFunctions")).createObject();
+        cinematicActor  = (JCinematicActor) (new JythonObjectFactory(JCinematicActor.class, "CinematicActor", "CinematicActor")).createObject();
+        musicSelector  = (JMusicSelector) (new JythonObjectFactory(JMusicSelector.class, "MusicScript", "MusicScript")).createObject();
+        spell  = (JSpell) (new JythonObjectFactory(JSpell.class, "Spells", "Spells")).createObject();
 	}
 
+	/**
+	 * Gets a script-backed JCinematicActor. This
+	 * method should only be called after the factory
+	 * has been initialized
+	 *
+	 * @return a script-backed JCinematicActor
+	 */
 	public static JCinematicActor createJCinematicActor()
 	{
-		return (JCinematicActor) cinematicActorFact.createObject();
+		checkFactoryInitialized();
+		return cinematicActor;
 	}
 
+	/**
+	 * Gets a script-backed JBattleFunctions. This
+	 * method should only be called after the factory
+	 * has been initialized
+	 *
+	 * @return a script-backed JBattleFunctions
+	 */
 	public static JBattleFunctions createJBattleFunctions()
 	{
-		return (JBattleFunctions) battleFunctionsFact.createObject();
+		checkFactoryInitialized();
+		return battleFunctions;
 	}
 
+	/**
+	 * Gets a script-backed JPanelRender. This
+	 * method should only be called after the factory
+	 * has been initialized
+	 *
+	 * @return a script-backed JPanelRender
+	 */
 	public static JPanelRender createJPanelRender()
 	{
-		return (JPanelRender) panelRendererFact.createObject();
+		checkFactoryInitialized();
+		return panelRender;
 	}
 
+	/**
+	 * Gets a script-backed JMusicSelector. This
+	 * method should only be called after the factory
+	 * has been initialized
+	 *
+	 * @return a script-backed JMusicSelector
+	 */
 	public static JMusicSelector createJMusicSelector()
 	{
-		return (JMusicSelector) musicScriptFact.createObject();
+		checkFactoryInitialized();
+		return musicSelector;
 	}
 
-	public static Spell createSpell()
+	/**
+	 * Gets a script-backed JSpell. This
+	 * method should only be called after the factory
+	 * has been initialized
+	 *
+	 * @return a script-backed JSpell
+	 */
+	public static JSpell createJSpell()
 	{
-		return (Spell) spellFact.createObject();
+		checkFactoryInitialized();
+		return spell;
+	}
+
+	/**
+	 * Ensures that this factory has been initialized before attempting to
+	 * return a Jython object
+	 */
+	private static void checkFactoryInitialized()
+	{
+		if (!initialized)
+			throw new RuntimeException("Attempted to create Jython object before initializing the factory");
 	}
 }

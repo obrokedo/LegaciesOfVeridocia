@@ -1,10 +1,16 @@
 package mb.fc.engine.message;
 
-
+/**
+ * A reusable message that should be used to issue a message that has
+ * a x and y coordinate as a parameter
+ *
+ * @author Broked
+ *
+ */
 public class LocationMessage extends Message
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	public int locX;
 	public int locY;
 

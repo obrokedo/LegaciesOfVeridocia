@@ -4,9 +4,8 @@ import mb.fc.cinematic.Cinematic;
 import mb.fc.engine.CommRPG;
 import mb.fc.game.manager.SoundManager;
 import mb.fc.loading.FCResourceManager;
+import mb.fc.loading.LoadableGameState;
 import mb.fc.renderer.TileMapRenderer;
-import mb.gl2.loading.LoadableGameState;
-import mb.gl2.loading.ResourceManager;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -15,6 +14,12 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+/**
+ * Dedicated state that renders Cinematics
+ *
+ * @author Broked
+ *
+ */
 public class CinematicState extends LoadableGameState
 {
 	private TileMapRenderer tileMapRenderer;
@@ -87,7 +92,7 @@ public class CinematicState extends LoadableGameState
 		if (stateInfo.isInitialized())
 		{
 			stateInfo.processMessages();
-			cinematic.update((int) (delta * cinematicSpeed), stateInfo.getCamera(), stateInfo.getInput(), stateInfo.getGc(), stateInfo.getResourceManager().getMap(), stateInfo);
+			cinematic.update((int) (delta * cinematicSpeed), stateInfo.getCamera(), stateInfo.getInput(), stateInfo.getResourceManager().getMap(), stateInfo);
 
 			if (System.currentTimeMillis() > stateInfo.getInputDelay())
 			{
@@ -112,8 +117,8 @@ public class CinematicState extends LoadableGameState
 	}
 
 	@Override
-	public void stateLoaded(ResourceManager resourceManager) {
-		stateInfo.setResourceManager((FCResourceManager) resourceManager);
+	public void stateLoaded(FCResourceManager resourceManager) {
+		stateInfo.setResourceManager(resourceManager);
 	}
 
 	@Override

@@ -1,9 +1,15 @@
 package mb.fc.engine.message;
 
+/**
+ * A message to indicate that a sound or music should be played
+ *
+ * @author Broked
+ *
+ */
 public class AudioMessage extends Message
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	private String audio;
 	private float volume;
 	private boolean loop;
@@ -16,7 +22,7 @@ public class AudioMessage extends Message
 		this.position = 0f;
 		this.loop = loop;
 	}
-	
+
 	public AudioMessage(int messageType, String audio, float volume, float position, boolean loop) {
 		super(messageType);
 		this.audio = audio;

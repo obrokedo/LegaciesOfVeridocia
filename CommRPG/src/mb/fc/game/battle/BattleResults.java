@@ -7,12 +7,12 @@ import mb.fc.engine.CommRPG;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.battle.command.BattleCommand;
 import mb.fc.game.battle.condition.BattleEffect;
-import mb.fc.game.battle.spell.Spell;
 import mb.fc.game.item.Item;
 import mb.fc.game.item.ItemUse;
 import mb.fc.game.sprite.CombatSprite;
 import mb.jython.GlobalPythonFactory;
 import mb.jython.JBattleFunctions;
+import mb.jython.JSpell;
 
 public class BattleResults implements Serializable
 {
@@ -113,7 +113,7 @@ public class BattleResults implements Serializable
 			}
 			else if (battleCommand.getCommand() == BattleCommand.COMMAND_SPELL)
 			{
-				Spell spell = battleCommand.getSpell();
+				JSpell spell = battleCommand.getSpell();
 				int spellLevel = battleCommand.getLevel() - 1;
 				int damage = 0;
 
@@ -145,10 +145,7 @@ public class BattleResults implements Serializable
 
 				int exp = spell.getExpGained(spellLevel, attacker, target);
 
-				if (exp == Spell.DEFAULT_EXP)
-					expGained += getExperienceByDamage(damage, attacker.getLevel(), target);
-				else
-					expGained += exp;
+				expGained += exp;
 			}
 			else if (battleCommand.getCommand() == BattleCommand.COMMAND_ITEM)
 			{

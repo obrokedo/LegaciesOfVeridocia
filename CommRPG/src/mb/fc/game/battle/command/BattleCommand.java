@@ -2,8 +2,8 @@ package mb.fc.game.battle.command;
 
 import java.io.Serializable;
 
-import mb.fc.game.battle.spell.Spell;
 import mb.fc.game.item.Item;
+import mb.jython.JSpell;
 
 public class BattleCommand implements Serializable
 {
@@ -14,7 +14,7 @@ public class BattleCommand implements Serializable
 	public static final int COMMAND_ITEM = 2;
 	
 	private int command;
-	private Spell spell;
+	private JSpell spell;
 	private Item item;
 	private int level;
 
@@ -29,7 +29,7 @@ public class BattleCommand implements Serializable
 		this.item = item;
 	}
 	
-	public BattleCommand(int command, Spell spell, int level) {
+	public BattleCommand(int command, JSpell spell, int level) {
 		super();
 		this.command = command;
 		this.spell = spell;
@@ -40,7 +40,7 @@ public class BattleCommand implements Serializable
 		return command;
 	}
 
-	public Spell getSpell() {
+	public JSpell getSpell() {
 		return spell;
 	}
 

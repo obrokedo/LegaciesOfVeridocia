@@ -4,8 +4,8 @@ import java.awt.Point;
 import java.util.ArrayList;
 
 import mb.fc.engine.state.StateInfo;
-import mb.fc.game.battle.spell.Spell;
 import mb.fc.game.sprite.CombatSprite;
+import mb.jython.JSpell;
 
 public class ClericAI extends CasterAI
 {	
@@ -14,7 +14,7 @@ public class ClericAI extends CasterAI
 	}
 
 	@Override
-	protected void handleSpell(Spell spell, int i, int tileWidth, int tileHeight, CombatSprite currentSprite, 
+	protected void handleSpell(JSpell spell, int i, int tileWidth, int tileHeight, CombatSprite currentSprite, 
 			CombatSprite targetSprite, StateInfo stateInfo, int baseConfidence, int cost, Point attackPoint, int distance)
 	{
 		// Check to see if this spell does damage, if so then use the damage to determine the confidence
@@ -26,7 +26,7 @@ public class ClericAI extends CasterAI
 	
 	// TODO Lots to do here, they aren't really smart enough to move and taget them self, kind of need it's own AI for that?
 	// Somhow there is never a time when aura can get 2 people in it
-	private void handleHealingSpell(Spell spell, int i, int tileWidth, int tileHeight, CombatSprite currentSprite, 
+	private void handleHealingSpell(JSpell spell, int i, int tileWidth, int tileHeight, CombatSprite currentSprite, 
 			CombatSprite targetSprite, StateInfo stateInfo, int baseConfidence, int cost, Point attackPoint)
 	{
 		boolean healSelf = false;
@@ -133,7 +133,7 @@ public class ClericAI extends CasterAI
 		mostConfident = checkForMaxConfidence(mostConfident, currentConfidence, spell, i, targetsInArea);
 	}
 	
-	private void handleDamagingSpell(Spell spell, int i, int tileWidth, int tileHeight, CombatSprite currentSprite, 
+	private void handleDamagingSpell(JSpell spell, int i, int tileWidth, int tileHeight, CombatSprite currentSprite, 
 			CombatSprite targetSprite, StateInfo stateInfo, int baseConfidence, int cost, int distance)
 	{
 		int currentConfidence = 0;

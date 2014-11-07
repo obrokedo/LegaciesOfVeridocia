@@ -4,6 +4,15 @@ import java.util.Random;
 
 import mb.fc.game.sprite.CombatSprite;
 
+/**
+ * Interface to call the BattleFunctions python methods that will determine
+ * battle statistics and the text displayed in battle
+ *
+ * @see /scripts/BattleFunctions.py
+ *
+ * @author Broked
+ *
+ */
 public interface JBattleFunctions {
 	public int getDodgePercent(CombatSprite attacker, CombatSprite target);
 	public int getCritPercent(CombatSprite attacker, CombatSprite target);
@@ -14,5 +23,5 @@ public interface JBattleFunctions {
 	public String getCriticalAttackText(CombatSprite attacker, CombatSprite target, int damage);
 	public String getNormalAttackText(CombatSprite attacker, CombatSprite target, int damage);
 	public String getCombatantDeathText(CombatSprite attacker, CombatSprite target);
-	
+
 }

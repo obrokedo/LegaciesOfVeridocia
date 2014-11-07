@@ -1,6 +1,6 @@
 package mb.fc.game.manager;
 
-import mb.fc.engine.message.ChatMessage;
+import mb.fc.engine.message.InfoMessage;
 import mb.fc.engine.message.Message;
 import mb.fc.game.hudmenu.ChatPanel;
 
@@ -22,7 +22,7 @@ public class PanelManager extends Manager {
 	public void recieveMessage(Message message) {
 		switch (message.getMessageType()) {
 		case Message.MESSAGE_SEND_INTERNAL_MESSAGE:
-			chatMenu.addMessage(((ChatMessage) message).getText());
+			chatMenu.addMessage(((InfoMessage) message).getText());
 			break;
 		}
 	}

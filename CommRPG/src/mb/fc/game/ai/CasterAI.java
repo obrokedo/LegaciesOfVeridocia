@@ -6,16 +6,16 @@ import java.util.ArrayList;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.battle.command.BattleCommand;
 import mb.fc.game.battle.spell.KnownSpell;
-import mb.fc.game.battle.spell.Spell;
 import mb.fc.game.item.EquippableItem;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.turnaction.AttackSpriteAction;
+import mb.jython.JSpell;
 
 public abstract class CasterAI extends AI
 {
 
 	protected int mostConfident = 0;
-	protected Spell bestSpell;
+	protected JSpell bestSpell;
 	protected int spellLevel;
 	protected ArrayList<CombatSprite> targets;
 
@@ -86,7 +86,7 @@ public abstract class CasterAI extends AI
 		{
 			for (KnownSpell sd : currentSprite.getSpellsDescriptors())
 			{
-				Spell spell = sd.getSpell();
+				JSpell spell = sd.getSpell();
 
 				for (int i = 1; i <= sd.getMaxLevel(); i++)
 				{
@@ -112,7 +112,7 @@ public abstract class CasterAI extends AI
 		}
 	}
 
-	protected int checkForMaxConfidence(int mostConfident, int confidence, Spell currentSpell, int level, ArrayList<CombatSprite> targets)
+	protected int checkForMaxConfidence(int mostConfident, int confidence, JSpell currentSpell, int level, ArrayList<CombatSprite> targets)
 	{
 		if (confidence > mostConfident)
 		{
@@ -138,7 +138,7 @@ public abstract class CasterAI extends AI
 		{
 			for (KnownSpell sd : currentSprite.getSpellsDescriptors())
 			{
-				Spell spell = sd.getSpell();
+				JSpell spell = sd.getSpell();
 
 				for (int i = 1; i <= sd.getMaxLevel(); i++)
 				{
@@ -168,7 +168,7 @@ public abstract class CasterAI extends AI
 		}
 	}
 
-	protected abstract void handleSpell(Spell spell, int i, int tileWidth, int tileHeight, CombatSprite currentSprite,
+	protected abstract void handleSpell(JSpell spell, int i, int tileWidth, int tileHeight, CombatSprite currentSprite,
 			CombatSprite targetSprite, StateInfo stateInfo, int baseConfidence, int cost, Point attackPoint, int distance);
 
 	protected abstract int determineBaseConfidence(CombatSprite currentSprite,

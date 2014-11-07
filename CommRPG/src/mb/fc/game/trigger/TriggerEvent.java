@@ -153,7 +153,7 @@ public class TriggerEvent
 		@Override
 		public boolean perform(StateInfo stateInfo)
 		{
-			stateInfo.sendMessage(new LoadMapMessage(Message.MESSAGE_LOAD_MAP, map, null, location));
+			stateInfo.sendMessage(new LoadMapMessage(Message.MESSAGE_LOAD_MAP, map, null, location, 0));
 			return false;
 		}
 	}
@@ -163,18 +163,20 @@ public class TriggerEvent
 		private String battle;
 		private String map;
 		private String entrance;
+		private int battleBG;
 
-		public TriggerStartBattle(String battle, String map, String entrance) {
+		public TriggerStartBattle(String battle, String map, String entrance, int battleBG) {
 			super();
 			this.battle = battle;
 			this.map = map;
 			this.entrance = entrance;
+			this.battleBG = battleBG;
 		}
 
 		@Override
 		public boolean perform(StateInfo stateInfo)
 		{
-			stateInfo.sendMessage(new LoadMapMessage(Message.MESSAGE_START_BATTLE, map, battle, entrance));
+			stateInfo.sendMessage(new LoadMapMessage(Message.MESSAGE_START_BATTLE, map, battle, entrance, battleBG));
 			return false;
 		}
 	}
@@ -366,7 +368,7 @@ public class TriggerEvent
 					}
 				}
 
-				stateInfo.sendMessage(new SpeechMessage(Message.MESSAGE_SPEECH, s.getMessage(), s.getTriggerId(), s.getPortraitId()));
+				stateInfo.sendMessage(new SpeechMessage(s.getMessage(), s.getTriggerId(), s.getPortraitId()));
 				break;
 			}
 

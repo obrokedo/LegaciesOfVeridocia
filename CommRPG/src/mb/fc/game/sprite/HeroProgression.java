@@ -7,9 +7,9 @@ import mb.fc.engine.CommRPG;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.battle.LevelUpResult;
 import mb.fc.game.battle.spell.KnownSpell;
-import mb.fc.game.battle.spell.Spell;
 import mb.fc.game.resource.SpellResource;
 import mb.fc.loading.FCResourceManager;
+import mb.jython.JSpell;
 
 public class HeroProgression implements Serializable
 {
@@ -77,7 +77,7 @@ public class HeroProgression implements Serializable
 			{
 				if (spellLevels[i][j] == (cs.getLevel() + 1))
 				{
-					Spell spell = SpellResource.getSpell(spellLevels[i][0], stateInfo);
+					JSpell spell = SpellResource.getSpell(spellLevels[i][0], stateInfo);
 					text += " " + cs.getName() + " learned " + spell.getName() + " " + j + "}[";
 				}
 			}
@@ -112,7 +112,7 @@ public class HeroProgression implements Serializable
 			{
 				if (spellLevels[i][j] == cs.getLevel())
 				{
-					Spell spell = SpellResource.getSpell(spellLevels[i][0], frm);
+					JSpell spell = SpellResource.getSpell(spellLevels[i][0], frm);
 
 					boolean found = false;
 					if (cs.getSpellsDescriptors() != null)

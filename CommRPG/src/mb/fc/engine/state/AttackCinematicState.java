@@ -1,6 +1,5 @@
 package mb.fc.engine.state;
 
-import java.awt.Point;
 import java.util.ArrayList;
 
 import mb.fc.engine.CommRPG;
@@ -15,11 +14,10 @@ import mb.fc.game.menu.SpeechMenu;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.ui.FCGameContainer;
 import mb.fc.loading.FCResourceManager;
+import mb.fc.loading.LoadableGameState;
 import mb.fc.utils.AnimSprite;
 import mb.fc.utils.Animation;
 import mb.fc.utils.SpriteAnims;
-import mb.gl2.loading.LoadableGameState;
-import mb.gl2.loading.ResourceManager;
 import mb.jython.GlobalPythonFactory;
 import mb.jython.JMusicSelector;
 
@@ -30,6 +28,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
+import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.EmptyTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
@@ -136,6 +135,7 @@ public class AttackCinematicState extends LoadableGameState
 	private int spellAnimIndex = 0;
 	private long spellDelta = 0;
 	private int castingDelta = 0;
+	private int battleBGIndex = 0;
 
 	private float screenScale = CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];// 1.88f; // (640 * 1024 / 3)
 
@@ -235,7 +235,10 @@ public class AttackCinematicState extends LoadableGameState
 			}
 
 			for (AnimSprite as : attackerAnim.frames.get(attackerAnimIndex).sprites)
-				g.drawImage(getRotatedImageIfNeeded(attacker.getAnimationImageAtIndex(as.imageIndex), as), xLoc + as.x * screenScale, yLoc + as.y * screenScale);
+			{
+				if (as.imageIndex > -1)
+					g.drawImage(getRotatedImageIfNeeded(attacker.getAnimationImageAtIndex(as.imageIndex), as), xLoc + as.x * screenScale, yLoc + as.y * screenScale);
+			}
 		}
 
 		if (spellAnimIndex != -1)
@@ -265,7 +268,6 @@ public class AttackCinematicState extends LoadableGameState
 	private Image getRotatedImageIfNeeded(Image image, AnimSprite as)
 	{
 		Image im = image;
-		System.out.println(as.angle);
 		if (as.angle != 0)
 		{
 			im = image.copy();
@@ -643,7 +645,7 @@ public class AttackCinematicState extends LoadableGameState
 		return CommRPG.STATE_GAME_BATTLE_ANIM;
 	}
 
-	public void setBattleInfo(CombatSprite attacker, FCResourceManager frm, Point bgImagePoint,
+	public void setBattleInfo(CombatSprite attacker, FCResourceManager frm,
 			BattleResults battleResults, FCGameContainer gc)
 	{
 		this.frm = frm;
@@ -655,7 +657,8 @@ public class AttackCinematicState extends LoadableGameState
 		targetIndex = 0;
 		transitionIndex = 0;
 		deathFade = false;
-		Image bgIm = frm.getSpriteSheets().get("battlebg").getSprite(bgImagePoint.x, bgImagePoint.y);
+		SpriteSheet battleBGSS = frm.getSpriteSheets().get("battlebg");
+		Image bgIm = battleBGSS.getSprite(battleBGIndex % battleBGSS.getHorizontalCount(), battleBGIndex / battleBGSS.getHorizontalCount());
 		System.out.println("ORIG " + bgIm.getWidth());
 		System.out.println("SCALE AMT " + (gc.getWidth() - gc.getDisplayPaddingX() * 2) / (float) bgIm.getWidth());
 		backgroundImage = bgIm.getScaledCopy((gc.getWidth() - gc.getDisplayPaddingX() * 2) / (float) bgIm.getWidth());
@@ -732,7 +735,11 @@ public class AttackCinematicState extends LoadableGameState
 	}
 
 	@Override
-	public void stateLoaded(ResourceManager resourceManager) {
-		frm = (FCResourceManager) resourceManager;
+	public void stateLoaded(FCResourceManager resourceManager) {
+		frm = resourceManager;
+	}
+
+	public void setBattleBGIndex(int battleBGIndex) {
+		this.battleBGIndex = battleBGIndex;
 	}
 }

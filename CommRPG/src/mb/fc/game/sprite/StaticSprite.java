@@ -10,10 +10,10 @@ import org.newdawn.slick.Image;
 public class StaticSprite extends Sprite
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	private Image image;
 	private int[] triggerIds;
-	
+
 	public StaticSprite(int locX, int locY, String name, Image image, int[] triggerIds)
 	{
 		super(locX, locY);
@@ -25,14 +25,14 @@ public class StaticSprite extends Sprite
 
 	@Override
 	public void render(Camera camera, Graphics graphics, FCGameContainer cont) {
-		graphics.drawImage(image, this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(), 
-				this.getLocY() - camera.getLocationY());
+		graphics.drawImage(image, this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(),
+			this.getLocY() - camera.getLocationY());
 	}
 
 	public void setImage(Image image) {
 		this.image = image;
 	}
-	
+
 	public void triggerButton1Event(StateInfo stateInfo)
 	{
 		if (triggerIds != null)

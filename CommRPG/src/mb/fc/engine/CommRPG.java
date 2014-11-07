@@ -6,14 +6,14 @@ import javax.swing.JOptionPane;
 
 import mb.fc.engine.log.FileLogger;
 import mb.fc.engine.state.AttackCinematicState;
-import mb.fc.engine.state.DevelMenuState;
+import mb.fc.engine.state.MenuState;
 import mb.fc.engine.state.PersistentStateInfo;
 import mb.fc.engine.state.TestState;
 import mb.fc.game.ui.FCGameContainer;
 import mb.fc.loading.FCLoadingRenderSystem;
 import mb.fc.loading.FCResourceManager;
-import mb.gl2.loading.LoadableGameState;
-import mb.gl2.loading.LoadingState;
+import mb.fc.loading.LoadableGameState;
+import mb.fc.loading.LoadingState;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
@@ -23,6 +23,12 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.util.Log;
 
+/**
+ * Entry point to the CommRPG game
+ *
+ * @author Broked
+ *
+ */
 public class CommRPG extends StateBasedGame   {
 	/**
 	 * State in which the game is actually being played
@@ -91,7 +97,7 @@ public class CommRPG extends StateBasedGame   {
 	}
 
 	/**
-	 * Entry point into Eaton
+	 * Entry point into the game
 	 */
 	public static void main(String args[])
 	{
@@ -134,7 +140,7 @@ public class CommRPG extends StateBasedGame   {
 				e.printStackTrace();
 			}
 
-			fullScreenWidth = 0;
+			// fullScreenWidth = 0;
 
 			if (fullScreenWidth == 0)
 			{
@@ -215,8 +221,8 @@ public class CommRPG extends StateBasedGame   {
 
 		LoadingState.loading = true;
 		loadingState = new LoadingState(STATE_GAME_LOADING);
-		// this.addState(new MenuState());
-		this.addState(new DevelMenuState());
+		this.addState(new MenuState());
+		// this.addState(new DevelMenuState());
 
 		this.addState(new AttackCinematicState());
 		this.addState(loadingState);
@@ -244,7 +250,7 @@ public class CommRPG extends StateBasedGame   {
 
 		loadingState.setLoadingInfo("/menu/MainMenu", null, false, true,
 				new FCResourceManager(),
-					(LoadableGameState) this.getState(STATE_GAME_MENU_DEVEL),
+					(LoadableGameState) this.getState(STATE_GAME_MENU),
 						new FCLoadingRenderSystem(gameContainer));
 
 

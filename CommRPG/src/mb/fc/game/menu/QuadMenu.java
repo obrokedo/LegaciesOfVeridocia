@@ -132,7 +132,7 @@ public abstract class QuadMenu extends Menu
 	}
 
 	@Override
-	public void render(FCGameContainer gc, Graphics graphics)
+	public final void render(FCGameContainer gc, Graphics graphics)
 	{
 		renderTextBox(gc, graphics);
 

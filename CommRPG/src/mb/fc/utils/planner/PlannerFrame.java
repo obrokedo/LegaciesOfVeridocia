@@ -20,6 +20,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JTabbedPane;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -58,6 +60,19 @@ public class PlannerFrame extends JFrame implements ActionListener,
 
 	private PlannerFrame() {
 		super("Planner: NO TRIGGERS LOADED");
+
+		try {
+		    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+		        if ("Nimbus".equals(info.getName())) {
+		            UIManager.setLookAndFeel(info.getClassName());
+		            break;
+		        }
+		    }
+		} catch (Exception e) {
+		    // If Nimbus is not available, you can set the GUI to another look and feel.
+		}
+
+
 		JMenuBar menuBar = new JMenuBar();
 		JMenu fileMenu = new JMenu("File");
 		JMenuItem newTriggersItem = new JMenuItem(
@@ -393,14 +408,14 @@ public class PlannerFrame extends JFrame implements ActionListener,
 		System.out.println("PARENT: " + pld.getTag());
 		for (PlannerValueDef pvd : pld.getPlannerValues()) {
 			if (pvd.getValueType() == PlannerValueDef.TYPE_STRING)
-				plannerLine.getValues().add(ta.getParams().get(pvd.getTag()));
+				plannerLine.getValues().add(ta.getAttribute(pvd.getTag()));
 			else if (pvd.getValueType() == PlannerValueDef.TYPE_INT) {
 				if (pvd.getRefersTo() == PlannerValueDef.REFERS_NONE) {
 					System.out.println("TAG: " + pvd.getTag() + " "
-							+ ta.getParams().get(pvd.getTag()));
+							+ ta.getAttribute(pvd.getTag()));
 					int value = 0;
 					try {
-						value = Integer.parseInt(ta.getParams().get(
+						value = Integer.parseInt(ta.getAttribute(
 								pvd.getTag()));
 					} catch (NumberFormatException ex) {
 					}
@@ -409,16 +424,16 @@ public class PlannerFrame extends JFrame implements ActionListener,
 				}
 				else
 				{
-					if (ta.getParams().containsKey(pvd.getTag()))
-						plannerLine.getValues().add(Integer.parseInt(ta.getParams().get(pvd.getTag())) + 1);
+					if (ta.getAttribute(pvd.getTag()) != null)
+						plannerLine.getValues().add(Integer.parseInt(ta.getAttribute(pvd.getTag())) + 1);
 					else
 						plannerLine.getValues().add(0);
 				}
 			} else if (pvd.getValueType() == PlannerValueDef.TYPE_MULTI_INT) {
 				String newVals = "";
 
-				if (ta.getParams().get(pvd.getTag()) != null) {
-					String[] values = ta.getParams().get(pvd.getTag())
+				if (ta.getAttribute(pvd.getTag()) != null) {
+					String[] values = ta.getAttribute(pvd.getTag())
 							.split(",");
 					for (int j = 0; j < values.length; j++) {
 						newVals = newVals + (Integer.parseInt(values[j]) + 1);
@@ -431,7 +446,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 				plannerLine.getValues().add(newVals);
 			} else if (pvd.getValueType() == PlannerValueDef.TYPE_BOOLEAN)
 				plannerLine.getValues().add(
-						Boolean.parseBoolean(ta.getParams().get(pvd.getTag())));
+						Boolean.parseBoolean(ta.getAttribute(pvd.getTag())));
 
 		}
 	}
@@ -1314,10 +1329,25 @@ public class PlannerFrame extends JFrame implements ActionListener,
 						PlannerValueDef.TYPE_STRING, "entrance", false,
 						"Entrance location",
 						"The name of the map location that the force will be placed at when the battle loads"));
-
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_INT, "battbg", false,
+				"Battle Background Index",
+				"The index of the battle background that should be used for the battle"));
 		allowableLines.add(new PlannerLineDef("loadbattle", "Start Battle",
 				"Starts the battle with the given triggers and map",
 				definingValues));
+
+		// Load Cinematic
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_STRING, "map", false, "Map Name",
+				"The name of the map that should be loaded"));
+		definingValues.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT,
+				"cinid", false, "Cinematic ID",
+				"The ID of the cinematic that should be shown"));
+		allowableLines.add(new PlannerLineDef("loadcin", "Load Cinematic",
+				"Loads the specified map and text file with the same name and then runs the specified cinematic.", definingValues));
 
 		// Exit Game
 		definingValues = new ArrayList<PlannerValueDef>();
@@ -1834,6 +1864,10 @@ public class PlannerFrame extends JFrame implements ActionListener,
 						PlannerValueDef.TYPE_STRING, "entrance", false,
 						"Entrance location",
 						"The name of the map location that the force will be placed at when the map loads"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+						PlannerValueDef.TYPE_INT, "battbg", false,
+						"Battle Background Index",
+						"The index of the battle background that should be used for the battle"));
 		allowableLines.add(new PlannerLineDef("startbattle", "Load Battle",
 				"Starts the battle with the given triggers and map",
 				definingValues));

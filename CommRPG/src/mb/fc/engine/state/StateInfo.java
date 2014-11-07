@@ -32,6 +32,12 @@ import mb.fc.map.MapObject;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Music;
 
+/**
+ * Central container to hold all information that is associated with a given state. AKA "The Dumping Ground"
+ *
+ * @author Broked
+ *
+ */
 public class StateInfo
 {
 	private static final SpriteZComparator SPRITE_Z_ORDER_COMPARATOR = new SpriteZComparator();
@@ -250,7 +256,7 @@ public class StateInfo
 					break MESSAGES;
 				case Message.MESSAGE_START_BATTLE:
 					LoadMapMessage lmb = (LoadMapMessage) m;
-					psi.loadBattle(lmb.getBattle(), lmb.getMap(), lmb.getLocation());
+					psi.loadBattle(lmb.getBattle(), lmb.getMap(), lmb.getLocation(), lmb.getBattleBG());
 					if (playingMusic != null)
 					{
 						playingMusic.stop();
