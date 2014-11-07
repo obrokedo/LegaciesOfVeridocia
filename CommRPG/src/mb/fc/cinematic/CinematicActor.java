@@ -19,7 +19,14 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
-public class CinematicActor
+/**
+ * Defines an "Actor" in a cinematic and contains the state information
+ * to render the given actor and progress its' state as engine time passes
+ *
+ * @author Broked
+ *
+ */
+public class CinematicActor implements Comparable<CinematicActor>
 {
 	private static final int INDEFINITE_TIME = -1;
 
@@ -777,5 +784,10 @@ public class CinematicActor
 			sprite.setFacing(facing);
 			sprite.setVisible(true);
 		}
+	}
+
+	@Override
+	public int compareTo(CinematicActor otherActor) {
+		return (int) (this.getLocY() - otherActor.getLocY());
 	}
 }

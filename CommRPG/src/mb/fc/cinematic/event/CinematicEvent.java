@@ -2,6 +2,13 @@ package mb.fc.cinematic.event;
 
 import java.util.ArrayList;
 
+/**
+ * Container to hold parameters for a CinematicEvent and associate
+ * a CinematicEventType with this event
+ *
+ * @author Broked
+ *
+ */
 public class CinematicEvent
 {
 	public enum CinematicEventType
@@ -27,6 +34,7 @@ public class CinematicEvent
 		CREATE,
 		LOAD_MAP,
 		LOAD_BATTLE,
+		LOAD_CIN,
 		FLASH,
 		NOD,
 		HEAD_SHAKE,

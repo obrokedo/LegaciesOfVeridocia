@@ -23,43 +23,172 @@ import mb.fc.game.ui.FCGameContainer;
 import mb.fc.map.Map;
 
 import org.newdawn.slick.Color;
-import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
+/**
+ * Defines CinematicEvents that should be executed to display a cinematic and handles/renders
+ * the results of each CinematicEvent
+ *
+ * @author Broked
+ *
+ */
 public class Cinematic {
-	private static final CinematicActorComparator CIN_ACT_COMP = new CinematicActorComparator();
+
+	/**
+	 * List of CinematicEvents that will be run before the scene is actually started
+	 */
 	private ArrayList<CinematicEvent> initializeEvents;
+
+	/**
+	 * List of CinematicEvents that will be run one-by-one starting from index
+	 * 0 once the scene has started (initialize events have finished)
+	 */
 	private ArrayList<CinematicEvent> cinematicEvents;
+
+	/**
+	 * Table that contains all of the CinematicActors currently in the scene
+	 * and maps them to their name
+	 */
 	private Hashtable<String, CinematicActor> actors;
+
+	/**
+	 * A list of CinematicActors sorted in the order that they should
+	 * be rendered on the screen in the normal fashion
+	 */
 	private ArrayList<CinematicActor> sortedActors;
+
+	/**
+	 * A list of CinematicActors that are rendered in the forefont of
+	 * the scene.
+	 */
 	private ArrayList<CinematicActor> forefrontActors;
 
+	/**
+	 * The currently displayed SpeechMenu, while this is displayed the scene
+	 * is "blocked". This value will be null if no SpeechMenu is being displayed
+	 */
 	private SpeechMenu speechMenu;
+
+	/**
+	 * The amount of CombatSprites currently on the screen who are performing "halting moves".
+	 * While this value is non-zero the scene is "blocked"
+	 */
 	private int haltedMovers;
+
+	/**
+	 * The amount of CombatSprites currently on the screen who are performing "halting animations".
+	 * While this value is non-zero the scene is "blocked"
+	 */
 	private int haltedAnims;
+
+	/**
+	 * The amount of time in milliseconds that scene is "waiting", while this value
+	 * is non-zero the scene is "blocked"
+	 */
 	private int waitTime;
 
+	/*************************/
+	/* Scene Fade Parameters */
+	/*************************/
+	/**
+	 * The color that the screen is fading to
+	 */
 	private Color fadingColor = null;
+
+	/**
+	 * A float that indicates the amount that the fade color will change
+	 * on each fade delta
+	 */
 	private float fadeSpeed;
+
+	/**
+	 * A boolean indicating whether the scene is "fading in", if true
+	 * the scene is fading in, if false the scene is fading out
+	 */
 	private boolean fadeIn;
+
+	/**
+	 * A long that indicates the amount of ms that have passed since the last
+	 * fade step occurred
+	 */
 	private long fadeDelta;
+
+	/**
+	 * A boolean indicating whether the scene is fading to black. If true
+	 * then the screen will not automatically fade back in after fading to
+	 * black. Otherwise the screen will fade back in
+	 */
 	private boolean fadeToBlack = false;
 
 	/*********************/
 	/* Camera parameters */
 	/*********************/
-	private CinematicActor cameraFollow;
-	private int cameraMoveToX = -1, cameraMoveToY = -1;
-	private int cameraStartX, cameraStartY;
-	private long cameraMoveDelta = 0;
-	private float cameraMoveSpeed;
+	/**
+	 * The amount of time in ms that should pass been each camera move step
+	 */
 	private static final int CAMERA_UPDATE = 30;
+
+	/**
+	 * The CinematicActor that the camera is currently following.
+	 * This value will be null if the camera should not follow an Actor
+	 */
+	private CinematicActor cameraFollow;
+
+	/**
+	 * The x and y pixel coordinates that the camera should be moving to as
+	 * ordered by a cinematic event.
+	 * These values will BOTH be -1 when the camera is not moving to a given
+	 * location.
+	 */
+	private int cameraMoveToX = -1, cameraMoveToY = -1;
+
+	/**
+	 * The x and y pixel coordinates that the camera should start at when
+	 * the cinematic begins
+	 */
+	private int cameraStartX, cameraStartY;
+
+	/**
+	 * The amount of time in ms since the camera has moved
+	 */
+	private long cameraMoveDelta = 0;
+
+	/**
+	 * A float indicating the speed that the camera will move in pixels
+	 * during each camera move step
+	 */
+	private float cameraMoveSpeed;
+
+	/**
+	 * A boolean indicating whether the camera is currently "shaking"
+	 */
 	private boolean cameraShaking = false;
+
+	/**
+	 * The amount of time in ms that the camera should continue to shake
+	 */
 	private int cameraShakeDuration;
+
+	/**
+	 * An integer that indicates how severe the shake will, a larger number
+	 * will result in "shakes" of a greater magnitude in terms of pixels offset
+	 */
 	private int cameraShakeSeverity;
+
+	/**
+	 * The amount of pixels that the last shake offset the camera in the x and y direction
+	 */
 	private int lastCameraShake;
 
-
+	/**
+	 * Constructor to create the Cinematic with the given events and
+	 * the given camera start position
+	 *
+	 * @param initializeEvents a list of CinematicEvents that should be executed before the cinematic starts
+	 * @param cinematicEvents a list of CinematicEvents that should be run one-by-one
+	 * @param cameraX The start x location in pixels for the camera
+	 * @param cameraY The start y location in pixels for the camera
+	 */
 	public Cinematic(ArrayList<CinematicEvent> initializeEvents,
 			ArrayList<CinematicEvent> cinematicEvents, int cameraX, int cameraY) {
 		this.initializeEvents = initializeEvents;
@@ -74,6 +203,12 @@ public class Cinematic {
 		this.cameraMoveToY = cameraY;
 	}
 
+	/**
+	 * Initializes the Cinematic and runs any CinematicEvents that are
+	 * marked "initialize"
+	 *
+	 * @param stateInfo the StateInfo that holds information for the current state
+	 */
 	public void initialize(StateInfo stateInfo) {
 		stateInfo.getCamera().setLocation(cameraStartX, cameraStartY);
 
@@ -81,8 +216,19 @@ public class Cinematic {
 			handleEvent(ce, stateInfo);
 	}
 
-	public boolean update(int delta, Camera camera, FCInput input,
-			GameContainer gc, Map map, StateInfo stateInfo) {
+	/**
+	 * Updates the Cinematic to account for the change in engine time as represented by
+	 * the given delta
+	 *
+	 * @param delta the amount of time in ms that has passed since the last update
+	 * @param camera the camera that defines what portion of the scene will be rendered
+	 * @param input the FCInput that indicates what keys the user is pushing
+	 * @param map the Map that this scene will be rendered over
+	 * @param stateInfo the StateInfo that holds information for the current state
+	 * @return a boolean indicating whether this cinematic is completed or not. A value of true
+	 * means the cinematic has been completed, false otherwise.
+	 */
+	public boolean update(int delta, Camera camera, FCInput input, Map map, StateInfo stateInfo) {
 
 		if (fadingColor != null)
 		{
@@ -155,7 +301,7 @@ public class Cinematic {
 			}
 		}
 
-		Collections.sort(sortedActors, CIN_ACT_COMP);
+		Collections.sort(sortedActors);
 
 		if (cameraShaking) {
 			cameraShakeDuration -= delta;
@@ -200,8 +346,12 @@ public class Cinematic {
 				&& cinematicEvents.size() == 0;
 	}
 
-	boolean debug = false;
-
+	/**
+	 * Processes a given CinematicEvent
+	 *
+	 * @param ce the CinematicEvent that should be processed
+	 * @param stateInfo the StateInfo that holds information for the current state
+	 */
 	private void handleEvent(CinematicEvent ce, StateInfo stateInfo) {
 		System.out.println("Handle event: " + ce.getType());
 		switch (ce.getType()) {
@@ -213,7 +363,6 @@ public class Cinematic {
 			case MOVE:
 				if ((int) ce.getParam(0) == 480 &&
 						(int) ce.getParam(1) == 96 && (float) ce.getParam(2) == 2)
-					debug = true;
 
 				actors.get(ce.getParam(3)).moveToLocation((int) ce.getParam(0),
 						(int) ce.getParam(1), (float) ce.getParam(2), false, -1, (boolean) ce.getParam(4), (boolean) ce.getParam(5));
@@ -291,7 +440,11 @@ public class Cinematic {
 				break;
 			case LOAD_BATTLE:
 				stateInfo.getPsi().loadBattle((String) ce.getParam(0),
-						(String) ce.getParam(1), (String) ce.getParam(2));
+						(String) ce.getParam(1), (String) ce.getParam(2), (int) ce.getParam(3));
+				CinematicState.cinematicSpeed = 1;
+				break;
+			case LOAD_CIN:
+				stateInfo.getPsi().loadCinematic((String) ce.getParam(0), (int) ce.getParam(1));
 				CinematicState.cinematicSpeed = 1;
 				break;
 			case HALTING_ANIMATION:
@@ -328,19 +481,19 @@ public class Cinematic {
 				break;
 			case LAY_ON_BACK:
 				actors.get(ce.getParam(0)).layOnBack(
-						getDirectionFromInt((int) ce.getParam(1)));
+						Direction.getDirectionFromInt((int) ce.getParam(1)));
 				break;
 			case LAY_ON_SIDE_RIGHT:
 				actors.get(ce.getParam(0)).layOnSideRight(
-						getDirectionFromInt((int) ce.getParam(1)));
+						Direction.getDirectionFromInt((int) ce.getParam(1)));
 				break;
 			case LAY_ON_SIDE_LEFT:
 				actors.get(ce.getParam(0)).layOnSideLeft(
-						getDirectionFromInt((int) ce.getParam(1)));
+						Direction.getDirectionFromInt((int) ce.getParam(1)));
 				break;
 			case FALL_ON_FACE:
 				actors.get(ce.getParam(0)).fallOnFace(
-						getDirectionFromInt((int) ce.getParam(1)));
+						Direction.getDirectionFromInt((int) ce.getParam(1)));
 				break;
 			case FLASH:
 				actors.get(ce.getParam(0)).flash((int) ce.getParam(1),
@@ -465,9 +618,16 @@ public class Cinematic {
 			default:
 				break;
 		}
-
 	}
 
+	/**
+	 * Renders the CinematicActors in this scene
+	 *
+	 * @param graphics the graphics to draw to
+	 * @param camera the location of the camera to draw relative to
+	 * @param cont the FCGameContainer that this game is displayed in
+	 * @param stateInfo the StateInfo that holds information for the current state
+	 */
 	public void render(Graphics graphics, Camera camera, FCGameContainer cont,
 			StateInfo stateInfo) {
 		for (CinematicActor ca : sortedActors)
@@ -477,11 +637,25 @@ public class Cinematic {
 
 	}
 
+	/**
+	 * Renders the menus in this scene
+	 *
+	 * @param cont the FCGameContainer that this game is displayed in
+	 * @param graphics the graphics to draw to
+	 */
 	public void renderMenus(FCGameContainer cont, Graphics g) {
 		if (speechMenu != null)
 			speechMenu.render(cont, g);
 	}
 
+	/**
+	 * Render the foreground actors and effects
+	 *
+	 * @param graphics the graphics to draw to
+	 * @param camera the location of the camera to draw relative to
+	 * @param cont the FCGameContainer that this game is displayed in
+	 * @param stateInfo the StateInfo that holds information for the current state
+	 */
 	public void renderPostEffects(Graphics graphics, Camera camera, FCGameContainer cont,
 			StateInfo stateInfo) {
 		for (CinematicActor ca : forefrontActors)
@@ -498,34 +672,31 @@ public class Cinematic {
 
 	}
 
+	/**
+	 * Decreases the amount of halted movers in the cinematic by 1.
+	 * It is the responsibility of the CinematicActor to decrease this value
+	 * once the action is complete
+	 */
 	public void decreaseMoves() {
-		haltedMovers--;
+		haltedMovers = Math.max(haltedMovers - 1, 0);
 	}
 
+	/**
+	 * Decreases the amount of halted animations in the cinematic by 1.
+	 * It is the responsibility of the CinematicActor to decrease this value
+	 * once the action is complete
+	 */
 	public void decreaseAnims() {
-		haltedAnims--;
+		haltedAnims = Math.max(haltedAnims - 1, 0);
 	}
 
-	public int getCameraStartX() {
-		return cameraStartX;
-	}
-
-	public int getCameraStartY() {
-		return cameraStartY;
-	}
-
-	public Direction getDirectionFromInt(int dir) {
-		if (dir == 0)
-			return Direction.UP;
-		else if (dir == 1)
-			return Direction.DOWN;
-		else if (dir == 2)
-			return Direction.LEFT;
-		else if (dir == 3)
-			return Direction.RIGHT;
-		return null;
-	}
-
+	/**
+	 * Resets all of the actors in the scene to be visible and
+	 * offset them by the correct Y amount to make them renderable
+	 * in the TownState
+	 *
+	 * @param stateInfo the StateInfo that holds information for the current state
+	 */
 	public void endCinematic(StateInfo stateInfo)
 	{
 		for (CinematicActor ca : actors.values())
