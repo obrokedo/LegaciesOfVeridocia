@@ -3,9 +3,11 @@ package mb.fc.game.manager;
 import java.util.ArrayList;
 
 import mb.fc.engine.message.Message;
+import mb.fc.engine.message.SpriteMoveMessage;
 import mb.fc.game.constants.Direction;
 import mb.fc.game.input.KeyMapping;
 import mb.fc.game.move.MovingSprite;
+import mb.fc.game.sprite.AnimatedSprite;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.sprite.Sprite;
 import mb.fc.map.Map;
@@ -74,13 +76,16 @@ public class TownMoveManager extends Manager
 			{
 				MovingSprite ms = movers.get(i);
 
-				if(ms.isFirstMove())
-					stateInfo.checkTriggers(stateInfo.getCurrentSprite().getLocX(), stateInfo.getCurrentSprite().getLocY(), true);
+				if(ms.isFirstMove() && stateInfo.getCurrentSprite() == ms.getAnimatedSprite())
+				{
+					stateInfo.checkTriggers(ms.getEndX(), ms.getEndY(), true);
+				}
 				if (ms.update())
 				{
 					movers.remove(i);
+					ms.getAnimatedSprite().doneMoving();
 					i--;
-					if (stateInfo.getCurrentSprite() == ms.getCombatSprite())
+					if (stateInfo.getCurrentSprite() == ms.getAnimatedSprite())
 					{
 						stateInfo.checkTriggers(stateInfo.getCurrentSprite().getLocX(), stateInfo.getCurrentSprite().getLocY(), false);
 						moving = false;
@@ -90,7 +95,7 @@ public class TownMoveManager extends Manager
 		}
 	}
 
-	private void setMoving(Direction direction, CombatSprite current)
+	private void setMoving(Direction direction, AnimatedSprite current)
 	{
 		if (current == stateInfo.getCurrentSprite())
 			moving = true;
@@ -115,28 +120,44 @@ public class TownMoveManager extends Manager
 	@Override
 	public void recieveMessage(Message message)
 	{
-		/*
+
 		switch (message.getMessageType())
 		{
 			case Message.MESSAGE_OVERLAND_MOVE_MESSAGE:
-				CombatSprite cs = (CombatSprite) ((OverlandMoveMessage) message).getSprite();
+				SpriteMoveMessage m = (SpriteMoveMessage) message;
+				AnimatedSprite sprite = m.getSprite();
 
-				MovingSprite ms = new MovingSprite(cs,
-						((OverlandMoveMessage) message).getPath());
+				int sx = sprite.getTileX();
+				int sy = sprite.getTileY();
+				Direction dir = m.getDirection();
 
-				for (int i = 0; i < movers.size(); i++)
+				boolean nowMoving = false;
+
+				switch (dir)
 				{
-					if (movers.get(i).getCombatSprite() == cs)
-					{
-						movers.remove(i);
-						ms.setMoveIndex(1);
+					case RIGHT:
+						if (!blocked(stateInfo.getResourceManager().getMap(), sx + 1, sy))
+							nowMoving = true;
 						break;
-					}
+					case LEFT:
+						if (!blocked(stateInfo.getResourceManager().getMap(), sx - 1, sy))
+							nowMoving = true;
+						break;
+					case UP:
+						if (!blocked(stateInfo.getResourceManager().getMap(), sx, sy - 1))
+							nowMoving = true;
+						break;
+					case DOWN:
+						if (!blocked(stateInfo.getResourceManager().getMap(), sx, sy + 1))
+							nowMoving = true;
 				}
 
-				movers.add(ms);
+				if (nowMoving)
+					movers.add(new MovingSprite(sprite, dir, stateInfo));
+				else
+					sprite.doneMoving();
 				break;
 		}
-		*/
+
 	}
 }

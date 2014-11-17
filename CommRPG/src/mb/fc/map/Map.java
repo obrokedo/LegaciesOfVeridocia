@@ -272,7 +272,9 @@ public class Map
 
 	public boolean isMarkedMoveable(int tileX, int tileY)
 	{
-		return mapLayer.get(3)[tileY * TILE_RATIO][tileX * TILE_RATIO] != 0;
+		if ((mapLayer.get(3).length > (tileY * TILE_RATIO)) && ((mapLayer.get(3)[0].length > tileX * TILE_RATIO)))
+			return mapLayer.get(3)[tileY * TILE_RATIO][tileX * TILE_RATIO] != 0;
+		return false;
 	}
 
 	protected class TileSet

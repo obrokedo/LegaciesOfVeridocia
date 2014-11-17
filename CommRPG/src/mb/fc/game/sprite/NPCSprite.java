@@ -2,7 +2,9 @@ package mb.fc.game.sprite;
 
 import java.util.ArrayList;
 
+import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.SpeechMessage;
+import mb.fc.engine.message.SpriteMoveMessage;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.constants.Direction;
 import mb.fc.game.text.Speech;
@@ -13,6 +15,10 @@ public class NPCSprite extends AnimatedSprite
 
 	private ArrayList<Speech> speeches;
 	private int uniqueNPCId;
+	private int moveCounter = 0;
+	private int initialTileX = -1;
+	private int initialTileY = -1;
+	private int maxWander = 0;
 
 	public NPCSprite(String imageName,
 			ArrayList<Speech> speeches)
@@ -21,6 +27,15 @@ public class NPCSprite extends AnimatedSprite
 		this.speeches = speeches;
 		this.spriteType = Sprite.TYPE_NPC;
 		this.uniqueNPCId = 0;
+	}
+
+	public void setInitialPosition(int xLoc, int yLoc, int maxWander)
+	{
+		this.setLocX(xLoc);
+		this.setLocY(yLoc);
+		this.initialTileX = this.getTileX();
+		this.initialTileY = this.getTileY();
+		this.maxWander = maxWander;
 	}
 
 	public void triggerButton1Event(StateInfo stateInfo)
@@ -62,11 +77,72 @@ public class NPCSprite extends AnimatedSprite
 		}
 	}
 
+	boolean moving = false;
+
+	@Override
+	public void update() {
+		super.update();
+
+		if (maxWander > 0)
+			wanderMove();
+	}
+
+	private void wanderMove()
+	{
+		if (!moving)
+		{
+			if (moveCounter == 30)
+			{
+				Direction nextDir = null;
+				int count = 0;
+				while (nextDir == null && count <= 4)
+				{
+					count++;
+					nextDir = Direction.values()[CommRPG.RANDOM.nextInt(4)];
+					switch (nextDir)
+					{
+						case UP:
+							if (Math.abs(this.getTileX() - this.initialTileX) + Math.abs(this.getTileY() - 1 - this.initialTileY) > maxWander)
+								nextDir = null;
+							break;
+						case DOWN:
+							if (Math.abs(this.getTileX() - this.initialTileX) + Math.abs(this.getTileY() + 1 - this.initialTileY) > maxWander)
+								nextDir = null;
+							break;
+						case LEFT:
+							if (Math.abs(this.getTileX() - 1 - this.initialTileX) + Math.abs(this.getTileY() - this.initialTileY) > maxWander)
+								nextDir = null;
+							break;
+						case RIGHT:
+							if (Math.abs(this.getTileX() + 1 - this.initialTileX) + Math.abs(this.getTileY() - this.initialTileY) > maxWander)
+								nextDir = null;
+							break;
+					}
+				}
+
+				if (nextDir != null)
+				{
+					moveCounter = 0;
+					moving = true;
+					stateInfo.sendMessage(new SpriteMoveMessage(this, nextDir));
+				}
+			}
+			else
+				moveCounter++;
+		}
+	}
+
 	public int getUniqueNPCId() {
 		return uniqueNPCId;
 	}
 
 	public void setUniqueNPCId(int uniqueNPCId) {
 		this.uniqueNPCId = uniqueNPCId;
+	}
+
+	@Override
+	public void doneMoving() {
+		super.doneMoving();
+		moving = false;
 	}
 }

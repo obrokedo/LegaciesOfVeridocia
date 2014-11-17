@@ -5,6 +5,7 @@ import java.util.Hashtable;
 
 import mb.fc.utils.planner.PlannerTimeBarViewer.ActorBar;
 import mb.fc.utils.planner.PlannerTimeBarViewer.CameraLocation;
+import mb.fc.utils.planner.PlannerTimeBarViewer.StaticSprite;
 import de.jaret.util.ui.timebars.TimeBarMarkerImpl;
 import de.jaret.util.ui.timebars.model.DefaultTimeBarRowModel;
 
@@ -18,6 +19,7 @@ public class CinematicTimeline
 	public ArrayList<Long> cinematicTime;
 	public int duration;
 	public ArrayList<CameraLocation> cameraLocations;
+	public ArrayList<StaticSprite> staticSprites;
 
 	public CinematicTimeline() {
 		super();

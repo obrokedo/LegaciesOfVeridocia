@@ -24,6 +24,8 @@ public class CinematicEvent
 		ASSOCIATE_NPC_AS_ACTOR,
 		ASSOCIATE_HERO_AS_ACTOR,
 		ASSOCIATE_ENEMY_AS_ACTOR,
+		ADD_STATIC_SPRITE,
+		REMOVE_STATIC_SPRITE,
 		ANIMATION_LOOP,
 		ANIMATION,
 		STOP_ANIMATION,
@@ -90,4 +92,15 @@ public class CinematicEvent
 	{
 		return params.get(i);
 	}
+
+	@Override
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		sb.append(type.name() + " ");
+		for (Object o : params)
+			sb.append(o.toString() + " ");
+		return sb.toString();
+	}
+
+
 }

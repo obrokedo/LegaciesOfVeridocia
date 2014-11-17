@@ -165,13 +165,15 @@ public class MapObject
 	public NPCSprite getNPC(StateInfo stateInfo)
 	{
 		int imageId = Integer.parseInt(params.get("imageid"));
+		int wander = 0;
+		if (params.containsKey("wander"))
+			wander = Integer.parseInt(params.get("wander"));
 		ArrayList<Speech> speeches = stateInfo.getResourceManager().getSpeechesById(Integer.parseInt(params.get("textid")));
 		NPCSprite npc = NPCResource.getNPC(imageId, speeches);
 		if (params.get("npcid") != null)
 			npc.setUniqueNPCId(Integer.parseInt(params.get("npcid")));
 		npc.initializeSprite(stateInfo);
-		npc.setLocX(x);
-		npc.setLocY(y);
+		npc.setInitialPosition(x, y, wander);
 		return npc;
 	}
 

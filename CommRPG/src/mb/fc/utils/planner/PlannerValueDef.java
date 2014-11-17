@@ -22,6 +22,7 @@ public class PlannerValueDef
 	public static final int REFERS_DIRECTION = 16;
 	public static final int REFERS_ANIMATIONS = 17;
 	public static final int REFERS_MAP = 18;
+	public static final int REFERS_SPRITE_IMAGE = 19;
 
 	public static final int TYPE_STRING = 0;
 	public static final int TYPE_INT = 1;

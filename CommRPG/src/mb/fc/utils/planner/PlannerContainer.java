@@ -48,7 +48,7 @@ public class PlannerContainer extends JPanel implements ActionListener
 
 		JPanel listPanel = new JPanel();
 		listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.PAGE_AXIS));
-		if (index < lines.size())
+		if (index != -1 && index < lines.size())
 		{
 			lines.get(index).setupUI(pcdef.getAllowableLines(), this, index + 1, pcdef.getListOfLists(), parentTab);
 			listPanel.add(lines.get(index));
@@ -111,6 +111,23 @@ public class PlannerContainer extends JPanel implements ActionListener
 	public void addLine(PlannerLine line, int addIndex)
 	{
 		this.lines.add(addIndex, line);
+	}
+
+	public void removeLine(int index)
+	{
+		lines.remove(index);
+		parentTab.updateAttributeList(Math.max(0, index - 1));
+		this.revalidate();
+		this.repaint();
+	}
+
+	public void duplicateLine(int index)
+	{
+		PlannerLine pl = lines.get(index);
+		lines.add(index + 1, new PlannerLine(pl));
+		parentTab.updateAttributeList(index + 1);
+		this.revalidate();
+		this.repaint();
 	}
 
 	@Override

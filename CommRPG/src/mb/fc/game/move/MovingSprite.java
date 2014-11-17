@@ -4,11 +4,12 @@ import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.Message;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.constants.Direction;
+import mb.fc.game.sprite.AnimatedSprite;
 import mb.fc.game.sprite.CombatSprite;
 
 public class MovingSprite
 {
-	private CombatSprite combatSprite;
+	private AnimatedSprite animatedSprite;
 	private int moveIndex;
 	private Direction direction;
 	private int endX, endY;
@@ -18,9 +19,9 @@ public class MovingSprite
 	public static int STAND_ANIMATION_SPEED = 10;
 	public static int WALK_ANIMATION_SPEED = 4;
 
-	public MovingSprite(CombatSprite combatSprite, Direction dir, StateInfo stateInfo) {
+	public MovingSprite(AnimatedSprite combatSprite, Direction dir, StateInfo stateInfo) {
 		super();
-		this.combatSprite = combatSprite;
+		this.animatedSprite = combatSprite;
 		this.direction = dir;
 		this.stateInfo = stateInfo;
 
@@ -51,27 +52,27 @@ public class MovingSprite
 	{
 		isFirstMove = false;
 		int moveSpeed = MOVE_SPEED;
-		if (!combatSprite.isHero() || fastMove)
+		if (stateInfo.isCombat() && (!((CombatSprite) animatedSprite).isHero() || fastMove))
 			moveSpeed /= 2;
 		switch (direction)
 		{
 			case UP:
-				combatSprite.setLocY(combatSprite.getAbsLocY() -
+				animatedSprite.setLocY(animatedSprite.getAbsLocY() -
 						1.0f * stateInfo.getTileHeight() / moveSpeed);
 						// 2 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]));
 				break;
 			case DOWN:
-				combatSprite.setLocY(combatSprite.getAbsLocY() +
+				animatedSprite.setLocY(animatedSprite.getAbsLocY() +
 						1.0f * stateInfo.getTileHeight() / moveSpeed);
 						// 2 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]));
 				break;
 			case LEFT:
-				combatSprite.setLocX(combatSprite.getAbsLocX() -
+				animatedSprite.setLocX(animatedSprite.getAbsLocX() -
 						1.0f * stateInfo.getTileWidth() / moveSpeed);
 						// 2 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]));
 				break;
 			case RIGHT:
-				combatSprite.setLocX(combatSprite.getAbsLocX() +
+				animatedSprite.setLocX(animatedSprite.getAbsLocX() +
 						1.0f * stateInfo.getTileWidth() / moveSpeed);
 						// 2 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]));
 				break;
@@ -79,16 +80,17 @@ public class MovingSprite
 		if (stateInfo.isCombat() && moveIndex == 0)
 			stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "step", 1f, false));
 
-		if (combatSprite == stateInfo.getCurrentSprite())
-			stateInfo.getCamera().centerOnSprite(combatSprite, stateInfo.getCurrentMap());
+		if (animatedSprite == stateInfo.getCurrentSprite())
+			stateInfo.getCamera().centerOnSprite(animatedSprite, stateInfo.getCurrentMap());
 
 		moveIndex++;
 
 		if (moveIndex == moveSpeed)
 		{
-			combatSprite.setLocation(endX, endY);
-			stateInfo.getCamera().centerOnSprite(combatSprite, stateInfo.getCurrentMap());
-			combatSprite.setAnimationUpdate(STAND_ANIMATION_SPEED);
+			animatedSprite.setLocation(endX, endY);
+			if (animatedSprite == stateInfo.getCurrentSprite())
+				stateInfo.getCamera().centerOnSprite(animatedSprite, stateInfo.getCurrentMap());
+			animatedSprite.setAnimationUpdate(STAND_ANIMATION_SPEED);
 			return true;
 		}
 		return false;
@@ -111,8 +113,8 @@ public class MovingSprite
 		return endY;
 	}
 
-	public CombatSprite getCombatSprite() {
-		return combatSprite;
+	public AnimatedSprite getAnimatedSprite() {
+		return animatedSprite;
 	}
 
 	public Direction getDirection() {

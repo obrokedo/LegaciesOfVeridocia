@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -37,6 +38,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 	private JTabbedPane jtp;
 	private File triggerFile;
 	public static boolean SHOW_CIN = false;
+	public static boolean SHOW_CIN_LOCATION = true;
 
 	public static final int TAB_TRIGGER = 0;
 	public static final int TAB_CIN = 1;
@@ -51,6 +53,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 	private static String PATH_HEROES = "definitions/Heroes";
 	private static String PATH_ITEMS = "definitions/Items";
 	private static String PATH_ANIMATIONS = "animations/fsa";
+	private static String PATH_SPRITE_IMAGE = "sprite";
 	private static String PATH_QUESTS = "Quests";
 
 	public static void main(String args[]) {
@@ -108,6 +111,10 @@ public class PlannerFrame extends JFrame implements ActionListener,
 		hideCinItem.addActionListener(this);
 		hideCinItem.setActionCommand("hidecin");
 		optionsMenu.add(hideCinItem);
+		JCheckBoxMenuItem showLocationItem = new JCheckBoxMenuItem( "Show Map Locations", true);
+		showLocationItem.addActionListener(this);
+		showLocationItem.setActionCommand("showloc");
+		optionsMenu.add(showLocationItem);
 
 		/*
 		 * JMenuItem createTriggersItem = new
@@ -142,7 +149,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 
 		listOfLists = new ArrayList<ArrayList<String>>();
 
-		for (int i = 0; i < 18; i++)
+		for (int i = 0; i < 19; i++)
 			listOfLists.add(new ArrayList<String>());
 
 		// Setup AI Types
@@ -233,6 +240,13 @@ public class PlannerFrame extends JFrame implements ActionListener,
 			if (f.endsWith(".fsa"))
 				listOfLists.get(PlannerValueDef.REFERS_ANIMATIONS - 1).add(
 						f.replaceFirst(".fsa", ""));
+
+		// Sprite image files
+		File spriteImages = new File(PATH_SPRITE_IMAGE);
+		for (String f : spriteImages.list())
+			if (f.endsWith(".png"))
+				listOfLists.get(PlannerValueDef.REFERS_SPRITE_IMAGE - 1).add(
+						f.replaceFirst(".png", ""));
 
 		/*******************/
 		/* Set up triggers */
@@ -568,6 +582,59 @@ public class PlannerFrame extends JFrame implements ActionListener,
 						"removeactor",
 						"Remove Actor",
 						"Removes the specified actor from the cinematic. This actor will no longer be able to be the target of actions.",
+						definingValues));
+
+		// Add Static Sprite
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_INT, "x", false, "Start Location X",
+				"The x coordinate (in pixels) to place the sprite at"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_INT, "y", false, "Start Location Y",
+				"The y coordinate (in pixels) to place the sprite at"));
+
+
+		definingValues
+		.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_STRING,
+				"spriteid",
+				false,
+				"Sprite Identifier",
+				""));
+
+		definingValues
+				.add(new PlannerValueDef(
+						PlannerValueDef.REFERS_SPRITE_IMAGE,
+						PlannerValueDef.TYPE_STRING,
+						"spriteim",
+						false,
+						"Sprite image",
+						""));
+
+		allowableLines
+				.add(new PlannerLineDef(
+						"addstatic",
+						"Add Static Sprite",
+						"Adds a static sprite at the given location",
+						definingValues));
+
+		// Remove Static Sprite
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues
+				.add(new PlannerValueDef(
+						PlannerValueDef.REFERS_NONE,
+						PlannerValueDef.TYPE_STRING,
+						"spriteid",
+						false,
+						"Sprite Identifier",
+						""));
+
+		allowableLines
+				.add(new PlannerLineDef(
+						"remstatic",
+						"Remove Static Sprite",
+						"Removes the static sprite with the given identifier",
 						definingValues));
 
 		// Halting Move
@@ -2284,6 +2351,11 @@ public class PlannerFrame extends JFrame implements ActionListener,
 		}
 		else if (arg0.getActionCommand().equalsIgnoreCase("hidecin")) {
 			SHOW_CIN = false;
+		}
+		else if (arg0.getActionCommand().equalsIgnoreCase("showloc")) {
+			SHOW_CIN_LOCATION = !SHOW_CIN_LOCATION;
+			((JCheckBoxMenuItem) arg0.getSource()).setSelected(SHOW_CIN_LOCATION);
+			this.repaint();
 		}
 	}
 

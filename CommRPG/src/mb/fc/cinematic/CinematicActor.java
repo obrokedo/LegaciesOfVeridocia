@@ -61,7 +61,6 @@ public class CinematicActor implements Comparable<CinematicActor>
 	private int moveToLocY;
 	private boolean haltingMove;
 	private float moveSpeed;
-	private int movingDelta;
 	private boolean loopMoving = false;
 	private float startLoopX;
 	private float startLoopY;
@@ -117,7 +116,15 @@ public class CinematicActor implements Comparable<CinematicActor>
 		if (!visible)
 			return;
 
-		if (specialEffectType != SE_FALL_ON_FACE && specialEffectType != SE_LAY_ON_SIDE_RIGHT && specialEffectType != SE_LAY_ON_SIDE_LEFT)
+		if (specialEffectType == SE_FALL_ON_FACE)
+			renderFaceDown(graphics, camera, cont);
+		else if (specialEffectType == SE_LAY_ON_SIDE_RIGHT)
+			renderOnSideRight(graphics, camera, cont);
+		else if (specialEffectType == SE_LAY_ON_SIDE_LEFT)
+			renderOnSideLeft(graphics, camera, cont);
+		else if (specialEffectType == SE_LAY_ON_BACK)
+			renderOnBack(graphics, camera, cont);
+		else
 		{
 			for (AnimSprite as : currentAnim.frames.get(imageIndex).sprites)
 			{
@@ -252,14 +259,6 @@ public class CinematicActor implements Comparable<CinematicActor>
 				}
 			}
 		}
-		else if (specialEffectType == SE_FALL_ON_FACE)
-			renderFaceDown(graphics, camera, cont);
-		else if (specialEffectType == SE_LAY_ON_SIDE_RIGHT)
-			renderOnSideRight(graphics, camera, cont);
-		else if (specialEffectType == SE_LAY_ON_SIDE_LEFT)
-			renderOnSideLeft(graphics, camera, cont);
-		else if (specialEffectType == SE_LAY_ON_BACK)
-			renderOnBack(graphics, camera, cont);
 	}
 
 	private void renderFaceDown(Graphics graphics, Camera camera, FCGameContainer cont)
@@ -308,28 +307,28 @@ public class CinematicActor implements Comparable<CinematicActor>
 		}
 	}
 
-	private boolean moveHorz()
+	private boolean moveHorz(float movePercent)
 	{
 		if (locX != moveToLocX)
 		{
 			if (locX > moveToLocX)
-				setLocX(getLocX() - Math.min(moveSpeed, locX - moveToLocX));
+				setLocX(getLocX() - Math.min(moveSpeed * movePercent, locX - moveToLocX));
 			else
-				setLocX(getLocX() + Math.min(moveSpeed, moveToLocX - locX));
+				setLocX(getLocX() + Math.min(moveSpeed * movePercent, moveToLocX - locX));
 			return true;
 		}
 		else
 			return false;
 	}
 
-	private boolean moveVert()
+	private boolean moveVert(float movePercent)
 	{
 		if (locY != moveToLocY)
 		{
 			if (locY > moveToLocY)
-				setLocY(getLocY() - Math.min(moveSpeed, locY - moveToLocY));
+				setLocY(getLocY() - Math.min(moveSpeed * movePercent, locY - moveToLocY));
 			else
-				setLocY(getLocY() + Math.min(moveSpeed, moveToLocY - locY));
+				setLocY(getLocY() + Math.min(moveSpeed * movePercent, moveToLocY - locY));
 			return true;
 		}
 		else
@@ -396,29 +395,32 @@ public class CinematicActor implements Comparable<CinematicActor>
 
 		if (moving)
 		{
+			/*
 			movingDelta += delta;
 			while (movingDelta > jCinematicActor.getMoveUpdate())
 			{
 				movingDelta -= jCinematicActor.getMoveUpdate();
+				*/
 				boolean moved = false;
+				float movePercent = (1.0f * delta) / jCinematicActor.getMoveUpdate();
 
 				if (moveDiag)
 				{
-					if (moveVert())
+					if (moveVert(movePercent))
 						moved = true;
-					if (moveHorz())
+					if (moveHorz(movePercent))
 						moved = true;
 				}
 				else
 				{
 					if (moveHorFirst)
-						moved = moveHorz();
+						moved = moveHorz(movePercent);
 
 					if (!moved)
-						moved = moveVert();
+						moved = moveVert(movePercent);
 
 					if (!moveHorFirst && !moved)
-						moved = moveHorz();
+						moved = moveHorz(movePercent);
 				}
 
 
@@ -445,7 +447,7 @@ public class CinematicActor implements Comparable<CinematicActor>
 						this.locY = startLoopY;
 					}
 				}
-			}
+			// }
 		}
 
 		if (specialEffectType != SE_NONE)
@@ -723,7 +725,6 @@ public class CinematicActor implements Comparable<CinematicActor>
 		this.moveToLocY = moveToLocY * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
 		this.haltingMove = haltingMove;
 		this.moveSpeed = speed * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
-		this.movingDelta = 0;
 		this.animDelta = 0;
 		this.animUpdate = (long) jCinematicActor.getAnimSpeedForMoveSpeed(speed);
 		this.moveHorFirst = moveHorFirst;

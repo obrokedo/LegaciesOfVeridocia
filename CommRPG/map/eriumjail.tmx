@@ -1723,8 +1723,8 @@
    <tile gid="1573"/>
    <tile gid="1572"/>
    <tile gid="1573"/>
-   <tile gid="1572"/>
-   <tile gid="1573"/>
+   <tile gid="1547"/>
+   <tile gid="1548"/>
    <tile gid="1461"/>
    <tile gid="1461"/>
    <tile gid="1547"/>
@@ -1789,8 +1789,8 @@
    <tile gid="1547"/>
    <tile gid="1548"/>
    <tile gid="1547"/>
-   <tile gid="1548"/>
-   <tile gid="1547"/>
+   <tile gid="1572"/>
+   <tile gid="1573"/>
    <tile gid="1461"/>
    <tile gid="1461"/>
    <tile gid="1573"/>
@@ -3748,7 +3748,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="1892"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -5996,7 +5996,7 @@
    <tile gid="1369"/>
    <tile gid="1371"/>
    <tile gid="0"/>
-   <tile gid="1892"/>
+   <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -6219,8 +6219,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="1886"/>
-   <tile gid="1887"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
    <tile gid="1344"/>
    <tile gid="1346"/>
    <tile gid="1344"/>
@@ -6285,8 +6285,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="1901"/>
-   <tile gid="1902"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
    <tile gid="1344"/>
    <tile gid="1346"/>
    <tile gid="1344"/>
@@ -9001,7 +9001,7 @@
    <tile gid="0"/>
   </data>
  </layer>
- <layer name="Roof0" width="66" height="34">
+ <layer name="Roof0" width="66" height="34" visible="0">
   <data>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -11368,29 +11368,39 @@
     <property name="sprite" value="image=jaildoor(night) name=door5"/>
    </properties>
   </object>
-  <object name="Remove Door" x="360" y="228" width="24" height="24">
+  <object name="Remove Door" x="336" y="204" width="48" height="24">
    <properties>
     <property name="trigger" value="triggerid=3"/>
    </properties>
   </object>
-  <object name="Remove Door" x="576" y="228" width="24" height="24">
+  <object name="Remove Door" x="552" y="204" width="48" height="24">
    <properties>
     <property name="trigger" value="triggerid=5"/>
    </properties>
   </object>
-  <object name="Remove Door" x="480" y="228" width="24" height="24">
+  <object name="Remove Door" x="456" y="204" width="48" height="24">
    <properties>
     <property name="trigger" value="triggerid=4"/>
    </properties>
   </object>
-  <object name="Remove Door" x="216" y="312" width="24" height="24">
+  <object name="Remove Door" x="216" y="300" width="24" height="24">
    <properties>
     <property name="trigger" value="triggerid=6"/>
    </properties>
   </object>
+  <object name="Remove Door" x="96" y="300" width="24" height="24">
+   <properties>
+    <property name="trigger" value="triggerid=7"/>
+   </properties>
+  </object>
+  <object name="NPC" x="648" y="312" width="24" height="24">
+   <properties>
+    <property name="npc" value="imageid=0 textid=0 wander=1"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup name="Battle" width="66" height="34" visible="0"/>
- <layer name="Grid Pattern" width="66" height="34" opacity="0.1">
+ <layer name="Grid Pattern" width="66" height="34" visible="0" opacity="0.1">
   <data>
    <tile gid="161"/>
    <tile gid="162"/>

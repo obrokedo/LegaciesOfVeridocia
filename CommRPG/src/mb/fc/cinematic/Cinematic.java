@@ -19,6 +19,7 @@ import mb.fc.game.menu.SpeechMenu;
 import mb.fc.game.sprite.AnimatedSprite;
 import mb.fc.game.sprite.NPCSprite;
 import mb.fc.game.sprite.Sprite;
+import mb.fc.game.sprite.StaticSprite;
 import mb.fc.game.ui.FCGameContainer;
 import mb.fc.map.Map;
 
@@ -180,6 +181,10 @@ public class Cinematic {
 	 */
 	private int lastCameraShake;
 
+	private ArrayList<StaticSprite> staticSprites = new ArrayList<StaticSprite>();
+
+	private boolean rendering = false;
+
 	/**
 	 * Constructor to create the Cinematic with the given events and
 	 * the given camera start position
@@ -199,8 +204,8 @@ public class Cinematic {
 		this.haltedMovers = 0;
 		this.haltedAnims = 0;
 		this.waitTime = 0;
-		this.cameraMoveToX = cameraX;
-		this.cameraMoveToY = cameraY;
+		this.cameraStartX = cameraX * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
+		this.cameraStartY = cameraY * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
 	}
 
 	/**
@@ -229,6 +234,9 @@ public class Cinematic {
 	 * means the cinematic has been completed, false otherwise.
 	 */
 	public boolean update(int delta, Camera camera, FCInput input, Map map, StateInfo stateInfo) {
+
+		if (!rendering)
+			return false;
 
 		if (fadingColor != null)
 		{
@@ -387,7 +395,7 @@ public class Cinematic {
 						- cameraMoveToX);
 				distance += Math.abs(stateInfo.getCamera().getLocationY()
 						- cameraMoveToY);
-				cameraMoveSpeed = distance / ((int) ce.getParam(2) / CAMERA_UPDATE);
+				cameraMoveSpeed = distance / (1.0f * ((int) ce.getParam(2)) / CAMERA_UPDATE);
 				cameraFollow = null;
 				break;
 			case CAMERA_CENTER:
@@ -425,6 +433,18 @@ public class Cinematic {
 				actors.put(
 						(String) ce.getParam(2), ca);
 				sortedActors.add(ca);
+				break;
+			case ADD_STATIC_SPRITE:
+				staticSprites.add(new StaticSprite((int) ce.getParam(0) * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()],
+						(int) ce.getParam(1) * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()],
+						(String) ce.getParam(2), stateInfo.getResourceManager().getImages().get(ce.getParam(3)), null));
+				break;
+			case REMOVE_STATIC_SPRITE:
+				String toRem = (String) ce.getParam(0);
+				for (int i = 0; i < staticSprites.size(); i++)
+					if (staticSprites.get(i).getName().equalsIgnoreCase(toRem))
+						staticSprites.remove(i--);
+
 				break;
 			case SPEECH:
 				speechMenu = new SpeechMenu((String) ce.getParam(0),
@@ -577,6 +597,12 @@ public class Cinematic {
 				actors.get(ce.getParam(0)).stopAnimation();
 				break;
 			case FADE_FROM_BLACK:
+				if ((boolean) ce.getParam(2))
+				{
+					fadingColor = new Color(0f, 0f, 0f, 1f);
+					break;
+				}
+
 				fadeToBlack = true;
 				fadeIn = true;
 				fadingColor = new Color(0f, 0f, 0f, 1f);
@@ -627,11 +653,15 @@ public class Cinematic {
 	 */
 	public void render(Graphics graphics, Camera camera, FCGameContainer cont,
 			StateInfo stateInfo) {
+		rendering = true;
+
 		for (CinematicActor ca : sortedActors)
 		{
 			ca.render(graphics, camera, cont, stateInfo);
 		}
 
+		for (StaticSprite ss : staticSprites)
+			ss.render(camera, graphics, cont);
 	}
 
 	/**

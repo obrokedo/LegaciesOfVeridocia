@@ -30,9 +30,11 @@ public class TriggerLocation
 
 			for (String trig : mo.getParam("triggerid").split(","))
 			{
-				event = new TriggerEvent(-1, false, false, false, false, null, null);
-				event.addTriggerType(event.new TriggerById(Integer.parseInt(trig)));
-				events.add(event);
+				TriggerEvent eventToTrigger = stateInfo.getResourceManager().getTriggerEventById(Integer.parseInt(trig));
+
+				// event = new TriggerEvent(-1, false, false, false, eventToTrigger., null, null);
+				// event.addTriggerType(event.new TriggerById(Integer.parseInt(trig)));
+				events.add(eventToTrigger);
 			}
 		}
 	}

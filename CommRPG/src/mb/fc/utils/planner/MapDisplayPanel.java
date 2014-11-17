@@ -12,6 +12,8 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map.Entry;
@@ -29,9 +31,7 @@ import mb.fc.map.MapObject;
 import mb.fc.utils.XMLParser;
 import mb.fc.utils.XMLParser.TagArea;
 import mb.fc.utils.planner.PlannerTimeBarViewer.ActorBar;
-import mb.fc.utils.planner.PlannerTimeBarViewer.ZIntervalImpl;
-import mb.fc.utils.planner.PlannerTimeBarViewer.ZLocationImpl;
-import mb.fc.utils.planner.PlannerTimeBarViewer.ZMoveIntervalImpl;
+import mb.fc.utils.planner.PlannerTimeBarViewer.StaticSprite;
 
 import org.newdawn.slick.SlickException;
 
@@ -54,10 +54,16 @@ public class MapDisplayPanel extends JPanel implements ActionListener, MouseList
 	private final Color SELECTED_MO_FILL_COLOR = new Color(0, 255, 0, 50);
 	private final Color SELECTED_MO_LINE_COLOR = new Color(0, 255, 0);
 
+	private final Color SPRITE_FILL_COLOR = new Color(230, 230, 230, 50);
+	private final Color SPRITE_LINE_COLOR = new Color(230, 230, 230);
+
 	private ArrayList<Point> actorLocations = new ArrayList<Point>();
+	private ArrayList<Point> spriteLocations = new ArrayList<Point>();
 	private int selectedActor = -1;
 	private int popupType = 0;
 	private Point cameraLocation = null;
+
+	private PlannerContainer currentPC;
 
 	public MapDisplayPanel(String mapFile, MapPanel mapPanel)
 	{
@@ -65,6 +71,8 @@ public class MapDisplayPanel extends JPanel implements ActionListener, MouseList
 		systemPopup.add(createMenuItem("Wait"));
 		systemPopup.add(createMenuItem("Add Actor"));
 		systemPopup.add(createMenuItem("Establish Sprite as Actor"));
+		systemPopup.add(createMenuItem("Add Static Sprite"));
+		systemPopup.add(createMenuItem("Remove Static Sprite"));
 		systemPopup.add(createMenuItem("Play Music"));
 		systemPopup.add(createMenuItem("Pause Music"));
 		systemPopup.add(createMenuItem("Resume Music"));
@@ -137,6 +145,16 @@ public class MapDisplayPanel extends JPanel implements ActionListener, MouseList
 		return jmi;
 	}
 
+	public void setStaticSpritesAtTime(int time)
+	{
+		spriteLocations.clear();
+		for (StaticSprite ss : timeline.staticSprites)
+		{
+			if (ss.timeAdded <= time && (ss.timeRemoved > time || ss.timeRemoved == 0))
+				spriteLocations.add(new Point(ss.locX, ss.locY));
+		}
+	}
+
 	public ArrayList<String> getSystemValuesAtTime(int time)
 	{
 		ArrayList<String> values = new ArrayList<String>();
@@ -163,74 +181,32 @@ public class MapDisplayPanel extends JPanel implements ActionListener, MouseList
 		actorLocations.clear();
 		ArrayList<ArrayList<String>> lol = new ArrayList<ArrayList<String>>();
 
-		for (Entry<String, ActorBar> ab : timeline.rowsByName.entrySet())
+		ArrayList<Entry<String, ActorBar>> listOfActorEntrys = new ArrayList<>(timeline.rowsByName.entrySet());
+		Collections.sort(listOfActorEntrys, new Comparator<Entry<String, ActorBar>>() {
+
+			@Override
+			public int compare(Entry<String, ActorBar> arg0,
+					Entry<String, ActorBar> arg1) {
+				return arg0.getKey().compareTo(arg1.getKey());
+			}});
+
+		for (Entry<String, ActorBar> ab : listOfActorEntrys)
 		{
 			ArrayList<String> values = new ArrayList<String>();
-			List<Interval> actorIntervals = ab.getValue().dt.getIntervals(new JaretDate(time));
 
-			if (actorInScene(actorIntervals))
+			if (ab.getValue().isActorInScene(time))
 			{
 				names.add(ab.getKey());
 
 				boolean moving = false;
 
-				ZLocationImpl zli = (ZLocationImpl) ab.getValue().movementRowModel.getIntervals(new JaretDate(time)).get(0);
-
-				Point actorPoint = null;
-
-				for (Interval i : actorIntervals)
-				{
-
-					if (((ZIntervalImpl) i).isMove())
-					{
-						ZMoveIntervalImpl zmi = (ZMoveIntervalImpl) i;
-						int xDiff = zmi.getEndX() - zmi.getStartX();
-						int yDiff = zmi.getEndY() - zmi.getStartY();
-						float percent = (time - 1.0f * zmi.getCurrentTime()) / zmi.getDuration();
-
-						if (zmi.isMoveDiag())
-						{
-							actorPoint = new Point(zmi.getStartX() + (int)(xDiff * percent), zmi.getStartY() + (int)(yDiff * percent));
-						}
-						else if (zmi.isMoveHor())
-						{
-							int totalMove = xDiff + yDiff;
-							float percentX = 1.0f * xDiff / totalMove;
-							if (percent > percentX)
-							{
-								actorPoint = new Point(zmi.getEndX(), (int)((percent - percentX) / (1 - percentX) * yDiff) + zmi.getStartY());
-							}
-							else
-							{
-								actorPoint = new Point((int)(percent / percentX * xDiff) + zmi.getStartX(), zmi.getStartY());
-							}
-						}
-						else
-						{
-							int totalMove = xDiff + yDiff;
-							float percentY = 1.0f * yDiff / totalMove;
-							if (percent > percentY)
-							{
-								actorPoint = new Point((int)((percent - percentY) / (1 - percentY) * xDiff) + zmi.getStartX(), zmi.getEndY());
-							}
-							else
-								actorPoint = new Point(zmi.getStartX(), (int)(percent / percentY * yDiff) + zmi.getStartY());
-						}
-
-						moving = true;
-						break;
-					}
-
-				}
-
-				if (!moving)
-					actorPoint = new Point(zli.locX, zli.locY);
+				Point actorPoint = ab.getValue().getActorLocationAtTime(time);
 
 				values.add("Current Location: " + actorPoint.x + " " + actorPoint.y);
 				values.add("Actor is Moving: " + moving);
 				actorLocations.add(actorPoint);
 
-				addIntervals(actorIntervals, values);
+				addIntervals(ab.getValue().dt.getIntervals(new JaretDate(time)), values);
 
 				lol.add(values);
 			}
@@ -244,66 +220,10 @@ public class MapDisplayPanel extends JPanel implements ActionListener, MouseList
 		if (!timeline.rowsByName.containsKey(name))
 			return new Point(0, 0);
 
-		List<Interval> actorIntervals = timeline.rowsByName.get(name).dt.getIntervals(new JaretDate(time));
+		ActorBar ab = timeline.rowsByName.get(name);
 
-		if (actorInScene(actorIntervals))
-		{
-			boolean moving = false;
-
-			ZLocationImpl zli = (ZLocationImpl) timeline.rowsByName.get(name).movementRowModel.getIntervals(new JaretDate(time)).get(0);
-
-			Point actorPoint = null;
-
-			for (Interval i : actorIntervals)
-			{
-
-				if (((ZIntervalImpl) i).isMove())
-				{
-					ZMoveIntervalImpl zmi = (ZMoveIntervalImpl) i;
-					int xDiff = zmi.getEndX() - zmi.getStartX();
-					int yDiff = zmi.getEndY() - zmi.getStartY();
-					float percent = (time - 1.0f * zmi.getCurrentTime()) / zmi.getDuration();
-
-					if (zmi.isMoveDiag())
-					{
-						actorPoint = new Point(zmi.getStartX() + (int)(xDiff * percent), zmi.getStartY() + (int)(yDiff * percent));
-					}
-					else if (zmi.isMoveHor())
-					{
-						int totalMove = xDiff + yDiff;
-						float percentX = 1.0f * xDiff / totalMove;
-						if (percent > percentX)
-						{
-							actorPoint = new Point(zmi.getEndX(), (int)((percent - percentX) / (1 - percentX) * yDiff) + zmi.getStartY());
-						}
-						else
-						{
-							actorPoint = new Point((int)(percent / percentX * xDiff) + zmi.getStartX(), zmi.getStartY());
-						}
-					}
-					else
-					{
-						int totalMove = xDiff + yDiff;
-						float percentY = 1.0f * yDiff / totalMove;
-						if (percent > percentY)
-						{
-							actorPoint = new Point((int)((percent - percentY) / (1 - percentY) * xDiff) + zmi.getStartX(), zmi.getEndY());
-						}
-						else
-							actorPoint = new Point(zmi.getStartX(), (int)(percent / percentY * yDiff) + zmi.getStartY());
-					}
-
-					moving = true;
-					break;
-				}
-
-			}
-
-			if (!moving)
-				actorPoint = new Point(zli.locX, zli.locY);
-
-			return actorPoint;
-		}
+		if (ab.isActorInScene(time))
+			return ab.getActorLocationAtTime(time);
 
 		return new Point(0, 0);
 	}
@@ -315,17 +235,6 @@ public class MapDisplayPanel extends JPanel implements ActionListener, MouseList
 			values.add(i.toString());
 		}
 	}
-
-	private boolean actorInScene(List<Interval> intervals)
-	{
-		for (Interval i : intervals)
-		{
-			if (i.toString().equalsIgnoreCase("Not in scene"))
-				return false;
-		}
-		return true;
-	}
-
 
 	@Override
 	protected void paintComponent(Graphics g) {
@@ -343,28 +252,39 @@ public class MapDisplayPanel extends JPanel implements ActionListener, MouseList
 			}
 		}
 
-		for (MapObject mo : plannerMap.getMapObjects())
+		if (PlannerFrame.SHOW_CIN_LOCATION)
 		{
-			int[] xP, yP;
-			xP = new int[mo.getShape().getPointCount()];
-			yP = new int[mo.getShape().getPointCount()];
-			for (int i = 0; i < xP.length; i++)
+			for (MapObject mo : plannerMap.getMapObjects())
 			{
-				xP[i] = (int) mo.getShape().getPoint(i)[0];
-				yP[i] = (int) mo.getShape().getPoint(i)[1];
+				int[] xP, yP;
+				xP = new int[mo.getShape().getPointCount()];
+				yP = new int[mo.getShape().getPointCount()];
+				for (int i = 0; i < xP.length; i++)
+				{
+					xP[i] = (int) mo.getShape().getPoint(i)[0];
+					yP[i] = (int) mo.getShape().getPoint(i)[1];
+				}
+
+				if (mo != this.selectedMO)
+					g.setColor(UNSELECTED_MO_FILL_COLOR);
+				else
+					g.setColor(SELECTED_MO_FILL_COLOR);
+				g.fillPolygon(xP, yP, xP.length);
+
+				if (mo != this.selectedMO)
+					g.setColor(UNSELECTED_MO_LINE_COLOR);
+				else
+					g.setColor(SELECTED_MO_LINE_COLOR);
+				g.drawPolygon(xP, yP, xP.length);
 			}
+		}
 
-			if (mo != this.selectedMO)
-				g.setColor(UNSELECTED_MO_FILL_COLOR);
-			else
-				g.setColor(SELECTED_MO_FILL_COLOR);
-			g.fillPolygon(xP, yP, xP.length);
-
-			if (mo != this.selectedMO)
-				g.setColor(UNSELECTED_MO_LINE_COLOR);
-			else
-				g.setColor(SELECTED_MO_LINE_COLOR);
-			g.drawPolygon(xP, yP, xP.length);
+		for (Point sp : spriteLocations)
+		{
+			g.setColor(new Color(230, 230, 230, 50));
+			g.fillRect(sp.x, sp.y, plannerMap.getTileEffectiveWidth(), plannerMap.getTileEffectiveHeight());
+			g.setColor(new Color(230, 230, 230));
+			g.drawRect(sp.x, sp.y, plannerMap.getTileEffectiveWidth(), plannerMap.getTileEffectiveHeight());
 		}
 
 		g.setColor(Color.red);
@@ -439,16 +359,19 @@ public class MapDisplayPanel extends JPanel implements ActionListener, MouseList
 			{
 				mapPanel.setActorSelected(-1);
 
-				for (MapObject mo : plannerMap.getMapObjects())
+				if (PlannerFrame.SHOW_CIN_LOCATION)
 				{
-					if (mo.getShape().contains(m.getX(), m.getY()))
+					for (MapObject mo : plannerMap.getMapObjects())
 					{
-						int newSize = mo.getWidth() * mo.getHeight();
-
-						if (newSize < size)
+						if (mo.getShape().contains(m.getX(), m.getY()))
 						{
-							selected = mo;
-							size = newSize;
+							int newSize = mo.getWidth() * mo.getHeight();
+
+							if (newSize < size)
+							{
+								selected = mo;
+								size = newSize;
+							}
 						}
 					}
 				}
@@ -509,12 +432,12 @@ public class MapDisplayPanel extends JPanel implements ActionListener, MouseList
 		this.actorLocations.clear();
 
 		PlannerTab pt = (PlannerTab) mapPanel.getParentTabbedPane().getComponentAt(PlannerFrame.TAB_CIN);
-		PlannerContainer pc = pt.getListPC().get(index);
+		currentPC = pt.getListPC().get(index);
 
 		try
 		{
 			ArrayList<PlannerContainer> pcs = new ArrayList<PlannerContainer>();
-			pcs.add(pc);
+			pcs.add(currentPC);
 			ArrayList<String> results = PlannerFrame.export(pcs);
 
 			ArrayList<TagArea> tas = XMLParser.process(results);
@@ -551,7 +474,9 @@ public class MapDisplayPanel extends JPanel implements ActionListener, MouseList
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getActionCommand().equalsIgnoreCase("Add Actor"))
+		if (e.getActionCommand().equalsIgnoreCase("Add Actor") ||
+				e.getActionCommand().equalsIgnoreCase("Add Static Sprite") ||
+				e.getActionCommand().equalsIgnoreCase("Camera Pan"))
 			mapPanel.addCinematicLineByName(e.getActionCommand(), -1, mouseX, mouseY);
 		else if (popupType != 2)
 			mapPanel.addCinematicLineByName(e.getActionCommand(), selectedActor, -1, -1);
@@ -563,5 +488,9 @@ public class MapDisplayPanel extends JPanel implements ActionListener, MouseList
 
 	public void setCameraLocation(Point cameraLocation) {
 		this.cameraLocation = cameraLocation;
+	}
+
+	public PlannerContainer getCurrentPC() {
+		return currentPC;
 	}
 }

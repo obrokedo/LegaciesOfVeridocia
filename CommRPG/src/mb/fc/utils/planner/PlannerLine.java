@@ -216,7 +216,16 @@ public class PlannerLine extends JPanel
 					{
 						c = new JTextField(30);
 						if (values.size() > i)
-							((JTextField) c).setText((String) values.get(i));
+						{
+							try
+							{
+								((JTextField) c).setText((String) values.get(i));
+							}
+							catch (Throwable t)
+							{
+								System.out.println(t);
+							}
+						}
 					}
 					else
 					{
@@ -261,6 +270,11 @@ public class PlannerLine extends JPanel
 					case PlannerValueDef.TYPE_STRING:
 						if (pv.getRefersTo() == PlannerValueDef.REFERS_NONE)
 						{
+							if (((JTextField) components.get(i)).getText().trim().length() < 0 && !pv.isOptional())
+							{
+								throw new IllegalArgumentException();
+							}
+
 							if (i >= values.size())
 								values.add(((JTextField) components.get(i)).getText());
 							else

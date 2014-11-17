@@ -161,4 +161,8 @@ public class AnimatedSprite extends Sprite
 	public Animation getCurrentAnim() {
 		return currentAnim;
 	}
+
+	public void doneMoving() {
+
+	}
 }

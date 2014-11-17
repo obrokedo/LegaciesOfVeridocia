@@ -6,7 +6,7 @@ import javax.swing.JOptionPane;
 
 import mb.fc.engine.log.FileLogger;
 import mb.fc.engine.state.AttackCinematicState;
-import mb.fc.engine.state.MenuState;
+import mb.fc.engine.state.DevelMenuState;
 import mb.fc.engine.state.PersistentStateInfo;
 import mb.fc.engine.state.TestState;
 import mb.fc.game.ui.FCGameContainer;
@@ -140,7 +140,7 @@ public class CommRPG extends StateBasedGame   {
 				e.printStackTrace();
 			}
 
-			// fullScreenWidth = 0;
+			fullScreenWidth = 0;
 
 			if (fullScreenWidth == 0)
 			{
@@ -221,8 +221,8 @@ public class CommRPG extends StateBasedGame   {
 
 		LoadingState.loading = true;
 		loadingState = new LoadingState(STATE_GAME_LOADING);
-		this.addState(new MenuState());
-		// this.addState(new DevelMenuState());
+		// this.addState(new MenuState());
+		this.addState(new DevelMenuState());
 
 		this.addState(new AttackCinematicState());
 		this.addState(loadingState);
@@ -250,7 +250,7 @@ public class CommRPG extends StateBasedGame   {
 
 		loadingState.setLoadingInfo("/menu/MainMenu", null, false, true,
 				new FCResourceManager(),
-					(LoadableGameState) this.getState(STATE_GAME_MENU),
+					(LoadableGameState) this.getState(STATE_GAME_MENU_DEVEL),
 						new FCLoadingRenderSystem(gameContainer));
 
 

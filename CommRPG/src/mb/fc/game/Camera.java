@@ -21,6 +21,12 @@ public class Camera
 		viewport = new Rectangle(0, 0, width, height);
 	}
 
+	private Camera(Camera camera)
+	{
+		this.viewport = new Rectangle(camera.viewport.getX(), camera.viewport.getY(),
+				camera.viewport.getWidth(), camera.viewport.getHeight());
+	}
+
 	public Rectangle getViewport() {
 		return viewport;
 	}
@@ -90,5 +96,10 @@ public class Camera
 		}
 		else
 			viewport.setY(Math.max(0, locY - getViewportHeight() / 2));
+	}
+
+	public Camera duplicate()
+	{
+		return new Camera(this);
 	}
 }

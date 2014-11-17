@@ -285,6 +285,11 @@ public class TextParser
 			}
 			return ce;
 		}
+		else if (type.equalsIgnoreCase("addstatic"))
+			return new CinematicEvent(CinematicEventType.ADD_STATIC_SPRITE, Integer.parseInt(area.getAttribute("x")),
+					Integer.parseInt(area.getAttribute("y")), area.getAttribute("spriteid"), area.getAttribute("spriteim"));
+		else if (type.equalsIgnoreCase("remstatic"))
+			return new CinematicEvent(CinematicEventType.REMOVE_STATIC_SPRITE, area.getAttribute("spriteid"));
 		else if (type.equalsIgnoreCase("assactor"))
 			return new CinematicEvent(CinematicEventType.ASSOCIATE_AS_ACTOR, area.getAttribute("name"),
 					Integer.parseInt(area.getAttribute("npcid")), Boolean.parseBoolean(area.getAttribute("hero")));
@@ -386,13 +391,12 @@ public class TextParser
 		}
 		else if (type.equalsIgnoreCase("fadein"))
 		{
-			CinematicEvent ce = new CinematicEvent(CinematicEventType.FADE_FROM_BLACK, Integer.parseInt(area.getAttribute("time")), Boolean.parseBoolean(area.getAttribute("halting")));
 			if (Boolean.parseBoolean(area.getAttribute("init")))
 			{
-				initEvents.add(ce);
-				return null;
+				initEvents.add(new CinematicEvent(CinematicEventType.FADE_FROM_BLACK, Integer.parseInt(area.getAttribute("time")), Boolean.parseBoolean(area.getAttribute("halting")), true));
+				// return null;
 			}
-			return ce;
+			return new CinematicEvent(CinematicEventType.FADE_FROM_BLACK, Integer.parseInt(area.getAttribute("time")), Boolean.parseBoolean(area.getAttribute("halting")), false);
 		}
 		else if (type.equalsIgnoreCase("fadeout"))
 			return new CinematicEvent(CinematicEventType.FADE_TO_BLACK, Integer.parseInt(area.getAttribute("time")), Boolean.parseBoolean(area.getAttribute("halting")));

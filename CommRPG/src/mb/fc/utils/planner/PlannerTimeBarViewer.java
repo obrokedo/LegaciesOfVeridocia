@@ -1,15 +1,18 @@
 package mb.fc.utils.planner;
 
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.List;
 
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import mb.fc.cinematic.event.CinematicEvent;
+import de.jaret.util.date.Interval;
 import de.jaret.util.date.IntervalImpl;
 import de.jaret.util.date.JaretDate;
 import de.jaret.util.ui.timebars.TimeBarMarker;
@@ -65,6 +68,7 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 		DefaultTimeBarRowModel soundRow = new DefaultTimeBarRowModel(new DefaultRowHeader("Sound"));
 		ArrayList<Long> cinematicTime = new ArrayList<Long>();
 		ArrayList<CameraLocation> cameraLocations = new ArrayList<>();
+		ArrayList<StaticSprite> staticSprites = new ArrayList<>();
 		CameraLocation cl = new CameraLocation();
 		cl.locX = cameraStartX;
 		cl.locY = cameraStartY;
@@ -114,6 +118,20 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 						zi.setEnd(new JaretDate(currentTime));
 						dt.addInterval(zi);
 					}
+					break;
+				case ADD_STATIC_SPRITE:
+					int ssX = (int) ce.getParam(0);
+					int ssY = (int) ce.getParam(1);
+					String ssID = (String) ce.getParam(2);
+					staticSprites.add(new StaticSprite(ssID, ssX, ssY, currentTime));
+					break;
+				case REMOVE_STATIC_SPRITE:
+					ssID = (String) ce.getParam(0);
+					for (int i = 0; i < staticSprites.size(); i++)
+						if (staticSprites.get(i).id.equalsIgnoreCase(ssID) && staticSprites.get(i).timeRemoved == 0)
+						{
+							staticSprites.get(i).timeRemoved = currentTime;
+						}
 					break;
 				case MOVE:
 					handleMove(currentTime, ce, rowsByName, "Move ", false);
@@ -351,17 +369,40 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 
 					cl = new CameraLocation();
 					CameraLocation oldLoc = cameraLocations.get(cameraLocations.size() - 1);
-					cl.locX = oldLoc.locX;
-					cl.locY = oldLoc.locY;
-					cl.endLocX = (int) ce.getParam(0);
-					cl.endLocY = (int) ce.getParam(1);
+					if (oldLoc.following != null)
+					{
+						ActorBar followingAB = rowsByName.get(oldLoc.following);
+						Point followingPoint = followingAB.getActorLocationAtTime((int) currentTime - 1, true);
+
+						if (followingPoint.x < 160)
+							followingPoint.x = 0;
+						else
+							followingPoint.x = (Math.max(0, followingPoint.x - 160));
+
+						if (followingPoint.y < 120)
+							followingPoint.y = 0;
+						else
+							followingPoint.y = (Math.max(0, followingPoint.y - 120));
+
+						cl.locX = followingPoint.x;
+						cl.locY = followingPoint.y;
+					}
+					else
+					{
+						cl.locX = oldLoc.locX;
+						cl.locY = oldLoc.locY;
+					}
+
+					cl.endLocX = (int) ce.getParam(0) - 160;
+					cl.endLocY = (int) ce.getParam(1) - 120;
 					cl.time = currentTime;
 					cl.duration = (int) ce.getParam(2);
+					System.out.println(cl);
 					cameraLocations.add(cl);
 
 					cl = new CameraLocation();
-					cl.locX = (int) ce.getParam(0);
-					cl.locY = (int) ce.getParam(1);
+					cl.locX = (int) ce.getParam(0) - 160;
+					cl.locY = (int) ce.getParam(1) - 120;
 					cl.time = currentTime + (int) ce.getParam(2);
 					cameraLocations.add(cl);
 					break;
@@ -482,6 +523,12 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 					soundRow.addInterval(zi);
 					break;
 				case FADE_FROM_BLACK:
+					if ((boolean) ce.getParam(2))
+					{
+						cinematicTime.remove(cinematicTime.size() - 1);
+						continue;
+					}
+
 					zi = new ZIntervalImpl("Fade from black");
 					zi.setBegin(new JaretDate(currentTime));
 					zi.setEnd(new JaretDate(currentTime + (int) ce.getParam(0)));
@@ -550,6 +597,7 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 		cinematicTimeline.rowsByName = rowsByName;
 		cinematicTimeline.duration = (int) currentTime;
 		cinematicTimeline.cameraLocations = cameraLocations;
+		cinematicTimeline.staticSprites = staticSprites;
 	}
 
 	public class CameraLocation
@@ -722,10 +770,9 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 		public ActorBar(DefaultTimeBarRowModel dt, int locX, int locY) {
 			super();
 			this.dt = dt;
-			this.locX = locX;
-			this.locY = locY;
 			indefiniteIntervals = new Hashtable<String, ZIntervalImpl>();
 			movementRowModel = new DefaultTimeBarRowModel();
+			changeLocations(locX, locY, 0);
 		}
 
 		public void changeLocations(int locX, int locY, long currentTime)
@@ -737,6 +784,104 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 			this.lastMoveTime = currentTime;
 			this.locX = locX;
 			this.locY = locY;
+		}
+
+		public Point getActorLocationAtTime(int time)
+		{
+			return getActorLocationAtTime(time, false);
+		}
+
+		public Point getActorLocationAtTime(int time, boolean duringConstruction)
+		{
+			List<Interval> actorIntervals = dt.getIntervals(new JaretDate(time));
+
+			boolean moving = false;
+
+			Point actorPoint = null;
+
+			for (Interval i : actorIntervals)
+			{
+
+				if (((ZIntervalImpl) i).isMove())
+				{
+					ZMoveIntervalImpl zmi = (ZMoveIntervalImpl) i;
+					int xDiff = zmi.getEndX() - zmi.getStartX();
+					int yDiff = zmi.getEndY() - zmi.getStartY();
+					int totalMove = Math.abs(xDiff) + Math.abs(yDiff);
+					float percent = (time - 1.0f * zmi.getCurrentTime()) / zmi.getDuration();
+
+					if (zmi.isMoveDiag())
+					{
+						actorPoint = new Point(zmi.getStartX() + (int)(xDiff * percent), zmi.getStartY() + (int)(yDiff * percent));
+					}
+					else if (zmi.isMoveHor())
+					{
+						float percentX = Math.abs(1.0f * xDiff / totalMove);
+						if (percent > percentX)
+						{
+							actorPoint = new Point(zmi.getEndX(), (int)((percent - percentX) / (1 - percentX) * yDiff) + zmi.getStartY());
+						}
+						else
+						{
+							actorPoint = new Point((int)(percent / percentX * xDiff) + zmi.getStartX(), zmi.getStartY());
+						}
+					}
+					else
+					{
+						float percentY = Math.abs(1.0f * yDiff / totalMove);
+						System.out.println(percent + " " + percentY);
+						if (percent > percentY)
+						{
+							actorPoint = new Point((int)((percent - percentY) / (1 - percentY) * xDiff) + zmi.getStartX(), zmi.getEndY());
+						}
+						else
+							actorPoint = new Point(zmi.getStartX(), (int)(percent / percentY * yDiff) + zmi.getStartY());
+					}
+
+					moving = true;
+					break;
+				}
+
+			}
+
+			if (!moving)
+			{
+				if (!duringConstruction)
+				{
+					// List<Interval> moveList =  movementRowModel.getIntervals(new JaretDate(0), new JaretDate(time));
+					ZLocationImpl zli = (ZLocationImpl) movementRowModel.getIntervals(new JaretDate(time)).get(0);
+					actorPoint = new Point(zli.locX, zli.locY);
+				}
+				else
+					actorPoint = new Point(this.locX, this.locY);
+			}
+
+			return actorPoint;
+		}
+
+		public boolean isActorInScene(int time)
+		{
+			for (Interval i : dt.getIntervals(new JaretDate(time)))
+			{
+				if (i.toString().equalsIgnoreCase("Not in scene"))
+					return false;
+			}
+			return true;
+		}
+    }
+
+    public class StaticSprite
+    {
+    	public String id;
+    	public int locX, locY;
+    	public long timeAdded, timeRemoved;
+
+		public StaticSprite(String id, int locX, int locY, long timeAdded) {
+			super();
+			this.id = id;
+			this.locX = locX;
+			this.locY = locY;
+			this.timeAdded = timeAdded;
 		}
     }
 

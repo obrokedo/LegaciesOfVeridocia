@@ -2,10 +2,7 @@ package mb.fc.utils.planner;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -13,18 +10,11 @@ import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-import javax.activation.ActivationDataFlavor;
-import javax.activation.DataHandler;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListModel;
-import javax.swing.DropMode;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.ListSelectionModel;
-import javax.swing.TransferHandler;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -43,9 +33,7 @@ public class PlannerTab extends JPanel implements ActionListener, ItemListener, 
 	protected JComboBox<String> typeComboBox;
 	protected int refersTo;
 	protected PlannerFrame plannerFrame;
-	protected JList<String> attributeList;
-	protected DefaultListModel<String> attributeListModel;
-	protected JScrollPane attributeScrollPane;
+	protected PlannerAttributeList attributeList;
 	private JPanel listPanel;
 
 	public PlannerTab(Hashtable<String, PlannerContainerDef> containersByName,
@@ -96,6 +84,11 @@ public class PlannerTab extends JPanel implements ActionListener, ItemListener, 
 		}
 		else if (command.equalsIgnoreCase("remove"))
 		{
+			int rc = JOptionPane.showConfirmDialog(this,
+					"Are you sure you'd like to delete the entire " + typeComboBox.getSelectedItem(),
+					"Confirm " + typeComboBox.getSelectedItem() + " deletion?", JOptionPane.YES_NO_OPTION);
+			if (rc != JOptionPane.OK_OPTION)
+				return;
 			int selected = list.getSelectedIndex();
 			plannerFrame.removeReferences(refersTo, selected);
 			currentPC.getPcdef().getDataLines().remove(selected);
@@ -186,30 +179,13 @@ public class PlannerTab extends JPanel implements ActionListener, ItemListener, 
 
 	public void updateAttributeList(int index)
 	{
-		if (attributeScrollPane != null)
+		if (attributeList == null)
 		{
-			this.remove(attributeScrollPane);
-			attributeList.removeListSelectionListener(this);
+			attributeList = new PlannerAttributeList(currentPC, this, new TabAttributeTransferHandler(currentPC));
+			this.add(attributeList, BorderLayout.LINE_START);
 		}
-
-		attributeListModel = new DefaultListModel<String>();
-		for (PlannerLine pl : currentPC.getLines())
-		{
-			attributeListModel.addElement(pl.getPlDef().getName());
-		}
-		attributeList = new JList<String>(attributeListModel);
-		attributeScrollPane = new JScrollPane(attributeList);
-		this.add(attributeScrollPane, BorderLayout.LINE_START);
-		attributeList.setPreferredSize(new Dimension(150, attributeList.getPreferredSize().height));
-		attributeList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		attributeList.addListSelectionListener(this);
-		attributeList.setTransferHandler(new AttributeTransferHandler());
-		attributeList.setDropMode(DropMode.INSERT);
-		attributeList.setDragEnabled(true);
-
-		if (attributeListModel.size() > index && index >= 0)
-			attributeList.setSelectedIndex(index);
-
+		else
+			attributeList.updateAttributeList(currentPC, index, new TabAttributeTransferHandler(currentPC));
 		this.validate();
 	}
 
@@ -294,69 +270,22 @@ public class PlannerTab extends JPanel implements ActionListener, ItemListener, 
 		}
 	}
 
-	public class AttributeTransferHandler extends TransferHandler
+	public class TabAttributeTransferHandler extends AttributeTransferHandler
 	{
 		private static final long serialVersionUID = 1L;
-		private final DataFlavor localObjectFlavor;
-		private String transferedObjects = null;
-		private int index;
 
-		public AttributeTransferHandler() {
-			super();
-			localObjectFlavor = new ActivationDataFlavor(
-				      String.class, DataFlavor.javaJVMLocalObjectMimeType, "Item");
-		}
-
-		@Override
-		public boolean canImport(TransferSupport arg0) {
-			return true;
-		}
-
-		@Override
-		protected Transferable createTransferable(JComponent c) {
-			JList<?> list = (JList<?>) c;
-		    index = list.getSelectedIndex();
-		    transferedObjects = (String) list.getSelectedValue();
-		    return new DataHandler(transferedObjects, localObjectFlavor.getMimeType());
-		}
-
-		@Override
-		protected void exportDone(JComponent arg0, Transferable arg1, int arg2) {
-			super.exportDone(arg0, arg1, arg2);
-		}
-
-		@Override
-		public int getSourceActions(JComponent arg0) {
-			return TransferHandler.MOVE;
+		public TabAttributeTransferHandler(PlannerContainer currentPC) {
+			super(currentPC);
 		}
 
 		@Override
 		public boolean importData(TransferSupport ts) {
-
-			JList.DropLocation dl = (JList.DropLocation)ts.getDropLocation();
-			if (index != dl.getIndex())
-			{
-				if (currentPC == null)
-					return false;
-
-				ArrayList<PlannerLine> pls = currentPC.getLines();
-				int newIndex = dl.getIndex();
-				if (dl.getIndex() < index)
-				{
-					pls.add(dl.getIndex(), pls.remove(index));
-				}
-				else
-				{
-					pls.add(--newIndex, pls.remove(index));
-				}
-
+			boolean rc = super.importData(ts);
+			if (rc)
 				updateAttributeList(newIndex);
-				return true;
-			}
-			System.out.println(dl.getIndex() + " " + index);
-
-			return false;
+			return rc;
 		}
+
 	}
 
 	public PlannerContainerDef getPlannerContainerDef()
