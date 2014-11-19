@@ -9,9 +9,20 @@ import org.newdawn.slick.Sound;
 
 public class SoundManager extends Manager
 {
+	private Music playingMusic;
+	private float playingVolume;
+	private String playingMusicName;
+	private float playingMusicPosition;
+	private float musicPosition = 0f;
+
 	public void update(int delta)
 	{
-
+		/*
+		if (playingMusic != null && playingMusic.playing())
+		{
+			musicPosition = musicPosition + delta / 1000.0f;
+		}
+		*/
 	}
 
 	@Override
@@ -27,58 +38,52 @@ public class SoundManager extends Manager
 		sound.play(1f, volume);
 	}
 
-	public void playMusicByName(String name)
-	{
-		Music playingMusic = stateInfo.getResourceManager().getMusicByName(name);
-		playingMusic.loop(1, 0);
-		stateInfo.setPlayingMusic(playingMusic);
-	}
-
 	public void playMusicByName(String name, float volume, float position)
 	{
 		Music playingMusic = stateInfo.getResourceManager().getMusicByName(name);
+		musicPosition = 0;
 		playingMusic.stop();
 		playingMusic.setPosition(position);
 		playingMusic.loop(1, 0);
 		playingMusic.fade(2000, volume, false);
-		stateInfo.setPlayingMusic(playingMusic);
-		stateInfo.setPlayingMusicName(name);
-	}
-
-
-	public void playMusicByName(String name, float volume)
-	{
-		Music playingMusic = stateInfo.getResourceManager().getMusicByName(name);
-		playingMusic.loop(1, volume);
-		stateInfo.setPlayingMusic(playingMusic);
-		stateInfo.setPlayingMusicName(name);
+		this.playingMusicName = name;
+		this.playingVolume = volume;
+		this.playingMusic = playingMusic;
 	}
 
 	public void pauseMusic()
 	{
-		if (stateInfo.getPlayingMusic() != null)
-			stateInfo.getPlayingMusic().pause();
+		if (playingMusic != null)
+		{
+			System.out.println(playingMusic.getPosition());
+			this.playingMusicPosition = this.playingMusic.getPosition();
+			playingMusic.stop();
+		}
 	}
 
 	public void resumeMusic()
 	{
-		if (stateInfo.getPlayingMusic() != null)
-			stateInfo.getPlayingMusic().resume();
+		if (playingMusic != null)
+		{
+			playMusicByName(playingMusicName, playingVolume, playingMusicPosition);
+		}
 	}
 
 	public void stopMusic()
 	{
-		if (stateInfo.getPlayingMusic() != null)
+		if (playingMusic != null)
 		{
-			stateInfo.getPlayingMusic().stop();
-			stateInfo.setPlayingMusic(null);
+			playingMusic.stop();
+			playingMusic = null;
 		}
 	}
 
 	public void fadeMusic(int duration)
 	{
-		if (stateInfo.getPlayingMusic() != null)
-			stateInfo.getPlayingMusic().fade(duration, 0f, true);
+		if (playingMusic != null)
+		{
+			playingMusic.fade(duration, 0f, true);
+		}
 	}
 
 	@Override

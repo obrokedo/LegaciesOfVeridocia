@@ -74,7 +74,9 @@ public class Message implements Serializable
 		super();
 		this.messageType = messageType;
 
-		if (messageType == MESSAGE_INTIIALIZE || messageType == MESSAGE_MOVETO_SPRITELOC)
+		if (messageType == MESSAGE_INTIIALIZE || messageType == MESSAGE_MOVETO_SPRITELOC ||
+				messageType == MESSAGE_PAUSE_MUSIC || messageType == MESSAGE_RESUME_MUSIC ||
+				messageType == MESSAGE_FADE_MUSIC)
 		{
 			immediate = true;
 		}

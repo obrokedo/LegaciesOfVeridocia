@@ -1,7 +1,6 @@
 package mb.fc.game.menu;
 
 import mb.fc.engine.message.AudioMessage;
-import mb.fc.engine.message.InfoMessage;
 import mb.fc.engine.message.Message;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.input.FCInput;
@@ -50,15 +49,19 @@ public class DebugMenu extends Menu
 			}
 			else if (splitText[0].equalsIgnoreCase("mute"))
 			{
+				/*
 				if (stateInfo.getPlayingMusic() != null)
 					stateInfo.getPlayingMusic().setVolume(0f);
+					*/
 			}
 			else if (splitText[0].equalsIgnoreCase("printmusic"))
 			{
+				/*
 				if (stateInfo.getPlayingMusic() == null)
 					stateInfo.sendMessage(new InfoMessage("SYSTEM", "Playing music: NULL"));
 				else
 					stateInfo.sendMessage(new InfoMessage("SYSTEM", "Playing music: " + stateInfo.getPlayingMusic().toString()));
+					*/
 			}
 			else if (splitText[0].equalsIgnoreCase("heal"))
 			{

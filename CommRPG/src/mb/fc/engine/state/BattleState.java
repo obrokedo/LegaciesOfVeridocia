@@ -1,7 +1,6 @@
 package mb.fc.engine.state;
 
 import mb.fc.engine.CommRPG;
-import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.Message;
 import mb.fc.game.manager.InitiativeManager;
 import mb.fc.game.manager.KeyboardManager;
@@ -47,8 +46,10 @@ public class BattleState extends LoadableGameState
 
 	private StateInfo stateInfo;
 
+	/*
 	private float musicVolume = 0;
 	private String music = null;
+	*/
 
 	public BattleState(PersistentStateInfo psi)
 	{
@@ -77,6 +78,10 @@ public class BattleState extends LoadableGameState
 		stateInfo.registerManager(soundManager);
 	}
 
+	/**
+	 * Initializes this state, this only gets called when coming
+	 * from a loading state
+	 */
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException
@@ -95,11 +100,7 @@ public class BattleState extends LoadableGameState
 			container.getInput().addKeyListener(stateInfo.getInput());
 			this.stateInfo.setInputDelay(System.currentTimeMillis() + 200);
 			stateInfo.setShowAttackCinematic(false);
-			if (music != null)
-			{
-				stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_PLAY_MUSIC, music, .5f, stateInfo.getPlayingMusicPostion(), true));
-				System.out.println("MUSIC ENTER " + musicVolume + " " + stateInfo.getPlayingMusicPostion() + " " + music);
-			}
+			stateInfo.sendMessage(Message.MESSAGE_RESUME_MUSIC);
 		}
 	}
 
@@ -111,12 +112,6 @@ public class BattleState extends LoadableGameState
 			stateInfo.getResourceManager().reinitialize();
 			stateInfo.setInitialized(false);
 			stateInfo.getInput().clear();
-		}
-		else
-		{
-			musicVolume = stateInfo.getPlayingMusic().getVolume();
-			music = stateInfo.getPlayingMusicName();
-			System.out.println("MUSIC EXIT " + musicVolume + " " + stateInfo.getPlayingMusicPostion() + " " + music + " " + stateInfo);
 		}
 
 		super.leave(container, game);

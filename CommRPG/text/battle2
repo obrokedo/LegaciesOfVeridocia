@@ -1,0 +1,4 @@
+<trigger id=0 description="Battle Initialize" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+</trigger>
+<trigger id=1 description="" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+</trigger>

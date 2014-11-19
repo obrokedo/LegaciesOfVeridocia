@@ -40,6 +40,10 @@ public class CinematicState extends LoadableGameState
 		stateInfo.registerManager(soundManager);
 	}
 
+	/**
+	 * Initializes this state, this only gets called when coming
+	 * from a loading state
+	 */
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {

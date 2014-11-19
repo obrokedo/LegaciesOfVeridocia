@@ -580,10 +580,8 @@ public class TurnManager extends Manager implements KeyboardListener
 				break;
 			case Message.MESSAGE_BATTLE_RESULTS:
 				battleResults = ((BattleResultsMessage) message).getBattleResults();
-				stateInfo.setPlayingMusicPostion(stateInfo.getPlayingMusic().getPosition());
-				stateInfo.getPlayingMusic().fade(250, 0f, true);
-				System.out.println("PLAYING POSITION " + stateInfo.getPlayingMusicPostion());
-				// turnActions.add(new WaitAction(15));
+				stateInfo.sendMessage(Message.MESSAGE_PAUSE_MUSIC);
+
 				turnActions.add(new PerformAttackAction(battleResults));
 				turnActions.add(new TurnAction(TurnAction.ACTION_CHECK_DEATH));
 				break;

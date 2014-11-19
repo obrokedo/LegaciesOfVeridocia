@@ -153,6 +153,10 @@ public class AttackCinematicState extends LoadableGameState
 		input = new FCInput();
 	}
 
+	/**
+	 * Initializes this state, this only gets called when coming
+	 * from a loading state
+	 */
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
@@ -473,8 +477,9 @@ public class AttackCinematicState extends LoadableGameState
 		else if (state == STATE_POST_ATTACK)
 		{
 			container.getInput().removeAllKeyListeners();
+			// music.fade(250, 0f, true);
+			music.stop();
 			game.enterState(CommRPG.STATE_GAME_BATTLE, new FadeOutTransition(Color.black, 250), new EmptyTransition());
-			music.fade(250, 0f, true);
 		}
 
 		if (menuUpdate == MenuUpdate.MENU_NEXT_ACTION)
@@ -516,8 +521,9 @@ public class AttackCinematicState extends LoadableGameState
 			else if (state == STATE_POST_ATTACK)
 			{
 				container.getInput().removeAllKeyListeners();
+				// music.fade(250, 0f, true);
+				music.stop();
 				game.enterState(CommRPG.STATE_GAME_BATTLE, new FadeOutTransition(Color.black, 250), new EmptyTransition());
-				music.fade(250, 0f, true);
 			}
 			else if (state == STATE_ATTACK_CLIMAX)
 			{

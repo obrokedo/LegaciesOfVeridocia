@@ -11249,7 +11249,6 @@
    <tile gid="0"/>
   </data>
  </layer>
- <objectgroup name="Battle Region" width="66" height="34" visible="0"/>
  <objectgroup name="Terrain" width="66" height="34" visible="0">
   <object name="Rug" x="480" y="264">
    <properties>
@@ -11399,8 +11398,34 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup name="Battle" width="66" height="34" visible="0"/>
- <layer name="Grid Pattern" width="66" height="34" visible="0" opacity="0.1">
+ <objectgroup name="Battle" width="66" height="34">
+  <object name="Battle Start" type="START" x="120" y="240" width="72" height="24">
+   <properties>
+    <property name="start" value="exit=battlestart"/>
+   </properties>
+  </object>
+  <object name="Battle Start 2" type="START" x="192" y="312" width="48" height="24">
+   <properties>
+    <property name="start" value="exit=battlestart"/>
+   </properties>
+  </object>
+  <object name="Soldier" type="NPC" x="264" y="72" width="24" height="24">
+   <properties>
+    <property name="enemy" value="enemyid=0 ai=fighter aiapproach=slow unit=0"/>
+   </properties>
+  </object>
+  <object name="Soldier" type="NPC" x="336" y="48" width="24" height="24">
+   <properties>
+    <property name="enemy" value="enemyid=0 ai=fighter aiapproach=slow unit=1"/>
+   </properties>
+  </object>
+  <object name="Soldier" type="NPC" x="360" y="264" width="24" height="24">
+   <properties>
+    <property name="enemy" value="enemyid=0 ai=fighter aiapproach=slow unit=2"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <layer name="Grid Pattern" width="66" height="34" opacity="0.1">
   <data>
    <tile gid="161"/>
    <tile gid="162"/>

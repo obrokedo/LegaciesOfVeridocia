@@ -1,5 +1,6 @@
 package mb.fc.game.move;
 
+import java.awt.Point;
 import java.util.ArrayList;
 
 import mb.fc.engine.message.AudioMessage;
@@ -50,6 +51,7 @@ public class MoveableSpace implements KeyboardListener, MouseListener, TileBased
 	private static final int UNMOVEABLE_TILE = 99;
 	private final Color MOVEABLE_COLOR = new Color(0, 0, 255, 70);
 	private boolean checkMoveable = true;
+	private ArrayList<Point> spritePoints = new ArrayList<Point>();
 
 	public static MoveableSpace determineMoveableSpace(StateInfo stateInfo, CombatSprite currentSprite, boolean ownsSprite)
 	{
@@ -116,6 +118,9 @@ public class MoveableSpace implements KeyboardListener, MouseListener, TileBased
 
 			int sX = s.getTileX();
 			int sY = s.getTileY();
+
+			if (s.getSpriteType() == Sprite.TYPE_STATIC_SPRITE)
+				ms.spritePoints.add(new Point(sX, sY));
 
 			// If this sprite is an ally then set it's location to the special non moveable
 			// value. The allies will be able to move through this spot but not end there.
@@ -331,7 +336,15 @@ public class MoveableSpace implements KeyboardListener, MouseListener, TileBased
 		else
 		{
 			if (map.getMapEffectiveHeight() > ty && map.getMapEffectiveWidth() > tx)
+			{
+				for (Point p : spritePoints)
+				{
+					if (p.x == tx && p.y == ty)
+						return true;
+				}
+
 				return !map.isMarkedMoveable(tx, ty);
+			}
 			return true;
 		}
 	}

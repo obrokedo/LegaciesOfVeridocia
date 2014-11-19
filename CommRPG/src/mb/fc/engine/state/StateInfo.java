@@ -30,7 +30,6 @@ import mb.fc.map.Map;
 import mb.fc.map.MapObject;
 
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Music;
 
 /**
  * Central container to hold all information that is associated with a given state. AKA "The Dumping Ground"
@@ -77,9 +76,11 @@ public class StateInfo
 	private ArrayList<CombatSprite> heroes;
 	private boolean showAttackCinematic = false;
 
+	/*
 	private Music playingMusic = null;
 	private float playingMusicPostion;
 	private String playingMusicName;
+	*/
 
 	private String currentMap;
 
@@ -246,31 +247,22 @@ public class StateInfo
 			switch (m.getMessageType())
 			{
 				case Message.MESSAGE_LOAD_MAP:
+					sendMessage(Message.MESSAGE_PAUSE_MUSIC);
+
 					LoadMapMessage lmm = (LoadMapMessage) m;
 					psi.loadMap(lmm.getMap(), lmm.getLocation());
-					if (playingMusic != null)
-					{
-						playingMusic.stop();
-						playingMusic = null;
-					}
 					break MESSAGES;
 				case Message.MESSAGE_START_BATTLE:
+					sendMessage(Message.MESSAGE_PAUSE_MUSIC);
+
 					LoadMapMessage lmb = (LoadMapMessage) m;
 					psi.loadBattle(lmb.getBattle(), lmb.getMap(), lmb.getLocation(), lmb.getBattleBG());
-					if (playingMusic != null)
-					{
-						playingMusic.stop();
-						playingMusic = null;
-					}
 					break MESSAGES;
 				case Message.MESSAGE_LOAD_CINEMATIC:
+					sendMessage(Message.MESSAGE_PAUSE_MUSIC);
+
 					LoadMapMessage lmc = (LoadMapMessage) m;
 					psi.loadCinematic(lmc.getMap(), lmc.getCinematicID());
-					if (playingMusic != null)
-					{
-						playingMusic.stop();
-						playingMusic = null;
-					}
 					break;
 				case Message.MESSAGE_SAVE:
 					getClientProfile().serializeToFile();
@@ -659,6 +651,11 @@ public class StateInfo
 		this.currentSprite = currentSprite;
 	}
 
+	public PersistentStateInfo getPsi() {
+		return psi;
+	}
+
+	/*
 	public Music getPlayingMusic() {
 		return playingMusic;
 	}
@@ -675,10 +672,6 @@ public class StateInfo
 		this.playingMusicName = playingMusicName;
 	}
 
-	public PersistentStateInfo getPsi() {
-		return psi;
-	}
-
 	public float getPlayingMusicPostion() {
 		return playingMusicPostion;
 	}
@@ -686,4 +679,5 @@ public class StateInfo
 	public void setPlayingMusicPostion(float playingMusicPostion) {
 		this.playingMusicPostion = playingMusicPostion;
 	}
+	*/
 }
