@@ -5,7 +5,7 @@ import java.util.Random;
 import javax.swing.JOptionPane;
 
 import mb.fc.engine.log.FileLogger;
-import mb.fc.engine.state.AttackCinematicState;
+import mb.fc.engine.state.AttackCinematicState2;
 import mb.fc.engine.state.DevelMenuState;
 import mb.fc.engine.state.PersistentStateInfo;
 import mb.fc.engine.state.TestState;
@@ -224,7 +224,7 @@ public class CommRPG extends StateBasedGame   {
 		// this.addState(new MenuState());
 		this.addState(new DevelMenuState());
 
-		this.addState(new AttackCinematicState());
+		this.addState(new AttackCinematicState2());
 		this.addState(loadingState);
 
 		this.addState(new TestState());

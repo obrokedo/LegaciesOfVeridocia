@@ -109,9 +109,6 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 		else
 			stateInfo.sendMessage(new InfoMessage(null, "No targets in range!"));
 
-		if (currentSprite.isHero())
-			stateInfo.registerMouseListener(this);
-
 		cursorImage = stateInfo.getResourceManager().getImages().get("battlecursor");
 	}
 
@@ -274,5 +271,10 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 			return true;
 		}
 		return false;
+	}
+
+	public int getTargetAmount()
+	{
+		return targetsInRange.size();
 	}
 }

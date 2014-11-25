@@ -24,6 +24,10 @@
 	<addactor x=600 y=228 name="Guard" anim="eriumguard" startanim="UnDown" visible=true init=true/>
 	<addactor x=624 y=144 name="Sharna" anim="Sharna" startanim="UnUp" visible=true init=true/>
 	<addactor x=552 y=168 name="Huun" anim="Huun" startanim="UnDown" visible=true init=true/>
+	<addactor x=96 y=216 name="Olivia" anim="Olivia" startanim="UnUp" visible=true init=true/>
+	<addactor x=216 y=120 name="Guard2" anim="eriumguard" startanim="UnDown" visible=true init=true/>
+	<addactor x=240 y=120 name="Guard3" anim="eriumguard" startanim="UnDown" visible=true init=true/>
+	<addactor x=120 y=144 name="Guard4" anim="eriumguard" startanim="UnDown" visible=true init=true/>
 	<camerafollow name="Noah"/>
 	<facing name="Sharna" dir=2/>
 	<layonback name="Noah" dir=0/>
@@ -32,10 +36,18 @@
 	<addstatic x=360 y=204 spriteid="Door2" spriteim="jaildoor(night)"/>
 	<addstatic x=216 y=288 spriteid="Door3" spriteim="jaildoor(night)"/>
 	<addstatic x=96 y=288 spriteid="Door2" spriteim="jaildoor(night)"/>
+	<addstatic x=264 y=192 spriteid="Fire" spriteim="fire"/>
+	<addstatic x=240 y=192 spriteid="Fire" spriteim="fire"/>
+	<addstatic x=216 y=192 spriteid="Fire" spriteim="fire"/>
+	<addstatic x=192 y=192 spriteid="Fire" spriteim="fire"/>
+	<addstatic x=120 y=192 spriteid="Fire" spriteim="fire"/>
+	<addstatic x=96 y=192 spriteid="Fire" spriteim="fire"/>
+	<addstatic x=72 y=192 spriteid="Fire" spriteim="fire"/>
+	<addstatic x=48 y=192 spriteid="Fire" spriteim="fire"/>
 	<fadein time=2000 halting=false init=true/>
 	<speech text="... But we can't prove that.]" portrait=2/>
 	<speech text="Noah only fell on her.} Are you suggesting that she just attacks any person that mistakenly runs into her?]" portrait=1/>
-	<speech text="Hey... I slipped]" portrait=0/>
+	<speech text="Hey... I slipped.]" portrait=0/>
 	<haltingmove name="Huun" x=552 y=144 speed="2.4" movehor=false movediag=false/>
 	<facing name="Huun" dir=3/>
 	<wait time=500/>
@@ -124,10 +136,44 @@
 	<wait time=500/>
 	<remstatic spriteid="Door3"/>
 	<wait time=500/>
-	<move name="Craig" x=216 y=120 speed="2.4" movehor=false movediag=false/>
-	<move name="Huun" x=216 y=144 speed="2.4" movehor=true movediag=false/>
-	<move name="Sharna" x=216 y=168 speed="2.4" movehor=true movediag=false/>
-	<haltingmove name="Noah" x=216 y=192 speed="2.4" movehor=true movediag=false/>
+	<move name="Craig" x=192 y=240 speed="2.4" movehor=false movediag=false/>
+	<move name="Huun" x=216 y=240 speed="2.4" movehor=true movediag=false/>
+	<move name="Sharna" x=216 y=264 speed="2.4" movehor=true movediag=false/>
+	<haltingmove name="Noah" x=216 y=288 speed="2.4" movehor=true movediag=false/>
+	<move name="Craig" x=96 y=240 speed="2.4" movehor=false movediag=false/>
+	<move name="Huun" x=120 y=240 speed="2.4" movehor=false movediag=false/>
+	<move name="Sharna" x=144 y=240 speed="2.4" movehor=false movediag=false/>
+	<haltingmove name="Noah" x=168 y=240 speed="2.4" movehor=false movediag=false/>
+	<facing name="Craig" dir=0/>
+	<facing name="Huun" dir=0/>
+	<facing name="Sharna" dir=0/>
+	<facing name="Noah" dir=0/>
+	<wait time=500/>
+	<facing name="Olivia" dir=1/>
+	<speech text="Good. You rescued them finally.} You know I can't maintain this spell indefinitely, Craig.]" portrait=5/>
+	<speech text="Um, excuse me, but who are you?]" portrait=1/>
+	<speech text="Oh, forgive us dear, we're{.{.{.|} There it goes. We must make haste!]" portrait=5/>
+	<remstatic spriteid="Fire"/>
+	<speech text="They'll try to pincer us. Take this key and lock the door behind us.} We'll hold the calvary there. You mop up the grunts, and we'll meet you upstairs.]" portrait=4/>
+	<move name="Olivia" x=216 y=240 speed="2.4" movehor=true movediag=false/>
+	<haltingmove name="Craig" x=216 y=216 speed="2.4" movehor=false movediag=false/>
+	<move name="Olivia" x=192 y=312 speed="2.4" movehor=false movediag=false/>
+	<haltingmove name="Craig" x=216 y=312 speed="2.4" movehor=false movediag=false/>
+	<wait time=500/>
+	<facing name="Craig" dir=0/>
+	<wait time=500/>
+	<addstatic x=216 y=288 spriteid="JailDoor" spriteim="jaildoor(night)"/>
+	<wait time=500/>
+	<facing name="Craig" dir=1/>
+	<wait time=1000/>
+	<cameramove x=168 y=144 time=1000/>
+	<wait time=1000/>
+	<speech text="Not so fast.]" portrait=-1/>
+	<speech text="We're surrounded!]" portrait=2/>
+	<speech text="You're observant. Mistal said you wouldn't go quietly.} Surrender now; you're only making it worse for yourselves.]" portrait=-1/>
+	<speech text="We have to get through. But subdue them, don't kill them.]" portrait=0/>
+	<speech text="Confident, aren't we? Don't expect the same courtesy from us.]" portrait=-1/>
+	<loadbattle textfile="battle2" map="eriumjail" entrance="battlestart" battbg=0/>
 </cinematic>
 <cinematic id=1 description="" camerax=0 cameray=0>
 </cinematic>

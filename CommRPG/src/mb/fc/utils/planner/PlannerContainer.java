@@ -133,7 +133,7 @@ public class PlannerContainer extends JPanel implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent a) {
 		String action = a.getActionCommand();
-		System.out.println("ACTION PERFORMED " + action);
+		System.out.println("ACTION PERFORMED " + action + " " + (this == parentTab.getCurrentPC()));
 		if (action.equalsIgnoreCase("addline"))
 		{
 			int index = defLine.getSelectedItem();

@@ -170,6 +170,7 @@ public class AttackCinematicState extends LoadableGameState
 		else
 			g.setColor(Color.white);
 		g.fillRect(0, 0, container.getWidth(), container.getHeight());
+
 		g.drawImage(backgroundImage, bgXPos, bgYPos);
 
 		FCGameContainer cont = (FCGameContainer) container;

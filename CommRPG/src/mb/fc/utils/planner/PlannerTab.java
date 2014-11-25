@@ -70,6 +70,7 @@ public class PlannerTab extends JPanel implements ActionListener, ItemListener, 
 	public void actionPerformed(ActionEvent al)
 	{
 		String command = al.getActionCommand();
+		System.out.println("CONTAINER ACTION PERFORMED " + command);
 		if (command.equalsIgnoreCase("add"))
 		{
 			String type = containers[typeComboBox.getSelectedIndex()];
@@ -92,6 +93,10 @@ public class PlannerTab extends JPanel implements ActionListener, ItemListener, 
 			int selected = list.getSelectedIndex();
 			plannerFrame.removeReferences(refersTo, selected);
 			currentPC.getPcdef().getDataLines().remove(selected);
+			this.remove(currentPC.getDefLine().getDefiningPanel());
+			this.remove(currentPCScroll);
+			this.repaint();
+
 			currentPC = null;
 			listModel.removeElementAt(selected);
 			listPC.remove(selected);
@@ -208,6 +213,7 @@ public class PlannerTab extends JPanel implements ActionListener, ItemListener, 
 		System.out.println("CLEAR VALUES");
 		this.removeAll();
 		this.add(listPanel, BorderLayout.PAGE_START);
+		attributeList = null;
 		/*
 		if (currentPCScroll != null)
 		{

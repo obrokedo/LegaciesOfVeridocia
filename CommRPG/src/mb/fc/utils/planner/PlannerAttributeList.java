@@ -48,9 +48,12 @@ public class PlannerAttributeList extends JScrollPane
 	public void updateAttributeList(PlannerContainer currentPC, int index, AttributeTransferHandler transferHandler)
 	{
 		attributeListModel.removeAllElements();
-		for (PlannerLine pl : currentPC.getLines())
+		if (currentPC != null)
 		{
-			attributeListModel.addElement(pl.getPlDef().getName());
+			for (PlannerLine pl : currentPC.getLines())
+			{
+				attributeListModel.addElement(pl.getPlDef().getName());
+			}
 		}
 
 		attributeList.setTransferHandler(transferHandler);

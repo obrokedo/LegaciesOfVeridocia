@@ -275,7 +275,6 @@ public class TurnManager extends Manager implements KeyboardListener
 			case TurnAction.ACTION_DISPLAY_SPEECH:
 				if (!stateInfo.isMenuDisplayed(Panel.PANEL_SPEECH))
 				{
-					System.out.println("NOT DISPLAYED");
 					turnActions.remove(0);
 					stateInfo.removePanel(landEffectPanel);
 					stateInfo.removePanel(Panel.PANEL_HEALTH_BAR);
@@ -472,11 +471,17 @@ public class TurnManager extends Manager implements KeyboardListener
 		}
 
 		as = new AttackableSpace(stateInfo, currentSprite, targetsHero, range, area);
+		if (as.getTargetAmount() == 0)
+		{
+			stateInfo.sendMessage(Message.MESSAGE_SHOW_BATTLEMENU);
+		}
+		else
+		{
+			if (playerAttacking)
+				stateInfo.addKeyboardListener(as);
 
-		if (playerAttacking)
-			stateInfo.addKeyboardListener(as);
-
-		displayAttackable = true;
+			displayAttackable = true;
+		}
 	}
 
 	private void setToCursorMode()
