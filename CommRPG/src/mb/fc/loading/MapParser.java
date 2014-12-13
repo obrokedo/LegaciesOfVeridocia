@@ -27,9 +27,30 @@ public class MapParser
 
 		int width = Integer.parseInt(tagArea.getAttribute("width"));
 		int height = Integer.parseInt(tagArea.getAttribute("height"));
-		int tileWidth = Integer.parseInt(tagArea.getAttribute("tilewidth")) * map.getTileScale();
-		int tileHeight = Integer.parseInt(tagArea.getAttribute("tileheight")) * map.getTileScale();
+		//int tileWidth = Integer.parseInt(tagArea.getAttribute("tilewidth")) * map.getTileScale();
+		//int tileHeight = Integer.parseInt(tagArea.getAttribute("tileheight")) * map.getTileScale();
+		int tileWidth = Integer.parseInt(tagArea.getAttribute("tilewidth"));
+		int tileHeight = Integer.parseInt(tagArea.getAttribute("tileheight"));
+
+
+		float desiredTileSize = Map.DESIRED_TILE_WIDTH;
+		float tileResize = 1;
+		if (tileWidth > desiredTileSize)
+		{
+			tileResize = desiredTileSize / tileWidth;
+			tileWidth *= tileResize;
+			tileHeight *= tileResize;
+			map.setOriginalTileWidth((int) desiredTileSize);
+		}
+		else
+			map.setOriginalTileWidth(tileWidth);
+
+		tileWidth *= map.getTileScale();
+		tileHeight *= map.getTileScale();
+
+
 		System.out.println("TILE " + tileWidth  + " " + tileHeight);
+
 		String tileSet = null;
 
 		for (TagArea childArea : tagArea.getChildren())
@@ -56,7 +77,7 @@ public class MapParser
 				tilesetParser.parseTileset("image/" + tsSplit[tsSplit.length - 1], new Color(	Integer.parseInt(trans.substring(0, 2), 16),
 						Integer.parseInt(trans.substring(2, 4), 16),
 						Integer.parseInt(trans.substring(4, 6), 16)),
-						tileWidth, tileHeight, startIndex, map, landEffectByTileId);
+						tileWidth, tileHeight, startIndex, map, landEffectByTileId, tileResize);
 			}
 			else if (childArea.getTagType().equalsIgnoreCase("layer"))
 			{
@@ -76,12 +97,14 @@ public class MapParser
 				{
 					MapObject mapObject = new MapObject();
 					mapObject.setName(objectTag.getAttribute("name"));
-					mapObject.setX(map.getTileScale() * Integer.parseInt(objectTag.getAttribute("x")));
-					mapObject.setY(map.getTileScale() * Integer.parseInt(objectTag.getAttribute("y")));
+					mapObject.setX((int) (map.getTileScale() * Integer.parseInt(objectTag.getAttribute("x")) * tileResize));
+					mapObject.setY((int) (map.getTileScale() * Integer.parseInt(objectTag.getAttribute("y")) * tileResize));
 					if (objectTag.getAttribute("width") != null)
-						mapObject.setWidth(map.getTileScale() * Integer.parseInt(objectTag.getAttribute("width")));
+						mapObject.setWidth((int) (map.getTileScale() *
+								Integer.parseInt(objectTag.getAttribute("width")) * tileResize));
 					if (objectTag.getAttribute("height") != null)
-						mapObject.setHeight(map.getTileScale() * Integer.parseInt(objectTag.getAttribute("height")));
+						mapObject.setHeight((int) (map.getTileScale() *
+								Integer.parseInt(objectTag.getAttribute("height"))  * tileResize));
 					for (TagArea propArea : objectTag.getChildren())
 					{
 						if (propArea.getTagType().equalsIgnoreCase("properties"))
@@ -107,7 +130,8 @@ public class MapParser
 							for (String point : points)
 							{
 								String[] p = point.split(",");
-								pointList.add(new Point(map.getTileScale() * Integer.parseInt(p[0]), map.getTileScale() * Integer.parseInt(p[1])));
+								pointList.add(new Point((int) (map.getTileScale() * Integer.parseInt(p[0])  * tileResize),
+										(int) (map.getTileScale() * Integer.parseInt(p[1])  * tileResize)));
 							}
 
 							mapObject.setPolyPoints(pointList);

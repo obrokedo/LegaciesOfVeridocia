@@ -14,7 +14,7 @@ public class LocationMessage extends Message
 	public int locX;
 	public int locY;
 
-	public LocationMessage(int messageType, int locX, int locY) {
+	public LocationMessage(MessageType messageType, int locX, int locY) {
 		super(messageType);
 		this.locX = locX;
 		this.locY = locY;

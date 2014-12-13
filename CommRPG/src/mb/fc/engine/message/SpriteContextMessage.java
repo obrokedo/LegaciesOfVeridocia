@@ -3,6 +3,7 @@ package mb.fc.engine.message;
 import java.util.ArrayList;
 
 import mb.fc.game.sprite.CombatSprite;
+import mb.fc.game.sprite.Sprite;
 
 /**
  * A reusuable message that takes a custom message type and has an associated
@@ -15,27 +16,45 @@ public class SpriteContextMessage extends Message
 {
 	private static final long serialVersionUID = 1L;
 
-	private ArrayList<CombatSprite> sprites;
+	private ArrayList<Integer> sprites;
 
-	public SpriteContextMessage(int messageType, CombatSprite sprite)
+	public SpriteContextMessage(MessageType messageType, CombatSprite sprite)
 	{
 		super(messageType);
-		this.sprites = new ArrayList<CombatSprite>();
-		sprites.add(sprite);
+		this.sprites = new ArrayList<Integer>();
+		sprites.add(sprite.getId());
 	}
 
-	public SpriteContextMessage(int messageType, ArrayList<CombatSprite> sprites)
+	public SpriteContextMessage(MessageType messageType, ArrayList<CombatSprite> sprites)
 	{
 		super(messageType);
-		this.sprites = new ArrayList<CombatSprite>();
-		this.sprites.addAll(sprites);
+		this.sprites = new ArrayList<Integer>();
+		for (CombatSprite cs : sprites)
+			this.sprites.add(cs.getId());
 	}
 
-	public CombatSprite getSprite() {
-		return sprites.get(0);
+	public CombatSprite getSprite(Iterable<Sprite> sprites) {
+		for (Sprite s : sprites)
+		{
+			if (s.getId() == this.sprites.get(0))
+				return (CombatSprite) s;
+		}
+		return null;
 	}
 
-	public ArrayList<CombatSprite> getSprites() {
-		return sprites;
+	public ArrayList<CombatSprite> getSprites(Iterable<Sprite> sprites) {
+		ArrayList<CombatSprite> cSprites = new ArrayList<CombatSprite>();
+		for (Sprite s : sprites)
+		{
+			for (Integer id : this.sprites)
+			{
+				if (id == s.getId())
+				{
+					cSprites.add((CombatSprite) s);
+					break;
+				}
+			}
+		}
+		return cSprites;
 	}
 }

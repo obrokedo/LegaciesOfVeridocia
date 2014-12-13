@@ -117,7 +117,7 @@ public class ShopMenuTabled { /*extends PersistentMenu implements YesNoListener
 					}
 				}
 				else
-					stateInfo.sendMessage(new ChatMessage(Message.MESSAGE_SEND_INTERNAL_MESSAGE, "SYSTEM", "Selected character already has 4 items."), false);
+					stateInfo.sendMessage(new ChatMessage(MessageType.SEND_INTERNAL_MESSAGE, "SYSTEM", "Selected character already has 4 items."), false);
 			}
 			else
 			{

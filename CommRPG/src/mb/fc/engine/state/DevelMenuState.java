@@ -30,12 +30,11 @@ public class DevelMenuState extends MenuState
 	private ResourceSelector mapSelector, textSelector, entranceSelector;
 
 	@Override
-	public void init(GameContainer container, StateBasedGame game)
-			throws SlickException {
+	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 
 		this.game = game;
 		this.gc = container;
-
+		gameSetup(game, gc);
 		mapSelector = new ResourceSelector(true, "map");
 		textSelector = new ResourceSelector(false, "text");
 	}

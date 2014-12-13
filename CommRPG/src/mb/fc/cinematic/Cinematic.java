@@ -8,7 +8,7 @@ import mb.fc.cinematic.event.CinematicEvent;
 import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.IntMessage;
-import mb.fc.engine.message.Message;
+import mb.fc.engine.message.MessageType;
 import mb.fc.engine.state.CinematicState;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.Camera;
@@ -574,23 +574,23 @@ public class Cinematic {
 				}
 				break;
 			case PLAY_MUSIC:
-				stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_PLAY_MUSIC,
+				stateInfo.sendMessage(new AudioMessage(MessageType.PLAY_MUSIC,
 						(String) ce.getParam(0), ((int) ce.getParam(1)) / 100.0f,
 						true));
 				break;
 			case PAUSE_MUSIC:
-				stateInfo.sendMessage(Message.MESSAGE_PAUSE_MUSIC);
+				stateInfo.sendMessage(MessageType.PAUSE_MUSIC);
 				break;
 			case RESUME_MUSIC:
-				stateInfo.sendMessage(Message.MESSAGE_RESUME_MUSIC);
+				stateInfo.sendMessage(MessageType.RESUME_MUSIC);
 				break;
 			case FADE_MUSIC:
-				stateInfo.sendMessage(new IntMessage(Message.MESSAGE_FADE_MUSIC,
+				stateInfo.sendMessage(new IntMessage(MessageType.FADE_MUSIC,
 						(int) ce.getParam(0)));
 				break;
 			case PLAY_SOUND:
 				stateInfo.sendMessage(new AudioMessage(
-						Message.MESSAGE_SOUND_EFFECT, (String) ce.getParam(0),
+						MessageType.SOUND_EFFECT, (String) ce.getParam(0),
 						((int) ce.getParam(1)) / 100.0f, true));
 				break;
 			case STOP_ANIMATION:

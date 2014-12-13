@@ -1,8 +1,8 @@
 package mb.fc.engine.state;
 
-import java.util.ArrayList;
-
 import mb.fc.engine.CommRPG;
+import mb.fc.engine.message.Message;
+import mb.fc.engine.message.MessageType;
 import mb.fc.game.Camera;
 import mb.fc.game.persist.ClientProfile;
 import mb.fc.game.persist.ClientProgress;
@@ -10,6 +10,10 @@ import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.ui.FCGameContainer;
 import mb.fc.loading.FCResourceManager;
 import mb.fc.loading.LoadableGameState;
+import mb.fc.network.TCPClient;
+import mb.fc.network.TCPServer;
+import mb.tcp.network.Client;
+import mb.tcp.network.PacketHandler;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -23,18 +27,21 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
  * @author Broked
  *
  */
-public class PersistentStateInfo
+public class PersistentStateInfo implements PacketHandler
 {
 	private Camera camera;
 	private CommRPG game;
 	private FCGameContainer gc;
 	private Graphics graphics;
-	private ArrayList<CombatSprite> heroes;
 	private ClientProfile clientProfile;
 	private ClientProgress clientProgress;
 	private FCResourceManager resourceManager;
 	private String entranceLocation = "priest";
 	private int cinematicID = 0;
+	private int clientId;
+	private TCPServer server = null;
+	private TCPClient client = null;
+	private StateInfo currentStateInfo;
 
 	public PersistentStateInfo(ClientProfile clientProfile, ClientProgress clientProgress, CommRPG game, Camera camera,
 			GameContainer gc, Graphics graphics)
@@ -43,10 +50,8 @@ public class PersistentStateInfo
 		this.camera = camera;
 		this.gc = (FCGameContainer) gc;
 		this.graphics = graphics;
-		this.heroes = new ArrayList<CombatSprite>();
 		this.clientProfile = clientProfile;
 		this.clientProgress = clientProgress;
-		this.heroes.addAll(clientProfile.getHeroes());
 		this.entranceLocation = getClientProgress().getLocation();
 	}
 
@@ -107,10 +112,6 @@ public class PersistentStateInfo
 		return graphics;
 	}
 
-	public ArrayList<CombatSprite> getHeroes() {
-		return heroes;
-	}
-
 	public void setQuestComplete(int id)
 	{
 		this.clientProgress.setQuestComplete(id);
@@ -151,5 +152,68 @@ public class PersistentStateInfo
 
 	public void setEntranceLocation(String entranceLocation) {
 		this.entranceLocation = entranceLocation;
+	}
+
+	public int getClientId() {
+		return clientId;
+	}
+
+	public void setClientId(int clientId) {
+		for (CombatSprite cs : clientProfile.getHeroes())
+			cs.setClientId(clientId);
+		this.clientId = clientId;
+	}
+
+	public void setServer(TCPServer server) {
+		this.server = server;
+	}
+
+	public void setClient(TCPClient client) {
+		this.client = client;
+	}
+
+	public boolean isHost()
+	{
+		if (!isOnline())
+			return true;
+		return server != null;
+	}
+
+	public boolean isOnline()
+	{
+		return client != null;
+	}
+
+	public void sendMessage(Message message)
+	{
+		if (!message.isInternal() && isOnline())
+			client.sendMessage(message);
+		else
+			currentStateInfo.recieveMessage(message);
+	}
+
+	@Override
+	public void handleIncomingPacket(Client client, Object packet) {
+		Message message = (Message) packet;
+		if (message.getMessageType() == MessageType.CONTINUE)
+		{
+			currentStateInfo.continueState();
+		}
+		else
+			currentStateInfo.recieveMessage(message);
+	}
+
+	@Override
+	public void handlerRegistered(Client client) {
+
+	}
+
+	public void setCurrentStateInfo(StateInfo currentStateInfo) {
+		this.currentStateInfo = currentStateInfo;
+		if (isOnline())
+		{
+			client.unregisterPacketHandler(this);
+			client.registerPacketHandler(this);
+		}
 	}
 }

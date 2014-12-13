@@ -14,7 +14,7 @@ public class InfoMessage extends Message
 	private String text;
 
 	public InfoMessage(String sender, String text) {
-		super(Message.MESSAGE_SEND_INTERNAL_MESSAGE);
+		super(MessageType.SEND_INTERNAL_MESSAGE);
 		this.sender = sender;
 		this.text = text;
 	}

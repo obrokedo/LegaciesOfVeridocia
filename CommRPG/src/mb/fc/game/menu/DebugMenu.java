@@ -1,7 +1,7 @@
 package mb.fc.game.menu;
 
 import mb.fc.engine.message.AudioMessage;
-import mb.fc.engine.message.Message;
+import mb.fc.engine.message.MessageType;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.input.FCInput;
 import mb.fc.game.move.MovingSprite;
@@ -90,7 +90,7 @@ public class DebugMenu extends Menu
 			}
 			else if (splitText[0].equalsIgnoreCase("play"))
 			{
-				stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_PLAY_MUSIC, splitText[1], 1, true));
+				stateInfo.sendMessage(new AudioMessage(MessageType.PLAY_MUSIC, splitText[1], 1, true));
 			}
 			else if (splitText[0].equalsIgnoreCase("gainlevel"))
 			{

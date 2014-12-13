@@ -30,8 +30,8 @@ public class AnimatedSprite extends Sprite
 	private Direction facing;
 	private int animationUpdate = 10;
 
-	public AnimatedSprite(int locX, int locY, String imageName) {
-		super(locX, locY);
+	public AnimatedSprite(int locX, int locY, String imageName, int id) {
+		super(locX, locY, id);
 		this.imageName = imageName;
 	}
 
@@ -47,7 +47,7 @@ public class AnimatedSprite extends Sprite
 			AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), this.getLocX(), this.getLocY(), cont.getDisplayPaddingX(), camera, true);
 
 			graphics.drawImage(spriteAnims.getImageAtIndex(as.imageIndex), this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(),
-					this.getLocY() - camera.getLocationY() - stateInfo.getResourceManager().getMap().getTileRenderHeight());
+					this.getLocY() - camera.getLocationY() - stateInfo.getResourceManager().getMap().getTileEffectiveHeight() / 2);
 		}
 	}
 
@@ -60,7 +60,7 @@ public class AnimatedSprite extends Sprite
 	{
 		Image i = (originalIm).getScaledCopy(originalIm.getWidth(), (int) (originalIm.getHeight() * .65));
 		i.drawSheared((int) (locX - camera.getLocationX() + displayPadding - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 13 * (1.0 * originalIm.getHeight() / stateInfo.getTileHeight())),
-				locY - camera.getLocationY() - (tileOffset ? stateInfo.getResourceManager().getMap().getTileRenderHeight() : 0) + originalIm.getHeight() -
+				locY - camera.getLocationY() - (tileOffset ? stateInfo.getResourceManager().getMap().getTileEffectiveHeight() / 2 : 0) + originalIm.getHeight() -
 					i.getHeight(), (int) (CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 13 * (1.0 * originalIm.getHeight() / stateInfo.getTileHeight())),
 				0, SHADOW_COLOR);
 	}

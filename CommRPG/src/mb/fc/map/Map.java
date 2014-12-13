@@ -72,7 +72,8 @@ public class Map
 	private Hashtable<Integer, Roof> roofsById = new Hashtable<Integer, Roof>();
 	private Shape battleRegion = null;
 
-	private final static int TILE_RATIO = 2;
+	private float tileRatio = 2f;
+	public static final float DESIRED_TILE_WIDTH = 24f;
 
 	public Map() {
 		super();
@@ -116,22 +117,22 @@ public class Map
 
 	public int getMapEffectiveWidth()
 	{
-		return mapLayer.get(0)[0].length / 2;
+		return (int) (mapLayer.get(0)[0].length / tileRatio);
 	}
 
 	public int getMapEffectiveHeight()
 	{
-		return mapLayer.get(0).length / 2;
+		return (int) (mapLayer.get(0).length / tileRatio);
 	}
 
 	public int getTileEffectiveWidth()
 	{
-		return tileWidth * TILE_RATIO;
+		return (int) (tileWidth * tileRatio);
 	}
 
 	public int getTileEffectiveHeight()
 	{
-		return tileHeight * TILE_RATIO;
+		return (int) (tileHeight * tileRatio);
 	}
 
 	public int getTileRenderWidth() {
@@ -272,8 +273,9 @@ public class Map
 
 	public boolean isMarkedMoveable(int tileX, int tileY)
 	{
-		if ((mapLayer.get(3).length > (tileY * TILE_RATIO)) && ((mapLayer.get(3)[0].length > tileX * TILE_RATIO)))
-			return mapLayer.get(3)[tileY * TILE_RATIO][tileX * TILE_RATIO] != 0;
+		System.out.println(tileX * tileRatio + " " + tileY * tileRatio);
+		if ((mapLayer.get(3).length > (tileY * tileRatio)) && ((mapLayer.get(3)[0].length > tileX * tileRatio)))
+			return mapLayer.get(3)[(int) (tileY * tileRatio)][(int) (tileX * tileRatio)] != 0;
 		return false;
 	}
 
@@ -365,5 +367,11 @@ public class Map
 	public int getTileScale()
 	{
 		return CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
+	}
+
+	public void setOriginalTileWidth(int origTileWidth)
+	{
+		tileRatio = DESIRED_TILE_WIDTH / origTileWidth;
+		System.out.println("TILE RATIO " + tileRatio);
 	}
 }

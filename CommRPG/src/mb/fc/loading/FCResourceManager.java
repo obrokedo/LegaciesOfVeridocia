@@ -359,7 +359,9 @@ public class FCResourceManager {
 		System.out.println("Read all lines " + file);
 		BufferedReader br = null;
 		if (LoadingState.inJar)
+		{
 			br = new BufferedReader(new InputStreamReader(LoadingState.MY_CLASS.getResourceAsStream(file)));
+		}
 		else
 			br = new BufferedReader(new InputStreamReader(ResourceLoader.getResourceAsStream(file)));
 		ArrayList<String> allLines = new ArrayList<String>();

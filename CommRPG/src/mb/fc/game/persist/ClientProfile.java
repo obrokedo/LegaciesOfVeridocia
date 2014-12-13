@@ -13,6 +13,8 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.sprite.HeroProgression;
@@ -23,13 +25,15 @@ public class ClientProfile implements Serializable
 
 	private HeroProgression leaderProgression;
 	private ArrayList<CombatSprite> heroes;
+	private transient ArrayList<CombatSprite> networkHeroes;
 	private int gold;
 	private String name;
 	private transient ArrayList<Integer> startingHeroIds = null;
 
 	public ClientProfile(String name)
 	{
-		heroes = new ArrayList<CombatSprite>();
+		heroes = new ArrayList<>();
+		networkHeroes = new ArrayList<>();
 
 		startingHeroIds = new ArrayList<Integer>();
 		startingHeroIds.add(0);
@@ -84,14 +88,36 @@ public class ClientProfile implements Serializable
 		return leaderProgression;
 	}
 
+	public void addHero(CombatSprite hero)
+	{
+		this.heroes.add(hero);
+	}
+
 	public ArrayList<CombatSprite> getHeroes() {
-		return heroes;
+		ArrayList<CombatSprite> hs = new ArrayList<>();
+		hs.addAll(heroes);
+		hs.addAll(networkHeroes);
+		Collections.sort(hs, new HeroComparator());
+		return hs;
+	}
+
+	private class HeroComparator implements Comparator<CombatSprite>
+	{
+		@Override
+		public int compare(CombatSprite c1, CombatSprite c2) {
+			return c2.getId() - c1.getId();
+		}
+
+	}
+
+	public void addNetworkHeroes(ArrayList<CombatSprite> networkHeroes) {
+		this.networkHeroes.addAll(networkHeroes);
 	}
 
 	public ArrayList<CombatSprite> getLeaderList()
 	{
 		ArrayList<CombatSprite> css = new ArrayList<CombatSprite>();
-		for (CombatSprite cs : heroes)
+		for (CombatSprite cs : this.getHeroes())
 			if (cs.isLeader())
 				css.add(cs);
 		return css;
@@ -142,11 +168,5 @@ public class ClientProfile implements Serializable
 
 	public String getName() {
 		return name;
-	}
-
-	public void setClientId(int clientId)
-	{
-		for (CombatSprite cs : heroes)
-			cs.setUniqueEnemyId(clientId);
 	}
 }

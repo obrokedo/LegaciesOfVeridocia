@@ -59,8 +59,18 @@ public class ItemDefinition
 
 	public Item getItem(StateInfo stateInfo)
 	{
-		item.setImage(stateInfo.getResourceManager().getSpriteSheets().get("items").getSprite(imageX, imageY));
+		initializeItem(item, stateInfo);
 		return item;
+	}
+
+	public Item getUnintializedItem()
+	{
+		return item;
+	}
+
+	public void initializeItem(Item i, StateInfo stateInfo)
+	{
+		i.setImage(stateInfo.getResourceManager().getSpriteSheets().get("items").getSprite(imageX, imageY));
 	}
 
 	public int getId() {

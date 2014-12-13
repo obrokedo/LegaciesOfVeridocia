@@ -16,7 +16,7 @@ public class SpeechMessage extends Message
 	private int portraitId = -1;
 
 	public SpeechMessage(String text, int triggerId, int portraitId) {
-		super(Message.MESSAGE_SPEECH);
+		super(MessageType.SPEECH);
 		this.text = text;
 		this.triggerId = triggerId;
 		this.portraitId = portraitId;

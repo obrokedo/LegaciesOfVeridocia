@@ -2,7 +2,6 @@ package mb.fc.game.definition;
 
 import java.util.ArrayList;
 
-import mb.fc.engine.state.StateInfo;
 import mb.fc.game.battle.spell.KnownSpell;
 import mb.fc.game.item.EquippableItem;
 import mb.fc.game.item.Item;
@@ -151,7 +150,7 @@ public class HeroDefinition
 		return hd;
 	}
 
-	public CombatSprite getHero(StateInfo stateInfo)
+	public CombatSprite getHero()
 	{
 		/*
 		leaderProgression = new HeroProgression(new int[][] {{KnownSpell.ID_BLAZE, 2, 6, 16, 27}},
@@ -217,12 +216,12 @@ public class HeroDefinition
 
 		// Create a CombatSprite from default stats, hero progression and spells known
 		CombatSprite cs = new CombatSprite(leader, name, animations, heroProgression,
-				hp, mp, attack, defense, speed, move[0], movementType[0], level, 0, portrait[0], knownSpells);
+				hp, mp, attack, defense, speed, move[0], movementType[0], level, 0, portrait[0], knownSpells, id);
 
 		// Add items to the combat sprite
 		for (int i = 0; i < items.size(); i++)
 		{
-			Item item = ItemResource.getItem(items.get(i), stateInfo);
+			Item item = ItemResource.getUninitializedItem(items.get(i));
 			cs.addItem(item);
 			if (itemsEquipped.get(i))
 				cs.equipItem((EquippableItem) item);

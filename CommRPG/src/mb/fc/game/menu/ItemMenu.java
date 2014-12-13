@@ -3,7 +3,7 @@ package mb.fc.game.menu;
 import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.IntMessage;
-import mb.fc.engine.message.Message;
+import mb.fc.engine.message.MessageType;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.constants.Direction;
 import mb.fc.game.hudmenu.Panel;
@@ -73,15 +73,15 @@ public class ItemMenu extends QuadMenu
 
 	@Override
 	public MenuUpdate onBack() {
-		stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menuback", 1f, false));
-		stateInfo.sendMessage(Message.MESSAGE_SHOW_BATTLEMENU);
+		stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, "menuback", 1f, false));
+		stateInfo.sendMessage(MessageType.SHOW_BATTLEMENU);
 		return MenuUpdate.MENU_CLOSE;
 	}
 
 	@Override
 	public MenuUpdate onConfirm() {
-		stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menuselect", 1f, false));
-		stateInfo.sendMessage(new IntMessage(Message.MESSAGE_SHOW_ITEM_OPTION_MENU, getSelectedInt()));
+		stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, "menuselect", 1f, false));
+		stateInfo.sendMessage(new IntMessage(MessageType.SHOW_ITEM_OPTION_MENU, getSelectedInt()));
 		return MenuUpdate.MENU_CLOSE;
 	}
 

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.LocationMessage;
-import mb.fc.engine.message.Message;
+import mb.fc.engine.message.MessageType;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.Camera;
 import mb.fc.game.constants.Direction;
@@ -394,14 +394,14 @@ public class MoveableSpace implements KeyboardListener, MouseListener, TileBased
 
 		if (rightClicked)
 		{
-			stateInfo.sendMessage(Message.MESSAGE_RESET_SPRITELOC);
+			stateInfo.sendMessage(MessageType.RESET_SPRITELOC);
 			return true;
 		}
 		else if (leftClicked)
 		{
 			if (canEndMoveHere(mx, my))
 			{
-				stateInfo.sendMessage(new LocationMessage(Message.MESSAGE_MOVETO_SPRITELOC, mx, my));
+				stateInfo.sendMessage(new LocationMessage(MessageType.MOVETO_SPRITELOC, mx, my));
 				return true;
 			}
 		}
@@ -423,20 +423,21 @@ public class MoveableSpace implements KeyboardListener, MouseListener, TileBased
 		{
 			if (canEndMoveHere(stateInfo.getCurrentSprite().getTileX(), stateInfo.getCurrentSprite().getTileY()))
 			{
-				stateInfo.sendMessage(Message.MESSAGE_SHOW_BATTLEMENU);
-				stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, GlobalPythonFactory.createJMusicSelector().getMenuAddedSoundEffect(), 1f, false));
+				stateInfo.sendMessage(MessageType.SHOW_BATTLEMENU);
+				stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT,
+						GlobalPythonFactory.createJMusicSelector().getMenuAddedSoundEffect(), 1f, false));
 				return true;
 			}
 			else
 			{
-				stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT,
+				stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT,
 						GlobalPythonFactory.createJMusicSelector().getInvalidActionSoundEffect(), 1f, false));
 			}
 		}
 		else if (input.isKeyDown(KeyMapping.BUTTON_2))
 		{
-			stateInfo.sendMessage(Message.MESSAGE_RESET_SPRITELOC);
-			stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menuback", 1f, false));
+			stateInfo.sendMessage(MessageType.RESET_SPRITELOC);
+			stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, "menuback", 1f, false));
 			return true;
 		}
 		else
@@ -464,7 +465,7 @@ public class MoveableSpace implements KeyboardListener, MouseListener, TileBased
 
 		if (canMoveHere(sx, sy))
 		{
-			stateInfo.sendMessage(new LocationMessage(Message.MESSAGE_MOVETO_SPRITELOC, sx * stateInfo.getTileWidth(), sy * stateInfo.getTileHeight()));
+			stateInfo.sendMessage(new LocationMessage(MessageType.MOVETO_SPRITELOC, sx * stateInfo.getTileWidth(), sy * stateInfo.getTileHeight()));
 		}
 		else
 			stateInfo.getCurrentSprite().setFacing(direction);

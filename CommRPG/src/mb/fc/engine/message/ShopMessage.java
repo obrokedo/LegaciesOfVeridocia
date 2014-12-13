@@ -17,7 +17,7 @@ public class ShopMessage extends Message
 
 	public ShopMessage(double buyPercent, double sellPercent,
 			int[] itemIds) {
-		super(Message.MESSAGE_SHOW_SHOP);
+		super(MessageType.SHOW_SHOP);
 		this.buyPercent = buyPercent;
 		this.sellPercent = sellPercent;
 		this.itemIds = itemIds;

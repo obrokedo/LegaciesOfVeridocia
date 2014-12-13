@@ -8,7 +8,7 @@ import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.BattleCondMessage;
 import mb.fc.engine.message.IntMessage;
 import mb.fc.engine.message.LoadMapMessage;
-import mb.fc.engine.message.Message;
+import mb.fc.engine.message.MessageType;
 import mb.fc.engine.message.ShopMessage;
 import mb.fc.engine.message.SpeechMessage;
 import mb.fc.engine.state.StateInfo;
@@ -134,7 +134,7 @@ public class TriggerEvent
 
 		@Override
 		public boolean perform(StateInfo stateInfo) {
-			stateInfo.sendMessage(new IntMessage(Message.MESSAGE_COMPLETE_QUEST, questId));
+			stateInfo.sendMessage(new IntMessage(MessageType.COMPLETE_QUEST, questId));
 			return false;
 		}
 	}
@@ -153,7 +153,7 @@ public class TriggerEvent
 		@Override
 		public boolean perform(StateInfo stateInfo)
 		{
-			stateInfo.sendMessage(new LoadMapMessage(Message.MESSAGE_LOAD_MAP, map, null, location, 0));
+			stateInfo.sendMessage(new LoadMapMessage(MessageType.LOAD_MAP, map, null, location, 0), true);
 			return false;
 		}
 	}
@@ -176,7 +176,7 @@ public class TriggerEvent
 		@Override
 		public boolean perform(StateInfo stateInfo)
 		{
-			stateInfo.sendMessage(new LoadMapMessage(Message.MESSAGE_START_BATTLE, map, battle, entrance, battleBG));
+			stateInfo.sendMessage(new LoadMapMessage(MessageType.START_BATTLE, map, battle, entrance, battleBG), true);
 			return false;
 		}
 	}
@@ -194,7 +194,7 @@ public class TriggerEvent
 
 		@Override
 		public boolean perform(StateInfo stateInfo) {
-			stateInfo.sendMessage(new BattleCondMessage(leaderIds, killAllLeaders));
+			stateInfo.sendMessage(new BattleCondMessage(leaderIds, killAllLeaders), true);
 			return false;
 		}
 	}
@@ -229,7 +229,7 @@ public class TriggerEvent
 	{
 		@Override
 		public boolean perform(StateInfo stateInfo) {
-			stateInfo.sendMessage(Message.MESSAGE_SHOW_PRIEST);
+			stateInfo.sendMessage(MessageType.SHOW_PRIEST);
 			return false;
 		}
 	}
@@ -245,7 +245,7 @@ public class TriggerEvent
 
 		@Override
 		public boolean perform(StateInfo stateInfo) {
-			stateInfo.getPsi().getHeroes().add(HeroResource.getHero(heroId, stateInfo));
+			stateInfo.getPsi().getClientProfile().addHero(HeroResource.getHero(heroId));
 			return false;
 		}
 	}
@@ -277,7 +277,7 @@ public class TriggerEvent
 
 		@Override
 		public boolean perform(StateInfo stateInfo) {
-			stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_PLAY_MUSIC, song, .5f, true));
+			stateInfo.sendMessage(new AudioMessage(MessageType.PLAY_MUSIC, song, .5f, true));
 			return false;
 		}
 	}
@@ -295,7 +295,7 @@ public class TriggerEvent
 
 		@Override
 		public boolean perform(StateInfo stateInfo) {
-			stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, song, volume / 100.0f, false));
+			stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, song, volume / 100.0f, false));
 			return false;
 		}
 	}
@@ -311,7 +311,7 @@ public class TriggerEvent
 
 		@Override
 		public boolean perform(StateInfo stateInfo) {
-			stateInfo.sendMessage(new IntMessage(Message.MESSAGE_SHOW_CINEMATIC, cinematicId));
+			stateInfo.sendMessage(new IntMessage(MessageType.SHOW_CINEMATIC, cinematicId), true);
 			return false;
 		}
 	}
@@ -328,7 +328,7 @@ public class TriggerEvent
 
 		@Override
 		public boolean perform(StateInfo stateInfo) {
-			stateInfo.sendMessage(new LoadMapMessage(Message.MESSAGE_LOAD_CINEMATIC, map, cinematicId));
+			stateInfo.sendMessage(new LoadMapMessage(MessageType.LOAD_CINEMATIC, map, cinematicId), true);
 			return false;
 		}
 	}
@@ -368,7 +368,7 @@ public class TriggerEvent
 					}
 				}
 
-				stateInfo.sendMessage(new SpeechMessage(s.getMessage(), s.getTriggerId(), s.getPortraitId()));
+				stateInfo.sendMessage(new SpeechMessage(s.getMessage(), s.getTriggerId(), s.getPortraitId()), true);
 				break;
 			}
 

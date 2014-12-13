@@ -2,7 +2,7 @@ package mb.fc.game.sprite;
 
 import java.util.ArrayList;
 
-import mb.fc.engine.message.Message;
+import mb.fc.engine.message.MessageType;
 import mb.fc.engine.message.SpriteContextMessage;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.Camera;
@@ -54,9 +54,11 @@ public class CombatSprite extends AnimatedSprite
 	private boolean isPromoted = false;
 
 	// This value provides a mean of differentiating between multiple enemies of the same name,
-	// in addition this value can be user speified for enemies so that they may be the target
+	// in addition this value can be user specified for enemies so that they may be the target
 	// of triggers
 	private int uniqueEnemyId = -1;
+	private int clientId = 0;
+
 	private ArrayList<KnownSpell> spells;
 	private ArrayList<Item> items;
 	private ArrayList<Boolean> equipped;
@@ -76,19 +78,20 @@ public class CombatSprite extends AnimatedSprite
 
 	public CombatSprite(boolean isLeader,
 			String name, String imageName, int hp, int mp, int attack, int defense, int speed, int move,
-				int movementType, int level, int id, int portraitIndex, ArrayList<KnownSpell> spells)
+				int movementType, int level, int enemyId, int portraitIndex, ArrayList<KnownSpell> spells, int id)
 	{
-		this(isLeader, name, imageName, null, hp, mp, attack, defense, speed, move, movementType, level, 0, portraitIndex, spells);
-		this.uniqueEnemyId = id;
+		this(isLeader, name, imageName, null, hp, mp, attack, defense, speed, move, movementType, level, 0, portraitIndex, spells, id);
+		this.uniqueEnemyId = enemyId;
 		this.ai = new ClericAI(AI.APPROACH_REACTIVE);
 		this.isHero = false;
 	}
 
 	public CombatSprite(boolean isLeader,
 			String name, String imageName, HeroProgression heroProgression, int hp, int mp, int attack,
-			int defense, int speed, int move, int movementType, int level, int exp, int portraitIndex, ArrayList<KnownSpell> spells)
+			int defense, int speed, int move, int movementType, int level, int exp, int portraitIndex, ArrayList<KnownSpell> spells,
+			int id)
 	{
-		super(0, 0, imageName);
+		super(0, 0, imageName, id);
 
 		currentHP = hp;
 		maxHP = hp;
@@ -132,6 +135,7 @@ public class CombatSprite extends AnimatedSprite
 		this.spells = spells;
 
 		this.spriteType = Sprite.TYPE_COMBAT;
+		this.id = id;
 	}
 
 	@Override
@@ -154,12 +158,9 @@ public class CombatSprite extends AnimatedSprite
 				sd.initializeFromLoad(stateInfo);
 		}
 
-		int itemsSize = items.size();
-		for (int i = 0; i < itemsSize; i++)
+		for (Item item : items)
 		{
-			Item item = ItemResource.getItem(items.get(0).getItemId(), stateInfo);
-			items.add(item);
-			items.remove(0);
+			ItemResource.initializeItem(item, stateInfo);
 		}
 
 		this.currentAttack = this.maxAttack;
@@ -196,6 +197,7 @@ public class CombatSprite extends AnimatedSprite
 	@Override
 	public void render(Camera camera, Graphics graphics, FCGameContainer cont)
 	{
+		graphics.drawString(this.getLocX() + " " + this.getLocY() + " " + camera.getLocationY(), 350, 350);
 		for (AnimSprite as : currentAnim.frames.get(imageIndex).sprites)
 		{
 			if (movementType != CombatSprite.MOVEMENT_FLYING)
@@ -204,7 +206,7 @@ public class CombatSprite extends AnimatedSprite
 			}
 
 			graphics.drawImage(spriteAnims.getImageAtIndex(as.imageIndex), this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(),
-					this.getLocY() - camera.getLocationY() - stateInfo.getResourceManager().getMap().getTileRenderHeight(), fadeColor);
+					this.getLocY() - camera.getLocationY() - stateInfo.getResourceManager().getMap().getTileEffectiveHeight() / 2, fadeColor);
 		}
 	}
 
@@ -593,11 +595,19 @@ public class CombatSprite extends AnimatedSprite
 
 	public void triggerButton1Event(StateInfo stateInfo)
 	{
-		stateInfo.sendMessage(new SpriteContextMessage(Message.MESSAGE_SHOW_HERO, this));
+		stateInfo.sendMessage(new SpriteContextMessage(MessageType.SHOW_HERO, this));
 	}
 
 	public void triggerOverEvent(StateInfo stateInfo)
 	{
 		stateInfo.addPanel(new SpriteContextPanel(Panel.PANEL_HEALTH_BAR, this, stateInfo.getGc()));
+	}
+
+	public int getClientId() {
+		return clientId;
+	}
+
+	public void setClientId(int clientId) {
+		this.clientId = clientId;
 	}
 }

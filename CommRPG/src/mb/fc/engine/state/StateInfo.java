@@ -10,6 +10,7 @@ import java.util.Stack;
 import mb.fc.engine.message.IntMessage;
 import mb.fc.engine.message.LoadMapMessage;
 import mb.fc.engine.message.Message;
+import mb.fc.engine.message.MessageType;
 import mb.fc.game.Camera;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.input.FCInput;
@@ -50,6 +51,7 @@ public class StateInfo
 	private boolean initialized = false;
 	private boolean isCombat = false;
 	private boolean isCinematic = false;
+	private boolean isWaiting = false;
 	private PersistentStateInfo psi;
 
 	// These values need to be reinitialized each time a map is loaded
@@ -100,11 +102,11 @@ public class StateInfo
 		this.newMessages = new ArrayList<Message>();
 		this.triggers = new ArrayList<TriggerLocation>();
 		this.fcInput = new FCInput();
+		this.heroes = new ArrayList<>();
 
 		camera = psi.getCamera();
 		gc = psi.getGc();
 		graphics = psi.getGraphics();
-		heroes = psi.getHeroes();
 
 		this.currentMap = psi.getClientProgress().getMap();
 	}
@@ -116,13 +118,16 @@ public class StateInfo
 	{
 		System.out.println("Initialize State");
 
+		psi.setCurrentStateInfo(this);
+
 		this.initialized = false;
+		setWaiting(true);
 
 		// Add starting heroes if they haven't been added yet
 		if (psi.getClientProfile().getStartingHeroIds() != null)
 		{
 			for (Integer heroId : psi.getClientProfile().getStartingHeroIds())
-				psi.getClientProfile().getHeroes().add(HeroResource.getHero(heroId, this));
+				psi.getClientProfile().addHero(HeroResource.getHero(heroId));
 			psi.getClientProfile().setStartingHeroIds(null);
 		}
 
@@ -134,7 +139,7 @@ public class StateInfo
 			this.heroes.addAll(getClientProfile().getLeaderList());
 
 
-		sendMessage(Message.MESSAGE_INTIIALIZE);
+		sendMessage(MessageType.INTIIALIZE);
 
 		if (this.getClientProgress().getRetriggerablesByMap() != null)
 			for (Integer triggerId : this.getClientProgress().getRetriggerablesByMap())
@@ -142,11 +147,15 @@ public class StateInfo
 
 		gc.getInput().addKeyListener(fcInput);
 
-		this.initialized = true;
-
-		if (isCombat)
-			// Start the whole battle
-			sendMessage(Message.MESSAGE_NEXT_TURN);
+		if (psi.isOnline())
+			sendMessage(MessageType.WAIT);
+		else
+		{
+			initialized = true;
+			if (isCombat)
+				// Start the whole battle
+				sendMessage(MessageType.NEXT_TURN);
+		}
 	}
 
 	private void initializeSystems()
@@ -176,6 +185,19 @@ public class StateInfo
 			System.out.println("Perform first trigger");
 			psi.getResourceManager().getTriggerEventById(0).perform(this);
 		}
+
+	}
+
+	public void continueState()
+	{
+		if (!initialized)
+		{
+			initialized = true;
+			if (isCombat)
+				// Start the whole battle
+				sendMessage(MessageType.NEXT_TURN);
+		}
+		isWaiting = false;
 	}
 
 	private void initializeMapObjects()
@@ -214,7 +236,27 @@ public class StateInfo
 		if (message.isImmediate())
 			sendMessageImpl(message);
 		else
+			psi.sendMessage(message);
+
+		/*
+		if (message.isImmediate())
+			sendMessageImpl(message);
+		else
 			newMessages.add(message);
+			*/
+	}
+
+	public void sendMessage(Message message, boolean ifHost)
+	{
+		if (psi.isHost())
+			psi.sendMessage(message);
+
+		/*
+		if (message.isImmediate())
+			sendMessageImpl(message);
+		else
+			newMessages.add(message);
+			*/
 	}
 
 	/**
@@ -222,19 +264,37 @@ public class StateInfo
 	 *
 	 * @param messageType The type of the message to be sent
 	 */
-	public void sendMessage(int messageType)
+	public void sendMessage(MessageType messageType)
 	{
 		Message message = new Message(messageType);
 		if (message.isImmediate())
 			sendMessageImpl(message);
 		else
+			psi.sendMessage(message);
+		/*
+		if (message.isImmediate())
+			sendMessageImpl(message);
+		else
 			newMessages.add(message);
+			*/
+	}
+
+	public void sendMessage(MessageType messageType, boolean ifHost)
+	{
+		Message message = new Message(messageType);
+		sendMessage(message, ifHost);
 	}
 
 	private void sendMessageImpl(Message message)
 	{
 		for (Manager m : managers)
 			m.recieveMessage(message);
+	}
+
+	public void recieveMessage(Message message)
+	{
+		newMessages.add(message);
+		//System.out.println("RECIEVED " + message.getMessageType());
 	}
 
 	public void processMessages()
@@ -244,31 +304,32 @@ public class StateInfo
 		MESSAGES: for (int i = 0; i < messagesToProcess.size(); i = 0)
 		{
 			Message m = messagesToProcess.remove(i);
+			//System.out.println("PROCESSING " + m.getMessageType());
 			switch (m.getMessageType())
 			{
-				case Message.MESSAGE_LOAD_MAP:
-					sendMessage(Message.MESSAGE_PAUSE_MUSIC);
+				case LOAD_MAP:
+					sendMessage(MessageType.PAUSE_MUSIC);
 
 					LoadMapMessage lmm = (LoadMapMessage) m;
 					psi.loadMap(lmm.getMap(), lmm.getLocation());
 					break MESSAGES;
-				case Message.MESSAGE_START_BATTLE:
-					sendMessage(Message.MESSAGE_PAUSE_MUSIC);
+				case START_BATTLE:
+					sendMessage(MessageType.PAUSE_MUSIC);
 
 					LoadMapMessage lmb = (LoadMapMessage) m;
 					psi.loadBattle(lmb.getBattle(), lmb.getMap(), lmb.getLocation(), lmb.getBattleBG());
 					break MESSAGES;
-				case Message.MESSAGE_LOAD_CINEMATIC:
-					sendMessage(Message.MESSAGE_PAUSE_MUSIC);
+				case LOAD_CINEMATIC:
+					sendMessage(MessageType.PAUSE_MUSIC);
 
 					LoadMapMessage lmc = (LoadMapMessage) m;
 					psi.loadCinematic(lmc.getMap(), lmc.getCinematicID());
 					break;
-				case Message.MESSAGE_SAVE:
+				case SAVE:
 					getClientProfile().serializeToFile();
 					getClientProgress().serializeToFile(currentMap, "priest");
 					break;
-				case Message.MESSAGE_COMPLETE_QUEST:
+				case COMPLETE_QUEST:
 					this.setQuestComplete(((IntMessage) m).getValue());
 					break;
 				default:
@@ -430,7 +491,8 @@ public class StateInfo
 
 	public void removeKeyboardListener()
 	{
-		keyboardListeners.pop();
+		if (keyboardListeners.size() > 0)
+			keyboardListeners.pop();
 	}
 
 	public void removeKeyboardListeners()
@@ -653,6 +715,17 @@ public class StateInfo
 
 	public PersistentStateInfo getPsi() {
 		return psi;
+	}
+
+	public boolean isWaiting() {
+		return isWaiting;
+	}
+
+	public void setWaiting(boolean isWaiting) {
+		if (psi.isOnline())
+		{
+			this.isWaiting = isWaiting;
+		}
 	}
 
 	/*

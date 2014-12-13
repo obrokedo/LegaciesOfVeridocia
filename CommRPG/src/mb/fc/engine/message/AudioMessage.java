@@ -15,7 +15,7 @@ public class AudioMessage extends Message
 	private boolean loop;
 	private float position;
 
-	public AudioMessage(int messageType, String audio, float volume, boolean loop) {
+	public AudioMessage(MessageType messageType, String audio, float volume, boolean loop) {
 		super(messageType);
 		this.audio = audio;
 		this.volume = volume;
@@ -23,7 +23,7 @@ public class AudioMessage extends Message
 		this.loop = loop;
 	}
 
-	public AudioMessage(int messageType, String audio, float volume, float position, boolean loop) {
+	public AudioMessage(MessageType messageType, String audio, float volume, float position, boolean loop) {
 		super(messageType);
 		this.audio = audio;
 		this.volume = volume;

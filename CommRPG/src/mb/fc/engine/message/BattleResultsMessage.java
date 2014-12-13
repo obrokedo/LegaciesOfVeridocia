@@ -16,7 +16,7 @@ public class BattleResultsMessage extends Message
 
 	public BattleResultsMessage(BattleResults battleResults)
 	{
-		super(Message.MESSAGE_BATTLE_RESULTS);
+		super(MessageType.BATTLE_RESULTS);
 		this.battleResults = battleResults;
 	}
 

@@ -14,7 +14,7 @@ public class BattleCondMessage extends Message
 	private boolean killAllLeaders;
 
 	public BattleCondMessage(int[] leaderIds, boolean killAllLeaders) {
-		super(Message.MESSAGE_BATTLE_COND);
+		super(MessageType.BATTLE_COND);
 		this.leaderIds = leaderIds;
 		this.killAllLeaders = killAllLeaders;
 	}

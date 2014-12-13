@@ -1,7 +1,7 @@
 package mb.fc.engine.state;
 
 import mb.fc.engine.CommRPG;
-import mb.fc.engine.message.Message;
+import mb.fc.engine.message.MessageType;
 import mb.fc.game.manager.InitiativeManager;
 import mb.fc.game.manager.KeyboardManager;
 import mb.fc.game.manager.MenuManager;
@@ -62,6 +62,8 @@ public class BattleState extends LoadableGameState
 		stateInfo.registerManager(panelRenderer);
 		this.menuRenderer = new MenuRenderer();
 		stateInfo.registerManager(menuRenderer);
+		this.initManager = new InitiativeManager();
+		stateInfo.registerManager(initManager);
 		this.spriteManager = new SpriteManager();
 		stateInfo.registerManager(spriteManager);
 		this.panelManager = new PanelManager();
@@ -70,8 +72,6 @@ public class BattleState extends LoadableGameState
 		stateInfo.registerManager(menuManager);
 		this.keyboardManager = new KeyboardManager();
 		stateInfo.registerManager(keyboardManager);
-		this.initManager = new InitiativeManager();
-		stateInfo.registerManager(initManager);
 		this.turnManager = new TurnManager();
 		stateInfo.registerManager(turnManager);
 		this.soundManager = new SoundManager();
@@ -96,11 +96,13 @@ public class BattleState extends LoadableGameState
 
 		if (stateInfo.isShowAttackCinematic())
 		{
+			stateInfo.setWaiting(true);
+			stateInfo.sendMessage(MessageType.WAIT);
 			stateInfo.getInput().clear();
 			container.getInput().addKeyListener(stateInfo.getInput());
 			this.stateInfo.setInputDelay(System.currentTimeMillis() + 200);
 			stateInfo.setShowAttackCinematic(false);
-			stateInfo.sendMessage(Message.MESSAGE_RESUME_MUSIC);
+			stateInfo.sendMessage(MessageType.RESUME_MUSIC);
 		}
 	}
 
@@ -154,13 +156,13 @@ public class BattleState extends LoadableGameState
 			{
 				if (container.getInput().isKeyDown(Input.KEY_ENTER))
 				{
-					stateInfo.sendMessage(Message.MESSAGE_SHOW_DEBUG);
+					stateInfo.sendMessage(MessageType.SHOW_DEBUG);
 					stateInfo.setInputDelay(System.currentTimeMillis() + 200);
 				}
 				/*
 				if (container.getInput().isKeyDown(Input.KEY_ESCAPE))
 				{
-					stateInfo.sendMessage(Message.MESSAGE_SHOW_SYSTEM_MENU);
+					stateInfo.sendMessage(MessageType.SHOW_SYSTEM_MENU);
 					stateInfo.setInputDelay(System.currentTimeMillis() + 200);
 				}*/
 				else if (container.getInput().isKeyDown(Input.KEY_F7))

@@ -12,14 +12,14 @@ public class BattleSelectionMessage extends Message
 
 	private int selectionIndex, level;
 
-	public BattleSelectionMessage(int messageType, int selectionIndex)
+	public BattleSelectionMessage(MessageType messageType, int selectionIndex)
 	{
 		super(messageType);
 		this.selectionIndex = selectionIndex;
 		this.level = 0;
 	}
 
-	public BattleSelectionMessage(int messageType, int selectionIndex, int level)
+	public BattleSelectionMessage(MessageType messageType, int selectionIndex, int level)
 	{
 		super(messageType);
 		this.selectionIndex = selectionIndex;

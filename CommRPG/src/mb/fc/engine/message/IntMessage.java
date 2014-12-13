@@ -12,7 +12,7 @@ public class IntMessage extends Message
 
 	private int value;
 
-	public IntMessage(int type, int value)
+	public IntMessage(MessageType type, int value)
 	{
 		super(type);
 		this.value = value;

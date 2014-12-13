@@ -1,7 +1,7 @@
 package mb.fc.engine.state;
 
 import mb.fc.engine.CommRPG;
-import mb.fc.engine.message.Message;
+import mb.fc.engine.message.MessageType;
 import mb.fc.game.manager.CinematicManager;
 import mb.fc.game.manager.MenuManager;
 import mb.fc.game.manager.PanelManager;
@@ -15,6 +15,7 @@ import mb.fc.renderer.PanelRenderer;
 import mb.fc.renderer.SpriteRenderer;
 import mb.fc.renderer.TileMapRenderer;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -110,6 +111,12 @@ public class TownState extends LoadableGameState
 			cinematicManager.renderMenu(g);
 			cinematicManager.renderPostEffects(g);
 		}
+
+		if (stateInfo.isWaiting())
+		{
+			g.setColor(Color.white);
+			g.drawString("Waiting...", 50, 100);
+		}
 	}
 
 	@Override
@@ -117,7 +124,7 @@ public class TownState extends LoadableGameState
 			throws SlickException
 	{
 		stateInfo.processMessages();
-		if (stateInfo.isInitialized())
+		if (stateInfo.isInitialized() && !stateInfo.isWaiting())
 		{
 			menuManager.update(delta);
 			cinematicManager.update(delta);
@@ -133,29 +140,29 @@ public class TownState extends LoadableGameState
 			{
 				if (container.getInput().isKeyDown(Input.KEY_ESCAPE))
 				{
-					stateInfo.sendMessage(Message.MESSAGE_SHOW_SYSTEM_MENU);
+					stateInfo.sendMessage(MessageType.SHOW_SYSTEM_MENU);
 					stateInfo.setInputDelay(System.currentTimeMillis() + 200);
 				}
 				/*
 				else if (container.getInput().isKeyDown(Input.KEY_C))
 				{
-					stateInfo.sendMessage(Message.MESSAGE_SHOW_HEROES);
+					stateInfo.sendMessage(MessageType.SHOW_HEROES);
 					stateInfo.setInputDelay(System.currentTimeMillis() + 200);
 				}
 				else if (container.getInput().isKeyDown(Input.KEY_S))
 				{
-					stateInfo.sendMessage(Message.MESSAGE_SHOW_PRIEST);
+					stateInfo.sendMessage(MessageType.SHOW_PRIEST);
 					stateInfo.setInputDelay(System.currentTimeMillis() + 200);
 				}
 				*/
 				else if (container.getInput().isKeyDown(Input.KEY_D) && !stateInfo.areMenusDisplayed())
 				{
-					stateInfo.sendMessage(Message.MESSAGE_INVESTIGATE);
+					stateInfo.sendMessage(MessageType.INVESTIGATE);
 					stateInfo.setInputDelay(System.currentTimeMillis() + 200);
 				}
 				else if (container.getInput().isKeyDown(Input.KEY_ENTER))
 				{
-					stateInfo.sendMessage(Message.MESSAGE_SHOW_DEBUG);
+					stateInfo.sendMessage(MessageType.SHOW_DEBUG);
 					stateInfo.setInputDelay(System.currentTimeMillis() + 200);
 				}
 				else if (container.getInput().isKeyDown(Input.KEY_F7))

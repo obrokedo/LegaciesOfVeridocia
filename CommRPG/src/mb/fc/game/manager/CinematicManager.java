@@ -50,10 +50,12 @@ public class CinematicManager extends Manager
 	{
 		switch (message.getMessageType())
 		{
-			case Message.MESSAGE_SHOW_CINEMATIC:
+			case SHOW_CINEMATIC:
 				IntMessage im = (IntMessage) message;
 				cinematic = stateInfo.getResourceManager().getCinematicById(im.getValue());
 				cinematic.initialize(stateInfo);
+				break;
+			default:
 				break;
 		}
 	}

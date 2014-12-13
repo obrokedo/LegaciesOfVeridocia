@@ -48,6 +48,7 @@ public class MenuState extends LoadableGameState
 		this.gc = container;
 		input = new FCInput();
 		container.getInput().addKeyListener(input);
+		gameSetup(game, gc);
 	}
 
 	@Override
@@ -104,8 +105,6 @@ public class MenuState extends LoadableGameState
 
 	public void start(GameContainer gc, int load, String map, String text, String entrance)
 	{
-		gameSetup(game, gc);
-
 		persistentStateInfo.setEntranceLocation(entrance);
 
 		if (load == 1)
@@ -223,9 +222,16 @@ public class MenuState extends LoadableGameState
 			clientProgress.serializeToFile(map, "north");
 		}
 
-		persistentStateInfo =
+		try {
+			persistentStateInfo =
 				new PersistentStateInfo(clientProfile, clientProgress, (CommRPG) game, new Camera(gc.getWidth() - ((FCGameContainer) gc).getDisplayPaddingX() * 2,
 						gc.getHeight()), gc, gc.getGraphics());
+		}
+		catch (Throwable t)
+		{
+			t.printStackTrace();
+			System.exit(0);
+		}
 
 		game.addState(new BattleState(persistentStateInfo));
 		game.addState(new TownState(persistentStateInfo));

@@ -91,23 +91,25 @@ public class SoundManager extends Manager
 	{
 		switch (message.getMessageType())
 		{
-			case Message.MESSAGE_SOUND_EFFECT:
+			case SOUND_EFFECT:
 				AudioMessage am = (AudioMessage) message;
 				playSoundByName(am.getAudio(), am.getVolume());
 				break;
-			case Message.MESSAGE_PAUSE_MUSIC:
+			case PAUSE_MUSIC:
 				pauseMusic();
 				break;
-			case Message.MESSAGE_RESUME_MUSIC:
+			case RESUME_MUSIC:
 				resumeMusic();
 				break;
-			case Message.MESSAGE_PLAY_MUSIC:
+			case PLAY_MUSIC:
 				am = (AudioMessage) message;
 				playMusicByName(am.getAudio(), am.getVolume(), am.getPosition());
 				break;
-			case Message.MESSAGE_FADE_MUSIC:
+			case FADE_MUSIC:
 				IntMessage im = (IntMessage) message;
 				fadeMusic(im.getValue());
+				break;
+			default:
 				break;
 		}
 	}

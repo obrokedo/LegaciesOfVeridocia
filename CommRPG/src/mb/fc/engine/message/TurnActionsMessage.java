@@ -1,0 +1,26 @@
+package mb.fc.engine.message;
+
+import java.util.ArrayList;
+
+import mb.fc.game.turnaction.TurnAction;
+
+public class TurnActionsMessage extends Message
+{
+	private boolean forHero = false;
+	private ArrayList<TurnAction> turnActions;
+
+	public TurnActionsMessage(boolean forHero,
+			ArrayList<TurnAction> turnActions) {
+		super(MessageType.TURN_ACTIONS);
+		this.forHero = forHero;
+		this.turnActions = turnActions;
+	}
+
+	public boolean isForHero() {
+		return forHero;
+	}
+
+	public ArrayList<TurnAction> getTurnActions() {
+		return turnActions;
+	}
+}

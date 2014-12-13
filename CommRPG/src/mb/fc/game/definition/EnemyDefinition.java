@@ -12,6 +12,8 @@ import mb.fc.utils.XMLParser.TagArea;
 
 public class EnemyDefinition
 {
+	private static int ENEMY_COUNT = -1;
+
 	private int id;
 	private String name;
 	private boolean leader = false;
@@ -92,12 +94,13 @@ public class EnemyDefinition
 		}
 
 		// Create a CombatSprite from default stats, hero progression and spells known
-		CombatSprite cs = new CombatSprite(leader, name, animations, hp, mp, attack, defense, speed, move, movementType, level, myId, portrait, knownSpells);
+		CombatSprite cs = new CombatSprite(leader, name, animations, hp, mp, attack, defense,
+				speed, move, movementType, level, myId, portrait, knownSpells, ENEMY_COUNT--);
 
 		// Add items to the combat sprite
 		for (int i = 0; i < items.size(); i++)
 		{
-			Item item = ItemResource.getItem(items.get(i), stateInfo);
+			Item item = ItemResource.getUninitializedItem(items.get(i));
 			cs.addItem(item);
 			if (itemsEquipped.get(i))
 				cs.equipItem((EquippableItem) item);
@@ -112,5 +115,10 @@ public class EnemyDefinition
 
 	public String getAnimation() {
 		return animations;
+	}
+
+	public static void resetEnemyIds()
+	{
+		ENEMY_COUNT = -1;
 	}
 }

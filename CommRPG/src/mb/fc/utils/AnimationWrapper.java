@@ -86,6 +86,13 @@ public class AnimationWrapper
 						g.drawImage(getRotatedImageIfNeeded(spriteAnims.getImageAtIndex(as.imageIndex), as),
 								x + as.x * SCREEN_SCALE, y + as.y * SCREEN_SCALE, filter);
 				}
+				else
+				{
+					// 30, 4
+					g.setColor(Color.yellow);
+					g.fillRect(x + as.x * SCREEN_SCALE, y + as.y * SCREEN_SCALE,
+							30 * SCREEN_SCALE, 4 * SCREEN_SCALE);
+				}
 			}
 		}
 	}

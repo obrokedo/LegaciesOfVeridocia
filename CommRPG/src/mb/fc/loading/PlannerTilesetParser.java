@@ -13,7 +13,7 @@ public class PlannerTilesetParser extends TilesetParser {
 	@Override
 	public void parseTileset(String image, Color trans, int tileWidth,
 			int tileHeight, int startIndex, Map map,
-			Hashtable<Integer, Integer> landEffectByTileId)
+			Hashtable<Integer, Integer> landEffectByTileId, float resize)
 			throws SlickException {
 		PlannerMap pm = (PlannerMap) map;
 		BufferedImage bim = ImageUtility.loadBufferedImage(image);

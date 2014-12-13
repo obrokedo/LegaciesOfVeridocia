@@ -21,12 +21,13 @@ public class NPCSprite extends AnimatedSprite
 	private int maxWander = 0;
 
 	public NPCSprite(String imageName,
-			ArrayList<Speech> speeches)
+			ArrayList<Speech> speeches, int id)
 	{
-		super(0, 0, imageName);
+		super(0, 0, imageName, Integer.MAX_VALUE);
 		this.speeches = speeches;
 		this.spriteType = Sprite.TYPE_NPC;
 		this.uniqueNPCId = 0;
+		this.id = id;
 	}
 
 	public void setInitialPosition(int xLoc, int yLoc, int maxWander)
@@ -40,40 +41,43 @@ public class NPCSprite extends AnimatedSprite
 
 	public void triggerButton1Event(StateInfo stateInfo)
 	{
-		SPEECHLOOP: for (Speech s : speeches)
+		if (speeches != null)
 		{
-			// Check to see if this mesage meets all required quests
-			if (s.getRequires() != null && s.getRequires().length > 0)
+			SPEECHLOOP: for (Speech s : speeches)
 			{
-				for (int i : s.getRequires())
+				// Check to see if this message meets all required quests
+				if (s.getRequires() != null && s.getRequires().length > 0)
 				{
-					if (i != -1 && !stateInfo.isQuestComplete(i))
-						continue SPEECHLOOP;
+					for (int i : s.getRequires())
+					{
+						if (i != -1 && !stateInfo.isQuestComplete(i))
+							continue SPEECHLOOP;
+					}
 				}
-			}
 
-			// Check to see if the excludes quests have been completed, if so
-			// then we can't use this message
-			if (s.getExcludes() != null && s.getExcludes().length > 0)
-			{
-				for (int i : s.getExcludes())
+				// Check to see if the excludes quests have been completed, if so
+				// then we can't use this message
+				if (s.getExcludes() != null && s.getExcludes().length > 0)
 				{
-					if (i != -1 && stateInfo.isQuestComplete(i))
-						continue SPEECHLOOP;
+					for (int i : s.getExcludes())
+					{
+						if (i != -1 && stateInfo.isQuestComplete(i))
+							continue SPEECHLOOP;
+					}
 				}
+
+				if (stateInfo.getCurrentSprite().getLocX() > this.getLocX())
+					this.setFacing(Direction.RIGHT);
+				else if (stateInfo.getCurrentSprite().getLocX() < this.getLocX())
+					this.setFacing(Direction.LEFT);
+				else if (stateInfo.getCurrentSprite().getLocY() > this.getLocY())
+					this.setFacing(Direction.DOWN);
+				else if (stateInfo.getCurrentSprite().getLocY() < this.getLocY())
+					this.setFacing(Direction.UP);
+
+				stateInfo.sendMessage(new SpeechMessage(s.getMessage(), s.getTriggerId(), s.getPortraitId()));
+				break;
 			}
-
-			if (stateInfo.getCurrentSprite().getLocX() > this.getLocX())
-				this.setFacing(Direction.RIGHT);
-			else if (stateInfo.getCurrentSprite().getLocX() < this.getLocX())
-				this.setFacing(Direction.LEFT);
-			else if (stateInfo.getCurrentSprite().getLocY() > this.getLocY())
-				this.setFacing(Direction.DOWN);
-			else if (stateInfo.getCurrentSprite().getLocY() < this.getLocY())
-				this.setFacing(Direction.UP);
-
-			stateInfo.sendMessage(new SpeechMessage(s.getMessage(), s.getTriggerId(), s.getPortraitId()));
-			break;
 		}
 	}
 
@@ -124,7 +128,7 @@ public class NPCSprite extends AnimatedSprite
 				{
 					moveCounter = 0;
 					moving = true;
-					stateInfo.sendMessage(new SpriteMoveMessage(this, nextDir));
+					stateInfo.sendMessage(new SpriteMoveMessage(this, nextDir), true);
 				}
 			}
 			else

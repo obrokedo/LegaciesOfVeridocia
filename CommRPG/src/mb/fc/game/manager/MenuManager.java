@@ -59,29 +59,31 @@ public class MenuManager extends Manager
 	{
 		switch (message.getMessageType())
 		{
-			case Message.MESSAGE_SPEECH:
+			case SPEECH:
 				SpeechMessage spm = (SpeechMessage) message;
 				stateInfo.addMenu(new SpeechMenu(spm.getText(),
 						stateInfo.getGc(), spm.getTriggerId(), spm.getPortraitId(), stateInfo));
 				break;
-			case Message.MESSAGE_SHOW_SYSTEM_MENU:
+			case SHOW_SYSTEM_MENU:
 				stateInfo.addSingleInstanceMenu(new SystemMenu(stateInfo.getGc()));
 				break;
-			case Message.MESSAGE_SHOW_SHOP:
+			case SHOW_SHOP:
 				ShopMessage sm = (ShopMessage) message;
 				stateInfo.addMenu(new ShopMenu(stateInfo.getGc(), stateInfo, sm.getSellPercent(), sm.getBuyPercent(), sm.getItemIds()));
 				break;
-			case Message.MESSAGE_SHOW_HEROES:
+			case SHOW_HEROES:
 				stateInfo.addSingleInstanceMenu(new HeroesStatMenu(stateInfo.getGc(), stateInfo.getClientProfile().getHeroes()));
 				break;
-			case Message.MESSAGE_SHOW_HERO:
-				stateInfo.addMenu(new HeroStatMenu(stateInfo.getGc(), ((SpriteContextMessage) message).getSprite(), stateInfo));
+			case SHOW_HERO:
+				stateInfo.addMenu(new HeroStatMenu(stateInfo.getGc(), ((SpriteContextMessage) message).getSprite(stateInfo.getSprites()), stateInfo));
 				break;
-			case Message.MESSAGE_SHOW_PRIEST:
+			case SHOW_PRIEST:
 				stateInfo.addMenu(new PriestMenu(stateInfo, stateInfo.getGc(), stateInfo.getClientProfile().getHeroes()));
 				break;
-			case Message.MESSAGE_SHOW_DEBUG:
+			case SHOW_DEBUG:
 				stateInfo.addMenu(new DebugMenu(stateInfo.getGc()));
+				break;
+			default:
 				break;
 		}
 	}

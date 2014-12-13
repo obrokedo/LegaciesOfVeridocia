@@ -4,7 +4,7 @@ import java.awt.Font;
 
 import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.AudioMessage;
-import mb.fc.engine.message.Message;
+import mb.fc.engine.message.MessageType;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.ui.FCGameContainer;
 import mb.fc.loading.FCResourceManager;
@@ -179,13 +179,13 @@ public abstract class Panel
 	public void panelRemoved(StateInfo stateInfo)
 	{
 		if (makeAddAndRemoveSounds())
-			stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, MUSIC_SELECTOR.getMenuRemovedSoundEffect(), 1f, false));
+			stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, MUSIC_SELECTOR.getMenuRemovedSoundEffect(), 1f, false));
 	}
 
 	public void panelAdded(StateInfo stateInfo)
 	{
 		if (makeAddAndRemoveSounds())
-			stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, MUSIC_SELECTOR.getMenuAddedSoundEffect(), 1f, false));
+			stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, MUSIC_SELECTOR.getMenuAddedSoundEffect(), 1f, false));
 	}
 
 	public boolean makeAddAndRemoveSounds()

@@ -5,7 +5,7 @@ import java.util.Random;
 import javax.swing.JOptionPane;
 
 import mb.fc.engine.log.FileLogger;
-import mb.fc.engine.state.AttackCinematicState2;
+import mb.fc.engine.state.AttackCinematicState;
 import mb.fc.engine.state.DevelMenuState;
 import mb.fc.engine.state.PersistentStateInfo;
 import mb.fc.engine.state.TestState;
@@ -57,6 +57,7 @@ public class CommRPG extends StateBasedGame   {
 	public static final int STATE_GAME_TEST = 7;
 
 	public static final int STATE_GAME_MENU_DEVEL = 8;
+	public static final int STATE_GAME_MENU_MULTI = 9;
 
 	/**
 	 * A global random number generator
@@ -166,7 +167,7 @@ public class CommRPG extends StateBasedGame   {
 
 			container.setShowFPS(false);
 			container.setVSync(true);
-			container.setAlwaysRender(false);
+			container.setAlwaysRender(true);
 			container.setTargetFrameRate(60);
 			container.start();
 		}
@@ -223,8 +224,9 @@ public class CommRPG extends StateBasedGame   {
 		loadingState = new LoadingState(STATE_GAME_LOADING);
 		// this.addState(new MenuState());
 		this.addState(new DevelMenuState());
+		// this.addState(new MultiplayerMenuState());
 
-		this.addState(new AttackCinematicState2());
+		this.addState(new AttackCinematicState());
 		this.addState(loadingState);
 
 		this.addState(new TestState());
@@ -234,7 +236,7 @@ public class CommRPG extends StateBasedGame   {
 				new FCResourceManager(),
 					(LoadableGameState) this.getState(STATE_GAME_TEST),
 						new FCLoadingRenderSystem(gameContainer));
-						*/
+		*/
 
 
 
@@ -252,6 +254,14 @@ public class CommRPG extends StateBasedGame   {
 				new FCResourceManager(),
 					(LoadableGameState) this.getState(STATE_GAME_MENU_DEVEL),
 						new FCLoadingRenderSystem(gameContainer));
+
+
+		/*
+		loadingState.setLoadingInfo("/menu/MainMenu", null, false, true,
+				new FCResourceManager(),
+					(LoadableGameState) this.getState(STATE_GAME_MENU_MULTI),
+						new FCLoadingRenderSystem(gameContainer));
+						*/
 
 
 		this.enterState(STATE_GAME_LOADING);

@@ -6753,7 +6753,7 @@
    <tile gid="0"/>
   </data>
  </layer>
- <layer name="Walk" width="66" height="34" opacity="0.45">
+ <layer name="Walk" width="66" height="34" opacity="0.41">
   <data>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -6765,6 +6765,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
+   <tile gid="197"/>
+   <tile gid="197"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -6829,6 +6831,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
+   <tile gid="197"/>
+   <tile gid="197"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -6893,6 +6897,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
+   <tile gid="197"/>
+   <tile gid="197"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -6957,14 +6963,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="197"/>
+   <tile gid="197"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -11337,7 +11337,7 @@
  </objectgroup>
  <objectgroup name="Trigger Regions" width="66" height="34" visible="0"/>
  <objectgroup name="Meta" width="66" height="34">
-  <object name="StartLocation" x="744" y="288" width="24" height="24">
+  <object name="StartLocation" x="720" y="288" width="48" height="24">
    <properties>
     <property name="start" value="exit=stairs"/>
    </properties>
@@ -11399,7 +11399,7 @@
   </object>
  </objectgroup>
  <objectgroup name="Battle" width="66" height="34">
-  <object name="Battle Start" type="START" x="120" y="240" width="72" height="24">
+  <object name="Battle Start" type="START" x="120" y="240" width="72" height="48">
    <properties>
     <property name="start" value="exit=battlestart"/>
    </properties>

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.InfoMessage;
-import mb.fc.engine.message.Message;
+import mb.fc.engine.message.MessageType;
 import mb.fc.engine.message.SpriteContextMessage;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.Camera;
@@ -109,6 +109,9 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 		else
 			stateInfo.sendMessage(new InfoMessage(null, "No targets in range!"));
 
+		if (currentSprite.isHero())
+			stateInfo.registerMouseListener(this);
+
 		cursorImage = stateInfo.getResourceManager().getImages().get("battlecursor");
 	}
 
@@ -170,7 +173,7 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 		stateInfo.removePanel(Panel.PANEL_ENEMY_HEALTH_BAR);
 		stateInfo.addPanel(new SpriteContextPanel(Panel.PANEL_ENEMY_HEALTH_BAR, targetsInRange.get(selectedTarget), stateInfo.getGc()));
 
-		stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menumove", 1f, false));
+		stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, "menumove", 1f, false));
 	}
 
 	@Override
@@ -204,9 +207,10 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 		{
 			// Remove yourself as the active keyboard listener
 			stateInfo.removeKeyboardListener();
-			stateInfo.sendMessage(Message.MESSAGE_SHOW_BATTLEMENU);
+			stateInfo.sendMessage(MessageType.SHOW_BATTLEMENU);
+			stateInfo.sendMessage(MessageType.HIDE_ATTACK_AREA);
 			stateInfo.removePanel(Panel.PANEL_ENEMY_HEALTH_BAR);
-			stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menuback", 1f, false));
+			stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, "menuback", 1f, false));
 			return true;
 		}
 		else if (input.isKeyDown(KeyMapping.BUTTON_3))
@@ -215,7 +219,7 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 				return false;
 
 			stateInfo.removePanel(Panel.PANEL_ENEMY_HEALTH_BAR);
-			stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menuselect", 1f, false));
+			stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, "menuselect", 1f, false));
 
 			ArrayList<CombatSprite> sprites = new ArrayList<CombatSprite>();
 			for (int i = 0; i < area.length; i++)
@@ -239,7 +243,7 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 				{
 					sprites.add(currentSprite);
 				}
-				stateInfo.sendMessage(new SpriteContextMessage(Message.MESSAGE_TARGET_SPRITE, sprites));
+				stateInfo.sendMessage(new SpriteContextMessage(MessageType.TARGET_SPRITE, sprites));
 
 				// Once we've targeted a sprite there can not be anymore keyboard input
 				stateInfo.removeKeyboardListeners();
@@ -251,7 +255,8 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 		}
 		else if (input.isKeyDown(KeyMapping.BUTTON_UP) || input.isKeyDown(KeyMapping.BUTTON_LEFT))
 		{
-			if (targetsInRange.size() <= 1)
+			if (targetsInRange.size() <= 1 ||
+					selectX != targetSelectX || selectY != targetSelectY)
 				return false;
 
 			selectedTarget = (selectedTarget + 1) % targetsInRange.size();
@@ -260,7 +265,8 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 		}
 		else if (input.isKeyDown(KeyMapping.BUTTON_DOWN) || input.isKeyDown(KeyMapping.BUTTON_RIGHT))
 		{
-			if (targetsInRange.size() <= 1)
+			if (targetsInRange.size() <= 1 ||
+					selectX != targetSelectX || selectY != targetSelectY)
 				return false;
 
 			if (selectedTarget > 0)

@@ -11,6 +11,7 @@ import mb.fc.game.combat.DamagedCombatAnimation;
 import mb.fc.game.combat.DeathCombatAnimation;
 import mb.fc.game.combat.DodgeCombatAnimation;
 import mb.fc.game.combat.StandCombatAnimation;
+import mb.fc.game.combat.TransBGCombatAnimation;
 import mb.fc.game.combat.TransCombatAnimation;
 import mb.fc.game.combat.WaitCombatAnimation;
 import mb.fc.game.hudmenu.Panel;
@@ -143,7 +144,6 @@ public class AttackCinematicState2 extends LoadableGameState
 		}
 
 		boolean isSpell = battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_SPELL;
-		boolean finalTargetDied = false;
 
 		if (targetsAllies)
 		{
@@ -175,7 +175,7 @@ public class AttackCinematicState2 extends LoadableGameState
 			}
 			else
 			{
-				addActionAndTransitionOut(attacker, battleResults, isSpell);
+				addActionAndTransitionOut(attacker, battleResults, isSpell, false);
 			}
 
 			for (; i < battleResults.targets.size(); i++)
@@ -192,7 +192,14 @@ public class AttackCinematicState2 extends LoadableGameState
 		}
 		else
 		{
-			addAttackAction(attacker, target, battleResults, 0, isSpell);
+			int distanceApart = Math.abs(attacker.getTileX() - target.getTileX()) + Math.abs(attacker.getTileY() - target.getTileY());
+			if (distanceApart == 1)
+			{
+				//TODO FIX THIS
+				// addAttackAction(attacker, target, battleResults, 0, isSpell);
+			}
+			else
+				addRangedAttack(attacker, target);
 
 			if (battleResults.targets.size() > 1)
 			{
@@ -238,11 +245,26 @@ public class AttackCinematicState2 extends LoadableGameState
 		nextAction(null);
 	}
 
-	private void addAttackAction(CombatSprite attacker, CombatSprite target, BattleResults battleResults,
-			int index, boolean isSpell)
+	private void addRangedAttack(CombatSprite attacker, CombatSprite target)
 	{
-		AttackCombatAnimation aca = new AttackCombatAnimation(attacker,
+		addActionAndTransitionOut(attacker, battleResults, false, true);
+		addCombatAnimationWithNoSpeechNoReaction(attacker.isHero(), new TransBGCombatAnimation(backgroundImage, bgXPos, bgYPos,
+				gc.getWidth(), null, false, attacker.isHero()));
+		addAttackAction(attacker, target, battleResults, 0, false, true);
+		//addCombatAnimationWithNoSpeechNoReaction(target.isHero(), new TransBGCombatAnimation(backgroundImage, bgXPos, bgYPos,
+			//	gc.getWidth(), null, false, target.isHero()));
+	}
+
+	private void addAttackAction(CombatSprite attacker, CombatSprite target, BattleResults battleResults,
+			int index, boolean isSpell, boolean rangedAttack)
+	{
+		AttackCombatAnimation aca = null;
+
+		if (!rangedAttack)
+			aca = new AttackCombatAnimation(attacker,
 				battleResults, false);
+		else
+			aca = new AttackCombatAnimation(new AnimationWrapper(frm.getSpriteAnimations().get("Ranged"), "Ranged", false));
 		addCombatAnimation(attacker.isHero(), aca);
 
 		if (battleResults.dodged)
@@ -294,10 +316,11 @@ public class AttackCinematicState2 extends LoadableGameState
 		}
 	}
 
-	private void addActionAndTransitionOut(CombatSprite transitioner, BattleResults battleResults, boolean isSpell)
+	private void addActionAndTransitionOut(CombatSprite transitioner, BattleResults battleResults, boolean isSpell,
+			boolean ranged)
 	{
 		AttackCombatAnimation aca = new AttackCombatAnimation(transitioner,
-				battleResults, true);
+				battleResults, true, ranged);
 		addCombatAnimationWithNoSpeechNoReaction(transitioner.isHero(), aca);
 		TransCombatAnimation tca = new TransCombatAnimation(aca, true);
 		tca.setDrawSpell(isSpell);
@@ -408,6 +431,7 @@ public class AttackCinematicState2 extends LoadableGameState
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
+		delta /= 4;
 		input.update(delta);
 
 		boolean startSpell = false;
@@ -505,13 +529,14 @@ public class AttackCinematicState2 extends LoadableGameState
 			CombatAnimation hero = heroCombatAnimations.remove(0);
 			if (hero != null)
 			{
-				if (hero.getParentSprite().getCurrentHP() <= 0)
+				if (hero.getParentSprite() == null || hero.getParentSprite().getCurrentHP() <= 0)
 					heroHealthPanel = null;
+				else
+					heroHealthPanel = new SpriteContextPanel(
+							Panel.PANEL_HEALTH_BAR,
+							hero.getParentSprite(), gc);
 				hero.initialize();
 				heroCombatAnim = hero;
-				heroHealthPanel = new SpriteContextPanel(
-						Panel.PANEL_HEALTH_BAR,
-						heroCombatAnim.getParentSprite(), gc);
 				// TODO I'M NOT SURE IF I LIKE THIS HERE MORE OR IN THE DAMAGEDCOMBATANIMATION
 				if (heroCombatAnim.isDamaging()) damagedSprite = heroCombatAnim.getParentSprite();
 			}
@@ -519,13 +544,15 @@ public class AttackCinematicState2 extends LoadableGameState
 			CombatAnimation enemy = enemyCombatAnimations.remove(0);
 			if (enemy != null)
 			{
-				if (enemy.getParentSprite().getCurrentHP() <= 0)
+				if (enemy.getParentSprite() == null || enemy.getParentSprite().getCurrentHP() <= 0)
 					enemyHealthPanel = null;
+				else
+					enemyHealthPanel = new SpriteContextPanel(
+							Panel.PANEL_TARGET_HEALTH_BAR,
+							enemy.getParentSprite(), gc);
 				enemy.initialize();
 				enemyCombatAnim = enemy;
-				enemyHealthPanel = new SpriteContextPanel(
-						Panel.PANEL_TARGET_HEALTH_BAR,
-						enemyCombatAnim.getParentSprite(), gc);
+
 
 				// TODO I'M NOT SURE IF I LIKE THIS HERE MORE OR IN THE DAMAGEDCOMBATANIMATION
 				if (enemyCombatAnim.isDamaging()) damagedSprite = enemyCombatAnim.getParentSprite();

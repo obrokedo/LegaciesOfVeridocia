@@ -16,11 +16,12 @@ public class StaticSprite extends Sprite
 
 	public StaticSprite(int locX, int locY, String name, Image image, int[] triggerIds)
 	{
-		super(locX, locY);
+		super(locX, locY, Integer.MAX_VALUE);
 		this.image = image;
 		this.name = name;
 		this.triggerIds = triggerIds;
 		this.spriteType = Sprite.TYPE_STATIC_SPRITE;
+		this.id = Integer.MIN_VALUE;
 	}
 
 	@Override

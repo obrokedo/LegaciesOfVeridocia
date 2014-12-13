@@ -3,7 +3,7 @@ package mb.fc.game.menu;
 import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.BattleSelectionMessage;
-import mb.fc.engine.message.Message;
+import mb.fc.engine.message.MessageType;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.battle.spell.KnownSpell;
 import mb.fc.game.hudmenu.Panel;
@@ -52,7 +52,7 @@ public class SpellMenu extends QuadMenu
 
 	@Override
 	protected MenuUpdate onBack() {
-		stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menuback", 1f, false));
+		stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, "menuback", 1f, false));
 		if (choseSpell)
 		{
 			choseSpell = false;
@@ -60,7 +60,7 @@ public class SpellMenu extends QuadMenu
 		}
 		else
 		{
-			stateInfo.sendMessage(Message.MESSAGE_SHOW_BATTLEMENU);
+			stateInfo.sendMessage(MessageType.SHOW_BATTLEMENU);
 			return MenuUpdate.MENU_CLOSE;
 		}
 	}
@@ -71,19 +71,19 @@ public class SpellMenu extends QuadMenu
 		{
 			if (stateInfo.getCurrentSprite().getSpellsDescriptors().get(getSelectedInt()).getSpell().getCosts()[selectedLevel] <= stateInfo.getCurrentSprite().getCurrentMP())
 			{
-				stateInfo.sendMessage(new BattleSelectionMessage(Message.MESSAGE_SELECT_SPELL, getSelectedInt(), selectedLevel + 1));
+				stateInfo.sendMessage(new BattleSelectionMessage(MessageType.SELECT_SPELL, getSelectedInt(), selectedLevel + 1));
 				return MenuUpdate.MENU_CLOSE;
 			}
 			else
 			{
-				stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, MUSIC_SELECTOR.getInvalidActionSoundEffect(), 1f, false));
-				// stateInfo.sendMessage(new ChatMessage(Message.MESSAGE_SEND_INTERNAL_MESSAGE, "SYSTEM", "SYSTEM: You do not have enough MP to cast that spell"));
+				stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, MUSIC_SELECTOR.getInvalidActionSoundEffect(), 1f, false));
+				// stateInfo.sendMessage(new ChatMessage(MessageType.SEND_INTERNAL_MESSAGE, "SYSTEM", "SYSTEM: You do not have enough MP to cast that spell"));
 				return MenuUpdate.MENU_ACTION_LONG;
 			}
 		}
 		else
 		{
-			stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menuselect", 1f, false));
+			stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, "menuselect", 1f, false));
 			choseSpell = true;
 			selectedLevel = 0;
 			return MenuUpdate.MENU_ACTION_LONG;
@@ -156,7 +156,7 @@ public class SpellMenu extends QuadMenu
 			return super.onLeft();
 		else if (selectedLevel > 0)
 		{
-			stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menumove", 1f, false));
+			stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, "menumove", 1f, false));
 			selectedLevel--;
 		}
 		return MenuUpdate.MENU_ACTION_LONG;
@@ -168,7 +168,7 @@ public class SpellMenu extends QuadMenu
 			return super.onRight();
 		else if (selectedLevel + 1 < stateInfo.getCurrentSprite().getSpellsDescriptors().get(getSelectedInt()).getMaxLevel())
 		{
-			stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menumove", 1f, false));
+			stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, "menumove", 1f, false));
 			selectedLevel++;
 		}
 		return MenuUpdate.MENU_ACTION_LONG;

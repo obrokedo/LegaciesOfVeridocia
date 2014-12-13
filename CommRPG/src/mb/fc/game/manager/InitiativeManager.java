@@ -6,6 +6,7 @@ import java.util.Comparator;
 
 import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.Message;
+import mb.fc.engine.message.MessageType;
 import mb.fc.engine.message.SpriteContextMessage;
 import mb.fc.game.sprite.CombatSprite;
 
@@ -117,11 +118,11 @@ public class InitiativeManager extends Manager
 		}
 
 		nextTurn.setCurrentInit(0);
-		stateInfo.sendMessage(new SpriteContextMessage(Message.MESSAGE_COMBATANT_TURN, nextTurn));
+		stateInfo.sendMessage(new SpriteContextMessage(MessageType.COMBATANT_TURN, nextTurn), true);
 
 		Collections.sort(initOrder, new InitComparator());
 
-		stateInfo.sendMessage(new SpriteContextMessage(Message.MESSAGE_SET_INIT_ORDER, initOrder));
+		stateInfo.sendMessage(new SpriteContextMessage(MessageType.SET_INIT_ORDER, initOrder), true);
 	}
 
 	public void initializeInitOrder()
@@ -134,24 +135,25 @@ public class InitiativeManager extends Manager
 			initOrder.add(s);
 		}
 
-		stateInfo.sendMessage(new SpriteContextMessage(Message.MESSAGE_SET_INIT_ORDER, initOrder));
+		stateInfo.sendMessage(new SpriteContextMessage(MessageType.SET_INIT_ORDER, initOrder), true);
 	}
 
 	@Override
 	public void recieveMessage(Message message) {
 		switch (message.getMessageType())
 		{
-			case Message.MESSAGE_NEXT_TURN:
-				System.out.println("NEXT TURN");
+			case NEXT_TURN:
 				updateOnTurn();
 				break;
 			/*
-			case Message.MESSAGE_SET_INIT_ORDER:
+			case MessageType.SET_INIT_ORDER:
 				initMenu.initOrder = ((MultiSpriteContextMessage) message).getSprites();
 				break;
 				*/
-			case Message.MESSAGE_INTIIALIZE:
+			case INTIIALIZE:
 				initializeAfterSprites();
+				break;
+			default:
 				break;
 		}
 	}

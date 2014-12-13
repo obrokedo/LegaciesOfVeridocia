@@ -1,7 +1,7 @@
 package mb.fc.game.move;
 
 import mb.fc.engine.message.AudioMessage;
-import mb.fc.engine.message.Message;
+import mb.fc.engine.message.MessageType;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.constants.Direction;
 import mb.fc.game.sprite.AnimatedSprite;
@@ -78,7 +78,7 @@ public class MovingSprite
 				break;
 		}
 		if (stateInfo.isCombat() && moveIndex == 0)
-			stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "step", 1f, false));
+			stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, "step", 1f, false));
 
 		if (animatedSprite == stateInfo.getCurrentSprite())
 			stateInfo.getCamera().centerOnSprite(animatedSprite, stateInfo.getCurrentMap());

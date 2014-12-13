@@ -6,6 +6,8 @@ import java.util.Iterator;
 import mb.fc.engine.message.BattleCondMessage;
 import mb.fc.engine.message.Message;
 import mb.fc.engine.message.SpeechMessage;
+import mb.fc.game.definition.EnemyDefinition;
+import mb.fc.game.resource.NPCResource;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.sprite.NPCSprite;
 import mb.fc.game.sprite.Sprite;
@@ -27,15 +29,26 @@ public class SpriteManager extends Manager
 
 	private void initializeAfterSprites()
 	{
+		EnemyDefinition.resetEnemyIds();
+		NPCResource.resetNPCIds();
+
 		// If we are not in combat then get this clients main character and set them as the current sprite
 		if (!stateInfo.isCombat())
 		{
 			for (CombatSprite cs : stateInfo.getHeroes())
+			{
+				System.out.println("LOOKING FOR MY HERO " + cs.isLeader() + " " + cs.getClientId() + " " + stateInfo.getPsi().getClientId());
 				if (cs.isLeader())
 				{
-					stateInfo.setCurrentSprite(cs);
+					if (cs.getClientId() == stateInfo.getPsi().getClientId())
+					{
+						stateInfo.setCurrentSprite(cs);
+						System.out.println("SETTING MY HERO " + cs.getClientId() + " " + cs.getId());
+					}
 					stateInfo.addSprite(cs);
 				}
+			}
+			System.out.println("DONE LOOKING FOR MY HERO");
 
 			// Even though this is not the leader, the sprites need to be initialized so we can
 			// view items, spells and pictures
@@ -82,7 +95,6 @@ public class SpriteManager extends Manager
 			}
 
 			stateInfo.addAllCombatSprites(stateInfo.getHeroes());
-
 
 			// Get any npcs from the map
 			for (MapObject mo : stateInfo.getResourceManager().getMap().getMapObjects())
@@ -154,10 +166,10 @@ public class SpriteManager extends Manager
 	{
 		switch (message.getMessageType())
 		{
-			case Message.MESSAGE_INTIIALIZE:
+			case INTIIALIZE:
 				initializeAfterSprites();
 				break;
-			case Message.MESSAGE_INVESTIGATE:
+			case INVESTIGATE:
 				int checkX = stateInfo.getCurrentSprite().getTileX();
 				int checkY = stateInfo.getCurrentSprite().getTileY();
 
@@ -202,7 +214,7 @@ public class SpriteManager extends Manager
 					}
 				}
 				break;
-			case Message.MESSAGE_BATTLE_COND:
+			case BATTLE_COND:
 				BattleCondMessage bcm = (BattleCondMessage) message;
 				this.killAllHeroLeaders = bcm.isKillAllLeaders();
 				for (Integer i : bcm.getLeaderIds())
@@ -212,6 +224,8 @@ public class SpriteManager extends Manager
 						this.heroLeaders.add(stateInfo.getHeroes().get(i));
 					}
 				}
+				break;
+			default:
 				break;
 		}
 	}

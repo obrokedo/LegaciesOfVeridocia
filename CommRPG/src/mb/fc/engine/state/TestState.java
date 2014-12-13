@@ -110,7 +110,7 @@ public class TestState extends LoadableGameState
 		bgXPos = gc.getDisplayPaddingX();
 		bgYPos = (gc.getHeight() - backgroundImage.getHeight()) / 2;
 
-		sas = frm.getSpriteAnimations().get("rat");
+		sas = frm.getSpriteAnimations().get("Darkling Ooze");
 		targetAnim = sas.getAnimation("UnStand");
 	}
 

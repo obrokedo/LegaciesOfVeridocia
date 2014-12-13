@@ -21,7 +21,7 @@ public class StringMenu extends Menu
 	protected Button okButton;
 	protected TextField textField;
 	protected String action;
-	
+
 	public StringMenu(GameContainer gc, String text, StringListener listener)
 	{
 		super(Panel.PANEL_STRING);
@@ -34,24 +34,24 @@ public class StringMenu extends Menu
 	}
 
 	@Override
-	public MenuUpdate handleUserInput(FCInput input, StateInfo stateInfo) 
+	public MenuUpdate handleUserInput(FCInput input, StateInfo stateInfo)
 	{
 		/*
-		if (okButton.handleUserInput(mouseX, mouseY, leftClick))
+		if (okButton.handleUserInput(input.g, mouseY, leftClick))
 		{
 			listener.stringEntered(textField.getText());
 			return true;
 		}
-		textField.setFocus(true);
 		*/
+		textField.setFocus(true);
 		return MenuUpdate.MENU_CLOSE;
 	}
 
 	@Override
-	public void render(FCGameContainer gc, Graphics graphics) 
+	public void render(FCGameContainer gc, Graphics graphics)
 	{
 		graphics.setColor(Color.blue);
-		Panel.drawPanelBox(x, 150, width, 120, graphics);
+		// Panel.drawPanelBox(x, 150, width, 120, graphics);
 		graphics.setColor(COLOR_FOREFRONT);
 		graphics.drawString(text, x + 15, 165);
 		okButton.render(gc, graphics);

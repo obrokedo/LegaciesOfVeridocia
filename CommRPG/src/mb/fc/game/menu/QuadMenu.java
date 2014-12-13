@@ -2,7 +2,7 @@ package mb.fc.game.menu;
 
 import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.AudioMessage;
-import mb.fc.engine.message.Message;
+import mb.fc.engine.message.MessageType;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.Timer;
 import mb.fc.game.constants.Direction;
@@ -222,6 +222,9 @@ public abstract class QuadMenu extends Menu
 	@Override
 	public MenuUpdate handleUserInput(FCInput input, StateInfo stateInfo)
 	{
+		if (stateInfo.getCurrentSprite().getClientId() != stateInfo.getPsi().getClientId())
+			return MenuUpdate.MENU_NO_ACTION;
+
 		if (input.isKeyDown(KeyMapping.BUTTON_2))
 		{
 			return onBack();
@@ -279,7 +282,7 @@ public abstract class QuadMenu extends Menu
 		{
 			selectCount = 2;
 			flashCount = -5;
-			stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menumove", 1f, false));
+			stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, "menumove", 1f, false));
 			selected = dir;
 			if (!paintSelectionCursor)
 				blink = true;

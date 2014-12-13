@@ -16,7 +16,7 @@ public class LoadMapMessage extends Message
 	private int cinematicID;
 	private int battleBG;
 
-	public LoadMapMessage(int messageType, String map, String battle, String location, int battleBG)
+	public LoadMapMessage(MessageType messageType, String map, String battle, String location, int battleBG)
 	{
 		super(messageType);
 		this.map = map;
@@ -25,7 +25,7 @@ public class LoadMapMessage extends Message
 		this.battleBG = battleBG;
 	}
 
-	public LoadMapMessage(int messageType, String map, int cinematicID)
+	public LoadMapMessage(MessageType messageType, String map, int cinematicID)
 	{
 		super(messageType);
 		this.map = map;

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="resource"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre7"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Slick2D"/>
 	<classpathentry kind="lib" path="/GameLib/Jars/exp4j-0.3.11.jar"/>
@@ -11,5 +12,6 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/GameLib/Jars/Jython/jython-standalone-2.7-b1-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry combineaccessrules="false" kind="src" path="/ZTCP"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

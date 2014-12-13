@@ -1,3 +1,4 @@
+// Load item images
 ss,items,image/Items.png,16,24
 // Load Battle Resources
 ss,battlebg,image/BattleBackgrounds.png,256,96,2
@@ -5,8 +6,9 @@ ss,battlebg,image/BattleBackgrounds.png,256,96,2
 ss,actionicons,image/ActionIcons.png,24,24,2
 ss,spellicons,image/SpellIcons.png,16,24,2
 // A scale value of -1 means the image is NOT scaled to the game engine proportions
-ss,menuborder,image/MenuBorder.png,12,12,0,-1
+ss,menuborder,image/MenuBorder.png,12,12,0,.3333333333
 // TYPE,NAME,PATH,SCALE
+image,battlecursor,image/battlecursor.png
 image,smallflor,image/smflor.png
 image,largeflor,image/lgflor.png
 image,attackplatform,image/CastleFloor.png
@@ -18,23 +20,37 @@ herodefs,/definitions/Heroes
 itemdefs,/definitions/Items
 enemydefs,/definitions/Enemies
 // BEGIN SINGLE JAR RESOURCES
+animsheet,blank,animations/animationsheets/blank.png
+animsheet,craigbattle,animations/animationsheets/craigbattle.png
 animsheet,Darkling Ooze,animations/animationsheets/Darkling Ooze.png
+animsheet,eriumguardbattle,animations/animationsheets/eriumguardbattle.png
+animsheet,Fog,animations/animationsheets/Fog.png
 animsheet,Heal,animations/animationsheets/Heal.png
 animsheet,Huun,animations/animationsheets/Huun.png
 animsheet,Lexus,animations/animationsheets/Lexus.png
 animsheet,Mistal,animations/animationsheets/Mistal.png
 animsheet,Noah,animations/animationsheets/Noah.png
+animsheet,oliviabattle,animations/animationsheets/oliviabattle.png
 animsheet,Sharna,animations/animationsheets/Sharna.png
+fsa,Craig,animations/fsa/Craig.fsa
 fsa,Darkling Ooze,animations/fsa/Darkling Ooze.fsa
+fsa,eriumguard,animations/fsa/eriumguard.fsa
+fsa,Fog,animations/fsa/Fog.fsa
 fsa,Heal,animations/fsa/Heal.fsa
 fsa,Huun,animations/fsa/Huun.fsa
+fsa,Huun2,animations/fsa/Huun2.fsa
 fsa,Lexus,animations/fsa/Lexus.fsa
 fsa,Mistal,animations/fsa/Mistal.fsa
 fsa,MistalHd,animations/fsa/MistalHd.fsa
 fsa,Noah,animations/fsa/Noah.fsa
+fsa,Noah2,animations/fsa/Noah2.fsa
+fsa,Olivia,animations/fsa/Olivia.fsa
+fsa,Ranged,animations/fsa/Ranged.fsa
 fsa,Sharna,animations/fsa/Sharna.fsa
 image,closedchest,sprite/closedchest.png
+image,fire,sprite/fire.png
 image,greydoor,sprite/greydoor.png
+image,jaildoor(night),sprite/jaildoor(night).png
 image,openchest,sprite/openchest.png
 sound,blast,sound/blast.wav
 sound,casting,sound/casting.ogg
@@ -50,15 +66,16 @@ sound,jump,sound/jump.wav
 sound,laser,sound/laser.wav
 sound,lvl,sound/lvl.ogg
 sound,menuback,sound/menuback.ogg
+sound,menubackOLD,sound/menubackOLD.wav
 sound,menumove,sound/menumove.wav
 sound,menuselect,sound/menuselect.wav
 sound,menushow,sound/menushow.ogg
+sound,menushowOLD,sound/menushowOLD.wav
 sound,speechblip,sound/speechblip.wav
 sound,step,sound/step.ogg
+sound,stepOLD,sound/stepOLD.wav
 sound,targetselect,sound/targetselect.wav
 music,battle1,music/battle1.ogg
 music,castlenight,music/castlenight.ogg
 music,Enemy,music/Enemy.ogg
-music,overland,music/overland.ogg
-music,townOLD,music/townOLD.ogg
 music,UnHero,music/UnHero.ogg

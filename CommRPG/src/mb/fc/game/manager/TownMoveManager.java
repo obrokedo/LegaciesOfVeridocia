@@ -76,7 +76,7 @@ public class TownMoveManager extends Manager
 			{
 				MovingSprite ms = movers.get(i);
 
-				if(ms.isFirstMove() && stateInfo.getCurrentSprite() == ms.getAnimatedSprite())
+				if(ms.isFirstMove() && ms.getAnimatedSprite().getSpriteType() == Sprite.TYPE_COMBAT)
 				{
 					stateInfo.checkTriggers(ms.getEndX(), ms.getEndY(), true);
 				}
@@ -99,11 +99,14 @@ public class TownMoveManager extends Manager
 	{
 		if (current == stateInfo.getCurrentSprite())
 			moving = true;
-		movers.add(new MovingSprite(current, direction, stateInfo));
+		stateInfo.sendMessage(new SpriteMoveMessage(current, direction));
+		// movers.add(new MovingSprite(current, direction, stateInfo));
 	}
 
 	private boolean blocked(Map map, int tx, int ty)
 	{
+		//System.out.println(tx + " " + ty);
+		//System.out.println(map.getMapEffectiveWidth() + " " + map.getMapEffectiveHeight());
 		if (tx >= 0 && ty >= 0 && map.getMapEffectiveHeight() > ty && map.getMapEffectiveWidth() > tx && map.isMarkedMoveable(tx, ty))
 		{
 			for (Sprite s : stateInfo.getSprites())
@@ -123,9 +126,9 @@ public class TownMoveManager extends Manager
 
 		switch (message.getMessageType())
 		{
-			case Message.MESSAGE_OVERLAND_MOVE_MESSAGE:
+			case OVERLAND_MOVE_MESSAGE:
 				SpriteMoveMessage m = (SpriteMoveMessage) message;
-				AnimatedSprite sprite = m.getSprite();
+				AnimatedSprite sprite = m.getSprite(stateInfo.getSprites());
 
 				int sx = sprite.getTileX();
 				int sy = sprite.getTileY();
@@ -156,6 +159,8 @@ public class TownMoveManager extends Manager
 					movers.add(new MovingSprite(sprite, dir, stateInfo));
 				else
 					sprite.doneMoving();
+				break;
+			default:
 				break;
 		}
 

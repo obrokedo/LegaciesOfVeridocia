@@ -10,9 +10,20 @@ public class AttackCombatAnimation extends CombatAnimation
 {
 	private boolean castingSpell = false;
 
+	public AttackCombatAnimation(AnimationWrapper animationWrapper)
+	{
+		super(animationWrapper, null);
+	}
+
 	public AttackCombatAnimation(CombatSprite parentSprite, BattleResults battleResults, boolean blockingAnimation)
 	{
-		super(new AnimationWrapper(parentSprite.getSpriteAnims(), "UnAttack"), parentSprite);
+		this(parentSprite, battleResults, blockingAnimation, false);
+	}
+
+	public AttackCombatAnimation(CombatSprite parentSprite, BattleResults battleResults, boolean blockingAnimation,
+			boolean rangedAttack)
+	{
+		super(new AnimationWrapper(parentSprite.getSpriteAnims(), (rangedAttack ? "UnRanged" : "UnAttack")), parentSprite);
 		if (battleResults.critted && animationWrapper.hasAnimation("UnCrit"))
 			this.animationWrapper.setAnimation("UnCrit", false);
 		else if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_SPELL)

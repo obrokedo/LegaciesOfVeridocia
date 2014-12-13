@@ -21,8 +21,10 @@ public class PanelManager extends Manager {
 	@Override
 	public void recieveMessage(Message message) {
 		switch (message.getMessageType()) {
-		case Message.MESSAGE_SEND_INTERNAL_MESSAGE:
+		case SEND_INTERNAL_MESSAGE:
 			chatMenu.addMessage(((InfoMessage) message).getText());
+			break;
+		default:
 			break;
 		}
 	}

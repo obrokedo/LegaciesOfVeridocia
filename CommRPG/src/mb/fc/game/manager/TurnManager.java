@@ -9,7 +9,9 @@ import mb.fc.engine.message.BattleSelectionMessage;
 import mb.fc.engine.message.IntMessage;
 import mb.fc.engine.message.LocationMessage;
 import mb.fc.engine.message.Message;
+import mb.fc.engine.message.MessageType;
 import mb.fc.engine.message.SpriteContextMessage;
+import mb.fc.engine.message.TurnActionsMessage;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.battle.BattleResults;
 import mb.fc.game.battle.command.BattleCommand;
@@ -89,6 +91,7 @@ public class TurnManager extends Manager implements KeyboardListener
 		itemOptionMenu = new ItemOptionMenu(stateInfo);
 		landEffectPanel = new LandEffectPanel();
 		movingSprite = null;
+		ms = null;
 
 		cursorImage = stateInfo.getResourceManager().getImages().get("battlecursor");
 		cursor = new Rectangle(0, 0, stateInfo.getTileWidth(), stateInfo.getTileHeight());
@@ -146,6 +149,8 @@ public class TurnManager extends Manager implements KeyboardListener
 
 	private void processTurnActions(StateBasedGame game)
 	{
+		if (turnActions.size() == 0)
+			return;
 		TurnAction a = turnActions.get(0);
 		switch (a.action)
 		{
@@ -253,8 +258,8 @@ public class TurnManager extends Manager implements KeyboardListener
 			case TurnAction.ACTION_TARGET_SPRITE:
 				TargetSpriteAction tsa = (TargetSpriteAction) a;
 				this.battleCommand = tsa.getBattleCommand();
-				this.determineAttackbleSpace(false);
-				as.setTargetSprite(tsa.getTargetSprite(), stateInfo);
+				this.determineAttackableSpace(false);
+				as.setTargetSprite(tsa.getTargetSprite(stateInfo.getCombatSprites()), stateInfo);
 				displayAttackable = true;
 				turnActions.remove(0);
 				break;
@@ -283,7 +288,7 @@ public class TurnManager extends Manager implements KeyboardListener
 					displayAttackable = false;
 					displayMoveable = false;
 					cursor.setLocation(currentSprite.getLocX(), currentSprite.getLocY());
-					stateInfo.sendMessage(Message.MESSAGE_NEXT_TURN);
+					stateInfo.sendMessage(MessageType.NEXT_TURN, true);
 				}
 				break;
 		}
@@ -376,9 +381,9 @@ public class TurnManager extends Manager implements KeyboardListener
 		if (ms == null)
 			cursor.setLocation(currentSprite.getLocX(), currentSprite.getLocY());
 
-		if (sprite.getAi() == null)
+		if (sprite.isHero() && sprite.getClientId() == stateInfo.getPsi().getClientId())
 		{
-			// stateInfo.sendMessage(new Message(Message.MESSAGE_SHOW_BATTLEMENU));
+			// stateInfo.sendMessage(new Message(MessageType.SHOW_BATTLEMENU));
 			this.ownsSprite = true;
 		}
 
@@ -392,13 +397,16 @@ public class TurnManager extends Manager implements KeyboardListener
 		turnActions.add(new WaitAction(150 / UPDATE_TIME));
 
 		if (sprite.getAi() != null)
-			turnActions.addAll(sprite.getAi().performAI(stateInfo, ms, currentSprite));
+		{
+			System.out.println("IVE GOT AI");
+			stateInfo.sendMessage(new TurnActionsMessage(false, sprite.getAi().performAI(stateInfo, ms, currentSprite)), true);
+		}
 
 		displayCursor = true;
 
 	}
 
-	private void determineAttackbleSpace(boolean playerAttacking)
+	private void determineAttackableSpace(boolean playerAttacking)
 	{
 		displayMoveable = false;
 
@@ -473,11 +481,11 @@ public class TurnManager extends Manager implements KeyboardListener
 		as = new AttackableSpace(stateInfo, currentSprite, targetsHero, range, area);
 		if (as.getTargetAmount() == 0)
 		{
-			stateInfo.sendMessage(Message.MESSAGE_SHOW_BATTLEMENU);
+			stateInfo.sendMessage(MessageType.SHOW_BATTLEMENU);
 		}
 		else
 		{
-			if (playerAttacking)
+			if (playerAttacking && currentSprite.getClientId() == stateInfo.getPsi().getClientId())
 				stateInfo.addKeyboardListener(as);
 
 			displayAttackable = true;
@@ -486,10 +494,13 @@ public class TurnManager extends Manager implements KeyboardListener
 
 	private void setToCursorMode()
 	{
+		if (!ownsSprite)
+			return;
+
 		// If we are already reset then switch to cursor mode
 		displayMoveable = false;
 		displayCursor = true;
-		stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, GlobalPythonFactory.createJMusicSelector().getMenuAddedSoundEffect(), 1f, false));
+		stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, GlobalPythonFactory.createJMusicSelector().getMenuAddedSoundEffect(), 1f, false));
 		stateInfo.removeKeyboardListener();
 		this.turnManagerHasFocus = true;
 	}
@@ -498,60 +509,60 @@ public class TurnManager extends Manager implements KeyboardListener
 	public void recieveMessage(Message message) {
 		switch (message.getMessageType())
 		{
-			case Message.MESSAGE_SHOW_BATTLEMENU:
+			case SHOW_BATTLEMENU:
 				displayMoveable = false;
 				displayAttackable = false;
 				battleActionsMenu.initialize();
 				stateInfo.addMenu(battleActionsMenu);
 				break;
-			case Message.MESSAGE_SHOW_MOVEABLE:
+			case SHOW_MOVEABLE:
 				displayMoveable = true;
 				break;
-			case Message.MESSAGE_SHOW_SPELLMENU:
+			case SHOW_SPELLMENU:
 				spellMenu.initialize();
 				stateInfo.addMenu(spellMenu);
 				break;
-			case Message.MESSAGE_SHOW_ITEM_MENU:
+			case SHOW_ITEM_MENU:
 				itemMenu.initialize();
 				stateInfo.addMenu(itemMenu);
 				break;
-			case Message.MESSAGE_SHOW_ITEM_OPTION_MENU:
+			case SHOW_ITEM_OPTION_MENU:
 				itemOptionMenu.initialize(((IntMessage) message).getValue());
 				stateInfo.addMenu(itemOptionMenu);
 				break;
 			// THIS IS SENT BY THE OWNER
-			case Message.MESSAGE_ATTACK_PRESSED:
+			case ATTACK_PRESSED:
 				battleCommand = new BattleCommand(BattleCommand.COMMAND_ATTACK);
-				determineAttackbleSpace(true);
+				determineAttackableSpace(true);
 				break;
 			// This message should never be sent by AI
 			// THIS IS SENT BY THE OWNER
-			case Message.MESSAGE_TARGET_SPRITE:
+			case TARGET_SPRITE:
 				displayAttackable = false;
 				displayMoveable = true;
 
 				// At this point we know who we intend to target, but we need to inject the BattleCommand.
 				// Only the owner will have a value for the battle command so they will have to be
 				// the one to send the BattleResults
-				turnActions.add(new AttackSpriteAction(((SpriteContextMessage) message).getSprites(), battleCommand));
+				turnActions.add(new AttackSpriteAction(((SpriteContextMessage) message).getSprites(stateInfo.getSprites()), battleCommand));
 				break;
 			// THIS IS SENT BY THE OWNER
-			case Message.MESSAGE_SELECT_SPELL:
+			case SELECT_SPELL:
 				BattleSelectionMessage bsm = (BattleSelectionMessage) message;
 				battleCommand = new BattleCommand(BattleCommand.COMMAND_SPELL,
 						currentSprite.getSpellsDescriptors().get(bsm.getSelectionIndex()).getSpell(), bsm.getLevel());
-				determineAttackbleSpace(true);
+				determineAttackableSpace(true);
 				break;
-			case Message.MESSAGE_SELECT_ITEM:
+			case SELECT_ITEM:
 				BattleSelectionMessage ibsm = (BattleSelectionMessage) message;
 				battleCommand = new BattleCommand(BattleCommand.COMMAND_ITEM,
 						currentSprite.getItem(ibsm.getSelectionIndex()));
-				determineAttackbleSpace(true);
+				determineAttackableSpace(true);
 				break;
-			case Message.MESSAGE_COMBATANT_TURN:
-				initializeCombatantTurn(((SpriteContextMessage) message).getSprite());
+			case COMBATANT_TURN:
+				initializeCombatantTurn(((SpriteContextMessage) message).getSprite(stateInfo.getSprites()));
 				break;
-			case Message.MESSAGE_RESET_SPRITELOC:
+			case RESET_SPRITELOC:
 				if (spriteStartPoint.x == currentSprite.getTileX() &&
 						spriteStartPoint.y == currentSprite.getTileY())
 				{
@@ -565,7 +576,7 @@ public class TurnManager extends Manager implements KeyboardListener
 					this.resetSpriteLoc = true;
 				}
 				break;
-			case Message.MESSAGE_MOVETO_SPRITELOC:
+			case MOVETO_SPRITELOC:
 				ms.setCheckEvents(false);
 
 				MoveToTurnAction mtta = new MoveToTurnAction(((LocationMessage) message).locX,
@@ -576,22 +587,44 @@ public class TurnManager extends Manager implements KeyboardListener
 				// Grab the final TurnAction, it should be a MoveToTurnAction. Process the first move
 				handleSpriteMovement(turnActions.get(turnActions.size() - 1));
 				break;
-			case Message.MESSAGE_HIDE_ATTACKABLE:
+			case HIDE_ATTACKABLE:
 				displayAttackable = false;
 				displayMoveable = true;
 
 				if (ownsSprite)
-					stateInfo.sendMessage(Message.MESSAGE_SHOW_BATTLEMENU);
+					stateInfo.sendMessage(MessageType.SHOW_BATTLEMENU);
 				break;
-			case Message.MESSAGE_BATTLE_RESULTS:
+			case BATTLE_RESULTS:
 				battleResults = ((BattleResultsMessage) message).getBattleResults();
-				stateInfo.sendMessage(Message.MESSAGE_PAUSE_MUSIC);
+				ArrayList<CombatSprite> transposedTargets = new ArrayList<>();
+				for (CombatSprite oldTargets : battleResults.targets)
+				{
+					for (CombatSprite cs : stateInfo.getCombatSprites())
+					{
+						if (oldTargets.getId() == cs.getId())
+						{
+							transposedTargets.add(cs);
+							break;
+						}
+					}
+				}
+				battleResults.targets = transposedTargets;
+				stateInfo.sendMessage(MessageType.PAUSE_MUSIC);
 
 				turnActions.add(new PerformAttackAction(battleResults));
 				turnActions.add(new TurnAction(TurnAction.ACTION_CHECK_DEATH));
 				break;
-			case Message.MESSAGE_PLAYER_END_TURN:
+			case PLAYER_END_TURN:
 				turnActions.add(new TurnAction(TurnAction.ACTION_END_TURN));
+				break;
+			case TURN_ACTIONS:
+				TurnActionsMessage tam = (TurnActionsMessage) message;
+				turnActions.addAll(tam.getTurnActions());
+				break;
+			case HIDE_ATTACK_AREA:
+				displayAttackable = false;
+				break;
+			default:
 				break;
 
 		}

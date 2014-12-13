@@ -57,7 +57,7 @@ public class PriestMenu extends Menu implements CellRenderer<CombatSprite>, YesN
 		}
 				
 		if (buttons.get(0).handleUserInput(mouseX, mouseY, leftClick))
-			stateInfo.sendMessage(Message.MESSAGE_SAVE);
+			stateInfo.sendMessage(MessageType.SAVE);
 		buttons.get(1).handleUserInput(mouseX, mouseY, leftClick);
 		buttons.get(2).handleUserInput(mouseX, mouseY, leftClick);		
 		if (buttons.get(3).handleUserInput(mouseX, mouseY, leftClick))

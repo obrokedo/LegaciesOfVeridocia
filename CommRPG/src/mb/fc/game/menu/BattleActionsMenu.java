@@ -1,7 +1,7 @@
 package mb.fc.game.menu;
 
 import mb.fc.engine.message.AudioMessage;
-import mb.fc.engine.message.Message;
+import mb.fc.engine.message.MessageType;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.constants.Direction;
 import mb.fc.game.hudmenu.Panel;
@@ -89,8 +89,8 @@ public class BattleActionsMenu extends QuadMenu
 
 	@Override
 	public MenuUpdate onBack() {
-		stateInfo.sendMessage(Message.MESSAGE_SHOW_MOVEABLE);
-		stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menuback", 1f, false));
+		stateInfo.sendMessage(MessageType.SHOW_MOVEABLE);
+		stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, "menuback", 1f, false));
 		return MenuUpdate.MENU_CLOSE;
 	}
 
@@ -99,18 +99,18 @@ public class BattleActionsMenu extends QuadMenu
 		switch (selected)
 		{
 			case UP:
-				stateInfo.sendMessage(Message.MESSAGE_ATTACK_PRESSED);
+				stateInfo.sendMessage(MessageType.ATTACK_PRESSED);
 				break;
 			case LEFT:
-				stateInfo.sendMessage(Message.MESSAGE_SHOW_SPELLMENU);
-				stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menuselect", 1f, false));
+				stateInfo.sendMessage(MessageType.SHOW_SPELLMENU);
+				stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, "menuselect", 1f, false));
 				break;
 			case RIGHT:
-				stateInfo.sendMessage(Message.MESSAGE_SHOW_ITEM_MENU);
-				stateInfo.sendMessage(new AudioMessage(Message.MESSAGE_SOUND_EFFECT, "menuselect", 1f, false));
+				stateInfo.sendMessage(MessageType.SHOW_ITEM_MENU);
+				stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, "menuselect", 1f, false));
 				break;
 			case DOWN:
-				stateInfo.sendMessage(Message.MESSAGE_PLAYER_END_TURN);
+				stateInfo.sendMessage(MessageType.PLAYER_END_TURN);
 				break;
 		}
 
