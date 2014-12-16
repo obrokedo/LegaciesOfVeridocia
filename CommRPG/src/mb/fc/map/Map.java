@@ -273,7 +273,6 @@ public class Map
 
 	public boolean isMarkedMoveable(int tileX, int tileY)
 	{
-		System.out.println(tileX * tileRatio + " " + tileY * tileRatio);
 		if ((mapLayer.get(3).length > (tileY * tileRatio)) && ((mapLayer.get(3)[0].length > tileX * tileRatio)))
 			return mapLayer.get(3)[(int) (tileY * tileRatio)][(int) (tileX * tileRatio)] != 0;
 		return false;

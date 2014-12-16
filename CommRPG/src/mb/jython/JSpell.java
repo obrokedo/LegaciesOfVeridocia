@@ -1,5 +1,7 @@
 package mb.jython;
 
+import java.io.Serializable;
+
 import mb.fc.game.battle.condition.BattleEffect;
 import mb.fc.game.battle.spell.KnownSpell;
 import mb.fc.game.sprite.CombatSprite;
@@ -16,7 +18,7 @@ import org.newdawn.slick.Image;
  * @author Broked
  *
  */
-public abstract class JSpell
+public abstract class JSpell implements Serializable
 {
 	/**
 	 * Spell attributes
@@ -31,7 +33,7 @@ public abstract class JSpell
 	protected int[] range;
 	protected int[] area;
 	protected int id;
-	protected Image spellIcon;
+	protected transient Image spellIcon;
 
 	/**
 	 * Creates a new JSpell Jython object and initializes it with

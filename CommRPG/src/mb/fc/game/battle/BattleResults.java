@@ -17,9 +17,12 @@ import mb.jython.JSpell;
 public class BattleResults implements Serializable
 {
 	private static final long serialVersionUID = 1L;
-	public boolean dodged, countered, critted, doubleAttack;
+	public boolean countered, doubleAttack;
+	public ArrayList<Boolean> dodged;
+	public ArrayList<Boolean> critted;
 	public ArrayList<Integer> hpDamage;
 	public ArrayList<Integer> mpDamage;
+	public ArrayList<Integer> remainingHP;
 	public ArrayList<String> text;
 	public ArrayList<CombatSprite> targets;
 	public ArrayList<BattleEffect> targetEffects;
@@ -27,6 +30,7 @@ public class BattleResults implements Serializable
 	public ArrayList<Integer> attackerHPDamage;
 	public ArrayList<Integer> attackerMPDamage;
 	public boolean death = false;
+	public boolean attackerDeath = false;
 	public String attackOverText = null;
 	public LevelUpResult levelUpResult = null;
 
@@ -46,9 +50,10 @@ public class BattleResults implements Serializable
 		br.targetEffects = new ArrayList<BattleEffect>();
 		br.attackerHPDamage = new ArrayList<Integer>();
 		br.attackerMPDamage = new ArrayList<Integer>();
-		br.dodged = false;
+		br.remainingHP = new ArrayList<>();
 		br.countered = false;
-		br.critted = false;
+		br.dodged = new ArrayList<Boolean>();
+		br.critted = new ArrayList<Boolean>();
 		br.doubleAttack = false;
 
 		int expGained = 0;
@@ -61,54 +66,84 @@ public class BattleResults implements Serializable
 			// If we are doing a simple attack command then we need to get the dodge chance and calculate damage dealt
 			if (battleCommand.getCommand() == BattleCommand.COMMAND_ATTACK)
 			{
+				int damage = 0;
 
-				// TODO This needs to take into effect other hitting modifiers.
-				int dodgeChance = jBattleFunctions.getDodgePercent(attacker, target);
+				// Normal Attack
+				text = addAttack(attacker, target, br, stateInfo, jBattleFunctions, false);
+				damage = br.hpDamage.get(0);
+				br.remainingHP.add(target.getCurrentHP() + damage);
 
-
-				// TODO Critting, countering
-				// TODO A lot to do here, handle spells
-				if (CommRPG.RANDOM.nextInt(100) < dodgeChance)
+				if (attacker.isHero())
 				{
-					br.hpDamage.add(0);
-					br.mpDamage.add(0);
-					if (target.isDodges())
-						text = jBattleFunctions.getDodgeText(attacker, target);
+					if (damage != 0)
+						expGained += getExperienceByDamage(damage, attacker.getLevel(), target);
 					else
-						text = jBattleFunctions.getBlockText(attacker, target);
-					br.targetEffects.add(null);
-					br.attackerHPDamage.add(0);
-					br.attackerMPDamage.add(0);
-					br.dodged = true;
-					expGained = 1;
+						expGained += 1;
 				}
-				else
+
+				// Check to see if the target is dead, if so then there is nothing additional to do
+				if (br.remainingHP.get(0) > 0)
 				{
-					float landEffect = (100 + stateInfo.getResourceManager().getMap().getLandEffectByTile(target.getMovementType(),
-							target.getTileX(), target.getTileY())) / 100.0f;
-
-					if (jBattleFunctions.getCritPercent(attacker, target) >= CommRPG.RANDOM.nextInt(100))
-						br.critted = true;
-					// Multiply the attackers attack by .8 - 1.2 and the targets defense by .8 - 1.2 and then the difference
-					// between the two values is the damage dealt or 1 if result is less then 1.
-					int damage = jBattleFunctions.getDamageDealt(attacker, target, landEffect, CommRPG.RANDOM);
-
-					if (br.critted)
+					int distanceApart = Math.abs(attacker.getTileX() - target.getTileX()) + Math.abs(attacker.getTileY() - target.getTileY());
+					// Counter Attack
+					if (distanceApart == 1 &&
+							jBattleFunctions.getCounterPercent(attacker, target) >= CommRPG.RANDOM.nextInt(100))
 					{
-						int critDamage = (int) (damage * jBattleFunctions.getCritDamageModifier(attacker, target));
-						br.hpDamage.add(critDamage);
-						text = jBattleFunctions.getCriticalAttackText(attacker, target, critDamage * -1);
+						br.text.add(text);
+						text = addAttack(target, attacker, br, stateInfo, jBattleFunctions, true);
+						damage = br.hpDamage.get(1);
+
+						// Add the attackers remaining HP
+						br.remainingHP.add(attacker.getCurrentHP() + damage);
+						if (br.remainingHP.get(br.remainingHP.size() - 1) <= 0)
+						{
+							br.death = true;
+							br.attackerDeath = true;
+						}
+
+						if (target.isHero())
+						{
+							if (damage != 0)
+								expGained += getExperienceByDamage(damage, attacker.getLevel(), target);
+							else
+								expGained += 1;
+						}
+						else if (br.attackerDeath)
+						{
+							expGained = 0;
+						}
+
+						br.countered = true;
 					}
-					else
+
+					// Check to make sure the attacker is still alive
+					if (br.remainingHP.size() == 1 || br.remainingHP.get(1) > 0)
 					{
-						br.hpDamage.add(damage);
-						text = jBattleFunctions.getNormalAttackText(attacker, target, damage * -1);
+						// Double Attack
+						if (jBattleFunctions.getDoublePercent(attacker, target) >= CommRPG.RANDOM.nextInt(100))
+						{
+							br.text.add(text);
+							text = addAttack(attacker, target, br, stateInfo, jBattleFunctions, false);
+							damage = br.hpDamage.get(br.hpDamage.size() - 1);
+
+							// Add the targets remaining HP
+							br.remainingHP.add(br.remainingHP.get(0) + damage);
+							if (br.remainingHP.get(br.remainingHP.size() - 1) <= 0)
+								br.death = true;
+
+							if (attacker.isHero())
+							{
+								if (damage != 0)
+									expGained += getExperienceByDamage(damage, attacker.getLevel(), target);
+								else
+									expGained += 1;
+							}
+							else if (br.death)
+								expGained = 0;
+
+							br.doubleAttack = true;
+						}
 					}
-					br.mpDamage.add(0);
-					br.targetEffects.add(null);
-					br.attackerHPDamage.add(0);
-					br.attackerMPDamage.add(0);
-					expGained += getExperienceByDamage(damage, attacker.getLevel(), target);
 				}
 			}
 			else if (battleCommand.getCommand() == BattleCommand.COMMAND_SPELL)
@@ -123,9 +158,13 @@ public class BattleResults implements Serializable
 				{
 					damage = spell.getDamage()[spellLevel];
 					br.hpDamage.add(damage);
+					br.remainingHP.add(target.getCurrentHP() + damage);
 				}
 				else
+				{
 					br.hpDamage.add(0);
+					br.remainingHP.add(target.getCurrentHP());
+				}
 
 				if (spell.getMpDamage() != null)
 					br.mpDamage.add(spell.getMpDamage()[spellLevel]);
@@ -145,7 +184,11 @@ public class BattleResults implements Serializable
 
 				int exp = spell.getExpGained(spellLevel, attacker, target);
 
-				expGained += exp;
+				if (attacker.isHero())
+					expGained += exp;
+
+				br.critted.add(false);
+				br.dodged.add(false);
 			}
 			else if (battleCommand.getCommand() == BattleCommand.COMMAND_ITEM)
 			{
@@ -159,9 +202,13 @@ public class BattleResults implements Serializable
 				{
 					damage = itemUse.getDamage();
 					br.hpDamage.add(damage);
+					br.remainingHP.add(target.getCurrentHP() + damage);
 				}
 				else
+				{
 					br.hpDamage.add(0);
+					br.remainingHP.add(target.getCurrentHP());
+				}
 
 				if (itemUse.getMpDamage() != 0)
 					br.mpDamage.add(itemUse.getMpDamage());
@@ -178,13 +225,18 @@ public class BattleResults implements Serializable
 
 				int exp = itemUse.getExpGained();
 
-				expGained += exp;
+				if (attacker.isHero())
+					expGained += exp;
 
 				if (item.getItemUse().isSingleUse())
 					attacker.removeItem(item);
+
+				br.critted.add(false);
+				br.dodged.add(false);
 			}
 
-			if (target.getCurrentHP() + br.hpDamage.get(index) <= 0)
+			if (target.getCurrentHP() + br.hpDamage.get(index) <= 0 ||
+					(br.battleCommand.getCommand() == BattleCommand.COMMAND_ATTACK && br.death && !br.attackerDeath))
 			{
 				br.death = true;
 				int idx = text.lastIndexOf("}");
@@ -198,6 +250,19 @@ public class BattleResults implements Serializable
 				text = text.replaceAll("}", "");
 				text = text + " " +jBattleFunctions.getCombatantDeathText(attacker, target);
 			}
+			else if (br.attackerDeath)
+			{
+				int idx = text.lastIndexOf("}");
+				if (idx != -1)
+					text = text.substring(0, idx);
+
+				idx = text.lastIndexOf("]");
+				if (idx != -1)
+					text = text.substring(0, idx);
+
+				text = text.replaceAll("}", "");
+				text = text + " " +jBattleFunctions.getCombatantDeathText(target, attacker);
+			}
 			br.text.add(text);
 			index++;
 		}
@@ -207,17 +272,96 @@ public class BattleResults implements Serializable
 
 		if (attacker.isHero())
 		{
-			attacker.setExp(attacker.getExp() + expGained);
-			br.attackOverText = attacker.getName() + " gained " + expGained +  " experience.}";
-			if (attacker.getExp() >= 100)
+			if (!br.attackerDeath)
+			{
+				attacker.setExp(attacker.getExp() + expGained);
+				br.attackOverText = attacker.getName() + " gained " + expGained +  " experience.}";
+				if (attacker.getExp() >= 100)
+				{
+					br.attackOverText += " |[ ";
+					br.levelUpResult = attacker.getHeroProgression().getLevelUpResults(attacker, stateInfo);
+					br.attackOverText += br.levelUpResult.text;
+				}
+			}
+		}
+		else if (expGained != 0)
+		{
+			targets.get(0).setExp(targets.get(0).getExp() + expGained);
+			br.attackOverText = targets.get(0).getName() + " gained " + expGained +  " experience.}";
+			if (targets.get(0).getExp() >= 100)
 			{
 				br.attackOverText += " |[ ";
-				br.levelUpResult = attacker.getHeroProgression().getLevelUpResults(attacker, stateInfo);
+				br.levelUpResult = targets.get(0).getHeroProgression().getLevelUpResults(targets.get(0), stateInfo);
 				br.attackOverText += br.levelUpResult.text;
 			}
 		}
 
 		return br;
+	}
+
+	private static String addAttack(CombatSprite attacker, CombatSprite target, BattleResults br,
+			StateInfo stateInfo, JBattleFunctions jBattleFunctions, boolean counter)
+	{
+		String text;
+
+		// TODO This needs to take into effect other hitting modifiers.
+		int dodgeChance = jBattleFunctions.getDodgePercent(attacker, target);
+
+
+		// TODO Critting, countering
+		// TODO A lot to do here, handle spells
+		if (CommRPG.RANDOM.nextInt(100) < dodgeChance)
+		{
+			br.hpDamage.add(0);
+			br.mpDamage.add(0);
+			if (target.isDodges())
+				text = jBattleFunctions.getDodgeText(attacker, target);
+			else
+				text = jBattleFunctions.getBlockText(attacker, target);
+			br.targetEffects.add(null);
+			br.attackerHPDamage.add(0);
+			br.attackerMPDamage.add(0);
+			br.dodged.add(true);
+			br.critted.add(false);
+		}
+		else
+		{
+			br.dodged.add(false);
+			float landEffect = (100 + stateInfo.getResourceManager().getMap().getLandEffectByTile(target.getMovementType(),
+					target.getTileX(), target.getTileY())) / 100.0f;
+
+			boolean critted = false;
+			if (jBattleFunctions.getCritPercent(attacker, target) >= CommRPG.RANDOM.nextInt(100))
+				critted = true;
+
+			br.critted.add(critted);
+
+			// Multiply the attackers attack by .8 - 1.2 and the targets defense by .8 - 1.2 and then the difference
+			// between the two values is the damage dealt or 1 if result is less then 1.
+			int damage = jBattleFunctions.getDamageDealt(attacker, target, landEffect, CommRPG.RANDOM);
+
+			if (counter)
+				damage = (int) (damage * jBattleFunctions.getCounterDamageModifier(attacker, target));
+
+			if (critted)
+			{
+				int critDamage = (int) (damage * jBattleFunctions.getCritDamageModifier(attacker, target));
+				br.hpDamage.add(critDamage);
+				text = jBattleFunctions.getCriticalAttackText(attacker, target, critDamage * -1);
+			}
+			else
+			{
+				br.hpDamage.add(damage);
+				text = jBattleFunctions.getNormalAttackText(attacker, target, damage * -1);
+			}
+
+			br.mpDamage.add(0);
+			br.targetEffects.add(null);
+			br.attackerHPDamage.add(0);
+			br.attackerMPDamage.add(0);
+		}
+
+		return text;
 	}
 
 	/*
@@ -279,5 +423,10 @@ public class BattleResults implements Serializable
 			double percentExperienceGained = Math.min(Math.abs(1.0 * damage / target.getMaxHP()) / .75, 1);
 			return (int) Math.max(Math.max(1, 5 + target.getLevel() - attackerLevel), maxExp * percentExperienceGained);
 		}
+	}
+
+	public void initialize(StateInfo stateInfo)
+	{
+		battleCommand.initializeSpell(stateInfo);
 	}
 }

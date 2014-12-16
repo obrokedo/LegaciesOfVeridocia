@@ -10,21 +10,23 @@ public class AttackCombatAnimation extends CombatAnimation
 {
 	private boolean castingSpell = false;
 
-	public AttackCombatAnimation(AnimationWrapper animationWrapper)
+	public AttackCombatAnimation(AnimationWrapper animationWrapper, CombatSprite parentSprite)
 	{
-		super(animationWrapper, null);
-	}
-
-	public AttackCombatAnimation(CombatSprite parentSprite, BattleResults battleResults, boolean blockingAnimation)
-	{
-		this(parentSprite, battleResults, blockingAnimation, false);
+		super(animationWrapper, parentSprite, true);
+		minimumTimePassed = animationWrapper.getAnimationLength();
 	}
 
 	public AttackCombatAnimation(CombatSprite parentSprite, BattleResults battleResults, boolean blockingAnimation,
-			boolean rangedAttack)
+			boolean critted)
 	{
-		super(new AnimationWrapper(parentSprite.getSpriteAnims(), (rangedAttack ? "UnRanged" : "UnAttack")), parentSprite);
-		if (battleResults.critted && animationWrapper.hasAnimation("UnCrit"))
+		this(parentSprite, battleResults, blockingAnimation, false, critted);
+	}
+
+	public AttackCombatAnimation(CombatSprite parentSprite, BattleResults battleResults, boolean blockingAnimation,
+			boolean rangedAttack, boolean critted)
+	{
+		super(new AnimationWrapper(parentSprite.getSpriteAnims(), (rangedAttack ? "UnRanged" : "UnAttack")), parentSprite, false);
+		if (critted && animationWrapper.hasAnimation("UnCrit"))
 			this.animationWrapper.setAnimation("UnCrit", false);
 		else if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_SPELL)
 		{

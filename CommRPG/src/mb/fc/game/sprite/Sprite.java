@@ -86,10 +86,8 @@ public class Sprite implements Serializable
 	}
 
 	public void setLocY(float locY) {
-		System.out.println(locY);
 		spriteBounds.setY(locY);
 		tileY = (int) (locY / stateInfo.getTileHeight());
-		System.out.println(tileY);
 	}
 
 	public int getTileX() {

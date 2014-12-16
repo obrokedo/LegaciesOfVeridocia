@@ -121,4 +121,8 @@ public class EnemyDefinition
 	{
 		ENEMY_COUNT = -1;
 	}
+
+	public int getPortrait() {
+		return portrait;
+	}
 }

@@ -35,8 +35,11 @@ public class MapParser
 
 		float desiredTileSize = Map.DESIRED_TILE_WIDTH;
 		float tileResize = 1;
-		if (tileWidth > desiredTileSize)
+		if (tileWidth != desiredTileSize && tileWidth != desiredTileSize / 2)
 		{
+			if (tileWidth < desiredTileSize)
+				desiredTileSize /= 2;
+
 			tileResize = desiredTileSize / tileWidth;
 			tileWidth *= tileResize;
 			tileHeight *= tileResize;

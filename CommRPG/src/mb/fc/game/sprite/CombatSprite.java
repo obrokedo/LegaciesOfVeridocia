@@ -80,7 +80,8 @@ public class CombatSprite extends AnimatedSprite
 			String name, String imageName, int hp, int mp, int attack, int defense, int speed, int move,
 				int movementType, int level, int enemyId, int portraitIndex, ArrayList<KnownSpell> spells, int id)
 	{
-		this(isLeader, name, imageName, null, hp, mp, attack, defense, speed, move, movementType, level, 0, portraitIndex, spells, id);
+		this(isLeader, name, imageName, null, hp, mp, attack,
+				defense, speed, move, movementType, level, 0, portraitIndex, spells, id);
 		this.uniqueEnemyId = enemyId;
 		this.ai = new ClericAI(AI.APPROACH_REACTIVE);
 		this.isHero = false;
@@ -88,8 +89,8 @@ public class CombatSprite extends AnimatedSprite
 
 	public CombatSprite(boolean isLeader,
 			String name, String imageName, HeroProgression heroProgression, int hp, int mp, int attack,
-			int defense, int speed, int move, int movementType, int level, int exp, int portraitIndex, ArrayList<KnownSpell> spells,
-			int id)
+			int defense, int speed, int move, int movementType, int level, int exp, int portraitIndex,
+			ArrayList<KnownSpell> spells, int id)
 	{
 		super(0, 0, imageName, id);
 
@@ -197,7 +198,6 @@ public class CombatSprite extends AnimatedSprite
 	@Override
 	public void render(Camera camera, Graphics graphics, FCGameContainer cont)
 	{
-		graphics.drawString(this.getLocX() + " " + this.getLocY() + " " + camera.getLocationY(), 350, 350);
 		for (AnimSprite as : currentAnim.frames.get(imageIndex).sprites)
 		{
 			if (movementType != CombatSprite.MOVEMENT_FLYING)

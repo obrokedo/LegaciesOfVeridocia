@@ -16,6 +16,7 @@ public abstract class CasterAI extends AI
 
 	protected int mostConfident = 0;
 	protected JSpell bestSpell;
+	protected KnownSpell bestKnownSpell;
 	protected int spellLevel;
 	protected ArrayList<CombatSprite> targets;
 
@@ -65,7 +66,7 @@ public abstract class CasterAI extends AI
 
 				System.out.println("Attack confidence " + currentConfidence + " name " + targetSprite.getName());
 
-				mostConfident = checkForMaxConfidence(mostConfident, currentConfidence, null, 0, null);
+				mostConfident = checkForMaxConfidence(mostConfident, currentConfidence, null, null, 0, null);
 			}
 		}
 
@@ -105,18 +106,20 @@ public abstract class CasterAI extends AI
 						continue;
 
 
-					handleSpell(spell, i, tileWidth, tileHeight, currentSprite,
+					handleSpell(spell, sd, i, tileWidth, tileHeight, currentSprite,
 							targetSprite, stateInfo, baseConfidence, cost, attackPoint, distance);
 				}
 			}
 		}
 	}
 
-	protected int checkForMaxConfidence(int mostConfident, int confidence, JSpell currentSpell, int level, ArrayList<CombatSprite> targets)
+	protected int checkForMaxConfidence(int mostConfident, int confidence, JSpell currentSpell, KnownSpell currentKnownSpell,
+			int level, ArrayList<CombatSprite> targets)
 	{
 		if (confidence > mostConfident)
 		{
 			bestSpell = currentSpell;
+			bestKnownSpell = currentKnownSpell;
 			this.spellLevel = level;
 			this.targets = targets;
 			return confidence;
@@ -162,13 +165,13 @@ public abstract class CasterAI extends AI
 		{
 			System.out.println("Cast spell " + bestSpell.getName() + " " + spellLevel);
 			if (targets != null)
-				return new AttackSpriteAction(targets, new BattleCommand(BattleCommand.COMMAND_SPELL, bestSpell, spellLevel));
+				return new AttackSpriteAction(targets, new BattleCommand(BattleCommand.COMMAND_SPELL, bestSpell, bestKnownSpell, spellLevel));
 			else
-				return new AttackSpriteAction(target, new BattleCommand(BattleCommand.COMMAND_SPELL, bestSpell, spellLevel));
+				return new AttackSpriteAction(target, new BattleCommand(BattleCommand.COMMAND_SPELL, bestSpell, bestKnownSpell, spellLevel));
 		}
 	}
 
-	protected abstract void handleSpell(JSpell spell, int i, int tileWidth, int tileHeight, CombatSprite currentSprite,
+	protected abstract void handleSpell(JSpell spell,  KnownSpell knownSpell, int i, int tileWidth, int tileHeight, CombatSprite currentSprite,
 			CombatSprite targetSprite, StateInfo stateInfo, int baseConfidence, int cost, Point attackPoint, int distance);
 
 	protected abstract int determineBaseConfidence(CombatSprite currentSprite,

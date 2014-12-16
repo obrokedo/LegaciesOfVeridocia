@@ -273,7 +273,9 @@ public class TurnManager extends Manager implements KeyboardListener
 				break;
 			case TurnAction.ACTION_CHECK_DEATH:
 				if (battleResults.death)
-					turnActions.add(new WaitAction(1500 / UPDATE_TIME));
+				{
+					turnActions.add(new WaitAction(2000 / UPDATE_TIME));
+				}
 				turnActions.add(new TurnAction(TurnAction.ACTION_END_TURN));
 				turnActions.remove(0);
 				break;
@@ -550,7 +552,8 @@ public class TurnManager extends Manager implements KeyboardListener
 			case SELECT_SPELL:
 				BattleSelectionMessage bsm = (BattleSelectionMessage) message;
 				battleCommand = new BattleCommand(BattleCommand.COMMAND_SPELL,
-						currentSprite.getSpellsDescriptors().get(bsm.getSelectionIndex()).getSpell(), bsm.getLevel());
+						currentSprite.getSpellsDescriptors().get(bsm.getSelectionIndex()).getSpell(),
+						currentSprite.getSpellsDescriptors().get(bsm.getSelectionIndex()), bsm.getLevel());
 				determineAttackableSpace(true);
 				break;
 			case SELECT_ITEM:
@@ -596,6 +599,7 @@ public class TurnManager extends Manager implements KeyboardListener
 				break;
 			case BATTLE_RESULTS:
 				battleResults = ((BattleResultsMessage) message).getBattleResults();
+				battleResults.initialize(stateInfo);
 				ArrayList<CombatSprite> transposedTargets = new ArrayList<>();
 				for (CombatSprite oldTargets : battleResults.targets)
 				{

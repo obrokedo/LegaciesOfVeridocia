@@ -5,7 +5,7 @@ import java.util.Random;
 import javax.swing.JOptionPane;
 
 import mb.fc.engine.log.FileLogger;
-import mb.fc.engine.state.AttackCinematicState;
+import mb.fc.engine.state.AttackCinematicState2;
 import mb.fc.engine.state.DevelMenuState;
 import mb.fc.engine.state.PersistentStateInfo;
 import mb.fc.engine.state.TestState;
@@ -148,7 +148,6 @@ public class CommRPG extends StateBasedGame   {
 				System.out.println("Unable to enter full screen");
 				for (DisplayMode dm : Display.getAvailableDisplayModes())
 					System.out.println(dm);
-				GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] = 3;
 				container.setDisplayPaddingX(0);
 				try
 				{
@@ -226,7 +225,7 @@ public class CommRPG extends StateBasedGame   {
 		this.addState(new DevelMenuState());
 		// this.addState(new MultiplayerMenuState());
 
-		this.addState(new AttackCinematicState());
+		this.addState(new AttackCinematicState2());
 		this.addState(loadingState);
 
 		this.addState(new TestState());
@@ -250,6 +249,7 @@ public class CommRPG extends StateBasedGame   {
 				*/
 
 
+
 		loadingState.setLoadingInfo("/menu/MainMenu", null, false, true,
 				new FCResourceManager(),
 					(LoadableGameState) this.getState(STATE_GAME_MENU_DEVEL),
@@ -262,6 +262,7 @@ public class CommRPG extends StateBasedGame   {
 					(LoadableGameState) this.getState(STATE_GAME_MENU_MULTI),
 						new FCLoadingRenderSystem(gameContainer));
 						*/
+
 
 
 		this.enterState(STATE_GAME_LOADING);

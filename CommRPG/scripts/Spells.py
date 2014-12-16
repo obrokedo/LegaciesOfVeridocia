@@ -19,7 +19,7 @@ class Spells(JSpell):
             spell.setName("Heal")              
             spell.setCosts(jarray.array([3, 5, 9, 12], 'i'))
             spell.setDamage(jarray.array([15, 22, 36, 120], 'i'))
-            spell.setRange(jarray.array([3, 2, 3, 1], 'i'))
+            spell.setRange(jarray.array([1, 2, 3, 1], 'i'))
             spell.setArea(jarray.array([1, 1, 1, 1], 'i'))            
             spell.setTargetsEnemy(0)
             spell.setMaxLevel(4)

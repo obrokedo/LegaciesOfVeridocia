@@ -75,7 +75,7 @@ public class NPCSprite extends AnimatedSprite
 				else if (stateInfo.getCurrentSprite().getLocY() < this.getLocY())
 					this.setFacing(Direction.UP);
 
-				stateInfo.sendMessage(new SpeechMessage(s.getMessage(), s.getTriggerId(), s.getPortraitId()));
+				stateInfo.sendMessage(new SpeechMessage(s.getMessage(), s.getTriggerId(), s.getPortraitId(stateInfo)));
 				break;
 			}
 		}

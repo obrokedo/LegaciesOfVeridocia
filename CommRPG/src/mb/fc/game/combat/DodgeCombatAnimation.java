@@ -7,6 +7,7 @@ public class DodgeCombatAnimation extends CombatAnimation
 {
 	public DodgeCombatAnimation(CombatSprite parentSprite)
 	{
-		super(new AnimationWrapper(parentSprite.getSpriteAnims(), "UnDodge"), parentSprite);
+		super(new AnimationWrapper(parentSprite.getSpriteAnims(), "UnDodge"), parentSprite, false);
+		this.minimumTimePassed = this.animationWrapper.getAnimationLength();
 	}
 }

@@ -13,6 +13,7 @@ import mb.fc.engine.message.Message;
 import mb.fc.engine.message.MessageType;
 import mb.fc.game.Camera;
 import mb.fc.game.hudmenu.Panel;
+import mb.fc.game.hudmenu.WaitPanel;
 import mb.fc.game.input.FCInput;
 import mb.fc.game.listener.KeyboardListener;
 import mb.fc.game.listener.MouseListener;
@@ -121,7 +122,7 @@ public class StateInfo
 		psi.setCurrentStateInfo(this);
 
 		this.initialized = false;
-		setWaiting(true);
+		setWaiting();
 
 		// Add starting heroes if they haven't been added yet
 		if (psi.getClientProfile().getStartingHeroIds() != null)
@@ -186,18 +187,6 @@ public class StateInfo
 			psi.getResourceManager().getTriggerEventById(0).perform(this);
 		}
 
-	}
-
-	public void continueState()
-	{
-		if (!initialized)
-		{
-			initialized = true;
-			if (isCombat)
-				// Start the whole battle
-				sendMessage(MessageType.NEXT_TURN);
-		}
-		isWaiting = false;
 	}
 
 	private void initializeMapObjects()
@@ -331,6 +320,17 @@ public class StateInfo
 					break;
 				case COMPLETE_QUEST:
 					this.setQuestComplete(((IntMessage) m).getValue());
+					break;
+				case CONTINUE:
+					if (!initialized)
+					{
+						initialized = true;
+						if (isCombat)
+							// Start the whole battle
+							sendMessage(MessageType.NEXT_TURN);
+					}
+					this.removePanel(Panel.PANEL_WAIT);
+					isWaiting = false;
 					break;
 				default:
 					sendMessageImpl(m);
@@ -721,10 +721,11 @@ public class StateInfo
 		return isWaiting;
 	}
 
-	public void setWaiting(boolean isWaiting) {
+	public void setWaiting() {
 		if (psi.isOnline())
 		{
-			this.isWaiting = isWaiting;
+			this.addPanel(new WaitPanel());
+			this.isWaiting = true;
 		}
 	}
 

@@ -1,7 +1,7 @@
 package mb.fc.game.turnaction;
 
 import mb.fc.engine.CommRPG;
-import mb.fc.engine.state.AttackCinematicState;
+import mb.fc.engine.state.AttackCinematicState2;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.battle.BattleResults;
 import mb.fc.game.hudmenu.Panel;
@@ -27,7 +27,7 @@ public class PerformAttackAction extends TurnAction
 		stateInfo.removePanel(Panel.PANEL_HEALTH_BAR);
 		stateInfo.removePanel(Panel.PANEL_ENEMY_HEALTH_BAR);
 		stateInfo.setShowAttackCinematic(true);
-		AttackCinematicState acs = (AttackCinematicState) stateInfo.getPsi().getGame().getState(CommRPG.STATE_GAME_BATTLE_ANIM);
+		AttackCinematicState2 acs = (AttackCinematicState2) stateInfo.getPsi().getGame().getState(CommRPG.STATE_GAME_BATTLE_ANIM);
 		acs.setBattleInfo(turnManager.getCurrentSprite(), stateInfo.getResourceManager(), battleResults, stateInfo.getGc());
 		stateInfo.getPsi().getGame().enterState(CommRPG.STATE_GAME_BATTLE_ANIM, new FadeOutTransition(Color.black, 250), new EmptyTransition());
 		return true;

@@ -25,13 +25,16 @@ public class HeroProgression implements Serializable
 	private int spellLevels[][];
 	private Progression unpromotedProgression;
 	private Progression promotedProgression;
+	private int heroID;
 
 	public HeroProgression(int[][] spellLevels,
-			Progression unpromotedProgression, Progression promotedProgression) {
+			Progression unpromotedProgression, Progression promotedProgression,
+			int heroID) {
 		super();
 		this.spellLevels = spellLevels;
 		this.unpromotedProgression = unpromotedProgression;
 		this.promotedProgression = promotedProgression;
+		this.heroID = heroID;
 	}
 
 	public void promote(CombatSprite cs)
@@ -171,5 +174,9 @@ public class HeroProgression implements Serializable
 
 	public Progression getPromotedProgression() {
 		return promotedProgression;
+	}
+
+	public int getHeroID() {
+		return heroID;
 	}
 }

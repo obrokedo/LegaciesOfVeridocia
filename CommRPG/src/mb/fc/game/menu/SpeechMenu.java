@@ -52,11 +52,6 @@ public class SpeechMenu extends Menu
 		this.isAttackCinematic = isAttackCinematic;
 	}
 
-	public SpeechMenu(String text, FCGameContainer gc, int portraitId, StateInfo stateInfo)
-	{
-		this(text, gc, -1, portraitId, stateInfo);
-	}
-
 	public SpeechMenu(String text, FCGameContainer gc, int triggerId,
 			int portraitId, StateInfo stateInfo)
 	{

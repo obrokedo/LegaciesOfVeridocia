@@ -12,7 +12,7 @@ public class StandCombatAnimation extends CombatAnimation
 
 	public StandCombatAnimation(CombatSprite parentSprite, int mimimumTimePassed)
 	{
-		super(new AnimationWrapper(parentSprite.getSpriteAnims(), "UnStand", true), parentSprite);
+		super(new AnimationWrapper(parentSprite.getSpriteAnims(), "UnStand", true), parentSprite, false);
 		this.minimumTimePassed = mimimumTimePassed;
 	}
 }

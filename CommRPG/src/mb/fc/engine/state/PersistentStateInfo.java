@@ -2,7 +2,6 @@ package mb.fc.engine.state;
 
 import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.Message;
-import mb.fc.engine.message.MessageType;
 import mb.fc.game.Camera;
 import mb.fc.game.persist.ClientProfile;
 import mb.fc.game.persist.ClientProgress;
@@ -76,7 +75,7 @@ public class PersistentStateInfo implements PacketHandler
 	{
 		this.entranceLocation = entrance;
 
-		((AttackCinematicState) game.getState(CommRPG.STATE_GAME_BATTLE_ANIM)).setBattleBGIndex(battleBGIndex);
+		((AttackCinematicState2) game.getState(CommRPG.STATE_GAME_BATTLE_ANIM)).setBattleBGIndex(battleBGIndex);
 
 		gc.getInput().removeAllKeyListeners();
 
@@ -194,13 +193,7 @@ public class PersistentStateInfo implements PacketHandler
 
 	@Override
 	public void handleIncomingPacket(Client client, Object packet) {
-		Message message = (Message) packet;
-		if (message.getMessageType() == MessageType.CONTINUE)
-		{
-			currentStateInfo.continueState();
-		}
-		else
-			currentStateInfo.recieveMessage(message);
+		currentStateInfo.recieveMessage((Message) packet);
 	}
 
 	@Override

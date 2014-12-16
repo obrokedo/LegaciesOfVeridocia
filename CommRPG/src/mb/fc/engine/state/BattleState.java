@@ -96,7 +96,7 @@ public class BattleState extends LoadableGameState
 
 		if (stateInfo.isShowAttackCinematic())
 		{
-			stateInfo.setWaiting(true);
+			stateInfo.setWaiting();
 			stateInfo.sendMessage(MessageType.WAIT);
 			stateInfo.getInput().clear();
 			container.getInput().addKeyListener(stateInfo.getInput());

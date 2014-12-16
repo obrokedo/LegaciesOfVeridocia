@@ -30,6 +30,13 @@ public class TransBGCombatAnimation extends CombatAnimation
 			endLocX = screenWidth;
 		else
 			endLocX = -screenWidth;
+
+		update(0);
+	}
+
+	@Override
+	public void initialize() {
+		update(0);
 	}
 
 	@Override
@@ -55,10 +62,15 @@ public class TransBGCombatAnimation extends CombatAnimation
 		g.drawImage(backgroundImage, bgXLoc + offsetLocX, bgYLoc);
 
 		if (childAnimation != null)
-			childAnimation.render(fcCont, g, yDrawPos);
+		{
+			if (childAnimation.getParentSprite().getCurrentHP() > 0)
+				childAnimation.render(fcCont, g, yDrawPos);
+		}
 
 		g.setColor(Color.black);
 		g.fillRect(0, 0, fcCont.getDisplayPaddingX(), fcCont.getHeight());
 		g.fillRect(fcCont.getDisplayPaddingX() + backgroundImage.getWidth(), 0, fcCont.getDisplayPaddingX(), fcCont.getHeight());
 	}
+
+
 }

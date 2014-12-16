@@ -48,3 +48,17 @@ class BattleFunctions(JBattleFunctions):
     # The text that should be displayed when a combatant dies
     def getCombatantDeathText(self, attack, target):
         return target.getName() + " has been defeated!]"
+    
+    # Gets the percent chance that the given attacker will get a double attack against the target
+    # this value should be between 0-100 
+    def getDoublePercent(self, attacker, target):
+        return 5;
+    
+    # Gets the percent chance that the given target will get a counter attack against the attacker
+    # this value should be between 0-100 
+    def getCounterPercent(self, attacker, target):
+        return 5;
+    
+    # Get the amount that the damage dealt by an attack should be modified by when it's a counter attack
+    def getCounterDamageModifier(self, attacker, target):
+        return .75

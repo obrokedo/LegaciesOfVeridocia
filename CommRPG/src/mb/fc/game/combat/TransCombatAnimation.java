@@ -25,7 +25,7 @@ public class TransCombatAnimation extends CombatAnimation
 		if (isHero)
 			maxOffset = (int) (250 * SCREEN_SCALE);
 		else
-			maxOffset = (int) (150 * SCREEN_SCALE);
+			maxOffset = (int) (-150 * SCREEN_SCALE);
 
 		if (!out)
 			childAnimation.xOffset = maxOffset;
@@ -37,7 +37,13 @@ public class TransCombatAnimation extends CombatAnimation
 		if (out)
 			childAnimation.xOffset = (maxOffset * totalTimePassed) / this.minimumTimePassed;
 		else
-			childAnimation.xOffset = Math.max(maxOffset - ((maxOffset * totalTimePassed) / this.minimumTimePassed), 0);
+		{
+			int offset = maxOffset - ((maxOffset * totalTimePassed) / this.minimumTimePassed);
+			if (maxOffset > 0)
+				childAnimation.xOffset = Math.max(offset, 0);
+			else
+				childAnimation.xOffset = Math.min(offset, 0);
+		}
 		childAnimation.update(delta);
 		return totalTimePassed >= minimumTimePassed;
 	}

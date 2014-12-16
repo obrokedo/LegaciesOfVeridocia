@@ -105,7 +105,9 @@ public class TriggerEvent
 		}
 
 		if (retrigOnEnter && !stateInfo.getClientProgress().isPreviouslyTriggered(id))
+		{
 			stateInfo.getClientProgress().addRetriggerableByMap(id);
+		}
 
 		performTriggerImpl(stateInfo);
 	}
@@ -368,7 +370,7 @@ public class TriggerEvent
 					}
 				}
 
-				stateInfo.sendMessage(new SpeechMessage(s.getMessage(), s.getTriggerId(), s.getPortraitId()), true);
+				stateInfo.sendMessage(new SpeechMessage(s.getMessage(), s.getTriggerId(), s.getPortraitId(stateInfo)), true);
 				break;
 			}
 

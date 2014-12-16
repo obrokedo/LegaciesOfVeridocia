@@ -595,6 +595,7 @@ public class AttackCinematicState extends LoadableGameState
 
 	private void performBattleResult()
 	{
+		/*
 		// If the target will dodge this attack then display the dodge animation now
 		if (battleResults.dodged)
 		{
@@ -645,6 +646,7 @@ public class AttackCinematicState extends LoadableGameState
 			deathColor.a = 1;
 			deathFade = true;
 		}
+		*/
 	}
 
 	@Override

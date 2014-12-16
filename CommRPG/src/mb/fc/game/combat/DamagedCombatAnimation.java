@@ -18,9 +18,10 @@ public class DamagedCombatAnimation extends CombatAnimation
 	private BattleEffect battleEffect;
 	private CombatSprite attacker;
 	private boolean isNegativeEffect = false;
+	private int battleResultIndex;
 
 	public DamagedCombatAnimation(CombatAnimation childAnimation, int hpDamage, int mpDamage,
-			BattleEffect battleEffect, CombatSprite attacker)
+			BattleEffect battleEffect, CombatSprite attacker, int battleResultIndex)
 	{
 		super();
 		this.minimumTimePassed = 200;
@@ -29,6 +30,7 @@ public class DamagedCombatAnimation extends CombatAnimation
 		this.mpDamage = mpDamage;
 		this.battleEffect = battleEffect;
 		this.attacker = attacker;
+		this.battleResultIndex = battleResultIndex;
 		if (hpDamage < 0 || mpDamage < 0 || (battleEffect != null && battleEffect.isNegativeEffect()))
 			isNegativeEffect =  true;
 	}
@@ -80,5 +82,9 @@ public class DamagedCombatAnimation extends CombatAnimation
 	public boolean willSpriteDie()
 	{
 		return childAnimation.parentSprite.getCurrentHP() + hpDamage <= 0;
+	}
+
+	public int getBattleResultIndex() {
+		return battleResultIndex;
 	}
 }

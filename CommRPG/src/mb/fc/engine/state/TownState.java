@@ -15,7 +15,6 @@ import mb.fc.renderer.PanelRenderer;
 import mb.fc.renderer.SpriteRenderer;
 import mb.fc.renderer.TileMapRenderer;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -111,12 +110,6 @@ public class TownState extends LoadableGameState
 			cinematicManager.renderMenu(g);
 			cinematicManager.renderPostEffects(g);
 		}
-
-		if (stateInfo.isWaiting())
-		{
-			g.setColor(Color.white);
-			g.drawString("Waiting...", 50, 100);
-		}
 	}
 
 	@Override
@@ -130,7 +123,7 @@ public class TownState extends LoadableGameState
 			cinematicManager.update(delta);
 			if (!menuManager.isBlocking() && !cinematicManager.isBlocking())
 			{
-				panelManager.update();
+				panelManager.update(delta);
 				townMoveManager.update(delta);
 			}
 			spriteManager.update(delta);

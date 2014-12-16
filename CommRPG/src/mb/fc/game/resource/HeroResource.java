@@ -18,4 +18,9 @@ public class HeroResource
 	{
 		return heroDefinitionsById.get(heroId).getHero();
 	}
+
+	public static int getPortraitIndex(int heroId)
+	{
+		return heroDefinitionsById.get(heroId).getPortrait();
+	}
 }

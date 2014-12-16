@@ -1,6 +1,7 @@
 package mb.fc.game.manager;
 
 import mb.fc.engine.message.Message;
+import mb.fc.engine.message.MessageType;
 import mb.fc.engine.message.ShopMessage;
 import mb.fc.engine.message.SpeechMessage;
 import mb.fc.engine.message.SpriteContextMessage;
@@ -40,6 +41,11 @@ public class MenuManager extends Manager
 		switch (menuUpdate)
 		{
 			case MENU_CLOSE:
+				if (stateInfo.getTopMenu() instanceof SpeechMenu)
+				{
+					stateInfo.setWaiting();
+					stateInfo.sendMessage(MessageType.WAIT);
+				}
 				stateInfo.removeTopMenu();
 				stateInfo.setInputDelay(System.currentTimeMillis() + 200);
 				break;

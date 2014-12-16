@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Progression implements Serializable
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	private int[] usuableWeapons;
 	private int[] usuableArmor;
 	private int move;
@@ -17,7 +17,7 @@ public class Progression implements Serializable
 	private int movementType;
 	private int portraitIndex;
 	private String className;
-	
+
 	public Progression(int[] usuableWeapons, int[] usuableArmor, int move, int movementType,
 			int attackGains, int defenseGains, int speedGains, int hpGains,
 			int mpGains, int portraitIndex, String className) {
@@ -34,7 +34,7 @@ public class Progression implements Serializable
 		this.portraitIndex = portraitIndex;
 		this.className = className;
 	}
-	
+
 	public int[] getUsuableWeapons() {
 		return usuableWeapons;
 	}

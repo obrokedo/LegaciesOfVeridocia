@@ -80,16 +80,17 @@ public class TownMoveManager extends Manager
 				{
 					stateInfo.checkTriggers(ms.getEndX(), ms.getEndY(), true);
 				}
+
 				if (ms.update())
 				{
 					movers.remove(i);
 					ms.getAnimatedSprite().doneMoving();
 					i--;
+
+					if (ms.getAnimatedSprite().getSpriteType() == Sprite.TYPE_COMBAT)
+						stateInfo.checkTriggers(ms.getAnimatedSprite().getLocX(), ms.getAnimatedSprite().getLocY(), false);
 					if (stateInfo.getCurrentSprite() == ms.getAnimatedSprite())
-					{
-						stateInfo.checkTriggers(stateInfo.getCurrentSprite().getLocX(), stateInfo.getCurrentSprite().getLocY(), false);
 						moving = false;
-					}
 				}
 			}
 		}
@@ -105,8 +106,6 @@ public class TownMoveManager extends Manager
 
 	private boolean blocked(Map map, int tx, int ty)
 	{
-		//System.out.println(tx + " " + ty);
-		//System.out.println(map.getMapEffectiveWidth() + " " + map.getMapEffectiveHeight());
 		if (tx >= 0 && ty >= 0 && map.getMapEffectiveHeight() > ty && map.getMapEffectiveWidth() > tx && map.isMarkedMoveable(tx, ty))
 		{
 			for (Sprite s : stateInfo.getSprites())

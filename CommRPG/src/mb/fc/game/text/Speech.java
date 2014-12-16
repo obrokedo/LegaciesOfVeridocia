@@ -1,20 +1,30 @@
 package mb.fc.game.text;
 
-public class Speech 
+import mb.fc.engine.state.StateInfo;
+import mb.fc.game.resource.EnemyResource;
+import mb.fc.game.resource.HeroResource;
+import mb.fc.game.sprite.CombatSprite;
+
+public class Speech
 {
 	private String message;
 	private int[] requires;
 	private int[] excludes;
 	private int triggerId;
 	private int portraitId;
-	
-	public Speech(String message, int[] requires, int[] excludes, int triggerId, int portraitId) {
+	private int heroPortrait;
+	private int enemyPortrait;
+
+	public Speech(String message, int[] requires, int[] excludes, int triggerId, int portraitId,
+			int heroPortrait, int enemyPortrait) {
 		super();
 		this.message = message;
 		this.requires = requires;
 		this.excludes = excludes;
 		this.triggerId = triggerId;
 		this.portraitId = portraitId;
+		this.heroPortrait = heroPortrait;
+		this.enemyPortrait = enemyPortrait;
 	}
 
 	public String getMessage() {
@@ -33,7 +43,26 @@ public class Speech
 		return triggerId;
 	}
 
-	public int getPortraitId() {
-		return portraitId;
+	public int getPortraitId(StateInfo stateInfo) {
+		if (portraitId != -1)
+			return portraitId;
+		else if (enemyPortrait != -1)
+			return EnemyResource.getPortraitIndex(enemyPortrait);
+		else if (heroPortrait != -1)
+		{
+			for (CombatSprite cs : stateInfo.getPsi().getClientProfile().getHeroes())
+			{
+				if (cs.getHeroProgression().getHeroID() == heroPortrait)
+				{
+					if (cs.isPromoted())
+						return cs.getHeroProgression().getPromotedProgression().getPortraitIndex();
+					else
+						return cs.getHeroProgression().getUnpromotedProgression().getPortraitIndex();
+				}
+			}
+
+			return HeroResource.getPortraitIndex(heroPortrait);
+		}
+		return -1;
 	}
 }

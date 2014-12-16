@@ -22,8 +22,8 @@ public class EnemyResource
 		return enemyDefinitionsById.get(enemyId).getEnemy(stateInfo, ID--);
 	}
 
-	public static String getEnemyAnimation(int enemyId)
+	public static int getPortraitIndex(int enemyId)
 	{
-		return enemyDefinitionsById.get(enemyId).getAnimation();
+		return enemyDefinitionsById.get(enemyId).getPortrait();
 	}
 }

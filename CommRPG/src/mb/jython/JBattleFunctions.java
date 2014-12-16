@@ -1,3 +1,4 @@
+
 package mb.jython;
 
 import java.util.Random;
@@ -16,6 +17,9 @@ import mb.fc.game.sprite.CombatSprite;
 public interface JBattleFunctions {
 	public int getDodgePercent(CombatSprite attacker, CombatSprite target);
 	public int getCritPercent(CombatSprite attacker, CombatSprite target);
+	public int getDoublePercent(CombatSprite attacker, CombatSprite target);
+	public int getCounterPercent(CombatSprite attacker, CombatSprite target);
+	public float getCounterDamageModifier(CombatSprite attacker, CombatSprite target);
 	public float getCritDamageModifier(CombatSprite attacker, CombatSprite target);
 	public int getDamageDealt(CombatSprite attacker, CombatSprite target, float landEffect, Random random);
 	public String getDodgeText(CombatSprite attacker, CombatSprite target);

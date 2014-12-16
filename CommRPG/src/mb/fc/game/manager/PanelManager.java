@@ -2,7 +2,10 @@ package mb.fc.game.manager;
 
 import mb.fc.engine.message.InfoMessage;
 import mb.fc.engine.message.Message;
+import mb.fc.engine.message.StringMessage;
 import mb.fc.game.hudmenu.ChatPanel;
+import mb.fc.game.hudmenu.MapEntryPanel;
+import mb.fc.game.hudmenu.Panel;
 
 public class PanelManager extends Manager {
 
@@ -13,9 +16,23 @@ public class PanelManager extends Manager {
 		stateInfo.addPanel(chatMenu);
 	}
 
-	public void update()
+	public void update(int delta)
 	{
-		chatMenu.update(1);
+		Panel panelToRemove = null;
+		for (Panel panel : stateInfo.getPanels())
+		{
+			switch (panel.update(delta))
+			{
+				case MENU_CLOSE:
+					panelToRemove = panel;
+					break;
+				default:
+					break;
+			}
+		}
+
+		if (panelToRemove != null)
+			stateInfo.removePanel(panelToRemove);
 	}
 
 	@Override
@@ -23,6 +40,9 @@ public class PanelManager extends Manager {
 		switch (message.getMessageType()) {
 		case SEND_INTERNAL_MESSAGE:
 			chatMenu.addMessage(((InfoMessage) message).getText());
+			break;
+		case DISPLAY_MAP_ENTRY:
+			stateInfo.addPanel(new MapEntryPanel(((StringMessage) message).getString()));
 			break;
 		default:
 			break;

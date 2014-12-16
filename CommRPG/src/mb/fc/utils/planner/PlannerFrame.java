@@ -1346,6 +1346,15 @@ public class PlannerFrame extends JFrame implements ActionListener,
 						"Portrait Index",
 						"The index of the portrait that should be used from the Image/Portraits file starting from 0. A value of -1 means no portrait should be displayed"));
 
+		definingValues.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_HERO, PlannerValueDef.TYPE_INT,
+				"heroportrait", false, "Hero Portrait",
+				"The hero whose portrait should be shown for this text. This will only be respected when 'Portrait Index' is -1"));
+		definingValues.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_ENEMY, PlannerValueDef.TYPE_INT,
+				"enemyportrait", false, "Enemy Portrait",
+				"The enemy whose portrait should be shown for this text. This will only be respected when 'Portrait Index' is -1"));
+
 		allowableLines
 				.add(new PlannerLineDef(
 						"speech",
@@ -1621,6 +1630,14 @@ public class PlannerFrame extends JFrame implements ActionListener,
 						false,
 						"Portrait Index",
 						"The index of the portrait in the Image/Portraits file starting from index 0 that should be shown during this text. A value of -1 means no portrait should be shown"));
+		definingValues.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_HERO, PlannerValueDef.TYPE_INT,
+				"heroportrait", false, "Hero Portrait",
+				"The hero whose portrait should be shown for this text. This will only be respected when 'Portrait Index' is -1"));
+		definingValues.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_ENEMY, PlannerValueDef.TYPE_INT,
+				"enemyportrait", false, "Enemy Portrait",
+				"The enemy whose portrait should be shown for this text. This will only be respected when 'Portrait Index' is -1"));
 		allowableLines.add(new PlannerLineDef("string", "Message Text",
 				"A message that should be displayed", definingValues));
 
@@ -1761,8 +1778,8 @@ public class PlannerFrame extends JFrame implements ActionListener,
 				"Whether this hero is the leader of the force"));
 
 		// definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
-		// PlannerValueDef.TYPE_INT, "triggerid", false,
-		// "Unique Trigger Id",
+		// PlannerValueDef.TYPE_INT, "portrait", false,
+		// "Portrait Index",
 		// "Unique id that can be used to identify a given trigger"));
 		PlannerLineDef definingLine = new PlannerLineDef("hero", "Hero", "",
 				definingValues);

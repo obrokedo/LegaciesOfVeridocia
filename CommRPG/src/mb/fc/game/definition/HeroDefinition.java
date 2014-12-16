@@ -212,7 +212,7 @@ public class HeroDefinition
 		}
 
 		// Create hero progression
-		HeroProgression heroProgression = new HeroProgression(spellProgression, unpromotedProgression, promotedProgression);
+		HeroProgression heroProgression = new HeroProgression(spellProgression, unpromotedProgression, promotedProgression, id);
 
 		// Create a CombatSprite from default stats, hero progression and spells known
 		CombatSprite cs = new CombatSprite(leader, name, animations, heroProgression,
@@ -232,5 +232,10 @@ public class HeroDefinition
 
 	public int getId() {
 		return id;
+	}
+
+	public int getPortrait()
+	{
+		return this.portrait[0];
 	}
 }

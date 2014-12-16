@@ -22,20 +22,31 @@ public abstract class CombatAnimation
 	protected Color renderColor = null;
 	protected boolean blocks = true;
 	protected CombatSprite parentSprite;
+	protected boolean displayPlatform = false;
 
-	public CombatAnimation(AnimationWrapper animationWrapper, CombatSprite combatSprite) {
-		this(animationWrapper, combatSprite, -1);
+	public CombatAnimation() {}
+
+	public CombatAnimation(AnimationWrapper animationWrapper, CombatSprite combatSprite, boolean isMissile) {
+		this(animationWrapper, combatSprite, -1, (isMissile ? true : null));
 	}
 
-	public CombatAnimation() { }
+	public CombatAnimation(AnimationWrapper animationWrapper, CombatSprite combatSprite, int minimumTimePassed)
+	{
+		this(animationWrapper, combatSprite, minimumTimePassed, null);
+	}
 
-	public CombatAnimation(AnimationWrapper animationWrapper, CombatSprite combatSprite, int minimumTimePassed) {
+	private CombatAnimation(AnimationWrapper animationWrapper, CombatSprite combatSprite, int minimumTimePassed, Boolean showPlatform) {
 		super();
 		this.animationWrapper = animationWrapper;
 		this.minimumTimePassed = minimumTimePassed;
 		this.parentSprite = combatSprite;
 		if (animationWrapper != null)
 			minimumTimePassed = animationWrapper.getAnimationLength();
+
+		if (showPlatform == null)
+		{
+			displayPlatform = (parentSprite.isHero() && parentSprite.getMovementType() != CombatSprite.MOVEMENT_FLYING);
+		}
 	}
 
 	public boolean update(int delta)
@@ -50,10 +61,10 @@ public abstract class CombatAnimation
 
 	public void render(FCGameContainer fcCont, Graphics g, int yDrawPos)
 	{
-		int x = fcCont.getDisplayPaddingX() + (parentSprite.isHero() ? xOffset : -xOffset);
+		int x = fcCont.getDisplayPaddingX() + xOffset; // + (parentSprite.isHero() ? xOffset : -xOffset);
 		int y = yDrawPos + yOffset;
 
-		if (parentSprite.isHero() && parentSprite.getMovementType() != CombatSprite.MOVEMENT_FLYING)
+		if (displayPlatform)
 			g.drawImage(AttackCinematicState2.FLOOR_IMAGE, x + 220 * SCREEN_SCALE, y - 15 * SCREEN_SCALE);
 
 		animationWrapper.drawAnimation(x, y, renderColor, g);

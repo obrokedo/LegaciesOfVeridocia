@@ -71,7 +71,9 @@ public class TextParser
 					if (portrait != null)
 						portraitId = Integer.parseInt(portrait);
 
-					speeches.add(new Speech(message, requireIds, excludeIds, triggerId, portraitId));
+					speeches.add(new Speech(message, requireIds, excludeIds, triggerId, portraitId,
+							(childTagArea.getAttribute("heroportrait") == null ? -1 : Integer.parseInt(childTagArea.getAttribute("heroportrait"))),
+							(childTagArea.getAttribute("enemyportrait") == null ? -1 : Integer.parseInt(childTagArea.getAttribute("enemyportrait")))));
 				}
 				speechesById.put(id, speeches);
 			}
@@ -321,7 +323,9 @@ public class TextParser
 			return new CinematicEvent(CinematicEventType.CAMERA_MOVE, Integer.parseInt(area.getAttribute("x")),
 					Integer.parseInt(area.getAttribute("y")), Integer.parseInt(area.getAttribute("time")));
 		else if (type.equalsIgnoreCase("speech"))
-			return new CinematicEvent(CinematicEventType.SPEECH, area.getAttribute("text"), Integer.parseInt(area.getAttribute("portrait")));
+			return new CinematicEvent(CinematicEventType.SPEECH, area.getAttribute("text"), Integer.parseInt(area.getAttribute("portrait")),
+					(area.getAttribute("heroportrait") == null ? -1 : Integer.parseInt(area.getAttribute("heroportrait"))),
+							(area.getAttribute("enemyportrait") == null ? -1 : Integer.parseInt(area.getAttribute("enemyportrait"))));
 		else if (type.equalsIgnoreCase("loadmap"))
 			return new CinematicEvent(CinematicEventType.LOAD_MAP, area.getAttribute("map"), area.getAttribute("enter"));
 		else if (type.equalsIgnoreCase("loadbattle"))
