@@ -10,6 +10,12 @@ public class AttackCombatAnimation extends CombatAnimation
 {
 	private boolean castingSpell = false;
 
+	/**
+	 * Constructor to create a ranged attack
+	 *
+	 * @param animationWrapper
+	 * @param parentSprite
+	 */
 	public AttackCombatAnimation(AnimationWrapper animationWrapper, CombatSprite parentSprite)
 	{
 		super(animationWrapper, parentSprite, true);
@@ -25,7 +31,8 @@ public class AttackCombatAnimation extends CombatAnimation
 	public AttackCombatAnimation(CombatSprite parentSprite, BattleResults battleResults, boolean blockingAnimation,
 			boolean rangedAttack, boolean critted)
 	{
-		super(new AnimationWrapper(parentSprite.getSpriteAnims(), (rangedAttack ? "UnRanged" : "UnAttack")), parentSprite, false);
+		super(new AnimationWrapper(parentSprite.getSpriteAnims(), (rangedAttack ? "UnRanged" : "UnAttack"), parentSprite.getCurrentWeaponImage()),
+				parentSprite, false);
 		if (critted && animationWrapper.hasAnimation("UnCrit"))
 			this.animationWrapper.setAnimation("UnCrit", false);
 		else if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_SPELL)

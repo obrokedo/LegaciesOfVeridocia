@@ -98,10 +98,12 @@ public class DevelMenuState extends MenuState
 			if (entranceSelector != null)
 				entranceSelector.mouseClicked(x, y);
 
-			if (y > 550 && y < 635 && mapSelector.getSelectedResource() != null &&
+			if (((y < 15 && x < 15) || (y > 550 && y < 635)) && mapSelector.getSelectedResource() != null &&
 				textSelector.getSelectedResource() != null)
 			{
 				int action = (y - 550) / 30;
+				if (y < 15)
+					action = 0;
 
 				String entrance = null;
 
@@ -109,6 +111,7 @@ public class DevelMenuState extends MenuState
 				{
 					entrance = entranceSelector.getSelectedResource();
 				}
+				System.out.println("START");
 				start(gc, action, mapSelector.getSelectedResource().replaceFirst(".tmx", ""), textSelector.getSelectedResource(), entrance);
 			}
 		}

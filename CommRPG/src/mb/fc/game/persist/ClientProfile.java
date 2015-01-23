@@ -105,7 +105,7 @@ public class ClientProfile implements Serializable
 	{
 		@Override
 		public int compare(CombatSprite c1, CombatSprite c2) {
-			return c2.getId() - c1.getId();
+			return  c1.getId() - c2.getId();
 		}
 
 	}

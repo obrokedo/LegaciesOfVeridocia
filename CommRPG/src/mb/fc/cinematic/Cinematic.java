@@ -464,10 +464,7 @@ public class Cinematic {
 							if (cs.getHeroProgression().getHeroID() == heroPortrait)
 							{
 								found = true;
-								if (cs.isPromoted())
-									portrait = cs.getHeroProgression().getPromotedProgression().getPortraitIndex();
-								else
-									portrait = cs.getHeroProgression().getUnpromotedProgression().getPortraitIndex();
+								portrait = cs.getCurrentProgression().getPortraitIndex();
 								break;
 							}
 						}
@@ -482,7 +479,7 @@ public class Cinematic {
 				}
 
 				speechMenu = new SpeechMenu((String) ce.getParam(0),
-						stateInfo.getGc(), -1, portrait, stateInfo);
+						stateInfo.getGc(), SpeechMenu.NO_TRIGGER, portrait, stateInfo);
 				break;
 			case LOAD_MAP:
 				stateInfo.getPsi().loadMap((String) ce.getParam(0),

@@ -27,6 +27,8 @@ public class EnemyDefinition
 	private int level;
 	private int portrait = -1;
 	private String animations;
+	private int effectId = -1;
+	private int effectChance = -1;
 
 	private ArrayList<int[]> spellsPerLevel;
 
@@ -79,6 +81,11 @@ public class EnemyDefinition
 				else
 					hd.itemsEquipped.add(false);
 			}
+			else if (childTagArea.getTagType().equalsIgnoreCase("attackeffect"))
+			{
+				hd.effectId = Integer.parseInt(childTagArea.getAttribute("effectid"));
+				hd.effectChance = Integer.parseInt(childTagArea.getAttribute("effectchance"));
+			}
 		}
 
 		return hd;
@@ -95,7 +102,8 @@ public class EnemyDefinition
 
 		// Create a CombatSprite from default stats, hero progression and spells known
 		CombatSprite cs = new CombatSprite(leader, name, animations, hp, mp, attack, defense,
-				speed, move, movementType, level, myId, portrait, knownSpells, ENEMY_COUNT--);
+				speed, move, movementType, level, myId, portrait, knownSpells, ENEMY_COUNT--,
+				effectId, effectChance);
 
 		// Add items to the combat sprite
 		for (int i = 0; i < items.size(); i++)

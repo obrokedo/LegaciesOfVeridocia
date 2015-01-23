@@ -1733,6 +1733,17 @@ public class PlannerFrame extends JFrame implements ActionListener,
 		allowableLines.add(new PlannerLineDef("item", "Starting Item",
 				"An item that this hero should start with", definingValues));
 
+		// Attack Special Effect
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_INT, "effectid", false, "Effect ID",
+				"The ID of the effect that the enemies attack may cause"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_INT, "effectchance", false,
+				"Effect Chance", "The percent chance that the effect will occur"));
+		allowableLines.add(new PlannerLineDef("attackeffect", "Attack Effect",
+				"An effect that may occur on the enemy attack", definingValues));
+
 		enemyContainer = new PlannerContainerDef(definingLine,
 				allowableContainers, allowableLines, listOfLists,
 				PlannerValueDef.REFERS_ENEMY - 1);

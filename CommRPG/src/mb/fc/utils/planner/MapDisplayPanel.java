@@ -244,7 +244,7 @@ public class MapDisplayPanel extends JPanel implements ActionListener, MouseList
 		{
 			for (int j = 0; j < plannerMap.getMapHeight(); j++)
 			{
-				for (int k = 0; k < 3; k++)
+				for (int k = 0; k < 5; k++)
 				{
 					if (k == 0 || plannerMap.getMapLayer(k)[j][i] != 0)
 						g.drawImage(plannerMap.getPlannerSprite(plannerMap.getMapLayer(k)[j][i]), i * plannerMap.getTileRenderWidth(), j * plannerMap.getTileRenderHeight(), this);

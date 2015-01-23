@@ -5,6 +5,7 @@ import mb.fc.engine.state.AttackCinematicState2;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.ui.FCGameContainer;
 import mb.fc.utils.AnimationWrapper;
+import mb.jython.JBattleEffect;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -44,15 +45,17 @@ public abstract class CombatAnimation
 			minimumTimePassed = animationWrapper.getAnimationLength();
 
 		if (showPlatform == null)
-		{
 			displayPlatform = (parentSprite.isHero() && parentSprite.getMovementType() != CombatSprite.MOVEMENT_FLYING);
-		}
 	}
 
 	public boolean update(int delta)
 	{
 		totalTimePassed += delta;
 		animationWrapper.udpate(delta);
+		for (JBattleEffect be : parentSprite.getBattleEffects())
+		{
+			be.getEffectAnimation().udpate(delta);
+		}
 		if (minimumTimePassed > -1 && totalTimePassed >= minimumTimePassed)
 			return true;
 
@@ -68,6 +71,12 @@ public abstract class CombatAnimation
 			g.drawImage(AttackCinematicState2.FLOOR_IMAGE, x + 220 * SCREEN_SCALE, y - 15 * SCREEN_SCALE);
 
 		animationWrapper.drawAnimation(x, y, renderColor, g);
+
+		for (JBattleEffect be : parentSprite.getBattleEffects())
+		{
+			be.getEffectAnimation().drawAnimation(xOffset + (int) (fcCont.getDisplayPaddingX() + (parentSprite.isHero() ? 276 * SCREEN_SCALE : 50 * SCREEN_SCALE)),
+					yDrawPos, g);
+		}
 	}
 
 	public int getAnimationLength()

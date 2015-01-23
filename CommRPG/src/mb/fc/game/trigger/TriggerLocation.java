@@ -3,6 +3,7 @@ package mb.fc.game.trigger;
 import java.util.ArrayList;
 
 import mb.fc.engine.state.StateInfo;
+import mb.fc.game.sprite.Door;
 import mb.fc.map.MapObject;
 
 import org.newdawn.slick.geom.Shape;
@@ -37,6 +38,15 @@ public class TriggerLocation
 				events.add(eventToTrigger);
 			}
 		}
+	}
+
+	public TriggerLocation(StateInfo stateInfo, MapObject mo, Door door)
+	{
+		triggerLocation = mo.getShape();
+		events = new ArrayList<TriggerEvent>();
+		TriggerEvent event = new TriggerEvent(-100, false, false, true, true, null, null);
+		event.addTriggerType(event.new TriggerRemoveSprite(door.getName()));
+		events.add(event);
 	}
 
 	public boolean contains(int mapX, int mapY)

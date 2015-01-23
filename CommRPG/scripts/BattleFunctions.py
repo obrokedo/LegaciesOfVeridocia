@@ -29,25 +29,25 @@ class BattleFunctions(JBattleFunctions):
         
     # Get the text that should be displayed when a target dodges an attack
     def getDodgeText(self, attacker, target):
-        return target.getName() + " quickly dodges the attack!]"
+        return target.getName() + " quickly dodges the attack!"
     
     # Get the text that should be displayed when a target blocks an attack    
     def getBlockText(self, attacker, target):
-        return target.getName() + " blocks the attack!]"
+        return target.getName() + " blocks the attack!"
     
     # Get the text that should be displayed when an attacker gets a critical hit.
     # The damage variable must be used like `damage` to be put into a string
     def getCriticalAttackText(self, attacker, target, damage):
-        return attacker.getName() + " strikes a deadly blow against " + target.getName() + ", dealing " + `damage` + " damage.] "
+        return attacker.getName() + " strikes a deadly blow against " + target.getName() + ", dealing " + `damage` + " damage. "
     
     # Get the text that should be displayed when an attacker gets a normal hit. 
     # The damage variable must be used like `damage` to be put into a string
     def getNormalAttackText(self, attacker, target, damage):
-        return attacker.getName() + " deals " + `damage` + " damage to " + target.getName() + ".] "
+        return attacker.getName() + " deals " + `damage` + " damage to " + target.getName() + ". "
         
     # The text that should be displayed when a combatant dies
     def getCombatantDeathText(self, attack, target):
-        return target.getName() + " has been defeated!]"
+        return target.getName() + " has been defeated!"
     
     # Gets the percent chance that the given attacker will get a double attack against the target
     # this value should be between 0-100 

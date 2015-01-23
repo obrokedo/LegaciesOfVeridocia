@@ -1,288 +1,235 @@
 package mb.fc.game.menu;
 
+import mb.fc.engine.CommRPG;
+import mb.fc.engine.state.StateInfo;
+import mb.fc.game.hudmenu.Panel;
+import mb.fc.game.input.FCInput;
+import mb.fc.game.input.KeyMapping;
+import mb.fc.game.item.EquippableItem;
+import mb.fc.game.item.Item;
+import mb.fc.game.listener.YesNoListener;
+import mb.fc.game.resource.ItemResource;
+import mb.fc.game.ui.FCGameContainer;
+import mb.fc.game.ui.RectUI;
+import mb.fc.game.ui.TextUI;
 
-public class ShopMenuTabled { /*extends PersistentMenu implements YesNoListener
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Font;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Polygon;
+
+public class ShopMenuTabled extends Menu implements YesNoListener
 {
-	private int x;
-	
-	private boolean buy = true;
-	private Button switchViewButton;
-	
-	
-	private ArrayList<Item> items;	
-	private Item selectedItem = null;	
-	private Table<Item> itemTable;
-	
-	private ArrayList<CombatSprite> heroes;
-	private int heroOffset = 0;
-	private int mouseOverHeroes = -1;
-	private Rectangle heroUpRect;
-	private Rectangle heroDownRect;
-	private Rectangle charSelectRect;	
-	private CombatSprite selectedHero = null;
-	
-	private Button buyButton;	
-	
-	private ArrayList<String> differences;
-	private int gold;
-	private double sellPercent = .75;
-	private double buyPercent = 1;
-	private int waitingYesNo = 0;
-	private EquippableItem oldItem;
-	
-	public ShopMenu(GameContainer gc, StateInfo stateInfo, double sellPercent, double buyPercent, int[] itemIds) {
-		super(Menu.MENU_SHOP, gc);
-		x = (gc.getWidth() - 700) / 2;
-		switchViewButton = new Button(x + 100, 35, 140, 20, "Switch to sell");
-		heroUpRect = new Rectangle(x + 670, 476, 15, 15);
-		heroDownRect = new Rectangle(x + 670, 650, 15, 15);
-		buyButton = new Button(x + 570, 680, 100, 20, "Buy");
-		charSelectRect = new Rectangle(x + 15, 475, 655, 180);
-		
-		this.heroes = stateInfo.getClientProfile().getHeroes();
-		this.gold = stateInfo.getClientProfile().getGold();
-		items = new ArrayList<Item>();
-		differences = new ArrayList<String>();
-		
-		for (Integer i : itemIds)
-			items.add(ItemResource.getItem(i, stateInfo));
-		for (Integer i : itemIds)
-			items.add(ItemResource.getItem(i, stateInfo));
-		for (Integer i : itemIds)
-			items.add(ItemResource.getItem(i, stateInfo));
-		for (Integer i : itemIds)
-			items.add(ItemResource.getItem(i, stateInfo));
-		for (Integer i : itemIds)
-			items.add(ItemResource.getItem(i, stateInfo));
-		
-		selectedHero = heroes.get(0);
+	protected double sellPercent;
+	protected double buyPercent;
+	protected Item[] items;
+	protected Image[] costImages;
+	protected int selectedItemIndex = 0;
+	protected Item selectedItem;
+	protected String[] itemName;
+	protected Font smallFont;
+	protected int gold;
+	protected SpeechMenu speechMenu;
+	protected boolean hasFocus = true;
+
+	// Base UI Shapes
+	protected Polygon leftArrow, rightArrow;
+	protected RectUI itemPanel, itemNamePanel, goldPanel, selectedItemRect;
+	protected TextUI itemNameText1, itemNameText2, itemCostText, goldTitleText, goldAmountText;
+
+	public ShopMenuTabled(StateInfo stateInfo,
+			double sellPercent, double buyPercent, int[] itemIds) {
+		super(Panel.PANEL_SHOP);
+
 		this.sellPercent = sellPercent;
 		this.buyPercent = buyPercent;
-		
-		itemTable = new Table<Item>(x + 15, 70, new int[] {200, 355, 100}, new String[] {"Name", "Description", "Cost"}, 10, items,
-				new ItemTableCellRenderer());
+		this.items = new Item[itemIds.length];
+		this.smallFont = stateInfo.getResourceManager().getFontByName("smallmenufont");
+		this.gold = stateInfo.getClientProfile().getGold();
+
+		for (int i = 0; i < items.length; i++)
+		{
+			items[i] = ItemResource.getItem(itemIds[i], stateInfo);
+			System.out.println(items[i].getName());
+			if (items[i].isEquippable())
+				System.out.println(((EquippableItem) items[i]).getItemType() + " " + ((EquippableItem) items[i]).getItemStyle());
+		}
+
+		selectedItem = items[0];
+		itemName = selectedItem.getName().split(" ");
+
+		costImages = new Image[items.length];
+		for (int i = 0; i < costImages.length; i++)
+		{
+
+			try {
+				Image im = new Image(8 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()],
+						24 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);
+
+				Graphics g = im.getGraphics();
+
+				costImages[i] = im;
+
+				g.setFont(smallFont);
+
+				g.rotate(3 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()],
+						3 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], 90);
+				g.setColor(Color.white);
+				g.drawString("" + items[i].getCost(), 0, 0);
+				g.destroy();
+			} catch (SlickException e) {}
+		}
+
+		rightArrow = new Polygon(new float[] {
+				285 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], 13 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()],
+				289 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], 17 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()],
+				285 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], 21 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]});
+
+
+		leftArrow = new Polygon(new float[] {
+				35 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], 13 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()],
+				31 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], 17 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()],
+				35 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], 21 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]});
+
+		itemPanel = new RectUI(27, 2, -54, 32, 0, 0, stateInfo.getGc().getWidth(), 0);
+		itemNamePanel = new RectUI(27, 34, 68, 37);
+		selectedItemRect = new RectUI(36,  6,  24,  24);
+		updateSelectedItem();
+
+		// Setup gold
+		goldPanel = new RectUI(241, 148, 62, 32);
+		goldTitleText = new TextUI("Gold", 246, 144);
+		goldAmountText = new TextUI(gold + "", 246, 156);
+
+		showBuyPanel(stateInfo);
 	}
 
 	@Override
-	public boolean handleUserInput(int mouseX, int mouseY, boolean leftClick,
-			boolean rightClick, StateInfo stateInfo) {
-		if (rightClick)
-		{
-			stateInfo.getClientProfile().setGold(gold);
-			return true;
-		}
-		
-		// Handle switching the view from buy/sell
-		if (switchViewButton.handleUserInput(mouseX, mouseY, leftClick))
-		{
-			if (buy)
-			{
-				switchViewButton.setText("Switch to buy");
-				buyButton.setText("Sell");
-			}
-			else
-			{
-				switchViewButton.setText("Switch to sell");
-				buyButton.setText("Buy");
-			}
-			
-			differences.clear();
-			buy = !buy;
-			ArrayList<Item> heroItems = new ArrayList<Item>();
-			for (int i = 0; i < selectedHero.getItemsSize(); i++)
-				heroItems.add(selectedHero.getItem(i));
-			itemTable.setItems(heroItems);
-			selectedItem = null;			
-		}
-		
-		// Handle heroes
-		if (leftClick && heroUpRect.contains(mouseX, mouseY))
-			heroOffset = Math.max(heroOffset - 1, 0);
-		else if (leftClick && heroes.size() > 6 && heroDownRect.contains(mouseX, mouseY))
-			heroOffset = Math.min(heroOffset + 1, heroes.size() - 6);
-		
-		if (buyButton.handleUserInput(mouseX, mouseY, leftClick) && selectedItem != null)
-		{
-			if (buy)
-			{					
-				if (selectedHero.getItemsSize() < 4)
-				{
-					selectedHero.addItem(selectedItem);
-					gold -= (int) (selectedItem.getCost() * buyPercent);
-					
-					if (selectedItem.isEquippable() && selectedHero.isEquippable((EquippableItem) selectedItem))
-					{
-						waitingYesNo = 1;
-						stateInfo.getMenus().add(new YesNoMenu(stateInfo.getGc(), "Would you like to equip it now?", this));
-					}
-				}
-				else
-					stateInfo.sendMessage(new ChatMessage(MessageType.SEND_INTERNAL_MESSAGE, "SYSTEM", "Selected character already has 4 items."), false);
-			}
-			else
-			{
-				selectedHero.removeItem(selectedItem);
-				gold += (int) (selectedItem.getCost() * sellPercent);
-				selectedItem = null;
-			}
-		}
-		
-		// Select Heroes
-		if (charSelectRect.contains(mouseX, mouseY))
-		{
-			int over = ((mouseY - 475) / 30);
-			
-			if (over < heroes.size())
-			{
-				mouseOverHeroes = over;
-				if (leftClick)
-				{
-					selectedHero = heroes.get(mouseOverHeroes + heroOffset);
-					if (!buy)
-					{
-						selectedItem = null;
-					}
-				}
-			}
-		}
-		
-		else
-			mouseOverHeroes = -1;
-		
-		// Handle items
-		Item item = itemTable.handleUserInput(mouseX, mouseY, leftClick);
-		if (item != null)
-		{
-			selectedItem = item;
-			determineDifferences();
-		}		
-		
-		return false;
+	public MenuUpdate update(long delta, StateInfo stateInfo) {
+		if (speechMenu != null)
+			speechMenu.update(delta, stateInfo);
+		return MenuUpdate.MENU_NO_ACTION;
 	}
-	
-	public void determineDifferences()
+
+	@Override
+	public MenuUpdate handleUserInput(FCInput input, StateInfo stateInfo) {
+		if (!hasFocus)
+		{
+			speechMenu.handleUserInput(input, stateInfo);
+			if (input.isKeyDown(KeyMapping.BUTTON_3) || input.isKeyDown(KeyMapping.BUTTON_1))
+				return MenuUpdate.MENU_ACTION_LONG;
+			else
+				return MenuUpdate.MENU_NO_ACTION;
+		}
+
+		if (input.isKeyDown(Input.KEY_RIGHT))
+		{
+			selectedItemIndex = Math.min(selectedItemIndex + 1, items.length - 1);
+			selectedItem = items[selectedItemIndex];
+			itemName = selectedItem.getName().split(" ");
+			updateSelectedItem();
+			return MenuUpdate.MENU_ACTION_LONG;
+		}
+		else if (input.isKeyDown(Input.KEY_LEFT))
+		{
+			selectedItemIndex = Math.max(0, selectedItemIndex - 1);
+			selectedItem = items[selectedItemIndex];
+			itemName = selectedItem.getName().split(" ");
+			updateSelectedItem();
+			return MenuUpdate.MENU_ACTION_LONG;
+		}
+		else if (input.isKeyDown(Input.KEY_F))
+		{
+			stateInfo.removeTopMenu();
+			stateInfo.addMenu(new ShopMenuTabled(stateInfo, .8, 1.2, new int[] {1, 1, 2, 2, 0, 0, 1, 1, 2, 2, 0, 0}));
+			return MenuUpdate.MENU_NO_ACTION;
+		}
+		else if (input.isKeyDown(KeyMapping.BUTTON_3))
+		{
+			showCostPanel(stateInfo);
+			// stateInfo.sendMessage(new IntMessage(MessageType.SHOW_SHOP_HERO_SELECT, selectedItem.getItemId()));
+			return MenuUpdate.MENU_ACTION_LONG;
+		}
+
+		return MenuUpdate.MENU_NO_ACTION;
+	}
+
+	@Override
+	public void render(FCGameContainer gc, Graphics graphics) {
+		// Draw items box
+		itemPanel.drawPanel(graphics);
+
+		// Draw items and price
+		for (int i = (selectedItemIndex < 9 ? 0 : selectedItemIndex - 8); i < Math.min(items.length,  (selectedItemIndex < 9 ? 9 : selectedItemIndex + 1)); i++)
+		{
+			items[i].getImage().draw(36 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] +
+				(28 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * (i - (selectedItemIndex < 9 ? 0 : selectedItemIndex - 8))),
+					6 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);
+
+			costImages[i].draw(51 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] +
+				(28 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * (i - (selectedItemIndex < 9 ? 0 : selectedItemIndex - 8))),
+					7 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);
+		}
+
+		// Draw item name
+		itemNamePanel.drawPanel(graphics);
+		graphics.setColor(Color.white);
+		itemNameText1.drawText(graphics);
+		if (itemName.length > 1)
+			itemNameText2.drawText(graphics);
+		itemCostText.drawText(graphics);
+
+
+		// Draw gold box
+		goldPanel.drawPanel(graphics);
+		graphics.setColor(Color.white);
+		goldTitleText.drawText(graphics);
+		goldAmountText.drawText(graphics);
+
+		// Draw selection box
+		selectedItemRect.drawRect(graphics, Color.white);
+
+		if (speechMenu != null)
+			speechMenu.render(gc, graphics);
+
+		if (items.length > 9 && selectedItemIndex != items.length - 1)
+			graphics.fill(rightArrow);
+
+		if (selectedItemIndex > 8)
+			graphics.fill(leftArrow);
+	}
+
+	private void updateSelectedItem()
 	{
-		differences.clear();
-		if (selectedItem.isEquippable())
-		{
-			int type = ((EquippableItem) selectedItem).getItemType();
-			
-			for (CombatSprite hero : heroes)
-			{
-				EquippableDifference ed = null;
-				if (hero.isEquippable((EquippableItem) selectedItem))
-				{
-					
-					if (type == EquippableItem.TYPE_WEAPON)
-						ed = Item.getEquippableDifference(hero.getEquippedWeapon(), (EquippableItem) selectedItem);
-					else if (type == EquippableItem.TYPE_ARMOR)
-						ed = Item.getEquippableDifference(hero.getEquippedArmor(), (EquippableItem) selectedItem);
-					else if (type == EquippableItem.TYPE_RING)
-						ed = Item.getEquippableDifference(hero.getEquippedRing(), (EquippableItem) selectedItem);
-					differences.add("ATK: " + ed.atk + 
-						" DEF: " + ed.def +
-						" SPD: " + ed.spd);
-				}
-				else
-					differences.add("Can not equip");
-			}
-		}
+		itemNamePanel.setX(27 + 28 * Math.min(8, selectedItemIndex));
+		itemNameText1 = new TextUI(itemName[0], 32 + 28  * Math.min(8, selectedItemIndex), 29);
+		if (itemName.length > 1)
+			itemNameText2 = new TextUI(itemName[1], 32 + 28 * Math.min(8, selectedItemIndex), 39);
+		itemCostText = new TextUI(selectedItem.getCost() + "", 87 + 28 * Math.min(8, selectedItemIndex), 49,
+				- PANEL_FONT.getWidth(selectedItem.getCost() + ""));
+		selectedItemRect.setX(36 + 28 * Math.min(8, selectedItemIndex));
 	}
 
-	@Override
-	public void render(GameContainer gc, Graphics graphics) {		
-		Menu.drawMenuBox(x, 25, 700, 700, graphics);
-	
-		graphics.setColor(Menu.COLOR_FOREFRONT);
-		
-		// Draw Shop Type
-		graphics.drawString("Shop", x + 15, 35);
-		
-		switchViewButton.render(gc, graphics);
+	private void showBuyPanel(StateInfo stateInfo)
+	{
+		speechMenu = new SpeechMenu("What would you like to buy?]", stateInfo.getGc(),
+				SpeechMenu.NO_PORTRAIT, SpeechMenu.NO_TRIGGER, stateInfo);
+	}
 
-		itemTable.render(gc, graphics);
-		
-		// Draw buy buttons
-		buyButton.render(gc, graphics);
-		
-		graphics.drawString("Gold: " + gold, x + 15, 680);		
-		
-		// Draw usuable by box
-		if (mouseOverHeroes != -1)
-		{
-			graphics.setColor(Menu.COLOR_MOUSE_OVER);
-			graphics.fillRect(x + 15, 475 + (mouseOverHeroes * 30), 655, 30);			
-		}
-		
-		graphics.setColor(Menu.COLOR_FOREFRONT);
-		
-		for (int i = 0; i < Math.min(heroes.size(), 6); i++)
-		{
-			if (heroes.get(i + heroOffset) == selectedHero)
-			{
-				graphics.setColor(Menu.COLOR_MOUSE_OVER);
-				graphics.fillRect(x + 15, 475 + (i * 30), 655, 30);
-				graphics.setColor(Menu.COLOR_FOREFRONT);
-			}
-			
-			graphics.drawString(heroes.get(i + heroOffset).getName(), x + 25, 485 + i * 30);
-			
-			if (differences.size() > 0)
-				graphics.drawString(differences.get(i),
-										x + 210, 485 + i * 30);
-		}
-		
-		
-		graphics.drawRect(x + 15, 475, 670, 190);
-		graphics.drawLine(x + 200, 475, x + 200, 665);
-		
-		graphics.setColor(Color.darkGray);
-		graphics.fillRect(x + 670, 476, 15, 189);
-		
-		graphics.setColor(Color.lightGray);
-		Menu.fillRect(heroUpRect, graphics);
-		Menu.fillRect(heroDownRect, graphics);
-		
-		graphics.setColor(Menu.COLOR_FOREFRONT);
-		graphics.drawString("^", heroUpRect.getX() + 2, heroUpRect.getY() + 2);
-		
-		graphics.drawString("v", heroDownRect.getX() + 2, heroDownRect.getY() - 1);
-		
-		
-		
-		/*
-		graphics.setColor(Color.red);
-		Menu.drawRect(charSelectRect, graphics);
-		*/
-	/*
+	private void showCostPanel(StateInfo stateInfo)
+	{
+		hasFocus = false;
+		speechMenu = new YesNoMenu("The " + selectedItem.getName() + " costs " + selectedItem.getCost() + " gold coins. Is that OK?]", stateInfo, this);
 	}
 
 	@Override
 	public boolean valueSelected(StateInfo stateInfo, boolean value) {
-		// Equip the item based on value
-		if (waitingYesNo == 1)
-		{			
-			if (value)
-			{
-				oldItem = selectedHero.equipItem((EquippableItem) selectedItem);
-				determineDifferences();
-			
-				if (oldItem != null)
-				{
-					waitingYesNo = 2;
-					stateInfo.getMenus().add(new YesNoMenu(stateInfo.getGc(), "Would you like to sell your previously equipped " + oldItem.getName() + "?", this));
-				}
-			}
-		}
-		else if (waitingYesNo == 2)
-		{
-			if (value)
-			{
-				selectedHero.removeItem(oldItem);
-				gold += (int) (oldItem.getCost() * sellPercent);
-				oldItem = null;
-			}
-		}
+		hasFocus = true;
+		if (!value)
+			showBuyPanel(stateInfo);
 		return false;
-	} */
+	}
 }

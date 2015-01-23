@@ -67,10 +67,7 @@ public class HeroStatMenu extends Menu
 
 		if (selectedSprite.isHero())
 		{
-			if (selectedSprite.isPromoted())
-				graphics.drawString(selectedSprite.getHeroProgression().getPromotedProgression().getClassName(), x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 70 + graphics.getFont().getWidth(selectedSprite.getName()) + 10 *  CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], y + -3);
-			else
-				graphics.drawString(selectedSprite.getHeroProgression().getUnpromotedProgression().getClassName(), x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 70 + graphics.getFont().getWidth(selectedSprite.getName()) + 10 *  CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], y + -3);
+			graphics.drawString(selectedSprite.getCurrentProgression().getClassName(), x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 70 + graphics.getFont().getWidth(selectedSprite.getName()) + 10 *  CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], y + -3);
 		}
 
 		int statsY = 13;

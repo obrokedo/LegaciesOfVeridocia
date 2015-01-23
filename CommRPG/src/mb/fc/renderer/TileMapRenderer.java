@@ -50,6 +50,11 @@ public class TileMapRenderer extends Manager
 					g.drawImage(map.getSprite(map.getMapLayer(1)[mapY][mapX]),
 						frameX * map.getTileRenderWidth() - xOffset + gc.getDisplayPaddingX(), frameY * map.getTileRenderHeight() - yOffset);
 				}
+				if (map.getMapLayer(2)[mapY][mapX] != 0)
+				{
+					g.drawImage(map.getSprite(map.getMapLayer(2)[mapY][mapX]),
+						frameX * map.getTileRenderWidth() - xOffset + gc.getDisplayPaddingX(), frameY * map.getTileRenderHeight() - yOffset);
+				}
 			}
 		}
 	}
@@ -73,14 +78,13 @@ public class TileMapRenderer extends Manager
 
 		for (int mapX = camera.getLocationX() / map.getTileRenderWidth(), frameX = 0; mapX < lastTileX; mapX++, frameX++)
 		{
-			// g.setColor(Color.white);
-			// g.drawLine(0, mapX * 12, 640, mapX * 12);
 			for (int mapY = camera.getLocationY() / map.getTileRenderHeight(), frameY = 0; mapY < lastTileY; mapY++, frameY++)
 			{
-				// g.setColor(Color.white);
-				// g.drawLine(mapY * 12, 0, mapY * 12, 480);
-				if (map.getMapLayer(2)[mapY][mapX] != 0)
-					g.drawImage(map.getSprite(map.getMapLayer(2)[mapY][mapX]),
+				if (map.getMapLayer(3)[mapY][mapX] != 0)
+					g.drawImage(map.getSprite(map.getMapLayer(3)[mapY][mapX]),
+						frameX * map.getTileRenderWidth() - xOffset + gc.getDisplayPaddingX(), frameY * map.getTileRenderHeight() - yOffset);
+				if (map.getMapLayer(4)[mapY][mapX] != 0)
+					g.drawImage(map.getSprite(map.getMapLayer(4)[mapY][mapX]),
 						frameX * map.getTileRenderWidth() - xOffset + gc.getDisplayPaddingX(), frameY * map.getTileRenderHeight() - yOffset);
 
 				// g.drawString(mapX +"\n" + mapY, frameX * map.getTileWidth() - xOffset + gc.getDisplayPaddingX(), frameY * map.getTileHeight() - yOffset);
@@ -96,9 +100,9 @@ public class TileMapRenderer extends Manager
 			{
 				for (int mapY = (int) roof.getRectangle().getY(); mapY < roof.getRectangle().getHeight() + roof.getRectangle().getY(); mapY++)
 				{
-					if (map.getMapLayer(4)[mapY][mapX] != 0)
+					if (map.getMapLayer(5)[mapY][mapX] != 0)
 					{
-						g.drawImage(map.getSprite(map.getMapLayer(4)[mapY][mapX]),
+						g.drawImage(map.getSprite(map.getMapLayer(5)[mapY][mapX]),
 							mapX * map.getTileRenderWidth() + gc.getDisplayPaddingX() - camera.getLocationX(),
 								mapY * map.getTileRenderHeight() - camera.getLocationY());
 					}

@@ -17,7 +17,7 @@ public class ItemDefinition
 
 	public static ItemDefinition parseItemDefinition(TagArea tagArea)
 	{
-		int attack = 0, defense = 0, speed = 0, style = 0, type=0, range = 0;
+		int attack = 0, defense = 0, speed = 0, style = 0, type = 0, range = 0;
 		boolean equippable = false;
 		ItemUse itemUse = null;
 		for (TagArea childTagArea : tagArea.getChildren())

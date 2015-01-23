@@ -14,6 +14,7 @@ import mb.fc.game.constants.Direction;
 import mb.fc.game.resource.EnemyResource;
 import mb.fc.game.resource.NPCResource;
 import mb.fc.game.sprite.CombatSprite;
+import mb.fc.game.sprite.Door;
 import mb.fc.game.sprite.NPCSprite;
 import mb.fc.game.sprite.Sprite;
 import mb.fc.game.sprite.StaticSprite;
@@ -233,6 +234,17 @@ public class MapObject
 		}
 
 		Sprite s = new StaticSprite(x, y, name, image, trigger);
+		s.initializeSprite(stateInfo);
+		s.setLocX(x);
+		s.setLocY(y);
+		return s;
+	}
+
+	public Sprite getDoor(StateInfo stateInfo, int doorId)
+	{
+		Image image = stateInfo.getResourceManager().getImages().get(params.get("image"));
+
+		Sprite s = new Door(doorId, x, y, image);
 		s.initializeSprite(stateInfo);
 		s.setLocX(x);
 		s.setLocY(y);

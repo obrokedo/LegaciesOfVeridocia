@@ -1,9 +1,9 @@
 package mb.fc.game.combat;
 
 import mb.fc.engine.CommRPG;
-import mb.fc.game.battle.condition.BattleEffect;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.ui.FCGameContainer;
+import mb.jython.JBattleEffect;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -15,13 +15,13 @@ public class DamagedCombatAnimation extends CombatAnimation
 	private CombatAnimation childAnimation;
 	private int hpDamage;
 	private int mpDamage;
-	private BattleEffect battleEffect;
+	private JBattleEffect battleEffect;
 	private CombatSprite attacker;
 	private boolean isNegativeEffect = false;
 	private int battleResultIndex;
 
 	public DamagedCombatAnimation(CombatAnimation childAnimation, int hpDamage, int mpDamage,
-			BattleEffect battleEffect, CombatSprite attacker, int battleResultIndex)
+			JBattleEffect battleEffect, CombatSprite attacker, int battleResultIndex)
 	{
 		super();
 		this.minimumTimePassed = 200;
@@ -61,7 +61,10 @@ public class DamagedCombatAnimation extends CombatAnimation
 		childAnimation.parentSprite.modifyCurrentHP(hpDamage);
 		childAnimation.parentSprite.modifyCurrentMP(mpDamage);
 		if (battleEffect != null)
-			battleEffect.performEffect(null, childAnimation.parentSprite);
+		{
+			childAnimation.parentSprite.addBattleEffect(battleEffect);
+			battleEffect.effectStarted(null, childAnimation.parentSprite);
+		}
 	}
 
 	@Override

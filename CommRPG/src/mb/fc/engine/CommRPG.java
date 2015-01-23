@@ -8,7 +8,6 @@ import mb.fc.engine.log.FileLogger;
 import mb.fc.engine.state.AttackCinematicState2;
 import mb.fc.engine.state.DevelMenuState;
 import mb.fc.engine.state.PersistentStateInfo;
-import mb.fc.engine.state.TestState;
 import mb.fc.game.ui.FCGameContainer;
 import mb.fc.loading.FCLoadingRenderSystem;
 import mb.fc.loading.FCResourceManager;
@@ -132,7 +131,7 @@ public class CommRPG extends StateBasedGame   {
 
 				System.out.println(fullScreenWidth + " " +fullScreenHeight);
 
-				GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] = fullScreenHeight / 240;
+				// GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] = fullScreenHeight / 240;
 				container.setDisplayPaddingX((fullScreenWidth - (GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 320)) / 2);
 
 
@@ -180,7 +179,7 @@ public class CommRPG extends StateBasedGame   {
 	public CommRPG()
 	{
 		super(GAME_TITLE);
-		DH =  new DEBUG_HOLDER(1);
+		DH =  new DEBUG_HOLDER(0);
 		Log.setLogSystem(new FileLogger());
 	}
 
@@ -228,7 +227,7 @@ public class CommRPG extends StateBasedGame   {
 		this.addState(new AttackCinematicState2());
 		this.addState(loadingState);
 
-		this.addState(new TestState());
+		// this.addState(new TestState());
 
 		/*
 		loadingState.setLoadingInfo("/loader/Test", null, false, true,

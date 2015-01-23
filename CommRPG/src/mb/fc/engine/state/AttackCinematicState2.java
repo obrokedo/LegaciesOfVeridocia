@@ -26,6 +26,7 @@ import mb.fc.loading.FCResourceManager;
 import mb.fc.loading.LoadableGameState;
 import mb.fc.utils.AnimationWrapper;
 import mb.jython.GlobalPythonFactory;
+import mb.jython.JBattleEffect;
 import mb.jython.JMusicSelector;
 
 import org.newdawn.slick.Color;
@@ -106,6 +107,21 @@ public class AttackCinematicState2 extends LoadableGameState
 		drawingSpellCounter = 0;
 		spellFlash = null;
 
+		// Initialize battle effects
+		for (CombatSprite cs : battleResults.targets)
+			cs.initializeBattleEffects(frm);
+
+		for (JBattleEffect eff : battleResults.targetEffects)
+		{
+			if (eff != null)
+				eff.initializeAnimation(frm);
+		}
+
+		attacker.initializeBattleEffects(frm);
+
+		/*****************************/
+		/** Setup battle animations **/
+		/*****************************/
 		if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_SPELL)
 		{
 			spellAnimation = new AnimationWrapper(frm.getSpriteAnimations().get(battleResults.battleCommand.getSpell().getName()),
@@ -467,7 +483,7 @@ public class AttackCinematicState2 extends LoadableGameState
 		if (drawingSpell && spellFlash == null)
 		{
 			spellAnimation.drawAnimation((int) (gc.getDisplayPaddingX() + (spellTargetsHeroes ? 276 * SCREEN_SCALE : 50 * SCREEN_SCALE)),
-					bgYPos + backgroundImage.getHeight(), g);
+					combatAnimationYOffset, g);
 		}
 		if (textMenu != null)
 			textMenu.render(gc, g);
@@ -538,7 +554,7 @@ public class AttackCinematicState2 extends LoadableGameState
 				String text = textToDisplay.remove(0);
 				if (text != null)
 				{
-					textMenu = new SpeechMenu(text, gc, true, true);
+					textMenu = new SpeechMenu(text, gc);
 				}
 			}
 			else

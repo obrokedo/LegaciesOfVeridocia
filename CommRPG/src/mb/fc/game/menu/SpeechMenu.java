@@ -19,6 +19,8 @@ import org.newdawn.slick.Image;
 
 public class SpeechMenu extends Menu
 {
+	public static final int NO_TRIGGER = -1, NO_PORTRAIT = -1;
+
 	private int x;
 	private int y = 60 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
 	private int width;
@@ -26,7 +28,7 @@ public class SpeechMenu extends Menu
 	private int textIndex = 0;
 	private int triggerId = -1;
 	private Image portrait;
-	private boolean initialized = false;
+	protected boolean initialized = false;
 	private boolean isAttackCinematic = false;
 
 	private boolean textMoving = true;
@@ -40,16 +42,30 @@ public class SpeechMenu extends Menu
 	private static final String CHAR_LINE_BREAK = "[";
 	private static final String CHAR_NEXT_CIN = "|";
 
-	public SpeechMenu(String text, FCGameContainer gc, boolean disableMenuPopup, boolean isAttackCinematic)
+	/**
+	 * Constructor to create a SpeechMenu to be displayed in an Attack Cinematic
+	 *
+	 * @param text the text that should be displayed in the speech menu
+	 * @param gc the graphics container that the menu will be displayed in
+	 */
+	public SpeechMenu(String text, FCGameContainer gc)
 	{
-		this(text, gc, -1, -1, null);
-		if (disableMenuPopup)
-		{
-			y = 0;
-			initialized = true;
-			// this.textIndex = panelText.size() - 1;
-		}
-		this.isAttackCinematic = isAttackCinematic;
+		this(text, gc, NO_TRIGGER, NO_PORTRAIT, null);
+		y = 0;
+		initialized = true;
+		this.isAttackCinematic = true;
+	}
+
+	/**
+	 * Constructor to create a SpeechMenu with no portrait or triggers, this should
+	 * NOT be used in Attack Cinematics
+	 *
+	 * @param text the text that should be displayed in the speech menu
+	 * @param stateInfo the stateinfo that resources should be retrieved from
+	 */
+	public SpeechMenu(String text, StateInfo stateInfo)
+	{
+		this(text, stateInfo.getGc(), NO_TRIGGER, NO_PORTRAIT, stateInfo);
 	}
 
 	public SpeechMenu(String text, FCGameContainer gc, int triggerId,
@@ -101,7 +117,7 @@ public class SpeechMenu extends Menu
 
 		this.triggerId = triggerId;
 
-		if (portraitId != -1)
+		if (portraitId != NO_PORTRAIT)
 			portrait = stateInfo.getResourceManager().getSpriteSheets().get("portraits").getSprite(portraitId, 0);
 		else
 			portrait = null;
@@ -171,7 +187,7 @@ public class SpeechMenu extends Menu
 						else
 						{
 							// System.out.println("SEND TRIGGER " + triggerId);
-							if (triggerId != -1)
+							if (triggerId != NO_TRIGGER)
 								stateInfo.getResourceManager().getTriggerEventById(triggerId).perform(stateInfo);
 							return MenuUpdate.MENU_CLOSE;
 						}

@@ -7,7 +7,6 @@ import mb.fc.engine.message.SpriteContextMessage;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.Camera;
 import mb.fc.game.ai.AI;
-import mb.fc.game.ai.ClericAI;
 import mb.fc.game.battle.spell.KnownSpell;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.hudmenu.SpriteContextPanel;
@@ -15,8 +14,10 @@ import mb.fc.game.item.EquippableItem;
 import mb.fc.game.item.Item;
 import mb.fc.game.resource.ItemResource;
 import mb.fc.game.ui.FCGameContainer;
+import mb.fc.loading.FCResourceManager;
 import mb.fc.utils.AnimSprite;
 import mb.fc.utils.Animation;
+import mb.jython.JBattleEffect;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -69,6 +70,9 @@ public class CombatSprite extends AnimatedSprite
 	private int portraitIndex;
 	private int kills;
 	private int defeat;
+	private ArrayList<JBattleEffect> battleEffects;
+	private Image currentWeaponImage = null;
+	private int attackEffectId, attackEffectChance;
 
 
 	/**
@@ -76,17 +80,25 @@ public class CombatSprite extends AnimatedSprite
 	 */
 	private boolean dodges;
 
+	/**
+	 * Constructor to create an enemy CombatSprite
+	 */
 	public CombatSprite(boolean isLeader,
 			String name, String imageName, int hp, int mp, int attack, int defense, int speed, int move,
-				int movementType, int level, int enemyId, int portraitIndex, ArrayList<KnownSpell> spells, int id)
+				int movementType, int level, int enemyId, int portraitIndex, ArrayList<KnownSpell> spells,
+				int id, int attackAffectId, int attackEffectChance)
 	{
 		this(isLeader, name, imageName, null, hp, mp, attack,
 				defense, speed, move, movementType, level, 0, portraitIndex, spells, id);
 		this.uniqueEnemyId = enemyId;
-		this.ai = new ClericAI(AI.APPROACH_REACTIVE);
 		this.isHero = false;
+		this.attackEffectChance = attackEffectChance;
+		this.attackEffectId = attackEffectId;
 	}
 
+	/**
+	 * Constructor to create a hero CombatSprite
+	 */
 	public CombatSprite(boolean isLeader,
 			String name, String imageName, HeroProgression heroProgression, int hp, int mp, int attack,
 			int defense, int speed, int move, int movementType, int level, int exp, int portraitIndex,
@@ -135,6 +147,8 @@ public class CombatSprite extends AnimatedSprite
 		}
 		this.spells = spells;
 
+		this.battleEffects = new ArrayList<>();
+		// this.battleEffects.add(GlobalPythonFactory.createJBattleEffect(0));
 		this.spriteType = Sprite.TYPE_COMBAT;
 		this.id = id;
 	}
@@ -163,6 +177,8 @@ public class CombatSprite extends AnimatedSprite
 		{
 			ItemResource.initializeItem(item, stateInfo);
 		}
+
+		// currentWeaponImage = stateInfo.getResourceManager().getSpriteSheets().get("weapons").getSubImage(0, 0);
 
 		this.currentAttack = this.maxAttack;
 		this.currentDefense = this.maxDefense;
@@ -592,6 +608,39 @@ public class CombatSprite extends AnimatedSprite
 		return heroProgression;
 	}
 
+	public Progression getCurrentProgression() {
+		if (isPromoted)
+			return heroProgression.getPromotedProgression();
+		else
+			return heroProgression.getUnpromotedProgression();
+	}
+
+	public ArrayList<JBattleEffect> getBattleEffects() {
+		return battleEffects;
+	}
+
+	public void addBattleEffect(JBattleEffect battleEffect)
+	{
+		this.battleEffects.add(battleEffect);
+	}
+
+	public Image getCurrentWeaponImage() {
+		return currentWeaponImage;
+	}
+
+	public int getAttackEffectId() {
+		return attackEffectId;
+	}
+
+	public int getAttackEffectChance() {
+		return attackEffectChance;
+	}
+
+	public void initializeBattleEffects(FCResourceManager frm)
+	{
+		for (JBattleEffect be : this.battleEffects)
+			be.initializeAnimation(frm);
+	}
 
 	public void triggerButton1Event(StateInfo stateInfo)
 	{

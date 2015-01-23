@@ -1,22 +1,22 @@
 package mb.fc.game.item;
 
-import mb.fc.game.battle.condition.BattleEffect;
+import mb.jython.JBattleEffect;
 
-public class ItemUse 
+public class ItemUse
 {
 	public static final int DEFAULT_EXP = -1;
-	
+
 	private boolean targetsEnemy;
 	private int damage;
 	private int mpDamage;
-	private BattleEffect effects;
+	private JBattleEffect effects;
 	private int range;
 	private int area;
 	private String battleText;
 	private boolean singleUse;
 
 	public ItemUse(boolean targetsEnemy, int damage, int mpDamage,
-			BattleEffect effects, int range, int area, String battleText, boolean singleUse) {
+			JBattleEffect effects, int range, int area, String battleText, boolean singleUse) {
 		super();
 		this.targetsEnemy = targetsEnemy;
 		this.damage = damage;
@@ -31,7 +31,7 @@ public class ItemUse
 	public boolean isTargetsEnemy() {
 		return targetsEnemy;
 	}
-	
+
 	public int getDamage() {
 		return damage;
 	}
@@ -40,7 +40,7 @@ public class ItemUse
 		return mpDamage;
 	}
 
-	public BattleEffect getEffects() {
+	public JBattleEffect getEffects() {
 		return effects;
 	}
 
@@ -55,7 +55,7 @@ public class ItemUse
 	public String getBattleText() {
 		return battleText;
 	}
-	
+
 	public boolean isSingleUse() {
 		return singleUse;
 	}
@@ -64,7 +64,7 @@ public class ItemUse
 	{
 		return 1;
 	}
-	
+
 	public String getBattleText(String targetName){
 		return targetName + " " + battleText;
 	}

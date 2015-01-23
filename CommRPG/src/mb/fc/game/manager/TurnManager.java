@@ -26,6 +26,7 @@ import mb.fc.game.menu.HeroStatMenu;
 import mb.fc.game.menu.ItemMenu;
 import mb.fc.game.menu.ItemOptionMenu;
 import mb.fc.game.menu.LandEffectPanel;
+import mb.fc.game.menu.SpeechMenu;
 import mb.fc.game.menu.SpellMenu;
 import mb.fc.game.move.AttackableSpace;
 import mb.fc.game.move.MoveableSpace;
@@ -38,6 +39,7 @@ import mb.fc.game.turnaction.TargetSpriteAction;
 import mb.fc.game.turnaction.TurnAction;
 import mb.fc.game.turnaction.WaitAction;
 import mb.jython.GlobalPythonFactory;
+import mb.jython.JBattleEffect;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -249,6 +251,29 @@ public class TurnManager extends Manager implements KeyboardListener
 				{
 					stateInfo.checkTriggers(currentSprite.getLocX(), currentSprite.getLocY(), false);
 				}
+
+				if (currentSprite.getBattleEffects().size() > 0)
+				{
+					String text = "";
+					for (int i = 0; i < currentSprite.getBattleEffects().size(); i++)
+					{
+						JBattleEffect be = currentSprite.getBattleEffects().get(i);
+						text = text + be.performEffect(currentSprite);
+						if (i + 1 == currentSprite.getBattleEffects().size())
+							text += "]";
+						else
+							text += "} ";
+
+						if (be.isDone())
+						{
+							currentSprite.getBattleEffects().remove(i--);
+							be.effectEnded(currentSprite);
+						}
+					}
+
+					stateInfo.addMenu(new SpeechMenu(text, stateInfo));
+				}
+
 				turnActions.add(new TurnAction(TurnAction.ACTION_DISPLAY_SPEECH));
 				break;
 			case TurnAction.ACTION_HIDE_MOVE_AREA:

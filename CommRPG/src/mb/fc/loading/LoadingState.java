@@ -167,6 +167,4 @@ public class LoadingState extends BasicGameState
 	public int getID() {
 		return stateId;
 	}
-
-
 }

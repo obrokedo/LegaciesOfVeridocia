@@ -6,11 +6,11 @@ import java.util.ArrayList;
 import mb.fc.engine.CommRPG;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.battle.command.BattleCommand;
-import mb.fc.game.battle.condition.BattleEffect;
 import mb.fc.game.item.Item;
 import mb.fc.game.item.ItemUse;
 import mb.fc.game.sprite.CombatSprite;
 import mb.jython.GlobalPythonFactory;
+import mb.jython.JBattleEffect;
 import mb.jython.JBattleFunctions;
 import mb.jython.JSpell;
 
@@ -25,7 +25,7 @@ public class BattleResults implements Serializable
 	public ArrayList<Integer> remainingHP;
 	public ArrayList<String> text;
 	public ArrayList<CombatSprite> targets;
-	public ArrayList<BattleEffect> targetEffects;
+	public ArrayList<JBattleEffect> targetEffects;
 	public BattleCommand battleCommand;
 	public ArrayList<Integer> attackerHPDamage;
 	public ArrayList<Integer> attackerMPDamage;
@@ -47,7 +47,7 @@ public class BattleResults implements Serializable
 		br.hpDamage = new ArrayList<Integer>();
 		br.mpDamage = new ArrayList<Integer>();
 		br.text = new ArrayList<String>();
-		br.targetEffects = new ArrayList<BattleEffect>();
+		br.targetEffects = new ArrayList<JBattleEffect>();
 		br.attackerHPDamage = new ArrayList<Integer>();
 		br.attackerMPDamage = new ArrayList<Integer>();
 		br.remainingHP = new ArrayList<>();
@@ -152,7 +152,7 @@ public class BattleResults implements Serializable
 				int spellLevel = battleCommand.getLevel() - 1;
 				int damage = 0;
 
-				text = spell.getBattleText(target, spellLevel) + "}";
+				text = spell.getBattleText(target, spellLevel);
 
 				if (spell.getDamage() != null)
 				{
@@ -171,8 +171,13 @@ public class BattleResults implements Serializable
 				else
 					br.mpDamage.add(0);
 
-				if (spell.getEffects() != null)
-					br.targetEffects.add(spell.getEffects()[spellLevel]);
+				if (spell.getEffect(spellLevel) != null && CommRPG.RANDOM.nextInt(100) <= spell.getEffectChance(spellLevel))
+				{
+					JBattleEffect eff = spell.getEffect(spellLevel);
+					text = text + " " + eff.effectStartedText(attacker, target);
+					System.out.println("TEXT: " + text);
+					br.targetEffects.add(eff);
+				}
 				else
 					br.targetEffects.add(null);
 
@@ -189,6 +194,7 @@ public class BattleResults implements Serializable
 
 				br.critted.add(false);
 				br.dodged.add(false);
+				text = text + "}";
 			}
 			else if (battleCommand.getCommand() == BattleCommand.COMMAND_ITEM)
 			{
@@ -356,9 +362,19 @@ public class BattleResults implements Serializable
 			}
 
 			br.mpDamage.add(0);
-			br.targetEffects.add(null);
+
+			if (attacker.getAttackEffectId() != -1 && attacker.getAttackEffectChance() >= CommRPG.RANDOM.nextInt(100))
+			{
+				JBattleEffect eff = GlobalPythonFactory.createJBattleEffect(attacker.getAttackEffectId());
+				text = text + " " + eff.effectStartedText(attacker, target);
+				br.targetEffects.add(eff);
+			}
+			else
+				br.targetEffects.add(null);
+
 			br.attackerHPDamage.add(0);
 			br.attackerMPDamage.add(0);
+			text = text + "}";
 		}
 
 		return text;

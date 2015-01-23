@@ -370,7 +370,7 @@ public class AttackCinematicState extends LoadableGameState
 					}
 					else
 					{
-						textMenu = new SpeechMenu(battleResults.text.get(targetIndex), (FCGameContainer) container, true, true);
+						textMenu = new SpeechMenu(battleResults.text.get(targetIndex), (FCGameContainer) container);
 						performBattleResult();
 					}
 				}
@@ -428,7 +428,7 @@ public class AttackCinematicState extends LoadableGameState
 					{
 						if (battleResults.attackOverText != null)
 						{
-							textMenu = new SpeechMenu(battleResults.attackOverText, (FCGameContainer) container, true, true);
+							textMenu = new SpeechMenu(battleResults.attackOverText, (FCGameContainer) container);
 						}
 						else
 							textMenu = null;
@@ -453,7 +453,7 @@ public class AttackCinematicState extends LoadableGameState
 				if (spellAnim != null && (targetsAreAllies || targetIndex > 0) && state == STATE_ATTACK_CLIMAX)
 				{
 					spellAnimIndex = 0;
-					textMenu = new SpeechMenu(battleResults.text.get(targetIndex), (FCGameContainer) container, true, true);
+					textMenu = new SpeechMenu(battleResults.text.get(targetIndex), (FCGameContainer) container);
 					performBattleResult();
 				}
 				transitionIndex = 0;
@@ -548,7 +548,7 @@ public class AttackCinematicState extends LoadableGameState
 
 							if (battleResults.attackOverText != null)
 							{
-								textMenu = new SpeechMenu(battleResults.attackOverText, (FCGameContainer) container, true, true);
+								textMenu = new SpeechMenu(battleResults.attackOverText, (FCGameContainer) container);
 							}
 							else
 								textMenu = null;
@@ -582,7 +582,7 @@ public class AttackCinematicState extends LoadableGameState
 					if (!targetsAreAllies || (targetSelf && targets.size() == 1))
 					{
 						spellAnimIndex = 0;
-						textMenu = new SpeechMenu(battleResults.text.get(targetIndex), (FCGameContainer) container, true, true);
+						textMenu = new SpeechMenu(battleResults.text.get(targetIndex), (FCGameContainer) container);
 						performBattleResult();
 					}
 
@@ -701,12 +701,12 @@ public class AttackCinematicState extends LoadableGameState
 		this.battleResults = battleResults;
 
 		if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_ATTACK)
-			textMenu = new SpeechMenu(attacker.getName() + " Attacks!}", gc, true, true);
+			textMenu = new SpeechMenu(attacker.getName() + " Attacks!}", gc);
 		else if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_SPELL)
 			textMenu = new SpeechMenu(attacker.getName() + " casts " + battleResults.battleCommand.getSpell().getName() + " "
-					+ (battleResults.battleCommand.getLevel() + "}"), gc, true, true);
+					+ (battleResults.battleCommand.getLevel() + "}"), gc);
 		else if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_ITEM)
-			textMenu = new SpeechMenu(attacker.getName() + " uses the " + battleResults.battleCommand.getItem().getName() + "}", gc, true, true);
+			textMenu = new SpeechMenu(attacker.getName() + " uses the " + battleResults.battleCommand.getItem().getName() + "}", gc);
 		state = 0;
 		/********************/
 		/* Handle targets	*/

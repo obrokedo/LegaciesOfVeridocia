@@ -48,7 +48,6 @@ public class MenuState extends LoadableGameState
 		this.gc = container;
 		input = new FCInput();
 		container.getInput().addKeyListener(input);
-		gameSetup(game, gc);
 	}
 
 	@Override
@@ -177,6 +176,8 @@ public class MenuState extends LoadableGameState
 
 	@Override
 	public void stateLoaded(FCResourceManager resourceManager) {
+		System.out.println("STATE LOADED");
+		gameSetup(game, gc);
 		font = resourceManager.getFontByName("menufont");
 		bgImage = resourceManager.getImages().get("mainbg");
 		initialized = true;

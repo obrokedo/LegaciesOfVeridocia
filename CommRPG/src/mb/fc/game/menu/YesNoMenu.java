@@ -1,59 +1,78 @@
 package mb.fc.game.menu;
 
 import mb.fc.engine.state.StateInfo;
-import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.input.FCInput;
+import mb.fc.game.input.KeyMapping;
 import mb.fc.game.listener.YesNoListener;
-import mb.fc.game.ui.Button;
 import mb.fc.game.ui.FCGameContainer;
+import mb.fc.game.ui.RectUI;
+import mb.fc.game.ui.SelectRectUI;
+import mb.fc.game.ui.TextUI;
 
-import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
-public class YesNoMenu extends Menu
+public class YesNoMenu extends SpeechMenu
 {
-	private int x;
-	private int width;
-	private String text;
-	private Button yesButton;
-	private Button noButton;
-	// private YesNoListener listener;
+	private RectUI yesPanel, noPanel;
+	private TextUI yesText, noText;
+	private SelectRectUI selectRect;
+	private YesNoListener listener;
+	private boolean yesSelected;
 
-	public YesNoMenu(GameContainer gc, String text, YesNoListener listener) {
-		super(Panel.PANEL_YES_NO);
-		width = gc.getDefaultFont().getWidth(text) + 30;
-		this.text = text;
-		x = (gc.getWidth() - width) / 2;		
-		yesButton = new Button(width / 3 - 20 + x, 355, 40, 20, "Yes");
-		noButton = new Button(width / 3 * 2- 20 + x, 355, 40, 20, "No");
-		// this.listener = listener;
+	public YesNoMenu(String text, StateInfo stateInfo, YesNoListener listener) {
+		this(text, NO_TRIGGER, NO_PORTRAIT, stateInfo, listener);
+	}
+
+	public YesNoMenu(String text, int triggerId,
+			int portraitId, StateInfo stateInfo, YesNoListener listener) {
+		super(text, stateInfo.getGc(),triggerId, portraitId, stateInfo);
+		yesPanel = new RectUI(120, 146, 32, 32);
+		noPanel = new RectUI(170, 146, 32, 32);
+		yesText = new TextUI("Yes", 125, 148);
+		noText = new TextUI("No", 179, 148);
+		selectRect = new SelectRectUI(120, 146, 32, 32);
+		this.listener = listener;
 	}
 
 	@Override
 	public MenuUpdate handleUserInput(FCInput input, StateInfo stateInfo) {
-		/*
-		if (yesButton.handleUserInput(mouseX, mouseY, leftClick))
+		if (input.isKeyDown(KeyMapping.BUTTON_1) || input.isKeyDown(KeyMapping.BUTTON_3))
 		{
-			listener.valueSelected(stateInfo, true);
-			return true;
+			listener.valueSelected(stateInfo, yesSelected);
+			return MenuUpdate.MENU_CLOSE;
 		}
-		if (noButton.handleUserInput(mouseX, mouseY, leftClick))
+		else if (input.isKeyDown(KeyMapping.BUTTON_LEFT))
 		{
-			listener.valueSelected(stateInfo, false);
-			return true;
+			selectRect.setX(120);
+			yesSelected = true;
 		}
-		*/
-		return MenuUpdate.MENU_CLOSE;
+		else if (input.isKeyDown(KeyMapping.BUTTON_RIGHT))
+		{
+			selectRect.setX(170);
+			yesSelected = false;
+		}
+		return MenuUpdate.MENU_NO_ACTION;
 	}
 
 	@Override
-	public void render(FCGameContainer gc, Graphics graphics) 
+	public void render(FCGameContainer gc, Graphics graphics)
 	{
-		Panel.drawPanelBox(x, 300, width, 100, graphics);
-		graphics.setColor(Panel.COLOR_FOREFRONT);
-		graphics.drawString(text, x + 15, 315);
-		yesButton.render(gc, graphics);
-		noButton.render(gc, graphics);
+		super.render(gc, graphics);
+
+		if (initialized)
+		{
+			// Draw background
+			yesPanel.drawPanel(graphics);
+			noPanel.drawPanel(graphics);
+			// Draw temporary YES - NO
+			graphics.setColor(Color.white);
+			yesText.drawText(graphics);
+			noText.drawText(graphics);
+
+			// Draw selection square
+			selectRect.draw(graphics, Color.red);
+		}
 	}
 
 }

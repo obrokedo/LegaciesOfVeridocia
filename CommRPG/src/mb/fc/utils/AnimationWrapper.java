@@ -15,10 +15,18 @@ public class AnimationWrapper
 	private int animationIndex;
 	private int animationDelta;
 	private boolean loops;
+	private Image weapon = null;
 
 	public AnimationWrapper(SpriteAnims spriteAnims)
 	{
 		this.spriteAnims = spriteAnims;
+	}
+
+	public AnimationWrapper(SpriteAnims spriteAnims, String animationName, Image weapon)
+	{
+		this.spriteAnims = spriteAnims;
+		setAnimation(animationName, false);
+		this.weapon = weapon;
 	}
 
 	public AnimationWrapper(SpriteAnims spriteAnims, String animationName)
@@ -86,12 +94,14 @@ public class AnimationWrapper
 						g.drawImage(getRotatedImageIfNeeded(spriteAnims.getImageAtIndex(as.imageIndex), as),
 								x + as.x * SCREEN_SCALE, y + as.y * SCREEN_SCALE, filter);
 				}
-				else
+				else if (weapon != null)
 				{
-					// 30, 4
-					g.setColor(Color.yellow);
-					g.fillRect(x + as.x * SCREEN_SCALE, y + as.y * SCREEN_SCALE,
-							30 * SCREEN_SCALE, 4 * SCREEN_SCALE);
+					if (filter == null)
+						g.drawImage(getRotatedImageIfNeeded(weapon, as),
+								x + as.x * SCREEN_SCALE, y + as.y * SCREEN_SCALE);
+					else
+						g.drawImage(getRotatedImageIfNeeded(weapon, as),
+								x + as.x * SCREEN_SCALE, y + as.y * SCREEN_SCALE, filter);
 				}
 			}
 		}

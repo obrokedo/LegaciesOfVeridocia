@@ -33,6 +33,7 @@ public class GlobalPythonFactory
 	private static JPanelRender panelRender = null;
 	private static JMusicSelector musicSelector = null;
 	private static JSpell spell = null;
+	private static JBattleEffect battleEffect = null;
 
 	/**
 	 * A boolean flag indicating whether this factory has been initialized.
@@ -86,6 +87,7 @@ public class GlobalPythonFactory
         cinematicActor  = (JCinematicActor) (new JythonObjectFactory(JCinematicActor.class, "CinematicActor", "CinematicActor")).createObject();
         musicSelector  = (JMusicSelector) (new JythonObjectFactory(JMusicSelector.class, "MusicScript", "MusicScript")).createObject();
         spell  = (JSpell) (new JythonObjectFactory(JSpell.class, "Spells", "Spells")).createObject();
+        battleEffect = (JBattleEffect) (new JythonObjectFactory(JBattleEffect.class, "BattleEffect", "BattleEffect")).createObject();
 	}
 
 	/**
@@ -151,6 +153,11 @@ public class GlobalPythonFactory
 	{
 		checkFactoryInitialized();
 		return spell;
+	}
+
+	public static JBattleEffect createJBattleEffect(int id)
+	{
+		return battleEffect.init(id);
 	}
 
 	/**

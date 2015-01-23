@@ -2,7 +2,6 @@ package mb.jython;
 
 import java.io.Serializable;
 
-import mb.fc.game.battle.condition.BattleEffect;
 import mb.fc.game.battle.spell.KnownSpell;
 import mb.fc.game.sprite.CombatSprite;
 
@@ -29,7 +28,8 @@ public abstract class JSpell implements Serializable
 	protected int maxLevel;
 	protected int[] damage;
 	protected int[] mpDamage;
-	protected BattleEffect[] effects;
+	protected int[] effects;
+	protected int[] effectChance;
 	protected int[] range;
 	protected int[] area;
 	protected int id;
@@ -99,18 +99,25 @@ public abstract class JSpell implements Serializable
 	}
 
 	/**
-	 * Gets an array of BattleEffects where a value at a given index
-	 * represents the BattleEffect for the spell of level = index + 1.
+	 * Gets the BattleEffect for the spell at a given level
 	 * A value of null will be returned for a given index if there is no
 	 * BattleEffect for that level
 	 *
-	 * @return an array of BattleEffects where a value at a given index
-	 * represents the BattleEffect for the spell of level = index + 1.
+	 * @return a BattleEffect for the spell at a given level
 	 * A value of null will be returned for a given index if there is no
 	 * BattleEffect for that level
 	 */
-	public BattleEffect[] getEffects() {
-		return effects;
+	public JBattleEffect getEffect(int level) {
+		if (effects == null || effects.length <= level || effects[level] == -1)
+			return null;
+		return GlobalPythonFactory.createJBattleEffect(level);
+	}
+
+	public int getEffectChance(int level)
+	{
+		if (effectChance == null || effectChance.length <= level || effectChance[level] == -1)
+			return -1;
+		return effectChance[level];
 	}
 
 	/**
@@ -211,8 +218,11 @@ public abstract class JSpell implements Serializable
 	protected void setMpDamage(int[] mpDamage) {
 		this.mpDamage = mpDamage;
 	}
-	protected void setEffects(BattleEffect[] effects) {
+	protected void setEffects(int[] effects) {
 		this.effects = effects;
+	}
+	public void setEffectChance(int[] effectChance) {
+		this.effectChance = effectChance;
 	}
 	protected void setRange(int[] range) {
 		this.range = range;

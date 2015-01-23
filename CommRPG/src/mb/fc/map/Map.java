@@ -71,6 +71,7 @@ public class Map
 	private Hashtable<TerrainTypeIndicator, Integer> overriddenTerrain = new Hashtable<TerrainTypeIndicator, Integer>();
 	private Hashtable<Integer, Roof> roofsById = new Hashtable<Integer, Roof>();
 	private Shape battleRegion = null;
+	private int roofCount = -1;
 
 	private float tileRatio = 2f;
 	public static final float DESIRED_TILE_WIDTH = 24f;
@@ -88,6 +89,7 @@ public class Map
 		tileSets.clear();
 		overriddenTerrain.clear();
 		roofsById.clear();
+		roofCount = -1;
 	}
 
 	public void addLayer(int[][] layer)
@@ -173,12 +175,20 @@ public class Map
 			int startX = mo.getX() / getTileRenderWidth();
 			int startY = mo.getY() / getTileRenderHeight();
 
-			roofsById.put(Integer.parseInt(mo.getParam("roofid")), new Roof(new Rectangle(startX, startY, roofWidth, roofHeight)));
+			int roofId = 0;
+
+			if (mo.getParam("roofid") != null)
+			{
+				roofId = Integer.parseInt(mo.getParam("roofid"));
+			}
+			else
+				roofId = roofCount--;
+
+			roofsById.put(roofId, new Roof(new Rectangle(startX, startY, roofWidth, roofHeight)));
+
 		}
 		else
 			this.mapObjects.add(mo);
-
-
 	}
 
 	public void addTileset(SpriteSheet spriteSheet, int tileStartIndex, int tileWidth, int tileHeight, Hashtable<Integer, Integer> landEffectByTileId)
@@ -273,8 +283,8 @@ public class Map
 
 	public boolean isMarkedMoveable(int tileX, int tileY)
 	{
-		if ((mapLayer.get(3).length > (tileY * tileRatio)) && ((mapLayer.get(3)[0].length > tileX * tileRatio)))
-			return mapLayer.get(3)[(int) (tileY * tileRatio)][(int) (tileX * tileRatio)] != 0;
+		if ((mapLayer.get(6).length > (tileY * tileRatio)) && ((mapLayer.get(6)[0].length > tileX * tileRatio)))
+			return mapLayer.get(6)[(int) (tileY * tileRatio)][(int) (tileX * tileRatio)] != 0;
 		return false;
 	}
 
@@ -350,6 +360,19 @@ public class Map
 		}
 		private Map getOuterType() {
 			return Map.this;
+		}
+	}
+
+	public void checkRoofs(int mapX, int mapY)
+	{
+		mapX = mapX / this.getTileRenderWidth();
+		mapY = mapY / this.getTileRenderHeight();
+		for (Roof r : getRoofIterator())
+		{
+			if (r.getRectangle().contains(mapX, mapY))
+				r.setVisible(false);
+			else
+				r.setVisible(true);
 		}
 	}
 

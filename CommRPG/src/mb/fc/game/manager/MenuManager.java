@@ -1,5 +1,6 @@
 package mb.fc.game.manager;
 
+import mb.fc.engine.message.IntMessage;
 import mb.fc.engine.message.Message;
 import mb.fc.engine.message.MessageType;
 import mb.fc.engine.message.ShopMessage;
@@ -19,7 +20,7 @@ public class MenuManager extends Manager
 	@Override
 	public void initialize()
 	{
-
+		// stateInfo.addMenu(new ShopMenuTabled(stateInfo, .8, 1.2, new int[] {0, 1, 2}));
 	}
 
 	public boolean isBlocking()
@@ -29,7 +30,7 @@ public class MenuManager extends Manager
 
 	public void update(long delta)
 	{
-		if (stateInfo.areMenusDisplayed() && stateInfo.areMenusDisplayed())
+		if (stateInfo.areMenusDisplayed())
 			handleMenuUpdate(stateInfo.getTopMenu().update(delta, stateInfo));
 
 		if (stateInfo.areMenusDisplayed() && System.currentTimeMillis() > stateInfo.getInputDelay())
@@ -47,6 +48,8 @@ public class MenuManager extends Manager
 					stateInfo.sendMessage(MessageType.WAIT);
 				}
 				stateInfo.removeTopMenu();
+				// stateInfo.addMenu(new ShopMenuTabled(stateInfo, .8, 1.2, new int[] {1, 1, 2, 2, 0, 0, 1, 1, 2, 2, 0, 0}));
+				// stateInfo.addSingleInstanceMenu(new HeroesStatMenu(stateInfo, true, 1));
 				stateInfo.setInputDelay(System.currentTimeMillis() + 200);
 				break;
 			case MENU_ACTION_SHORT:
@@ -78,7 +81,7 @@ public class MenuManager extends Manager
 				stateInfo.addMenu(new ShopMenu(stateInfo.getGc(), stateInfo, sm.getSellPercent(), sm.getBuyPercent(), sm.getItemIds()));
 				break;
 			case SHOW_HEROES:
-				stateInfo.addSingleInstanceMenu(new HeroesStatMenu(stateInfo.getGc(), stateInfo.getClientProfile().getHeroes()));
+				stateInfo.addSingleInstanceMenu(new HeroesStatMenu(stateInfo));
 				break;
 			case SHOW_HERO:
 				stateInfo.addMenu(new HeroStatMenu(stateInfo.getGc(), ((SpriteContextMessage) message).getSprite(stateInfo.getSprites()), stateInfo));
@@ -89,6 +92,8 @@ public class MenuManager extends Manager
 			case SHOW_DEBUG:
 				stateInfo.addMenu(new DebugMenu(stateInfo.getGc()));
 				break;
+			case SHOW_SHOP_HERO_SELECT:
+				stateInfo.addSingleInstanceMenu(new HeroesStatMenu(stateInfo, true, ((IntMessage) message).getValue()));
 			default:
 				break;
 		}

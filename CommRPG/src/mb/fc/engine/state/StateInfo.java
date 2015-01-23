@@ -23,6 +23,7 @@ import mb.fc.game.persist.ClientProfile;
 import mb.fc.game.persist.ClientProgress;
 import mb.fc.game.resource.HeroResource;
 import mb.fc.game.sprite.CombatSprite;
+import mb.fc.game.sprite.Door;
 import mb.fc.game.sprite.Sprite;
 import mb.fc.game.sprite.SpriteZComparator;
 import mb.fc.game.trigger.TriggerLocation;
@@ -191,6 +192,7 @@ public class StateInfo
 
 	private void initializeMapObjects()
 	{
+		int doorId = 500;
 		for (MapObject mo : getResourceManager().getMap().getMapObjects())
 		{
 			if (!isCombat && mo.getKey().equalsIgnoreCase("trigger"))
@@ -205,6 +207,18 @@ public class StateInfo
 			{
 				addSprite(mo.getSprite(this));
 			}
+			else if (mo.getKey().equalsIgnoreCase("door"))
+			{
+				Door door = (Door) mo.getDoor(this, doorId++);
+				addSprite(door);
+				triggers.add(new TriggerLocation(this, mo, door));
+			}
+			/*
+			else if (mo.getKey().equalsIgnoreCase("roof"))
+			{
+				addSprite(mo.getSprite(this));
+			}
+			*/
 		}
 	}
 
@@ -517,6 +531,8 @@ public class StateInfo
 				trigger.perform(this, immediate);
 			}
 		}
+
+		this.getResourceManager().getMap().checkRoofs(mapX, mapY);
 	}
 
 	public void setQuestComplete(int id)

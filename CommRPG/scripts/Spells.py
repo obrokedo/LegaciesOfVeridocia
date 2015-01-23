@@ -37,7 +37,7 @@ class Spells(JSpell):
         if self.name == "blaze":
             return "Flame engulfs " + target.getName() + "'s body dealing " + `self.getDamage()[spellLevel]` + " damage!"
         elif self.name == "Heal":
-            return target.getName() + "'s wounds are healed. " + target.getName() + " recovers " + `int(Math.min(target.getMaxHP() - target.getCurrentHP(), self.getDamage()[spellLevel]))` + " HP!]"
+            return target.getName() + "'s wounds are healed. " + target.getName() + " recovers " + `int(Math.min(target.getMaxHP() - target.getCurrentHP(), self.getDamage()[spellLevel]))` + " HP!"
         elif self.name == "Aura":
             return "A healing aura washes over " + target.getName() + ". " + target.getName() + " is healed by " + `int(Math.min(target.getMaxHP() - target.getCurrentHP(), self.getDamage()[spellLevel]))` + "!"
 

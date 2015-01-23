@@ -9,6 +9,7 @@ import mb.fc.game.input.KeyMapping;
 import mb.fc.game.move.MovingSprite;
 import mb.fc.game.sprite.AnimatedSprite;
 import mb.fc.game.sprite.CombatSprite;
+import mb.fc.game.sprite.Door;
 import mb.fc.game.sprite.Sprite;
 import mb.fc.map.Map;
 
@@ -110,7 +111,7 @@ public class TownMoveManager extends Manager
 		{
 			for (Sprite s : stateInfo.getSprites())
 			{
-				if (s.getTileX() == tx && s.getTileY() == ty)
+				if (s.getTileX() == tx && s.getTileY() == ty && !(s instanceof Door))
 					return true;
 			}
 

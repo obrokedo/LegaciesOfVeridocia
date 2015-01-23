@@ -368,6 +368,7 @@ public class FCResourceManager {
 		String line;
 		while ((line = br.readLine()) != null) {
             allLines.add(line);
+            System.err.println(line);
         }
 		br.close();
 		return allLines;

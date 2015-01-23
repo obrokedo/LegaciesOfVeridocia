@@ -54,10 +54,7 @@ public class Speech
 			{
 				if (cs.getHeroProgression().getHeroID() == heroPortrait)
 				{
-					if (cs.isPromoted())
-						return cs.getHeroProgression().getPromotedProgression().getPortraitIndex();
-					else
-						return cs.getHeroProgression().getUnpromotedProgression().getPortraitIndex();
+					return cs.getCurrentProgression().getPortraitIndex();
 				}
 			}
 
