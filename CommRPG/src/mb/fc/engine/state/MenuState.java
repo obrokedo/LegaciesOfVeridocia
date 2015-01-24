@@ -1,6 +1,11 @@
 package mb.fc.engine.state;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 import mb.fc.engine.CommRPG;
 import mb.fc.game.Camera;
@@ -197,6 +202,10 @@ public class MenuState extends LoadableGameState
 		String map = "";
 
 		File file = new File(".");
+
+		ArrayList<Integer> heroesToAdd = new ArrayList<>();
+		int level = 1;
+
 		for (String s : file.list())
 		{
 			if (s.endsWith(".profile"))
@@ -206,6 +215,28 @@ public class MenuState extends LoadableGameState
 			else if (s.endsWith(".progress"))
 			{
 				clientProgress =  ClientProgress.deserializeFromFile(s);
+			}
+			else if (s.equalsIgnoreCase("DevParams"))
+			{
+				BufferedReader br = null;
+				try
+				{
+					br = new BufferedReader(new InputStreamReader(new FileInputStream(new File("DevParams"))));
+					ArrayList<String> allLines = new ArrayList<String>();
+					String line;
+					while ((line = br.readLine()) != null) {
+			            if (line.startsWith("HERO "))
+			            	heroesToAdd.add(Integer.parseInt(line.split(" ")[1]));
+			            else if (line.startsWith("LEVEL "))
+			            	level = Integer.parseInt(line.split(" ")[1]);
+			        }
+				}
+				catch (Exception ex) {}
+				finally
+				{
+					if (br != null)
+						try { br.close(); } catch (IOException e) {}
+				}
 			}
 		}
 
@@ -221,6 +252,11 @@ public class MenuState extends LoadableGameState
 			System.out.println("CREATE PROGRESS");
 			clientProgress = new ClientProgress("Quest");
 			clientProgress.serializeToFile(map, "north");
+		}
+
+		if (heroesToAdd.size() > 0 || level > 1)
+		{
+			clientProfile.setDevelParams(heroesToAdd, level);
 		}
 
 		try {

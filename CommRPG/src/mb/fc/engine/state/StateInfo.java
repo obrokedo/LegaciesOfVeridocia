@@ -12,6 +12,7 @@ import mb.fc.engine.message.LoadMapMessage;
 import mb.fc.engine.message.Message;
 import mb.fc.engine.message.MessageType;
 import mb.fc.game.Camera;
+import mb.fc.game.battle.LevelUpResult;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.hudmenu.WaitPanel;
 import mb.fc.game.input.FCInput;
@@ -131,6 +132,19 @@ public class StateInfo
 			for (Integer heroId : psi.getClientProfile().getStartingHeroIds())
 				psi.getClientProfile().addHero(HeroResource.getHero(heroId));
 			psi.getClientProfile().setStartingHeroIds(null);
+		}
+
+		if (psi.getClientProfile().getDevelLevel() > 1)
+		{
+			for (CombatSprite cs : psi.getClientProfile().getHeroes())
+			{
+				while (cs.getLevel() < psi.getClientProfile().getDevelLevel())
+				{
+					LevelUpResult lur = cs.getHeroProgression().getLevelUpResults(cs, this);
+					cs.setExp(100);
+					cs.getHeroProgression().levelUp(cs, lur, this.getResourceManager());
+				}
+			}
 		}
 
 		initializeSystems();

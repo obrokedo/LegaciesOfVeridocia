@@ -29,6 +29,13 @@ public class ClientProfile implements Serializable
 	private int gold;
 	private String name;
 	private transient ArrayList<Integer> startingHeroIds = null;
+	private int develLevel = 1;
+
+	public void setDevelParams(ArrayList<Integer> heroes, int level)
+	{
+		this.startingHeroIds.addAll(heroes);
+		develLevel = level;
+	}
 
 	public ClientProfile(String name)
 	{
@@ -168,5 +175,9 @@ public class ClientProfile implements Serializable
 
 	public String getName() {
 		return name;
+	}
+
+	public int getDevelLevel() {
+		return develLevel;
 	}
 }

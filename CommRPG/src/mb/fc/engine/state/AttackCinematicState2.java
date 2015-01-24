@@ -18,7 +18,7 @@ import mb.fc.game.combat.WaitCombatAnimation;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.hudmenu.SpriteContextPanel;
 import mb.fc.game.input.FCInput;
-import mb.fc.game.input.KeyMapping;
+import mb.fc.game.menu.Menu.MenuUpdate;
 import mb.fc.game.menu.SpeechMenu;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.ui.FCGameContainer;
@@ -159,9 +159,9 @@ public class AttackCinematicState2 extends LoadableGameState
 
 		if (isSpell)
 			textToDisplay.add(attacker.getName() + " casts " + battleResults.battleCommand.getSpell().getName() + " " +
-					battleResults.battleCommand.getLevel());
+					battleResults.battleCommand.getLevel() + "]");
 		else
-			textToDisplay.add(attacker.getName() + " attacks!");
+			textToDisplay.add(attacker.getName() + " attacks!]");
 		CombatSprite target = battleResults.targets.get(0);
 
 		if (targetsAllies)
@@ -539,11 +539,23 @@ public class AttackCinematicState2 extends LoadableGameState
 
 		if (textMenu != null)
 		{
-			textMenu.update(delta, null);
-			if (input.isKeyDown(KeyMapping.BUTTON_3))
+			textMenu.handleUserInput(input, null);
+			MenuUpdate update = textMenu.update(delta, null);
+
+			if (update == MenuUpdate.MENU_CLOSE)
 			{
 				textMenu = null;
 				nextAction(game);
+			}
+			else if (update == MenuUpdate.MENU_NEXT_ACTION)
+			{
+				if (battleResults.levelUpResult != null)
+				{
+					if (attacker.isHero())
+						attacker.getHeroProgression().levelUp(attacker, battleResults.levelUpResult, frm);
+					else
+						battleResults.targets.get(0).getHeroProgression().levelUp(battleResults.targets.get(0), battleResults.levelUpResult, frm);
+				}
 			}
 		}
 		else if (heroUpdate && enemyUpdate)
