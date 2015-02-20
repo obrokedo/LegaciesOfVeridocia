@@ -33,8 +33,10 @@ public abstract class AI
 	private int approachType;
 	private boolean canHeal;
 	private Point targetPoint;
+
+	// The target Combat sprite that has been specified by external commands
 	private CombatSprite targetCS;
-	private AttackSpriteAction potentialAttackSpriteAction = null;
+
 	public AI(int approachType, boolean canHeal) {
 		super();
 		this.approachType = approachType;
@@ -46,31 +48,16 @@ public abstract class AI
 		return performTheAI(stateInfo, ms, currentSprite);
 	}
 
-	/**
-	 *
-	 * @param stateInfo The StateInfo for the current game state
-	 * @param ms
-	 * @param currentSprite
-	 * @return
-	 */
-	private ArrayList<TurnAction> performTheAI(StateInfo stateInfo, MoveableSpace ms, CombatSprite currentSprite)
+	public AIConfidence getBestConfidence(StateInfo stateInfo, MoveableSpace ms, CombatSprite currentSprite)
 	{
 		this.initialize();
-		ArrayList<TurnAction> turnActions = new ArrayList<TurnAction>();
-		turnActions.add(new WaitAction());
-
-		boolean attacking = false;
 
 		ArrayList<AttackableEntity> attackableSprites = this.getAttackableSprites(stateInfo, currentSprite, ms, getMaxRange(currentSprite));
-		AttackableEntity target = null;
-		Point targetPoint = null;
-		int maxConfidence = 0;
+		AIConfidence maxConfidence = new AIConfidence(0);
 		int tileWidth = ms.getTileWidth();
 		int tileHeight = ms.getTileHeight();
 
 		System.out.println("------ " + currentSprite.getName());
-
-		boolean foundHero = false;
 
 		// People that can heal should have an oppurtunity to heal themselves
 		if (canHeal)
@@ -84,101 +71,133 @@ public abstract class AI
 		{
 			for (AttackableEntity as : attackableSprites)
 			{
-				if (as.getCombatSprite().isHero())
+				if (as.getCombatSprite().isHero() != currentSprite.isHero())
 				{
-					// If we have a target approach type then we want to ignore any heo who is not the target,
+					// If we have a target approach type then we want to ignore any hero who is not the target,
 					// however we will still perform actions on our allies and self.
 					if (approachType == AI.APPROACH_TARGET && as.getCombatSprite() != targetCS)
 						continue;
 
-					foundHero = true;
+					maxConfidence.foundHero = true;
 				}
 
 				for (int i = 0; i < as.getAttackablePoints().size(); i++)
 				{
 					Point attackPoint = as.getAttackablePoints().get(i);
 					int distance = as.getDistances().get(i);
-					int currentConfidence = getConfidence(currentSprite, as.getCombatSprite(), tileWidth, tileHeight,
+					AIConfidence currentConfidence = getConfidence(currentSprite, as.getCombatSprite(), tileWidth, tileHeight,
 							attackPoint, distance, stateInfo);
 
 					System.out.println("Target " + as.getCombatSprite().getName() + " Confidence: " + currentConfidence);
 
-					if (currentConfidence > maxConfidence)
+					if (currentConfidence.confidence > 0)
 					{
-						targetPoint = attackPoint;
-						target = as;
+						currentConfidence.confidence += this.getLandEffectConfidence(attackPoint, currentSprite, stateInfo);
+					}
+
+					if (currentConfidence.confidence > maxConfidence.confidence)
+					{
 						maxConfidence = currentConfidence;
-						potentialAttackSpriteAction = getPerformedTurnAction(target.getCombatSprite());
+						currentConfidence.attackPoint = attackPoint;
+						currentConfidence.target = as.getCombatSprite();
+						currentConfidence.potentialAttackSpriteAction = getPerformedTurnAction(as.getCombatSprite());
+						currentConfidence.foundHero = true;
 					}
 					else if (currentConfidence == maxConfidence)
 					{
 						System.out.println("Found equal confidence = " + currentConfidence);
 						if (CommRPG.RANDOM.nextInt(100) > 50)
 						{
-							targetPoint = attackPoint;
-							target = as;
 							maxConfidence = currentConfidence;
-							potentialAttackSpriteAction = getPerformedTurnAction(target.getCombatSprite());
+							currentConfidence.attackPoint = attackPoint;
+							currentConfidence.target = as.getCombatSprite();
+							currentConfidence.potentialAttackSpriteAction = getPerformedTurnAction(as.getCombatSprite());
+							currentConfidence.foundHero = true;
 							System.out.println("Switched action");
 						}
 					}
 				}
 			}
+		}
 
-			// If we have no confidence in what we're going to do then we want to move away from the enemies
-			// to try and split them up.
-			if (foundHero && maxConfidence == 0)
+		return maxConfidence;
+	}
+
+	public ArrayList<TurnAction> getActions(StateInfo stateInfo,
+			MoveableSpace ms, CombatSprite currentSprite, AIConfidence confidence)
+	{
+		int tileWidth = ms.getTileWidth();
+		int tileHeight = ms.getTileHeight();
+		ArrayList<TurnAction> turnActions = new ArrayList<TurnAction>();
+
+
+		// If we have no confidence in what we're going to do then we want to move away from the enemies
+		// to try and split them up.
+		if (confidence.confidence == 0)
+		{
+			if (confidence.foundHero)
 			{
-				targetPoint = this.getBestPoint(stateInfo, tileWidth, tileHeight, currentSprite, ms, true, 2);
-				ms.addMoveActionsToLocation(targetPoint.x, targetPoint.y, currentSprite, turnActions);
+				Point bestPoint = this.getBestPoint(stateInfo, tileWidth, tileHeight, currentSprite, ms, true, 2);
+				ms.addMoveActionsToLocation(bestPoint.x, bestPoint.y, currentSprite, turnActions);
+			}
+			else
+			{
+				switch (approachType)
+				{
+					case AI.APPROACH_REACTIVE:
+						performReactiveApproach(stateInfo, tileWidth, tileHeight, currentSprite, ms, turnActions);
+						break;
+					case AI.APPROACH_KAMIKAZEE:
+						performKamikazeeApproach(stateInfo, tileWidth, tileHeight, currentSprite, ms, turnActions);
+						break;
+					case AI.APPROACH_HESITANT:
+						performHesitantApproach(stateInfo, tileWidth, tileHeight, currentSprite, ms, turnActions);
+						break;
+					case AI.APPROACH_FOLLOW:
+						performFollowApproach(stateInfo, tileWidth, tileHeight, currentSprite, ms, turnActions);
+						break;
+					case AI.APPROACH_MOVE_TO_POINT:
+						performMoveToApproach(stateInfo, tileWidth, tileHeight, currentSprite, ms, turnActions);
+						break;
+					case AI.APPROACH_TARGET:
+						performFollowApproach(stateInfo, tileWidth, tileHeight, currentSprite, ms, turnActions);
+						break;
+				}
 			}
 		}
 
-		// If no enemy was found and our max confidence is 0 then we just want to approach
-		if (!foundHero && maxConfidence == 0)
+		if (confidence.target != null)
 		{
-			switch (approachType)
-			{
-				case AI.APPROACH_REACTIVE:
-					performReactiveApproach(stateInfo, tileWidth, tileHeight, currentSprite, ms, turnActions);
-					break;
-				case AI.APPROACH_KAMIKAZEE:
-					performKamikazeeApproach(stateInfo, tileWidth, tileHeight, currentSprite, ms, turnActions);
-					break;
-				case AI.APPROACH_HESITANT:
-					performHesitantApproach(stateInfo, tileWidth, tileHeight, currentSprite, ms, turnActions);
-					break;
-				case AI.APPROACH_FOLLOW:
-					performFollowApproach(stateInfo, tileWidth, tileHeight, currentSprite, ms, turnActions);
-					break;
-				case AI.APPROACH_MOVE_TO_POINT:
-					performMoveToApproach(stateInfo, tileWidth, tileHeight, currentSprite, ms, turnActions);
-					break;
-				case AI.APPROACH_TARGET:
-					performFollowApproach(stateInfo, tileWidth, tileHeight, currentSprite, ms, turnActions);
-					break;
-			}
-		}
-
-		if (target != null)
-		{
-			ms.addMoveActionsToLocation(targetPoint.x, targetPoint.y, currentSprite, turnActions);
+			ms.addMoveActionsToLocation(confidence.attackPoint.x, confidence.attackPoint.y, currentSprite, turnActions);
 			turnActions.add(new WaitAction());
-			turnActions.add(new TargetSpriteAction(potentialAttackSpriteAction.getBattleCommand(), target.getCombatSprite()));
+			turnActions.add(new TargetSpriteAction(confidence.potentialAttackSpriteAction.getBattleCommand(),
+					confidence.target));
 			turnActions.add(new WaitAction(25));
-			turnActions.add(potentialAttackSpriteAction);
-			attacking = true;
+			turnActions.add(confidence.potentialAttackSpriteAction);
 		}
 		else
 		{
 			turnActions.add(new TurnAction(TurnAction.ACTION_HIDE_MOVE_AREA));
 			turnActions.add(new WaitAction());
+			turnActions.add(new TurnAction(TurnAction.ACTION_END_TURN));
 		}
 
-		if (!attacking)
-			turnActions.add(new TurnAction(TurnAction.ACTION_END_TURN));
 
 		return turnActions;
+	}
+
+
+	/**
+	 *
+	 * @param stateInfo The StateInfo for the current game state
+	 * @param ms
+	 * @param currentSprite
+	 * @return
+	 */
+	private ArrayList<TurnAction> performTheAI(StateInfo stateInfo, MoveableSpace ms, CombatSprite currentSprite)
+	{
+		AIConfidence conf = this.getBestConfidence(stateInfo, ms, currentSprite);
+		return this.getActions(stateInfo, ms, currentSprite, conf);
 	}
 
 	private void performKamikazeeApproach(StateInfo stateInfo, int tileWidth, int tileHeight, CombatSprite currentSprite, MoveableSpace ms, ArrayList<TurnAction> turnActions)
@@ -219,9 +238,11 @@ public abstract class AI
 	{
 		int leastAmt = Integer.MAX_VALUE;
 		CombatSprite mostIsolatedCS = currentSprite;
-		for (CombatSprite cs : stateInfo.getHeroes())
+		for (CombatSprite cs : stateInfo.getCombatSprites())
 		{
-			int amt = getNearbySpriteAmount(stateInfo, true, tileWidth, tileHeight, new Point(cs.getTileX(), cs.getTileY()), 5, currentSprite);
+			if (cs.isHero() == currentSprite.isHero())
+				continue;
+			int amt = getNearbySpriteAmount(stateInfo, !currentSprite.isHero(), tileWidth, tileHeight, new Point(cs.getTileX(), cs.getTileY()), 5, currentSprite);
 			if (amt < leastAmt && ms.doesPathExist(currentSprite.getTileX(), currentSprite.getTileY(), cs.getTileX(), cs.getTileY()))
 			{
 				leastAmt = amt;
@@ -266,8 +287,8 @@ public abstract class AI
 				if ((Math.abs(i) + Math.abs(j)) <= searchRange &&  ms.canEndMoveHere(tx + i, ty + j) &&
 						ms.isTileWithinMove((tx + i) * tileWidth, (ty + j) * tileHeight, attacker, searchRange))
 				{
-					int heroDistance = getDistanceFromSprites(stateInfo, true, tileWidth, tileHeight, tx + i, ty + j, attacker);
-					int enemyDistance = getDistanceFromSprites(stateInfo, false, tileWidth, tileHeight, tx + i, ty + j, attacker);
+					int heroDistance = getDistanceFromSprites(stateInfo, !attacker.isHero(), tileWidth, tileHeight, tx + i, ty + j, attacker);
+					int enemyDistance = getDistanceFromSprites(stateInfo, attacker.isHero(), tileWidth, tileHeight, tx + i, ty + j, attacker);
 
 					int distance = 0;
 					if (retreat)
@@ -314,7 +335,7 @@ public abstract class AI
 	 * @param attacker The entity for which AI is being performed for. (This is just used to omit the distance of this entity from the selected space)
 	 * @return The total distance of all heroes/enemies from the specified space.
 	 */
-	private int getDistanceFromSprites(StateInfo stateInfo, boolean isHero,
+	private static int getDistanceFromSprites(StateInfo stateInfo, boolean isHero,
 			int tileWidth, int tileHeight, int x, int y, CombatSprite attacker)
 	{
 		int distance = 0;
@@ -451,7 +472,7 @@ public abstract class AI
 	 * @return An AttackableEntity containing the locations from which the specified target entity is in range for the attacking entity, null
 	 *			if the target is not in range
 	 */
-	private AttackableEntity isInAttackRange(CombatSprite attacking, Sprite target, int maxAttackRange, MoveableSpace ms, StateInfo stateInfo)
+	private static AttackableEntity isInAttackRange(CombatSprite attacking, Sprite target, int maxAttackRange, MoveableSpace ms, StateInfo stateInfo)
 	{
 		int tx = target.getTileX();
 		int ty = target.getTileY();
@@ -482,7 +503,7 @@ public abstract class AI
 	 * Includes all points from which the target is in range and the distance the attacker will
 	 * be from the taret when at a given point
 	 */
-	private class AttackableEntity
+	private static class AttackableEntity
 	{
 		private CombatSprite combatEntity;
 		private ArrayList<Point> attackablePoints;
@@ -520,8 +541,16 @@ public abstract class AI
 
 	protected abstract int getMaxRange(CombatSprite currentSprite);
 
-	protected abstract int getConfidence(CombatSprite currentSprite, CombatSprite targetSprite,
+	protected abstract AIConfidence getConfidence(CombatSprite currentSprite, CombatSprite targetSprite,
 			int tileWidth , int tileHeight, Point attackPoint, int distance, StateInfo stateInfo);
 
 	protected abstract void initialize();
+
+	protected int getLandEffectConfidence(Point actionPoint, CombatSprite currentSprite, StateInfo stateInfo)
+	{
+		return getLandEffectWeight(stateInfo.getCurrentMap().getLandEffectByTile(currentSprite.getMovementType(),
+				actionPoint.x, actionPoint.y));
+	}
+
+	protected abstract int getLandEffectWeight(int landEffect);
 }

@@ -45,7 +45,8 @@ public class ClericAI extends CasterAI
 			// If there are multiple targets then get the total percent damage done and then divide it by the area amount
 			// this will hopefully prevent casters from casting higher level spells then they need to
 			Point castPoint = new Point(targetSprite.getTileX(), targetSprite.getTileY());
-			targetsInArea = getNearbySprites(stateInfo, spell.isTargetsEnemy(), tileWidth, tileHeight,
+			targetsInArea = getNearbySprites(stateInfo, (currentSprite.isHero() ? !spell.isTargetsEnemy() : spell.isTargetsEnemy()),
+					tileWidth, tileHeight,
 					castPoint, spell.getArea()[i - 1] - 1, currentSprite);
 
 			// Check to see if the point that the healer would move to would be in the radius of the spell. Make sure
@@ -60,8 +61,6 @@ public class ClericAI extends CasterAI
 			}
 			else
 				healedSelf = true;
-
-			// TODO CHECK TO SEE IF CASTING THE SPELL ON YOURSELF WOULD BE BETTER
 
 			if (targetsInArea.size() > 1)
 				System.out.println("MULTIPLE TARGETS " + targetsInArea.size());
@@ -131,12 +130,13 @@ public class ClericAI extends CasterAI
 		targetSprite.getName() + " " + targetSprite.getUniqueEnemyId() + " spell " + spell.getName() + " level " + i);
 
 		// Check to see if this is the most confident
-		mostConfident = checkForMaxConfidence(mostConfident, currentConfidence, spell, knownSpell, i, targetsInArea);
+		mostConfident = checkForMaxConfidence(mostConfident, currentConfidence, spell, knownSpell, i, targetsInArea, false, true);
 	}
 
 	private void handleDamagingSpell(JSpell spell, KnownSpell knownSpell, int i, int tileWidth, int tileHeight, CombatSprite currentSprite,
 			CombatSprite targetSprite, StateInfo stateInfo, int baseConfidence, int cost, int distance)
 	{
+		boolean willKill = false;
 		int currentConfidence = 0;
 		int area = spell.getArea()[i - 1];
 		ArrayList<CombatSprite> targetsInArea;
@@ -146,15 +146,22 @@ public class ClericAI extends CasterAI
 
 			// If there are multiple targets then get the total percent damage done and then divide it by the area amount
 			// this will hopefully prevent wizards from casting higher level spells then they need to
-			targetsInArea = getNearbySprites(stateInfo, spell.isTargetsEnemy(), tileWidth, tileHeight,
+			targetsInArea = getNearbySprites(stateInfo, (currentSprite.isHero() ? !spell.isTargetsEnemy() : spell.isTargetsEnemy()),
+					tileWidth, tileHeight,
 					new Point(targetSprite.getTileX(), targetSprite.getTileY()), spell.getArea()[i - 1] - 1,
 						currentSprite);
 
 			for (CombatSprite ts : targetsInArea)
 			{
-				currentConfidence += Math.max(-30, (int)(-30.0 * spell.getDamage()[i - 1] / ts.getMaxHP()));
 				if (ts.getCurrentHP() + spell.getDamage()[i - 1] <= 0)
+				{
 					killed++;
+					willKill = true;
+				}
+				else
+				{
+					currentConfidence += Math.min(30, (int)(-30.0 * spell.getDamage()[i - 1] / ts.getMaxHP()));
+				}
 
 			}
 
@@ -165,9 +172,14 @@ public class ClericAI extends CasterAI
 		}
 		else
 		{
-			currentConfidence += Math.max(-30, (int)(-30.0 * spell.getDamage()[i - 1] / targetSprite.getMaxHP()));
+
 			if (targetSprite.getCurrentHP() + spell.getDamage()[i - 1] <= 0)
+			{
 				currentConfidence += 50;
+				willKill = true;
+			}
+			else
+				currentConfidence += Math.min(30, (int)(-30.0 * spell.getDamage()[i - 1] / targetSprite.getMaxHP()));
 			targetsInArea = null;
 		}
 
@@ -181,7 +193,7 @@ public class ClericAI extends CasterAI
 		System.out.println("Spell confidence " + currentConfidence + " name " + targetSprite.getName() + " " + targetSprite.getUniqueEnemyId() + " spell " + spell.getName() + " level " + i);
 
 		// Check to see if this is the most confident
-		mostConfident = checkForMaxConfidence(mostConfident, currentConfidence, spell, knownSpell, i, targetsInArea);
+		mostConfident = checkForMaxConfidence(mostConfident, currentConfidence, spell, knownSpell, i, targetsInArea, willKill, false);
 	}
 
 	@Override
@@ -197,8 +209,8 @@ public class ClericAI extends CasterAI
 
 		// Determine confidence, add 5 because the attacked sprite will probably always be in range
 		int currentConfidence = 5 +
-				getNearbySpriteAmount(stateInfo, false, tileWidth, tileHeight, attackPoint, 2, currentSprite) * 5 -
-				getNearbySpriteAmount(stateInfo, true, tileWidth, tileHeight, attackPoint, 2, currentSprite) * 5;
+				getNearbySpriteAmount(stateInfo, currentSprite.isHero(), tileWidth, tileHeight, attackPoint, 2, currentSprite) * 5 -
+				getNearbySpriteAmount(stateInfo, !currentSprite.isHero(), tileWidth, tileHeight, attackPoint, 2, currentSprite) * 5;
 				// Adding the attackers damage to this person causes us to flee way to much
 		 		// -Math.min(20, (int)(20.0 * damage / currentSprite.getMaxHP()));
 		return currentConfidence;

@@ -48,7 +48,6 @@ public class CombatSprite extends AnimatedSprite
 				level, exp;
 
 	private transient AI ai;
-	private transient Image portraitImage;
 
 	private boolean isHero = false;
 	private boolean isLeader = false;
@@ -67,7 +66,6 @@ public class CombatSprite extends AnimatedSprite
 	private int[] usuableArmor;
 	private HeroProgression heroProgression;
 	private int movementType;
-	private int portraitIndex;
 	private int kills;
 	private int defeat;
 	private ArrayList<JBattleEffect> battleEffects;
@@ -85,11 +83,11 @@ public class CombatSprite extends AnimatedSprite
 	 */
 	public CombatSprite(boolean isLeader,
 			String name, String imageName, int hp, int mp, int attack, int defense, int speed, int move,
-				int movementType, int level, int enemyId, int portraitIndex, ArrayList<KnownSpell> spells,
+				int movementType, int level, int enemyId, ArrayList<KnownSpell> spells,
 				int id, int attackAffectId, int attackEffectChance)
 	{
 		this(isLeader, name, imageName, null, hp, mp, attack,
-				defense, speed, move, movementType, level, 0, portraitIndex, spells, id);
+				defense, speed, move, movementType, level, 0, spells, id);
 		this.uniqueEnemyId = enemyId;
 		this.isHero = false;
 		this.attackEffectChance = attackEffectChance;
@@ -101,7 +99,7 @@ public class CombatSprite extends AnimatedSprite
 	 */
 	public CombatSprite(boolean isLeader,
 			String name, String imageName, HeroProgression heroProgression, int hp, int mp, int attack,
-			int defense, int speed, int move, int movementType, int level, int exp, int portraitIndex,
+			int defense, int speed, int move, int movementType, int level, int exp,
 			ArrayList<KnownSpell> spells, int id)
 	{
 		super(0, 0, imageName, id);
@@ -131,7 +129,6 @@ public class CombatSprite extends AnimatedSprite
 		this.items = new ArrayList<Item>();
 		this.equipped = new ArrayList<Boolean>();
 		this.heroProgression = heroProgression;
-		this.portraitIndex = portraitIndex;
 		if (heroProgression != null)
 		{
 			if (isPromoted)
@@ -151,6 +148,15 @@ public class CombatSprite extends AnimatedSprite
 		// this.battleEffects.add(GlobalPythonFactory.createJBattleEffect(0));
 		this.spriteType = Sprite.TYPE_COMBAT;
 		this.id = id;
+
+		/*
+		if (this.name.equalsIgnoreCase("Sharna"))
+			this.ai = new ClericAI(1);
+		else if (this.name.equalsIgnoreCase("Olivia"))
+			this.ai = new WizardAI(1);
+		else
+			this.ai = new WarriorAI(1);
+		 */
 	}
 
 	@Override
@@ -163,9 +169,6 @@ public class CombatSprite extends AnimatedSprite
 			super.setLocX(-1);
 			super.setLocY(-1);
 		}
-
-		if (portraitIndex != -1)
-			portraitImage = stateInfo.getResourceManager().getSpriteSheets().get("portraits").getSprite(portraitIndex, 0);
 
 		if (spells != null && spells.size() > 0)
 		{
@@ -373,17 +376,6 @@ public class CombatSprite extends AnimatedSprite
 	/*******************************************/
 	/* MUTATOR AND ACCESSOR METHODS START HERE */
 	/*******************************************/
-	/*
-	 * Gets the image portrait of this combat sprite. This will return NULL if the combat sprite does not
-	 * have a portrait.
-	 *
-	 * @return the image portrait of this combat sprite. This will return NULL if the combat sprite does not
-	 * have a portrait.
-	 */
-	public Image getPortraitImage() {
-		return portraitImage;
-	}
-
 	public int getCurrentHP() {
 		return currentHP;
 	}

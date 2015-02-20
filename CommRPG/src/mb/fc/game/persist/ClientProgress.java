@@ -27,10 +27,10 @@ public class ClientProgress implements Serializable
 	private String map;
 	private String location;
 	private String name;
-	private transient long lastSaveTime;
 	private long timePlayed;
 	private boolean isBattle;
 	private static final String BATTLE_PREFIX = "!!";
+	private transient long lastSaveTime;
 
 	public ClientProgress(String name)
 	{

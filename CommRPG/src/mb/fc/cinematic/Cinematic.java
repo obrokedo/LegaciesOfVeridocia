@@ -15,11 +15,9 @@ import mb.fc.game.Camera;
 import mb.fc.game.constants.Direction;
 import mb.fc.game.input.FCInput;
 import mb.fc.game.menu.Menu.MenuUpdate;
+import mb.fc.game.menu.Portrait;
 import mb.fc.game.menu.SpeechMenu;
-import mb.fc.game.resource.EnemyResource;
-import mb.fc.game.resource.HeroResource;
 import mb.fc.game.sprite.AnimatedSprite;
-import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.sprite.NPCSprite;
 import mb.fc.game.sprite.Sprite;
 import mb.fc.game.sprite.StaticSprite;
@@ -450,36 +448,12 @@ public class Cinematic {
 
 				break;
 			case SPEECH:
-				int portrait = (int) ce.getParam(1);
-				int heroPortrait = (int) ce.getParam(2);
-				int enemyPortrait = (int) ce.getParam(3);
+				int heroPortrait = (int) ce.getParam(1);
+				int enemyPortrait = (int) ce.getParam(2);
 
-				if(portrait == -1)
-				{
-					if (heroPortrait != -1)
-					{
-						boolean found = false;
-						for (CombatSprite cs : stateInfo.getPsi().getClientProfile().getHeroes())
-						{
-							if (cs.getHeroProgression().getHeroID() == heroPortrait)
-							{
-								found = true;
-								portrait = cs.getCurrentProgression().getPortraitIndex();
-								break;
-							}
-						}
-
-						if (!found)
-							portrait = HeroResource.getPortraitIndex(heroPortrait);
-					}
-					else if (enemyPortrait != -1)
-					{
-						portrait = EnemyResource.getPortraitIndex(enemyPortrait);
-					}
-				}
-
+				Portrait port = Portrait.getPortrait(heroPortrait, enemyPortrait, stateInfo);
 				speechMenu = new SpeechMenu((String) ce.getParam(0),
-						stateInfo.getGc(), SpeechMenu.NO_TRIGGER, portrait, stateInfo);
+						stateInfo.getGc(), SpeechMenu.NO_TRIGGER, port, stateInfo);
 				break;
 			case LOAD_MAP:
 				stateInfo.getPsi().loadMap((String) ce.getParam(0),

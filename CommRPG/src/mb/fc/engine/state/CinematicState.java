@@ -3,6 +3,7 @@ package mb.fc.engine.state;
 import mb.fc.cinematic.Cinematic;
 import mb.fc.engine.CommRPG;
 import mb.fc.game.manager.SoundManager;
+import mb.fc.game.sprite.CombatSprite;
 import mb.fc.loading.FCResourceManager;
 import mb.fc.loading.LoadableGameState;
 import mb.fc.renderer.TileMapRenderer;
@@ -48,6 +49,9 @@ public class CinematicState extends LoadableGameState
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
 		stateInfo.initState();
+		for (CombatSprite cs : stateInfo.getClientProfile().getHeroes())
+			cs.initializeSprite(stateInfo);
+
 	}
 
 	@Override

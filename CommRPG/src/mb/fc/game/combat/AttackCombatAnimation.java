@@ -1,6 +1,6 @@
 package mb.fc.game.combat;
 
-import mb.fc.engine.state.AttackCinematicState2;
+import mb.fc.engine.state.LOVAttackCinematicState;
 import mb.fc.game.battle.BattleResults;
 import mb.fc.game.battle.command.BattleCommand;
 import mb.fc.game.sprite.CombatSprite;
@@ -54,7 +54,7 @@ public class AttackCombatAnimation extends CombatAnimation
 		if (castingSpell)
 		{
 			int maxTime = getAnimationLength();
-			if (this.totalTimePassed > maxTime - AttackCinematicState2.SPELL_FLASH_DURATION)
+			if (this.totalTimePassed > maxTime - LOVAttackCinematicState.SPELL_FLASH_DURATION)
 				this.setDrawSpell(true);
 		}
 		return super.update(delta);

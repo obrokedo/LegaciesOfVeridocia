@@ -21,12 +21,12 @@ public class YesNoMenu extends SpeechMenu
 	private boolean yesSelected;
 
 	public YesNoMenu(String text, StateInfo stateInfo, YesNoListener listener) {
-		this(text, NO_TRIGGER, NO_PORTRAIT, stateInfo, listener);
+		this(text, NO_TRIGGER, null, stateInfo, listener);
 	}
 
 	public YesNoMenu(String text, int triggerId,
-			int portraitId, StateInfo stateInfo, YesNoListener listener) {
-		super(text, stateInfo.getGc(),triggerId, portraitId, stateInfo);
+			Portrait portrait, StateInfo stateInfo, YesNoListener listener) {
+		super(text, stateInfo.getGc(),triggerId, portrait, stateInfo);
 		yesPanel = new RectUI(120, 146, 32, 32);
 		noPanel = new RectUI(170, 146, 32, 32);
 		yesText = new TextUI("Yes", 125, 148);

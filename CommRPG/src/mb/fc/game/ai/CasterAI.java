@@ -13,7 +13,8 @@ import mb.jython.JSpell;
 
 public abstract class CasterAI extends AI
 {
-
+	protected boolean willKill;
+	protected boolean willHeal;
 	protected int mostConfident = 0;
 	protected JSpell bestSpell;
 	protected KnownSpell bestKnownSpell;
@@ -31,10 +32,12 @@ public abstract class CasterAI extends AI
 		bestSpell = null;
 		spellLevel = 0;
 		targets = null;
+		willKill = false;
+		willHeal = false;
 	}
 
 	@Override
-	protected int getConfidence(CombatSprite currentSprite,
+	protected AIConfidence getConfidence(CombatSprite currentSprite,
 			CombatSprite targetSprite, int tileWidth, int tileHeight,
 			Point attackPoint, int distance, StateInfo stateInfo)
 	{
@@ -55,25 +58,30 @@ public abstract class CasterAI extends AI
 				attackRange = 3;
 
 			// Get the wizards basic attack confidence, but make sure that the current sprite is in basic attack range
-			if (distance <= attackRange && targetSprite.isHero())
+			if (distance <= attackRange && targetSprite.isHero() != currentSprite.isHero())
 			{
 				int damage = Math.max(1, currentSprite.getCurrentAttack() - targetSprite.getCurrentDefense());
 				currentConfidence += Math.min(30, (int)(30.0 * damage / targetSprite.getMaxHP()));
 
 				// If this attack would kill the target then add 50 confidence
 				if (targetSprite.getCurrentHP() <= damage)
+				{
 					currentConfidence += 50;
+					willKill = true;
+				}
 
 				System.out.println("Attack confidence " + currentConfidence + " name " + targetSprite.getName());
 
-				mostConfident = checkForMaxConfidence(mostConfident, currentConfidence, null, null, 0, null);
+				mostConfident = checkForMaxConfidence(mostConfident, currentConfidence, null, null, 0, null, willKill, false);
 			}
 		}
 
 
 		this.checkSpells(currentSprite, targetSprite, tileWidth, tileHeight, attackPoint, distance, stateInfo, baseConfidence);
-
-		return mostConfident;
+		AIConfidence aiC = new AIConfidence(mostConfident);
+		aiC.willKill = willKill;
+		aiC.willHeal = willHeal;
+		return aiC;
 	}
 
 	protected void checkSpells(CombatSprite currentSprite,
@@ -98,7 +106,7 @@ public abstract class CasterAI extends AI
 						continue;
 
 					// Make sure the target is the correct type for this spell
-					if (targetSprite.isHero() != spell.isTargetsEnemy())
+					if ((targetSprite.isHero() == currentSprite.isHero()) == spell.isTargetsEnemy())
 						continue;
 
 					// Check to see if the target is in range of this spell
@@ -114,7 +122,7 @@ public abstract class CasterAI extends AI
 	}
 
 	protected int checkForMaxConfidence(int mostConfident, int confidence, JSpell currentSpell, KnownSpell currentKnownSpell,
-			int level, ArrayList<CombatSprite> targets)
+			int level, ArrayList<CombatSprite> targets, boolean willKill, boolean willHeal)
 	{
 		if (confidence > mostConfident)
 		{
@@ -122,6 +130,8 @@ public abstract class CasterAI extends AI
 			bestKnownSpell = currentKnownSpell;
 			this.spellLevel = level;
 			this.targets = targets;
+			this.willKill = willKill;
+			this.willHeal = willHeal;
 			return confidence;
 		}
 		return mostConfident;
@@ -177,4 +187,11 @@ public abstract class CasterAI extends AI
 	protected abstract int determineBaseConfidence(CombatSprite currentSprite,
 			CombatSprite targetSprite, int tileWidth, int tileHeight,
 			Point attackPoint, StateInfo stateInfo);
+
+	@Override
+	protected int getLandEffectWeight(int landEffect) {
+		return landEffect / 6;
+	}
+
+
 }

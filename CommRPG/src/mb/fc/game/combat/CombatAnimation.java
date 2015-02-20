@@ -1,7 +1,7 @@
 package mb.fc.game.combat;
 
 import mb.fc.engine.CommRPG;
-import mb.fc.engine.state.AttackCinematicState2;
+import mb.fc.engine.state.LOVAttackCinematicState;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.ui.FCGameContainer;
 import mb.fc.utils.AnimationWrapper;
@@ -51,10 +51,10 @@ public abstract class CombatAnimation
 	public boolean update(int delta)
 	{
 		totalTimePassed += delta;
-		animationWrapper.udpate(delta);
+		animationWrapper.update(delta);
 		for (JBattleEffect be : parentSprite.getBattleEffects())
 		{
-			be.getEffectAnimation().udpate(delta);
+			be.getEffectAnimation().update(delta);
 		}
 		if (minimumTimePassed > -1 && totalTimePassed >= minimumTimePassed)
 			return true;
@@ -68,7 +68,7 @@ public abstract class CombatAnimation
 		int y = yDrawPos + yOffset;
 
 		if (displayPlatform)
-			g.drawImage(AttackCinematicState2.FLOOR_IMAGE, x + 220 * SCREEN_SCALE, y - 15 * SCREEN_SCALE);
+			g.drawImage(LOVAttackCinematicState.FLOOR_IMAGE, x + 220 * SCREEN_SCALE, y - 15 * SCREEN_SCALE);
 
 		animationWrapper.drawAnimation(x, y, renderColor, g);
 

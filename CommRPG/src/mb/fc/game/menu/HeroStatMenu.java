@@ -22,6 +22,7 @@ public class HeroStatMenu extends Menu
 	private String gold;
 	private int animCount = 0;
 	private Timer timer;
+	private Portrait portrait;
 
 	public HeroStatMenu(GameContainer gc, CombatSprite selectedSprite, StateInfo stateInfo) {
 		super(Panel.PANEL_HEROS_STATS);
@@ -30,6 +31,8 @@ public class HeroStatMenu extends Menu
 		this.selectedSprite = selectedSprite;
 		if (selectedSprite.isHero())
 			this.gold = stateInfo.getClientProfile().getGold() + "";
+
+		portrait = Portrait.getPortrait(selectedSprite);
 
 		timer = new Timer(500);
 	}
@@ -141,10 +144,9 @@ public class HeroStatMenu extends Menu
 		/****************************/
 		/* Draw the portrait window	*/
 		/****************************/
-		if (selectedSprite.getPortraitImage() != null)
+		if (portrait != null)
 		{
-			Panel.drawPanelBox(x, y, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 62, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 78, graphics, Color.black);
-			graphics.drawImage(selectedSprite.getPortraitImage(), x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 7, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 7);
+			portrait.render(x, y, graphics);
 		}
 
 		/*****************************/

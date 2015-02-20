@@ -21,6 +21,11 @@
         <spr name="Crit-Item" x="69" y="203" w="57" h="66"/>
         <spr name="Item1" x="181" y="131" w="57" h="66"/>
         <spr name="Item2" x="325" y="132" w="57" h="66"/>
+        <spr name="14" x="509" y="143" w="48" h="64"/>
+        <spr name="15" x="566" y="144" w="48" h="64"/>
+        <spr name="16" x="622" y="144" w="48" h="64"/>
+        <spr name="17" x="677" y="144" w="48" h="64"/>
+        <spr name="18" x="730" y="144" w="48" h="64"/>
       </dir>
     </dir>
   </definitions>

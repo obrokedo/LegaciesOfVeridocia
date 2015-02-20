@@ -9,6 +9,8 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
 
+import javax.swing.JOptionPane;
+
 import org.newdawn.slick.util.DefaultLogSystem;
 
 /**
@@ -30,6 +32,8 @@ public class FileLogger extends DefaultLogSystem
 	@Override
 	public void error(Throwable e) {
 		super.error(e);
+
+		JOptionPane.showMessageDialog(null, "An error occurred during execution: " + e.getMessage());
 
 		try {
 			PrintWriter pw = new PrintWriter(new FileOutputStream(

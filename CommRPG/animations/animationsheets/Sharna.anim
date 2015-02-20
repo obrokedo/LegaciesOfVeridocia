@@ -86,4 +86,32 @@
       <spr name="/Unpromoted/Guard" x="259" y="-43" z="0"/>
     </cell>
   </anim>
+  <anim name="UnPort" loops="0">
+    <cell index="0" delay="2000">
+      <spr name="/Unpromoted/0" x="0" y="0" z="0"/>
+    </cell>
+    <cell index="1" delay="50">
+      <spr name="/Unpromoted/1" x="0" y="0" z="0"/>
+    </cell>
+    <cell index="2" delay="50">
+      <spr name="/Unpromoted/2" x="0" y="0" z="0"/>
+    </cell>
+    <cell index="3" delay="50">
+      <spr name="/Unpromoted/3" x="0" y="0" z="0"/>
+    </cell>
+  </anim>
+  <anim name="UnPortTalk" loops="0">
+    <cell index="0" delay="100">
+      <spr name="/Unpromoted/0" x="0" y="0" z="0"/>
+    </cell>
+    <cell index="1" delay="100">
+      <spr name="/Unpromoted/4" x="0" y="0" z="0"/>
+    </cell>
+    <cell index="2" delay="100">
+      <spr name="/Unpromoted/5" x="0" y="0" z="0"/>
+    </cell>
+    <cell index="3" delay="100">
+      <spr name="/Unpromoted/4" x="0" y="0" z="0"/>
+    </cell>
+  </anim>
 </animations>

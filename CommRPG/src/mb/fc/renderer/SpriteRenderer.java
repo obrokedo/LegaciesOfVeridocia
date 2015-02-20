@@ -7,14 +7,27 @@ import mb.fc.game.sprite.Sprite;
 import org.newdawn.slick.Graphics;
 
 public class SpriteRenderer extends Manager
-{	
-	public void render(Graphics g) 
+{
+	public void render(Graphics g)
 	{
 		for (Sprite s : stateInfo.getSprites())
 		{
 			if (s.isVisible())
+			{
 				s.render(stateInfo.getCamera(), g, stateInfo.getGc());
-		}				
+				/*
+				switch (s.getSpriteType())
+				{
+					case Sprite.TYPE_STATIC_SPRITE:
+						break;
+					case Sprite.TYPE_COMBAT:
+						break;
+					case Sprite.TYPE_NPC:
+						break;
+				}
+				*/
+			}
+		}
 	}
 
 	@Override
@@ -23,6 +36,6 @@ public class SpriteRenderer extends Manager
 	@Override
 	public void recieveMessage(Message message) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

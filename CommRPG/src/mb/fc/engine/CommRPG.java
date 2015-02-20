@@ -5,7 +5,7 @@ import java.util.Random;
 import javax.swing.JOptionPane;
 
 import mb.fc.engine.log.FileLogger;
-import mb.fc.engine.state.AttackCinematicState2;
+import mb.fc.engine.state.LOVAttackCinematicState;
 import mb.fc.engine.state.DevelMenuState;
 import mb.fc.engine.state.PersistentStateInfo;
 import mb.fc.game.ui.FCGameContainer;
@@ -163,7 +163,7 @@ public class CommRPG extends StateBasedGame   {
 			// container.setDisplayPaddingX(100);
 			// container.setDisplayMode(200 + 320 * GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], 240 * GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], false);
 
-			container.setShowFPS(false);
+			// container.setShowFPS(true);
 			container.setVSync(true);
 			container.setAlwaysRender(true);
 			container.setTargetFrameRate(60);
@@ -224,7 +224,7 @@ public class CommRPG extends StateBasedGame   {
 		this.addState(new DevelMenuState());
 		// this.addState(new MultiplayerMenuState());
 
-		this.addState(new AttackCinematicState2());
+		this.addState(new LOVAttackCinematicState());
 		this.addState(loadingState);
 
 		// this.addState(new TestState());

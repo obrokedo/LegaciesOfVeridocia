@@ -120,6 +120,8 @@ public class HeroesStatMenu extends Menu
 			graphics.setColor(Color.white);
 		}
 
+		// TODO PORTRAITS
+		/*
 		if (selectedHero.getPortraitImage() != null)
 		{
 			Panel.drawPanelBox(xOffset + 20 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()],
@@ -131,6 +133,7 @@ public class HeroesStatMenu extends Menu
 					yOffsetTop + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 27);
 
 		}
+		*/
 
 		Panel.drawPanelBox(xOffset + 20 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()],
 				yOffsetBot + 118 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()],

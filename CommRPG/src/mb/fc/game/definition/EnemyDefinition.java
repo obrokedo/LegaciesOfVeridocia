@@ -25,7 +25,6 @@ public class EnemyDefinition
 	private int move;
 	private int movementType;
 	private int level;
-	private int portrait = -1;
 	private String animations;
 	private int effectId = -1;
 	private int effectChance = -1;
@@ -51,10 +50,6 @@ public class EnemyDefinition
 		hd.level = Integer.parseInt(tagArea.getAttribute("level"));
 		hd.move = Integer.parseInt(tagArea.getAttribute("move"));
 		hd.movementType = Integer.parseInt(tagArea.getAttribute("movementtype"));
-		if (tagArea.getAttribute("portrait") != null)
-			hd.portrait = Integer.parseInt(tagArea.getAttribute("portrait"));
-		else
-			hd.portrait = -1;
 		hd.animations = tagArea.getAttribute("animations");
 
 		if (tagArea.getAttribute("leader") != null)
@@ -102,7 +97,7 @@ public class EnemyDefinition
 
 		// Create a CombatSprite from default stats, hero progression and spells known
 		CombatSprite cs = new CombatSprite(leader, name, animations, hp, mp, attack, defense,
-				speed, move, movementType, level, myId, portrait, knownSpells, ENEMY_COUNT--,
+				speed, move, movementType, level, myId, knownSpells, ENEMY_COUNT--,
 				effectId, effectChance);
 
 		// Add items to the combat sprite
@@ -128,9 +123,5 @@ public class EnemyDefinition
 	public static void resetEnemyIds()
 	{
 		ENEMY_COUNT = -1;
-	}
-
-	public int getPortrait() {
-		return portrait;
 	}
 }

@@ -42,7 +42,6 @@ public class TextParser
 					String requires = childTagArea.getAttribute("require");
 					String excludes = childTagArea.getAttribute("exclude");
 					String trigger = childTagArea.getAttribute("trigger");
-					String portrait = childTagArea.getAttribute("portrait");
 					int[] requireIds = null;
 
 					if (requires != null)
@@ -68,10 +67,7 @@ public class TextParser
 					if (trigger != null)
 						triggerId = Integer.parseInt(trigger);
 
-					if (portrait != null)
-						portraitId = Integer.parseInt(portrait);
-
-					speeches.add(new Speech(message, requireIds, excludeIds, triggerId, portraitId,
+					speeches.add(new Speech(message, requireIds, excludeIds, triggerId,
 							(childTagArea.getAttribute("heroportrait") == null ? -1 : Integer.parseInt(childTagArea.getAttribute("heroportrait"))),
 							(childTagArea.getAttribute("enemyportrait") == null ? -1 : Integer.parseInt(childTagArea.getAttribute("enemyportrait")))));
 				}
@@ -323,7 +319,7 @@ public class TextParser
 			return new CinematicEvent(CinematicEventType.CAMERA_MOVE, Integer.parseInt(area.getAttribute("x")),
 					Integer.parseInt(area.getAttribute("y")), Integer.parseInt(area.getAttribute("time")));
 		else if (type.equalsIgnoreCase("speech"))
-			return new CinematicEvent(CinematicEventType.SPEECH, area.getAttribute("text"), Integer.parseInt(area.getAttribute("portrait")),
+			return new CinematicEvent(CinematicEventType.SPEECH, area.getAttribute("text"),
 					(area.getAttribute("heroportrait") == null ? -1 : Integer.parseInt(area.getAttribute("heroportrait"))),
 							(area.getAttribute("enemyportrait") == null ? -1 : Integer.parseInt(area.getAttribute("enemyportrait"))));
 		else if (type.equalsIgnoreCase("loadmap"))

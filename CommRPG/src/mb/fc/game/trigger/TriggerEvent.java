@@ -370,7 +370,7 @@ public class TriggerEvent
 					}
 				}
 
-				stateInfo.sendMessage(new SpeechMessage(s.getMessage(), s.getTriggerId(), s.getPortraitId(stateInfo)), true);
+				stateInfo.sendMessage(new SpeechMessage(s.getMessage(), s.getTriggerId(), s.getPortrait(stateInfo)), true);
 				break;
 			}
 
@@ -461,8 +461,6 @@ public class TriggerEvent
 							s.getAi().setApproachType(speed);
 							break;
 					}
-
-					break;
 				}
 			}
 

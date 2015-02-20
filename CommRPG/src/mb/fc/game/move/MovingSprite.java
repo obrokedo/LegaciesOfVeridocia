@@ -54,45 +54,47 @@ public class MovingSprite
 		int moveSpeed = MOVE_SPEED;
 		if (stateInfo.isCombat() && (!((CombatSprite) animatedSprite).isHero() || fastMove))
 			moveSpeed /= 2;
-		switch (direction)
-		{
-			case UP:
-				animatedSprite.setLocY(animatedSprite.getAbsLocY() -
-						1.0f * stateInfo.getTileHeight() / moveSpeed);
-						// 2 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]));
-				break;
-			case DOWN:
-				animatedSprite.setLocY(animatedSprite.getAbsLocY() +
-						1.0f * stateInfo.getTileHeight() / moveSpeed);
-						// 2 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]));
-				break;
-			case LEFT:
-				animatedSprite.setLocX(animatedSprite.getAbsLocX() -
-						1.0f * stateInfo.getTileWidth() / moveSpeed);
-						// 2 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]));
-				break;
-			case RIGHT:
-				animatedSprite.setLocX(animatedSprite.getAbsLocX() +
-						1.0f * stateInfo.getTileWidth() / moveSpeed);
-						// 2 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]));
-				break;
-		}
+
 		if (stateInfo.isCombat() && moveIndex == 0)
 			stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, "step", 1f, false));
-
-		if (animatedSprite == stateInfo.getCurrentSprite())
-			stateInfo.getCamera().centerOnSprite(animatedSprite, stateInfo.getCurrentMap());
 
 		moveIndex++;
 
 		if (moveIndex == moveSpeed)
 		{
 			animatedSprite.setLocation(endX, endY);
+
 			if (animatedSprite == stateInfo.getCurrentSprite())
 				stateInfo.getCamera().centerOnSprite(animatedSprite, stateInfo.getCurrentMap());
+
 			animatedSprite.setAnimationUpdate(STAND_ANIMATION_SPEED);
 			return true;
 		}
+
+		float amountMoved = ((moveSpeed - moveIndex) / (moveSpeed * 1.0f) * stateInfo.getTileHeight());
+		switch (direction)
+		{
+			case UP:
+				animatedSprite.setLocY(endY + amountMoved);
+						// 2 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]));
+				break;
+			case DOWN:
+				animatedSprite.setLocY(endY - amountMoved);
+						// 2 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]));
+				break;
+			case LEFT:
+				animatedSprite.setLocX(endX + amountMoved);
+						// 2 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]));
+				break;
+			case RIGHT:
+				animatedSprite.setLocX(endX - amountMoved);
+						// 2 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]));
+				break;
+		}
+
+		if (animatedSprite == stateInfo.getCurrentSprite())
+			stateInfo.getCamera().centerOnSprite(animatedSprite, stateInfo.getCurrentMap());
+
 		return false;
 	}
 

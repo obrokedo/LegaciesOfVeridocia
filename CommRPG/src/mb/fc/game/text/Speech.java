@@ -1,9 +1,7 @@
 package mb.fc.game.text;
 
 import mb.fc.engine.state.StateInfo;
-import mb.fc.game.resource.EnemyResource;
-import mb.fc.game.resource.HeroResource;
-import mb.fc.game.sprite.CombatSprite;
+import mb.fc.game.menu.Portrait;
 
 public class Speech
 {
@@ -11,18 +9,16 @@ public class Speech
 	private int[] requires;
 	private int[] excludes;
 	private int triggerId;
-	private int portraitId;
 	private int heroPortrait;
 	private int enemyPortrait;
 
-	public Speech(String message, int[] requires, int[] excludes, int triggerId, int portraitId,
+	public Speech(String message, int[] requires, int[] excludes, int triggerId,
 			int heroPortrait, int enemyPortrait) {
 		super();
 		this.message = message;
 		this.requires = requires;
 		this.excludes = excludes;
 		this.triggerId = triggerId;
-		this.portraitId = portraitId;
 		this.heroPortrait = heroPortrait;
 		this.enemyPortrait = enemyPortrait;
 	}
@@ -43,23 +39,7 @@ public class Speech
 		return triggerId;
 	}
 
-	public int getPortraitId(StateInfo stateInfo) {
-		if (portraitId != -1)
-			return portraitId;
-		else if (enemyPortrait != -1)
-			return EnemyResource.getPortraitIndex(enemyPortrait);
-		else if (heroPortrait != -1)
-		{
-			for (CombatSprite cs : stateInfo.getPsi().getClientProfile().getHeroes())
-			{
-				if (cs.getHeroProgression().getHeroID() == heroPortrait)
-				{
-					return cs.getCurrentProgression().getPortraitIndex();
-				}
-			}
-
-			return HeroResource.getPortraitIndex(heroPortrait);
-		}
-		return -1;
+	public Portrait getPortrait(StateInfo stateInfo) {
+		return Portrait.getPortrait(heroPortrait, enemyPortrait, stateInfo);
 	}
 }

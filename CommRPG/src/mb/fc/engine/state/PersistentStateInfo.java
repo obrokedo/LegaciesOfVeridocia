@@ -75,8 +75,6 @@ public class PersistentStateInfo implements PacketHandler
 	{
 		this.entranceLocation = entrance;
 
-		((AttackCinematicState2) game.getState(CommRPG.STATE_GAME_BATTLE_ANIM)).setBattleBGIndex(battleBGIndex);
-
 		gc.getInput().removeAllKeyListeners();
 
 		getClientProgress().setMap(map, true);

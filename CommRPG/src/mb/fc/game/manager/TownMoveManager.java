@@ -30,7 +30,8 @@ public class TownMoveManager extends Manager
 	public void update(int delta)
 	{
 		updateDelta += delta;
-		if (updateDelta >= UPDATE_TIME)
+
+		while (updateDelta >= UPDATE_TIME)
 		{
 			updateDelta -= UPDATE_TIME;
 			/******************************************/
@@ -101,8 +102,7 @@ public class TownMoveManager extends Manager
 	{
 		if (current == stateInfo.getCurrentSprite())
 			moving = true;
-		stateInfo.sendMessage(new SpriteMoveMessage(current, direction));
-		// movers.add(new MovingSprite(current, direction, stateInfo));
+		recieveMessage(new SpriteMoveMessage(current, direction));
 	}
 
 	private boolean blocked(Map map, int tx, int ty)

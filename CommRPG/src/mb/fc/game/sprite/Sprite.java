@@ -13,7 +13,6 @@ public class Sprite implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 
-	public static final byte TYPE_SPRITE = 0;
 	public static final byte TYPE_COMBAT = 1;
 	public static final byte TYPE_NPC = 2;
 	public static final byte TYPE_STATIC_SPRITE = 3;

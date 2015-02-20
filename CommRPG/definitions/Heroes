@@ -1,17 +1,26 @@
 <hero id=0 name="Noah" hp=12 mp=0 attack=6 defense=5 speed=4 promoted=false level=1 animations="Noah" leader=true>
-	<progression promoted=false move=6 movementtype=0 attack=1 defense=1 speed=1 hp=2 mp=1 portrait=0 usuableitems=2, class="Swordsman"/>
-	<progression promoted=true move=6 movementtype=0 attack=1 defense=1 speed=1 hp=1 mp=1 portrait=0 usuableitems=2, class="Hero"/>
+	<progression promoted=false move=6 movementtype=0 attack=1 attackstart=0 attackend=0 defense=1 defensestart=0 defenseend=0 speed=1 speedstart=0 speedend=0 hp=2 hpstart=0 hpend=0 mp=1 mpstart=0 mpend=0 usuableitems=2, class="Swordsman"/>
+	<progression promoted=true move=6 movementtype=0 attack=1 attackstart=0 attackend=0 defense=1 defensestart=0 defenseend=0 speed=1 speedstart=0 speedend=0 hp=1 hpstart=0 hpend=0 mp=1 mpstart=0 mpend=0 usuableitems=2, class="Hero"/>
 	<item itemid=0 equipped=true/>
 	<item itemid=2 equipped=false/>
 </hero>
 <hero id=1 name="Sharna" hp=8 mp=9 attack=6 defense=4 speed=5 promoted=false level=1 animations="Sharna" leader=false>
-	<progression promoted=false move=5 movementtype=0 attack=1 defense=1 speed=2 hp=1 mp=3 portrait=1 usuableitems=2, class="Healer"/>
-	<progression promoted=true move=7 movementtype=0 attack=1 defense=1 speed=1 hp=1 mp=1 portrait=1 usuableitems=2, class="Priest"/>
+	<progression promoted=false move=5 movementtype=0 attack=1 attackstart=0 attackend=0 defense=1 defensestart=0 defenseend=0 speed=2 speedstart=0 speedend=0 hp=1 hpstart=0 hpend=0 mp=3 mpstart=0 mpend=0 usuableitems=2, class="Healer"/>
+	<progression promoted=true move=7 movementtype=0 attack=1 attackstart=0 attackend=0 defense=1 defensestart=0 defenseend=0 speed=1 speedstart=0 speedend=0 hp=1 hpstart=0 hpend=0 mp=1 mpstart=0 mpend=0 usuableitems=2, class="Priest"/>
 	<spellprogression spellid=0 gained="0,2,6,9"/>
 	<item itemid=1 equipped=true/>
 </hero>
 <hero id=2 name="Huun" hp=9 mp=0 attack=7 defense=4 speed=6 promoted=false level=1 animations="Huun" leader=false>
-	<progression promoted=false move=5 movementtype=0 attack=2 defense=1 speed=3 hp=1 mp=0 portrait=2 usuableitems=2, class="Archer"/>
-	<progression promoted=true move=7 movementtype=0 attack=3 defense=2 speed=3 hp=1 mp=0 portrait=2 usuableitems=2, class="Better Archer"/>
+	<progression promoted=false move=5 movementtype=0 attack=2 attackstart=0 attackend=0 defense=1 defensestart=0 defenseend=0 speed=3 speedstart=0 speedend=0 hp=1 hpstart=0 hpend=0 mp=0 mpstart=0 mpend=0 usuableitems=2, class="Archer"/>
+	<progression promoted=true move=7 movementtype=0 attack=3 attackstart=0 attackend=0 defense=2 defensestart=0 defenseend=0 speed=3 speedstart=0 speedend=0 hp=1 hpstart=0 hpend=0 mp=0 mpstart=0 mpend=0 usuableitems=2, class="Better Archer"/>
 	<item itemid=3 equipped=true/>
+</hero>
+<hero id=3 name="Craig" hp=18 mp=0 attack=12 defense=9 speed=5 promoted=false level=4 animations="Craig" leader=false>
+	<item itemid=0 equipped=true/>
+	<progression promoted=false move=5 movementtype=0 attack=3 attackstart=0 attackend=0 defense=3 defensestart=0 defenseend=0 speed=1 speedstart=0 speedend=0 hp=2 hpstart=0 hpend=0 mp=0 mpstart=0 mpend=0 usuableitems=2, class="Warrior"/>
+</hero>
+<hero id=4 name="Olivia" hp=13 mp=9 attack=8 defense=6 speed=9 promoted=false level=4 animations="Olivia" leader=false>
+	<item itemid=1 equipped=true/>
+	<progression promoted=false move=6 movementtype=0 attack=1 attackstart=0 attackend=0 defense=2 defensestart=0 defenseend=0 speed=3 speedstart=0 speedend=0 hp=2 hpstart=0 hpend=0 mp=3 mpstart=0 mpend=0 usuableitems=3, class="Wizard"/>
+	<spellprogression spellid=11 gained="4,7"/>
 </hero>

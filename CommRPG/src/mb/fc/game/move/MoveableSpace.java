@@ -12,7 +12,6 @@ import mb.fc.game.constants.Direction;
 import mb.fc.game.input.FCInput;
 import mb.fc.game.input.KeyMapping;
 import mb.fc.game.listener.KeyboardListener;
-import mb.fc.game.listener.MouseListener;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.sprite.Sprite;
 import mb.fc.game.turnaction.MoveToTurnAction;
@@ -38,7 +37,7 @@ import org.newdawn.slick.util.pathfinding.TileBasedMap;
  * case when the acting CombatSprite is moving. This means its' input and display
  * must be managed by some other entity
  */
-public class MoveableSpace implements KeyboardListener, MouseListener, TileBasedMap
+public class MoveableSpace implements KeyboardListener, TileBasedMap
 {
 	private int[][] moveableTiles;
 	private int topX, topY;
@@ -97,8 +96,8 @@ public class MoveableSpace implements KeyboardListener, MouseListener, TileBased
 		// Add the move cost of the current tile as it will be subtracted from the sprites move. Use 10 as the lowest cost so tha we can
 		// have half-values (1.5, 2.5) without making the cost a double
 		ms.determineMoveableSpacesRecursive(currentSprite.getCurrentMove()  * 10 + ms.map.getMovementCostByType(currentSprite.getMovementType(),
-				mapSpriteX, mapSpriteY), currentSprite.getCurrentMove(),
-					currentSprite.getCurrentMove(), mapSpriteX, mapSpriteY);
+			mapSpriteX, mapSpriteY), currentSprite.getCurrentMove(),
+				currentSprite.getCurrentMove(), mapSpriteX, mapSpriteY);
 
 		// For any spaces that had sprites in them change the special place holder 99 that makes them unmovable
 		// to -1 so they aren't shown as moveable
@@ -128,8 +127,6 @@ public class MoveableSpace implements KeyboardListener, MouseListener, TileBased
 					&& checkMoveableRect.contains(sX + 1, sY + 1) && ms.canEndMoveHere(sX, sY))
 						ms.moveableTiles[sY - ms.topY][sX - ms.topX] = UNMOVEABLE_TILE;
 		}
-
-		stateInfo.registerMouseListener(ms);
 
 		return ms;
 	}
@@ -370,47 +367,6 @@ public class MoveableSpace implements KeyboardListener, MouseListener, TileBased
 	 */
 	public void setCheckEvents(boolean checkEvents) {
 		this.checkEvents = checkEvents;
-	}
-
-	/**
-	 * Performs cleanup when this object no longer needs to be used
-	 */
-	public void destroy(StateInfo stateInfo)
-	{
-		stateInfo.unregisterMouseListener(this);
-	}
-
-	@Override
-	public boolean mouseUpdate(int frameMX, int frameMY, int mapMX, int mapMY,
-			boolean leftClicked, boolean rightClicked, StateInfo stateInfo)
-	{
-		if (!owner || !checkEvents)
-			return false;
-
-		int tw = stateInfo.getTileWidth();
-		int th = stateInfo.getTileHeight();
-		int mx = mapMX / tw;
-		int my = mapMY / th;
-
-		if (rightClicked)
-		{
-			stateInfo.sendMessage(MessageType.RESET_SPRITELOC);
-			return true;
-		}
-		else if (leftClicked)
-		{
-			if (canEndMoveHere(mx, my))
-			{
-				stateInfo.sendMessage(new LocationMessage(MessageType.MOVETO_SPRITELOC, mx, my));
-				return true;
-			}
-		}
-		return false;
-	}
-
-	@Override
-	public int getZOrder() {
-		return MouseListener.ORDER_MOVEABLE_SPACE;
 	}
 
 	@Override

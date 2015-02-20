@@ -28,12 +28,23 @@ public class HeroDefinition
 	private String className[];
 	private int move[];
 	private int movementType[];
+
 	private int attackGain[];
+	private int attackStart[];
+	private int attackEnd[];
 	private int defenseGain[];
+	private int defenseStart[];
+	private int defenseEnd[];
 	private int speedGain[];
+	private int speedStart[];
+	private int speedEnd[];
 	private int hpGain[];
+	private int hpStart[];
+	private int hpEnd[];
 	private int mpGain[];
-	private int portrait[];
+	private int mpStart[];
+	private int mpEnd[];
+
 	private int[][] usuableWeapons;
 
 	private ArrayList<int[]> spellsPerLevel;
@@ -75,13 +86,22 @@ public class HeroDefinition
 		{
 			hd.move = new int[2];
 			hd.movementType = new int[2];
+			hd.attackStart = new int[2];
+			hd.attackEnd = new int[2];
+			hd.defenseStart = new int[2];
+			hd.defenseEnd = new int[2];
+			hd.speedStart = new int[2];
+			hd.speedEnd = new int[2];
+			hd.hpStart = new int[2];
+			hd.hpEnd = new int[2];
+			hd.mpStart = new int[2];
+			hd.mpEnd = new int[2];
 			hd.attackGain = new int[2];
 			hd.defenseGain = new int[2];
 			hd.speedGain = new int[2];
 			hd.hpGain = new int[2];
 			hd.mpGain = new int[2];
 			hd.usuableWeapons = new int[2][];
-			hd.portrait = new int[2];
 			hd.className = new String[2];
 		}
 		// Otherwise
@@ -89,13 +109,22 @@ public class HeroDefinition
 		{
 			hd.move = new int[1];
 			hd.movementType = new int[1];
+			hd.attackStart = new int[1];
+			hd.attackEnd = new int[1];
+			hd.defenseStart = new int[1];
+			hd.defenseEnd = new int[1];
+			hd.speedStart = new int[1];
+			hd.speedEnd = new int[1];
+			hd.hpStart = new int[1];
+			hd.hpEnd = new int[1];
+			hd.mpStart = new int[1];
+			hd.mpEnd = new int[1];
 			hd.attackGain = new int[1];
 			hd.defenseGain = new int[1];
 			hd.speedGain = new int[1];
 			hd.hpGain = new int[1];
 			hd.mpGain = new int[1];
 			hd.usuableWeapons = new int[1][];
-			hd.portrait = new int[1];
 			hd.className = new String[1];
 		}
 
@@ -131,11 +160,20 @@ public class HeroDefinition
 				hd.move[index] = Integer.parseInt(childTagArea.getAttribute("move"));
 				hd.movementType[index] = Integer.parseInt(childTagArea.getAttribute("movementtype"));
 				hd.attackGain[index] = Integer.parseInt(childTagArea.getAttribute("attack"));
+				hd.attackStart[index] = Integer.parseInt(childTagArea.getAttribute("attackstart"));
+				hd.attackEnd[index] = Integer.parseInt(childTagArea.getAttribute("attackend"));
 				hd.defenseGain[index] = Integer.parseInt(childTagArea.getAttribute("defense"));
+				hd.defenseStart[index] = Integer.parseInt(childTagArea.getAttribute("defensestart"));
+				hd.defenseEnd[index] = Integer.parseInt(childTagArea.getAttribute("defenseend"));
 				hd.speedGain[index] = Integer.parseInt(childTagArea.getAttribute("speed"));
+				hd.speedStart[index] = Integer.parseInt(childTagArea.getAttribute("speedstart"));
+				hd.speedEnd[index] = Integer.parseInt(childTagArea.getAttribute("speedend"));
 				hd.hpGain[index] = Integer.parseInt(childTagArea.getAttribute("hp"));
+				hd.hpStart[index] = Integer.parseInt(childTagArea.getAttribute("hpstart"));
+				hd.hpEnd[index] = Integer.parseInt(childTagArea.getAttribute("hpend"));
 				hd.mpGain[index] = Integer.parseInt(childTagArea.getAttribute("mp"));
-				hd.portrait[index] = Integer.parseInt(childTagArea.getAttribute("portrait"));
+				hd.mpStart[index] = Integer.parseInt(childTagArea.getAttribute("mpstart"));
+				hd.mpEnd[index] = Integer.parseInt(childTagArea.getAttribute("mpend"));
 				hd.className[index] = childTagArea.getAttribute("class");
 
 				String[] splitItems = childTagArea.getAttribute("usuableitems").split(",");
@@ -178,15 +216,25 @@ public class HeroDefinition
 
 		// Set up unpromoted progression
 		if(!promoted)
-			unpromotedProgression = new Progression(usuableWeapons[0], null, move[0], movementType[0], attackGain[0],
-					defenseGain[0], speedGain[0], hpGain[0], mpGain[0], portrait[0], className[0]);
+			unpromotedProgression = new Progression(usuableWeapons[0], null, move[0], movementType[0],
+					new int[] {attackGain[0], attackStart[0], attackEnd[0]},
+					new int[] {defenseGain[0], defenseStart[0], defenseEnd[0]},
+					new int[] {speedGain[0], speedStart[0], speedEnd[0]},
+					new int[] {hpGain[0], hpStart[0], hpEnd[0]},
+					new int[] {mpGain[0], mpStart[0], mpEnd[0]},
+					className[0]);
 
 		// Set up promoted progression
 		int index = 1;
 		if (promoted)
 			index = 0;
-		promotedProgression = new Progression(usuableWeapons[index], null, move[index], movementType[index], attackGain[index],
-				defenseGain[index], speedGain[index], hpGain[index], mpGain[index], portrait[index], className[index]);
+		promotedProgression = new Progression(usuableWeapons[index], null, move[index], movementType[index],
+				new int[] {attackGain[index], attackStart[index], attackEnd[index]},
+				new int[] {defenseGain[index], defenseStart[index], defenseEnd[index]},
+				new int[] {speedGain[index], speedStart[index], speedEnd[index]},
+				new int[] {hpGain[index], hpStart[index], hpEnd[index]},
+				new int[] {mpGain[index], mpStart[index], mpEnd[index]},
+				className[index]);
 
 		// Set up spell Progression
 		int[][] spellProgression = new int[spellsPerLevel.size()][];
@@ -216,7 +264,7 @@ public class HeroDefinition
 
 		// Create a CombatSprite from default stats, hero progression and spells known
 		CombatSprite cs = new CombatSprite(leader, name, animations, heroProgression,
-				hp, mp, attack, defense, speed, move[0], movementType[0], level, 0, portrait[0], knownSpells, id);
+				hp, mp, attack, defense, speed, move[0], movementType[0], level, 0, knownSpells, id);
 
 		// Add items to the combat sprite
 		for (int i = 0; i < items.size(); i++)
@@ -234,8 +282,7 @@ public class HeroDefinition
 		return id;
 	}
 
-	public int getPortrait()
-	{
-		return this.portrait[0];
+	public String getAnimation() {
+		return animations;
 	}
 }

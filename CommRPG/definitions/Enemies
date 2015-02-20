@@ -1,5 +1,13 @@
-<enemy id=0 name="Darkling Ooze" hp=8 mp=0 attack=9 defense=4 speed=4 level=0 move=4 movementtype=0 portrait=-1 animations="Darkling Ooze" leader=false>
+<enemy id=0 name="Darkling Ooze" hp=8 mp=0 attack=9 defense=4 speed=4 level=0 move=4 movementtype=0 animations="Darkling Ooze" leader=false>
 </enemy>
-<enemy id=1 name="Erium Guard" hp=12 mp=8 attack=9 defense=5 speed=4 level=1 move=4 movementtype=0 portrait=-1 animations="eriumguard" leader=false>
+<enemy id=1 name="Erium Guard" hp=12 mp=8 attack=9 defense=5 speed=4 level=1 move=4 movementtype=0 animations="eriumguard" leader=false>
 	<item itemid=0 equipped=true/>
+</enemy>
+<enemy id=2 name="Erium Archer" hp=9 mp=0 attack=5 defense=4 speed=7 level=1 move=5 movementtype=0 animations="eriumarcher" leader=false>
+	<item itemid=3 equipped=true/>
+</enemy>
+<enemy id=3 name="Erium Mage" hp=8 mp=5 attack=6 defense=4 speed=5 level=1 move=5 movementtype=0 animations="eriummage" leader=false>
+	<spell spellid=11 level=1/>
+</enemy>
+<enemy id=4 name="Erium Captain" hp=16 mp=0 attack=14 defense=8 speed=5 level=3 move=6 movementtype=0 animations="guardcaptain" leader=true>
 </enemy>

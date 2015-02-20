@@ -2,7 +2,6 @@ package mb.jython;
 
 import org.python.core.Py;
 import org.python.core.PyObject;
-import org.python.core.PyString;
 import org.python.core.PySystemState;
 
 
@@ -10,27 +9,8 @@ import org.python.core.PySystemState;
  * Jython Object Factory using PySystemState
  */
 public class JythonObjectFactory {
-	
+
 	public static PySystemState sys;
-
-	public static void main(String args[]) {
-
-		PySystemState sys = Py.getSystemState();
-		sys.path.append(new PyString(sys.getPath("scripts")));
-		
-        JythonObjectFactory factory = new JythonObjectFactory(sys,
-            BuildingType.class, "Building", "Building");
-
-        BuildingType building = (BuildingType) factory.createObject();
-
-        building.setBuildingName("BUIDING-A");
-        building.setBuildingAddress("100 MAIN ST.");
-        building.setBuildingId(1);
-
-        System.out.println(building.getBuildingId() + " " +
-            building.getBuildingName() + " " +
-            building.getBuildingAddress());
-    }
 
 	private final Class<?> interfaceType;
 	private final PyObject klass;
@@ -40,9 +20,9 @@ public class JythonObjectFactory {
 	public JythonObjectFactory(PySystemState state, Class<?> interfaceType,
 			String moduleName, String className) {
 		this.interfaceType = interfaceType;
-			
+
 		PyObject importer = state.getBuiltins().__getitem__(
-				Py.newString("__import__"));		
+				Py.newString("__import__"));
 		PyObject module = importer.__call__(Py.newString(moduleName));
 		klass = module.__getattr__(className);
 		System.err.println("module=" + module + ",class=" + klass);
@@ -91,5 +71,5 @@ public class JythonObjectFactory {
 	public Object createObject(Object... args) {
 		return createObject(args, Py.NoKeywords);
 	}
-	
+
 }

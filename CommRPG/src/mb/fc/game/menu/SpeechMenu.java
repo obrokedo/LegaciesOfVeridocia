@@ -13,13 +13,11 @@ import mb.fc.game.input.FCInput;
 import mb.fc.game.input.KeyMapping;
 import mb.fc.game.ui.FCGameContainer;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 
 public class SpeechMenu extends Menu
 {
-	public static final int NO_TRIGGER = -1, NO_PORTRAIT = -1;
+	public static final int NO_TRIGGER = -1;
 
 	private int x;
 	private int y = 60 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
@@ -27,7 +25,7 @@ public class SpeechMenu extends Menu
 	private ArrayList<String> panelText;
 	private int textIndex = 0;
 	private int triggerId = -1;
-	private Image portrait;
+	private Portrait portrait;
 	protected boolean initialized = false;
 	private boolean isAttackCinematic = false;
 
@@ -50,7 +48,7 @@ public class SpeechMenu extends Menu
 	 */
 	public SpeechMenu(String text, FCGameContainer gc)
 	{
-		this(text, gc, NO_TRIGGER, NO_PORTRAIT, null);
+		this(text, gc, NO_TRIGGER, null, null);
 		y = 0;
 		initialized = true;
 		this.isAttackCinematic = true;
@@ -65,11 +63,11 @@ public class SpeechMenu extends Menu
 	 */
 	public SpeechMenu(String text, StateInfo stateInfo)
 	{
-		this(text, stateInfo.getGc(), NO_TRIGGER, NO_PORTRAIT, stateInfo);
+		this(text, stateInfo.getGc(), NO_TRIGGER, null, stateInfo);
 	}
 
 	public SpeechMenu(String text, FCGameContainer gc, int triggerId,
-			int portraitId, StateInfo stateInfo)
+			Portrait portrait, StateInfo stateInfo)
 	{
 		super(Panel.PANEL_SPEECH);
 		width = gc.getWidth() - 100 - gc.getDisplayPaddingX() * 2;
@@ -117,10 +115,13 @@ public class SpeechMenu extends Menu
 
 		this.triggerId = triggerId;
 
-		if (portraitId != NO_PORTRAIT)
-			portrait = stateInfo.getResourceManager().getSpriteSheets().get("portraits").getSprite(portraitId, 0);
+		if (portrait != null)
+		{
+			this.portrait = portrait;
+			this.portrait.setTalking();
+		}
 		else
-			portrait = null;
+			this.portrait = null;
 
 		timer = new Timer(16);
 	}
@@ -149,8 +150,7 @@ public class SpeechMenu extends Menu
 
 		if (portrait != null)
 		{
-			Panel.drawPanelBox(x, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 12, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 62, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 78, graphics, Color.black);
-			graphics.drawImage(portrait, x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 7, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 12 + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 7);
+			portrait.render(x, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 12, graphics);
 			// graphics.drawImage(portrait, x, 25);
 		}
 	}
@@ -160,6 +160,10 @@ public class SpeechMenu extends Menu
 		super.update(delta, stateInfo);
 
 		timer.update(delta);
+
+		if (portrait != null)
+			portrait.update(delta);
+
 		while (timer.perform())
 		{
 			if (!initialized)
@@ -199,11 +203,15 @@ public class SpeechMenu extends Menu
 						if (nextLetter.equalsIgnoreCase(CHAR_HARD_STOP))
 						{
 							textMoving = false;
+							if (portrait != null)
+								portrait.setBlinking();
 							waitingOn = CHAR_HARD_STOP;
 						}
 						else if (nextLetter.equalsIgnoreCase(CHAR_SOFT_STOP))
 						{
 							textMoving = false;
+							if (portrait != null)
+								portrait.setBlinking();
 
 							String[] softSplit = panelText.get(textIndex).substring(textMovingIndex).split(" ");
 
@@ -221,6 +229,8 @@ public class SpeechMenu extends Menu
 						else if (nextLetter.equalsIgnoreCase(CHAR_PAUSE))
 						{
 							textMoving = false;
+							if (portrait != null)
+								portrait.setBlinking();
 							waitUntil = System.currentTimeMillis() + 400;
 							waitingOn = CHAR_PAUSE;
 						}
@@ -246,6 +256,8 @@ public class SpeechMenu extends Menu
 			if (waitUntil != -1 && waitUntil <= System.currentTimeMillis())
 			{
 				textMoving = true;
+				if (portrait != null)
+					portrait.setTalking();
 				waitUntil = -1;
 			}
 		}
@@ -266,6 +278,8 @@ public class SpeechMenu extends Menu
 				waitingOn = null;
 				waitUntil = -1;
 				textMoving = true;
+				if (portrait != null)
+					portrait.setTalking();
 			}
 		}
 

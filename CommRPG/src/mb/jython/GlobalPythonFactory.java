@@ -34,6 +34,7 @@ public class GlobalPythonFactory
 	private static JMusicSelector musicSelector = null;
 	private static JSpell spell = null;
 	private static JBattleEffect battleEffect = null;
+	private static JLevelProgression levelProgression = null;
 
 	/**
 	 * A boolean flag indicating whether this factory has been initialized.
@@ -88,6 +89,7 @@ public class GlobalPythonFactory
         musicSelector  = (JMusicSelector) (new JythonObjectFactory(JMusicSelector.class, "MusicScript", "MusicScript")).createObject();
         spell  = (JSpell) (new JythonObjectFactory(JSpell.class, "Spells", "Spells")).createObject();
         battleEffect = (JBattleEffect) (new JythonObjectFactory(JBattleEffect.class, "BattleEffect", "BattleEffect")).createObject();
+        levelProgression = (JLevelProgression) (new JythonObjectFactory(JLevelProgression.class, "LevelProgression", "LevelProgression")).createObject();
 	}
 
 	/**
@@ -158,6 +160,12 @@ public class GlobalPythonFactory
 	public static JBattleEffect createJBattleEffect(int id)
 	{
 		return battleEffect.init(id);
+	}
+
+	public static JLevelProgression createLevelProgression()
+	{
+		checkFactoryInitialized();
+		return levelProgression;
 	}
 
 	/**

@@ -34,8 +34,8 @@ class Spells(JSpell):
         return spell
         
     def getBattleText(self, target, spellLevel):
-        if self.name == "blaze":
-            return "Flame engulfs " + target.getName() + "'s body dealing " + `self.getDamage()[spellLevel]` + " damage!"
+        if self.name == "Blaze":
+            return "Flame engulfs " + target.getName() + "'s body dealing " + `self.getDamage()[spellLevel] * -1` + " damage!"
         elif self.name == "Heal":
             return target.getName() + "'s wounds are healed. " + target.getName() + " recovers " + `int(Math.min(target.getMaxHP() - target.getCurrentHP(), self.getDamage()[spellLevel]))` + " HP!"
         elif self.name == "Aura":

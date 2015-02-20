@@ -40,38 +40,49 @@
   </anim>
   <anim name="UnStand" loops="0">
     <cell index="0" delay="350">
+      <spr name="/Weapon" x="283" y="-40" z="-1" angle="213.0"/>
       <spr name="/Unpromoted/0" x="267" y="-31" z="0"/>
     </cell>
     <cell index="1" delay="350">
+      <spr name="/Weapon" x="281" y="-37" z="-1" angle="213.0"/>
       <spr name="/Unpromoted/1" x="268" y="-31" z="0"/>
     </cell>
   </anim>
   <anim name="UnAttack" loops="0">
     <cell index="0" delay="50">
+      <spr name="/Weapon" x="241" y="-66" z="-1" angle="29.0"/>
       <spr name="/Unpromoted/2" x="244" y="-32" z="0"/>
     </cell>
     <cell index="1" delay="75">
+      <spr name="/Weapon" x="234" y="-76" z="-1" angle="29.0"/>
       <spr name="/Unpromoted/2" x="238" y="-42" z="0"/>
     </cell>
     <cell index="2" delay="100">
+      <spr name="/Weapon" x="230" y="-80" z="-1" angle="29.0"/>
       <spr name="/Unpromoted/2" x="233" y="-47" z="0"/>
     </cell>
     <cell index="3" delay="125">
+      <spr name="/Weapon" x="226" y="-82" z="-1" angle="29.0"/>
       <spr name="/Unpromoted/2" x="230" y="-49" z="0"/>
     </cell>
     <cell index="4" delay="100">
+      <spr name="/Weapon" x="222" y="-80" z="-1" angle="29.0"/>
       <spr name="/Unpromoted/2" x="226" y="-46" z="0"/>
     </cell>
     <cell index="5" delay="75">
+      <spr name="/Weapon" x="216" y="-72" z="-1" angle="29.0"/>
       <spr name="/Unpromoted/2" x="220" y="-37" z="0"/>
     </cell>
     <cell index="6" delay="50">
+      <spr name="/Weapon" x="211" y="-66" z="-1" angle="29.0"/>
       <spr name="/Unpromoted/2" x="214" y="-32" z="0"/>
     </cell>
     <cell index="7" delay="30">
+      <spr name="/Weapon" x="185" y="-32" z="-1" angle="205.0"/>
       <spr name="/Unpromoted/3" x="195" y="-34" z="0"/>
     </cell>
     <cell index="8" delay="350">
+      <spr name="/Weapon" x="186" y="-32" z="-1" angle="208.0"/>
       <spr name="/Unpromoted/4" x="196" y="-28" z="0"/>
     </cell>
   </anim>
@@ -84,6 +95,34 @@
     </cell>
     <cell index="2" delay="350">
       <spr name="/Unpromoted/Item2" x="260" y="-31" z="0"/>
+    </cell>
+  </anim>
+  <anim name="UnPort" loops="0">
+    <cell index="0" delay="2000">
+      <spr name="/Unpromoted/16" x="0" y="0" z="0"/>
+    </cell>
+    <cell index="1" delay="50">
+      <spr name="/Unpromoted/17" x="0" y="0" z="0"/>
+    </cell>
+    <cell index="2" delay="50">
+      <spr name="/Unpromoted/18" x="0" y="0" z="0"/>
+    </cell>
+    <cell index="3" delay="50">
+      <spr name="/Unpromoted/17" x="0" y="0" z="0"/>
+    </cell>
+  </anim>
+  <anim name="UnPortTalk" loops="0">
+    <cell index="0" delay="100">
+      <spr name="/Unpromoted/16" x="0" y="0" z="0"/>
+    </cell>
+    <cell index="1" delay="100">
+      <spr name="/Unpromoted/14" x="0" y="0" z="0"/>
+    </cell>
+    <cell index="2" delay="100">
+      <spr name="/Unpromoted/15" x="0" y="0" z="0"/>
+    </cell>
+    <cell index="3" delay="100">
+      <spr name="/Unpromoted/14" x="0" y="0" z="0"/>
     </cell>
   </anim>
 </animations>

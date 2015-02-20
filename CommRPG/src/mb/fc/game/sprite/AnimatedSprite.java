@@ -19,7 +19,8 @@ public class AnimatedSprite extends Sprite
 	private static final long serialVersionUID = 1L;
 
 	public final transient static Color SHADOW_COLOR = new Color(0, 0, 0, 120);
-	protected final static int SHADOW_OFFSET = 8;
+	public static int SHADOW_OFFSET = 13;
+	public static final int DEFAULT_SHADOW_OFFSET = 13;
 
 	protected transient int imageIndex;
 	protected transient int animationDelay = 0;
@@ -59,9 +60,9 @@ public class AnimatedSprite extends Sprite
 	public static void drawShadow(Image originalIm, int locX, int locY, int displayPadding, Camera camera, boolean tileOffset, StateInfo stateInfo)
 	{
 		Image i = (originalIm).getScaledCopy(originalIm.getWidth(), (int) (originalIm.getHeight() * .65));
-		i.drawSheared((int) (locX - camera.getLocationX() + displayPadding - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 13 * (1.0 * originalIm.getHeight() / stateInfo.getTileHeight())),
-				locY - camera.getLocationY() - (tileOffset ? stateInfo.getResourceManager().getMap().getTileEffectiveHeight() / 2 : 0) + originalIm.getHeight() -
-					i.getHeight(), (int) (CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 13 * (1.0 * originalIm.getHeight() / stateInfo.getTileHeight())),
+		i.drawSheared((int) (locX - camera.getLocationX() + displayPadding - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * SHADOW_OFFSET * (1.0 * originalIm.getHeight() / stateInfo.getTileHeight())),
+				locY - camera.getLocationY() - (tileOffset ? stateInfo.getResourceManager().getMap().getTileEffectiveHeight() / 2 : 0) + originalIm.getHeight() - i.getHeight(),
+				(int) (CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * SHADOW_OFFSET * (1.0 * originalIm.getHeight() / stateInfo.getTileHeight())),
 				0, SHADOW_COLOR);
 	}
 

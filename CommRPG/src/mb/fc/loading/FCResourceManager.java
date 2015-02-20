@@ -51,13 +51,6 @@ public class FCResourceManager {
 
 	private Color transparent = new Color(255, 0, 255);
 
-	public static void main(String args[])
-	{
-		File f = new File("C:\\Users\\Broked\\Pictures\\ShiningForce\\Sprites\\sf1-characters");
-		for (File s : f.listFiles())
-			System.out.println("ss," + s.getName().replaceAll(".png", "") + "," + s.getAbsolutePath() + ",24,24");
-	}
-
 	public void reinitialize()
 	{
 		map.reinitalize();

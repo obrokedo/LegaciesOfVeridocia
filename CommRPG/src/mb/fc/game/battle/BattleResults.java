@@ -347,11 +347,11 @@ public class BattleResults implements Serializable
 			int damage = jBattleFunctions.getDamageDealt(attacker, target, landEffect, CommRPG.RANDOM);
 
 			if (counter)
-				damage = (int) (damage * jBattleFunctions.getCounterDamageModifier(attacker, target));
+				damage = Math.min(-1, (int) (damage * jBattleFunctions.getCounterDamageModifier(attacker, target)));
 
 			if (critted)
 			{
-				int critDamage = (int) (damage * jBattleFunctions.getCritDamageModifier(attacker, target));
+				int critDamage = Math.min(-1, (int) (damage * jBattleFunctions.getCritDamageModifier(attacker, target)));
 				br.hpDamage.add(critDamage);
 				text = jBattleFunctions.getCriticalAttackText(attacker, target, critDamage * -1);
 			}
@@ -374,8 +374,9 @@ public class BattleResults implements Serializable
 
 			br.attackerHPDamage.add(0);
 			br.attackerMPDamage.add(0);
-			text = text + "}";
 		}
+
+		text = text + "}";
 
 		return text;
 	}

@@ -222,7 +222,6 @@ public class MenuState extends LoadableGameState
 				try
 				{
 					br = new BufferedReader(new InputStreamReader(new FileInputStream(new File("DevParams"))));
-					ArrayList<String> allLines = new ArrayList<String>();
 					String line;
 					while ((line = br.readLine()) != null) {
 			            if (line.startsWith("HERO "))

@@ -1,12 +1,8 @@
 package mb.fc.game.ui;
 
-import javax.swing.JOptionPane;
-
-import org.lwjgl.opengl.Display;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.Game;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.util.Log;
 
 public class FCGameContainer extends AppGameContainer
 {
@@ -32,6 +28,7 @@ public class FCGameContainer extends AppGameContainer
 	 *
 	 * @throws SlickException Indicates a game failure
 	 */
+	/*
 	@Override
 	protected void gameLoop() throws SlickException {
 		int delta = getDelta();
@@ -41,13 +38,9 @@ public class FCGameContainer extends AppGameContainer
 			try {
 				updateAndRender(delta);
 			} catch (Throwable e) {
-				Log.error(e);
 
 				running = false;
 				// ((CommRPG) game).enterState(CommRPG.STATE_GAME_MENU_DEVEL);
-
-
-				JOptionPane.showMessageDialog(null, "An error occurred during execution: " + e.getMessage());
 
 				return;
 			}
@@ -63,4 +56,5 @@ public class FCGameContainer extends AppGameContainer
 			}
 		}
 	}
+	*/
 }

@@ -1,6 +1,7 @@
 package mb.fc.utils;
 
 import mb.fc.engine.CommRPG;
+import mb.fc.game.exception.BadAnimationException;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -44,13 +45,21 @@ public class AnimationWrapper
 	public void setAnimation(String animationName, boolean loops)
 	{
 		this.animation = spriteAnims.getAnimation(animationName);
+		if (animation == null)
+			throw new BadAnimationException("No animation for the action: " + animationName + " could be found.");
 		this.loops = loops;
 		animationIndex = 0;
 		animationDelta = 0;
 
 	}
 
-	public boolean udpate(int delta)
+	public void resetCurrentAnimation()
+	{
+		animationIndex = 0;
+		animationDelta = 0;
+	}
+
+	public boolean update(long delta)
 	{
 		animationDelta += delta;
 		while (animationDelta >= animation.frames.get(animationIndex).delay)
@@ -77,6 +86,24 @@ public class AnimationWrapper
 	public void drawAnimation(int x, int y, Graphics g)
 	{
 		drawAnimation(x, y, null, g);
+	}
+
+	public void drawAnimationIgnoreOffset(int x, int y, Graphics g)
+	{
+		if (animation != null)
+		{
+			for (AnimSprite as : animation.frames.get(animationIndex).sprites)
+			{
+				if (as.imageIndex != -1)
+				{
+					g.drawImage(getRotatedImageIfNeeded(spriteAnims.getImageAtIndex(as.imageIndex), as), x, y);
+				}
+				else if (weapon != null)
+				{
+					g.drawImage(getRotatedImageIfNeeded(weapon, as), x, y);
+				}
+			}
+		}
 	}
 
 	public void drawAnimation(int x, int y, Color filter, Graphics g)

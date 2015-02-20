@@ -9,29 +9,27 @@ public class Progression implements Serializable
 	private int[] usuableWeapons;
 	private int[] usuableArmor;
 	private int move;
-	private int attackGains;
-	private int defenseGains;
-	private int speedGains;
-	private int hpGains;
-	private int mpGains;
+	private int[] attack;
+	private int[] defense;
+	private int[] speed;
+	private int[] hp;
+	private int[] mp;
 	private int movementType;
-	private int portraitIndex;
 	private String className;
 
 	public Progression(int[] usuableWeapons, int[] usuableArmor, int move, int movementType,
-			int attackGains, int defenseGains, int speedGains, int hpGains,
-			int mpGains, int portraitIndex, String className) {
+			int[] attackGains, int[] defenseGains, int[] speedGains, int[] hpGains,
+			int[] mpGains, String className) {
 		super();
 		this.usuableWeapons = usuableWeapons;
 		this.usuableArmor = usuableArmor;
 		this.move = move;
 		this.movementType = movementType;
-		this.attackGains = attackGains;
-		this.defenseGains = defenseGains;
-		this.speedGains = speedGains;
-		this.hpGains = hpGains;
-		this.mpGains = mpGains;
-		this.portraitIndex = portraitIndex;
+		this.attack = attackGains;
+		this.defense = defenseGains;
+		this.speed = speedGains;
+		this.hp = hpGains;
+		this.mp = mpGains;
 		this.className = className;
 	}
 
@@ -44,26 +42,23 @@ public class Progression implements Serializable
 	public int getMove() {
 		return move;
 	}
-	public int getAttackGains() {
-		return attackGains;
+	public int[] getAttack() {
+		return attack;
 	}
-	public int getDefenseGains() {
-		return defenseGains;
+	public int[] getDefense() {
+		return defense;
 	}
-	public int getSpeedGains() {
-		return speedGains;
+	public int[] getSpeed() {
+		return speed;
 	}
-	public int getHpGains() {
-		return hpGains;
+	public int[] getHp() {
+		return hp;
 	}
-	public int getMpGains() {
-		return mpGains;
+	public int[] getMp() {
+		return mp;
 	}
 	public int getMovementType() {
 		return movementType;
-	}
-	public int getPortraitIndex() {
-		return portraitIndex;
 	}
 	public String getClassName() {
 		return className;

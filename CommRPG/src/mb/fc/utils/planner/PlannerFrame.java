@@ -160,11 +160,16 @@ public class PlannerFrame extends JFrame implements ActionListener,
 		listOfLists.get(PlannerValueDef.REFERS_AI - 1).add("Move to point");
 
 		// Setup stat gain types
-		listOfLists.get(PlannerValueDef.REFERS_STAT_GAINS - 1).add("None");
-		listOfLists.get(PlannerValueDef.REFERS_STAT_GAINS - 1).add("Weak");
-		listOfLists.get(PlannerValueDef.REFERS_STAT_GAINS - 1).add("Average");
-		listOfLists.get(PlannerValueDef.REFERS_STAT_GAINS - 1).add("Strong");
-		listOfLists.get(PlannerValueDef.REFERS_STAT_GAINS - 1).add("Very Strong");
+		listOfLists.get(PlannerValueDef.REFERS_STAT_GAINS - 1).add("Linear");
+		listOfLists.get(PlannerValueDef.REFERS_STAT_GAINS - 1).add("Early");
+		listOfLists.get(PlannerValueDef.REFERS_STAT_GAINS - 1).add("Middle");
+		listOfLists.get(PlannerValueDef.REFERS_STAT_GAINS - 1).add("Late");
+		listOfLists.get(PlannerValueDef.REFERS_STAT_GAINS - 1).add("Early-Late");
+		listOfLists.get(PlannerValueDef.REFERS_STAT_GAINS - 1).add("Start-Stop");
+		listOfLists.get(PlannerValueDef.REFERS_STAT_GAINS - 1).add("Step-Up");
+		listOfLists.get(PlannerValueDef.REFERS_STAT_GAINS - 1).add("Step-Down");
+		listOfLists.get(PlannerValueDef.REFERS_STAT_GAINS - 1).add("2-Wave");
+		listOfLists.get(PlannerValueDef.REFERS_STAT_GAINS - 1).add("3-Wave");
 
 		// Setup usuable itemstyles
 		listOfLists.get(PlannerValueDef.REFERS_ITEM_STYLE - 1).add("SPEAR");
@@ -1337,15 +1342,6 @@ public class PlannerFrame extends JFrame implements ActionListener,
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
 				PlannerValueDef.TYPE_STRING, "text", false, "Text",
 				"The text that should be displayed. Using the { character will cause a short pause, the } character will do a soft stop and the } chararacter will do a hard stop. Using a | will cause the action after this one to be ran"));
-		definingValues
-				.add(new PlannerValueDef(
-						PlannerValueDef.REFERS_NONE,
-						PlannerValueDef.TYPE_INT,
-						"portrait",
-						false,
-						"Portrait Index",
-						"The index of the portrait that should be used from the Image/Portraits file starting from 0. A value of -1 means no portrait should be displayed"));
-
 		definingValues.add(new PlannerValueDef(
 				PlannerValueDef.REFERS_HERO, PlannerValueDef.TYPE_INT,
 				"heroportrait", false, "Hero Portrait",
@@ -1622,14 +1618,6 @@ public class PlannerFrame extends JFrame implements ActionListener,
 						PlannerValueDef.TYPE_INT, "trigger", false,
 						"Trigger ID",
 						"The ID of the trigger that should be run after this message is complete."));
-		definingValues
-				.add(new PlannerValueDef(
-						PlannerValueDef.REFERS_NONE,
-						PlannerValueDef.TYPE_INT,
-						"portrait",
-						false,
-						"Portrait Index",
-						"The index of the portrait in the Image/Portraits file starting from index 0 that should be shown during this text. A value of -1 means no portrait should be shown"));
 		definingValues.add(new PlannerValueDef(
 				PlannerValueDef.REFERS_HERO, PlannerValueDef.TYPE_INT,
 				"heroportrait", false, "Hero Portrait",
@@ -1681,14 +1669,6 @@ public class PlannerFrame extends JFrame implements ActionListener,
 						PlannerValueDef.TYPE_INT, "movementtype", false,
 						"Movement Type",
 						"The enemies movement type as it relates to land effect and barriers"));
-		definingValues
-				.add(new PlannerValueDef(
-						PlannerValueDef.REFERS_NONE,
-						PlannerValueDef.TYPE_INT,
-						"portrait",
-						false,
-						"Portrait Index",
-						"The index of the portrait in the portraits image. If this enemy has no portrait then use -1"));
 		definingValues
 				.add(new PlannerValueDef(PlannerValueDef.REFERS_ANIMATIONS,
 						PlannerValueDef.TYPE_STRING, "animations", false,
@@ -1818,29 +1798,77 @@ public class PlannerFrame extends JFrame implements ActionListener,
 				PlannerValueDef.REFERS_MOVE_TYPE, PlannerValueDef.TYPE_INT,
 				"movementtype", false, "Movement Type",
 				"The movement type of this hero"));
+
+		// ATTACK
 		definingValues.add(new PlannerValueDef(
 				PlannerValueDef.REFERS_STAT_GAINS, PlannerValueDef.TYPE_INT,
 				"attack", false, "Attack Gain",
 				"The amount of attack the hero should gain per level"));
 		definingValues.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT,
+				"attackstart", false, "Attack Start",
+				"The amount of attack the hero should start with"));
+		definingValues.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT,
+				"attackend", false, "Attack End",
+				"The minimum amount of attack the hero should end with"));
+
+		// DEFENSE
+		definingValues.add(new PlannerValueDef(
 				PlannerValueDef.REFERS_STAT_GAINS, PlannerValueDef.TYPE_INT,
 				"defense", false, "Defense Gain",
 				"The amount of defense the hero should gain per level"));
+		definingValues.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT,
+				"defensestart", false, "Defense Start",
+				"The amount of defense the hero should start with"));
+		definingValues.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT,
+				"defenseend", false, "Defense End",
+				"The minimum amount of defense the hero should end with"));
+
+		// SPEED
 		definingValues.add(new PlannerValueDef(
 				PlannerValueDef.REFERS_STAT_GAINS, PlannerValueDef.TYPE_INT,
 				"speed", false, "Speed Gain",
 				"The amount of speed the hero should gain per level"));
 		definingValues.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT,
+				"speedstart", false, "Speed Start",
+				"The amount of speed the hero should start with"));
+		definingValues.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT,
+				"speedend", false, "Speed End",
+				"The minimum amount of speed the hero should end with"));
+
+		// HP
+		definingValues.add(new PlannerValueDef(
 				PlannerValueDef.REFERS_STAT_GAINS, PlannerValueDef.TYPE_INT,
 				"hp", false, "HP Gain",
 				"The amount of HP the hero should gain per level"));
 		definingValues.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT,
+				"hpstart", false, "HP Start",
+				"The amount of HP the hero should start with"));
+		definingValues.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT,
+				"hpend", false, "HP End",
+				"The minimum amount of HP the hero should end with"));
+
+		// MP
+		definingValues.add(new PlannerValueDef(
 				PlannerValueDef.REFERS_STAT_GAINS, PlannerValueDef.TYPE_INT,
 				"mp", false, "MP Gain",
 				"The amount of MP the hero should gain per level"));
-		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
-				PlannerValueDef.TYPE_INT, "portrait", false, "Portrait Index",
-				"The index of the portrait in the portraits image."));
+		definingValues.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT,
+				"mpstart", false, "MP Start",
+				"The amount of MP the hero should start with"));
+		definingValues.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT,
+				"mpend", false, "MP End",
+				"The minimum amount of MP the hero should end with"));
+
 		definingValues.add(new PlannerValueDef(
 				PlannerValueDef.REFERS_ITEM_STYLE,
 				PlannerValueDef.TYPE_MULTI_INT, "usuableitems", false,

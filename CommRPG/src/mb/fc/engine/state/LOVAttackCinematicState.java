@@ -41,7 +41,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.EmptyTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
-public class AttackCinematicState2 extends LoadableGameState
+public class LOVAttackCinematicState extends LoadableGameState
 {
 	private static float SCREEN_SCALE = CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
 
@@ -143,8 +143,8 @@ public class AttackCinematicState2 extends LoadableGameState
 		music.loop();
 
 		SpriteSheet battleBGSS = frm.getSpriteSheets().get("battlebg");
-		// TODO CUSTOM IMAGE
-		Image bgIm = battleBGSS.getSprite(0 % battleBGSS.getHorizontalCount(), 0 / battleBGSS.getHorizontalCount());
+		Image bgIm = battleBGSS.getSprite(frm.getMap().getBackgroundImageIndex() % battleBGSS.getHorizontalCount(),
+				frm.getMap().getBackgroundImageIndex() / battleBGSS.getHorizontalCount());
 		backgroundImage = bgIm.getScaledCopy((gc.getWidth() - gc.getDisplayPaddingX() * 2) / (float) bgIm.getWidth());
 		bgXPos = gc.getDisplayPaddingX();
 		bgYPos = (gc.getHeight() - backgroundImage.getHeight()) / 2;
@@ -592,7 +592,7 @@ public class AttackCinematicState2 extends LoadableGameState
 		else
 		{
 			spellFlash = null;
-			spellAnimation.udpate(delta);
+			spellAnimation.update(delta);
 		}
 	}
 
@@ -648,8 +648,6 @@ public class AttackCinematicState2 extends LoadableGameState
 		else
 		{
 			// EXIT
-			// setBattleInfo(attacker, frm, battleResults, gc);
-
 			music.stop();
 			gc.getInput().removeAllKeyListeners();
 			game.enterState(CommRPG.STATE_GAME_BATTLE, new FadeOutTransition(Color.black, 250), new EmptyTransition());
@@ -688,10 +686,5 @@ public class AttackCinematicState2 extends LoadableGameState
 	@Override
 	public int getID() {
 		return CommRPG.STATE_GAME_BATTLE_ANIM;
-	}
-
-	public void setBattleBGIndex(int bgIndex)
-	{
-
 	}
 }

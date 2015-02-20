@@ -9,6 +9,8 @@ import mb.fc.game.battle.LevelUpResult;
 import mb.fc.game.battle.spell.KnownSpell;
 import mb.fc.game.resource.SpellResource;
 import mb.fc.loading.FCResourceManager;
+import mb.jython.GlobalPythonFactory;
+import mb.jython.JLevelProgression;
 import mb.jython.JSpell;
 
 public class HeroProgression implements Serializable
@@ -26,6 +28,8 @@ public class HeroProgression implements Serializable
 	private Progression unpromotedProgression;
 	private Progression promotedProgression;
 	private int heroID;
+
+	private float remainderAtk = 0, remainderDef = 0, remainderSpd = 0, remainderHP = 0, remainderMP = 0;
 
 	public HeroProgression(int[][] spellLevels,
 			Progression unpromotedProgression, Progression promotedProgression,
@@ -49,28 +53,33 @@ public class HeroProgression implements Serializable
 		String text = cs.getName() + " has reached level " + (cs.getLevel() + 1) + "!}[";
 		LevelUpResult level = new LevelUpResult();
 
-		int increase = getStatIncrease(p.getHpGains());
-		level.hitpointGain = increase;
+		float increase = getStatIncrease(p.getHp(), cs.isPromoted(), cs.getMaxHP(), cs.getLevel() + 1, remainderHP);
+		remainderHP = increase - ((int) increase);
+		level.hitpointGain = (int) increase;
 		if (increase > 0)
 			text += " HP increased by " + increase + ".}[";
 
-		increase = getStatIncrease(p.getMpGains());
-		level.magicpointGain = increase;
+		increase = getStatIncrease(p.getMp(), cs.isPromoted(), cs.getMaxMP(), cs.getLevel() + 1, remainderMP);
+		remainderMP = increase - ((int) increase);
+		level.magicpointGain = (int) increase;
 		if (increase > 0)
 			text += " MP increased by " + increase + ".}[";
 
-		increase = getStatIncrease(p.getAttackGains());
-		level.attackGain = increase;
+		increase = getStatIncrease(p.getAttack(), cs.isPromoted(), cs.getMaxAttack(), cs.getLevel() + 1, remainderAtk);
+		remainderAtk = increase - ((int) increase);
+		level.attackGain = (int) increase;
 		if (increase > 0)
 			text += " Attack increased by " + increase + ".}[";
 
-		increase = getStatIncrease(p.getDefenseGains());
-		level.defenseGain = increase;
+		increase = getStatIncrease(p.getDefense(), cs.isPromoted(), cs.getMaxDefense(), cs.getLevel() + 1, remainderDef);
+		remainderDef = increase - ((int) increase);
+		level.defenseGain = (int) increase;
 		if (increase > 0)
 			text += " Defense increased by " + increase + ".}[";
 
-		increase = getStatIncrease(p.getSpeedGains());
-		level.speedGain = increase;
+		increase = getStatIncrease(p.getSpeed(), cs.isPromoted(), cs.getMaxSpeed(), cs.getLevel() + 1, remainderSpd);
+		remainderSpd = increase - ((int) increase);
+		level.speedGain = (int) increase;
 		if (increase > 0)
 			text += " Speed increased by " + increase + ".}[";
 
@@ -145,24 +154,88 @@ public class HeroProgression implements Serializable
 		}
 	}
 
-	private int getStatIncrease(int type)
+	public static void main(String args[])
 	{
-		switch (type)
+		GlobalPythonFactory.intialize();
+
+		int val = 30;
+		float rem = 0;
+		int max = 0;
+
+		for (int j = 0; j < 10; j++)
 		{
-			case STAT_WEAK:
-				return CommRPG.RANDOM.nextInt(2);
-			case STAT_AVERAGE:
-				return CommRPG.RANDOM.nextInt(3);
-			case STAT_STRONG:
-				return CommRPG.RANDOM.nextInt(3) + 1;
-			case STAT_VERY_STRONG:
-				return CommRPG.RANDOM.nextInt(4) + 1;
-			case STAT_NONE:
-				return 0;
+			val = 30;
+			for (int i = 2; i < 30; i++)
+			{
+				// System.out.println("New Level ---- " + i);
+				float gain = getStatIncrease(new int[]{4, 30, 90}, true, val, i, rem);
+				val += (int) gain;
+				System.out.print("NEW " + val +", ");
+				rem = gain - ((int) gain);
+			}
+			System.out.println();
 		}
 
-		return 0;
+		if (val > max)
+		{
+			max = val;
+			System.out.println("MAX " + max);
+		}
+
 	}
+
+	private static float getStatIncrease(int[] stat, boolean isPromoted, int currentStat,
+			int newLevel, float statRemainder)
+	{
+		JLevelProgression jlp = GlobalPythonFactory.createLevelProgression();
+		float[] values = jlp.getProgressArray(stat[0], isPromoted);
+
+		float percentDone = 0;
+		for (int i = 1; i < newLevel; i++)
+			percentDone += values[i];
+
+		percentDone /= 100;
+
+		int amountToGainTotal = (stat[2] - stat[1]);
+
+		int averageValue = (int) ((amountToGainTotal * percentDone) + // The amount that should have been gained at minimum
+				stat[1] + // The base stat
+				newLevel / 3); // Assume 33% bonus hp
+
+		// If promoted then assume 1.5 bonus for each of the "big" levels
+		if (isPromoted)
+			averageValue += (int) ((1 + (newLevel - 1) / 6) * 1.5);
+
+		// System.out.println("AVG " + averageValue);
+
+
+		float amountToGainNow = (values[newLevel - 1] / 100) * amountToGainTotal + statRemainder;
+
+		if (!isPromoted || (newLevel - 1) % 6 != 0)
+		{
+			// Add a value 0 - 1
+			// amountToGainNow += CommRPG.RANDOM.nextInt(2);
+			amountToGainNow += CommRPG.RANDOM.nextFloat() * 1.5;
+		}
+		// BIG LEVEL!
+		else
+		{
+			// Add a value 0 - 3
+			amountToGainNow += CommRPG.RANDOM.nextInt(4);
+		}
+
+		// Check for pity upgrades
+		if (currentStat + amountToGainNow < averageValue)
+		{
+			amountToGainNow++;
+			// System.out.println("Pity @ " + newLevel);
+		}
+
+
+		return amountToGainNow;
+	}
+
+
 
 	public int[][] getSpellLevels() {
 		return spellLevels;

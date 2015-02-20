@@ -395,8 +395,6 @@ public class TurnManager extends Manager implements KeyboardListener
 
 		as = null;
 		this.battleResults = null;
-		if (ms != null)
-			ms.destroy(stateInfo);
 
 		spriteStartPoint = new Point(sprite.getTileX(),
 				sprite.getTileY());
@@ -416,9 +414,6 @@ public class TurnManager extends Manager implements KeyboardListener
 
 		determineMoveableSpaces();
 
-		// If we own this sprite then we add keyboard input listener
-		if (ownsSprite)
-			stateInfo.addKeyboardListener(this);
 
 		turnActions.add(new TurnAction(TurnAction.ACTION_MOVE_CURSOR_TO_ACTOR));
 		turnActions.add(new WaitAction(150 / UPDATE_TIME));
@@ -428,7 +423,9 @@ public class TurnManager extends Manager implements KeyboardListener
 			System.out.println("IVE GOT AI");
 			stateInfo.sendMessage(new TurnActionsMessage(false, sprite.getAi().performAI(stateInfo, ms, currentSprite)), true);
 		}
-
+		// If we own this sprite then we add keyboard input listener
+		else if (ownsSprite)
+			stateInfo.addKeyboardListener(this);
 		displayCursor = true;
 
 	}

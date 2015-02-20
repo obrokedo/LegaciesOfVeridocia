@@ -72,6 +72,7 @@ public class Map
 	private Hashtable<Integer, Roof> roofsById = new Hashtable<Integer, Roof>();
 	private Shape battleRegion = null;
 	private int roofCount = -1;
+	private int backgroundImageIndex;
 
 	private float tileRatio = 2f;
 	public static final float DESIRED_TILE_WIDTH = 24f;
@@ -90,6 +91,7 @@ public class Map
 		overriddenTerrain.clear();
 		roofsById.clear();
 		roofCount = -1;
+		backgroundImageIndex = 0;
 	}
 
 	public void addLayer(int[][] layer)
@@ -395,5 +397,13 @@ public class Map
 	{
 		tileRatio = DESIRED_TILE_WIDTH / origTileWidth;
 		System.out.println("TILE RATIO " + tileRatio);
+	}
+
+	public int getBackgroundImageIndex() {
+		return backgroundImageIndex;
+	}
+
+	public void setBackgroundImageIndex(int index) {
+		this.backgroundImageIndex = index;
 	}
 }

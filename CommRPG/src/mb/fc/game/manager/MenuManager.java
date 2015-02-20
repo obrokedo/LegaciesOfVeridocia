@@ -71,7 +71,7 @@ public class MenuManager extends Manager
 			case SPEECH:
 				SpeechMessage spm = (SpeechMessage) message;
 				stateInfo.addMenu(new SpeechMenu(spm.getText(),
-						stateInfo.getGc(), spm.getTriggerId(), spm.getPortraitId(), stateInfo));
+						stateInfo.getGc(), spm.getTriggerId(), spm.getPortrait(), stateInfo));
 				break;
 			case SHOW_SYSTEM_MENU:
 				stateInfo.addSingleInstanceMenu(new SystemMenu(stateInfo.getGc()));

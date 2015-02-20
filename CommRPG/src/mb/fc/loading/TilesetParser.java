@@ -15,7 +15,6 @@ public class TilesetParser
 	public void parseTileset(String image, Color trans, int tileWidth, int tileHeight,
 			int startIndex, Map map, Hashtable<Integer, Integer> landEffectByTileId, float tileResize) throws SlickException
 	{
-
 		Image tileSheetImage = new Image(image, trans);
 		System.out.println("LOAD TILESET " + tileSheetImage);
 		tileSheetImage.setFilter(Image.FILTER_NEAREST);

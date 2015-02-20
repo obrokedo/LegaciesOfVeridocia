@@ -1,5 +1,7 @@
 package mb.fc.engine.message;
 
+import mb.fc.game.menu.Portrait;
+
 /**
  * A message that indicates that a speech menu should be displayed with the given
  * text and portrait
@@ -13,13 +15,13 @@ public class SpeechMessage extends Message
 
 	private String text;
 	private int triggerId = -1;
-	private int portraitId = -1;
+	private Portrait portrait = null;
 
-	public SpeechMessage(String text, int triggerId, int portraitId) {
+	public SpeechMessage(String text, int triggerId, Portrait portrait) {
 		super(MessageType.SPEECH);
 		this.text = text;
 		this.triggerId = triggerId;
-		this.portraitId = portraitId;
+		this.portrait = portrait;
 	}
 
 	public String getText() {
@@ -30,7 +32,7 @@ public class SpeechMessage extends Message
 		return triggerId;
 	}
 
-	public int getPortraitId() {
-		return portraitId;
+	public Portrait getPortrait() {
+		return portrait;
 	}
 }

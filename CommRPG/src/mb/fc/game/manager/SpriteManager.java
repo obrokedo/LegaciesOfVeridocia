@@ -109,6 +109,11 @@ public class SpriteManager extends Manager
 					stateInfo.addSprite(mo.getEnemy(stateInfo));
 				}
 			}
+
+			/*
+			AIController aic = new AIController();
+			aic.initialize(stateInfo.getCombatSprites());
+			*/
 		}
 	}
 
@@ -142,7 +147,7 @@ public class SpriteManager extends Manager
 							if (heroLeaders.remove(cs))
 							{
 								if (heroLeaders.size() == 0 || !killAllHeroLeaders)
-									stateInfo.sendMessage(new SpeechMessage("You have been defeated...]", -2, -1));
+									stateInfo.sendMessage(new SpeechMessage("You have been defeated...]", -2, null));
 							}
 						}
 						else if (cs.isLeader())

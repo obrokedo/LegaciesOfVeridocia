@@ -5,6 +5,7 @@ import mb.fc.engine.message.MessageType;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.input.FCInput;
 import mb.fc.game.move.MovingSprite;
+import mb.fc.game.sprite.AnimatedSprite;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.ui.FCGameContainer;
 import mb.jython.GlobalPythonFactory;
@@ -101,6 +102,10 @@ public class DebugMenu extends Menu
 			{
 				for (CombatSprite cs : stateInfo.getHeroes())
 					cs.setCurrentHP(1);
+			}
+			else if (splitText[0].equalsIgnoreCase("shadow"))
+			{
+				AnimatedSprite.SHADOW_OFFSET = Integer.parseInt(splitText[1]);
 			}
 
 			textField.deactivate();
