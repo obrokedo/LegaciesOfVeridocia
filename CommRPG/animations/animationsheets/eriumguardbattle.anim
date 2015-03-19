@@ -75,16 +75,18 @@
     <cell index="7" delay="30">
       <spr name="/Unpromoted/Frame12" x="70" y="-60" z="0"/>
     </cell>
-    <cell index="8" delay="30">
+  </anim>
+  <anim name="UnWinddown" loops="0">
+    <cell index="0" delay="30">
       <spr name="/Unpromoted/Frame13" x="70" y="-60" z="0"/>
     </cell>
-    <cell index="9" delay="30">
+    <cell index="1" delay="30">
       <spr name="/Unpromoted/Frame14" x="70" y="-60" z="0"/>
     </cell>
-    <cell index="10" delay="30">
+    <cell index="2" delay="30">
       <spr name="/Unpromoted/Frame15" x="70" y="-60" z="0"/>
     </cell>
-    <cell index="11" delay="30">
+    <cell index="3" delay="30">
       <spr name="/Unpromoted/Frame16" x="70" y="-60" z="0"/>
     </cell>
   </anim>

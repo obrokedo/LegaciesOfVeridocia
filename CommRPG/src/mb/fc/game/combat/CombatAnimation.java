@@ -10,7 +10,7 @@ import mb.jython.JBattleEffect;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
-public abstract class CombatAnimation
+public class CombatAnimation
 {
 	protected static float SCREEN_SCALE = CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
 

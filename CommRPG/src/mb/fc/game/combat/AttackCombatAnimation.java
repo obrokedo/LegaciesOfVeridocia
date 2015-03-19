@@ -5,6 +5,7 @@ import mb.fc.game.battle.BattleResults;
 import mb.fc.game.battle.command.BattleCommand;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.utils.AnimationWrapper;
+import mb.fc.utils.HeroAnimationWrapper;
 
 public class AttackCombatAnimation extends CombatAnimation
 {
@@ -31,18 +32,20 @@ public class AttackCombatAnimation extends CombatAnimation
 	public AttackCombatAnimation(CombatSprite parentSprite, BattleResults battleResults, boolean blockingAnimation,
 			boolean rangedAttack, boolean critted)
 	{
-		super(new AnimationWrapper(parentSprite.getSpriteAnims(), (rangedAttack ? "UnRanged" : "UnAttack"), parentSprite.getCurrentWeaponImage()),
+		super(new HeroAnimationWrapper(parentSprite,
+				(rangedAttack ? "Ranged" : "Attack")),
 				parentSprite, false);
-		if (critted && animationWrapper.hasAnimation("UnCrit"))
-			this.animationWrapper.setAnimation("UnCrit", false);
+
+		if (critted && animationWrapper.hasAnimation("Crit"))
+			this.animationWrapper.setAnimation("Crit", false);
 		else if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_SPELL)
 		{
-			this.animationWrapper.setAnimation("UnSpell", false);
+			this.animationWrapper.setAnimation("Spell", false);
 			castingSpell = true;
 		}
 		else if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_ITEM
-				 && animationWrapper.hasAnimation("UnItem"))
-			this.animationWrapper.setAnimation("UnItem", false);
+				 && animationWrapper.hasAnimation("Item"))
+			this.animationWrapper.setAnimation("Item", false);
 
 		this.blocks = blockingAnimation;
 

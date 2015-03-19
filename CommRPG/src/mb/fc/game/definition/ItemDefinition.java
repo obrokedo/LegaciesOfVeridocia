@@ -18,6 +18,7 @@ public class ItemDefinition
 	public static ItemDefinition parseItemDefinition(TagArea tagArea)
 	{
 		int attack = 0, defense = 0, speed = 0, style = 0, type = 0, range = 0;
+		String weaponImage = null;
 		boolean equippable = false;
 		ItemUse itemUse = null;
 		for (TagArea childTagArea : tagArea.getChildren())
@@ -31,6 +32,9 @@ public class ItemDefinition
 				style = Integer.parseInt(childTagArea.getAttribute("style"));
 				type = Integer.parseInt(childTagArea.getAttribute("type"));
 				range = Integer.parseInt(childTagArea.getAttribute("range"));
+				weaponImage = childTagArea.getAttribute("weaponimage");
+				if (weaponImage != null && (weaponImage.trim().length() == 0 || weaponImage.trim().equalsIgnoreCase("null")))
+					weaponImage = null;
 			}
 			else if (childTagArea.getTagType().equalsIgnoreCase("use"))
 			{
@@ -46,7 +50,7 @@ public class ItemDefinition
 
 		if (equippable)
 			id.item = new EquippableItem(tagArea.getAttribute("name"), Integer.parseInt(tagArea.getAttribute("cost")), tagArea.getAttribute("description"),
-					itemUse, id.id, attack, defense, speed, range, type, style);
+					itemUse, id.id, attack, defense, speed, range, type, style, weaponImage);
 		else
 			id.item = new Item(tagArea.getAttribute("name"), Integer.parseInt(tagArea.getAttribute("cost")), tagArea.getAttribute("description"),
 						itemUse, false, id.id);

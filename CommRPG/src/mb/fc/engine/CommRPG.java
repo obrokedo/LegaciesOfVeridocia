@@ -5,8 +5,9 @@ import java.util.Random;
 import javax.swing.JOptionPane;
 
 import mb.fc.engine.log.FileLogger;
-import mb.fc.engine.state.LOVAttackCinematicState;
 import mb.fc.engine.state.DevelMenuState;
+import mb.fc.engine.state.LOVAttackCinematicState;
+import mb.fc.engine.state.MenuState;
 import mb.fc.engine.state.PersistentStateInfo;
 import mb.fc.game.ui.FCGameContainer;
 import mb.fc.loading.FCLoadingRenderSystem;
@@ -220,7 +221,7 @@ public class CommRPG extends StateBasedGame   {
 
 		LoadingState.loading = true;
 		loadingState = new LoadingState(STATE_GAME_LOADING);
-		// this.addState(new MenuState());
+		this.addState(new MenuState());
 		this.addState(new DevelMenuState());
 		// this.addState(new MultiplayerMenuState());
 

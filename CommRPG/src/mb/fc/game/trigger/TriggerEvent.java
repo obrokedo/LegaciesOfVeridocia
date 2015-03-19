@@ -431,7 +431,7 @@ public class TriggerEvent
 							CombatSprite targetSprite = null;
 							for (CombatSprite ts : stateInfo.getCombatSprites())
 							{
-								if (ts.getUniqueEnemyId() == targetId)
+								if (ts.getUniqueEnemyId() == targetId && ts.getCurrentHP() > 0)
 								{
 									targetSprite = ts;
 									break;

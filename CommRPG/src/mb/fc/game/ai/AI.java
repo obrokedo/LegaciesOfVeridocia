@@ -226,7 +226,14 @@ public abstract class AI
 
 	private void performFollowApproach(StateInfo stateInfo, int tileWidth, int tileHeight, CombatSprite currentSprite, MoveableSpace ms, ArrayList<TurnAction> turnActions)
 	{
-		ms.addMoveActionsAlongPath(targetCS.getLocX(), targetCS.getLocY(), currentSprite, turnActions);
+		if (targetCS.getCurrentHP() > 0)
+			ms.addMoveActionsAlongPath(targetCS.getLocX(), targetCS.getLocY(), currentSprite, turnActions);
+		else
+		{
+			this.approachType = AI.APPROACH_HESITANT;
+
+			performHesitantApproach(stateInfo, tileWidth, tileHeight, currentSprite, ms, turnActions);
+		}
 	}
 
 	private void performMoveToApproach(StateInfo stateInfo, int tileWidth, int tileHeight, CombatSprite currentSprite, MoveableSpace ms, ArrayList<TurnAction> turnActions)

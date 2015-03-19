@@ -28,7 +28,7 @@ public class AnimatedSprite extends Sprite
 
 	protected transient Animation currentAnim;
 	protected String imageName;
-	private Direction facing;
+	protected Direction facing;
 	private int animationUpdate = 10;
 
 	public AnimatedSprite(int locX, int locY, String imageName, int id) {
@@ -72,7 +72,7 @@ public class AnimatedSprite extends Sprite
 
 		imageIndex = 0;
 		spriteAnims = stateInfo.getResourceManager().getSpriteAnimations().get(imageName);
-		currentAnim = spriteAnims.getAnimation("UnDown");
+		currentAnim = spriteAnims.getAnimation("Down");
 		facing = Direction.DOWN;
 		animationUpdate = MovingSprite.STAND_ANIMATION_SPEED;
 	}
@@ -120,16 +120,16 @@ public class AnimatedSprite extends Sprite
 		switch (dir)
 		{
 			case UP:
-				currentAnim = spriteAnims.getAnimation("UnUp");
+				currentAnim = spriteAnims.getCharacterAnimation("Up", false);
 				break;
 			case DOWN:
-				currentAnim = spriteAnims.getAnimation("UnDown");
+				currentAnim = spriteAnims.getCharacterAnimation("Down", false);
 				break;
 			case LEFT:
-				currentAnim = spriteAnims.getAnimation("UnLeft");
+				currentAnim = spriteAnims.getCharacterAnimation("Left", false);
 				break;
 			case RIGHT:
-				currentAnim = spriteAnims.getAnimation("UnRight");
+				currentAnim = spriteAnims.getCharacterAnimation("Right", false);
 				break;
 		}
 		facing = dir;

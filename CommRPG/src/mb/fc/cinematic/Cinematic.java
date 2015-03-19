@@ -18,6 +18,7 @@ import mb.fc.game.menu.Menu.MenuUpdate;
 import mb.fc.game.menu.Portrait;
 import mb.fc.game.menu.SpeechMenu;
 import mb.fc.game.sprite.AnimatedSprite;
+import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.sprite.NPCSprite;
 import mb.fc.game.sprite.Sprite;
 import mb.fc.game.sprite.StaticSprite;
@@ -425,12 +426,33 @@ public class Cinematic {
 				cameraShaking = true;
 				break;
 			case ADD_ACTOR:
+				boolean isHeroAss = false;
+				boolean isHeroPro = false;
+
+				int associated = (int) ce.getParam(6);
+				if (associated >= 0)
+				{
+					for (CombatSprite cs : stateInfo.getHeroes())
+					{
+						if (cs.getId() == associated)
+						{
+							isHeroAss = true;
+							isHeroPro = cs.isPromoted();
+							break;
+						}
+					}
+				}
+
 				CinematicActor ca = new CinematicActor(
 						stateInfo.getResourceManager()
 						.getSpriteAnimations()
 						.get(ce.getParam(3)), (String) ce
 						.getParam(4), (int) ce.getParam(0),
-				(int) ce.getParam(1), (boolean) ce.getParam(5));
+				(int) ce.getParam(1), (boolean) ce.getParam(5),
+				isHeroAss, isHeroPro);
+
+
+
 				actors.put(
 						(String) ce.getParam(2), ca);
 				sortedActors.add(ca);

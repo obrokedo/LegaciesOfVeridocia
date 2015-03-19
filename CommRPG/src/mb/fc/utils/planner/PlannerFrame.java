@@ -553,6 +553,15 @@ public class PlannerFrame extends JFrame implements ActionListener,
 						"Initialize before Cinematic",
 						"Indicates that this action should be taken before the scene is rendered. Blocking actions should NEVER be initialized before the scene"));
 
+		definingValues
+		.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_HERO,
+				PlannerValueDef.TYPE_INT,
+				"associatedhero",
+				false,
+				"Associated Hero",
+				"The hero that should be used to determine if the unpromoted or promoted version of animations should be used."));
+
 		allowableLines
 				.add(new PlannerLineDef(
 						"addactor",
@@ -1489,6 +1498,9 @@ public class PlannerFrame extends JFrame implements ActionListener,
 				.add(new PlannerValueDef(PlannerValueDef.REFERS_ITEM_RANGE,
 						PlannerValueDef.TYPE_INT, "range", false, "Item Range",
 						"The range this weapon can attack from, use any value for rings"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_STRING, "weaponimage", false, "Weapon Attack Image",
+					"The name of the weapon image that should be used for this weapon (should exist in the images/weapons folder). Use any value for rings"));
 		allowableLines.add(new PlannerLineDef("equippable", "Equippable Item",
 				"Marks this item as equippable and defines stats for it",
 				definingValues));

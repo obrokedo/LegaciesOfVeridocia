@@ -274,7 +274,7 @@ public class TextParser
 			CinematicEvent ce = new CinematicEvent(CinematicEventType.ADD_ACTOR, Integer.parseInt(area.getAttribute("x")),
 					Integer.parseInt(area.getAttribute("y")),
 					area.getAttribute("name"), area.getAttribute("anim"),
-					area.getAttribute("startanim"), Boolean.parseBoolean(area.getAttribute("visible")));
+					area.getAttribute("startanim"), Boolean.parseBoolean(area.getAttribute("visible")), Integer.parseInt(area.getAttribute("associatedhero")));
 			animToLoad.add(area.getAttribute("anim"));
 			if (Boolean.parseBoolean(area.getAttribute("init")))
 			{

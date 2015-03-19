@@ -13,8 +13,10 @@ import mb.fc.game.input.FCInput;
 import mb.fc.game.persist.ClientProfile;
 import mb.fc.game.persist.ClientProgress;
 import mb.fc.game.ui.FCGameContainer;
+import mb.fc.loading.FCLoadingRenderSystem;
 import mb.fc.loading.FCResourceManager;
 import mb.fc.loading.LoadableGameState;
+import mb.fc.loading.LoadingState;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
@@ -35,7 +37,7 @@ public class MenuState extends LoadableGameState
 {
 	protected StateBasedGame game;
 	protected GameContainer gc;
-	protected String version = "DEMO";
+	protected String version = "DEV 2";
 	protected Font font;
 	protected boolean initialized = false;
 	protected FCInput input;
@@ -136,6 +138,16 @@ public class MenuState extends LoadableGameState
 			throws SlickException {
 		if (initialized)
 		{
+			if (container.getInput().isKeyDown(Input.KEY_F2))
+			{
+				((LoadingState) game.getState(CommRPG.STATE_GAME_LOADING)).setLoadingInfo("/menu/MainMenu", null, false, true,
+						new FCResourceManager(),
+							(LoadableGameState) game.getState(CommRPG.STATE_GAME_MENU_DEVEL),
+								new FCLoadingRenderSystem(container));
+
+				game.enterState(CommRPG.STATE_GAME_LOADING);
+			}
+
 			if (updateDelta != 0)
 			{
 				updateDelta = Math.max(0, updateDelta - delta);

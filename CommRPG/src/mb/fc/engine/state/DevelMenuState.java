@@ -6,7 +6,10 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import mb.fc.engine.CommRPG;
+import mb.fc.loading.FCLoadingRenderSystem;
 import mb.fc.loading.FCResourceManager;
+import mb.fc.loading.LoadableGameState;
+import mb.fc.loading.LoadingState;
 import mb.fc.loading.MapParser;
 import mb.fc.loading.TilesetParser;
 import mb.fc.map.Map;
@@ -83,6 +86,16 @@ public class DevelMenuState extends MenuState
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException
 	{
+		if (container.getInput().isKeyDown(Input.KEY_F1))
+		{
+			((LoadingState) game.getState(CommRPG.STATE_GAME_LOADING)).setLoadingInfo("/menu/MainMenu", null, false, true,
+					new FCResourceManager(),
+						(LoadableGameState) game.getState(CommRPG.STATE_GAME_MENU),
+							new FCLoadingRenderSystem(container));
+
+			game.enterState(CommRPG.STATE_GAME_LOADING);
+		}
+
 		if (updateDelta > 0)
 			updateDelta = Math.max(0, updateDelta - delta);
 		else if (container.getInput().isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))

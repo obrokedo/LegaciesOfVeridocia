@@ -43,6 +43,9 @@ public class HeroStatMenu extends Menu
 
 		timer.update(delta);
 
+		if (portrait != null)
+			portrait.update(delta);
+
 		while (timer.perform())
 			animCount = (animCount + 1) % 2;
 
@@ -154,7 +157,7 @@ public class HeroStatMenu extends Menu
 		/*****************************/
 		Panel.drawPanelBox(x, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 78, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 62, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 80, graphics);
 		graphics.setColor(Panel.COLOR_FOREFRONT);
-		graphics.drawImage(selectedSprite.getAnimationImageAtIndex(selectedSprite.getAnimation("UnDown").frames.get(animCount).sprites.get(0).imageIndex),
+		graphics.drawImage(selectedSprite.getAnimationImageAtIndex(selectedSprite.getAnimation("Down").frames.get(animCount).sprites.get(0).imageIndex),
 				x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 19,
 				y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 82);
 		graphics.drawString("Kills", x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 13, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 100);

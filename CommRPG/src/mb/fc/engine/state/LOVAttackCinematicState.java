@@ -25,6 +25,7 @@ import mb.fc.game.ui.FCGameContainer;
 import mb.fc.loading.FCResourceManager;
 import mb.fc.loading.LoadableGameState;
 import mb.fc.utils.AnimationWrapper;
+import mb.fc.utils.HeroAnimationWrapper;
 import mb.jython.GlobalPythonFactory;
 import mb.jython.JBattleEffect;
 import mb.jython.JMusicSelector;
@@ -352,6 +353,8 @@ public class LOVAttackCinematicState extends LoadableGameState
 				addCombatAnimation(attacker.isHero(), null);
 				addCombatAnimation(target.isHero(), targetDodge);
 				textToDisplay.add(battleResults.text.get(index));
+
+
 			}
 		}
 		else
@@ -379,6 +382,14 @@ public class LOVAttackCinematicState extends LoadableGameState
 				addCombatAnimation(target.isHero(), new StandCombatAnimation(target));
 			}
 			textToDisplay.add(battleResults.text.get(index));
+
+			if (attacker.getAnimation("Winddown") != null)
+			{
+				AnimationWrapper aw = new HeroAnimationWrapper(attacker, "Winddown");
+				addCombatAnimation(attacker.isHero(), new CombatAnimation(aw, attacker, aw.getAnimationLength()));
+				addCombatAnimation(target.isHero(), null);
+				textToDisplay.add(null);
+			}
 		}
 	}
 

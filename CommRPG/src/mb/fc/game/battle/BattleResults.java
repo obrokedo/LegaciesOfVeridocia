@@ -428,6 +428,8 @@ public class BattleResults implements Serializable
 
 	private static int getExperienceByDamage(int damage, int attackerLevel, CombatSprite target)
 	{
+		return GlobalPythonFactory.createJBattleFunctions().getExperienceGainedByDamage(damage, attackerLevel, target);
+		/*
 		int maxExp = Math.max(1, Math.min(49, (target.getLevel() - attackerLevel) * 7 + 35));
 		// Check to see if we've killed the target
 		if (target.getCurrentHP() + damage <= 0)
@@ -440,6 +442,7 @@ public class BattleResults implements Serializable
 			double percentExperienceGained = Math.min(Math.abs(1.0 * damage / target.getMaxHP()) / .75, 1);
 			return (int) Math.max(Math.max(1, 5 + target.getLevel() - attackerLevel), maxExp * percentExperienceGained);
 		}
+		*/
 	}
 
 	public void initialize(StateInfo stateInfo)

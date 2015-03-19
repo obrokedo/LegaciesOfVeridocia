@@ -6,6 +6,7 @@ import mb.fc.engine.CommRPG;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.Camera;
 import mb.fc.game.constants.Direction;
+import mb.fc.game.exception.BadAnimationException;
 import mb.fc.game.sprite.AnimatedSprite;
 import mb.fc.game.ui.FCGameContainer;
 import mb.fc.utils.AnimSprite;
@@ -81,15 +82,21 @@ public class CinematicActor implements Comparable<CinematicActor>
 	private float specialEffectCounter;
 	private Direction specialEffectDirection;
 
+	boolean isHeroBacked = false;
+	boolean isHeroPromoted = false;
+
 	private Color flashColor = new Color(255, 255, 255);
 
 	private boolean moving;
 
 	public JCinematicActor jCinematicActor;
 
-	public CinematicActor(SpriteAnims spriteAnims, String initialAnimation, int x, int y, boolean visible)
+	public CinematicActor(SpriteAnims spriteAnims, String initialAnimation, int x, int y, boolean visible,
+			boolean isHeroBacked, boolean isHeroPromoted)
 	{
 		jCinematicActor = GlobalPythonFactory.createJCinematicActor();
+		this.isHeroBacked = isHeroBacked;
+		this.isHeroPromoted = isHeroPromoted;
 		this.facing = Direction.DOWN;
 		this.spriteAnims = spriteAnims;
 		currentAnim = this.spriteAnims.getAnimation(initialAnimation);
@@ -263,22 +270,34 @@ public class CinematicActor implements Comparable<CinematicActor>
 
 	private void renderFaceDown(Graphics graphics, Camera camera, FCGameContainer cont)
 	{
-		renderOnDirection(spriteAnims.getAnimation("UnUp").frames.get(0).sprites, graphics, camera, cont);
+		if (isHeroBacked)
+			renderOnDirection(spriteAnims.getCharacterAnimation("Up", isHeroPromoted).frames.get(0).sprites, graphics, camera, cont);
+		else
+			renderOnDirection(spriteAnims.getAnimation("UnUp").frames.get(0).sprites, graphics, camera, cont);
 	}
 
 	private void renderOnBack(Graphics graphics, Camera camera, FCGameContainer cont)
 	{
-		renderOnDirection(spriteAnims.getAnimation("UnDown").frames.get(0).sprites, graphics, camera, cont);
+		if (isHeroBacked)
+			renderOnDirection(spriteAnims.getCharacterAnimation("Down", isHeroPromoted).frames.get(0).sprites, graphics, camera, cont);
+		else
+			renderOnDirection(spriteAnims.getAnimation("UnDown").frames.get(0).sprites, graphics, camera, cont);
 	}
 
 	private void renderOnSideLeft(Graphics graphics, Camera camera, FCGameContainer cont)
 	{
-		renderOnDirection(spriteAnims.getAnimation("UnLeft").frames.get(0).sprites, graphics, camera, cont);
+		if (isHeroBacked)
+			renderOnDirection(spriteAnims.getCharacterAnimation("Left", isHeroPromoted).frames.get(0).sprites, graphics, camera, cont);
+		else
+			renderOnDirection(spriteAnims.getAnimation("UnLeft").frames.get(0).sprites, graphics, camera, cont);
 	}
 
 	private void renderOnSideRight(Graphics graphics, Camera camera, FCGameContainer cont)
 	{
-		renderOnDirection(spriteAnims.getAnimation("UnRight").frames.get(0).sprites, graphics, camera, cont);
+		if (isHeroBacked)
+			renderOnDirection(spriteAnims.getCharacterAnimation("Right", isHeroPromoted).frames.get(0).sprites, graphics, camera, cont);
+		else
+			renderOnDirection(spriteAnims.getAnimation("UnRight").frames.get(0).sprites, graphics, camera, cont);
 	}
 
 	private void renderOnDirection(ArrayList<AnimSprite> sprites, Graphics graphics, Camera camera, FCGameContainer cont)
@@ -682,16 +701,28 @@ public class CinematicActor implements Comparable<CinematicActor>
 		switch (dir)
 		{
 			case UP:
-				currentAnim = spriteAnims.getAnimation("UnUp");
+				if (isHeroBacked)
+					currentAnim = spriteAnims.getCharacterAnimation("UnUp", isHeroPromoted);
+				else
+					currentAnim = spriteAnims.getAnimation("UnUp");
 				break;
 			case DOWN:
-				currentAnim = spriteAnims.getAnimation("UnDown");
+				if (isHeroBacked)
+					currentAnim = spriteAnims.getCharacterAnimation("Down", isHeroPromoted);
+				else
+					currentAnim = spriteAnims.getAnimation("UnDown");
 				break;
 			case LEFT:
-				currentAnim = spriteAnims.getAnimation("UnLeft");
+				if (isHeroBacked)
+					currentAnim = spriteAnims.getCharacterAnimation("Left", isHeroPromoted);
+				else
+					currentAnim = spriteAnims.getAnimation("UnLeft");
 				break;
 			case RIGHT:
-				currentAnim = spriteAnims.getAnimation("UnRight");
+				if (isHeroBacked)
+					currentAnim = spriteAnims.getCharacterAnimation("Right", isHeroPromoted);
+				else
+					currentAnim = spriteAnims.getAnimation("UnRight");
 				break;
 		}
 		facing = dir;
@@ -713,7 +744,13 @@ public class CinematicActor implements Comparable<CinematicActor>
 	{
 		this.animHalting = halting;
 		this.animationLooping = looping;
-		this.currentAnim = spriteAnims.getAnimation(animation);
+		if (isHeroBacked)
+			this.currentAnim = spriteAnims.getCharacterAnimation(animation, isHeroPromoted);
+		else
+			this.currentAnim = spriteAnims.getAnimation(animation);
+
+		if (currentAnim == null)
+			throw new BadAnimationException("Unable to find animation: " + (isHeroBacked ? (isHeroPromoted ? "Pro" : "Un") : "" ) + animation + " for cinematic actor");
 		this.animDelta = 0;
 		this.animUpdate = time / currentAnim.frames.size();
 	}
@@ -770,10 +807,6 @@ public class CinematicActor implements Comparable<CinematicActor>
 
 	public void setVisible(boolean visible) {
 		this.visible = visible;
-	}
-
-	public AnimatedSprite getSprite() {
-		return sprite;
 	}
 
 	public void resetSprite(StateInfo stateInfo)

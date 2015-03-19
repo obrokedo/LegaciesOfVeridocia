@@ -8,6 +8,8 @@ animsheetdir,animations/animationsheets
 animfsadir,animations/fsa
 // Load all of the static sprites
 spritedir,sprite
+// Load all weapons
+imagedir,image/weapons
 // Load item images
 ss,items,image/Items.png,16,24
 // Load Battle Resources

@@ -62,3 +62,17 @@ class BattleFunctions(JBattleFunctions):
     # Get the amount that the damage dealt by an attack should be modified by when it's a counter attack
     def getCounterDamageModifier(self, attacker, target):
         return .75
+    
+    # Get the amount of experience that should be gained for hurting someone with a normal attack
+    # The damage provided will always be NEGATIVE
+    def getExperienceGainedByDamage(self, damage, attackerLevel, target):
+        maxExp = Math.max(1, Math.min(49, (target.getLevel() - attackerLevel) * 7 + 35));
+        # Check to see if we've killed the target, if so return the max experience possible
+        if target.getCurrentHP() + damage <= 0:
+            return maxExp;
+        # Otherwise give experience based on damage dealt
+        else:
+            # Calculate the percent experience gained, this gives full "kill" experience any time you do 75% damage or more
+            # and smaller amounts based on the percent of 75% health that you've done. This number can never exceed 1.
+            percentExperienceGained = Math.min(Math.abs(1.0 * damage / target.getMaxHP()) / .75, 1);
+            return int(Math.max(Math.max(1, 5 + target.getLevel() - attackerLevel), maxExp * percentExperienceGained));

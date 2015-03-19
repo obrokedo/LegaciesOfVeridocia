@@ -49,7 +49,7 @@ public class Portrait
 
 	private static Portrait getPortrait(SpriteAnims spriteAnim, boolean promoted)
 	{
-		if (promoted || spriteAnim.getAnimation("UnPort") == null)
+		if ((promoted || spriteAnim.getAnimation("UnPort") == null) && spriteAnim.getAnimation("ProPort") != null)
 		{
 			Portrait p = new Portrait();
 			p.blinkAnim = new AnimationWrapper(spriteAnim, "ProPort", true);

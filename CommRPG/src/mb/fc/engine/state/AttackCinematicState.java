@@ -437,13 +437,13 @@ public class AttackCinematicState extends LoadableGameState
 
 						state = STATE_POST_ATTACK;
 						this.attackerAnimIndex = 0;
-						attackerAnim = attacker.getAnimation("UnStand");
+						attackerAnim = attacker.getAnimation("Stand");
 					}
 					else
 					{
 						System.out.println("TRANSITION AT 10, NO STATE");
 						deathFade = false;
-						targetAnim = targets.get(++targetIndex).getAnimation("UnStand");
+						targetAnim = targets.get(++targetIndex).getAnimation("Stand");
 					}
 				}
 			}
@@ -502,20 +502,20 @@ public class AttackCinematicState extends LoadableGameState
 				state = STATE_ATTACKING;
 				attackerAnimIndex = 0;
 				if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_ATTACK)
-					attackerAnim = attacker.getAnimation("UnAttack");
+					attackerAnim = attacker.getAnimation("Attack");
 				else if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_SPELL)
 				{
-					if (attacker.getAnimation("UnSpell") != null)
-						attackerAnim = attacker.getAnimation("UnSpell");
+					if (attacker.getAnimation("Spell") != null)
+						attackerAnim = attacker.getAnimation("Spell");
 					else
-						attackerAnim = attacker.getAnimation("UnAttack");
+						attackerAnim = attacker.getAnimation("Attack");
 				}
 				else if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_ITEM)
 				{
-					if (attacker.getAnimation("UnItem") != null)
-						attackerAnim = attacker.getAnimation("UnItem");
+					if (attacker.getAnimation("Item") != null)
+						attackerAnim = attacker.getAnimation("Item");
 					else
-						attackerAnim = attacker.getAnimation("UnAttack");
+						attackerAnim = attacker.getAnimation("Attack");
 				}
 			}
 			// If the user clicks after the attack then return to the battle game-state
@@ -542,8 +542,8 @@ public class AttackCinematicState extends LoadableGameState
 						}
 						else
 						{
-							attackerAnim = attacker.getAnimation("UnStand");
-							targetAnim = targets.get(targetIndex).getAnimation("UnStand");
+							attackerAnim = attacker.getAnimation("Stand");
+							targetAnim = targets.get(targetIndex).getAnimation("Stand");
 							attackerAnimIndex = 0;
 
 							if (battleResults.attackOverText != null)

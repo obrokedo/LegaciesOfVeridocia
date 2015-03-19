@@ -9,25 +9,17 @@ import org.newdawn.slick.Image;
 
 public class AnimationWrapper
 {
-	private static float SCREEN_SCALE = CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
+	protected static float SCREEN_SCALE = CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
 
-	private SpriteAnims spriteAnims;
-	private Animation animation;
-	private int animationIndex;
-	private int animationDelta;
-	private boolean loops;
-	private Image weapon = null;
+	protected SpriteAnims spriteAnims;
+	protected Animation animation;
+	protected int animationIndex;
+	protected int animationDelta;
+	protected boolean loops;
 
-	public AnimationWrapper(SpriteAnims spriteAnims)
+	protected AnimationWrapper(SpriteAnims spriteAnims)
 	{
 		this.spriteAnims = spriteAnims;
-	}
-
-	public AnimationWrapper(SpriteAnims spriteAnims, String animationName, Image weapon)
-	{
-		this.spriteAnims = spriteAnims;
-		setAnimation(animationName, false);
-		this.weapon = weapon;
 	}
 
 	public AnimationWrapper(SpriteAnims spriteAnims, String animationName)
@@ -98,10 +90,8 @@ public class AnimationWrapper
 				{
 					g.drawImage(getRotatedImageIfNeeded(spriteAnims.getImageAtIndex(as.imageIndex), as), x, y);
 				}
-				else if (weapon != null)
-				{
-					g.drawImage(getRotatedImageIfNeeded(weapon, as), x, y);
-				}
+				else
+					drawWeapon(as, x, y, null, g);
 			}
 		}
 	}
@@ -121,20 +111,18 @@ public class AnimationWrapper
 						g.drawImage(getRotatedImageIfNeeded(spriteAnims.getImageAtIndex(as.imageIndex), as),
 								x + as.x * SCREEN_SCALE, y + as.y * SCREEN_SCALE, filter);
 				}
-				else if (weapon != null)
-				{
-					if (filter == null)
-						g.drawImage(getRotatedImageIfNeeded(weapon, as),
-								x + as.x * SCREEN_SCALE, y + as.y * SCREEN_SCALE);
-					else
-						g.drawImage(getRotatedImageIfNeeded(weapon, as),
-								x + as.x * SCREEN_SCALE, y + as.y * SCREEN_SCALE, filter);
-				}
+				else
+					drawWeapon(as, x, y, filter, g);
 			}
 		}
 	}
 
-	private Image getRotatedImageIfNeeded(Image image, AnimSprite as)
+	protected void drawWeapon(AnimSprite as, int x, int y, Color filter, Graphics g)
+	{
+
+	}
+
+	protected Image getRotatedImageIfNeeded(Image image, AnimSprite as)
 	{
 		Image im = image;
 		if (as.angle != 0)

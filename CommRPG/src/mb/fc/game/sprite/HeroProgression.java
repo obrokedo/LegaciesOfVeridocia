@@ -56,32 +56,32 @@ public class HeroProgression implements Serializable
 		float increase = getStatIncrease(p.getHp(), cs.isPromoted(), cs.getMaxHP(), cs.getLevel() + 1, remainderHP);
 		remainderHP = increase - ((int) increase);
 		level.hitpointGain = (int) increase;
-		if (increase > 0)
-			text += " HP increased by " + increase + ".}[";
+		if (((int) increase) > 0)
+			text += " HP increased by " + level.hitpointGain + ".}[";
 
 		increase = getStatIncrease(p.getMp(), cs.isPromoted(), cs.getMaxMP(), cs.getLevel() + 1, remainderMP);
 		remainderMP = increase - ((int) increase);
 		level.magicpointGain = (int) increase;
-		if (increase > 0)
-			text += " MP increased by " + increase + ".}[";
+		if (((int) increase) > 0)
+			text += " MP increased by " + level.magicpointGain + ".}[";
 
 		increase = getStatIncrease(p.getAttack(), cs.isPromoted(), cs.getMaxAttack(), cs.getLevel() + 1, remainderAtk);
 		remainderAtk = increase - ((int) increase);
 		level.attackGain = (int) increase;
-		if (increase > 0)
-			text += " Attack increased by " + increase + ".}[";
+		if (((int) increase) > 0)
+			text += " Attack increased by " + level.attackGain + ".}[";
 
 		increase = getStatIncrease(p.getDefense(), cs.isPromoted(), cs.getMaxDefense(), cs.getLevel() + 1, remainderDef);
 		remainderDef = increase - ((int) increase);
 		level.defenseGain = (int) increase;
-		if (increase > 0)
-			text += " Defense increased by " + increase + ".}[";
+		if (((int) increase) > 0)
+			text += " Defense increased by " + level.defenseGain + ".}[";
 
 		increase = getStatIncrease(p.getSpeed(), cs.isPromoted(), cs.getMaxSpeed(), cs.getLevel() + 1, remainderSpd);
 		remainderSpd = increase - ((int) increase);
 		level.speedGain = (int) increase;
-		if (increase > 0)
-			text += " Speed increased by " + increase + ".}[";
+		if (((int) increase) > 0)
+			text += " Speed increased by " + level.speedGain + ".}[";
 
 		for (int i = 0; i < spellLevels.length; i++)
 		{
@@ -187,6 +187,9 @@ public class HeroProgression implements Serializable
 	private static float getStatIncrease(int[] stat, boolean isPromoted, int currentStat,
 			int newLevel, float statRemainder)
 	{
+		if (stat[2] == 0)
+			return 0;
+
 		JLevelProgression jlp = GlobalPythonFactory.createLevelProgression();
 		float[] values = jlp.getProgressArray(stat[0], isPromoted);
 

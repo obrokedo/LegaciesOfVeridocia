@@ -27,5 +27,5 @@ public interface JBattleFunctions {
 	public String getCriticalAttackText(CombatSprite attacker, CombatSprite target, int damage);
 	public String getNormalAttackText(CombatSprite attacker, CombatSprite target, int damage);
 	public String getCombatantDeathText(CombatSprite attacker, CombatSprite target);
-
+	public int getExperienceGainedByDamage(int damage, int attackerLevel, CombatSprite target);
 }

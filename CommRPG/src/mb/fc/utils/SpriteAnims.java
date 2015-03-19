@@ -21,59 +21,64 @@ import org.newdawn.slick.util.ResourceLoader;
 public class SpriteAnims implements Serializable
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	private Hashtable<String, Animation> animations;
 	private String spriteSheet;
 	public ArrayList<Rectangle> imageLocs;
 	public transient ArrayList<Image> images;
-	
+
 	public SpriteAnims(String spriteSheet, ArrayList<Rectangle> imageLocs)
 	{
 		animations = new Hashtable<String, Animation>();
 		this.imageLocs = imageLocs;
 		this.spriteSheet = spriteSheet;
 	}
-	
+
 	public void addAnimation(String name, Animation anim)
 	{
 		animations.put(name, anim);
 	}
-	
+
 	public void initialize(Image image, float magnify)
 	{
 		images = new ArrayList<Image>();
-		
+
 		for (int i = 0; i < imageLocs.size(); i++)
 		{
 			Rectangle r = imageLocs.get(i);
-			Image subImage = image.getSubImage((int) r.getX(), (int) r.getY(), (int) r.getWidth(), 
+			Image subImage = image.getSubImage((int) r.getX(), (int) r.getY(), (int) r.getWidth(),
 					(int) r.getHeight());
 			subImage.setFilter(Image.FILTER_NEAREST);
 			images.add(subImage.getScaledCopy(magnify));
 		}
 	}
-	
+
+	public Animation getCharacterAnimation(String name, boolean isPromoted)
+	{
+		return animations.get((isPromoted ? "Pro" : "Un") + name);
+	}
+
 	public Animation getAnimation(String name)
 	{
 		return animations.get(name);
 	}
-	
+
 	public Image getImageAtIndex(int idx)
 	{
 		return images.get(idx);
 	}
-	
+
 	public String getSpriteSheet() {
 		return spriteSheet;
 	}
-	
+
 	public void printAnimations()
 	{
 		System.out.println("-- Print Animations --");
 		for (String a : animations.keySet())
 			System.out.println(a);
 	}
-	
+
 	public Set<String> getAnimationKeys()
 	{
 		return animations.keySet();
@@ -81,7 +86,7 @@ public class SpriteAnims implements Serializable
 
 	public void serializeToFile(String fileName)
 	{
-		try 
+		try
 		{
 			OutputStream file = new FileOutputStream(fileName);
 			OutputStream buffer = new BufferedOutputStream(file);
@@ -96,7 +101,7 @@ public class SpriteAnims implements Serializable
 			System.exit(0);
 		}
 	}
-	
+
 	public static SpriteAnims deserializeFromFile(String fileName)
 	{
 	    try

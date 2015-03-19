@@ -8,6 +8,7 @@ import mb.fc.engine.state.StateInfo;
 import mb.fc.game.Camera;
 import mb.fc.game.ai.AI;
 import mb.fc.game.battle.spell.KnownSpell;
+import mb.fc.game.constants.Direction;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.hudmenu.SpriteContextPanel;
 import mb.fc.game.item.EquippableItem;
@@ -156,13 +157,15 @@ public class CombatSprite extends AnimatedSprite
 			this.ai = new WizardAI(1);
 		else
 			this.ai = new WarriorAI(1);
-		 */
+	`	*/
 	}
 
 	@Override
 	public void initializeSprite(StateInfo stateInfo)
 	{
 		super.initializeSprite(stateInfo);
+
+		currentAnim = spriteAnims.getCharacterAnimation("Down", this.isPromoted);
 
 		if (isHero)
 		{
@@ -181,7 +184,10 @@ public class CombatSprite extends AnimatedSprite
 			ItemResource.initializeItem(item, stateInfo);
 		}
 
-		// currentWeaponImage = stateInfo.getResourceManager().getSpriteSheets().get("weapons").getSubImage(0, 0);
+		if (this.getEquippedWeapon() != null && this.getEquippedWeapon().getWeaponImage() != null)
+		{
+			currentWeaponImage = stateInfo.getResourceManager().getImages().get(this.getEquippedWeapon().getWeaponImage());
+		}
 
 		this.currentAttack = this.maxAttack;
 		this.currentDefense = this.maxDefense;
@@ -330,23 +336,29 @@ public class CombatSprite extends AnimatedSprite
 
 		if (oldItem != null)
 		{
-			this.currentAttack -= oldItem.getAttack();
-			this.currentDefense -= oldItem.getDefense();
-			this.currentSpeed -= oldItem.getSpeed();
-			this.maxAttack -= oldItem.getAttack();
-			this.maxDefense -= oldItem.getDefense();
-			this.maxSpeed -= oldItem.getSpeed();
+			if (this.isHero)
+			{
+				this.currentAttack -= oldItem.getAttack();
+				this.currentDefense -= oldItem.getDefense();
+				this.currentSpeed -= oldItem.getSpeed();
+				this.maxAttack -= oldItem.getAttack();
+				this.maxDefense -= oldItem.getDefense();
+				this.maxSpeed -= oldItem.getSpeed();
+			}
 			int index = items.indexOf(oldItem);
 			this.equipped.set(index, false);
-
 		}
 
-		this.currentAttack += item.getAttack();
-		this.currentDefense += item.getDefense();
-		this.currentSpeed += item.getSpeed();
-		this.maxAttack += item.getAttack();
-		this.maxDefense += item.getDefense();
-		this.maxSpeed += item.getSpeed();
+		if (this.isHero)
+		{
+			this.currentAttack += item.getAttack();
+			this.currentDefense += item.getDefense();
+			this.currentSpeed += item.getSpeed();
+			this.maxAttack += item.getAttack();
+			this.maxDefense += item.getDefense();
+			this.maxSpeed += item.getSpeed();
+		}
+
 		int index = items.indexOf(item);
 		this.equipped.set(index, true);
 
@@ -376,6 +388,27 @@ public class CombatSprite extends AnimatedSprite
 	/*******************************************/
 	/* MUTATOR AND ACCESSOR METHODS START HERE */
 	/*******************************************/
+	@Override
+	public void setFacing(Direction dir)
+	{
+		switch (dir)
+		{
+			case UP:
+				currentAnim = spriteAnims.getCharacterAnimation("Up", this.isPromoted);
+				break;
+			case DOWN:
+				currentAnim = spriteAnims.getCharacterAnimation("Down", this.isPromoted);
+				break;
+			case LEFT:
+				currentAnim = spriteAnims.getCharacterAnimation("Left", this.isPromoted);
+				break;
+			case RIGHT:
+				currentAnim = spriteAnims.getCharacterAnimation("Right", this.isPromoted);
+				break;
+		}
+		facing = dir;
+	}
+
 	public int getCurrentHP() {
 		return currentHP;
 	}
@@ -539,7 +572,7 @@ public class CombatSprite extends AnimatedSprite
 
 	public Animation getAnimation(String animation)
 	{
-		return spriteAnims.getAnimation(animation);
+		return spriteAnims.getCharacterAnimation(animation, this.isPromoted);
 	}
 
 	public Image getAnimationImageAtIndex(int index)
