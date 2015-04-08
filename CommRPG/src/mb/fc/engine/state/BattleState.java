@@ -128,6 +128,7 @@ public class BattleState extends LoadableGameState
 			turnManager.render(g);
 			spriteRenderer.render(g);
 			tileMapRenderer.renderForeground(stateInfo.getCamera(), g, stateInfo.getGc());
+			turnManager.renderCursor(g);
 			panelRenderer.render();
 			menuRenderer.render();
 		}

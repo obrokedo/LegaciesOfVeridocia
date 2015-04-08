@@ -16,6 +16,7 @@ public class AnimationWrapper
 	protected int animationIndex;
 	protected int animationDelta;
 	protected boolean loops;
+	protected Image weapon = null;
 
 	protected AnimationWrapper(SpriteAnims spriteAnims)
 	{
@@ -31,6 +32,13 @@ public class AnimationWrapper
 	public AnimationWrapper(SpriteAnims spriteAnims, String animationName, boolean loops)
 	{
 		this.spriteAnims = spriteAnims;
+		setAnimation(animationName, loops);
+	}
+
+	public AnimationWrapper(SpriteAnims spriteAnims, String animationName, boolean loops, Image weapon)
+	{
+		this.spriteAnims = spriteAnims;
+		this.weapon = weapon;
 		setAnimation(animationName, loops);
 	}
 
@@ -96,6 +104,28 @@ public class AnimationWrapper
 		}
 	}
 
+	public void drawAnimationPortrait(int x, int y, int ySecond, Graphics g)
+	{
+		boolean first = true;
+		if (animation != null)
+		{
+			for (AnimSprite as : animation.frames.get(animationIndex).sprites)
+			{
+				if (as.imageIndex != -1)
+				{
+					if (first)
+						g.drawImage(getRotatedImageIfNeeded(spriteAnims.getImageAtIndex(as.imageIndex), as), x, y);
+					else
+						g.drawImage(getRotatedImageIfNeeded(spriteAnims.getImageAtIndex(as.imageIndex), as), x, y + ySecond);
+				}
+				else
+					drawWeapon(as, x, y, null, g);
+
+				first = false;
+			}
+		}
+	}
+
 	public void drawAnimation(int x, int y, Color filter, Graphics g)
 	{
 		if (animation != null)
@@ -117,9 +147,58 @@ public class AnimationWrapper
 		}
 	}
 
+	public void drawAnimationNormalize(int x, int y, Color filter, Graphics g)
+	{
+		if (animation != null)
+		{
+			int xOff = Integer.MIN_VALUE;
+			int yOff = Integer.MIN_VALUE;
+			for (AnimSprite as : animation.frames.get(animationIndex).sprites)
+			{
+				if (as.imageIndex != -1)
+				{
+					if (xOff == Integer.MIN_VALUE)
+					{
+						xOff = -as.x;
+						yOff = -as.y;
+					}
+
+					/*
+					System.out.println("----");
+					System.out.println(as.y);
+					System.out.println(spriteAnims.getImageAtIndex(as.imageIndex).getHeight());
+					*/
+
+					if (filter == null)
+					{
+						if (as.y < 0)
+							g.drawImage(getRotatedImageIfNeeded(spriteAnims.getImageAtIndex(as.imageIndex), as),
+								x + (as.x + xOff) * SCREEN_SCALE, y + (as.y + yOff) * SCREEN_SCALE);
+						else
+							g.drawImage(getRotatedImageIfNeeded(spriteAnims.getImageAtIndex(as.imageIndex), as),
+									x + (as.x + xOff) * SCREEN_SCALE, y + (as.y - 3 + yOff) * SCREEN_SCALE);
+					}
+					else
+						g.drawImage(getRotatedImageIfNeeded(spriteAnims.getImageAtIndex(as.imageIndex), as),
+								x + (as.x + xOff) * SCREEN_SCALE, y + (as.y + yOff) * SCREEN_SCALE, filter);
+				}
+				else
+					drawWeapon(as, x, y, filter, g);
+			}
+		}
+	}
+
 	protected void drawWeapon(AnimSprite as, int x, int y, Color filter, Graphics g)
 	{
-
+		if (weapon != null)
+		{
+			if (filter == null)
+				g.drawImage(getRotatedImageIfNeeded(weapon, as),
+						x + as.x * SCREEN_SCALE, y + as.y * SCREEN_SCALE);
+			else
+				g.drawImage(getRotatedImageIfNeeded(weapon, as),
+						x + as.x * SCREEN_SCALE, y + as.y * SCREEN_SCALE, filter);
+		}
 	}
 
 	protected Image getRotatedImageIfNeeded(Image image, AnimSprite as)

@@ -118,7 +118,7 @@ public class SpeechMenu extends Menu
 		if (portrait != null)
 		{
 			this.portrait = portrait;
-			this.portrait.setTalking();
+			this.portrait.setTalking(true);
 		}
 		else
 			this.portrait = null;
@@ -204,14 +204,14 @@ public class SpeechMenu extends Menu
 						{
 							textMoving = false;
 							if (portrait != null)
-								portrait.setBlinking();
+								portrait.setTalking(false);
 							waitingOn = CHAR_HARD_STOP;
 						}
 						else if (nextLetter.equalsIgnoreCase(CHAR_SOFT_STOP))
 						{
 							textMoving = false;
 							if (portrait != null)
-								portrait.setBlinking();
+								portrait.setTalking(false);
 
 							String[] softSplit = panelText.get(textIndex).substring(textMovingIndex).split(" ");
 
@@ -230,7 +230,7 @@ public class SpeechMenu extends Menu
 						{
 							textMoving = false;
 							if (portrait != null)
-								portrait.setBlinking();
+								portrait.setTalking(false);
 							waitUntil = System.currentTimeMillis() + 400;
 							waitingOn = CHAR_PAUSE;
 						}
@@ -257,7 +257,7 @@ public class SpeechMenu extends Menu
 			{
 				textMoving = true;
 				if (portrait != null)
-					portrait.setTalking();
+					portrait.setTalking(true);
 				waitUntil = -1;
 			}
 		}
@@ -279,7 +279,7 @@ public class SpeechMenu extends Menu
 				waitUntil = -1;
 				textMoving = true;
 				if (portrait != null)
-					portrait.setTalking();
+					portrait.setTalking(true);
 			}
 		}
 

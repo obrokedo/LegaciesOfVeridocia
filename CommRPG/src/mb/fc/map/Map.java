@@ -32,32 +32,34 @@ public class Map
 	 * A value of 1000 means that the space is unmoveable in battle. A value of 10 is equivalent to 1 space
 	 */
 	private static final int[][] movementCostsByType = {
-														//Sky      Path   Forest   Sand      Water
-														//	  Even     Ovrgrth Mtn     High Mt.
-														// Walking
-														{1000, 10, 10, 15, 20, 15, 15, 1000, 1000},
-														// Horses/Centaurs
-														{1000, 10, 10, 15, 25, 25, 25, 1000, 1000},
-														// Animals/Beastmen
-														{1000, 10, 10, 10, 10, 10, 20, 1000, 1000},
-														// Mechanical
-														{1000, 10, 10, 10, 15, 15, 15, 1000, 1000},
-														// Flying
-														{10,   10, 10, 10, 10, 10, 10, 10, 10},
+														//Water   		Road   			Forest     		Sand    	H Sky
+														//	  	Grass  			Th Gras   	 	Hills  			L Sky	Impassable
+														// Normal
+														{1000, 	10, 	10, 	15, 	20, 	15, 	20, 	1000, 1000, 1000},
+														// Slow
+														{1000, 	10, 	10, 	15, 	25, 	25, 	25, 	1000, 1000, 1000},
+														// Fast
+														{1000, 	10, 	10, 	10, 	15, 	10, 	20, 	1000, 1000, 1000},
+														// Beast
+														{1000, 	10, 	10, 	10, 	10, 	15, 	15, 	1000, 1000, 1000},
+														// Tank
+														{1000, 	10, 	10, 	10, 	15, 	10, 	15, 	1000, 1000, 1000},
+
+
 														// Hovering
-														{10,   10, 10, 10, 10, 10, 10, 1000, 10},
-														// Swimming
-														{1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 10},
-														// Elves
-														{1000, 10, 10, 10, 10, 10, 20, 1000, 1000},
+														{10,   10, 		10, 	10, 	10, 	10, 	10, 	10,   1000, 1000},
+														// Flight
+														{10,	10, 	10, 	10, 	10, 	10, 	10, 	10,	  10,	1000},
+														// Free
+														{10, 	10, 	10, 	10, 	10, 	10, 	10, 	10,   10,	10},
 													};
 
 	/**
 	 * Describes the land effect of each terrain type for units that are not flying
 	 */
-													//Sky      Path   Forest   Sand      Water
-													//	  Even     Ovrgrth Mtn     High Mt.
-	private static final int[] terrainEffectByType = {0,  15,  0,  30, 30, 30, 0,  0,    0};
+													//Water   		Road   			Forest     		Sand    	H Sky
+													//	  	Grass  			Th Gras   	 	Hills  			L Sky	Impassable
+	private static final int[] terrainEffectByType = {0,  	10,  	0,  	20, 	40, 	30, 	0,  	0,    0, 0};
 
 	/**
 	 * A list of 2 dimensional int arrays, where each entry contains the tile indexs for each tile on that layer.

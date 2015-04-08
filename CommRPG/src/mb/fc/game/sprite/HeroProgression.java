@@ -53,34 +53,24 @@ public class HeroProgression implements Serializable
 		String text = cs.getName() + " has reached level " + (cs.getLevel() + 1) + "!}[";
 		LevelUpResult level = new LevelUpResult();
 
-		float increase = getStatIncrease(p.getHp(), cs.isPromoted(), cs.getMaxHP(), cs.getLevel() + 1, remainderHP);
-		remainderHP = increase - ((int) increase);
-		level.hitpointGain = (int) increase;
-		if (((int) increase) > 0)
+		level.hitpointGain = getStatIncrease(p.getHp(), cs.isPromoted(), cs.getMaxHP(), cs.getLevel() + 1);
+		if (level.hitpointGain > 0)
 			text += " HP increased by " + level.hitpointGain + ".}[";
 
-		increase = getStatIncrease(p.getMp(), cs.isPromoted(), cs.getMaxMP(), cs.getLevel() + 1, remainderMP);
-		remainderMP = increase - ((int) increase);
-		level.magicpointGain = (int) increase;
-		if (((int) increase) > 0)
+		level.magicpointGain = getStatIncrease(p.getMp(), cs.isPromoted(), cs.getMaxMP(), cs.getLevel() + 1);
+		if (level.magicpointGain > 0)
 			text += " MP increased by " + level.magicpointGain + ".}[";
 
-		increase = getStatIncrease(p.getAttack(), cs.isPromoted(), cs.getMaxAttack(), cs.getLevel() + 1, remainderAtk);
-		remainderAtk = increase - ((int) increase);
-		level.attackGain = (int) increase;
-		if (((int) increase) > 0)
+		level.attackGain = getStatIncrease(p.getAttack(), cs.isPromoted(), cs.getMaxAttack(), cs.getLevel() + 1);
+		if (level.attackGain > 0)
 			text += " Attack increased by " + level.attackGain + ".}[";
 
-		increase = getStatIncrease(p.getDefense(), cs.isPromoted(), cs.getMaxDefense(), cs.getLevel() + 1, remainderDef);
-		remainderDef = increase - ((int) increase);
-		level.defenseGain = (int) increase;
-		if (((int) increase) > 0)
+		level.defenseGain = getStatIncrease(p.getDefense(), cs.isPromoted(), cs.getMaxDefense(), cs.getLevel() + 1);
+		if (level.defenseGain > 0)
 			text += " Defense increased by " + level.defenseGain + ".}[";
 
-		increase = getStatIncrease(p.getSpeed(), cs.isPromoted(), cs.getMaxSpeed(), cs.getLevel() + 1, remainderSpd);
-		remainderSpd = increase - ((int) increase);
-		level.speedGain = (int) increase;
-		if (((int) increase) > 0)
+		level.speedGain = getStatIncrease(p.getSpeed(), cs.isPromoted(), cs.getMaxSpeed(), cs.getLevel() + 1);
+		if (level.speedGain > 0)
 			text += " Speed increased by " + level.speedGain + ".}[";
 
 		for (int i = 0; i < spellLevels.length; i++)
@@ -159,7 +149,6 @@ public class HeroProgression implements Serializable
 		GlobalPythonFactory.intialize();
 
 		int val = 30;
-		float rem = 0;
 		int max = 0;
 
 		for (int j = 0; j < 10; j++)
@@ -168,10 +157,9 @@ public class HeroProgression implements Serializable
 			for (int i = 2; i < 30; i++)
 			{
 				// System.out.println("New Level ---- " + i);
-				float gain = getStatIncrease(new int[]{4, 30, 90}, true, val, i, rem);
+				float gain = getStatIncrease(new int[]{4, 30, 90}, true, val, i);
 				val += (int) gain;
 				System.out.print("NEW " + val +", ");
-				rem = gain - ((int) gain);
 			}
 			System.out.println();
 		}
@@ -184,8 +172,8 @@ public class HeroProgression implements Serializable
 
 	}
 
-	private static float getStatIncrease(int[] stat, boolean isPromoted, int currentStat,
-			int newLevel, float statRemainder)
+	private static int getStatIncrease(int[] stat, boolean isPromoted, int currentStat,
+			int newLevel)
 	{
 		if (stat[2] == 0)
 			return 0;
@@ -212,7 +200,8 @@ public class HeroProgression implements Serializable
 		// System.out.println("AVG " + averageValue);
 
 
-		float amountToGainNow = (values[newLevel - 1] / 100) * amountToGainTotal + statRemainder;
+		float amountToGainNow = (values[newLevel - 1] / 100) * amountToGainTotal;
+
 
 		if (!isPromoted || (newLevel - 1) % 6 != 0)
 		{
@@ -227,15 +216,22 @@ public class HeroProgression implements Serializable
 			amountToGainNow += CommRPG.RANDOM.nextInt(4);
 		}
 
-		// Check for pity upgrades
-		if (currentStat + amountToGainNow < averageValue)
+		int amountToGainNowInt = Math.round(amountToGainNow);
+
+		// Only give pity upgrades if you are unpromoted and under level 11 or
+		// if you are promoted and under level 25
+		if ((!isPromoted && newLevel <= 10) || (isPromoted && newLevel <= 25))
 		{
-			amountToGainNow++;
-			// System.out.println("Pity @ " + newLevel);
+			// Check for pity upgrades
+			if (currentStat + amountToGainNowInt < averageValue)
+			{
+				amountToGainNowInt++;
+				// System.out.println("Pity @ " + newLevel);
+			}
 		}
 
 
-		return amountToGainNow;
+		return amountToGainNowInt;
 	}
 
 

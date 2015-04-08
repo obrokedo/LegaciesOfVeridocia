@@ -5,11 +5,13 @@ import mb.fc.engine.message.IntMessage;
 import mb.fc.engine.message.Message;
 
 import org.newdawn.slick.Music;
+import org.newdawn.slick.MusicListener;
 import org.newdawn.slick.Sound;
 
-public class SoundManager extends Manager
+public class SoundManager extends Manager implements MusicListener
 {
 	private Music playingMusic;
+	private Music introMusic;
 	private float playingVolume;
 	private String playingMusicName;
 	private float playingMusicPosition;
@@ -112,5 +114,15 @@ public class SoundManager extends Manager
 			default:
 				break;
 		}
+	}
+
+	@Override
+	public void musicEnded(Music music) {
+
+	}
+
+	@Override
+	public void musicSwapped(Music music, Music newMusic) {
+
 	}
 }

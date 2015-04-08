@@ -134,7 +134,12 @@ public class BattleResults implements Serializable
 							if (attacker.isHero())
 							{
 								if (damage != 0)
-									expGained += getExperienceByDamage(damage, attacker.getLevel(), target);
+								{
+									int level = attacker.getLevel();
+									if (attacker.isPromoted())
+										level += 10;
+									expGained += getExperienceByDamage(damage, level, target);
+								}
 								else
 									expGained += 1;
 							}

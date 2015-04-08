@@ -88,7 +88,7 @@ public class CombatSprite extends AnimatedSprite
 				int id, int attackAffectId, int attackEffectChance)
 	{
 		this(isLeader, name, imageName, null, hp, mp, attack,
-				defense, speed, move, movementType, level, 0, spells, id);
+				defense, speed, move, movementType, level, 0, false, spells, id);
 		this.uniqueEnemyId = enemyId;
 		this.isHero = false;
 		this.attackEffectChance = attackEffectChance;
@@ -100,7 +100,7 @@ public class CombatSprite extends AnimatedSprite
 	 */
 	public CombatSprite(boolean isLeader,
 			String name, String imageName, HeroProgression heroProgression, int hp, int mp, int attack,
-			int defense, int speed, int move, int movementType, int level, int exp,
+			int defense, int speed, int move, int movementType, int level, int exp, boolean promoted,
 			ArrayList<KnownSpell> spells, int id)
 	{
 		super(0, 0, imageName, id);
@@ -120,6 +120,7 @@ public class CombatSprite extends AnimatedSprite
 		maxDefense = defense;
 		dodges = true;
 
+		this.isPromoted = promoted;
 		this.level = level;
 		this.exp = 0;
 
@@ -132,7 +133,7 @@ public class CombatSprite extends AnimatedSprite
 		this.heroProgression = heroProgression;
 		if (heroProgression != null)
 		{
-			if (isPromoted)
+			if (!isPromoted)
 			{
 				this.usuableWeapons = heroProgression.getUnpromotedProgression().getUsuableWeapons();
 				this.usuableArmor = heroProgression.getUnpromotedProgression().getUsuableArmor();

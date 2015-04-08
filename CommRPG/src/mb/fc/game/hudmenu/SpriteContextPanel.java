@@ -50,8 +50,8 @@ public class SpriteContextPanel extends Panel
 		int width = CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 75;
 		int healthWidth = (int) (sprite.getMaxHP() * .75 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);
 		int mpWidth = (int) (sprite.getMaxMP() * .75 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);
-		width = Math.max(width, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 57 + healthWidth);
-		width = Math.max(width, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 57 + mpWidth);
+		width = Math.max(width, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 60 + healthWidth);
+		width = Math.max(width, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 60 + mpWidth);
 		if (sprite.isHero())
 		{
 			width = Math.max(width, PANEL_FONT.getWidth(sprite.getName() + " Lv " +

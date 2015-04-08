@@ -264,7 +264,7 @@ public class HeroDefinition
 
 		// Create a CombatSprite from default stats, hero progression and spells known
 		CombatSprite cs = new CombatSprite(leader, name, animations, heroProgression,
-				hp, mp, attack, defense, speed, move[0], movementType[0], level, 0, knownSpells, id);
+				hp, mp, attack, defense, speed, move[0], movementType[0], level, 0, promoted, knownSpells, id);
 
 		// Add items to the combat sprite
 		for (int i = 0; i < items.size(); i++)

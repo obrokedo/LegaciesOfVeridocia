@@ -23,7 +23,7 @@ public class TransBGCombatAnimation extends CombatAnimation
 		this.bgXLoc = bgXLoc;
 		this.bgYLoc = bgYLoc;
 		this.childAnimation = childAnimation;
-		this.minimumTimePassed = 500;
+		this.minimumTimePassed = 250;
 		this.transIn = transIn;
 
 		if (isHero)

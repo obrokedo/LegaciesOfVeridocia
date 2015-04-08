@@ -80,6 +80,8 @@ public class DevelMenuState extends MenuState
 			g.setColor(Color.white);
 			g.drawString("Load Cin", 25, 585);
 		}
+
+		g.drawString(version, container.getWidth() / 2, container.getHeight() - 30);
 	}
 
 	@Override
@@ -218,6 +220,8 @@ public class DevelMenuState extends MenuState
 					g.drawString("v", drawX + longestNameWidth + 22, 495);
 				}
 			}
+
+			g.setColor(Color.white);
 		}
 
 		public void mouseClicked(int x, int y)

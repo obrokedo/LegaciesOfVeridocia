@@ -10,7 +10,7 @@ import mb.fc.game.menu.DebugMenu;
 import mb.fc.game.menu.HeroStatMenu;
 import mb.fc.game.menu.HeroesStatMenu;
 import mb.fc.game.menu.Menu.MenuUpdate;
-import mb.fc.game.menu.PriestMenu;
+import mb.fc.game.menu.PriestMenu2;
 import mb.fc.game.menu.ShopMenu;
 import mb.fc.game.menu.SpeechMenu;
 import mb.fc.game.menu.SystemMenu;
@@ -87,7 +87,7 @@ public class MenuManager extends Manager
 				stateInfo.addMenu(new HeroStatMenu(stateInfo.getGc(), ((SpriteContextMessage) message).getSprite(stateInfo.getSprites()), stateInfo));
 				break;
 			case SHOW_PRIEST:
-				stateInfo.addMenu(new PriestMenu(stateInfo, stateInfo.getGc(), stateInfo.getClientProfile().getHeroes()));
+				stateInfo.addMenu(new PriestMenu2(stateInfo, stateInfo.getGc(), stateInfo.getClientProfile().getHeroes()));
 				break;
 			case SHOW_DEBUG:
 				stateInfo.addMenu(new DebugMenu(stateInfo.getGc()));

@@ -17,6 +17,7 @@ import mb.fc.game.input.FCInput;
 import mb.fc.game.menu.Menu.MenuUpdate;
 import mb.fc.game.menu.Portrait;
 import mb.fc.game.menu.SpeechMenu;
+import mb.fc.game.resource.HeroResource;
 import mb.fc.game.sprite.AnimatedSprite;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.sprite.NPCSprite;
@@ -432,7 +433,7 @@ public class Cinematic {
 				int associated = (int) ce.getParam(6);
 				if (associated >= 0)
 				{
-					for (CombatSprite cs : stateInfo.getHeroes())
+					for (CombatSprite cs : stateInfo.getPsi().getClientProfile().getHeroes())
 					{
 						if (cs.getId() == associated)
 						{
@@ -664,6 +665,9 @@ public class Cinematic {
 				break;
 			case EXIT_GAME:
 				System.exit(0);
+				break;
+			case ADD_HERO:
+				stateInfo.getPsi().getClientProfile().addHero(HeroResource.getHero((int) ce.getParam(0)));
 				break;
 			default:
 				break;

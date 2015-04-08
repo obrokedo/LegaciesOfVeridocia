@@ -35,6 +35,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Music;
+import org.newdawn.slick.MusicListener;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 import org.newdawn.slick.SpriteSheet;
@@ -42,7 +43,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.EmptyTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
-public class LOVAttackCinematicState extends LoadableGameState
+public class LOVAttackCinematicState extends LoadableGameState implements MusicListener
 {
 	private static float SCREEN_SCALE = CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
 
@@ -78,6 +79,7 @@ public class LOVAttackCinematicState extends LoadableGameState
 	private AnimationWrapper spellAnimation;
 	private boolean spellTargetsHeroes;
 	private Music music;
+	private Music introMusic;
 	public static final int SPELL_FLASH_DURATION = 480;
 	public static Image FLOOR_IMAGE;
 
@@ -140,8 +142,20 @@ public class LOVAttackCinematicState extends LoadableGameState
 			musicSelector = GlobalPythonFactory.createJMusicSelector();
 		}
 
-		music = frm.getMusicByName(musicSelector.getAttackMusic(attacker, targetsAllies));
-		music.loop();
+		String mus = musicSelector.getAttackMusic(attacker, targetsAllies);
+		music = frm.getMusicByName(mus);
+		introMusic = frm.getMusicByName(mus + "_L");
+
+		if (introMusic == null)
+		{
+			if (music != null)
+				music.loop();
+		}
+		else
+		{
+			introMusic.addListener(this);
+			introMusic.play();
+		}
 
 		SpriteSheet battleBGSS = frm.getSpriteSheets().get("battlebg");
 		Image bgIm = battleBGSS.getSprite(frm.getMap().getBackgroundImageIndex() % battleBGSS.getHorizontalCount(),
@@ -311,7 +325,9 @@ public class LOVAttackCinematicState extends LoadableGameState
 				gc.getWidth(), null, false, attacker.isHero()));
 		addCombatAnimationWithNoSpeechNoReaction(attacker.isHero(), new TransBGCombatAnimation(backgroundImage, bgXPos, bgYPos,
 				gc.getWidth(), sca, true, !attacker.isHero()));
+
 		addAttackAction(attacker, target, battleResults, index, false, true);
+
 		addCombatAnimationWithNoSpeechNoReaction(target.isHero(), new TransBGCombatAnimation(backgroundImage, bgXPos, bgYPos,
 				gc.getWidth(), sca, false, target.isHero()));
 		addCombatAnimationWithNoSpeechNoReaction(target.isHero(), new TransBGCombatAnimation(backgroundImage, bgXPos, bgYPos,
@@ -331,7 +347,8 @@ public class LOVAttackCinematicState extends LoadableGameState
 			aca = new AttackCombatAnimation(attacker,
 				battleResults, false, battleResults.critted.get(index));
 		else
-			aca = new AttackCombatAnimation(new AnimationWrapper(frm.getSpriteAnimations().get("Ranged"), "Ranged", false), attacker);
+			aca = new AttackCombatAnimation(new AnimationWrapper(frm.getSpriteAnimations().get("Ranged"), "Ranged", false, attacker.getCurrentWeaponImage()),
+					attacker);
 		addCombatAnimation(attacker.isHero(), aca);
 
 		if (battleResults.dodged.get(index))
@@ -566,6 +583,9 @@ public class LOVAttackCinematicState extends LoadableGameState
 						attacker.getHeroProgression().levelUp(attacker, battleResults.levelUpResult, frm);
 					else
 						battleResults.targets.get(0).getHeroProgression().levelUp(battleResults.targets.get(0), battleResults.levelUpResult, frm);
+					String sound = musicSelector.getLevelUpSoundEffect(attacker);
+					if (sound != null)
+						frm.getSoundByName(sound).play();
 				}
 			}
 		}
@@ -602,6 +622,9 @@ public class LOVAttackCinematicState extends LoadableGameState
 		}
 		else
 		{
+			String sound = musicSelector.getAfterSpellFlashSoundEffect(attacker.isHero(), battleResults.battleCommand.getSpell().getName());
+			if (sound != null)
+				frm.getSoundByName(sound).play();
 			spellFlash = null;
 			spellAnimation.update(delta);
 		}
@@ -659,7 +682,10 @@ public class LOVAttackCinematicState extends LoadableGameState
 		else
 		{
 			// EXIT
-			music.stop();
+			if (music != null)
+				music.stop();
+			if (introMusic != null)
+				introMusic.stop();
 			gc.getInput().removeAllKeyListeners();
 			game.enterState(CommRPG.STATE_GAME_BATTLE, new FadeOutTransition(Color.black, 250), new EmptyTransition());
 		}
@@ -697,5 +723,17 @@ public class LOVAttackCinematicState extends LoadableGameState
 	@Override
 	public int getID() {
 		return CommRPG.STATE_GAME_BATTLE_ANIM;
+	}
+
+	@Override
+	public void musicEnded(Music music) {
+		music.removeListener(this);
+		this.music.loop();
+	}
+
+	@Override
+	public void musicSwapped(Music music, Music newMusic) {
+		// TODO Auto-generated method stub
+
 	}
 }

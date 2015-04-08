@@ -408,6 +408,16 @@ public class TextParser
 			return new CinematicEvent(CinematicEventType.MOVE_FROM_FOREFRONT, area.getAttribute("name"));
 		else if (type.equalsIgnoreCase("exit"))
 			return new CinematicEvent(CinematicEventType.EXIT_GAME);
+		else if (type.equalsIgnoreCase("addhero"))
+		{
+			CinematicEvent ce = new CinematicEvent(CinematicEventType.ADD_HERO, Integer.parseInt(area.getAttribute("heroid")));
+			if (Boolean.parseBoolean(area.getAttribute("init")))
+			{
+				initEvents.add(ce);
+				return null;
+			}
+			return ce;
+		}
 		return null;
 	}
 }

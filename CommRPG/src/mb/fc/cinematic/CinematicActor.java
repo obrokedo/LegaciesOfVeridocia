@@ -702,7 +702,7 @@ public class CinematicActor implements Comparable<CinematicActor>
 		{
 			case UP:
 				if (isHeroBacked)
-					currentAnim = spriteAnims.getCharacterAnimation("UnUp", isHeroPromoted);
+					currentAnim = spriteAnims.getCharacterAnimation("Up", isHeroPromoted);
 				else
 					currentAnim = spriteAnims.getAnimation("UnUp");
 				break;

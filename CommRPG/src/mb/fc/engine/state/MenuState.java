@@ -37,7 +37,7 @@ public class MenuState extends LoadableGameState
 {
 	protected StateBasedGame game;
 	protected GameContainer gc;
-	protected String version = "DEV 2";
+	protected String version = "DEV 1.23";
 	protected Font font;
 	protected boolean initialized = false;
 	protected FCInput input;

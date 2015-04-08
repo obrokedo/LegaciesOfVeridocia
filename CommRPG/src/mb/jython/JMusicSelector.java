@@ -20,6 +20,8 @@ public interface JMusicSelector {
 
 	public String getCastSpellSoundEffect(boolean isHero, String spellName);
 
+	public String getAfterSpellFlashSoundEffect(boolean isHero, String spellName);
+
 	public String getUseItemSoundEffect(boolean isHero, boolean isTargetAlly, String itemName);
 
 	public String getLevelUpSoundEffect(CombatSprite hero);

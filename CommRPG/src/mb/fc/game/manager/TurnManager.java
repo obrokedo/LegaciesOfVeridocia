@@ -41,6 +41,7 @@ import mb.fc.game.turnaction.WaitAction;
 import mb.jython.GlobalPythonFactory;
 import mb.jython.JBattleEffect;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
@@ -74,6 +75,7 @@ public class TurnManager extends Manager implements KeyboardListener
 	private boolean resetSpriteLoc = false;
 	private boolean turnManagerHasFocus = false;
 	private int activeCharFlashDelta = 0;
+	private boolean displayOverCursor = false;
 	private static final int UPDATE_TIME = 20;
 
 	// This describes the location and size of the moveable tiles array on the world
@@ -149,6 +151,15 @@ public class TurnManager extends Manager implements KeyboardListener
 		}
 	}
 
+	public void renderCursor(Graphics graphics)
+	{
+		if (displayCursor && displayOverCursor)
+		{
+			cursorImage.draw(cursor.getX() - stateInfo.getCamera().getLocationX() + stateInfo.getGc().getDisplayPaddingX(),
+					cursor.getY() - stateInfo.getCamera().getLocationY(), new Color(1f, 1f, 1f, .5f));
+		}
+	}
+
 	private void processTurnActions(StateBasedGame game)
 	{
 		if (turnActions.size() == 0)
@@ -157,6 +168,12 @@ public class TurnManager extends Manager implements KeyboardListener
 		switch (a.action)
 		{
 			case TurnAction.ACTION_MANUAL_MOVE_CURSOR:
+
+				// Get any combat sprite at the cursors location
+				if (stateInfo.getCombatSpriteAtMapLocation(cursorTargetX, cursorTargetY, null) != null)
+				{
+					displayOverCursor = false;
+				}
 
 				if (cursor.getX() < cursorTargetX)
 					cursor.setX(cursor.getX() + stateInfo.getTileWidth() / 6);
@@ -186,6 +203,7 @@ public class TurnManager extends Manager implements KeyboardListener
 					}
 					else
 					{
+						displayOverCursor = true;
 						stateInfo.removePanel(landEffectPanel);
 						// Remove any health bar panels that may have been displayed from a sprite that we were previously over
 						stateInfo.removePanel(Panel.PANEL_HEALTH_BAR);
@@ -194,6 +212,8 @@ public class TurnManager extends Manager implements KeyboardListener
 				}
 				break;
 			case TurnAction.ACTION_MOVE_CURSOR_TO_ACTOR:
+				this.displayOverCursor = true;
+
 				if (cursor.getX() == currentSprite.getLocX() &&
 					cursor.getY() == currentSprite.getLocY())
 				{
@@ -427,7 +447,7 @@ public class TurnManager extends Manager implements KeyboardListener
 		else if (ownsSprite)
 			stateInfo.addKeyboardListener(this);
 		displayCursor = true;
-
+		displayOverCursor = false;
 	}
 
 	private void determineAttackableSpace(boolean playerAttacking)
@@ -524,6 +544,7 @@ public class TurnManager extends Manager implements KeyboardListener
 		// If we are already reset then switch to cursor mode
 		displayMoveable = false;
 		displayCursor = true;
+		displayOverCursor = false;
 		stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, GlobalPythonFactory.createJMusicSelector().getMenuAddedSoundEffect(), 1f, false));
 		stateInfo.removeKeyboardListener();
 		this.turnManagerHasFocus = true;

@@ -6,6 +6,7 @@ import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.resource.EnemyResource;
 import mb.fc.game.resource.HeroResource;
 import mb.fc.game.sprite.CombatSprite;
+import mb.fc.utils.AnimFrame;
 import mb.fc.utils.AnimationWrapper;
 import mb.fc.utils.SpriteAnims;
 
@@ -14,7 +15,10 @@ import org.newdawn.slick.Graphics;
 
 public class Portrait
 {
-	private AnimationWrapper blinkAnim, talkAnim, currentAnim;
+	private AnimationWrapper idleAnim, blinkAnim, talkAnim;
+	private int topHeight;
+	private boolean isBlinking = false, isTalking = false;
+	int blinkCounter = 0;
 
 	public static Portrait getPortrait(int heroId, int enemyId, StateInfo stateInfo)
 	{
@@ -49,20 +53,28 @@ public class Portrait
 
 	private static Portrait getPortrait(SpriteAnims spriteAnim, boolean promoted)
 	{
-		if ((promoted || spriteAnim.getAnimation("UnPort") == null) && spriteAnim.getAnimation("ProPort") != null)
+		if ((promoted || spriteAnim.getAnimation("UnPortIdle") == null) && spriteAnim.getAnimation("ProPortIdle") != null)
 		{
 			Portrait p = new Portrait();
-			p.blinkAnim = new AnimationWrapper(spriteAnim, "ProPort", true);
+
+			p.idleAnim = new AnimationWrapper(spriteAnim, "ProPortIdle", true);
+			p.blinkAnim = new AnimationWrapper(spriteAnim, "ProPortBlink", false);
 			p.talkAnim = new AnimationWrapper(spriteAnim, "ProPortTalk", true);
-			p.currentAnim = p.blinkAnim;
+
+			AnimFrame af = p.blinkAnim.getCurrentAnimation().frames.get(0);
+			p.topHeight = spriteAnim.images.get(af.sprites.get(0).imageIndex).getHeight();
 			return p;
 		}
-		else if (spriteAnim.getAnimation("UnPort") != null)
+		else if (spriteAnim.getAnimation("UnPortIdle") != null)
 		{
 			Portrait p = new Portrait();
-			p.blinkAnim = new AnimationWrapper(spriteAnim, "UnPort", true);
+			p.idleAnim = new AnimationWrapper(spriteAnim, "UnPortIdle", true);
+			p.blinkAnim = new AnimationWrapper(spriteAnim, "UnPortBlink", false);
 			p.talkAnim = new AnimationWrapper(spriteAnim, "UnPortTalk", true);
-			p.currentAnim = p.blinkAnim;
+
+			AnimFrame af = p.blinkAnim.getCurrentAnimation().frames.get(0);
+			p.topHeight = spriteAnim.images.get(af.sprites.get(0).imageIndex).getHeight();
+
 			return p;
 		}
 
@@ -72,24 +84,46 @@ public class Portrait
 	public void render(int x, int y, Graphics graphics)
 	{
 		Panel.drawPanelBox(x, y, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 62, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 78, graphics, Color.black);
-		currentAnim.drawAnimationIgnoreOffset(x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 7, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 7, graphics);
+		idleAnim.drawAnimationPortrait(x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 7,
+				y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 7, topHeight, graphics);
+
+		if (isBlinking)
+			blinkAnim.drawAnimationIgnoreOffset(x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 7,
+				y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 7, graphics);
+
+		if (isTalking)
+			talkAnim.drawAnimationIgnoreOffset(x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 7,
+					y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 7 + topHeight, graphics);
 	}
 
 	public void update(long delta)
 	{
 		delta = (int) (delta * (CommRPG.RANDOM.nextFloat() * 2));
-		currentAnim.update(delta);
+		if (isBlinking)
+		{
+			if (blinkAnim.update(delta))
+			{
+				isBlinking = false;
+				blinkAnim.resetCurrentAnimation();
+			}
+		}
+		else
+		{
+			blinkCounter += delta;
+			if (blinkCounter >= 1500)
+			{
+				isBlinking = true;
+				blinkCounter = 0;
+			}
+		}
+
+		if (isTalking)
+			talkAnim.update(delta);
 	}
 
-	public void setTalking()
+	public void setTalking(boolean talking)
 	{
-		currentAnim = talkAnim;
-		blinkAnim.resetCurrentAnimation();
-	}
-
-	public void setBlinking()
-	{
-		currentAnim = blinkAnim;
+		isTalking = talking;
 		talkAnim.resetCurrentAnimation();
 	}
 }

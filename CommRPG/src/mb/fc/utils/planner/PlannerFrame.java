@@ -37,6 +37,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 	private ArrayList<ArrayList<String>> listOfLists;
 	private JTabbedPane jtp;
 	private File triggerFile;
+	private static String version = "DEV 1.23";
 	public static boolean SHOW_CIN = false;
 	public static boolean SHOW_CIN_LOCATION = true;
 
@@ -62,7 +63,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 	}
 
 	private PlannerFrame() {
-		super("Planner: NO TRIGGERS LOADED");
+		super("Planner: NO TRIGGERS LOADED " + version);
 
 		try {
 		    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
@@ -1436,6 +1437,22 @@ public class PlannerFrame extends JFrame implements ActionListener,
 				"Causes the game to exit",
 				definingValues));
 
+		// Add hero
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_HERO,
+				PlannerValueDef.TYPE_INT, "heroid", false, "Hero ID",
+				"The ID of the hero that should be added to the force"));
+		allowableLines.add(new PlannerLineDef("addhero", "Add Hero",
+				"Adds a new hero to the force", definingValues));
+		definingValues
+		.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_BOOLEAN,
+				"init",
+				false,
+				"Initialize before Cinematic",
+				"Indicates that this action should be taken before the scene is rendered. Blocking actions should NEVER be initialized before the scene"));
+
 
 
 		cinematicContainer = new PlannerContainerDef(definingLine,
@@ -2353,7 +2370,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 
 				triggerFile = fc.getSelectedFile();
 
-				this.setTitle("Planner: " + triggerFile.getName());
+				this.setTitle("Planner: " + triggerFile.getName() + " " + version);
 
 				try {
 					triggerFile.createNewFile();
@@ -2436,7 +2453,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 		((PlannerTab) jtp.getComponent(TAB_CIN)).clearValues();
 		((PlannerTab) jtp.getComponent(TAB_TEXT)).clearValues();
 
-		this.setTitle("Planner: " + triggerFile.getName());
+		this.setTitle("Planner: " + triggerFile.getName() + " " + version);
 
 		try {
 			parseContainer(XMLParser.process(Files.readAllLines(

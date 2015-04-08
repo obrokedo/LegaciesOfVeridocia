@@ -69,7 +69,8 @@ public class CinematicEvent
 		FLASH_SCREEN,
 		MOVE_TO_FOREFRONT,
 		MOVE_FROM_FOREFRONT,
-		EXIT_GAME
+		EXIT_GAME,
+		ADD_HERO
 	}
 
 	private CinematicEventType type;

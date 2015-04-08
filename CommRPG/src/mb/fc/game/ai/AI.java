@@ -278,7 +278,6 @@ public abstract class AI
 	private Point getBestPoint(StateInfo stateInfo, int tileWidth, int tileHeight,
 			CombatSprite attacker, MoveableSpace ms, boolean retreat, int searchRange)
 	{
-		Point bestPoint = null;
 		int maxDistance = Integer.MIN_VALUE;
 
 		if (!retreat)
@@ -286,6 +285,8 @@ public abstract class AI
 
 		int tx = attacker.getTileX();
 		int ty = attacker.getTileY();
+
+		Point bestPoint = new Point(tx, ty);
 
 		for (int i = -searchRange; i <= searchRange; i++)
 		{
