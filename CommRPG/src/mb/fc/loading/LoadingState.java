@@ -3,6 +3,7 @@ package mb.fc.loading;
 import java.util.ArrayList;
 import java.util.List;
 
+import mb.fc.game.exception.BadResourceException;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.resource.SpellResource;
 import mb.jython.GlobalPythonFactory;
@@ -15,6 +16,7 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.EmptyTransition;
 import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.util.Log;
 
 public class LoadingState extends BasicGameState
 {
@@ -97,7 +99,7 @@ public class LoadingState extends BasicGameState
 			}
 			catch (Throwable e)
 			{
-				System.err.println("Error loading resource list: " + mapName);
+				Log.debug("Error loading resource list: " + mapName);
 				errorMessage = "Error loading resource list: " + mapName;
 				e.printStackTrace();
 				// System.exit(0);
@@ -114,10 +116,10 @@ public class LoadingState extends BasicGameState
 				}
 				catch (Throwable e)
 				{
-					System.err.println("Error loading resource: " + line);
+					Log.debug("Error loading resource: " + line);
 					errorMessage = "Error loading resource: " + line;
 					e.printStackTrace();
-					// System.exit(0);
+					throw new BadResourceException("Error loading resource: " + line + ".\n" + e.getMessage());
 				}
 			}
 		}
@@ -141,7 +143,7 @@ public class LoadingState extends BasicGameState
 			if (loadResources)
 				nextState.stateLoaded(resourceManager);
 			LoadingState.loading = false;
-			game.getState(nextState.getID()).init(container, game);
+			nextState.initAfterLoad();
 			game.enterState(nextState.getID(), new EmptyTransition(), new FadeInTransition(Color.black, 250));
 		}
 

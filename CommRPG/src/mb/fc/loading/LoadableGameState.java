@@ -8,6 +8,8 @@ public abstract class LoadableGameState extends BasicGameState
 
 	public abstract void stateLoaded(FCResourceManager resourceManager);
 
+	public abstract void initAfterLoad();
+
 	public boolean isLoading() {
 		return loading;
 	}
@@ -15,4 +17,6 @@ public abstract class LoadableGameState extends BasicGameState
 	public void setLoading(boolean loading) {
 		this.loading = loading;
 	}
+
+
 }

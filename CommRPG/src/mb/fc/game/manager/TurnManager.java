@@ -19,7 +19,6 @@ import mb.fc.game.constants.Direction;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.input.FCInput;
 import mb.fc.game.input.KeyMapping;
-import mb.fc.game.item.EquippableItem;
 import mb.fc.game.listener.KeyboardListener;
 import mb.fc.game.menu.BattleActionsMenu;
 import mb.fc.game.menu.HeroStatMenu;
@@ -46,9 +45,12 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.util.Log;
 
 public class TurnManager extends Manager implements KeyboardListener
 {
+	private static final int UPDATE_TIME = 20;
+
 	/**
 	 * So if AI is command people it just manually adds entries to the turn actions that determine
 	 * what type of battle command should be contained in the AttackSpriteAction. If this is being controlled
@@ -60,7 +62,6 @@ public class TurnManager extends Manager implements KeyboardListener
 	private CombatSprite currentSprite;
 	private MovingSprite movingSprite;
 	private Point spriteStartPoint;
-	private boolean ownsSprite;
 	private BattleResults battleResults;
 	private BattleCommand battleCommand;
 	private SpellMenu spellMenu;
@@ -72,12 +73,12 @@ public class TurnManager extends Manager implements KeyboardListener
 	private Rectangle cursor;
 	private int cursorTargetX, cursorTargetY;
 	private int updateDelta = 0;
+	private int activeCharFlashDelta = 0;
+
+	private boolean ownsSprite;
 	private boolean resetSpriteLoc = false;
 	private boolean turnManagerHasFocus = false;
-	private int activeCharFlashDelta = 0;
 	private boolean displayOverCursor = false;
-	private static final int UPDATE_TIME = 20;
-
 	// This describes the location and size of the moveable tiles array on the world
 	private boolean displayMoveable = false;
 
@@ -96,9 +97,17 @@ public class TurnManager extends Manager implements KeyboardListener
 		landEffectPanel = new LandEffectPanel();
 		movingSprite = null;
 		ms = null;
+		as = null;
+		currentSprite = null;
+		spriteStartPoint = null;
+		battleResults = null;
+		battleCommand = null;
+		displayMoveable = displayAttackable = displayCursor = displayOverCursor =
+				turnManagerHasFocus = resetSpriteLoc = ownsSprite = false;
 
 		cursorImage = stateInfo.getResourceManager().getImages().get("battlecursor");
 		cursor = new Rectangle(0, 0, stateInfo.getTileWidth(), stateInfo.getTileHeight());
+		cursorTargetX = cursorTargetY = updateDelta = activeCharFlashDelta = 0;
 	}
 
 	public void update(StateBasedGame game, int delta)
@@ -440,7 +449,7 @@ public class TurnManager extends Manager implements KeyboardListener
 
 		if (sprite.getAi() != null)
 		{
-			System.out.println("IVE GOT AI");
+			Log.debug("Perform AI for " + sprite.getName());
 			stateInfo.sendMessage(new TurnActionsMessage(false, sprite.getAi().performAI(stateInfo, ms, currentSprite)), true);
 		}
 		// If we own this sprite then we add keyboard input listener
@@ -458,16 +467,15 @@ public class TurnManager extends Manager implements KeyboardListener
 		int[][] range = null;
 		int[][] area = null;
 		boolean targetsHero = !currentSprite.isHero();
-		int declaredRange = 0;
 
 		if (battleCommand.getCommand() == BattleCommand.COMMAND_ATTACK)
 		{
-			declaredRange = currentSprite.getAttackRange();
+			range = currentSprite.getAttackRange().getAttackableSpace();
 			area = AttackableSpace.RANGE_0;
 		}
 		else if (battleCommand.getCommand() == BattleCommand.COMMAND_SPELL)
 		{
-			declaredRange = battleCommand.getSpell().getRange()[battleCommand.getLevel() - 1];
+			range = battleCommand.getSpell().getRange()[battleCommand.getLevel() - 1].getAttackableSpace();
 
 			switch (battleCommand.getSpell().getArea()[battleCommand.getLevel() - 1])
 			{
@@ -487,7 +495,7 @@ public class TurnManager extends Manager implements KeyboardListener
 		}
 		else if (battleCommand.getCommand() == BattleCommand.COMMAND_ITEM)
 		{
-			declaredRange = battleCommand.getItem().getItemUse().getRange();
+			range = battleCommand.getItem().getItemUse().getRange().getAttackableSpace();
 
 			switch (battleCommand.getItem().getItemUse().getArea())
 			{
@@ -504,22 +512,6 @@ public class TurnManager extends Manager implements KeyboardListener
 
 			if (!battleCommand.getItem().getItemUse().isTargetsEnemy())
 				targetsHero = currentSprite.isHero();
-		}
-
-		switch (declaredRange)
-		{
-			case 1:
-				range = AttackableSpace.RANGE_1;
-				break;
-			case 2:
-				range = AttackableSpace.RANGE_2;
-				break;
-			case 3:
-				range = AttackableSpace.RANGE_3;
-				break;
-			case EquippableItem.RANGE_BOW_2_NO_1:
-				range = AttackableSpace.RANGE_2_1;
-				break;
 		}
 
 		as = new AttackableSpace(stateInfo, currentSprite, targetsHero, range, area);

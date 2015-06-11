@@ -105,7 +105,6 @@ public class TestState extends LoadableGameState
 		Image bgIm = frm.getSpriteSheets().get("battlebg").getSprite(0,  0);
 
 		backgroundImage = bgIm.getScaledCopy((gc.getWidth() - gc.getDisplayPaddingX() * 2) / (float) bgIm.getWidth());
-		System.out.println("RESULT SCALE " + backgroundImage.getWidth());
 
 		bgXPos = gc.getDisplayPaddingX();
 		bgYPos = (gc.getHeight() - backgroundImage.getHeight()) / 2;
@@ -118,6 +117,12 @@ public class TestState extends LoadableGameState
 	public int getID() {
 		// TODO Auto-generated method stub
 		return CommRPG.STATE_GAME_TEST;
+	}
+
+	@Override
+	public void initAfterLoad() {
+		// TODO Auto-generated method stub
+
 	}
 
 }

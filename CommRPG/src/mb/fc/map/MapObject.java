@@ -191,8 +191,6 @@ public class MapObject
 			if (params.containsKey("unit"))
 				id = Integer.parseInt(params.get("unit"));
 
-			System.out.println("SET ID " + id);
-
 			int approachIndex = 0;
 			if (approach.equalsIgnoreCase("fast"))
 				approachIndex = AI.APPROACH_KAMIKAZEE;

@@ -452,7 +452,6 @@ public class CinematicActor implements Comparable<CinematicActor>
 
 						if (haltingMove)
 						{
-							System.out.println("STOP HALTING");
 							haltingMove = false;
 							cinematic.decreaseMoves();
 						}
@@ -619,7 +618,6 @@ public class CinematicActor implements Comparable<CinematicActor>
 		specialEffectType = SE_TREMBLE;
 		specialEffectDuration = INDEFINITE_TIME;
 		specialEffectDelta = 0;
-		System.out.println("TREMBLE " + jCinematicActor.getTrembleUpdate());
 		specialEffectUpdate = jCinematicActor.getTrembleUpdate();
 		specialEffectCounter = 0;
 		animUpdate = Long.MAX_VALUE;

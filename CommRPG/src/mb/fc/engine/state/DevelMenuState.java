@@ -1,11 +1,12 @@
 package mb.fc.engine.state;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
 import mb.fc.engine.CommRPG;
+import mb.fc.game.ui.ResourceSelector;
+import mb.fc.game.ui.ResourceSelector.ResourceSelectorListener;
 import mb.fc.loading.FCLoadingRenderSystem;
 import mb.fc.loading.FCResourceManager;
 import mb.fc.loading.LoadableGameState;
@@ -14,6 +15,8 @@ import mb.fc.loading.MapParser;
 import mb.fc.loading.TilesetParser;
 import mb.fc.map.Map;
 import mb.fc.map.MapObject;
+import mb.fc.utils.gif.GifFrame;
+import mb.fc.utils.planner.PlannerFrame;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -28,9 +31,11 @@ import org.newdawn.slick.state.StateBasedGame;
  * @author Broked
  *
  */
-public class DevelMenuState extends MenuState
+public class DevelMenuState extends MenuState implements ResourceSelectorListener
 {
 	private ResourceSelector mapSelector, textSelector, entranceSelector;
+	private PlannerFrame plannerFrame = new PlannerFrame();
+	private GifFrame quickAnimate = new GifFrame();
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
@@ -38,8 +43,9 @@ public class DevelMenuState extends MenuState
 		this.game = game;
 		this.gc = container;
 		gameSetup(game, gc);
-		mapSelector = new ResourceSelector(true, "map");
-		textSelector = new ResourceSelector(false, "text");
+		mapSelector = new ResourceSelector("Select Map", 0, true, "map", ".tmx", container);
+		mapSelector.setListener(this);
+		textSelector = new ResourceSelector("Select Text", 0, false, "text", "", container);
 	}
 
 	@Override
@@ -50,9 +56,6 @@ public class DevelMenuState extends MenuState
 		g.drawString("DEVELOPMENT MODE", 5, 5);
 
 		g.setColor(Color.white);
-		g.drawString("Select Map", 5, 35);
-		g.drawString("Select Entrance", (gc.getWidth() - 150) / 2, 35);
-		g.drawString("Select Text", gc.getWidth() - 150, 35);
 
 		mapSelector.render(g);
 		textSelector.render(g);
@@ -82,13 +85,18 @@ public class DevelMenuState extends MenuState
 		}
 
 		g.drawString(version, container.getWidth() / 2, container.getHeight() - 30);
+		g.drawString("F1 - Toggle Main/Dev Menu", container.getWidth() - 250, container.getHeight() - 120);
+		g.drawString("F2 - Open Planner", container.getWidth() - 250, container.getHeight() - 90);
+		g.drawString("F3 - Open Quick Animator", container.getWidth() - 250, container.getHeight() - 60);
+		g.drawString("F4 - Open Animation Viewer", container.getWidth() - 250, container.getHeight() - 30);
+
 	}
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException
 	{
-		if (container.getInput().isKeyDown(Input.KEY_F1))
+		if (container.getInput().isKeyPressed(Input.KEY_F1))
 		{
 			((LoadingState) game.getState(CommRPG.STATE_GAME_LOADING)).setLoadingInfo("/menu/MainMenu", null, false, true,
 					new FCResourceManager(),
@@ -96,6 +104,25 @@ public class DevelMenuState extends MenuState
 							new FCLoadingRenderSystem(container));
 
 			game.enterState(CommRPG.STATE_GAME_LOADING);
+		}
+
+
+
+		if (container.getInput().isKeyPressed(Input.KEY_F2))
+		{
+			if (!plannerFrame.isVisible())
+				plannerFrame.setVisible(true);
+		}
+
+		if (container.getInput().isKeyPressed(Input.KEY_F3))
+		{
+			if (!quickAnimate.isVisible())
+				quickAnimate.setVisible(true);
+		}
+
+		if (container.getInput().isKeyPressed(Input.KEY_F4))
+		{
+			game.enterState(CommRPG.STATE_GAME_ANIM_VIEW);
 		}
 
 		if (updateDelta > 0)
@@ -126,7 +153,6 @@ public class DevelMenuState extends MenuState
 				{
 					entrance = entranceSelector.getSelectedResource();
 				}
-				System.out.println("START");
 				start(gc, action, mapSelector.getSelectedResource().replaceFirst(".tmx", ""), textSelector.getSelectedResource(), entrance);
 			}
 		}
@@ -142,141 +168,27 @@ public class DevelMenuState extends MenuState
 		return CommRPG.STATE_GAME_MENU_DEVEL;
 	}
 
-	private class ResourceSelector
-	{
-		private ArrayList<String> mapFiles = new ArrayList<String>();
-		private int longestNameWidth = 0;
-		private int selectedItem = -1;
-		private int drawX = 0;
-		private int menuIndex = 0;
-		private boolean isMap = false;
-		private ArrayList<String> entrances;
+	@Override
+	public boolean resourceSelected(String selectedItem,
+			ResourceSelector parentSelector) {
+		Map map = new Map();
+		ArrayList<String> entrances = new ArrayList<>();
+		try {
+			MapParser.parseMap("map/" + selectedItem, map, new TilesetParser(), null);
 
-		public ResourceSelector(boolean onLeft, String rootFolder)
-		{
-			File dir = new File(rootFolder);
-			mapFiles.clear();
 
-			for (String map : dir.list())
-			{
-				mapFiles.add(map);
-				int width = gc.getDefaultFont().getWidth(map);
+			for (MapObject mo : map.getMapObjects())
+				if (mo.getKey().equalsIgnoreCase("start"))
+					entrances.add(mo.getParam("exit"));
 
-				if (width > longestNameWidth)
-					longestNameWidth = width;
-			}
-			longestNameWidth += 50;
+			entranceSelector = new ResourceSelector("Select Entrance", (gc.getWidth() - 150) / 2, entrances);
+			return true;
 
-			if (!onLeft)
-			{
-				drawX = gc.getWidth() - longestNameWidth;
-			}
-
-			isMap = onLeft;
-
-			if (isMap)
-			{
-				entrances = new ArrayList<String>();
-			}
+		} catch (Throwable t) {
+			t.printStackTrace();
+			JOptionPane.showMessageDialog(null, "The selected map contains errors and may not be loaded");
+			entranceSelector = null;
 		}
-
-		public ResourceSelector(int drawX, ArrayList<String> values)
-		{
-			longestNameWidth = 150;
-			this.mapFiles = values;
-			this.drawX = drawX;
-		}
-
-
-		public void render(Graphics g)
-		{
-			for (int i = 0; i < Math.min(15, mapFiles.size()); i++)
-			{
-				g.setColor(Color.blue);
-				g.fillRect(drawX + 0, 70 + 30 * i, longestNameWidth, 25);
-
-				if (i + menuIndex != selectedItem)
-					g.setColor(Color.white);
-				else
-					g.setColor(Color.red);
-				g.drawString(mapFiles.get(i + this.menuIndex), drawX + 25, 75 + 30 * i);
-			}
-
-			if (mapFiles.size() > 15)
-			{
-				if (menuIndex > 0)
-				{
-					g.setColor(Color.blue);
-					g.fillRect(drawX + longestNameWidth + 15, 70, 25, 25);
-					g.setColor(Color.white);
-					g.drawString("^", drawX + longestNameWidth + 22, 75);
-				}
-
-				if (menuIndex < mapFiles.size() - 15)
-				{
-					g.setColor(Color.blue);
-					g.fillRect(drawX + longestNameWidth + 15, 490, 25, 25);
-					g.setColor(Color.white);
-					g.drawString("v", drawX + longestNameWidth + 22, 495);
-				}
-			}
-
-			g.setColor(Color.white);
-		}
-
-		public void mouseClicked(int x, int y)
-		{
-			if (x > drawX && x < drawX + longestNameWidth)
-			{
-				if (y > 70 && y < 555)
-				{
-					int item = (y - 70) / 30 + this.menuIndex;
-					if (item < this.mapFiles.size())
-					{
-						this.selectedItem = item;
-
-						if (isMap)
-						{
-							Map map = new Map();
-							entrances.clear();
-							try {
-								MapParser.parseMap("map/" + mapFiles.get(selectedItem), map, new TilesetParser(), null);
-
-
-								for (MapObject mo : map.getMapObjects())
-									if (mo.getKey().equalsIgnoreCase("start"))
-										entrances.add(mo.getParam("exit"));
-
-								entranceSelector = new ResourceSelector((gc.getWidth() - 150) / 2, entrances);
-
-							} catch (Throwable t) {
-								t.printStackTrace();
-								JOptionPane.showMessageDialog(null, "The selected map contains errors and may not be loaded");
-								this.selectedItem = -1;
-								entranceSelector = null;
-							}
-						}
-					}
-				}
-			}
-			else if (x > longestNameWidth + 15 && x < longestNameWidth + 40)
-			{
-				if (menuIndex > 0 && y > 70 && y < 95)
-				{
-					menuIndex--;
-				}
-				else if (menuIndex < mapFiles.size() - 15 && y > 490 && y < 515)
-				{
-					menuIndex++;
-				}
-			}
-		}
-
-		public String getSelectedResource()
-		{
-			if (selectedItem == -1)
-				return null;
-			return mapFiles.get(selectedItem);
-		}
+		return false;
 	}
 }

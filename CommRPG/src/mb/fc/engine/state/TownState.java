@@ -43,7 +43,9 @@ public class TownState extends LoadableGameState
 
 	private StateInfo stateInfo;
 
-	public TownState(PersistentStateInfo psi)
+	public TownState() { }
+
+	public void setPersistentStateInfo(PersistentStateInfo psi)
 	{
 		this.stateInfo = new StateInfo(psi, false, false);
 		this.tileMapRenderer = new TileMapRenderer();
@@ -68,14 +70,19 @@ public class TownState extends LoadableGameState
 		stateInfo.registerManager(soundManager);
 	}
 
+	@Override
+	public void init(GameContainer container, StateBasedGame game)
+			throws SlickException
+	{
+
+	}
+
 	/**
 	 * Initializes this state, this only gets called when coming
 	 * from a loading state
 	 */
 	@Override
-	public void init(GameContainer container, StateBasedGame game)
-			throws SlickException
-	{
+	public void initAfterLoad() {
 		stateInfo.initState();
 	}
 
@@ -161,6 +168,10 @@ public class TownState extends LoadableGameState
 				else if (container.getInput().isKeyDown(Input.KEY_F7))
 				{
 					((CommRPG) game).toggleFullScreen();
+				}
+				else if (container.getInput().isKeyPressed(Input.KEY_ESCAPE))
+				{
+					game.enterState(CommRPG.STATE_GAME_MENU_DEVEL);
 				}
 			}
 

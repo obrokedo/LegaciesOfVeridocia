@@ -3,9 +3,9 @@ package mb.fc.game.menu;
 import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.MessageType;
 import mb.fc.engine.state.StateInfo;
+import mb.fc.game.Range;
 import mb.fc.game.constants.Direction;
 import mb.fc.game.hudmenu.Panel;
-import mb.fc.game.item.EquippableItem;
 import mb.fc.game.move.AttackableSpace;
 import mb.fc.game.sprite.CombatSprite;
 
@@ -45,24 +45,8 @@ public class BattleActionsMenu extends QuadMenu
 		/**************************************************/
 		/* Determine if there are enemies in attack range */
 		/**************************************************/
-		int declaredRange = currentSprite.getAttackRange();
-		int range[][] = null;
-
-		switch (declaredRange)
-		{
-			case 1:
-				range = AttackableSpace.RANGE_1;
-				break;
-			case 2:
-				range = AttackableSpace.RANGE_2;
-				break;
-			case 3:
-				range = AttackableSpace.RANGE_3;
-				break;
-			case EquippableItem.RANGE_BOW_2_NO_1:
-				range = AttackableSpace.RANGE_2_1;
-				break;
-		}
+		Range declaredRange = currentSprite.getAttackRange();
+		int range[][] = AttackableSpace.getAttackableArea(declaredRange);
 
 		int rangeOffset = (range.length - 1) / 2;
 

@@ -2,6 +2,7 @@ from mb.jython import JSpell
 from mb.fc.game.battle.spell import KnownSpell
 from org.python.modules import jarray
 from java.lang import Math
+from mb.fc.game import Range
 
 class Spells(JSpell):
     def init(self, id):
@@ -11,7 +12,7 @@ class Spells(JSpell):
             spell.setName("Blaze")       
             spell.setCosts(jarray.array([2, 5, 8, 12], 'i'))
             spell.setDamage(jarray.array([-6, -8, -15, -40], 'i'))
-            spell.setRange(jarray.array([2, 2, 2, 2], 'i'))
+            spell.setRange(jarray.array([Range.TWO_AND_LESS, Range.TWO_AND_LESS, Range.TWO_AND_LESS, Range.TWO_AND_LESS], Range))
             spell.setArea(jarray.array([1, 2, 2, 1], 'i'))            
             spell.setTargetsEnemy(1)
             spell.setMaxLevel(4)     
@@ -19,7 +20,7 @@ class Spells(JSpell):
             spell.setName("Heal")              
             spell.setCosts(jarray.array([3, 5, 9, 12], 'i'))
             spell.setDamage(jarray.array([15, 22, 36, 120], 'i'))
-            spell.setRange(jarray.array([1, 2, 3, 1], 'i'))
+            spell.setRange(jarray.array([Range.ONE_ONLY, Range.TWO_AND_LESS, Range.THREE_AND_LESS, Range.ONE_ONLY], Range))
             spell.setArea(jarray.array([1, 1, 1, 1], 'i'))            
             spell.setTargetsEnemy(0)
             spell.setMaxLevel(4)
@@ -27,7 +28,7 @@ class Spells(JSpell):
             spell.setName("Aura")
             spell.setCosts(jarray.array([7, 11, 15, 20], 'i'))
             spell.setDamage(jarray.array([15, 15, 30, 120], 'i'))
-            spell.setRange(jarray.array([3, 3, 3, 3], 'i'))
+            spell.setRange(jarray.array([Range.THREE_AND_LESS, Range.THREE_AND_LESS, Range.THREE_AND_LESS, Range.THREE_AND_LESS], Range))
             spell.setArea(jarray.array([2, 3, 3, 3], 'i'))            
             spell.setTargetsEnemy(0)
             spell.setMaxLevel(4)                        

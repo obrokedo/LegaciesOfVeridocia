@@ -83,7 +83,9 @@ public class Portrait
 
 	public void render(int x, int y, Graphics graphics)
 	{
-		Panel.drawPanelBox(x, y, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 62, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 78, graphics, Color.black);
+		Panel.drawPanelBox(x, y, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 62,
+				CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 78, graphics, Color.black);
+
 		idleAnim.drawAnimationPortrait(x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 7,
 				y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 7, topHeight, graphics);
 

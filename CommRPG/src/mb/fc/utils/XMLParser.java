@@ -72,8 +72,6 @@ public class XMLParser
                     }
                 }
 
-                // System.out.println(lineChars[i] + " " + tagFound);
-
                 if (lineChars[i] == '<')
                     open++;
                 else if (lineChars[i] == '>')
@@ -306,7 +304,7 @@ public class XMLParser
         for (String s : allLines)
         {
             s = s.trim();
-            if (s.startsWith("<!") || s.startsWith("<?"))
+            if (s.length() == 0 || s.startsWith("<!") || s.startsWith("<?"))
                 continue;
 
             if (s.startsWith("</"))

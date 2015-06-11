@@ -1,5 +1,6 @@
 package mb.jython;
 
+import org.newdawn.slick.util.Log;
 import org.python.core.Py;
 import org.python.core.PyObject;
 import org.python.core.PySystemState;
@@ -25,7 +26,7 @@ public class JythonObjectFactory {
 				Py.newString("__import__"));
 		PyObject module = importer.__call__(Py.newString(moduleName));
 		klass = module.__getattr__(className);
-		System.err.println("module=" + module + ",class=" + klass);
+		Log.debug("module=" + module + ",class=" + klass);
 	}
 
 	// This constructor passes through to the other constructor

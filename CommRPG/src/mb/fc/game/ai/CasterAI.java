@@ -4,12 +4,15 @@ import java.awt.Point;
 import java.util.ArrayList;
 
 import mb.fc.engine.state.StateInfo;
+import mb.fc.game.Range;
 import mb.fc.game.battle.command.BattleCommand;
 import mb.fc.game.battle.spell.KnownSpell;
 import mb.fc.game.item.EquippableItem;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.turnaction.AttackSpriteAction;
 import mb.jython.JSpell;
+
+import org.newdawn.slick.util.Log;
 
 public abstract class CasterAI extends AI
 {
@@ -44,36 +47,25 @@ public abstract class CasterAI extends AI
 		int baseConfidence = determineBaseConfidence(currentSprite, targetSprite, tileWidth, tileHeight, attackPoint, stateInfo);
 		int currentConfidence = baseConfidence;
 
-		int attackRange = currentSprite.getAttackRange();
+		Range attackRange = currentSprite.getAttackRange();
 
 		// Check to make sure that if we're using a ranged weapon that has spots that it cannot target in the range that the enemy is not in one of those spaces
-		if (attackRange <= 3 ||
-				(attackRange == EquippableItem.RANGE_BOW_2_NO_1 && distance != 1) ||
-				(attackRange == EquippableItem.RANGE_BOW_3_NO_1 && distance != 1) ||
-					(attackRange == EquippableItem.RANGE_BOW_3_NO_1_OR_2 && distance != 1 && distance != 2))
+		// Get the wizards basic attack confidence, but make sure that the current sprite is in basic attack range
+		if (attackRange.isInDistance(distance) && targetSprite.isHero() != currentSprite.isHero())
 		{
-			if (attackRange == EquippableItem.RANGE_BOW_2_NO_1)
-				attackRange = 2;
-			else if (attackRange == EquippableItem.RANGE_BOW_3_NO_1 || attackRange == EquippableItem.RANGE_BOW_3_NO_1_OR_2)
-				attackRange = 3;
+			int damage = Math.max(1, currentSprite.getCurrentAttack() - targetSprite.getCurrentDefense());
+			currentConfidence += Math.min(30, (int)(30.0 * damage / targetSprite.getMaxHP()));
 
-			// Get the wizards basic attack confidence, but make sure that the current sprite is in basic attack range
-			if (distance <= attackRange && targetSprite.isHero() != currentSprite.isHero())
+			// If this attack would kill the target then add 50 confidence
+			if (targetSprite.getCurrentHP() <= damage)
 			{
-				int damage = Math.max(1, currentSprite.getCurrentAttack() - targetSprite.getCurrentDefense());
-				currentConfidence += Math.min(30, (int)(30.0 * damage / targetSprite.getMaxHP()));
-
-				// If this attack would kill the target then add 50 confidence
-				if (targetSprite.getCurrentHP() <= damage)
-				{
-					currentConfidence += 50;
-					willKill = true;
-				}
-
-				System.out.println("Attack confidence " + currentConfidence + " name " + targetSprite.getName());
-
-				mostConfident = checkForMaxConfidence(mostConfident, currentConfidence, null, null, 0, null, willKill, false);
+				currentConfidence += 50;
+				willKill = true;
 			}
+
+			Log.debug("Caster Attack confidence " + currentConfidence + " name " + targetSprite.getName());
+
+			mostConfident = checkForMaxConfidence(mostConfident, currentConfidence, null, null, 0, null, willKill, false);
 		}
 
 
@@ -110,7 +102,7 @@ public abstract class CasterAI extends AI
 						continue;
 
 					// Check to see if the target is in range of this spell
-					if (distance > spell.getRange()[i - 1])
+					if (!spell.getRange()[i - 1].isInDistance(distance))
 						continue;
 
 
@@ -140,7 +132,7 @@ public abstract class CasterAI extends AI
 	@Override
 	protected int getMaxRange(CombatSprite currentSprite) {
 		// Check for weapons that have a range, but areas in the range they cannot hit
-		int range = currentSprite.getAttackRange();
+		int range = currentSprite.getAttackRange().getMaxRange();
 		if (range == EquippableItem.RANGE_BOW_2_NO_1)
 			range = 2;
 		else if (range == EquippableItem.RANGE_BOW_3_NO_1 || range == EquippableItem.RANGE_BOW_3_NO_1_OR_2)
@@ -155,7 +147,7 @@ public abstract class CasterAI extends AI
 
 				for (int i = 1; i <= sd.getMaxLevel(); i++)
 				{
-					range = Math.max(spell.getRange()[i - 1], range);
+					range = Math.max(spell.getRange()[i - 1].getMaxRange(), range);
 				}
 			}
 		}
@@ -167,13 +159,13 @@ public abstract class CasterAI extends AI
 	protected AttackSpriteAction getPerformedTurnAction(CombatSprite target) {
 		if (bestSpell == null)
 		{
-			System.out.println("Attack");
+			Log.debug("Attack is the preferred action");
 			return new AttackSpriteAction(target,
 				new BattleCommand(BattleCommand.COMMAND_ATTACK));
 		}
 		else
 		{
-			System.out.println("Cast spell " + bestSpell.getName() + " " + spellLevel);
+			Log.debug("Cast spell " + bestSpell.getName() + " " + spellLevel + " is the preferred action");
 			if (targets != null)
 				return new AttackSpriteAction(targets, new BattleCommand(BattleCommand.COMMAND_SPELL, bestSpell, bestKnownSpell, spellLevel));
 			else

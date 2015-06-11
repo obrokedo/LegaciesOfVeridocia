@@ -56,7 +56,7 @@ public class MapParser
 		tileHeight *= map.getTileScale();
 
 
-		System.out.println("TILE " + tileWidth  + " " + tileHeight);
+		Log.debug("Tile Dimensions " + tileWidth  + " " + tileHeight);
 
 		String tileSet = null;
 		// This is kind of a kludge...

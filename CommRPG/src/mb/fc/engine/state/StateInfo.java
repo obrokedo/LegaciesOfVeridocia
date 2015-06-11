@@ -34,6 +34,7 @@ import mb.fc.map.Map;
 import mb.fc.map.MapObject;
 
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.util.Log;
 
 /**
  * Central container to hold all information that is associated with a given state. AKA "The Dumping Ground"
@@ -119,7 +120,7 @@ public class StateInfo
 	/************************/
 	public void initState()
 	{
-		System.out.println("Initialize State");
+		Log.debug("Initialize State");
 
 		psi.setCurrentStateInfo(this);
 
@@ -176,7 +177,7 @@ public class StateInfo
 
 	private void initializeSystems()
 	{
-		System.out.println("Initialize Systems");
+		Log.debug("Initialize Systems");
 
 		triggers.clear();
 		sprites.clear();
@@ -198,7 +199,7 @@ public class StateInfo
 
 		if (!isCinematic)
 		{
-			System.out.println("Perform first trigger");
+			Log.debug("Perform first trigger");
 			psi.getResourceManager().getTriggerEventById(0).perform(this);
 		}
 
@@ -311,7 +312,6 @@ public class StateInfo
 	public void recieveMessage(Message message)
 	{
 		newMessages.add(message);
-		//System.out.println("RECIEVED " + message.getMessageType());
 	}
 
 	public void processMessages()
@@ -321,7 +321,6 @@ public class StateInfo
 		MESSAGES: for (int i = 0; i < messagesToProcess.size(); i = 0)
 		{
 			Message m = messagesToProcess.remove(i);
-			//System.out.println("PROCESSING " + m.getMessageType());
 			switch (m.getMessageType())
 			{
 				case LOAD_MAP:

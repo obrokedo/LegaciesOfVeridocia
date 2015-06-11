@@ -8,6 +8,8 @@ import mb.fc.game.battle.spell.KnownSpell;
 import mb.fc.game.sprite.CombatSprite;
 import mb.jython.JSpell;
 
+import org.newdawn.slick.util.Log;
+
 public class ClericAI extends CasterAI
 {
 	public ClericAI(int approachType) {
@@ -63,7 +65,7 @@ public class ClericAI extends CasterAI
 				healedSelf = true;
 
 			if (targetsInArea.size() > 1)
-				System.out.println("MULTIPLE TARGETS " + targetsInArea.size());
+				Log.debug("There are multiple targets in cleric range " + targetsInArea.size());
 
 			int incidentalHealed = 0;
 
@@ -126,7 +128,7 @@ public class ClericAI extends CasterAI
 		// Subtract the mp cost of the spell
 		currentConfidence -= cost;
 
-		System.out.println("Spell confidence " + currentConfidence + " name " +
+		Log.debug(" Cleric Spell confidence " + currentConfidence + " name " +
 		targetSprite.getName() + " " + targetSprite.getUniqueEnemyId() + " spell " + spell.getName() + " level " + i);
 
 		// Check to see if this is the most confident
@@ -190,7 +192,7 @@ public class ClericAI extends CasterAI
 
 		currentConfidence += distance - 1;
 
-		System.out.println("Spell confidence " + currentConfidence + " name " + targetSprite.getName() + " " + targetSprite.getUniqueEnemyId() + " spell " + spell.getName() + " level " + i);
+		Log.debug("Cleric Spell confidence " + currentConfidence + " name " + targetSprite.getName() + " " + targetSprite.getUniqueEnemyId() + " spell " + spell.getName() + " level " + i);
 
 		// Check to see if this is the most confident
 		mostConfident = checkForMaxConfidence(mostConfident, currentConfidence, spell, knownSpell, i, targetsInArea, willKill, false);

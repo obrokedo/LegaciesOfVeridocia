@@ -2,6 +2,7 @@ package mb.jython;
 
 import java.io.Serializable;
 
+import mb.fc.game.Range;
 import mb.fc.game.battle.spell.KnownSpell;
 import mb.fc.game.sprite.CombatSprite;
 
@@ -30,7 +31,7 @@ public abstract class JSpell implements Serializable
 	protected int[] mpDamage;
 	protected int[] effects;
 	protected int[] effectChance;
-	protected int[] range;
+	protected Range[] range;
 	protected int[] area;
 	protected int id;
 	protected transient Image spellIcon;
@@ -127,7 +128,7 @@ public abstract class JSpell implements Serializable
 	 * @return an array of integers where a value at a given index
 	 * represents the range for the spell of level = index + 1
 	 */
-	public int[] getRange() {
+	public Range[] getRange() {
 		return range;
 	}
 
@@ -224,7 +225,7 @@ public abstract class JSpell implements Serializable
 	public void setEffectChance(int[] effectChance) {
 		this.effectChance = effectChance;
 	}
-	protected void setRange(int[] range) {
+	protected void setRange(Range[] range) {
 		this.range = range;
 	}
 	protected void setArea(int[] area) {

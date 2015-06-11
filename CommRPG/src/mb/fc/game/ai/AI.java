@@ -13,6 +13,8 @@ import mb.fc.game.turnaction.TargetSpriteAction;
 import mb.fc.game.turnaction.TurnAction;
 import mb.fc.game.turnaction.WaitAction;
 
+import org.newdawn.slick.util.Log;
+
 public abstract class AI
 {
 	// BESERKER
@@ -57,7 +59,7 @@ public abstract class AI
 		int tileWidth = ms.getTileWidth();
 		int tileHeight = ms.getTileHeight();
 
-		System.out.println("------ " + currentSprite.getName());
+		Log.debug("------ " + currentSprite.getName());
 
 		// People that can heal should have an oppurtunity to heal themselves
 		if (canHeal)
@@ -88,7 +90,7 @@ public abstract class AI
 					AIConfidence currentConfidence = getConfidence(currentSprite, as.getCombatSprite(), tileWidth, tileHeight,
 							attackPoint, distance, stateInfo);
 
-					System.out.println("Target " + as.getCombatSprite().getName() + " Confidence: " + currentConfidence);
+					Log.debug("Target " + as.getCombatSprite().getName() + " Confidence: " + currentConfidence);
 
 					if (currentConfidence.confidence > 0)
 					{
@@ -105,7 +107,7 @@ public abstract class AI
 					}
 					else if (currentConfidence == maxConfidence)
 					{
-						System.out.println("Found equal confidence = " + currentConfidence);
+						Log.debug("Found equal confidence = " + currentConfidence);
 						if (CommRPG.RANDOM.nextInt(100) > 50)
 						{
 							maxConfidence = currentConfidence;
@@ -113,7 +115,7 @@ public abstract class AI
 							currentConfidence.target = as.getCombatSprite();
 							currentConfidence.potentialAttackSpriteAction = getPerformedTurnAction(as.getCombatSprite());
 							currentConfidence.foundHero = true;
-							System.out.println("Switched action");
+							Log.debug("Switched action randomly");
 						}
 					}
 				}
@@ -323,7 +325,7 @@ public abstract class AI
 			}
 		}
 
-		System.out.println(attacker.getName() + " Distance " + maxDistance);
+		Log.debug("Get Best Point: " + attacker.getName() + " Distance " + maxDistance);
 
 		return bestPoint;
 	}

@@ -14,6 +14,8 @@ import mb.jython.JBattleEffect;
 import mb.jython.JBattleFunctions;
 import mb.jython.JSpell;
 
+import org.newdawn.slick.util.Log;
+
 public class BattleResults implements Serializable
 {
 	private static final long serialVersionUID = 1L;
@@ -86,7 +88,7 @@ public class BattleResults implements Serializable
 				{
 					int distanceApart = Math.abs(attacker.getTileX() - target.getTileX()) + Math.abs(attacker.getTileY() - target.getTileY());
 					// Counter Attack
-					if (distanceApart == 1 &&
+					if (distanceApart == 1 && target.getAttackRange().isInDistance(1) &&
 							jBattleFunctions.getCounterPercent(attacker, target) >= CommRPG.RANDOM.nextInt(100))
 					{
 						br.text.add(text);
@@ -180,7 +182,7 @@ public class BattleResults implements Serializable
 				{
 					JBattleEffect eff = spell.getEffect(spellLevel);
 					text = text + " " + eff.effectStartedText(attacker, target);
-					System.out.println("TEXT: " + text);
+					Log.debug("Battle Results: Spell Text: " + text);
 					br.targetEffects.add(eff);
 				}
 				else

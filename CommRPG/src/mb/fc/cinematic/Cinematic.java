@@ -13,6 +13,7 @@ import mb.fc.engine.state.CinematicState;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.Camera;
 import mb.fc.game.constants.Direction;
+import mb.fc.game.exception.BadResourceException;
 import mb.fc.game.input.FCInput;
 import mb.fc.game.menu.Menu.MenuUpdate;
 import mb.fc.game.menu.Portrait;
@@ -28,6 +29,8 @@ import mb.fc.map.Map;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.util.Log;
 
 /**
  * Defines CinematicEvents that should be executed to display a cinematic and handles/renders
@@ -364,28 +367,59 @@ public class Cinematic {
 	 * @param stateInfo the StateInfo that holds information for the current state
 	 */
 	private void handleEvent(CinematicEvent ce, StateInfo stateInfo) {
-		System.out.println("Handle event: " + ce.getType());
+		Log.debug("Handle event: " + ce.getType());
+		CinematicActor ca = null;
 		switch (ce.getType()) {
 			case HALTING_MOVE:
-				actors.get(ce.getParam(3)).moveToLocation((int) ce.getParam(0),
+				ca = actors.get(ce.getParam(3));
+				if (ca == null)
+					throw new BadResourceException(
+							"A cinematic event of type: " + ce.getType() + " referenced an actor name " + ce.getParam(3)
+							+ " before that actor has been defined in the scene\n. Either add the actor by that name to the scene prior to this or "
+							+ "ensure that the name is spelled correctly");
+				ca.moveToLocation((int) ce.getParam(0),
 						(int) ce.getParam(1), (float) ce.getParam(2), true, -1, (boolean) ce.getParam(4), (boolean) ce.getParam(5));
 				haltedMovers++;
 				break;
 			case MOVE:
-				actors.get(ce.getParam(3)).moveToLocation((int) ce.getParam(0),
+				ca = actors.get(ce.getParam(3));
+				if (ca == null)
+					throw new BadResourceException(
+							"A cinematic event of type: " + ce.getType() + " referenced an actor name " + ce.getParam(3)
+							+ " before that actor has been defined in the scene\n. Either add the actor by that name to the scene prior to this or "
+							+ "ensure that the name is spelled correctly");
+				ca.moveToLocation((int) ce.getParam(0),
 						(int) ce.getParam(1), (float) ce.getParam(2), false, -1, (boolean) ce.getParam(4), (boolean) ce.getParam(5));
 				break;
 			case MOVE_ENFORCE_FACING:
-				actors.get(ce.getParam(3)).moveToLocation((int) ce.getParam(0),
+				ca = actors.get(ce.getParam(3));
+				if (ca == null)
+					throw new BadResourceException(
+							"A cinematic event of type: " + ce.getType() + " referenced an actor name " + ce.getParam(3)
+							+ " before that actor has been defined in the scene\n. Either add the actor by that name to the scene prior to this or "
+							+ "ensure that the name is spelled correctly");
+				ca.moveToLocation((int) ce.getParam(0),
 						(int) ce.getParam(1), (float) ce.getParam(2), false,
 						(int) ce.getParam(4), (boolean) ce.getParam(5), (boolean) ce.getParam(6));
 				break;
 			case LOOP_MOVE:
-				actors.get(ce.getParam(0)).loopMoveToLocation((int) ce.getParam(1),
+				ca = actors.get(ce.getParam(0));
+				if (ca == null)
+					throw new BadResourceException(
+							"A cinematic event of type: " + ce.getType() + " referenced an actor name " + ce.getParam(3)
+							+ " before that actor has been defined in the scene\n. Either add the actor by that name to the scene prior to this or "
+							+ "ensure that the name is spelled correctly");
+				ca.loopMoveToLocation((int) ce.getParam(1),
 						(int) ce.getParam(2), (float) ce.getParam(3));
 				break;
 			case STOP_LOOP_MOVE:
-				actors.get(ce.getParam(0)).stopLoopMove();
+				ca = actors.get(ce.getParam(0));
+				if (ca == null)
+					throw new BadResourceException(
+							"A cinematic event of type: " + ce.getType() + " referenced an actor name " + ce.getParam(3)
+							+ " before that actor has been defined in the scene\n. Either add the actor by that name to the scene prior to this or "
+							+ "ensure that the name is spelled correctly");
+				ca.stopLoopMove();
 				break;
 			case CAMERA_MOVE:
 				cameraMoveToX = (int) ce.getParam(0)
@@ -415,7 +449,13 @@ public class Cinematic {
 				cameraFollow = null;
 				break;
 			case CAMERA_FOLLOW:
-				cameraFollow = actors.get(ce.getParam(0));
+				ca = actors.get(ce.getParam(0));
+				if (ca == null)
+					throw new BadResourceException(
+							"A cinematic event of type: " + ce.getType() + " referenced an actor name " + ce.getParam(3)
+							+ " before that actor has been defined in the scene\n. Either add the actor by that name to the scene prior to this or "
+							+ "ensure that the name is spelled correctly");
+				cameraFollow = ca;
 				stateInfo.getCamera().centerOnPoint(cameraFollow.getLocX(),
 						cameraFollow.getLocY(), stateInfo.getCurrentMap());
 				break;
@@ -442,9 +482,15 @@ public class Cinematic {
 							break;
 						}
 					}
+
+					if (!isHeroAss)
+					{
+						throw new BadResourceException("Attempted to add an actor to the scene that is associated with a hero that has\n"
+								+ "not yet joined the party. If you want the association to work then you first must add them to the force");
+					}
 				}
 
-				CinematicActor ca = new CinematicActor(
+				ca = new CinematicActor(
 						stateInfo.getResourceManager()
 						.getSpriteAnimations()
 						.get(ce.getParam(3)), (String) ce
@@ -459,9 +505,13 @@ public class Cinematic {
 				sortedActors.add(ca);
 				break;
 			case ADD_STATIC_SPRITE:
+				Image im = stateInfo.getResourceManager().getImages().get(ce.getParam(3));
+				if (im == null)
+					throw new BadResourceException("Attempted to add a static sprite with an image that has not loaded: " + ce.getParam(3) + "\n."
+							+ "Static sprite images must appear in the 'sprite' resource folder and ARE case sensitive");
 				staticSprites.add(new StaticSprite((int) ce.getParam(0) * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()],
 						(int) ce.getParam(1) * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()],
-						(String) ce.getParam(2), stateInfo.getResourceManager().getImages().get(ce.getParam(3)), null));
+						(String) ce.getParam(2), im, null));
 				break;
 			case REMOVE_STATIC_SPRITE:
 				String toRem = (String) ce.getParam(0);

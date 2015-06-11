@@ -3,6 +3,8 @@ package mb.fc.utils;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import org.newdawn.slick.geom.Point;
+
 public class Animation implements Serializable
 {
 	private static final long serialVersionUID = 1L;
@@ -32,5 +34,10 @@ public class Animation implements Serializable
 			length += frames.get(i).delay;
 
 		return length;
+	}
+
+	public Point getFirstFramePosition()
+	{
+		return new Point(frames.get(0).sprites.get(0).x, frames.get(0).sprites.get(0).y);
 	}
 }

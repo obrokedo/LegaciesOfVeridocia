@@ -1,27 +1,18 @@
 package mb.fc.utils;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.io.Serializable;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Set;
 
+import mb.fc.game.exception.BadResourceException;
+import mb.fc.utils.XMLParser.TagArea;
+
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
-import org.newdawn.slick.util.ResourceLoader;
 
-public class SpriteAnims implements Serializable
+public class SpriteAnims
 {
-	private static final long serialVersionUID = 1L;
-
 	private Hashtable<String, Animation> animations;
 	private String spriteSheet;
 	public ArrayList<Rectangle> imageLocs;
@@ -53,14 +44,27 @@ public class SpriteAnims implements Serializable
 		}
 	}
 
+	public boolean hasAnimation(String name)
+	{
+		return animations.get(name) != null;
+	}
+
 	public Animation getCharacterAnimation(String name, boolean isPromoted)
 	{
-		return animations.get((isPromoted ? "Pro" : "Un") + name);
+		Animation a = animations.get((isPromoted ? "Pro" : "Un") + name);
+		if (a == null)
+			throw new BadResourceException("Unable to find animation: " +
+					(isPromoted ? "Pro" : "Un") + name + " for animation using spritesheet: " + spriteSheet);
+		return a;
 	}
 
 	public Animation getAnimation(String name)
 	{
-		return animations.get(name);
+		Animation a = animations.get(name);
+		if (a == null)
+			throw new BadResourceException("Unable to find animation: " +
+					name + " for animation using spritesheet: " + spriteSheet);
+		return a;
 	}
 
 	public Image getImageAtIndex(int idx)
@@ -84,44 +88,165 @@ public class SpriteAnims implements Serializable
 		return animations.keySet();
 	}
 
-	public void serializeToFile(String fileName)
+	public static void main(String args[])
 	{
-		try
-		{
-			OutputStream file = new FileOutputStream(fileName);
-			OutputStream buffer = new BufferedOutputStream(file);
-			ObjectOutput output = new ObjectOutputStream(buffer);
-			output.writeObject(this);
-			output.flush();
-			file.close();
-		}
-		catch (Exception e)
-		{
+		try {
+
+			SpriteAnims sa = parseAnimations("/animations/noah.anim");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.exit(0);
 		}
 	}
 
-	public static SpriteAnims deserializeFromFile(String fileName)
+	public static SpriteAnims parseAnimations(String animsFile) throws IOException
 	{
-	    try
-	    {
-	    	InputStream file = ResourceLoader.getResourceAsStream(fileName);
-	    	InputStream buffer = new BufferedInputStream(file);
-	    	ObjectInput input = new ObjectInputStream (buffer);
-	    	SpriteAnims sa = (SpriteAnims) input.readObject();
-	    	file.close();
-	    	return sa;
-	    }
-	    catch (Exception e)
-		{
-			e.printStackTrace();
-			System.exit(0);
-		}
-	    return null;
+		// Parse Animations
+		 ArrayList<TagArea> rootTags = XMLParser.process(animsFile);
+		 ArrayList<String> imageNames = new ArrayList<>();
+		 ArrayList<Rectangle> imageLocs = new ArrayList<>();
+		 SpriteAnims sa = null;
+
+		 for (TagArea ta : rootTags)
+		 {
+			 if (ta.getTagType().equalsIgnoreCase("animations"))
+			 {
+				 String imageLocation = null;
+				 try
+				 {
+					 imageLocation =
+						 parseSprites("/animations/animationsheets/" + ta.getAttribute("spriteSheet"), imageNames, imageLocs);
+				 }
+				 catch (Exception e)
+				 {
+					 throw new BadResourceException("An error occurred while attempting to load the animation file " + animsFile + "\n"
+					 		+ "The specified sprite sheet " + "/animations/animationsheets/" + ta.getAttribute("spriteSheet") + " does not exist.\n"
+					 		+ "Check the animationsheets folder to verify that the file exists.\n"
+					 		+ "Keep in mind that the names ARE case-sensitive");
+				 }
+
+				 sa = new SpriteAnims(imageLocation, imageLocs);
+
+				 for (TagArea animTag : ta.getChildren())
+				 {
+					 String name = animTag.getAttribute("name");
+					 Animation animation = new Animation(name);
+
+					 for (TagArea frameTag : animTag.getChildren())
+					 {
+						 AnimFrame animFrame = new AnimFrame(Integer.parseInt(frameTag.getAttribute("delay")));
+
+						 for (TagArea spriteTag : frameTag.getChildren())
+						 {
+							 int x = Integer.parseInt(spriteTag.getAttribute("x"));
+							 int y = Integer.parseInt(spriteTag.getAttribute("y"));
+							 int index = -1;
+							 Rectangle imageSize;
+							 if (!spriteTag.getAttribute("name").equalsIgnoreCase("/weapon"))
+							 {
+								 index = imageNames.indexOf(spriteTag.getAttribute("name"));
+								 if (index == -1)
+									 throw new BadResourceException("Unable to parse the animation " + name +
+										 ". One of the frames had a bad sprite index " + spriteTag.getAttribute("name"));
+								 imageSize = imageLocs.get(index);
+							 }
+							 else
+								 imageSize = new Rectangle(0, 0, 112, 24);
+
+							 x -= imageSize.getWidth() / 2;
+							 y -= imageSize.getHeight() / 2;
+
+							 int angle = 0;
+							 if (spriteTag.getAttribute("angle") != null)
+								 angle = (int) Float.parseFloat(spriteTag.getAttribute("angle"));
+
+							 int flipH = 0;
+							 if (spriteTag.getAttribute("flipH") != null)
+								 flipH = Integer.parseInt(spriteTag.getAttribute("flipH"));
+
+							 int flipV = 0;
+							 if (spriteTag.getAttribute("flipV") != null)
+								 flipV = Integer.parseInt(spriteTag.getAttribute("flipV"));
+
+							 if (animFrame.sprites.size() > 0)
+								 animFrame.sprites.add(0, new AnimSprite(x, y, index, angle, flipH == 1, flipV == 1));
+							 else
+								 animFrame.sprites.add(new AnimSprite(x, y, index, angle, flipH == 1, flipV == 1));
+						 }
+
+						 animation.frames.add(animFrame);
+					 }
+
+					 sa.addAnimation(name, animation);
+				 }
+			 }
+		 }
+
+		 if (sa == null)
+			 throw new BadResourceException("Unable to parse the animation file " + animsFile);
+
+		 return sa;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	private static String parseSprites(String spritesFile, ArrayList<String> imageNames, ArrayList<Rectangle> imageLocs) throws IOException
+	{
+		ArrayList<TagArea> rootTags = XMLParser.process(spritesFile);
+
+		// Parse Sprites
+		for (TagArea ta : rootTags)
+		{
+			if (ta.getTagType().equalsIgnoreCase("img"))
+			{
+				TagArea spriteDirTag = null;
+				String spriteSheetName = ta.getAttribute("name");
+				spriteSheetName = spriteSheetName.replace("../animationsheets/", "");
+				String spriteSheet = spriteSheetName.split("\\.")[0];
+
+
+				String dirName = "";
+
+				while (spriteDirTag == null)
+				{
+					if (ta.getChildren() != null && ta.getChildren().size() > 0)
+					{
+						if (ta.getTagType().equalsIgnoreCase("dir"))
+						{
+							dirName += ta.getAttribute("name");
+						}
+
+						if (ta.getChildren().get(0).getTagType().equalsIgnoreCase("spr"))
+						{
+							spriteDirTag = ta;
+							break;
+						}
+
+						ta = ta.getChildren().get(0);
+					}
+					else
+					{
+						break;
+					}
+				}
+
+				if (spriteDirTag != null)
+				{
+					for (TagArea sprites : ta.getChildren())
+					{
+						imageNames.add(dirName + "/" + sprites.getAttribute("name"));
+						imageLocs.add(new Rectangle(Integer.parseInt(sprites.getAttribute("x")),
+												Integer.parseInt(sprites.getAttribute("y")),
+												Integer.parseInt(sprites.getAttribute("w")),
+												Integer.parseInt(sprites.getAttribute("h"))));
+
+					}
+				}
+				else
+					throw new BadResourceException("Unable to parse .sprites file " + spritesFile + ". Could not find any defined sprites");
+
+				return spriteSheet;
+			}
+		}
+
+		return null;
 	}
 }

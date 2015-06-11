@@ -14,6 +14,7 @@ import mb.fc.game.input.KeyMapping;
 import mb.fc.game.ui.FCGameContainer;
 
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.util.Log;
 
 public class SpeechMenu extends Menu
 {
@@ -190,7 +191,7 @@ public class SpeechMenu extends Menu
 						}
 						else
 						{
-							// System.out.println("SEND TRIGGER " + triggerId);
+							Log.debug("Speech Menu: Send Trigger " + triggerId);
 							if (triggerId != NO_TRIGGER)
 								stateInfo.getResourceManager().getTriggerEventById(triggerId).perform(stateInfo);
 							return MenuUpdate.MENU_CLOSE;

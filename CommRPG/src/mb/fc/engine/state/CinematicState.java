@@ -32,7 +32,9 @@ public class CinematicState extends LoadableGameState
 
 	private StateInfo stateInfo;
 
-	public CinematicState(PersistentStateInfo psi)
+	public CinematicState() {}
+
+	public void setPersistentStateInfo(PersistentStateInfo psi)
 	{
 		this.stateInfo = new StateInfo(psi, false, true);
 		this.tileMapRenderer = new TileMapRenderer();
@@ -41,17 +43,22 @@ public class CinematicState extends LoadableGameState
 		stateInfo.registerManager(soundManager);
 	}
 
+
+	@Override
+	public void init(GameContainer container, StateBasedGame game)
+			throws SlickException {
+
+	}
+
 	/**
 	 * Initializes this state, this only gets called when coming
 	 * from a loading state
 	 */
 	@Override
-	public void init(GameContainer container, StateBasedGame game)
-			throws SlickException {
+	public void initAfterLoad() {
 		stateInfo.initState();
 		for (CombatSprite cs : stateInfo.getClientProfile().getHeroes())
 			cs.initializeSprite(stateInfo);
-
 	}
 
 	@Override

@@ -37,18 +37,15 @@ public class SpriteManager extends Manager
 		{
 			for (CombatSprite cs : stateInfo.getHeroes())
 			{
-				System.out.println("LOOKING FOR MY HERO " + cs.isLeader() + " " + cs.getClientId() + " " + stateInfo.getPsi().getClientId());
 				if (cs.isLeader())
 				{
 					if (cs.getClientId() == stateInfo.getPsi().getClientId())
 					{
 						stateInfo.setCurrentSprite(cs);
-						System.out.println("SETTING MY HERO " + cs.getClientId() + " " + cs.getId());
 					}
 					stateInfo.addSprite(cs);
 				}
 			}
-			System.out.println("DONE LOOKING FOR MY HERO");
 
 			// Even though this is not the leader, the sprites need to be initialized so we can
 			// view items, spells and pictures

@@ -57,7 +57,6 @@ public class SoundManager extends Manager implements MusicListener
 	{
 		if (playingMusic != null)
 		{
-			System.out.println(playingMusic.getPosition());
 			this.playingMusicPosition = this.playingMusic.getPosition();
 			playingMusic.stop();
 		}

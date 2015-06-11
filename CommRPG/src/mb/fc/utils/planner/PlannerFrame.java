@@ -37,7 +37,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 	private ArrayList<ArrayList<String>> listOfLists;
 	private JTabbedPane jtp;
 	private File triggerFile;
-	private static String version = "DEV 1.23";
+	private static String version = "DEV 1.24";
 	public static boolean SHOW_CIN = false;
 	public static boolean SHOW_CIN_LOCATION = true;
 
@@ -53,7 +53,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 	private static String PATH_ENEMIES = "definitions/Enemies";
 	private static String PATH_HEROES = "definitions/Heroes";
 	private static String PATH_ITEMS = "definitions/Items";
-	private static String PATH_ANIMATIONS = "animations/fsa";
+	private static String PATH_ANIMATIONS = "animations/animationsheets";
 	private static String PATH_SPRITE_IMAGE = "sprite";
 	private static String PATH_QUESTS = "Quests";
 
@@ -62,7 +62,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 		System.out.println("Planner frame started");
 	}
 
-	private PlannerFrame() {
+	public PlannerFrame() {
 		super("Planner: NO TRIGGERS LOADED " + version);
 
 		try {
@@ -243,9 +243,9 @@ public class PlannerFrame extends JFrame implements ActionListener,
 		// Animation files
 		File animations = new File(PATH_ANIMATIONS);
 		for (String f : animations.list())
-			if (f.endsWith(".fsa"))
+			if (f.endsWith(".anim"))
 				listOfLists.get(PlannerValueDef.REFERS_ANIMATIONS - 1).add(
-						f.replaceFirst(".fsa", ""));
+						f.replaceFirst(".anim", ""));
 
 		// Sprite image files
 		File spriteImages = new File(PATH_SPRITE_IMAGE);
@@ -2334,8 +2334,9 @@ public class PlannerFrame extends JFrame implements ActionListener,
 		this.setContentPane(jtp);
 
 		this.setPreferredSize(new Dimension(800, 600));
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		this.pack();
+		// this.setVisible(false);
 		this.setVisible(true);
 	}
 

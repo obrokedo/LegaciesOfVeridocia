@@ -27,8 +27,6 @@ public class AIController
 			findGroupMembers(copyCombatSprites, groupMembers, copyCombatSprites.get(0));
 			aiGroups.add(new AIGroup(groupMembers));
 		}
-
-		System.out.println();
 	}
 
 	private void findGroupMembers(ArrayList<CombatSprite> css, HashSet<CombatSprite> groupMembers, CombatSprite member)

@@ -9,6 +9,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.util.Log;
 
 public class TilesetParser
 {
@@ -16,7 +17,7 @@ public class TilesetParser
 			int startIndex, Map map, Hashtable<Integer, Integer> landEffectByTileId, float tileResize) throws SlickException
 	{
 		Image tileSheetImage = new Image(image, trans);
-		System.out.println("LOAD TILESET " + tileSheetImage);
+		Log.debug("LOAD TILESET " + tileSheetImage);
 		tileSheetImage.setFilter(Image.FILTER_NEAREST);
 		SpriteSheet ss = new SpriteSheet(tileSheetImage.getScaledCopy(CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * tileResize), tileWidth, tileHeight);
 		map.addTileset(ss, startIndex, tileWidth, tileHeight, landEffectByTileId);

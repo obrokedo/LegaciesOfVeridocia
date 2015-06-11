@@ -8,6 +8,8 @@ import mb.fc.game.battle.spell.KnownSpell;
 import mb.fc.game.sprite.CombatSprite;
 import mb.jython.JSpell;
 
+import org.newdawn.slick.util.Log;
+
 public class WizardAI extends CasterAI
 {
 	public WizardAI(int approachType) {
@@ -75,7 +77,7 @@ public class WizardAI extends CasterAI
 			// Subtract the mp cost of the spell
 			currentConfidence -= cost;
 
-			System.out.println("Spell confidence " + currentConfidence + " name " + targetSprite.getName() + " spell " + spell.getName() + " level " + i);
+			Log.debug("Wizard Spell confidence " + currentConfidence + " name " + targetSprite.getName() + " spell " + spell.getName() + " level " + i);
 
 			// Check to see if this is the most confident
 			mostConfident = checkForMaxConfidence(mostConfident, currentConfidence, spell, knownSpell, i, targetsInArea, willKill, false);

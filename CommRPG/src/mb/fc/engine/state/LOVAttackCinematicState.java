@@ -347,8 +347,14 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 			aca = new AttackCombatAnimation(attacker,
 				battleResults, false, battleResults.critted.get(index));
 		else
-			aca = new AttackCombatAnimation(new AnimationWrapper(frm.getSpriteAnimations().get("Ranged"), "Ranged", false, attacker.getCurrentWeaponImage()),
-					attacker);
+		{
+			if (attacker.isHero())
+				aca = new AttackCombatAnimation(new AnimationWrapper(frm.getSpriteAnimations().get("Ranged"),
+					"Ranged", false, attacker.getCurrentWeaponImage()), attacker);
+			else
+				aca = new AttackCombatAnimation(new AnimationWrapper(frm.getSpriteAnimations().get("EnemyRanged"),
+						"Ranged", false, attacker.getCurrentWeaponImage()), attacker);
+		}
 		addCombatAnimation(attacker.isHero(), aca);
 
 		if (battleResults.dodged.get(index))
@@ -400,7 +406,7 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 			}
 			textToDisplay.add(battleResults.text.get(index));
 
-			if (attacker.getAnimation("Winddown") != null)
+			if (attacker.hasAnimation("Winddown"))
 			{
 				AnimationWrapper aw = new HeroAnimationWrapper(attacker, "Winddown");
 				addCombatAnimation(attacker.isHero(), new CombatAnimation(aw, attacker, aw.getAnimationLength()));
@@ -491,6 +497,15 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
+
+	}
+
+	/**
+	 * Initializes this state, this only gets called when coming
+	 * from a loading state
+	 */
+	@Override
+	public void initAfterLoad() {
 
 	}
 

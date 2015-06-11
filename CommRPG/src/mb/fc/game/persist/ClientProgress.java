@@ -17,6 +17,8 @@ import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.concurrent.TimeUnit;
 
+import org.newdawn.slick.util.Log;
+
 public class ClientProgress implements Serializable
 {
 	private static final long serialVersionUID = 1L;
@@ -139,7 +141,7 @@ public class ClientProgress implements Serializable
 
 	public void addNonretriggerableByMap(int triggerId)
 	{
-		System.out.println("Add non retrig " + triggerId + " " + (isBattle ? BATTLE_PREFIX + map : map));
+		Log.debug("Add non retrig " + triggerId + " " + (isBattle ? BATTLE_PREFIX + map : map));
 		if (!nonretriggerablesPerMap.containsKey((isBattle ? BATTLE_PREFIX + map : map)))
 			nonretriggerablesPerMap.put((isBattle ? BATTLE_PREFIX + map : map), new ArrayList<Integer>());
 		nonretriggerablesPerMap.get((isBattle ? BATTLE_PREFIX + map : map)).add(triggerId);

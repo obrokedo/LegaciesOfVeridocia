@@ -4,6 +4,7 @@ import mb.fc.engine.CommRPG;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.Camera;
 import mb.fc.game.constants.Direction;
+import mb.fc.game.exception.BadResourceException;
 import mb.fc.game.move.MovingSprite;
 import mb.fc.game.ui.FCGameContainer;
 import mb.fc.utils.AnimSprite;
@@ -72,7 +73,13 @@ public class AnimatedSprite extends Sprite
 
 		imageIndex = 0;
 		spriteAnims = stateInfo.getResourceManager().getSpriteAnimations().get(imageName);
-		currentAnim = spriteAnims.getAnimation("Down");
+		if (spriteAnims == null)
+			throw new BadResourceException("Unable to initialize sprite " + this.name +".\n"
+					+ "Associated animation file " + imageName + ".anim could not be found.\n"
+							+ "Check the animationsheets folder to make sure an animation by that name exists.\n"
+							+ "Keep in mind that animation file names ARE case sensitive.");
+		if (!(this instanceof CombatSprite))
+				currentAnim = spriteAnims.getAnimation("Down");
 		facing = Direction.DOWN;
 		animationUpdate = MovingSprite.STAND_ANIMATION_SPEED;
 	}

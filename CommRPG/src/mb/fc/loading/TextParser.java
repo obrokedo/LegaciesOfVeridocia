@@ -232,7 +232,6 @@ public class TextParser
 
 
 				cinematicById.put(cinematicId, new Cinematic(initEvents, events, cameraX, cameraY));
-				System.out.println();
 			}
 		}
 

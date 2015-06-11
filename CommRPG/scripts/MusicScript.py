@@ -4,11 +4,17 @@ class MusicScript(JMusicSelector):
     # Get the name of the music that should be played during a BattleCinematic
     # The attacker is a CombatSprite and targetAllies is a boolean that indicates whether
     # this action is targeting the attackers allies
+    
+        
     def getAttackMusic(self, attacker, targetsAllies):
-        if attacker.isHero():
-            return "UnHero"
-        else:
-            return "Enemy"
+          if attacker.isHero() and attacker.isPromoted():
+              return "PrHero"
+          elif attacker.isHero():
+              return "UnHero"
+          elif attacker.isLeader():
+              return "Boss"
+          else:
+              return "Enemy"
         
     # WEAPON TYPE
     #-1 = No Weapon
@@ -46,3 +52,6 @@ class MusicScript(JMusicSelector):
 
     def getMenuRemovedSoundEffect(self):
         return "menushow"
+    
+    def getAfterSpellFlashSoundEffect(self, isHero, spellName):
+        return None

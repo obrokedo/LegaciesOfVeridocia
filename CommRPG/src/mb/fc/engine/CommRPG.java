@@ -5,10 +5,13 @@ import java.util.Random;
 import javax.swing.JOptionPane;
 
 import mb.fc.engine.log.FileLogger;
+import mb.fc.engine.state.BattleState;
+import mb.fc.engine.state.CinematicState;
+import mb.fc.engine.state.DevelAnimationViewState;
 import mb.fc.engine.state.DevelMenuState;
 import mb.fc.engine.state.LOVAttackCinematicState;
 import mb.fc.engine.state.MenuState;
-import mb.fc.engine.state.PersistentStateInfo;
+import mb.fc.engine.state.TownState;
 import mb.fc.game.ui.FCGameContainer;
 import mb.fc.loading.FCLoadingRenderSystem;
 import mb.fc.loading.FCResourceManager;
@@ -30,10 +33,7 @@ import org.newdawn.slick.util.Log;
  *
  */
 public class CommRPG extends StateBasedGame   {
-	/**
-	 * State in which the game is actually being played
-	 */
-	public static final int STATE_GAME_TOWN = 1;
+	public static final int STATE_GAME_MENU_DEVEL = 1;
 
 	/**
 	 * State that displays and allows interaction with the "Start Menu"
@@ -56,8 +56,14 @@ public class CommRPG extends StateBasedGame   {
 
 	public static final int STATE_GAME_TEST = 7;
 
-	public static final int STATE_GAME_MENU_DEVEL = 8;
+	public static final int STATE_GAME_ANIM_VIEW = 8;
 	public static final int STATE_GAME_MENU_MULTI = 9;
+	/**
+	 * State in which the game is actually being played
+	 */
+	public static final int STATE_GAME_TOWN = 10;
+
+
 
 	/**
 	 * A global random number generator
@@ -67,8 +73,6 @@ public class CommRPG extends StateBasedGame   {
 	private LoadingState loadingState;
 
 	public static String IP;
-
-	private PersistentStateInfo persistentStateInfo;
 
 	public static final int[] GLOBAL_WORLD_SCALE = new int[] {3, 2};
 
@@ -116,7 +120,7 @@ public class CommRPG extends StateBasedGame   {
 
 			try {
 				double ratio =  container.getScreenWidth() * 1.0 / container.getScreenHeight();
-				System.out.println(ratio);
+				Log.debug("Screen Ratio: " + ratio);
 				DisplayMode[] modes = Display.getAvailableDisplayModes();
 
 				for (DisplayMode dm : modes)
@@ -130,7 +134,7 @@ public class CommRPG extends StateBasedGame   {
 					}
 				}
 
-				System.out.println(fullScreenWidth + " " +fullScreenHeight);
+				Log.debug("Fullscreen dimensions: " + fullScreenWidth + " " + fullScreenHeight);
 
 				// GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] = fullScreenHeight / 240;
 				container.setDisplayPaddingX((fullScreenWidth - (GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 320)) / 2);
@@ -145,9 +149,9 @@ public class CommRPG extends StateBasedGame   {
 
 			if (fullScreenWidth == 0)
 			{
-				System.out.println("Unable to enter full screen");
+				Log.debug("Unable to enter full screen");
 				for (DisplayMode dm : Display.getAvailableDisplayModes())
-					System.out.println(dm);
+					Log.debug("Supported display modes " + dm);
 				container.setDisplayPaddingX(0);
 				try
 				{
@@ -191,42 +195,18 @@ public class CommRPG extends StateBasedGame   {
 	@Override
 	public void initStatesList(GameContainer gameContainer) throws SlickException
 	{
-		/*
-		String name = null;
-		if (DEBUG_HOST)
-		{
-			name = "Broked";
-		}
-		else
-			name = "Test";
-		ClientProfile cp = ClientProfile.deserializeFromFile(name + ".profile");
-		if (cp == null)
-		{
-			System.out.println("CREATE NEW PROFILE");
-			cp = new ClientProfile(name);
-		}
-
-		ClientProgress cg = ClientProgress.deserializeFromFile(name + ".progress");
-		if (cg == null)
-		{
-			System.out.println("CREATE NEW PROGRESS");
-			cg = new ClientProgress(name);
-		}
-
-
-		persistentStateInfo =
-				new PersistentStateInfo(cp, cg, this, new Camera(gameContainer.getWidth() - ForsakenChampions.MAP_START_X * 2,
-						gameContainer.getHeight()), gameContainer, gameContainer.getGraphics(), DEBUG_HOST);
-						*/
-
 		LoadingState.loading = true;
 		loadingState = new LoadingState(STATE_GAME_LOADING);
 		this.addState(new MenuState());
-		this.addState(new DevelMenuState());
 		// this.addState(new MultiplayerMenuState());
 
 		this.addState(new LOVAttackCinematicState());
+		this.addState(new DevelMenuState());
+		this.addState(new DevelAnimationViewState());
 		this.addState(loadingState);
+		addState(new BattleState());
+		addState(new TownState());
+		addState(new CinematicState());
 
 		// this.addState(new TestState());
 
@@ -263,13 +243,7 @@ public class CommRPG extends StateBasedGame   {
 						new FCLoadingRenderSystem(gameContainer));
 						*/
 
-
-
 		this.enterState(STATE_GAME_LOADING);
-	}
-
-	public PersistentStateInfo getPersistentStateInfo() {
-		return persistentStateInfo;
 	}
 
 	/**

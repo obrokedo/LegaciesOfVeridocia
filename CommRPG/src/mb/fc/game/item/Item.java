@@ -7,7 +7,7 @@ import org.newdawn.slick.Image;
 public class Item implements Serializable
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	private transient String name;
 	private transient int cost;
 	private transient String description;
@@ -15,8 +15,8 @@ public class Item implements Serializable
 	private transient boolean isEquippable;
 	private int itemId;
 	private transient Image image;
-	private transient ItemUse itemUse;	
-	
+	private transient ItemUse itemUse;
+
 	public Item(String name, int cost, String description, ItemUse itemUse,
 			boolean isEquippable, int itemId) {
 		super();
@@ -52,7 +52,7 @@ public class Item implements Serializable
 	public int getItemId() {
 		return itemId;
 	}
-	
+
 	public ItemUse getItemUse() {
 		return itemUse;
 	}
@@ -61,11 +61,19 @@ public class Item implements Serializable
 	{
 		return new EquippableDifference(oldItem, newItem);
 	}
-	
+
+	public void setImage(Image image) {
+		this.image = image;
+	}
+
+	public Image getImage() {
+		return image;
+	}
+
 	public static class EquippableDifference
 	{
 		public int atk, def, spd;
-		
+
 		public EquippableDifference(EquippableItem oldItem, EquippableItem newItem)
 		{
 			if (oldItem != null)
@@ -81,13 +89,5 @@ public class Item implements Serializable
 				spd = newItem.getSpeed();
 			}
 		}
-	}
-
-	public void setImage(Image image) {
-		this.image = image;
-	}
-
-	public Image getImage() {
-		return image;
 	}
 }

@@ -1,5 +1,8 @@
 package mb.fc.game.ui;
 
+import mb.fc.engine.CommRPG;
+
+import org.lwjgl.opengl.Display;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.Game;
 import org.newdawn.slick.SlickException;
@@ -28,7 +31,6 @@ public class FCGameContainer extends AppGameContainer
 	 *
 	 * @throws SlickException Indicates a game failure
 	 */
-	/*
 	@Override
 	protected void gameLoop() throws SlickException {
 		int delta = getDelta();
@@ -38,10 +40,7 @@ public class FCGameContainer extends AppGameContainer
 			try {
 				updateAndRender(delta);
 			} catch (Throwable e) {
-
-				running = false;
-				// ((CommRPG) game).enterState(CommRPG.STATE_GAME_MENU_DEVEL);
-
+				((CommRPG) game).enterState(CommRPG.STATE_GAME_MENU_DEVEL);
 				return;
 			}
 		}
@@ -56,5 +55,4 @@ public class FCGameContainer extends AppGameContainer
 			}
 		}
 	}
-	*/
 }

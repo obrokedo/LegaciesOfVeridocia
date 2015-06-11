@@ -1,5 +1,6 @@
 package mb.fc.game.item;
 
+import mb.fc.game.Range;
 import mb.jython.JBattleEffect;
 
 public class ItemUse
@@ -10,7 +11,7 @@ public class ItemUse
 	private int damage;
 	private int mpDamage;
 	private JBattleEffect effects;
-	private int range;
+	private Range range;
 	private int area;
 	private String battleText;
 	private boolean singleUse;
@@ -22,7 +23,7 @@ public class ItemUse
 		this.damage = damage;
 		this.mpDamage = mpDamage;
 		this.effects = effects;
-		this.range = range;
+		this.range = Range.convertToRange(range);
 		this.area = area;
 		this.battleText = battleText;
 		this.singleUse = singleUse;
@@ -44,7 +45,7 @@ public class ItemUse
 		return effects;
 	}
 
-	public int getRange() {
+	public Range getRange() {
 		return range;
 	}
 

@@ -1,5 +1,7 @@
 package mb.fc.game.item;
 
+import mb.fc.game.Range;
+
 
 public class EquippableItem extends Item
 {
@@ -23,7 +25,8 @@ public class EquippableItem extends Item
 	public static final int RANGE_BOW_3_NO_1 = 5;
 	public static final int RANGE_BOW_3_NO_1_OR_2 = 6;
 
-	private int attack, defense, speed, itemType, itemStyle, range;
+	private int attack, defense, speed, itemType, itemStyle;
+	private Range range;
 	private boolean equipped;
 	private String weaponImage;
 
@@ -34,14 +37,14 @@ public class EquippableItem extends Item
 		this.attack = attack;
 		this.defense = defense;
 		this.speed = speed;
-		this.range = range;
+		this.range = Range.convertToRange(range);
 		this.itemType = itemType;
 		this.itemStyle = itemStyle;
 		this.equipped = false;
 		this.weaponImage = weaponImage;
 	}
 
-	public int getRange() {
+	public Range getRange() {
 		return range;
 	}
 

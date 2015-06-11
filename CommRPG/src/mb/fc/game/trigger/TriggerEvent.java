@@ -20,6 +20,8 @@ import mb.fc.game.sprite.Sprite;
 import mb.fc.game.sprite.StaticSprite;
 import mb.fc.game.text.Speech;
 
+import org.newdawn.slick.util.Log;
+
 public class TriggerEvent
 {
 	private ArrayList<TriggerType> triggerTypes = new ArrayList<TriggerType>();
@@ -441,7 +443,7 @@ public class TriggerEvent
 							if (targetSprite != null)
 							{
 								s.getAi().setApproachType(speed, targetSprite);
-								System.out.println("Follow sprite " + targetSprite.getName());
+								Log.debug("Follow sprite " + targetSprite.getName());
 							}
 
 							break;
@@ -450,11 +452,11 @@ public class TriggerEvent
 							if (heroTargetId < stateInfo.getHeroes().size() && stateInfo.getHeroes().get(heroTargetId).getCurrentHP() > 0)
 							{
 								s.getAi().setApproachType(speed, stateInfo.getHeroes().get(heroTargetId));
-								System.out.println("Target sprite " + stateInfo.getHeroes().get(heroTargetId).getName());
+								Log.debug("Target sprite " + stateInfo.getHeroes().get(heroTargetId).getName());
 							}
 							break;
 						case AI.APPROACH_MOVE_TO_POINT:
-							System.out.println("Move to point " + p);
+							Log.debug("Move to point " + p);
 							s.getAi().setApproachType(speed, new Point(p.x * stateInfo.getTileWidth(), p.y * stateInfo.getTileHeight()));
 							break;
 						default:

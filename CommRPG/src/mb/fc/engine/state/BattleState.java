@@ -51,7 +51,12 @@ public class BattleState extends LoadableGameState
 	private String music = null;
 	*/
 
-	public BattleState(PersistentStateInfo psi)
+	public BattleState()
+	{
+
+	}
+
+	public void setPersistentStateInfo(PersistentStateInfo psi)
 	{
 		this.stateInfo = new StateInfo(psi, true, false);
 		this.tileMapRenderer = new TileMapRenderer();
@@ -78,14 +83,20 @@ public class BattleState extends LoadableGameState
 		stateInfo.registerManager(soundManager);
 	}
 
+
+	@Override
+	public void init(GameContainer container, StateBasedGame game)
+			throws SlickException
+	{
+
+	}
+
 	/**
 	 * Initializes this state, this only gets called when coming
 	 * from a loading state
 	 */
 	@Override
-	public void init(GameContainer container, StateBasedGame game)
-			throws SlickException
-	{
+	public void initAfterLoad() {
 		stateInfo.initState();
 	}
 
@@ -170,8 +181,11 @@ public class BattleState extends LoadableGameState
 				{
 					((CommRPG) game).toggleFullScreen();
 				}
+				else if (container.getInput().isKeyPressed(Input.KEY_ESCAPE))
+				{
+					game.enterState(CommRPG.STATE_GAME_MENU_DEVEL);
+				}
 			}
-
 
 			stateInfo.getInput().update(delta);
 		}

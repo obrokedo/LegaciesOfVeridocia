@@ -398,7 +398,6 @@ public class Map
 	public void setOriginalTileWidth(int origTileWidth)
 	{
 		tileRatio = DESIRED_TILE_WIDTH / origTileWidth;
-		System.out.println("TILE RATIO " + tileRatio);
 	}
 
 	public int getBackgroundImageIndex() {

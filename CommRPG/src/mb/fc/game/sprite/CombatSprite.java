@@ -6,6 +6,7 @@ import mb.fc.engine.message.MessageType;
 import mb.fc.engine.message.SpriteContextMessage;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.Camera;
+import mb.fc.game.Range;
 import mb.fc.game.ai.AI;
 import mb.fc.game.battle.spell.KnownSpell;
 import mb.fc.game.constants.Direction;
@@ -378,12 +379,12 @@ public class CombatSprite extends AnimatedSprite
 		this.equipped.set(index, false);
 	}
 
-	public int getAttackRange()
+	public Range getAttackRange()
 	{
 		EquippableItem equippedWeapon = this.getEquippedWeapon();
 		if (equippedWeapon != null)
 			return equippedWeapon.getRange();
-		return 1;
+		return Range.ONE_ONLY;
 	}
 
 	/*******************************************/
@@ -574,6 +575,11 @@ public class CombatSprite extends AnimatedSprite
 	public Animation getAnimation(String animation)
 	{
 		return spriteAnims.getCharacterAnimation(animation, this.isPromoted);
+	}
+
+	public boolean hasAnimation(String animation)
+	{
+		return spriteAnims.hasAnimation(animation);
 	}
 
 	public Image getAnimationImageAtIndex(int index)

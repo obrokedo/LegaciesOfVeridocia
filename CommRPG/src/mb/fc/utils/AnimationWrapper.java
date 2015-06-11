@@ -1,5 +1,7 @@
 package mb.fc.utils;
 
+import java.util.Set;
+
 import mb.fc.engine.CommRPG;
 import mb.fc.game.exception.BadAnimationException;
 
@@ -18,7 +20,7 @@ public class AnimationWrapper
 	protected boolean loops;
 	protected Image weapon = null;
 
-	protected AnimationWrapper(SpriteAnims spriteAnims)
+	public AnimationWrapper(SpriteAnims spriteAnims)
 	{
 		this.spriteAnims = spriteAnims;
 	}
@@ -114,12 +116,10 @@ public class AnimationWrapper
 				if (as.imageIndex != -1)
 				{
 					if (first)
-						g.drawImage(getRotatedImageIfNeeded(spriteAnims.getImageAtIndex(as.imageIndex), as), x, y);
-					else
 						g.drawImage(getRotatedImageIfNeeded(spriteAnims.getImageAtIndex(as.imageIndex), as), x, y + ySecond);
+					else
+						g.drawImage(getRotatedImageIfNeeded(spriteAnims.getImageAtIndex(as.imageIndex), as), x, y);
 				}
-				else
-					drawWeapon(as, x, y, null, g);
 
 				first = false;
 			}
@@ -163,12 +163,6 @@ public class AnimationWrapper
 						yOff = -as.y;
 					}
 
-					/*
-					System.out.println("----");
-					System.out.println(as.y);
-					System.out.println(spriteAnims.getImageAtIndex(as.imageIndex).getHeight());
-					*/
-
 					if (filter == null)
 					{
 						if (as.y < 0)
@@ -204,11 +198,16 @@ public class AnimationWrapper
 	protected Image getRotatedImageIfNeeded(Image image, AnimSprite as)
 	{
 		Image im = image;
-		if (as.angle != 0)
+
+		if (as.angle != 0 || as.flipH || as.flipV)
 		{
 			im = image.copy();
-			im.rotate(as.angle);
+			if (as.angle != 0)
+				im.rotate(as.angle);
+			if (as.flipH || as.flipV)
+				im = im.getFlippedCopy(as.flipH, as.flipV);
 		}
+
 		return im;
 	}
 
@@ -230,5 +229,14 @@ public class AnimationWrapper
 	public Animation getCurrentAnimation()
 	{
 		return animation;
+	}
+
+	public Set<String> getAnimations()
+	{
+		return spriteAnims.getAnimationKeys();
+	}
+
+	public void setWeapon(Image weapon) {
+		this.weapon = weapon;
 	}
 }

@@ -8,6 +8,7 @@ import mb.fc.engine.message.MessageType;
 import mb.fc.engine.message.SpriteContextMessage;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.Camera;
+import mb.fc.game.Range;
 import mb.fc.game.constants.Direction;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.hudmenu.SpriteContextPanel;
@@ -21,6 +22,7 @@ import mb.fc.game.ui.FCGameContainer;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.util.Log;
 
 public class AttackableSpace implements KeyboardListener, MouseListener
 {
@@ -51,7 +53,7 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 											{-1,  1, 1,  1, -1},
 											{-1, -1, 1, -1, -1}};
 
-	public static final int[][] RANGE_2_1 = {   {-1, -1, 1, -1, -1},
+	public static final int[][] RANGE_2_NO_1 = {   {-1, -1, 1, -1, -1},
 												{-1,  1, -1,  1, -1},
 												{ 1,  -1, 1,  -1,  1},
 												{-1,  1, -1,  1, -1},
@@ -64,6 +66,23 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 											{-1,  1,  1, 1,  1,  1, -1},
 											{-1, -1,  1, 1,  1, -1, -1},
 											{-1, -1, -1, 1, -1, -1, -1}};
+
+	public static final int[][] RANGE_3_NO_1 =
+										{	{-1, -1, -1,  1, -1, -1, -1},
+											{-1, -1,  1,  1,  1, -1, -1},
+											{-1,  1,  1, -1,  1,  1, -1},
+											{ 1,  1, -1,  1, -1,  1,  1},
+											{-1,  1,  1, -1,  1,  1, -1},
+											{-1, -1,  1,  1,  1, -1, -1},
+											{-1, -1, -1,  1, -1, -1, -1}};
+	public static final int[][] RANGE_3_NO_1_2 =
+										{	{-1, -1, -1,  1, -1, -1, -1},
+											{-1, -1,  1, -1,  1, -1, -1},
+											{-1,  1, -1, -1, -1,  1, -1},
+											{ 1, -1, -1,  1, -1, -1,  1},
+											{-1,  1, -1, -1, -1,  1, -1},
+											{-1, -1,  1, -1,  1, -1, -1},
+											{-1, -1, -1,  1, -1, -1, -1}};
 
 
 
@@ -91,7 +110,7 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 					if (targetable != null)
 					{
 						targetsInRange.add(targetable);
-						System.out.println("ADD TARGETABLE " + targetable.getName());
+						Log.debug("Attackable Space: Add Targetable " + targetable.getName());
 					}
 				}
 			}
@@ -248,7 +267,7 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 				// Once we've targeted a sprite there can not be anymore keyboard input
 				stateInfo.removeKeyboardListeners();
 
-				System.out.println("TARGETS -> " + sprites.size());
+				Log.debug("Target Amount -> " + sprites.size());
 
 				return true;
 			}
@@ -282,5 +301,37 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 	public int getTargetAmount()
 	{
 		return targetsInRange.size();
+	}
+
+	public static int[][] getAttackableArea(Range range)
+	{
+		int area[][] = null;
+
+		switch (range)
+		{
+			case ONE_ONLY:
+				area = AttackableSpace.RANGE_1;
+				break;
+			case TWO_AND_LESS:
+				area = AttackableSpace.RANGE_2;
+				break;
+			case THREE_AND_LESS:
+				area = AttackableSpace.RANGE_3;
+				break;
+			case TWO_NO_ONE:
+				area = AttackableSpace.RANGE_2_NO_1;
+				break;
+			case THREE_NO_ONE_OR_TWO:
+				area = AttackableSpace.RANGE_3_NO_1_2;
+			case SELF_ONLY:
+				break;
+			case THREE_NO_ONE:
+				area = AttackableSpace.RANGE_3_NO_1;
+				break;
+			default:
+				break;
+		}
+
+		return area;
 	}
 }

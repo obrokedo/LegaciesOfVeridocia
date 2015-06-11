@@ -420,7 +420,6 @@ public class AttackCinematicState extends LoadableGameState
 					if (state == STATE_TRANSITION_ATTACKER_OUT)
 					{
 						state = STATE_ATTACK_CLIMAX;
-						System.out.println("SET STATE CLIMAX 1");
 					}
 					// If we are transitioning and we are already at the last target then that means we are actually transitioning in
 					// the attacker, so we need to set the end of battle state
@@ -433,15 +432,12 @@ public class AttackCinematicState extends LoadableGameState
 						else
 							textMenu = null;
 
-						System.out.println("SET STATE POST ATTACK");
-
 						state = STATE_POST_ATTACK;
 						this.attackerAnimIndex = 0;
 						attackerAnim = attacker.getAnimation("Stand");
 					}
 					else
 					{
-						System.out.println("TRANSITION AT 10, NO STATE");
 						deathFade = false;
 						targetAnim = targets.get(++targetIndex).getAnimation("Stand");
 					}
@@ -668,10 +664,7 @@ public class AttackCinematicState extends LoadableGameState
 		deathFade = false;
 		SpriteSheet battleBGSS = frm.getSpriteSheets().get("battlebg");
 		Image bgIm = battleBGSS.getSprite(battleBGIndex % battleBGSS.getHorizontalCount(), battleBGIndex / battleBGSS.getHorizontalCount());
-		System.out.println("ORIG " + bgIm.getWidth());
-		System.out.println("SCALE AMT " + (gc.getWidth() - gc.getDisplayPaddingX() * 2) / (float) bgIm.getWidth());
 		backgroundImage = bgIm.getScaledCopy((gc.getWidth() - gc.getDisplayPaddingX() * 2) / (float) bgIm.getWidth());
-		System.out.println("RESULT SCALE " + backgroundImage.getWidth());
 
 		bgXPos = gc.getDisplayPaddingX();
 		bgYPos = (gc.getHeight() - backgroundImage.getHeight()) / 2;
@@ -750,5 +743,11 @@ public class AttackCinematicState extends LoadableGameState
 
 	public void setBattleBGIndex(int battleBGIndex) {
 		this.battleBGIndex = battleBGIndex;
+	}
+
+	@Override
+	public void initAfterLoad() {
+		// TODO Auto-generated method stub
+
 	}
 }

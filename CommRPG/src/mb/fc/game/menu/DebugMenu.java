@@ -87,7 +87,6 @@ public class DebugMenu extends Menu
 			else if (splitText[0].equalsIgnoreCase("loadscripts"))
 			{
 				GlobalPythonFactory.intialize();
-				System.out.println("LOAD ");
 			}
 			else if (splitText[0].equalsIgnoreCase("play"))
 			{

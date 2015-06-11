@@ -15,6 +15,7 @@ import mb.fc.engine.CommRPG;
 import mb.fc.game.definition.EnemyDefinition;
 import mb.fc.game.definition.HeroDefinition;
 import mb.fc.game.definition.ItemDefinition;
+import mb.fc.game.exception.BadResourceException;
 import mb.fc.game.resource.EnemyResource;
 import mb.fc.game.resource.HeroResource;
 import mb.fc.game.resource.ItemResource;
@@ -33,6 +34,7 @@ import org.newdawn.slick.Sound;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
+import org.newdawn.slick.util.Log;
 import org.newdawn.slick.util.ResourceLoader;
 
 public class FCResourceManager {
@@ -81,7 +83,7 @@ public class FCResourceManager {
 		String[] split = resource.split(",");
 		if (split[0].equalsIgnoreCase("image"))
 		{
-			System.out.println("Load image " + split[2]);
+			Log.debug("Load image " + split[2]);
 			Image nImage = new Image(split[2], transparent);
 			nImage.setFilter(Image.FILTER_NEAREST);
 			images.put(split[1], nImage.getScaledCopy(split.length == 4 ?
@@ -107,13 +109,19 @@ public class FCResourceManager {
 		}
 		else if (split[0].equalsIgnoreCase("map"))
 		{
-			System.out.println("Load map: " + split[2]);
+			Log.debug("Load map: " + split[2]);
 			MapParser.parseMap(split[2], map, new TilesetParser(), this);
 		}
 		else if (split[0].equalsIgnoreCase("anim"))
 		{
-			SpriteAnims sa = SpriteAnims.deserializeFromFile(split[2]);
-			sa.initialize(images.get(sa.getSpriteSheet()), 1.88f);
+			SpriteAnims sa = SpriteAnims.parseAnimations(split[2]);
+			if (!images.containsKey(sa.getSpriteSheet()))
+				throw new BadResourceException("Error while attempting to load animation file: " + split[2] + ".\n The"
+					+ " animation file has refers to an image '" + sa.getSpriteSheet() + "' which does not exist\n."
+							+ "Either change the name of the desired image in the 'sprite' folder to the correct name\n"
+							+ "or update the animation file to refer to the correct image. Keep in mind that image names\n"
+							+ "ARE case sensitive");
+			sa.initialize(images.get(sa.getSpriteSheet()), CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);
 			spriteAnimations.put(split[1], sa);
 		}
 		else if (split[0].equalsIgnoreCase("animsheet"))
@@ -124,7 +132,7 @@ public class FCResourceManager {
 		}
 		else if (split[0].equalsIgnoreCase("fsa"))
 		{
-			SpriteAnims sa = SpriteAnims.deserializeFromFile(split[2]);
+			SpriteAnims sa = SpriteAnims.parseAnimations(split[2]);
 			sa.initialize(images.get(sa.getSpriteSheet()), CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);// 1.88f);
 			spriteAnimations.put(split[1], sa);
 		}
@@ -240,7 +248,7 @@ public class FCResourceManager {
 			{
 				if (file.getName().endsWith(".png"))
 				{
-					System.out.println("Anim sheet " + file.getName());
+					Log.debug("Anim sheet " + file.getName());
 					images.put(file.getName().replace(".png", ""), new Image(file.getPath(), transparent));
 				}
 			}
@@ -276,33 +284,29 @@ public class FCResourceManager {
 			File dir = new File(split[1]);
 			for (File file : dir.listFiles())
 			{
-				if (file.getName().endsWith(".fsa"))
+				if (file.getName().endsWith(".anim"))
 				{
-					System.out.println(file.getName());
-					SpriteAnims sa = SpriteAnims.deserializeFromFile(file.getPath());
+					Log.debug(file.getName());
+					SpriteAnims sa = SpriteAnims.parseAnimations(file.getPath());
+					if (!images.containsKey(sa.getSpriteSheet()))
+					{
+						throw new BadResourceException("Error while attempting to load animation file: " + file.getName() + ".\n The"
+								+ " animation file has refers to an image '" + sa.getSpriteSheet() + "' which does not exist\n."
+										+ "Either change the name of the desired image in the 'sprite' folder to the correct name\n"
+										+ "or update the animation file to refer to the correct image. Keep in mind that image names\n"
+										+ "ARE case sensitive");
+					}
 					sa.initialize(images.get(sa.getSpriteSheet()), CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);// 1.88f);
-					spriteAnimations.put(file.getName().replace(".fsa", ""), sa);
+					spriteAnimations.put(file.getName().replace(".anim", ""), sa);
 				}
 			}
 		}
-		loadingStatus.currentIndex = currentIndex;
-		loadingStatus.maxIndex = maxIndex;
-	}
 
-	public void addSpriteResource(String spriteName) throws SlickException
-	{
-		Image nIm = new Image("sprite/" + spriteName, transparent);
-		nIm.setFilter(Image.FILTER_NEAREST);
-		images.put(spriteName.replace(".png", ""), nIm.getScaledCopy(CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]));
-	}
-
-
-	public void addSoundResource(String soundName) throws SlickException
-	{
-		if (soundName.endsWith(".ogg"))
-			soundByTitle.put(soundName.replace(".ogg", ""), new Sound("sound/" + soundName));
-		else if (soundName.endsWith(".wav"))
-			soundByTitle.put(soundName.replace(".wav", ""), new Sound("sound/" + soundName));
+		if (loadingStatus != null)
+		{
+			loadingStatus.currentIndex = currentIndex;
+			loadingStatus.maxIndex = maxIndex;
+		}
 	}
 
 	public Hashtable<String, Image> getImages() {
@@ -362,7 +366,7 @@ public class FCResourceManager {
 
 	public static ArrayList<String> readAllLines(String file) throws IOException
 	{
-		System.out.println("Read all lines " + file);
+		Log.debug("Read all lines " + file);
 		BufferedReader br = null;
 		if (LoadingState.inJar)
 		{
@@ -374,7 +378,6 @@ public class FCResourceManager {
 		String line;
 		while ((line = br.readLine()) != null) {
             allLines.add(line);
-            System.err.println(line);
         }
 		br.close();
 		return allLines;

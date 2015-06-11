@@ -26,6 +26,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.util.Log;
 
 /**
  * State that handles the main menu
@@ -37,7 +38,7 @@ public class MenuState extends LoadableGameState
 {
 	protected StateBasedGame game;
 	protected GameContainer gc;
-	protected String version = "DEV 1.23";
+	protected String version = "DEV 1.25";
 	protected Font font;
 	protected boolean initialized = false;
 	protected FCInput input;
@@ -55,6 +56,14 @@ public class MenuState extends LoadableGameState
 		this.gc = container;
 		input = new FCInput();
 		container.getInput().addKeyListener(input);
+	}
+
+	/**
+	 * Initializes this state, this only gets called when coming
+	 * from a loading state
+	 */
+	@Override
+	public void initAfterLoad() {
 	}
 
 	@Override
@@ -138,7 +147,7 @@ public class MenuState extends LoadableGameState
 			throws SlickException {
 		if (initialized)
 		{
-			if (container.getInput().isKeyDown(Input.KEY_F2))
+			if (container.getInput().isKeyPressed(Input.KEY_F1))
 			{
 				((LoadingState) game.getState(CommRPG.STATE_GAME_LOADING)).setLoadingInfo("/menu/MainMenu", null, false, true,
 						new FCResourceManager(),
@@ -193,7 +202,6 @@ public class MenuState extends LoadableGameState
 
 	@Override
 	public void stateLoaded(FCResourceManager resourceManager) {
-		System.out.println("STATE LOADED");
 		gameSetup(game, gc);
 		font = resourceManager.getFontByName("menufont");
 		bgImage = resourceManager.getImages().get("mainbg");
@@ -255,12 +263,12 @@ public class MenuState extends LoadableGameState
 		{
 			clientProfile = new ClientProfile("Test");
 			// clientProfile.serializeToFile();
-			System.out.println("CREATE AND SAVE PROFILE");
+			Log.debug("CREATE AND SAVE PROFILE");
 		}
 
 		if (clientProgress == null)
 		{
-			System.out.println("CREATE PROGRESS");
+			Log.debug("CREATE PROGRESS");
 			clientProgress = new ClientProgress("Quest");
 			clientProgress.serializeToFile(map, "north");
 		}
@@ -281,8 +289,8 @@ public class MenuState extends LoadableGameState
 			System.exit(0);
 		}
 
-		game.addState(new BattleState(persistentStateInfo));
-		game.addState(new TownState(persistentStateInfo));
-		game.addState(new CinematicState(persistentStateInfo));
+		((BattleState) game.getState(CommRPG.STATE_GAME_BATTLE)).setPersistentStateInfo(persistentStateInfo);
+		((TownState) game.getState(CommRPG.STATE_GAME_TOWN)).setPersistentStateInfo(persistentStateInfo);
+		((CinematicState) game.getState(CommRPG.STATE_GAME_CINEMATIC)).setPersistentStateInfo(persistentStateInfo);
 	}
 }
