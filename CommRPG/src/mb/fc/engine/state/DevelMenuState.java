@@ -85,10 +85,11 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 		}
 
 		g.drawString(version, container.getWidth() / 2, container.getHeight() - 30);
-		g.drawString("F1 - Toggle Main/Dev Menu", container.getWidth() - 250, container.getHeight() - 120);
-		g.drawString("F2 - Open Planner", container.getWidth() - 250, container.getHeight() - 90);
-		g.drawString("F3 - Open Quick Animator", container.getWidth() - 250, container.getHeight() - 60);
-		g.drawString("F4 - Open Animation Viewer", container.getWidth() - 250, container.getHeight() - 30);
+		g.drawString("F1 - Toggle Main/Dev Menu", container.getWidth() - 250, container.getHeight() - 150);
+		g.drawString("F2 - Open Planner", container.getWidth() - 250, container.getHeight() - 120);
+		g.drawString("F3 - Open Quick Animator", container.getWidth() - 250, container.getHeight() - 90);
+		g.drawString("F4 - Open Animation Viewer", container.getWidth() - 250, container.getHeight() - 60);
+		g.drawString("F5 - Run Test", container.getWidth() - 250, container.getHeight() - 30);
 
 	}
 
@@ -125,6 +126,13 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 			game.enterState(CommRPG.STATE_GAME_ANIM_VIEW);
 		}
 
+		if (container.getInput().isKeyPressed(Input.KEY_F5))
+		{
+			CommRPG.TEST_MODE_ENABLED = true;
+			this.gameSetup(game, container);
+			start(gc, 1, "eriumcastle", "eriumcastle", null);
+		}
+
 		if (updateDelta > 0)
 			updateDelta = Math.max(0, updateDelta - delta);
 		else if (container.getInput().isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))
@@ -155,6 +163,8 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 				}
 				start(gc, action, mapSelector.getSelectedResource().replaceFirst(".tmx", ""), textSelector.getSelectedResource(), entrance);
 			}
+
+
 		}
 	}
 

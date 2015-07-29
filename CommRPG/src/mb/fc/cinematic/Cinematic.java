@@ -717,7 +717,9 @@ public class Cinematic {
 				System.exit(0);
 				break;
 			case ADD_HERO:
-				stateInfo.getPsi().getClientProfile().addHero(HeroResource.getHero((int) ce.getParam(0)));
+				CombatSprite addHeroSprite = HeroResource.getHero((int) ce.getParam(0));
+				addHeroSprite.initializeSprite(stateInfo);
+				stateInfo.getPsi().getClientProfile().addHero(addHeroSprite);
 				break;
 			default:
 				break;

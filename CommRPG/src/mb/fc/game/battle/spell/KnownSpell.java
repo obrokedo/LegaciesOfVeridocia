@@ -31,7 +31,7 @@ public class KnownSpell implements Serializable
 	public static final int ID_NEPTUNE = 23;
 	public static final int ID_ATLAS = 24;
 
-	private int spellId;
+	private String spellId;
 	private byte maxLevel;
 	private transient JSpell spell;
 
@@ -44,20 +44,20 @@ public class KnownSpell implements Serializable
 	 * @param spellId The spell id of the spell to create
 	 * @param maxLevel The max level that the caster knows of this spell
 	 */
-	public KnownSpell(int spellId, byte maxLevel) {
+	public KnownSpell(String spellId, byte maxLevel) {
 		super();
 		this.spellId = spellId;
 		this.maxLevel = maxLevel;
 	}
 
-	public KnownSpell(int spellId, byte maxLevel, JSpell spell) {
+	public KnownSpell(String spellId, byte maxLevel, JSpell spell) {
 		super();
 		this.spellId = spellId;
 		this.maxLevel = maxLevel;
 		this.spell = spell;
 	}
 
-	public int getSpellId() {
+	public String getSpellId() {
 		return spellId;
 	}
 

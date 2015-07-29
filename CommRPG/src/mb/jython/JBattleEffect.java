@@ -14,10 +14,10 @@ public abstract class JBattleEffect implements Serializable
 	protected int duration;
 	protected int currentTurn;
 	protected int temporaryStat;
-	protected int battleEffectId;
+	protected String battleEffectId;
 	private transient AnimationWrapper effectAnimation;
 
-	public abstract JBattleEffect init(int battleEffectId);
+	public abstract JBattleEffect init(String battleEffectId);
 
 	protected abstract String performEffectImpl(CombatSprite target, int currentTurn);
 
@@ -48,11 +48,11 @@ public abstract class JBattleEffect implements Serializable
 		return duration >= currentTurn;
 	}
 
-	public void setBattleEffectId(int battleEffectId) {
+	public void setBattleEffectId(String battleEffectId) {
 		this.battleEffectId = battleEffectId;
 	}
 
-	public int getBattleEffectId() {
+	public String getBattleEffectId() {
 		return battleEffectId;
 	}
 
@@ -87,4 +87,6 @@ public abstract class JBattleEffect implements Serializable
 	public AnimationWrapper getEffectAnimation() {
 		return effectAnimation;
 	}
+
+	public abstract String[] getBattleEffectList();
 }

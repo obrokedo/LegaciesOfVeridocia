@@ -8,6 +8,7 @@ import mb.fc.game.exception.BadAnimationException;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.util.Log;
 
 public class AnimationWrapper
 {
@@ -46,6 +47,8 @@ public class AnimationWrapper
 
 	public void setAnimation(String animationName, boolean loops)
 	{
+		Log.debug("Setting animation: " + animationName);
+
 		this.animation = spriteAnims.getAnimation(animationName);
 		if (animation == null)
 			throw new BadAnimationException("No animation for the action: " + animationName + " could be found.");
@@ -202,10 +205,12 @@ public class AnimationWrapper
 		if (as.angle != 0 || as.flipH || as.flipV)
 		{
 			im = image.copy();
-			if (as.angle != 0)
-				im.rotate(as.angle);
+
 			if (as.flipH || as.flipV)
 				im = im.getFlippedCopy(as.flipH, as.flipV);
+
+			if (as.angle != 0)
+				im.rotate(as.angle);
 		}
 
 		return im;
@@ -223,7 +228,7 @@ public class AnimationWrapper
 
 	public boolean hasAnimation(String animationName)
 	{
-		return this.spriteAnims.getAnimation(animationName) != null;
+		return this.spriteAnims.hasAnimation(animationName);
 	}
 
 	public Animation getCurrentAnimation()

@@ -7,6 +7,7 @@ import mb.fc.engine.CommRPG;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.battle.LevelUpResult;
 import mb.fc.game.battle.spell.KnownSpell;
+import mb.fc.game.exception.BadResourceException;
 import mb.fc.game.resource.SpellResource;
 import mb.fc.loading.FCResourceManager;
 import mb.jython.GlobalPythonFactory;
@@ -25,16 +26,16 @@ public class HeroProgression implements Serializable
 
 
 	private int spellLevels[][];
+	private ArrayList<String> spellIds;
 	private Progression unpromotedProgression;
 	private Progression promotedProgression;
 	private int heroID;
 
-	private float remainderAtk = 0, remainderDef = 0, remainderSpd = 0, remainderHP = 0, remainderMP = 0;
-
-	public HeroProgression(int[][] spellLevels,
+	public HeroProgression(ArrayList<String> spellIds, int[][] spellLevels,
 			Progression unpromotedProgression, Progression promotedProgression,
 			int heroID) {
 		super();
+		this.spellIds = spellIds;
 		this.spellLevels = spellLevels;
 		this.unpromotedProgression = unpromotedProgression;
 		this.promotedProgression = promotedProgression;
@@ -45,6 +46,7 @@ public class HeroProgression implements Serializable
 	{
 		cs.setPromoted(true);
 		cs.setMaxMove(promotedProgression.getMove());
+		cs.setMovementType(promotedProgression.getMovementType());
 	}
 
 	public LevelUpResult getLevelUpResults(CombatSprite cs, StateInfo stateInfo)
@@ -75,11 +77,11 @@ public class HeroProgression implements Serializable
 
 		for (int i = 0; i < spellLevels.length; i++)
 		{
-			for (int j = 1; j < spellLevels[i].length; j++)
+			for (int j = 0; j < spellLevels[i].length; j++)
 			{
 				if (spellLevels[i][j] == (cs.getLevel() + 1))
 				{
-					JSpell spell = SpellResource.getSpell(spellLevels[i][0], stateInfo);
+					JSpell spell = SpellResource.getSpell(spellIds.get(i), stateInfo);
 					text += " " + cs.getName() + " learned " + spell.getName() + " " + j + "}[";
 				}
 			}
@@ -110,18 +112,18 @@ public class HeroProgression implements Serializable
 
 		for (int i = 0; i < spellLevels.length; i++)
 		{
-			for (int j = 1; j < spellLevels[i].length; j++)
+			for (int j = 0; j < spellLevels[i].length; j++)
 			{
 				if (spellLevels[i][j] == cs.getLevel())
 				{
-					JSpell spell = SpellResource.getSpell(spellLevels[i][0], frm);
+					JSpell spell = SpellResource.getSpell(spellIds.get(i), frm);
 
 					boolean found = false;
 					if (cs.getSpellsDescriptors() != null)
 					{
 						for (KnownSpell sd : cs.getSpellsDescriptors())
 						{
-							if (sd.getSpellId() == spell.getId())
+							if (sd.getSpellId().equalsIgnoreCase(spell.getId()))
 							{
 								sd.setMaxLevel((byte) j);
 								found = true;
@@ -157,7 +159,7 @@ public class HeroProgression implements Serializable
 			for (int i = 2; i < 30; i++)
 			{
 				// System.out.println("New Level ---- " + i);
-				float gain = getStatIncrease(new int[]{4, 30, 90}, true, val, i);
+				float gain = getStatIncrease(new Object[]{"4", 30, 90}, true, val, i);
 				val += (int) gain;
 				System.out.print("NEW " + val +", ");
 			}
@@ -172,14 +174,18 @@ public class HeroProgression implements Serializable
 
 	}
 
-	private static int getStatIncrease(int[] stat, boolean isPromoted, int currentStat,
+	private static int getStatIncrease(Object[] stat, boolean isPromoted, int currentStat,
 			int newLevel)
 	{
-		if (stat[2] == 0)
+		if (((int) stat[2]) == 0)
 			return 0;
 
 		JLevelProgression jlp = GlobalPythonFactory.createLevelProgression();
-		float[] values = jlp.getProgressArray(stat[0], isPromoted);
+		float[] values = jlp.getProgressArray((String) stat[0], isPromoted);
+
+		if (values == null)
+			throw new BadResourceException("No value was found for the progression type " + ((String) stat[0]) +
+					" check LevelProgression.py to make sure an array is returned for the given value");
 
 		float percentDone = 0;
 		for (int i = 1; i < newLevel; i++)
@@ -187,10 +193,10 @@ public class HeroProgression implements Serializable
 
 		percentDone /= 100;
 
-		int amountToGainTotal = (stat[2] - stat[1]);
+		int amountToGainTotal = (((int) stat[2]) - ((int) stat[1]));
 
 		int averageValue = (int) ((amountToGainTotal * percentDone) + // The amount that should have been gained at minimum
-				stat[1] + // The base stat
+				((int) stat[1]) + // The base stat
 				newLevel / 3); // Assume 33% bonus hp
 
 		// If promoted then assume 1.5 bonus for each of the "big" levels

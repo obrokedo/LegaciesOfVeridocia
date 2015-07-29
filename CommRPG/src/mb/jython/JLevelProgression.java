@@ -1,5 +1,7 @@
 package mb.jython;
 
 public interface JLevelProgression {
-	public float[] getProgressArray(int progressionType, boolean promoted);
+	public float[] getProgressArray(String progressionType, boolean promoted);
+
+	public abstract String[] getProgressionTypeList();
 }

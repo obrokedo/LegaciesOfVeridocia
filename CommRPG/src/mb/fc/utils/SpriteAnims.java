@@ -49,6 +49,11 @@ public class SpriteAnims
 		return animations.get(name) != null;
 	}
 
+	public boolean hasCharacterAnimation(String name, boolean isPromoted)
+	{
+		return animations.get((isPromoted ? "Pro" : "Un") + name) != null;
+	}
+
 	public Animation getCharacterAnimation(String name, boolean isPromoted)
 	{
 		Animation a = animations.get((isPromoted ? "Pro" : "Un") + name);

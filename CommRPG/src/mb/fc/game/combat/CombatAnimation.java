@@ -45,7 +45,7 @@ public class CombatAnimation
 			minimumTimePassed = animationWrapper.getAnimationLength();
 
 		if (showPlatform == null)
-			displayPlatform = (parentSprite.isHero() && parentSprite.getMovementType() != CombatSprite.MOVEMENT_FLYING);
+			displayPlatform = (parentSprite.isHero() && parentSprite.isDrawShadow());
 	}
 
 	public boolean update(int delta)

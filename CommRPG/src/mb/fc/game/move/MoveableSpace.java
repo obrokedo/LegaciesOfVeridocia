@@ -45,7 +45,7 @@ public class MoveableSpace implements KeyboardListener, TileBasedMap
 	private boolean owner;
 	private boolean checkEvents = true;
 	private Map map;
-	private int spriteMovementType;
+	private String spriteMovementType;
 	int mapWidth, mapHeight;
 	private static final int UNMOVEABLE_TILE = 99;
 	private final Color MOVEABLE_COLOR = new Color(0, 0, 255, 70);

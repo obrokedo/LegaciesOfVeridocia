@@ -40,7 +40,7 @@ public class WizardAI extends CasterAI
 
 				for (CombatSprite ts : targetsInArea)
 				{
-					if (ts.getCurrentHP() + spell.getDamage()[i - 1] <= 0)
+					if (ts.getCurrentHP() + spell.getEffectiveDamage(currentSprite, ts, i - 1) <= 0)
 					{
 						killed++;
 						willKill = true;
@@ -50,7 +50,7 @@ public class WizardAI extends CasterAI
 						// TODO WHY ARE WE USING THEIR MAX HEALTH HERE? PERCENTAGE OF CURRENT HEALTH IS SUFFICIENT WITH
 						// A MAX PERCENT OF -1. OTHERWISE WE WILL ALMOST ALWAYS USE HIGHER LEVEL SPELLS
 						// ALSO, WHY DO WE HAVE CURRENT CONFIDENCE BE MAXED TO -50? IT SHOULD BE MINNED TO 0
-						currentConfidence += Math.min(50, (int)(-50.0 * spell.getDamage()[i - 1] / ts.getMaxHP()));
+						currentConfidence += Math.min(50, (int)(-50.0 * spell.getEffectiveDamage(currentSprite, ts, i - 1) / ts.getMaxHP()));
 					}
 				}
 
@@ -61,13 +61,13 @@ public class WizardAI extends CasterAI
 			}
 			else
 			{
-				if (targetSprite.getCurrentHP() + spell.getDamage()[i - 1] <= 0)
+				if (targetSprite.getCurrentHP() + spell.getEffectiveDamage(currentSprite, targetSprite, i - 1) <= 0)
 				{
 					currentConfidence += 50;
 					willKill = true;
 				}
 				else
-					currentConfidence += Math.min(50, (int)(-50.0 * spell.getDamage()[i - 1] / targetSprite.getMaxHP()));
+					currentConfidence += Math.min(50, (int)(-50.0 * spell.getEffectiveDamage(currentSprite, targetSprite, i - 1) / targetSprite.getMaxHP()));
 				targetsInArea = null;
 			}
 

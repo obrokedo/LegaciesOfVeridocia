@@ -6,7 +6,8 @@ import java.util.Comparator;
 import java.util.Hashtable;
 
 import mb.fc.engine.CommRPG;
-import mb.fc.game.sprite.CombatSprite;
+import mb.jython.GlobalPythonFactory;
+import mb.jython.JConfigurationValues;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
@@ -31,7 +32,7 @@ public class Map
 	 * Table that defines how each type of battle unit's movement is effected by each type of terrain.
 	 * A value of 1000 means that the space is unmoveable in battle. A value of 10 is equivalent to 1 space
 	 */
-	private static final int[][] movementCostsByType = {
+	private static final int[][] movementCostsByType2 = {
 														//Water   		Road   			Forest     		Sand    	H Sky
 														//	  	Grass  			Th Gras   	 	Hills  			L Sky	Impassable
 														// Normal
@@ -59,7 +60,12 @@ public class Map
 	 */
 													//Water   		Road   			Forest     		Sand    	H Sky
 													//	  	Grass  			Th Gras   	 	Hills  			L Sky	Impassable
-	private static final int[] terrainEffectByType = {0,  	10,  	0,  	20, 	40, 	30, 	0,  	0,    0, 0};
+	private static final int[] terrainEffectByType2 = {0,  	10,  	0,  	20, 	40, 	30, 	0,  	0,    0, 0};
+
+
+
+	private Hashtable<String, Integer> terrainEffectByType = new Hashtable<String, Integer>();
+	private Hashtable<String, MovementCost> movementCostsByType = new Hashtable<String, Map.MovementCost>();
 
 	/**
 	 * A list of 2 dimensional int arrays, where each entry contains the tile indexs for each tile on that layer.
@@ -70,17 +76,23 @@ public class Map
 	protected ArrayList<TileSet> tileSets = new ArrayList<TileSet>();
 	private ArrayList<MapObject> mapObjects = new ArrayList<MapObject>();
 	protected Hashtable<Integer, Integer> landEffectByTileId = new Hashtable<Integer, Integer>();
-	private Hashtable<TerrainTypeIndicator, Integer> overriddenTerrain = new Hashtable<TerrainTypeIndicator, Integer>();
+	private Hashtable<TerrainTypeIndicator, String> overriddenTerrain = new Hashtable<TerrainTypeIndicator, String>();
 	private Hashtable<Integer, Roof> roofsById = new Hashtable<Integer, Roof>();
 	private Shape battleRegion = null;
 	private int roofCount = -1;
 	private int backgroundImageIndex;
+	private JConfigurationValues jConfigValues;
 
 	private float tileRatio = 2f;
 	public static final float DESIRED_TILE_WIDTH = 24f;
 
 	public Map() {
 		super();
+		jConfigValues = GlobalPythonFactory.createConfigurationValues();
+		for (String movementType : jConfigValues.getMovementTypes())
+			movementCostsByType.put(movementType, new MovementCost(movementType, jConfigValues));
+		for (String terrainType : jConfigValues.getTerrainTypes())
+			terrainEffectByType.put(terrainType, jConfigValues.getTerrainEffectAmount(terrainType));
 	}
 
 	public void reinitalize()
@@ -162,7 +174,7 @@ public class Map
 				{
 					if (mo.getShape().contains(x + 1, y + 1))
 					{
-						overriddenTerrain.put(new TerrainTypeIndicator(x / getTileEffectiveWidth(), y / getTileEffectiveHeight()), Integer.parseInt(mo.getParam("type")));
+						overriddenTerrain.put(new TerrainTypeIndicator(x / getTileEffectiveWidth(), y / getTileEffectiveHeight()), mo.getParam("type"));
 					}
 				}
 			}
@@ -213,18 +225,19 @@ public class Map
 		return null;
 	}
 
-	public int getMovementCostByType(int moverType, int tileX, int tileY)
+	public int getMovementCostByType(String moverType, int tileX, int tileY)
 	{
-		int tile;
+		String tile;
 
 		TerrainTypeIndicator tti = new TerrainTypeIndicator(tileX, tileY);
 		if (overriddenTerrain.containsKey(tti))
 		{
 			tile = overriddenTerrain.get(tti);
-			return movementCostsByType[moverType][tile];
+			return movementCostsByType.get(moverType).getMovementCost(tile);
 		}
 		else
 		{
+			/*
 			if (mapLayer.get(1)[tileY][tileX] != 0)
 				tile = mapLayer.get(1)[tileY][tileX];
 			else
@@ -239,24 +252,29 @@ public class Map
 			}
 			else
 				return 10000;
+			*/
+			return 10000;
 		}
 	}
 
-	public int getLandEffectByTile(int moverType, int tileX, int tileY)
+	public int getLandEffectByTile(String moverType, int tileX, int tileY)
 	{
-		if (moverType == CombatSprite.MOVEMENT_FLYING)
+		// Check to see if given the movement type is effected by land effect
+		// if not then just return 0
+		if (!jConfigValues.isAffectedByTerrain(moverType))
 			return 0;
 
-		int tile;
+		String tileTerrainType;
 
 		TerrainTypeIndicator tti = new TerrainTypeIndicator(tileX, tileY);
 		if (overriddenTerrain.containsKey(tti))
 		{
-			tile = overriddenTerrain.get(tti);
-			return terrainEffectByType[tile];
+			tileTerrainType = overriddenTerrain.get(tti);
+			return terrainEffectByType.get(tileTerrainType);
 		}
 		else
 		{
+			/*
 			if (mapLayer.get(1)[tileY][tileX] != 0)
 				tile = mapLayer.get(1)[tileY][tileX];
 			else
@@ -273,6 +291,8 @@ public class Map
 			{
 				return 0;
 			}
+			*/
+			return 0;
 		}
 	}
 
@@ -406,5 +426,21 @@ public class Map
 
 	public void setBackgroundImageIndex(int index) {
 		this.backgroundImageIndex = index;
+	}
+
+	private class MovementCost
+	{
+		private Hashtable<String, Integer> movementCostByTerrain = new Hashtable<>();
+
+		public MovementCost(String moveType, JConfigurationValues configValues)
+		{
+			for (String terrainType : configValues.getTerrainTypes())
+				movementCostByTerrain.put(terrainType, configValues.getMovementCosts(moveType, terrainType));
+		}
+
+		public int getMovementCost(String terrain)
+		{
+			return movementCostByTerrain.get(terrain);
+		}
 	}
 }

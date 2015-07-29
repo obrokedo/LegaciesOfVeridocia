@@ -170,6 +170,8 @@ public abstract class AI
 
 		if (confidence.target != null)
 		{
+			Log.debug("Move to attack the target from attack point " + confidence.attackPoint.x + ", " + confidence.attackPoint.y);
+			Log.debug("Attack " + confidence.target.getName() + " at " + confidence.target.getTileX() + ", " + confidence.target.getTileY());
 			ms.addMoveActionsToLocation(confidence.attackPoint.x, confidence.attackPoint.y, currentSprite, turnActions);
 			turnActions.add(new WaitAction());
 			turnActions.add(new TargetSpriteAction(confidence.potentialAttackSpriteAction.getBattleCommand(),

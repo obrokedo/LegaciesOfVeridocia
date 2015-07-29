@@ -9,17 +9,17 @@ public class Progression implements Serializable
 	private int[] usuableWeapons;
 	private int[] usuableArmor;
 	private int move;
-	private int[] attack;
-	private int[] defense;
-	private int[] speed;
-	private int[] hp;
-	private int[] mp;
-	private int movementType;
+	private Object[] attack;
+	private Object[] defense;
+	private Object[] speed;
+	private Object[] hp;
+	private Object[] mp;
+	private String movementType;
 	private String className;
 
-	public Progression(int[] usuableWeapons, int[] usuableArmor, int move, int movementType,
-			int[] attackGains, int[] defenseGains, int[] speedGains, int[] hpGains,
-			int[] mpGains, String className) {
+	public Progression(int[] usuableWeapons, int[] usuableArmor, int move, String movementType,
+			Object[] attackGains, Object[] defenseGains, Object[] speedGains, Object[] hpGains,
+			Object[] mpGains, String className) {
 		super();
 		this.usuableWeapons = usuableWeapons;
 		this.usuableArmor = usuableArmor;
@@ -42,22 +42,22 @@ public class Progression implements Serializable
 	public int getMove() {
 		return move;
 	}
-	public int[] getAttack() {
+	public Object[] getAttack() {
 		return attack;
 	}
-	public int[] getDefense() {
+	public Object[] getDefense() {
 		return defense;
 	}
-	public int[] getSpeed() {
+	public Object[] getSpeed() {
 		return speed;
 	}
-	public int[] getHp() {
+	public Object[] getHp() {
 		return hp;
 	}
-	public int[] getMp() {
+	public Object[] getMp() {
 		return mp;
 	}
-	public int getMovementType() {
+	public String getMovementType() {
 		return movementType;
 	}
 	public String getClassName() {

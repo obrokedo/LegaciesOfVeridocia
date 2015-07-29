@@ -28,6 +28,7 @@ import javax.swing.event.ChangeListener;
 
 import mb.fc.utils.XMLParser;
 import mb.fc.utils.XMLParser.TagArea;
+import mb.jython.GlobalPythonFactory;
 
 public class PlannerFrame extends JFrame implements ActionListener,
 		ChangeListener {
@@ -37,7 +38,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 	private ArrayList<ArrayList<String>> listOfLists;
 	private JTabbedPane jtp;
 	private File triggerFile;
-	private static String version = "DEV 1.24";
+	private static String version = "DEV 1.26";
 	public static boolean SHOW_CIN = false;
 	public static boolean SHOW_CIN_LOCATION = true;
 
@@ -150,7 +151,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 
 		listOfLists = new ArrayList<ArrayList<String>>();
 
-		for (int i = 0; i < 19; i++)
+		for (int i = 0; i < 20; i++)
 			listOfLists.add(new ArrayList<String>());
 
 		// Setup AI Types
@@ -161,23 +162,15 @@ public class PlannerFrame extends JFrame implements ActionListener,
 		listOfLists.get(PlannerValueDef.REFERS_AI - 1).add("Move to point");
 
 		// Setup stat gain types
-		listOfLists.get(PlannerValueDef.REFERS_STAT_GAINS - 1).add("Linear");
-		listOfLists.get(PlannerValueDef.REFERS_STAT_GAINS - 1).add("Early");
-		listOfLists.get(PlannerValueDef.REFERS_STAT_GAINS - 1).add("Middle");
-		listOfLists.get(PlannerValueDef.REFERS_STAT_GAINS - 1).add("Late");
-		listOfLists.get(PlannerValueDef.REFERS_STAT_GAINS - 1).add("Early-Late");
-		listOfLists.get(PlannerValueDef.REFERS_STAT_GAINS - 1).add("Start-Stop");
-		listOfLists.get(PlannerValueDef.REFERS_STAT_GAINS - 1).add("Step-Up");
-		listOfLists.get(PlannerValueDef.REFERS_STAT_GAINS - 1).add("Step-Down");
-		listOfLists.get(PlannerValueDef.REFERS_STAT_GAINS - 1).add("2-Wave");
-		listOfLists.get(PlannerValueDef.REFERS_STAT_GAINS - 1).add("3-Wave");
+		GlobalPythonFactory.intialize();
+
+		// Setup progression type
+		for (String progressionName : GlobalPythonFactory.createLevelProgression().getProgressionTypeList())
+			listOfLists.get(PlannerValueDef.REFERS_STAT_GAINS - 1).add(progressionName);
 
 		// Setup usuable itemstyles
-		listOfLists.get(PlannerValueDef.REFERS_ITEM_STYLE - 1).add("SPEAR");
-		listOfLists.get(PlannerValueDef.REFERS_ITEM_STYLE - 1).add("AXE");
-		listOfLists.get(PlannerValueDef.REFERS_ITEM_STYLE - 1).add("SWORD");
-		listOfLists.get(PlannerValueDef.REFERS_ITEM_STYLE - 1).add("STAFF");
-		listOfLists.get(PlannerValueDef.REFERS_ITEM_STYLE - 1).add("BOW");
+		for (String weaponName : GlobalPythonFactory.createConfigurationValues().getWeaponTypes())
+			listOfLists.get(PlannerValueDef.REFERS_ITEM_STYLE - 1).add(weaponName);
 
 		// Setup usuable item types
 		listOfLists.get(PlannerValueDef.REFERS_ITEM_TYPE - 1).add("Weapon");
@@ -201,44 +194,27 @@ public class PlannerFrame extends JFrame implements ActionListener,
 		// Setup usuable item areas
 		listOfLists.get(PlannerValueDef.REFERS_ITEM_AREA - 1).add("None");
 		listOfLists.get(PlannerValueDef.REFERS_ITEM_AREA - 1).add("One square");
-		listOfLists.get(PlannerValueDef.REFERS_ITEM_AREA - 1).add(
-				"Five squares");
-		listOfLists.get(PlannerValueDef.REFERS_ITEM_AREA - 1).add(
-				"Thirteen squares");
+		listOfLists.get(PlannerValueDef.REFERS_ITEM_AREA - 1).add("Five squares");
+		listOfLists.get(PlannerValueDef.REFERS_ITEM_AREA - 1).add("Thirteen squares");
 		listOfLists.get(PlannerValueDef.REFERS_ITEM_AREA - 1).add("Everyone");
 
 		// Setup movement types
-		listOfLists.get(PlannerValueDef.REFERS_MOVE_TYPE - 1).add("WALKING");
-		listOfLists.get(PlannerValueDef.REFERS_MOVE_TYPE - 1).add("CENTAUR");
-		listOfLists.get(PlannerValueDef.REFERS_MOVE_TYPE - 1).add("BEASTMEN");
-		listOfLists.get(PlannerValueDef.REFERS_MOVE_TYPE - 1).add("MECHANICAL");
-		listOfLists.get(PlannerValueDef.REFERS_MOVE_TYPE - 1).add("FLYING");
-		listOfLists.get(PlannerValueDef.REFERS_MOVE_TYPE - 1).add("HOVERING");
-		listOfLists.get(PlannerValueDef.REFERS_MOVE_TYPE - 1).add("SWIMMING");
-		listOfLists.get(PlannerValueDef.REFERS_MOVE_TYPE - 1).add("ELVES");
+		for (String movementName : GlobalPythonFactory.createConfigurationValues().getMovementTypes())
+			listOfLists.get(PlannerValueDef.REFERS_MOVE_TYPE - 1).add(movementName);
 
 		// Setup spells
-		listOfLists.get(PlannerValueDef.REFERS_SPELL - 1).add("Heal");
-		listOfLists.get(PlannerValueDef.REFERS_SPELL - 1).add("Aura");
-		listOfLists.get(PlannerValueDef.REFERS_SPELL - 1).add("Detox");
-		listOfLists.get(PlannerValueDef.REFERS_SPELL - 1).add("Boost");
-		listOfLists.get(PlannerValueDef.REFERS_SPELL - 1).add("Slow");
-		listOfLists.get(PlannerValueDef.REFERS_SPELL - 1).add("Strength");
-		listOfLists.get(PlannerValueDef.REFERS_SPELL - 1).add("Dispel");
-		listOfLists.get(PlannerValueDef.REFERS_SPELL - 1).add("Muddle");
-		listOfLists.get(PlannerValueDef.REFERS_SPELL - 1).add("Desoul");
-		listOfLists.get(PlannerValueDef.REFERS_SPELL - 1).add("Sleep");
-		listOfLists.get(PlannerValueDef.REFERS_SPELL - 1).add("Egress");
-		listOfLists.get(PlannerValueDef.REFERS_SPELL - 1).add("Blaze");
-		listOfLists.get(PlannerValueDef.REFERS_SPELL - 1).add("Freeze");
-		listOfLists.get(PlannerValueDef.REFERS_SPELL - 1).add("Bolt");
-		listOfLists.get(PlannerValueDef.REFERS_SPELL - 1).add("Blast");
+		for (String spellName : GlobalPythonFactory.createJSpell().getSpellList())
+			listOfLists.get(PlannerValueDef.REFERS_SPELL - 1).add(spellName);
 
 		// Setup Direction
 		listOfLists.get(PlannerValueDef.REFERS_DIRECTION - 1).add("Up");
 		listOfLists.get(PlannerValueDef.REFERS_DIRECTION - 1).add("Down");
 		listOfLists.get(PlannerValueDef.REFERS_DIRECTION - 1).add("Left");
 		listOfLists.get(PlannerValueDef.REFERS_DIRECTION - 1).add("Right");
+
+		// Setup Battle Effects
+		for (String effectName : GlobalPythonFactory.createJBattleEffect("NOTHING").getBattleEffectList())
+			listOfLists.get(PlannerValueDef.REFERS_EFFECT - 1).add(effectName);
 
 		// Animation files
 		File animations = new File(PATH_ANIMATIONS);
@@ -427,7 +403,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 			TagArea ta) {
 		System.out.println("PARENT: " + pld.getTag());
 		for (PlannerValueDef pvd : pld.getPlannerValues()) {
-			if (pvd.getValueType() == PlannerValueDef.TYPE_STRING)
+			if (pvd.getValueType() == PlannerValueDef.TYPE_STRING || pvd.getValueType() == PlannerValueDef.TYPE_LONG_STRING)
 				plannerLine.getValues().add(ta.getAttribute(pvd.getTag()));
 			else if (pvd.getValueType() == PlannerValueDef.TYPE_INT) {
 				if (pvd.getRefersTo() == PlannerValueDef.REFERS_NONE) {
@@ -1350,7 +1326,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 		// Text Box
 		definingValues = new ArrayList<PlannerValueDef>();
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
-				PlannerValueDef.TYPE_STRING, "text", false, "Text",
+				PlannerValueDef.TYPE_LONG_STRING, "text", false, "Text",
 				"The text that should be displayed. Using the { character will cause a short pause, the } character will do a soft stop and the } chararacter will do a hard stop. Using a | will cause the action after this one to be ran"));
 		definingValues.add(new PlannerValueDef(
 				PlannerValueDef.REFERS_HERO, PlannerValueDef.TYPE_INT,
@@ -1627,7 +1603,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 		definingValues
 				.add(new PlannerValueDef(
 						PlannerValueDef.REFERS_NONE,
-						PlannerValueDef.TYPE_STRING,
+						PlannerValueDef.TYPE_LONG_STRING,
 						"message",
 						false,
 						"Message Text",
@@ -1695,7 +1671,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 				"Starting Move for the enemy"));
 		definingValues
 				.add(new PlannerValueDef(PlannerValueDef.REFERS_MOVE_TYPE,
-						PlannerValueDef.TYPE_INT, "movementtype", false,
+						PlannerValueDef.TYPE_STRING, "movementtype", false,
 						"Movement Type",
 						"The enemies movement type as it relates to land effect and barriers"));
 		definingValues
@@ -1723,7 +1699,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 		// Spell Progression
 		definingValues = new ArrayList<PlannerValueDef>();
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_SPELL,
-				PlannerValueDef.TYPE_INT, "spellid", false, "Spell ID",
+				PlannerValueDef.TYPE_STRING, "spellid", false, "Spell ID",
 				"The ID of the spell that this enemy knows"));
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
 				PlannerValueDef.TYPE_INT, "level", false, "Max Level",
@@ -1744,8 +1720,8 @@ public class PlannerFrame extends JFrame implements ActionListener,
 
 		// Attack Special Effect
 		definingValues = new ArrayList<PlannerValueDef>();
-		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
-				PlannerValueDef.TYPE_INT, "effectid", false, "Effect ID",
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_EFFECT,
+				PlannerValueDef.TYPE_STRING, "effectid", false, "Effect ID",
 				"The ID of the effect that the enemies attack may cause"));
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
 				PlannerValueDef.TYPE_INT, "effectchance", false,
@@ -1824,13 +1800,13 @@ public class PlannerFrame extends JFrame implements ActionListener,
 				PlannerValueDef.TYPE_INT, "move", false, "Starting Move",
 				"The heroes base move while in this progression"));
 		definingValues.add(new PlannerValueDef(
-				PlannerValueDef.REFERS_MOVE_TYPE, PlannerValueDef.TYPE_INT,
+				PlannerValueDef.REFERS_MOVE_TYPE, PlannerValueDef.TYPE_STRING,
 				"movementtype", false, "Movement Type",
 				"The movement type of this hero"));
 
 		// ATTACK
 		definingValues.add(new PlannerValueDef(
-				PlannerValueDef.REFERS_STAT_GAINS, PlannerValueDef.TYPE_INT,
+				PlannerValueDef.REFERS_STAT_GAINS, PlannerValueDef.TYPE_STRING,
 				"attack", false, "Attack Gain",
 				"The amount of attack the hero should gain per level"));
 		definingValues.add(new PlannerValueDef(
@@ -1844,7 +1820,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 
 		// DEFENSE
 		definingValues.add(new PlannerValueDef(
-				PlannerValueDef.REFERS_STAT_GAINS, PlannerValueDef.TYPE_INT,
+				PlannerValueDef.REFERS_STAT_GAINS, PlannerValueDef.TYPE_STRING,
 				"defense", false, "Defense Gain",
 				"The amount of defense the hero should gain per level"));
 		definingValues.add(new PlannerValueDef(
@@ -1858,7 +1834,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 
 		// SPEED
 		definingValues.add(new PlannerValueDef(
-				PlannerValueDef.REFERS_STAT_GAINS, PlannerValueDef.TYPE_INT,
+				PlannerValueDef.REFERS_STAT_GAINS, PlannerValueDef.TYPE_STRING,
 				"speed", false, "Speed Gain",
 				"The amount of speed the hero should gain per level"));
 		definingValues.add(new PlannerValueDef(
@@ -1872,7 +1848,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 
 		// HP
 		definingValues.add(new PlannerValueDef(
-				PlannerValueDef.REFERS_STAT_GAINS, PlannerValueDef.TYPE_INT,
+				PlannerValueDef.REFERS_STAT_GAINS, PlannerValueDef.TYPE_STRING,
 				"hp", false, "HP Gain",
 				"The amount of HP the hero should gain per level"));
 		definingValues.add(new PlannerValueDef(
@@ -1886,7 +1862,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 
 		// MP
 		definingValues.add(new PlannerValueDef(
-				PlannerValueDef.REFERS_STAT_GAINS, PlannerValueDef.TYPE_INT,
+				PlannerValueDef.REFERS_STAT_GAINS, PlannerValueDef.TYPE_STRING,
 				"mp", false, "MP Gain",
 				"The amount of MP the hero should gain per level"));
 		definingValues.add(new PlannerValueDef(
@@ -1912,7 +1888,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 		// Spell Progression
 		definingValues = new ArrayList<PlannerValueDef>();
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_SPELL,
-				PlannerValueDef.TYPE_INT, "spellid", false, "Spell ID",
+				PlannerValueDef.TYPE_STRING, "spellid", false, "Spell ID",
 				"The ID of the spell that this hero knows"));
 		definingValues
 				.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
@@ -2336,7 +2312,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 		this.setPreferredSize(new Dimension(800, 600));
 		this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		this.pack();
-		// this.setVisible(false);
+		this.setVisible(false);
 		this.setVisible(true);
 	}
 

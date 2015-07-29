@@ -78,7 +78,7 @@ public class AnimatedSprite extends Sprite
 					+ "Associated animation file " + imageName + ".anim could not be found.\n"
 							+ "Check the animationsheets folder to make sure an animation by that name exists.\n"
 							+ "Keep in mind that animation file names ARE case sensitive.");
-		if (!(this instanceof CombatSprite))
+		if (!(this instanceof CombatSprite) && !(this instanceof NPCSprite))
 				currentAnim = spriteAnims.getAnimation("Down");
 		facing = Direction.DOWN;
 		animationUpdate = MovingSprite.STAND_ANIMATION_SPEED;

@@ -99,7 +99,12 @@ public class CinematicActor implements Comparable<CinematicActor>
 		this.isHeroPromoted = isHeroPromoted;
 		this.facing = Direction.DOWN;
 		this.spriteAnims = spriteAnims;
-		currentAnim = this.spriteAnims.getAnimation(initialAnimation);
+
+		if (isHeroBacked)
+			currentAnim = this.spriteAnims.getCharacterAnimation(initialAnimation, isHeroPromoted);
+		else
+			currentAnim = this.spriteAnims.getAnimation(initialAnimation);
+
 		this.setAnimation(initialAnimation, 1000, false, true);
 		this.locX = x * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
 		this.locY = y * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];

@@ -80,6 +80,10 @@ public class CommRPG extends StateBasedGame   {
 
 	public static final String GAME_TITLE = "Legacies of Veridocia";
 
+	public static boolean TEST_MODE_ENABLED = false; //true;
+
+	public static boolean DEV_MODE_ENABLED = true;
+
 	private static DEBUG_HOLDER DH;
 
 	private class DEBUG_HOLDER

@@ -38,7 +38,7 @@ public class MenuState extends LoadableGameState
 {
 	protected StateBasedGame game;
 	protected GameContainer gc;
-	protected String version = "DEV 1.25";
+	protected String version = "DEV 1.27";
 	protected Font font;
 	protected boolean initialized = false;
 	protected FCInput input;
@@ -236,7 +236,7 @@ public class MenuState extends LoadableGameState
 			{
 				clientProgress =  ClientProgress.deserializeFromFile(s);
 			}
-			else if (s.equalsIgnoreCase("DevParams"))
+			else if (s.equalsIgnoreCase("DevParams") && CommRPG.DEV_MODE_ENABLED && !CommRPG.TEST_MODE_ENABLED)
 			{
 				BufferedReader br = null;
 				try

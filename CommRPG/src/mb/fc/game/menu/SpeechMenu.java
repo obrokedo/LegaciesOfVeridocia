@@ -272,7 +272,7 @@ public class SpeechMenu extends Menu
 		if (!initialized)
 			return MenuUpdate.MENU_NO_ACTION;
 
-		if (input.isKeyDown(KeyMapping.BUTTON_3))
+		if (input.isKeyDown(KeyMapping.BUTTON_3) || CommRPG.TEST_MODE_ENABLED)
 		{
 			if (waitingOn != null)
 			{

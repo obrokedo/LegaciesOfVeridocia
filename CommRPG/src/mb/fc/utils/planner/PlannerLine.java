@@ -16,6 +16,7 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.text.NumberFormatter;
@@ -235,6 +236,26 @@ public class PlannerLine extends JPanel
 							((JComboBox<?>) c).setSelectedItem(values.get(i));
 					}
 					break;
+				case PlannerValueDef.TYPE_LONG_STRING:
+					JTextArea ta = new JTextArea(5, 40);
+
+					ta.setWrapStyleWord(true);
+					ta.setLineWrap(true);
+					if (values.size() > i)
+					{
+						try
+						{
+							ta.setText((String) values.get(i));
+						}
+						catch (Throwable t)
+						{
+							System.out.println(t);
+						}
+					}
+
+					c = ta;
+					break;
+
 			}
 
 			label.setToolTipText(pv.getDisplayDescription());
@@ -287,6 +308,17 @@ public class PlannerLine extends JPanel
 							else
 								values.set(i, ((JComboBox<?>) components.get(i)).getSelectedItem());
 						}
+						break;
+					case PlannerValueDef.TYPE_LONG_STRING:
+						if (((JTextArea) components.get(i)).getText().trim().length() < 0 && !pv.isOptional())
+						{
+							throw new IllegalArgumentException();
+						}
+
+						if (i >= values.size())
+							values.add(((JTextArea) components.get(i)).getText());
+						else
+							values.set(i, ((JTextArea) components.get(i)).getText());
 						break;
 					case PlannerValueDef.TYPE_INT:
 						if (pv.getRefersTo() == PlannerValueDef.REFERS_NONE)

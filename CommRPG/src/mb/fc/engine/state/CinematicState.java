@@ -104,6 +104,11 @@ public class CinematicState extends LoadableGameState
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
+		// If this is test mode then we want to speed
+		// up the game
+		if (CommRPG.TEST_MODE_ENABLED)
+			delta *= 15;
+
 		if (stateInfo.isInitialized())
 		{
 			stateInfo.processMessages();

@@ -6,6 +6,7 @@ import mb.fc.game.Range;
 import mb.fc.game.battle.spell.KnownSpell;
 import mb.fc.game.sprite.CombatSprite;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
 
 /**
@@ -29,12 +30,14 @@ public abstract class JSpell implements Serializable
 	protected int maxLevel;
 	protected int[] damage;
 	protected int[] mpDamage;
-	protected int[] effects;
+	protected String[] effects;
 	protected int[] effectChance;
 	protected Range[] range;
 	protected int[] area;
-	protected int id;
+	protected String id;
 	protected transient Image spellIcon;
+	protected boolean loops = false;
+	protected int spellIconIndex = 0;
 
 	/**
 	 * Creates a new JSpell Jython object and initializes it with
@@ -44,7 +47,9 @@ public abstract class JSpell implements Serializable
 	 * @return a new JSpell Jython objects with values initialized as determined by
 	 * the spellId
 	 */
-	public abstract JSpell init(int spellId);
+	public abstract JSpell init(String spellId);
+
+	public abstract String[] getSpellList();
 
 	/**
 	 * Gets the spell's name
@@ -99,6 +104,8 @@ public abstract class JSpell implements Serializable
 		return damage;
 	}
 
+	public abstract int getEffectiveDamage(CombatSprite attacker, CombatSprite target, int spellLevel);
+
 	/**
 	 * Gets the BattleEffect for the spell at a given level
 	 * A value of null will be returned for a given index if there is no
@@ -109,9 +116,9 @@ public abstract class JSpell implements Serializable
 	 * BattleEffect for that level
 	 */
 	public JBattleEffect getEffect(int level) {
-		if (effects == null || effects.length <= level || effects[level] == -1)
+		if (effects == null || effects.length <= level || effects[level] == null)
 			return null;
-		return GlobalPythonFactory.createJBattleEffect(level);
+		return GlobalPythonFactory.createJBattleEffect(effects[level]);
 	}
 
 	public int getEffectChance(int level)
@@ -160,7 +167,7 @@ public abstract class JSpell implements Serializable
 	 * @return an integer that represents the spell Id for this spell
 	 * @see KnownSpell
 	 */
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
@@ -173,6 +180,27 @@ public abstract class JSpell implements Serializable
 	 */
 	public Image getSpellIcon() {
 		return spellIcon;
+	}
+
+	/**
+	 * Returns the index of the image that should be used for the
+	 * spell icon from the Spells image
+	 *
+	 * @return the index of the image that should be used for the
+	 * spell icon from the Spells image
+	 */
+	public int getSpellIconId() {
+		return spellIconIndex;
+	}
+
+
+	/**
+	 * Gets a flag indicating whether spell animation should loop
+	 *
+	 * @return a flag indicating whether spell animation should loop
+	 */
+	public boolean isLoops() {
+		return loops;
 	}
 
 	/**
@@ -191,12 +219,22 @@ public abstract class JSpell implements Serializable
 	 * Gets a string containing the text that should be shown when casting the given spell as determined
 	 * by Spells.py
 	 *
-	 * @param level an integer representing the "level" of the spell - 1
 	 * @param target the CombatSprite that is the target of this spell
 	 * @return a string containing the text that should be shown when casting the given spell
 	 * @see /scripts/Spells.py
 	 */
-	public abstract String getBattleText(CombatSprite target, int spellLevel);
+	public abstract String getBattleText(CombatSprite target, int damage, int mpDamage, int attackerHPDamage,
+			int attackerMPDamage, JBattleEffect battleEffect);
+
+	/**
+	 * Gets the color that the spell overlay should appear as for the given spell.
+	 * This occurs after the spell flash and the color fades in gradually
+	 *
+	 * @param the level of the spell that is being case
+	 * @return the color that the spell overlay should as
+	 * @see /scripts/Spells.py
+	 */
+	public abstract Color getSpellOverlayColor(int spellLevel);
 
 	/*****************************************************************************/
 	/* Protected methods used by the Python scripts to set values for this spell */
@@ -219,7 +257,7 @@ public abstract class JSpell implements Serializable
 	protected void setMpDamage(int[] mpDamage) {
 		this.mpDamage = mpDamage;
 	}
-	protected void setEffects(int[] effects) {
+	protected void setEffects(String[] effects) {
 		this.effects = effects;
 	}
 	public void setEffectChance(int[] effectChance) {
@@ -231,10 +269,16 @@ public abstract class JSpell implements Serializable
 	protected void setArea(int[] area) {
 		this.area = area;
 	}
-	protected void setId(int id) {
+	protected void setId(String id) {
 		this.id = id;
 	}
 	public void setSpellIcon(Image spellIcon) {
 		this.spellIcon = spellIcon;
+	}
+	protected void setLoops(boolean loops) {
+		this.loops = loops;
+	}
+	protected void setSpellIconIndex(int spellIconIndex) {
+		this.spellIconIndex = spellIconIndex;
 	}
 }

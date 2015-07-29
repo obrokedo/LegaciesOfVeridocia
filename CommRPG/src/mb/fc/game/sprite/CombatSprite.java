@@ -2,13 +2,16 @@ package mb.fc.game.sprite;
 
 import java.util.ArrayList;
 
+import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.MessageType;
 import mb.fc.engine.message.SpriteContextMessage;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.Camera;
 import mb.fc.game.Range;
 import mb.fc.game.ai.AI;
+import mb.fc.game.ai.ClericAI;
 import mb.fc.game.battle.spell.KnownSpell;
+import mb.fc.game.constants.AttributeStrength;
 import mb.fc.game.constants.Direction;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.hudmenu.SpriteContextPanel;
@@ -19,6 +22,7 @@ import mb.fc.game.ui.FCGameContainer;
 import mb.fc.loading.FCResourceManager;
 import mb.fc.utils.AnimSprite;
 import mb.fc.utils.Animation;
+import mb.jython.GlobalPythonFactory;
 import mb.jython.JBattleEffect;
 
 import org.newdawn.slick.Color;
@@ -28,15 +32,6 @@ import org.newdawn.slick.Image;
 public class CombatSprite extends AnimatedSprite
 {
 	private static final long serialVersionUID = 1L;
-
-	public static final int MOVEMENT_WALKING = 0;
-	public static final int MOVEMENT_HORSES_CENTAURS = 1;
-	public static final int MOVEMENT_ANIMALS_BEASTMEN = 2;
-	public static final int MOVEMENT_MECHANICAL = 3;
-	public static final int MOVEMENT_FLYING = 4;
-	public static final int MOVEMENT_HOVERING = 5;
-	public static final int MOVEMENT_SWIMMING = 6;
-	public static final int MOVEMENT_ELVES = 7;
 
 	private transient Color fadeColor = new Color(255, 255, 255, 255);
 
@@ -48,6 +43,30 @@ public class CombatSprite extends AnimatedSprite
 				currentAttack, maxAttack,
 				currentDefense, maxDefense,
 				level, exp;
+
+	// TODO In order to make the engine more generic these stats should probably be moved somewhere else
+	//Elemental Affinity Stats
+	private int currentFireAffin, maxFireAffin,
+				currentElecAffin, maxElecAffin,
+				currentColdAffin, maxColdAffin,
+				currentDarkAffin, maxDarkAffin,
+				currentWaterAffin, maxWaterAffin,
+				currentEarthAffin, maxEarthAffin,
+				currentWindAffin, maxWindAffin,
+				currentLightAffin, maxLightAffin;
+
+	// Defense stats
+	private int currentBody, maxBody,
+				currentMind, maxMind;
+
+
+	private int currentCounter, currentEvade,
+		currentDouble, currentCrit;
+
+	// Battle Action stats
+	private AttributeStrength 	counterStrength, evadeStrength,
+								doubleStrength, critStrength,
+								bodyStrength, mindStrength;
 
 	private transient AI ai;
 
@@ -67,12 +86,14 @@ public class CombatSprite extends AnimatedSprite
 	private int[] usuableWeapons;
 	private int[] usuableArmor;
 	private HeroProgression heroProgression;
-	private int movementType;
+	private String movementType;
 	private int kills;
 	private int defeat;
 	private ArrayList<JBattleEffect> battleEffects;
 	private Image currentWeaponImage = null;
-	private int attackEffectId, attackEffectChance;
+	private String attackEffectId;
+	private int attackEffectChance;
+	private boolean drawShadow = true;
 
 
 	/**
@@ -85,11 +106,20 @@ public class CombatSprite extends AnimatedSprite
 	 */
 	public CombatSprite(boolean isLeader,
 			String name, String imageName, int hp, int mp, int attack, int defense, int speed, int move,
-				int movementType, int level, int enemyId, ArrayList<KnownSpell> spells,
-				int id, int attackAffectId, int attackEffectChance)
+				String movementType, int maxFireAffin, int maxElecAffin,
+				int maxColdAffin, int maxDarkAffin, int maxWaterAffin, int maxEarthAffin, int maxWindAffin,
+				int maxLightAffin, int maxBody, int maxMind, AttributeStrength counterStrength, AttributeStrength evadeStrength,
+				AttributeStrength doubleStrength, AttributeStrength critStrength, AttributeStrength bodyStrength,
+				AttributeStrength mindStrength, int level, int enemyId, ArrayList<KnownSpell> spells,
+				int id, String attackEffectId, int attackEffectChance)
 	{
 		this(isLeader, name, imageName, null, hp, mp, attack,
-				defense, speed, move, movementType, level, 0, false, spells, id);
+				defense, speed, move, movementType, maxFireAffin,
+				maxElecAffin, maxColdAffin, maxDarkAffin, maxWaterAffin,
+				maxEarthAffin, maxWindAffin, maxLightAffin, maxBody,
+				maxMind, counterStrength, evadeStrength,
+				doubleStrength, critStrength,
+				bodyStrength, mindStrength, level, 0, false, spells, id);
 		this.uniqueEnemyId = enemyId;
 		this.isHero = false;
 		this.attackEffectChance = attackEffectChance;
@@ -101,10 +131,17 @@ public class CombatSprite extends AnimatedSprite
 	 */
 	public CombatSprite(boolean isLeader,
 			String name, String imageName, HeroProgression heroProgression, int hp, int mp, int attack,
-			int defense, int speed, int move, int movementType, int level, int exp, boolean promoted,
-			ArrayList<KnownSpell> spells, int id)
+			int defense, int speed, int move, String movementType, int maxFireAffin, int maxElecAffin,
+			int maxColdAffin, int maxDarkAffin, int maxWaterAffin, int maxEarthAffin, int maxWindAffin,
+			int maxLightAffin, int maxBody, int maxMind, AttributeStrength counterStrength, AttributeStrength evadeStrength,
+			AttributeStrength doubleStrength, AttributeStrength critStrength, AttributeStrength bodyStrength,
+			AttributeStrength mindStrength, int level, int exp, boolean promoted, ArrayList<KnownSpell> spells, int id)
 	{
 		super(0, 0, imageName, id);
+
+		this.isPromoted = promoted;
+		this.level = level;
+		this.exp = 0;
 
 		currentHP = hp;
 		maxHP = hp;
@@ -121,9 +158,24 @@ public class CombatSprite extends AnimatedSprite
 		maxDefense = defense;
 		dodges = true;
 
-		this.isPromoted = promoted;
-		this.level = level;
-		this.exp = 0;
+		this.maxFireAffin = maxFireAffin;
+		this.maxElecAffin = maxElecAffin;
+		this.maxColdAffin = maxColdAffin;
+		this.maxDarkAffin = maxDarkAffin;
+		this.maxWaterAffin = maxWaterAffin;
+		this.maxEarthAffin = maxEarthAffin;
+		this.maxWindAffin = maxWindAffin;
+		this.maxLightAffin = maxLightAffin;
+		this.maxBody = maxBody;
+		this.maxMind = maxMind;
+		this.counterStrength = counterStrength;
+		this.evadeStrength = evadeStrength;
+		this.doubleStrength = doubleStrength;
+		this.critStrength = critStrength;
+		this.bodyStrength = bodyStrength;
+		this.mindStrength = mindStrength;
+
+
 
 		this.isHero = true;
 		this.isLeader = isLeader;
@@ -132,6 +184,7 @@ public class CombatSprite extends AnimatedSprite
 		this.items = new ArrayList<Item>();
 		this.equipped = new ArrayList<Boolean>();
 		this.heroProgression = heroProgression;
+
 		if (heroProgression != null)
 		{
 			if (!isPromoted)
@@ -151,6 +204,19 @@ public class CombatSprite extends AnimatedSprite
 		// this.battleEffects.add(GlobalPythonFactory.createJBattleEffect(0));
 		this.spriteType = Sprite.TYPE_COMBAT;
 		this.id = id;
+		this.attackEffectId = null;
+
+		if (CommRPG.TEST_MODE_ENABLED)
+		{
+			this.ai = new ClericAI(1);
+			if (this.isHero && this.isLeader)
+			{
+				this.setMaxHP(99);
+				this.setMaxAttack(99);
+				this.setMaxDefense(99);
+				this.setMaxSpeed(99);
+			}
+		}
 
 		/*
 		if (this.name.equalsIgnoreCase("Sharna"))
@@ -166,6 +232,8 @@ public class CombatSprite extends AnimatedSprite
 	public void initializeSprite(StateInfo stateInfo)
 	{
 		super.initializeSprite(stateInfo);
+
+		drawShadow = GlobalPythonFactory.createConfigurationValues().isAffectedByTerrain(this.movementType);
 
 		currentAnim = spriteAnims.getCharacterAnimation("Down", this.isPromoted);
 
@@ -207,6 +275,17 @@ public class CombatSprite extends AnimatedSprite
 
 		this.currentMove = this.maxMove;
 
+		this.currentFireAffin = maxFireAffin;
+		this.currentElecAffin = maxElecAffin;
+		this.currentColdAffin = maxColdAffin;
+		this.currentDarkAffin = maxDarkAffin;
+		this.currentWaterAffin = maxWaterAffin;
+		this.currentEarthAffin = maxEarthAffin;
+		this.currentWindAffin = maxWindAffin;
+		this.currentLightAffin = maxLightAffin;
+		this.currentBody = maxBody;
+		this.currentMind = maxMind;
+
 		fadeColor = new Color(255, 255, 255, 255);
 	}
 
@@ -227,7 +306,7 @@ public class CombatSprite extends AnimatedSprite
 	{
 		for (AnimSprite as : currentAnim.frames.get(imageIndex).sprites)
 		{
-			if (movementType != CombatSprite.MOVEMENT_FLYING)
+			if (drawShadow)
 			{
 				AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), this.getLocX(), this.getLocY(), cont.getDisplayPaddingX(), camera, true);
 			}
@@ -560,11 +639,11 @@ public class CombatSprite extends AnimatedSprite
 		this.maxMove = maxMove;
 	}
 
-	public int getMovementType() {
+	public String getMovementType() {
 		return movementType;
 	}
 
-	public void setMovementType(int characterMovementType) {
+	public void setMovementType(String characterMovementType) {
 		this.movementType = characterMovementType;
 	}
 
@@ -579,7 +658,7 @@ public class CombatSprite extends AnimatedSprite
 
 	public boolean hasAnimation(String animation)
 	{
-		return spriteAnims.hasAnimation(animation);
+		return spriteAnims.hasCharacterAnimation(animation, this.isPromoted);
 	}
 
 	public Image getAnimationImageAtIndex(int index)
@@ -660,7 +739,7 @@ public class CombatSprite extends AnimatedSprite
 		return currentWeaponImage;
 	}
 
-	public int getAttackEffectId() {
+	public String getAttackEffectId() {
 		return attackEffectId;
 	}
 
@@ -690,5 +769,113 @@ public class CombatSprite extends AnimatedSprite
 
 	public void setClientId(int clientId) {
 		this.clientId = clientId;
+	}
+
+	public int getCurrentFireAffin() {
+		return currentFireAffin;
+	}
+
+	public int getMaxFireAffin() {
+		return maxFireAffin;
+	}
+
+	public int getCurrentElecAffin() {
+		return currentElecAffin;
+	}
+
+	public int getMaxElecAffin() {
+		return maxElecAffin;
+	}
+
+	public int getCurrentColdAffin() {
+		return currentColdAffin;
+	}
+
+	public int getMaxColdAffin() {
+		return maxColdAffin;
+	}
+
+	public int getCurrentDarkAffin() {
+		return currentDarkAffin;
+	}
+
+	public int getMaxDarkAffin() {
+		return maxDarkAffin;
+	}
+
+	public int getCurrentWaterAffin() {
+		return currentWaterAffin;
+	}
+
+	public int getMaxWaterAffin() {
+		return maxWaterAffin;
+	}
+
+	public int getCurrentEarthAffin() {
+		return currentEarthAffin;
+	}
+
+	public int getMaxEarthAffin() {
+		return maxEarthAffin;
+	}
+
+	public int getCurrentWindAffin() {
+		return currentWindAffin;
+	}
+
+	public int getMaxWindAffin() {
+		return maxWindAffin;
+	}
+
+	public int getCurrentLightAffin() {
+		return currentLightAffin;
+	}
+
+	public int getMaxLightAffin() {
+		return maxLightAffin;
+	}
+
+	public int getCurrentBody() {
+		return currentBody;
+	}
+
+	public int getMaxBody() {
+		return maxBody;
+	}
+
+	public int getCurrentMind() {
+		return currentMind;
+	}
+
+	public int getMaxMind() {
+		return maxMind;
+	}
+
+	public AttributeStrength getCounterStrength() {
+		return counterStrength;
+	}
+
+	public AttributeStrength getEvadeStrength() {
+		return evadeStrength;
+	}
+
+	public AttributeStrength getDoubleStrength() {
+		return doubleStrength;
+	}
+
+	public AttributeStrength getCritStrength() {
+		return critStrength;
+	}
+
+	public AttributeStrength getBodyStrength() {
+		return bodyStrength;
+	}
+
+	public AttributeStrength getMindStrength() {
+		return mindStrength;
+	}
+
+	public boolean isDrawShadow() {
+		return drawShadow;
 	}
 }

@@ -23,11 +23,13 @@ public class PlannerValueDef
 	public static final int REFERS_ANIMATIONS = 17;
 	public static final int REFERS_MAP = 18;
 	public static final int REFERS_SPRITE_IMAGE = 19;
+	public static final int REFERS_EFFECT = 20;
 
 	public static final int TYPE_STRING = 0;
 	public static final int TYPE_INT = 1;
 	public static final int TYPE_BOOLEAN = 2;
 	public static final int TYPE_MULTI_INT = 3;
+	public static final int TYPE_LONG_STRING = 4;
 
 	// Refers to
 	private int refersTo;

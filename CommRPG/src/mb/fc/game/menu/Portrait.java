@@ -18,7 +18,8 @@ public class Portrait
 	private AnimationWrapper idleAnim, blinkAnim, talkAnim;
 	private int topHeight;
 	private boolean isBlinking = false, isTalking = false;
-	int blinkCounter = 0;
+	private int blinkCounter = 0;
+	private boolean portraitFound = true;
 
 	public static Portrait getPortrait(int heroId, int enemyId, StateInfo stateInfo)
 	{
@@ -53,10 +54,9 @@ public class Portrait
 
 	private static Portrait getPortrait(SpriteAnims spriteAnim, boolean promoted)
 	{
-		if ((promoted || spriteAnim.getAnimation("UnPortIdle") == null) && spriteAnim.getAnimation("ProPortIdle") != null)
+		Portrait p = new Portrait();
+		if ((promoted || spriteAnim.hasAnimation("UnPortIdle")) && spriteAnim.hasAnimation("ProPortIdle"))
 		{
-			Portrait p = new Portrait();
-
 			p.idleAnim = new AnimationWrapper(spriteAnim, "ProPortIdle", true);
 			p.blinkAnim = new AnimationWrapper(spriteAnim, "ProPortBlink", false);
 			p.talkAnim = new AnimationWrapper(spriteAnim, "ProPortTalk", true);
@@ -65,9 +65,8 @@ public class Portrait
 			p.topHeight = spriteAnim.images.get(af.sprites.get(0).imageIndex).getHeight();
 			return p;
 		}
-		else if (spriteAnim.getAnimation("UnPortIdle") != null)
+		else if (spriteAnim.hasAnimation("UnPortIdle"))
 		{
-			Portrait p = new Portrait();
 			p.idleAnim = new AnimationWrapper(spriteAnim, "UnPortIdle", true);
 			p.blinkAnim = new AnimationWrapper(spriteAnim, "UnPortBlink", false);
 			p.talkAnim = new AnimationWrapper(spriteAnim, "UnPortTalk", true);
@@ -78,13 +77,22 @@ public class Portrait
 			return p;
 		}
 
-		return null;
+		p.portraitFound = false;
+		return p;
 	}
 
 	public void render(int x, int y, Graphics graphics)
 	{
 		Panel.drawPanelBox(x, y, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 62,
 				CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 78, graphics, Color.black);
+
+		if (!portraitFound)
+		{
+			graphics.setColor(Color.red);
+			graphics.fillRect(x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 7,
+					y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 7, 100, 100);
+			return;
+		}
 
 		idleAnim.drawAnimationPortrait(x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 7,
 				y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 7, topHeight, graphics);
@@ -100,6 +108,9 @@ public class Portrait
 
 	public void update(long delta)
 	{
+		if (!portraitFound)
+			return;
+
 		delta = (int) (delta * (CommRPG.RANDOM.nextFloat() * 2));
 		if (isBlinking)
 		{
@@ -125,6 +136,9 @@ public class Portrait
 
 	public void setTalking(boolean talking)
 	{
+		if (!portraitFound)
+			return;
+
 		isTalking = talking;
 		talkAnim.resetCurrentAnimation();
 	}

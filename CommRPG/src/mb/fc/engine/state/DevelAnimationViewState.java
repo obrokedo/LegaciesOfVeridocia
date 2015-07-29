@@ -28,6 +28,7 @@ public class DevelAnimationViewState extends BasicGameState implements ResourceS
 	private Rectangle playRect = new Rectangle(350, 675, 100, 30);
 	private Rectangle loopRect = new Rectangle(500, 675, 100, 30);
 	private int drawX, drawY;
+	private static final Color BG_COLOR = new Color(172, 205, 183);
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
@@ -58,9 +59,11 @@ public class DevelAnimationViewState extends BasicGameState implements ResourceS
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
+		g.setColor(BG_COLOR);
+		g.fillRect(0, 0, container.getWidth(), container.getHeight());
 		if (currentAnimation != null && currentAnimation.getCurrentAnimation() != null)
 		{
-			g.setColor(Color.lightGray);
+			g.setColor(Color.black);
 			g.drawRect(playRect.getX() - 50, playRect.getY() + 100, playRect.getWidth(), playRect.getHeight());
 			g.draw(playRect);
 			g.draw(loopRect);
@@ -69,11 +72,16 @@ public class DevelAnimationViewState extends BasicGameState implements ResourceS
 			currentAnimation.drawAnimation(drawX, drawY, g);
 		}
 
+		g.setColor(Color.black);
 		animationFileSelector.render(g);
+		g.setColor(Color.black);
 		weaponSelector.render(g);
 
+		g.setColor(Color.black);
 		if (animationSelector != null)
 			animationSelector.render(g);
+
+		g.setColor(Color.black);
 
 		g.drawString("Escape - Dev Menu", container.getWidth() - 250, container.getHeight() - 30);
 	}

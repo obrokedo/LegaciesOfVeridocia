@@ -34,6 +34,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.MusicListener;
 import org.newdawn.slick.SlickException;
@@ -78,6 +79,10 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 	private Color spellFlash = null;
 	private AnimationWrapper spellAnimation;
 	private boolean spellTargetsHeroes;
+	private int spellOverlayFadeIn = 0;
+	private int SPELL_OVERLAY_MAX_ALPHA = 80;
+	private Color spellOverlayColor = null;
+
 	private Music music;
 	private Music introMusic;
 	public static final int SPELL_FLASH_DURATION = 480;
@@ -109,6 +114,7 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 		spellStarted = false;
 		drawingSpellCounter = 0;
 		spellFlash = null;
+		textMenu = null;
 
 		// Initialize battle effects
 		for (CombatSprite cs : battleResults.targets)
@@ -128,8 +134,8 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 		if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_SPELL)
 		{
 			spellAnimation = new AnimationWrapper(frm.getSpriteAnimations().get(battleResults.battleCommand.getSpell().getName()),
-					battleResults.battleCommand.getLevel() + "", true);
-
+					battleResults.battleCommand.getLevel() + "", battleResults.battleCommand.getSpell().isLoops());
+			spellOverlayColor = battleResults.battleCommand.getSpell().getSpellOverlayColor(battleResults.battleCommand.getLevel());
 			spellTargetsHeroes = battleResults.targets.get(0).isHero();
 		}
 		else
@@ -382,6 +388,7 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 		}
 		else
 		{
+			System.out.println(Math.max(2400, aca.getAnimationLength() + 200) + " " + aca.getAnimationLength());
 			StandCombatAnimation targetStand = new StandCombatAnimation(target,
 					(isSpell ? aca.getAnimationLength() + 200 : aca.getAnimationLengthMinusLast()));
 			addCombatAnimation(target.isHero(), targetStand);
@@ -405,6 +412,8 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 				addCombatAnimation(target.isHero(), new StandCombatAnimation(target));
 			}
 			textToDisplay.add(battleResults.text.get(index));
+
+			System.out.println("Has winddown: " + attacker.hasAnimation("Winddown"));
 
 			if (attacker.hasAnimation("Winddown"))
 			{
@@ -535,36 +544,75 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 			heroHealthPanel.render(gc, g);
 		if (enemyHealthPanel != null)
 			enemyHealthPanel.render(gc, g);
+
+		if (drawingSpell && spellFlash == null)
+		{
+			g.setColor(spellOverlayColor);
+			g.fillRect(0, 0, gc.getWidth(), gc.getHeight());
+		}
+
+		// If dev mode is enabled and we're at the end of the cinematic
+		// then display the text to indicate the animation can be
+		// restarted
+		if (CommRPG.DEV_MODE_ENABLED && heroCombatAnimations.size() == 0)
+		{
+			g.setColor(Color.white);
+			g.drawString("Press R to restart attack cinematic", 20, 90);
+		}
 	}
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
+		// If this is test mode then we want to speed
+		// up the game
+		if (CommRPG.TEST_MODE_ENABLED)
+			delta *= 15;
+
+		// Update the input so that released keys are realized
 		input.update(delta);
 
-		boolean startSpell = false;
-		boolean heroUpdate = true;
+		// Whether the current animation says that
+		// a spell should be rendered
+		boolean currentAnimDrawSpell = false;
 
+		// Whether the heroes/enemy current animation has finished yet
+		// In other words whether the hero/enemy is ready to move to the next step
+		// This is set to true initially so that if there is no current hero/enemy
+		// animation it won't block
+		boolean heroAnimationFinished = true;
+		boolean enemyAnimationFinished = true;
+
+		// If there is a hero combat animation check to see if it has
+		// completed and whether the current animation should be drawn
+		// with a spell
 		if (heroCombatAnim != null)
 		{
-			heroUpdate = heroCombatAnim.update(delta);
+			heroAnimationFinished = heroCombatAnim.update(delta);
 			if (heroCombatAnim.isDrawSpell())
-				startSpell = true;
+				currentAnimDrawSpell = true;
 		}
 
-		boolean enemyUpdate = true;
+		// If there is a enemy combat animation check to see if it has
+		// completed and whether the current animation should be drawn
+		// with a spell
 		if (enemyCombatAnim != null)
 		{
-			enemyUpdate = enemyCombatAnim.update(delta);
+			enemyAnimationFinished = enemyCombatAnim.update(delta);
 
 			if (enemyCombatAnim.isDrawSpell())
-				startSpell = true;
+				currentAnimDrawSpell = true;
 		}
 
-		if (startSpell && !spellStarted)
+		// If the current animation says a spell should be drawn,
+		// but the attack cinematic has not started drawing a spell
+		// yet then we need to start drawing the "casting" of the spell
+		// which is a flash and play the cast sound
+		if (currentAnimDrawSpell && !spellStarted)
 		{
 			drawingSpell = true;
 			spellStarted = true;
+			spellOverlayFadeIn = 0;
 
 			String sound = musicSelector.getCastSpellSoundEffect(attacker.isHero(), battleResults.battleCommand.getSpell().getName());
 
@@ -574,12 +622,35 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 				snd.play();
 			}
 		}
-		else if (spellStarted && !startSpell)
+		// If we have started a spell but the current animation says no spell should
+		// be displayed then we toggle off the drawing spell flag
+		else if (spellStarted && !currentAnimDrawSpell)
 		{
 			drawingSpell = false;
 		}
 
+		// Check for whether we are in development mode, if so then the animation should be able to be re-run
+		// but not actually effect anything on subsequent times through
+		if (CommRPG.DEV_MODE_ENABLED && heroCombatAnimations.size() == 0 && input.isKeyDown(Input.KEY_R))
+		{
+				for (int i = 0; i < battleResults.hpDamage.size(); i++)
+					battleResults.hpDamage.set(i, 0);
+				for (int i = 0; i < battleResults.mpDamage.size(); i++)
+					battleResults.mpDamage.set(i, 0);
+				for (int i = 0; i < battleResults.attackerHPDamage.size(); i++)
+					battleResults.attackerHPDamage.set(i, 0);
+				for (int i = 0; i < battleResults.attackerMPDamage.size(); i++)
+					battleResults.attackerMPDamage.set(i, 0);
+				battleResults.levelUpResult = null;
 
+				// Restart this animation
+				setBattleInfo(attacker, frm,
+						battleResults, gc);
+		}
+
+		// Check to see if there is a text menu that is currently displayed
+		// if so we want to handle the user input and potentially
+		// drive the next action or level up a hero
 		if (textMenu != null)
 		{
 			textMenu.handleUserInput(input, null);
@@ -604,8 +675,18 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 				}
 			}
 		}
-		else if (heroUpdate && enemyUpdate)
+		// If there is no text menu then we don't transition to the
+		// next animations until both the hero's and enemy's current
+		// animation has finished
+		else if (heroAnimationFinished && enemyAnimationFinished)
 		{
+			// Text appears after the animations at the same index
+			// have completed. If we haven't yet checked to see if there
+			// should be text after this action do that now and
+			// potentially display a text box. Once that text box has been
+			// viewed consumedText = true and we'll move onto the next action
+			// If there was no text box to display then we'll do an additional update
+			// and consumedText = true so we'll get the next action
 			if (!consumedText)
 			{
 				consumedText = true;
@@ -621,12 +702,23 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 			}
 		}
 
+		// If we're currently drawing a spell then we want to
+		// update the spells animation
 		if (drawingSpell)
 			spellUpdate(delta);
 	}
 
+	/**
+	 * Updates spell flashing, spell animations and the spell overlay.
+	 * Additionally handles playing the "After spell flash sound effect"
+	 *
+	 * @param delta the amount of time that has passed since the previous update
+	 */
 	private void spellUpdate(int delta)
 	{
+		// Check to see if we are still flashing,
+		// if so then toggle the color based on the time
+		// elapse
 		if (drawingSpellCounter < SPELL_FLASH_DURATION)
 		{
 			if (drawingSpellCounter % 160 < 80)
@@ -635,12 +727,30 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 				spellFlash = Color.darkGray;
 			drawingSpellCounter += delta;
 		}
+		// Otherwise we are done flashing and
+		// the actual spell should begin rendering
 		else
 		{
-			String sound = musicSelector.getAfterSpellFlashSoundEffect(attacker.isHero(), battleResults.battleCommand.getSpell().getName());
-			if (sound != null)
-				frm.getSoundByName(sound).play();
-			spellFlash = null;
+			// If the flashing just finished then play the "After spell flash sound effect"
+			// and set the spell flash to null so that we don't play the sound again
+			if (spellFlash != null)
+			{
+				String sound = musicSelector.getAfterSpellFlashSoundEffect(attacker.isHero(), battleResults.battleCommand.getSpell().getName());
+				if (sound != null)
+					frm.getSoundByName(sound).play();
+				spellFlash = null;
+			}
+
+			// If the overlay is not yet at full alpha then increment it
+			// so that it will fade in
+			if (spellOverlayFadeIn < SPELL_OVERLAY_MAX_ALPHA)
+			{
+				spellOverlayFadeIn += 2;
+				spellOverlayColor.a = spellOverlayFadeIn / 255.0f;
+			}
+
+			// Update the spell animation as it should
+			// be rendering at this point
 			spellAnimation.update(delta);
 		}
 	}

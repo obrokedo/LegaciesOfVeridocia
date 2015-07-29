@@ -44,7 +44,9 @@ public abstract class CasterAI extends AI
 			CombatSprite targetSprite, int tileWidth, int tileHeight,
 			Point attackPoint, int distance, StateInfo stateInfo)
 	{
+		boolean couldAttackTarget = false;
 		int baseConfidence = determineBaseConfidence(currentSprite, targetSprite, tileWidth, tileHeight, attackPoint, stateInfo);
+		Log.debug("Base Caster confidence " + baseConfidence + " name " + targetSprite.getName());
 		int currentConfidence = baseConfidence;
 
 		Range attackRange = currentSprite.getAttackRange();
@@ -53,6 +55,7 @@ public abstract class CasterAI extends AI
 		// Get the wizards basic attack confidence, but make sure that the current sprite is in basic attack range
 		if (attackRange.isInDistance(distance) && targetSprite.isHero() != currentSprite.isHero())
 		{
+			couldAttackTarget = true;
 			int damage = Math.max(1, currentSprite.getCurrentAttack() - targetSprite.getCurrentDefense());
 			currentConfidence += Math.min(30, (int)(30.0 * damage / targetSprite.getMaxHP()));
 
@@ -73,6 +76,18 @@ public abstract class CasterAI extends AI
 		AIConfidence aiC = new AIConfidence(mostConfident);
 		aiC.willKill = willKill;
 		aiC.willHeal = willHeal;
+
+		// If we're not healing (good effecting) the target and it's the same
+		// as you hero/enemy-wise then just return negative
+		if (!willHeal && targetSprite.isHero() == currentSprite.isHero())
+			return new AIConfidence(Integer.MIN_VALUE);
+
+		// If we're not casting a spell and couldn't reach the target then
+		// we can't actually attack this person. In this case just
+		// return the minimum value
+		if (this.bestSpell == null && !couldAttackTarget)
+			return new AIConfidence(Integer.MIN_VALUE);
+
 		return aiC;
 	}
 

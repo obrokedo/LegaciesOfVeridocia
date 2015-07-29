@@ -202,7 +202,7 @@ public class AttackCinematicState extends LoadableGameState
 			else
 			{
 				// Draw the floor represented by the land underneath the hero unless it is a flying hero
-				if (targets.get(targetIndex).getMovementType() != CombatSprite.MOVEMENT_FLYING)
+				if (targets.get(targetIndex).isDrawShadow())
 					g.drawImage(heroFloorImage, xLoc + 220 * screenScale, bgYPos + backgroundImage.getHeight() - 15 * screenScale);
 			}
 
@@ -231,7 +231,7 @@ public class AttackCinematicState extends LoadableGameState
 				xLoc = cont.getDisplayPaddingX() + (!targetsAreAllies ? 0 : transitionX);
 
 				// Draw the floor represented by the land underneath the hero unless it is a flying hero
-				if (targets.get(targetIndex).getMovementType() != CombatSprite.MOVEMENT_FLYING)
+				if (targets.get(targetIndex).isDrawShadow())
 					g.drawImage(heroFloorImage, xLoc + 220 * screenScale, bgYPos + backgroundImage.getHeight() - 15 * screenScale);
 			}
 			else

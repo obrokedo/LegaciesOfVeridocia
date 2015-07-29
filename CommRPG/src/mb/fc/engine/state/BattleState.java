@@ -149,6 +149,9 @@ public class BattleState extends LoadableGameState
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException
 	{
+		if (CommRPG.TEST_MODE_ENABLED)
+			delta *= 15;
+
 		stateInfo.processMessages();
 		if (stateInfo.isInitialized())
 		{

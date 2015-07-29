@@ -159,11 +159,9 @@ public class BattleResults implements Serializable
 				int spellLevel = battleCommand.getLevel() - 1;
 				int damage = 0;
 
-				text = spell.getBattleText(target, spellLevel);
-
 				if (spell.getDamage() != null)
 				{
-					damage = spell.getDamage()[spellLevel];
+					damage = spell.getEffectiveDamage(attacker, target, spellLevel);
 					br.hpDamage.add(damage);
 					br.remainingHP.add(target.getCurrentHP() + damage);
 				}
@@ -193,6 +191,11 @@ public class BattleResults implements Serializable
 					br.attackerMPDamage.add(-1 * spell.getCosts()[spellLevel]);
 				else
 					br.attackerMPDamage.add(0);
+
+				text = spell.getBattleText(target, damage, br.mpDamage.get(br.mpDamage.size() - 1),
+						br.attackerHPDamage.get(br.attackerHPDamage.size() - 1),
+						br.attackerMPDamage.get(br.attackerMPDamage.size() - 1),
+						br.targetEffects.get(br.targetEffects.size() - 1));
 
 				int exp = spell.getExpGained(spellLevel, attacker, target);
 
@@ -370,7 +373,7 @@ public class BattleResults implements Serializable
 
 			br.mpDamage.add(0);
 
-			if (attacker.getAttackEffectId() != -1 && attacker.getAttackEffectChance() >= CommRPG.RANDOM.nextInt(100))
+			if (attacker.getAttackEffectId() != null && attacker.getAttackEffectChance() >= CommRPG.RANDOM.nextInt(100))
 			{
 				JBattleEffect eff = GlobalPythonFactory.createJBattleEffect(attacker.getAttackEffectId());
 				text = text + " " + eff.effectStartedText(attacker, target);

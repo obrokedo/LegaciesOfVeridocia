@@ -98,19 +98,22 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 		this.tileHeight = stateInfo.getTileHeight();
 		spriteTileX = currentSprite.getTileX();
 		spriteTileY = currentSprite.getTileY();
-
+		Log.debug("Finding attackables for " + currentSprite.getName());
 		for (int i = 0; i < range.length; i++)
 		{
 			for (int j = 0; j < range[0].length; j++)
 			{
 				if (range[i][j] == 1)
 				{
+					Log.debug("\tChecking space for targetables " + (currentSprite.getTileX() - rangeOffset + i) + ", " +
+							(currentSprite.getTileY() - rangeOffset + j));
 					CombatSprite targetable = stateInfo.getCombatSpriteAtTile(currentSprite.getTileX() - rangeOffset + i,
 							currentSprite.getTileY() - rangeOffset + j, targetsHero);
 					if (targetable != null)
 					{
 						targetsInRange.add(targetable);
-						Log.debug("Attackable Space: Add Targetable " + targetable.getName());
+
+						Log.debug("\tAttackable Space: Add Targetable " + targetable.getName());
 					}
 				}
 			}
@@ -126,7 +129,10 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 			this.setTargetSprite(targetsInRange.get(0), stateInfo);
 		}
 		else
+		{
+			Log.debug("\tNo targets found in range");
 			stateInfo.sendMessage(new InfoMessage(null, "No targets in range!"));
+		}
 
 		if (currentSprite.isHero())
 			stateInfo.registerMouseListener(this);

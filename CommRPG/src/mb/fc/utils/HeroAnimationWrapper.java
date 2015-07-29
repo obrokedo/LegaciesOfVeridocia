@@ -14,8 +14,7 @@ public class HeroAnimationWrapper extends AnimationWrapper
 	public HeroAnimationWrapper(CombatSprite combatSprite, String animationName, boolean loops)
 	{
 		super(combatSprite.getSpriteAnims());
-		if (combatSprite.isHero())
-			this.weapon = combatSprite.getCurrentWeaponImage();
+		this.weapon = combatSprite.getCurrentWeaponImage();
 		this.combatSprite = combatSprite;
 		this.setAnimation(animationName, loops);
 	}
@@ -27,6 +26,6 @@ public class HeroAnimationWrapper extends AnimationWrapper
 
 	@Override
 	public boolean hasAnimation(String animationName) {
-		return combatSprite.getAnimation(animationName) != null;
+		return combatSprite.hasAnimation(animationName);
 	}
 }

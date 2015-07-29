@@ -35,6 +35,7 @@ public class GlobalPythonFactory
 	private static JSpell spell = null;
 	private static JBattleEffect battleEffect = null;
 	private static JLevelProgression levelProgression = null;
+	private static JConfigurationValues configurationValues = null;
 
 	/**
 	 * A boolean flag indicating whether this factory has been initialized.
@@ -90,6 +91,7 @@ public class GlobalPythonFactory
         spell  = (JSpell) (new JythonObjectFactory(JSpell.class, "Spells", "Spells")).createObject();
         battleEffect = (JBattleEffect) (new JythonObjectFactory(JBattleEffect.class, "BattleEffect", "BattleEffect")).createObject();
         levelProgression = (JLevelProgression) (new JythonObjectFactory(JLevelProgression.class, "LevelProgression", "LevelProgression")).createObject();
+        configurationValues = (JConfigurationValues) (new JythonObjectFactory(JConfigurationValues.class, "ConfigurationValues", "ConfigurationValues")).createObject();
 	}
 
 	/**
@@ -157,7 +159,7 @@ public class GlobalPythonFactory
 		return spell;
 	}
 
-	public static JBattleEffect createJBattleEffect(int id)
+	public static JBattleEffect createJBattleEffect(String id)
 	{
 		return battleEffect.init(id);
 	}
@@ -166,6 +168,12 @@ public class GlobalPythonFactory
 	{
 		checkFactoryInitialized();
 		return levelProgression;
+	}
+
+	public static JConfigurationValues createConfigurationValues()
+	{
+		checkFactoryInitialized();
+		return configurationValues;
 	}
 
 	/**

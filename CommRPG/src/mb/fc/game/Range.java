@@ -3,6 +3,8 @@ package mb.fc.game;
 import mb.fc.game.exception.BadResourceException;
 import mb.fc.game.move.AttackableSpace;
 
+import org.newdawn.slick.util.Log;
+
 public enum Range {
 	SELF_ONLY,
 	ONE_ONLY,
@@ -14,6 +16,8 @@ public enum Range {
 
 	public boolean isInDistance(int range)
 	{
+		boolean inDistance = false;
+
 		if (range == 1)
 		{
 			switch (this)
@@ -21,9 +25,11 @@ public enum Range {
 				case ONE_ONLY:
 				case TWO_AND_LESS:
 				case THREE_AND_LESS:
-					return true;
+					inDistance = true;
+					break;
 				default:
-					return false;
+					inDistance = false;
+					break;
 			}
 		}
 		else if (range == 2)
@@ -34,9 +40,11 @@ public enum Range {
 				case THREE_AND_LESS:
 				case TWO_NO_ONE:
 				case THREE_NO_ONE:
-					return true;
+					inDistance = true;
+					break;
 				default:
-					return false;
+					inDistance = false;
+					break;
 			}
 		}
 		else if (range == 3)
@@ -46,13 +54,17 @@ public enum Range {
 				case THREE_AND_LESS:
 				case THREE_NO_ONE:
 				case THREE_NO_ONE_OR_TWO:
-					return true;
+					inDistance = true;
+					break;
 				default:
-					return false;
+					inDistance = false;
+					break;
 			}
 		}
 
-		return true;
+		Log.debug("Check is in distance. My range: " + this + " Check at range: " + range + " In Distance: " + inDistance);
+
+		return inDistance;
 	}
 
 	public int[][] getAttackableSpace()

@@ -23,13 +23,14 @@ public class EnemyDefinition
 	private int defense;
 	private int speed;
 	private int move;
-	private int movementType;
+	private String movementType;
 	private int level;
 	private String animations;
-	private int effectId = -1;
+	private String effectId = null;
 	private int effectChance = -1;
 
-	private ArrayList<int[]> spellsPerLevel;
+	private ArrayList<Integer> spellsPerLevel;
+	private ArrayList<String> spellIds;
 
 	private ArrayList<Integer> items;
 	private ArrayList<Boolean> itemsEquipped;
@@ -49,24 +50,24 @@ public class EnemyDefinition
 		hd.speed = Integer.parseInt(tagArea.getAttribute("speed"));
 		hd.level = Integer.parseInt(tagArea.getAttribute("level"));
 		hd.move = Integer.parseInt(tagArea.getAttribute("move"));
-		hd.movementType = Integer.parseInt(tagArea.getAttribute("movementtype"));
+		hd.movementType = tagArea.getAttribute("movementtype");
 		hd.animations = tagArea.getAttribute("animations");
 
 		if (tagArea.getAttribute("leader") != null)
 			hd.leader = Boolean.parseBoolean(tagArea.getAttribute("leader"));
 
-		hd.spellsPerLevel = new ArrayList<int[]>();
+		hd.spellsPerLevel = new ArrayList<Integer>();
+		hd.spellIds = new ArrayList<String>();
 		hd.items = new ArrayList<Integer>();
 		hd.itemsEquipped = new ArrayList<Boolean>();
+		hd.effectId = null;
 
 		for (TagArea childTagArea : tagArea.getChildren())
 		{
 			if (childTagArea.getTagType().equalsIgnoreCase("spell"))
 			{
-				int[] splitLevel = new int[2];
-				splitLevel[0] = Integer.parseInt(childTagArea.getAttribute("spellid"));
-				splitLevel[1] = Integer.parseInt(childTagArea.getAttribute("level"));
-				hd.spellsPerLevel.add(splitLevel);
+				hd.spellIds.add(childTagArea.getAttribute("spellid"));
+				hd.spellsPerLevel.add(Integer.parseInt(childTagArea.getAttribute("level")));
 			}
 			else if (childTagArea.getTagType().equalsIgnoreCase("item"))
 			{
@@ -78,7 +79,7 @@ public class EnemyDefinition
 			}
 			else if (childTagArea.getTagType().equalsIgnoreCase("attackeffect"))
 			{
-				hd.effectId = Integer.parseInt(childTagArea.getAttribute("effectid"));
+				hd.effectId = childTagArea.getAttribute("effectid");
 				hd.effectChance = Integer.parseInt(childTagArea.getAttribute("effectchance"));
 			}
 		}
@@ -92,12 +93,16 @@ public class EnemyDefinition
 		ArrayList<KnownSpell> knownSpells = new ArrayList<KnownSpell>();
 		for (int i = 0; i < spellsPerLevel.size(); i++)
 		{
-			knownSpells.add(new KnownSpell(spellsPerLevel.get(i)[0], (byte) spellsPerLevel.get(i)[1]));
+			knownSpells.add(new KnownSpell(spellIds.get(i), (byte) spellsPerLevel.get(i).intValue()));
 		}
 
 		// Create a CombatSprite from default stats, hero progression and spells known
 		CombatSprite cs = new CombatSprite(leader, name, animations, hp, mp, attack, defense,
-				speed, move, movementType, level, myId, knownSpells, ENEMY_COUNT--,
+				speed, move, movementType,
+
+				0, 0, 0, 0, 0, 0, 0, 0, 0, 0, null, null, null, null, null, null, // TODO READ THESE VALUES!
+
+				level, myId, knownSpells, ENEMY_COUNT--,
 				effectId, effectChance);
 
 		// Add items to the combat sprite
