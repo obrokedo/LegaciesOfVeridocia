@@ -23,6 +23,10 @@ public class EnemyDefinition
 	private int defense;
 	private int speed;
 	private int move;
+	private int maxFireAffin, maxElecAffin,
+		maxColdAffin, maxDarkAffin, maxWaterAffin, maxEarthAffin, maxWindAffin,
+		maxLightAffin, maxBody, maxMind, maxCounter, maxEvade,
+		maxDouble, maxCrit;
 	private String movementType;
 	private int level;
 	private String animations;
@@ -52,6 +56,26 @@ public class EnemyDefinition
 		hd.move = Integer.parseInt(tagArea.getAttribute("move"));
 		hd.movementType = tagArea.getAttribute("movementtype");
 		hd.animations = tagArea.getAttribute("animations");
+
+		// Load affinities
+		hd.maxFireAffin = Integer.parseInt(tagArea.getAttribute("fireAffin"));
+		hd.maxElecAffin = Integer.parseInt(tagArea.getAttribute("elecAffin"));
+		hd.maxColdAffin = Integer.parseInt(tagArea.getAttribute("coldAffin"));
+		hd.maxDarkAffin = Integer.parseInt(tagArea.getAttribute("darkAffin"));
+		hd.maxWaterAffin = Integer.parseInt(tagArea.getAttribute("waterAffin"));
+		hd.maxEarthAffin = Integer.parseInt(tagArea.getAttribute("earthAffin"));
+		hd.maxWindAffin = Integer.parseInt(tagArea.getAttribute("windAffin"));
+		hd.maxLightAffin = Integer.parseInt(tagArea.getAttribute("lightAffin"));
+
+		// Load body/mind
+		hd.maxBody = Integer.parseInt(tagArea.getAttribute("bodyStrength"));
+		hd.maxMind = Integer.parseInt(tagArea.getAttribute("mindStrength"));
+
+		// Load battle stats
+		hd.maxCounter = Integer.parseInt(tagArea.getAttribute("counterStrength"));
+		hd.maxEvade = Integer.parseInt(tagArea.getAttribute("evadeStrength"));
+		hd.maxDouble = Integer.parseInt(tagArea.getAttribute("doubleStrength"));
+		hd.maxCrit = Integer.parseInt(tagArea.getAttribute("critStrength"));
 
 		if (tagArea.getAttribute("leader") != null)
 			hd.leader = Boolean.parseBoolean(tagArea.getAttribute("leader"));
@@ -98,11 +122,10 @@ public class EnemyDefinition
 
 		// Create a CombatSprite from default stats, hero progression and spells known
 		CombatSprite cs = new CombatSprite(leader, name, animations, hp, mp, attack, defense,
-				speed, move, movementType,
-
-				0, 0, 0, 0, 0, 0, 0, 0, 0, 0, null, null, null, null, null, null, // TODO READ THESE VALUES!
-
-				level, myId, knownSpells, ENEMY_COUNT--,
+				speed, move, movementType, maxFireAffin, maxElecAffin,
+				maxColdAffin, maxDarkAffin, maxWaterAffin, maxEarthAffin, maxWindAffin,
+				maxLightAffin, maxBody, maxMind, maxCounter, maxEvade,
+				maxDouble, maxCrit, level, myId, knownSpells, ENEMY_COUNT--,
 				effectId, effectChance);
 
 		// Add items to the combat sprite

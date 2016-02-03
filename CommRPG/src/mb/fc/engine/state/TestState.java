@@ -115,13 +115,11 @@ public class TestState extends LoadableGameState
 
 	@Override
 	public int getID() {
-		// TODO Auto-generated method stub
 		return CommRPG.STATE_GAME_TEST;
 	}
 
 	@Override
 	public void initAfterLoad() {
-		// TODO Auto-generated method stub
 
 	}
 

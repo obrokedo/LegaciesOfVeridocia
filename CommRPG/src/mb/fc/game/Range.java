@@ -106,7 +106,7 @@ public enum Range {
 		}
 	}
 
-	public static Range convertToRange(int rangeInt)
+	public static Range convertIntToRange(int rangeInt)
 	{
 		switch (rangeInt)
 		{

@@ -10,6 +10,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
+import javax.swing.JOptionPane;
+
 import mb.fc.cinematic.Cinematic;
 import mb.fc.engine.CommRPG;
 import mb.fc.game.definition.EnemyDefinition;
@@ -38,6 +40,18 @@ import org.newdawn.slick.util.Log;
 import org.newdawn.slick.util.ResourceLoader;
 
 public class FCResourceManager {
+	public static final String ANIMATIONS_FOLDER = "animations/animationsheets";
+	public static final String ANIMATIONS_EXTENSION = ".anim";
+	public static final String ANIMATIONS_FOLDER_IDENTIFIER = "animsheetdir";
+
+	public static final String ANIMATION_IDENTIFIER = "anim";
+
+	public static final String WEAPONS_FOLDER = "image/weapons";
+	public static final String WEAPONS_EXTENSION = ".png";
+
+	public static final String IMAGES_FOLDER_IDENTIFIER = "imagedir";
+
+
 	private Hashtable<String, Image> images = new Hashtable<String, Image>();
 	private Hashtable<String, SpriteSheet> spriteSheets = new Hashtable<String, SpriteSheet>();
 	private Hashtable<String, SpriteAnims> spriteAnimations = new Hashtable<String, SpriteAnims>();
@@ -200,8 +214,8 @@ public class FCResourceManager {
 				ufont.loadGlyphs();
 				unicodeFonts.put(split[1], ufont);
 			} catch (FontFormatException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
+				JOptionPane.showMessageDialog(null, "Unable to load the font " + split[2] + ": " + e.getMessage(), "Error loading resource", JOptionPane.ERROR_MESSAGE);
 			}
 
 		}

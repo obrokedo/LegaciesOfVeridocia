@@ -72,6 +72,7 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
  *  In the post attack state the attacker is displayed and the target if he is an enemy. In addition the experience gained
  *  will be displayed. Once this state is clicked we exit the AttackCinematicState
  */
+@Deprecated
 public class AttackCinematicState extends LoadableGameState
 {
 	private final byte STATE_PRE_ATTACK = 0;
@@ -747,7 +748,6 @@ public class AttackCinematicState extends LoadableGameState
 
 	@Override
 	public void initAfterLoad() {
-		// TODO Auto-generated method stub
 
 	}
 }

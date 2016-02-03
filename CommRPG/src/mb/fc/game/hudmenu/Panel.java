@@ -2,10 +2,13 @@ package mb.fc.game.hudmenu;
 
 import java.awt.Font;
 
+import javax.swing.JOptionPane;
+
 import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.MessageType;
 import mb.fc.engine.state.StateInfo;
+import mb.fc.game.exception.BadResourceException;
 import mb.fc.game.menu.Menu.MenuUpdate;
 import mb.fc.game.ui.FCGameContainer;
 import mb.fc.loading.FCResourceManager;
@@ -28,7 +31,6 @@ public abstract class Panel
 {
 	public static final int PANEL_HEALTH_BAR = 0;
 	public static final int PANEL_LAND_EFFECT = 1;
-	public static final int PANEL_STATS = 2;
 	public static final int PANEL_INITIATIVE = 3;
 	public static final int PANEL_ENEMY_HEALTH_BAR = 4;
 	public static final int PANEL_TEXT = 5;
@@ -54,6 +56,7 @@ public abstract class Panel
 	public static final int PANEL_DEBUG = 25;
 	public static final int PANEL_TARGET_HEALTH_BAR = 26;
 	public static final int PANEL_MAP_ENTRY = 27;
+	public static final int PANEL_SHOP_OPTIONS = 28;
 
 	protected int panelType;
 	public final static Color COLOR_MOUSE_OVER = new Color(0, 0, 153);
@@ -94,8 +97,10 @@ public abstract class Panel
 			ufont.loadGlyphs();
 			SPEECH_FONT = ufont;
 		} catch (SlickException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "An error occurred trying to load font glyphs:" + e.getMessage(),
+					"Error loading font glyphs", JOptionPane.ERROR_MESSAGE);
+			throw new BadResourceException(e);
 		}
 
 		// stateInfo.getGc().getGraphics().setFont(PANEL_FONT);

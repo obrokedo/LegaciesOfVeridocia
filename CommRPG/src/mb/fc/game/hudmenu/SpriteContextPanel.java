@@ -15,14 +15,6 @@ public class SpriteContextPanel extends Panel
 	public SpriteContextPanel(int menuType, CombatSprite sprite, GameContainer gc) {
 		super(menuType);
 		this.sprite = sprite;
-
-		switch (menuType)
-		{
-			case Panel.PANEL_STATS:
-				// this.menuActions.add(new MenuAction(MenuAction.MA_CLOSE_WINDOW, new Rectangle((gc.getWidth() - 500) / 2 + 475,
-					//	(gc.getHeight() - 400) / 2 + 2, 10, 10), true));
-				break;
-		}
 	}
 
 	@Override
@@ -37,9 +29,6 @@ public class SpriteContextPanel extends Panel
 				break;
 			case Panel.PANEL_TARGET_HEALTH_BAR:
 				displayHealth(gc, graphics, 2);
-				break;
-			case Panel.PANEL_STATS:
-				displayStatPanel(gc, graphics);
 				break;
 		}
 	}
@@ -122,20 +111,5 @@ public class SpriteContextPanel extends Panel
 					(int) (Math.max(0, sprite.getCurrentMP() * .75 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()])),
 					CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 8,
 					5);
-	}
-
-	private void displayStatPanel(GameContainer gc, Graphics graphics)
-	{
-		// TODO This should use the Menu draw method for its' background
-		graphics.setColor(Color.darkGray);
-		int startX = (gc.getWidth() - 500) / 2;
-		int startY = (gc.getHeight() - 400) / 2;
-		graphics.fillRoundRect(startX, startY, 500, 400, 15);
-		//graphics.fillRect(30, 30, 15, 15);
-		//graphics.fillRect(515, 415, 15, 15);
-		graphics.setColor(Color.blue);
-		graphics.fillRect(startX + 5, startY + 15, 490, 370);
-		graphics.setColor(Panel.COLOR_FOREFRONT);
-		graphics.fillRect(startX + 475, startY + 2, 10, 10);
 	}
 }

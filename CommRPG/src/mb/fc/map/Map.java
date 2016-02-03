@@ -72,9 +72,10 @@ public class Map
 	 * A value of 0 in any given layer means that no tile was selected at this location.
 	 */
 	private ArrayList<int[][]> mapLayer = new ArrayList<int[][]>();
+	private int[][] moveableLayer;
 	protected int tileWidth, tileHeight;
 	protected ArrayList<TileSet> tileSets = new ArrayList<TileSet>();
-	private ArrayList<MapObject> mapObjects = new ArrayList<MapObject>();
+	protected ArrayList<MapObject> mapObjects = new ArrayList<MapObject>();
 	protected Hashtable<Integer, Integer> landEffectByTileId = new Hashtable<Integer, Integer>();
 	private Hashtable<TerrainTypeIndicator, String> overriddenTerrain = new Hashtable<TerrainTypeIndicator, String>();
 	private Hashtable<Integer, Roof> roofsById = new Hashtable<Integer, Roof>();
@@ -166,6 +167,9 @@ public class Map
 	}
 
 	public void addMapObject(MapObject mo) {
+		if (mo.getKey() == null)
+			return;
+
 		if (mo.getKey().equalsIgnoreCase("terrain"))
 		{
 			for (int x = mo.getX(); x < mo.getX() + mo.getWidth(); x += getTileEffectiveWidth())
@@ -232,8 +236,16 @@ public class Map
 		TerrainTypeIndicator tti = new TerrainTypeIndicator(tileX, tileY);
 		if (overriddenTerrain.containsKey(tti))
 		{
-			tile = overriddenTerrain.get(tti);
-			return movementCostsByType.get(moverType).getMovementCost(tile);
+			try
+			{
+				tile = overriddenTerrain.get(tti);
+				return movementCostsByType.get(moverType).getMovementCost(tile);
+			}
+			catch (NullPointerException e)
+			{
+				System.out.println(e);
+				throw e;
+			}
 		}
 		else
 		{
@@ -307,8 +319,8 @@ public class Map
 
 	public boolean isMarkedMoveable(int tileX, int tileY)
 	{
-		if ((mapLayer.get(6).length > (tileY * tileRatio)) && ((mapLayer.get(6)[0].length > tileX * tileRatio)))
-			return mapLayer.get(6)[(int) (tileY * tileRatio)][(int) (tileX * tileRatio)] != 0;
+		if ((moveableLayer.length > (tileY * tileRatio)) && ((moveableLayer[0].length > tileX * tileRatio)))
+			return moveableLayer[(int) (tileY * tileRatio)][(int) (tileX * tileRatio)] != 0;
 		return false;
 	}
 
@@ -442,5 +454,9 @@ public class Map
 		{
 			return movementCostByTerrain.get(terrain);
 		}
+	}
+
+	public void setMoveableLayer(int[][] moveableLayer) {
+		this.moveableLayer = moveableLayer;
 	}
 }

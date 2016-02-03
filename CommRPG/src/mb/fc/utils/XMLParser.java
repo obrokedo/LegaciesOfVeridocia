@@ -16,9 +16,11 @@ public class XMLParser
         private ArrayList<TagArea> children;
         private String value = null;
         private String tagType;
+        private String originalLine;
 
         public TagArea(String line) throws IOException
         {
+        	originalLine = line;
             int open = 0;
             int tagClose = 0;
             char[] lineChars = line.toCharArray();
@@ -289,6 +291,49 @@ public class XMLParser
                 child.queryAllTagImpl(tagType, depth, maxDepth, tagAreas, matcher);
             }
         }
+
+		public String getOriginalText() {
+			// If this has no children and no value then this should be the whole tag
+			if (this.children.size() == 0 && this.value == null)
+			{
+				if (!originalLine.endsWith("/>"))
+				{
+					return originalLine.substring(0,  originalLine.length() - 1) + "/>";
+				}
+				return originalLine;
+			}
+
+			StringBuffer sb = new StringBuffer();
+			if (originalLine.endsWith("/>"))
+			{
+				sb.append(originalLine.substring(0, originalLine.length() - 2) +">\n");
+			}
+			else
+				sb.append(originalLine +"\n");
+
+			for (TagArea ta : this.children)
+			{
+				sb.append(ta.getOriginalText() + "\n");
+			}
+
+			if (this.value != null)
+				sb.append(this.value + "\n");
+
+			sb.append("</" + this.tagType +">");
+
+			return sb.toString();
+		}
+
+		public TagArea(TagArea ta)
+		{
+	        this.value = ta.value;
+	        this.tagType = ta.tagType;
+	        this.originalLine = ta.originalLine;
+	        this.children = new ArrayList<>();
+	        this.params = new Hashtable<>();
+	        this.children.addAll(ta.children);
+	        this.params.putAll(ta.params);
+		}
     }
 
 	public static ArrayList<TagArea> process(String file) throws IOException
@@ -327,7 +372,9 @@ public class XMLParser
                 }
 
                 if (s.endsWith("/>") || s.endsWith("</" + ta.tagType + ">"))
+                {
                     openTags.pop();
+                }
             }
             else
             {
@@ -341,4 +388,6 @@ public class XMLParser
     {
         public boolean matchesQuery(TagArea tagArea);
     }
+
+
 }

@@ -3,6 +3,8 @@ package mb.fc.engine.state;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import mb.fc.engine.CommRPG;
 import mb.fc.game.ui.ResourceSelector;
 import mb.fc.game.ui.ResourceSelector.ResourceSelectorListener;
@@ -33,23 +35,21 @@ public class DevelAnimationViewState extends BasicGameState implements ResourceS
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
-		animationFileSelector = new ResourceSelector("Animations", 0, true, "animations/animationsheets", ".anim", container);
+		animationFileSelector = new ResourceSelector("Animations", 0, true, FCResourceManager.ANIMATIONS_FOLDER, FCResourceManager.ANIMATIONS_EXTENSION, container);
 		animationFileSelector.setListener(this);
-		weaponSelector = new ResourceSelector("Weapons", 300, true, "image/weapons", ".png", container);
+		weaponSelector = new ResourceSelector("Weapons", 300, true, FCResourceManager.WEAPONS_FOLDER, FCResourceManager.WEAPONS_EXTENSION, container);
 		weaponSelector.setListener(this);
 	}
 
 	@Override
 	public void enter(GameContainer container, StateBasedGame game)
 			throws SlickException {
-		// TODO Auto-generated method stub
 		super.enter(container, game);
 		frm = new FCResourceManager();
 		try {
-			frm.addResource("animsheetdir,animations/animationsheets", null, 0, 0);
-			frm.addResource("imagedir,image/weapons", null, 0, 0);
+			frm.addResource(FCResourceManager.ANIMATIONS_FOLDER_IDENTIFIER + "," + FCResourceManager.ANIMATIONS_FOLDER, null, 0, 0);
+			frm.addResource(FCResourceManager.IMAGES_FOLDER_IDENTIFIER + "," + FCResourceManager.WEAPONS_FOLDER, null, 0, 0);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -134,18 +134,17 @@ public class DevelAnimationViewState extends BasicGameState implements ResourceS
 		if (parentSelector == animationFileSelector)
 		{
 			try {
-				frm.addResource("anim," + selectedItem + ",animations/animationsheets/" + selectedItem,  null, 0, 0);
+				frm.addResource(FCResourceManager.ANIMATION_IDENTIFIER + "," + selectedItem + "," + FCResourceManager.ANIMATIONS_FOLDER + "/" + selectedItem,  null, 0, 0);
 				currentAnimation = new AnimationWrapper(frm.getSpriteAnimations().get(selectedItem));
 				ArrayList<String> animNames = new ArrayList<>(currentAnimation.getAnimations());
 				animationSelector = new ResourceSelector("Anim", 600, animNames);
 				animationSelector.setListener(this);
 				weaponSelector.setSelectedIndex(-1);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (SlickException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			} catch (Throwable t ) {
+				t.printStackTrace();
+				JOptionPane.showMessageDialog(null, "Unable to load the selected animation: " + t.getMessage(),
+						"Unable to load animation", JOptionPane.ERROR_MESSAGE);
+				return false;
 			}
 		}
 		else if (parentSelector == animationSelector)
@@ -168,7 +167,7 @@ public class DevelAnimationViewState extends BasicGameState implements ResourceS
 		{
 			if (currentAnimation != null)
 			{
-				currentAnimation.setWeapon(frm.getImages().get(selectedItem.replace(".png", "")));
+				currentAnimation.setWeapon(frm.getImages().get(selectedItem.replace(FCResourceManager.WEAPONS_EXTENSION, "")));
 			}
 		}
 

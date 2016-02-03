@@ -3,22 +3,20 @@ package mb.fc.game.menu;
 import java.util.ArrayList;
 
 import mb.fc.engine.CommRPG;
+import mb.fc.engine.message.MessageType;
+import mb.fc.engine.message.SpriteContextMessage;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.input.FCInput;
 import mb.fc.game.input.KeyMapping;
-import mb.fc.game.item.EquippableItem;
-import mb.fc.game.item.Item;
-import mb.fc.game.item.Item.EquippableDifference;
-import mb.fc.game.resource.ItemResource;
+import mb.fc.game.listener.MenuListener;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.ui.FCGameContainer;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
 
-public class HeroesStatMenu extends Menu
+public class HeroesStatMenu extends Menu implements MenuListener
 {
 	protected static final int VIEW_LEVEL = 0;
 	protected static final int VIEW_STATS = 1;
@@ -31,29 +29,26 @@ public class HeroesStatMenu extends Menu
 	protected String[][] items;
 	protected CombatSprite selectedHero;
 	protected int view = VIEW_LEVEL;
-	protected boolean showDiffs = false;
-	protected ArrayList<String> differences = new ArrayList<>();
-	protected Item selectedItem;
+
+	protected Portrait selectedHeroPortrait;
 
 	public HeroesStatMenu(StateInfo stateInfo)
 	{
-		this(stateInfo, false, -1);
+		this(stateInfo, null);
 	}
 
-	public HeroesStatMenu(StateInfo stateInfo, boolean showDiffs, int itemId)
+	public HeroesStatMenu(StateInfo stateInfo, MenuListener listener)
 	{
 		super(Panel.PANEL_HEROS_OVERVIEW);
 		heroes = new ArrayList<>(stateInfo.getPsi().getClientProfile().getHeroes());
 		updateCurrentHero();
+		this.listener = listener;
+	}
 
-		this.showDiffs = showDiffs;
-
-		if (showDiffs)
-		{
-			view = VIEW_DIFFS;
-			selectedItem = ItemResource.getItem(itemId, stateInfo);
-			determineDifferences(stateInfo);
-		}
+	@Override
+	public MenuUpdate update(long delta, StateInfo stateInfo) {
+		this.selectedHeroPortrait.update(delta);
+		return MenuUpdate.MENU_NO_ACTION;
 	}
 
 	@Override
@@ -65,7 +60,17 @@ public class HeroesStatMenu extends Menu
 			115 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], graphics);
 		graphics.setColor(Color.white);
 
+		/****************************/
+		/* Draw the portrait window	*/
+		/****************************/
+		if (selectedHero != null)
+		{
+			int x = (gc.getWidth() - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 280) / 2;
+			int y = (gc.getHeight() - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 226) / 2 -1;
+			selectedHeroPortrait.render(x, y, graphics);
+		}
 
+		graphics.setColor(Color.white);
 		graphics.drawString(selectedHero.getName() + " " + selectedHero.getCurrentProgression().getClassName() +
 				" L" + selectedHero.getLevel(),
 				xOffset + 88 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()],
@@ -77,7 +82,7 @@ public class HeroesStatMenu extends Menu
 		graphics.drawString("ITEMS", xOffset + 200 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()],
 				yOffsetTop + 32 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);
 
-		// Draw hero items
+		// Draw Hero Spells
 		if (selectedHero.getSpellsDescriptors() != null && selectedHero.getSpellsDescriptors().size() > 0)
 			for (int i = 0; i < selectedHero.getSpellsDescriptors().size(); i++)
 			{
@@ -95,6 +100,7 @@ public class HeroesStatMenu extends Menu
 			graphics.setColor(Color.white);
 		}
 
+		// Draw hero items
 		if (items != null && selectedHero.getItemsSize() > 0)
 			for (int i = 0; i < selectedHero.getItemsSize(); i++)
 			{
@@ -199,12 +205,23 @@ public class HeroesStatMenu extends Menu
 				graphics.drawString(heroes.get(i).getCurrentMove() + "", xOffset + 267 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()],
 						yOffsetBot + (128 + 15 * (i - (selectedIndex < 12 ? 0 : selectedIndex - 11))) * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);
 			}
-			else if (view == VIEW_DIFFS)
+			else
 			{
-				graphics.drawString(differences.get(i), xOffset + 92 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()],
-						yOffsetBot + (128 + 15 * (i - (selectedIndex < 12 ? 0 : selectedIndex - 11))) * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);
+				renderMenuItem(graphics, i);
 			}
 		}
+
+		postRender(graphics);
+	}
+
+	protected void postRender(Graphics g)
+	{
+
+	}
+
+	protected void renderMenuItem(Graphics graphics, int index)
+	{
+
 	}
 
 	@Override
@@ -212,87 +229,112 @@ public class HeroesStatMenu extends Menu
 	{
 		if (input.isKeyDown(KeyMapping.BUTTON_UP))
 		{
-			if (selectedIndex > 0)
-			{
-				selectedIndex--;
-				updateCurrentHero();
-				return MenuUpdate.MENU_ACTION_LONG;
-			}
+			return onUp(stateInfo);
 		}
 		else if (input.isKeyDown(KeyMapping.BUTTON_DOWN))
 		{
-			if (selectedIndex < heroes.size() - 1)
-			{
-				selectedIndex++;
-				updateCurrentHero();
-				return MenuUpdate.MENU_ACTION_LONG;
-			}
+			return onDown(stateInfo);
 		}
-		else if (input.isKeyDown(Input.KEY_ENTER))
-			return MenuUpdate.MENU_CLOSE;
 		else if (input.isKeyDown(KeyMapping.BUTTON_LEFT))
 		{
-			if (view > 0)
-				view--;
-			else
-			{
-				if (showDiffs)
-					view = 2;
-				else
-					view = 1;
-			}
-			return MenuUpdate.MENU_ACTION_LONG;
+			return onLeft(stateInfo);
 		}
 		else if (input.isKeyDown(KeyMapping.BUTTON_RIGHT))
 		{
-			if ((showDiffs && view == 2) ||
-					(!showDiffs && view == 1))
-				view = 0;
-			else
-				view++;
-			return MenuUpdate.MENU_ACTION_LONG;
+			return onRight(stateInfo);
 		}
 		else if (input.isKeyDown(KeyMapping.BUTTON_2))
 		{
-			return MenuUpdate.MENU_CLOSE;
+			return onBack(stateInfo);
+		}
+		else if (input.isKeyDown(KeyMapping.BUTTON_1) || input.isKeyDown(KeyMapping.BUTTON_3))
+		{
+			return onConfirm(stateInfo);
 		}
 
 		return MenuUpdate.MENU_NO_ACTION;
 	}
 
-	public void determineDifferences(StateInfo stateInfo)
+	protected MenuUpdate onLeft(StateInfo stateInfo)
 	{
-		differences.clear();
-		if (selectedItem.isEquippable())
-		{
-			int type = ((EquippableItem) selectedItem).getItemType();
+		if (view > 0)
+			view--;
+		else
+			view = 1;
+		return MenuUpdate.MENU_ACTION_LONG;
+	}
 
-			for (CombatSprite hero : stateInfo.getPsi().getClientProfile().getHeroes())
-			{
-				EquippableDifference ed = null;
-				if (hero.isEquippable((EquippableItem) selectedItem))
-				{
-					if (type == EquippableItem.TYPE_WEAPON)
-						ed = Item.getEquippableDifference(hero.getEquippedWeapon(), (EquippableItem) selectedItem);
-					else if (type == EquippableItem.TYPE_ARMOR)
-						ed = Item.getEquippableDifference(hero.getEquippedArmor(), (EquippableItem) selectedItem);
-					else if (type == EquippableItem.TYPE_RING)
-						ed = Item.getEquippableDifference(hero.getEquippedRing(), (EquippableItem) selectedItem);
-					differences.add("ATK: " + ed.atk +
-						" DEF: " + ed.def +
-						" SPD: " + ed.spd);
-				}
-				else
-					differences.add("Can not equip");
-			}
+	protected MenuUpdate onRight (StateInfo stateInfo)
+	{
+		if (view == 1)
+			view = 0;
+		else
+			view++;
+		return MenuUpdate.MENU_ACTION_LONG;
+	}
+
+	protected MenuUpdate onBack(StateInfo stateInfo)
+	{
+		selectedHero = null;
+		return MenuUpdate.MENU_CLOSE;
+	}
+
+	protected MenuUpdate onConfirm(StateInfo stateInfo)
+	{
+		stateInfo.sendMessage(new SpriteContextMessage(MessageType.SHOW_HERO, selectedHero));
+		return MenuUpdate.MENU_ACTION_LONG;
+	}
+
+	protected MenuUpdate onUp(StateInfo stateInfo)
+	{
+		if (selectedIndex > 0)
+		{
+			selectedIndex--;
+			updateCurrentHero();
+			return MenuUpdate.MENU_ACTION_LONG;
 		}
+		return MenuUpdate.MENU_NO_ACTION;
+	}
+
+	protected MenuUpdate onDown(StateInfo stateInfo)
+	{
+		if (selectedIndex < heroes.size() - 1)
+		{
+			selectedIndex++;
+			updateCurrentHero();
+			return MenuUpdate.MENU_ACTION_LONG;
+		}
+		return MenuUpdate.MENU_NO_ACTION;
 	}
 
 	private void updateCurrentHero()
 	{
 		selectedHero = heroes.get(selectedIndex);
+		selectedHeroPortrait = Portrait.getPortrait(selectedHero);
 		items = new String[selectedHero.getItemsSize()][];
 		for (int i = 0; i < selectedHero.getItemsSize(); i++)
 			items[i] = selectedHero.getItem(i).getName().split(" ");
 	}
+
+	@Override
+	public Object getExitValue() {
+		return null;
+	}
+
+	@Override
+	public boolean valueSelected(StateInfo stateInfo, Object value) {
+		return false;
+	}
+
+	@Override
+	public void menuClosed() {
+
+	}
+
+	@Override
+	public boolean displayWhenNotTop() {
+		return false;
+	}
+
+
 }

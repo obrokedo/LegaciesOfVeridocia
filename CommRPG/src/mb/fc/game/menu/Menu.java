@@ -3,6 +3,7 @@ package mb.fc.game.menu;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.input.FCInput;
+import mb.fc.game.listener.MenuListener;
 
 /**
  * A special type of panel container that allows for user interaction and generally
@@ -12,6 +13,8 @@ import mb.fc.game.input.FCInput;
  */
 public abstract class Menu extends Panel
 {
+	protected MenuListener listener = null;
+
 	public enum MenuUpdate
 	{
 		MENU_NO_ACTION,
@@ -30,5 +33,20 @@ public abstract class Menu extends Panel
 	public MenuUpdate update(long delta, StateInfo stateInfo)
 	{
 		return MenuUpdate.MENU_NO_ACTION;
+	}
+
+	public MenuListener getMenuListener()
+	{
+		return listener;
+	}
+
+	public Object getExitValue()
+	{
+		return null;
+	}
+
+	public boolean displayWhenNotTop()
+	{
+		return true;
 	}
 }

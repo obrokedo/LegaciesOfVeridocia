@@ -11,7 +11,7 @@ public class PlannerValueDef
 	public static final int REFERS_ENEMY = 5;
 	public static final int REFERS_ITEM = 6;
 	public static final int REFERS_QUEST = 7;
-	public static final int REFERS_AI = 8;
+	public static final int REFERS_AI_APPROACH = 8;
 	public static final int REFERS_STAT_GAINS = 9;
 	public static final int REFERS_ITEM_STYLE = 10;
 	public static final int REFERS_ITEM_TYPE = 11;
@@ -24,6 +24,10 @@ public class PlannerValueDef
 	public static final int REFERS_MAP = 18;
 	public static final int REFERS_SPRITE_IMAGE = 19;
 	public static final int REFERS_EFFECT = 20;
+	public static final int REFERS_ATTRIBUTE_STRENGTH = 21;
+	public static final int REFERS_BODYMIND_GAIN = 22;
+	public static final int REFERS_AI = 23;
+	public static final int REFERS_TERRAIN = 24;
 
 	public static final int TYPE_STRING = 0;
 	public static final int TYPE_INT = 1;

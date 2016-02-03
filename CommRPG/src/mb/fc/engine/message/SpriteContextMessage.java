@@ -42,6 +42,15 @@ public class SpriteContextMessage extends Message
 		return null;
 	}
 
+	public CombatSprite getCombatSprite(Iterable<CombatSprite> sprites) {
+		for (Sprite s : sprites)
+		{
+			if (s.getId() == this.sprites.get(0))
+				return (CombatSprite) s;
+		}
+		return null;
+	}
+
 	public ArrayList<CombatSprite> getSprites(Iterable<Sprite> sprites) {
 		ArrayList<CombatSprite> cSprites = new ArrayList<CombatSprite>();
 		for (Sprite s : sprites)

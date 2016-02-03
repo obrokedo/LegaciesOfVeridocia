@@ -21,6 +21,8 @@ import org.newdawn.slick.Image;
  */
 public abstract class JSpell implements Serializable
 {
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Spell attributes
 	 */

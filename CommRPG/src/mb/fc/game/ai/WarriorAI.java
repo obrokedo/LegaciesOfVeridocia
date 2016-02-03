@@ -60,7 +60,6 @@ public class WarriorAI extends AI
 
 	@Override
 	protected void initialize() {
-		// TODO Auto-generated method stub
 
 	}
 

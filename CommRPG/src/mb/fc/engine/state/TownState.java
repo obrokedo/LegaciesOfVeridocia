@@ -2,6 +2,7 @@ package mb.fc.engine.state;
 
 import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.MessageType;
+import mb.fc.engine.message.ShopMessage;
 import mb.fc.game.manager.CinematicManager;
 import mb.fc.game.manager.MenuManager;
 import mb.fc.game.manager.PanelManager;
@@ -172,6 +173,11 @@ public class TownState extends LoadableGameState
 				else if (container.getInput().isKeyPressed(Input.KEY_ESCAPE))
 				{
 					game.enterState(CommRPG.STATE_GAME_MENU_DEVEL);
+				}
+				else if (container.getInput().isKeyDown(Input.KEY_Z))
+				{
+					// stateInfo.sendMessage(new Message(MessageType.SHOW_HEROES));
+					stateInfo.sendMessage(new ShopMessage(.8, 1.2, new int[] {1, 1, 2, 2, 0, 0, 1, 1, 2, 2, 0, 0}));
 				}
 			}
 

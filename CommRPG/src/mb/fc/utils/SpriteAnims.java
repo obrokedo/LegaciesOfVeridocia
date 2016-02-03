@@ -93,17 +93,6 @@ public class SpriteAnims
 		return animations.keySet();
 	}
 
-	public static void main(String args[])
-	{
-		try {
-
-			SpriteAnims sa = parseAnimations("/animations/noah.anim");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
 	public static SpriteAnims parseAnimations(String animsFile) throws IOException
 	{
 		// Parse Animations

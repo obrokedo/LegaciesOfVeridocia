@@ -141,6 +141,12 @@ public class CinematicActor implements Comparable<CinematicActor>
 			for (AnimSprite as : currentAnim.frames.get(imageIndex).sprites)
 			{
 				Image im = spriteAnims.getImageAtIndex(as.imageIndex);
+				if (as.flipH) {
+					im = im.getFlippedCopy(true, false);
+				}
+				if (as.flipV) {
+					im = im.getFlippedCopy(false, true);
+				}
 				switch (specialEffectType)
 				{
 					case SE_NONE:

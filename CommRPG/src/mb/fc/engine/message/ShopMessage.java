@@ -34,4 +34,19 @@ public class ShopMessage extends Message
 	public int[] getItemIds() {
 		return itemIds;
 	}
+
+	public void setMenuTypeShopOptions()
+	{
+		this.messageType = MessageType.SHOW_SHOP;
+	}
+
+	public void setMenuTypeShopBuy()
+	{
+		this.messageType = MessageType.SHOW_SHOP_BUY;
+	}
+
+	public void setMenuTypeShopDeals()
+	{
+		this.messageType = MessageType.SHOW_SHOP_DEALS;
+	}
 }

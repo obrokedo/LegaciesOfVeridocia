@@ -19,6 +19,7 @@ import mb.fc.game.constants.Direction;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.input.FCInput;
 import mb.fc.game.input.KeyMapping;
+import mb.fc.game.item.Item;
 import mb.fc.game.listener.KeyboardListener;
 import mb.fc.game.menu.BattleActionsMenu;
 import mb.fc.game.menu.HeroStatMenu;
@@ -468,16 +469,47 @@ public class TurnManager extends Manager implements KeyboardListener
 		int[][] area = null;
 		boolean targetsHero = !currentSprite.isHero();
 
+		// If the command is to attack, get the characters attack range
 		if (battleCommand.getCommand() == BattleCommand.COMMAND_ATTACK)
 		{
 			range = currentSprite.getAttackRange().getAttackableSpace();
 			area = AttackableSpace.RANGE_0;
 		}
-		else if (battleCommand.getCommand() == BattleCommand.COMMAND_SPELL)
-		{
-			range = battleCommand.getSpell().getRange()[battleCommand.getLevel() - 1].getAttackableSpace();
+		// Otherwise it's an item or spell
+		else {
+			int areaSize = 1;
+			if (battleCommand.getCommand() == BattleCommand.COMMAND_SPELL)
 
-			switch (battleCommand.getSpell().getArea()[battleCommand.getLevel() - 1])
+			{
+				range = battleCommand.getSpell().getRange()[battleCommand.getLevel() - 1].getAttackableSpace();
+				areaSize = battleCommand.getSpell().getArea()[battleCommand.getLevel() - 1];
+
+				if (!battleCommand.getSpell().isTargetsEnemy())
+					targetsHero = currentSprite.isHero();
+			}
+			else if (battleCommand.getCommand() == BattleCommand.COMMAND_ITEM)
+			{
+				Item item = battleCommand.getItem();
+				// If the item does not have a "spell use" then just use the item use to get range and target
+				if (item.getSpellUse() == null)
+				{
+					range = battleCommand.getItem().getItemUse().getRange().getAttackableSpace();
+
+					if (!battleCommand.getItem().getItemUse().isTargetsEnemy())
+						targetsHero = currentSprite.isHero();
+				}
+				// Otherwise load the spell from the item
+				else
+				{
+					range = item.getSpellUse().getSpell().getRange()[item.getSpellUse().getLevel() - 1].getAttackableSpace();
+					areaSize = item.getSpellUse().getSpell().getArea()[item.getSpellUse().getLevel() - 1];
+
+					if (!item.getSpellUse().getSpell().isTargetsEnemy())
+						targetsHero = currentSprite.isHero();
+				}
+			}
+
+			switch (areaSize)
 			{
 				case 1:
 					area = AttackableSpace.RANGE_0;
@@ -489,29 +521,6 @@ public class TurnManager extends Manager implements KeyboardListener
 					area = AttackableSpace.RANGE_2;
 					break;
 			}
-
-			if (!battleCommand.getSpell().isTargetsEnemy())
-				targetsHero = currentSprite.isHero();
-		}
-		else if (battleCommand.getCommand() == BattleCommand.COMMAND_ITEM)
-		{
-			range = battleCommand.getItem().getItemUse().getRange().getAttackableSpace();
-
-			switch (battleCommand.getItem().getItemUse().getArea())
-			{
-				case 1:
-					area = AttackableSpace.RANGE_0;
-					break;
-				case 2:
-					area = AttackableSpace.RANGE_1;
-					break;
-				case 3:
-					area = AttackableSpace.RANGE_2;
-					break;
-			}
-
-			if (!battleCommand.getItem().getItemUse().isTargetsEnemy())
-				targetsHero = currentSprite.isHero();
 		}
 
 		as = new AttackableSpace(stateInfo, currentSprite, targetsHero, range, area);

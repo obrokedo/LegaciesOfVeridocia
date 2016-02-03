@@ -7,6 +7,7 @@ import mb.fc.engine.message.BattleCondMessage;
 import mb.fc.engine.message.Message;
 import mb.fc.engine.message.SpeechMessage;
 import mb.fc.game.definition.EnemyDefinition;
+import mb.fc.game.exception.BadMapException;
 import mb.fc.game.resource.NPCResource;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.sprite.NPCSprite;
@@ -75,7 +76,12 @@ public class SpriteManager extends Manager
 			}
 
 			if (!foundStart)
-				defaultEntrance.getStartLocation(stateInfo);
+			{
+				if (defaultEntrance != null)
+					defaultEntrance.getStartLocation(stateInfo);
+				else
+					throw new BadMapException("The selected map does not contain a start location");
+			}
 
 			stateInfo.getCamera().centerOnSprite(stateInfo.getCurrentSprite(), stateInfo.getCurrentMap());
 		}

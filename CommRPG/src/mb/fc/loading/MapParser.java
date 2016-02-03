@@ -24,6 +24,7 @@ public class MapParser
 	public static void parseMap(String mapFile, Map map, TilesetParser tilesetParser,
 			FCResourceManager frm) throws IOException, SlickException
 	{
+
 		HashSet<String> spriteToLoad = new HashSet<String>();
 		ArrayList<TagArea> tagAreas = XMLParser.process(mapFile);
 
@@ -62,6 +63,10 @@ public class MapParser
 		// This is kind of a kludge...
 		AnimatedSprite.SHADOW_OFFSET = AnimatedSprite.DEFAULT_SHADOW_OFFSET;
 
+
+		if (map instanceof PlannerMap)
+			((PlannerMap) map).setRootTagArea(tagArea);
+
 		for (TagArea childArea : tagArea.getChildren())
 		{
 			if (childArea.getTagType().equalsIgnoreCase("tileset"))
@@ -78,8 +83,12 @@ public class MapParser
 					if (tile.getTagType().equalsIgnoreCase("tile"))
 					{
 						int id = Integer.parseInt(tile.getAttribute("id"));
-						int landEffect = Integer.parseInt(tile.getChildren().get(0).getChildren().get(0).getAttribute("value"));
-						landEffectByTileId.put(id, landEffect);
+						if (tile.getChildren().size() > 0 && tile.getChildren().get(0).getChildren().size() > 0 &&
+								tile.getChildren().get(0).getChildren().get(0).getAttribute("value") != null)
+						{
+							int landEffect = Integer.parseInt(tile.getChildren().get(0).getChildren().get(0).getAttribute("value"));
+							landEffectByTileId.put(id, landEffect);
+						}
 					}
 				}
 
@@ -94,6 +103,11 @@ public class MapParser
 				try
 				{
 					layer = decodeLayer(childArea, width, height); // new int[height][width];
+					if (childArea.getParams().get("name").startsWith("walk") ||
+							childArea.getParams().get("name").startsWith("Walk"))
+						map.setMoveableLayer(layer);
+					else
+						map.addLayer(layer);
 				}
 				catch (BadMapException ex)
 				{
@@ -108,8 +122,6 @@ public class MapParser
 					index++;
 				}
 				*/
-
-				map.addLayer(layer);
 			}
 			else if (childArea.getTagType().equalsIgnoreCase("objectgroup"))
 			{
@@ -157,8 +169,13 @@ public class MapParser
 							mapObject.setPolyPoints(pointList);
 						}
 					}
+
 					mapObject.determineShape();
-					map.addMapObject(mapObject);
+
+					if (map instanceof PlannerMap)
+						((PlannerMap) map).addMapObject(mapObject, objectTag);
+					else
+						map.addMapObject(mapObject);
 				}
 			}
 			else if (childArea.getTagType().equalsIgnoreCase("properties"))

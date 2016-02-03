@@ -4,6 +4,7 @@ import mb.fc.engine.state.StateInfo;
 import mb.fc.game.item.EquippableItem;
 import mb.fc.game.item.Item;
 import mb.fc.game.item.ItemUse;
+import mb.fc.game.item.SpellItemUse;
 import mb.fc.utils.XMLParser.TagArea;
 
 public class ItemDefinition
@@ -20,7 +21,9 @@ public class ItemDefinition
 		int attack = 0, defense = 0, speed = 0, style = 0, type = 0, range = 0;
 		String weaponImage = null;
 		boolean equippable = false;
+		boolean useDamagesItem = false;
 		ItemUse itemUse = null;
+		SpellItemUse spellUse = null;
 		for (TagArea childTagArea : tagArea.getChildren())
 		{
 			if (childTagArea.getTagType().equalsIgnoreCase("equippable"))
@@ -38,9 +41,25 @@ public class ItemDefinition
 			}
 			else if (childTagArea.getTagType().equalsIgnoreCase("use"))
 			{
-				itemUse = new ItemUse(Boolean.parseBoolean(childTagArea.getAttribute("targetsenemy")), Integer.parseInt(childTagArea.getAttribute("damage")),
-						Integer.parseInt(childTagArea.getAttribute("mpdamage")), null,  Integer.parseInt(childTagArea.getAttribute("range")),
-						Integer.parseInt(childTagArea.getAttribute("area")),  childTagArea.getAttribute("text"), Boolean.parseBoolean(childTagArea.getAttribute("singleuse")));
+				itemUse = new ItemUse(
+						Boolean.parseBoolean(
+						childTagArea.getAttribute("targetsenemy")),
+						Integer.parseInt(childTagArea.getAttribute("damage")),
+						Integer.parseInt(childTagArea.getAttribute("mpdamage")),
+						null,
+						Integer.parseInt(childTagArea.getAttribute("range")),
+						Integer.parseInt(childTagArea.getAttribute("area")),
+						childTagArea.getAttribute("text"),
+						Boolean.parseBoolean(childTagArea.getAttribute("singleuse")));
+				useDamagesItem = Boolean.parseBoolean(childTagArea.getAttribute("damageitem"));
+			}
+			else if (childTagArea.getTagType().equalsIgnoreCase("usespell"))
+			{
+				spellUse = new SpellItemUse(
+						childTagArea.getAttribute("spellid"),
+						Integer.parseInt(childTagArea.getAttribute("level")),
+						Boolean.parseBoolean(childTagArea.getAttribute("singleuse")));
+				useDamagesItem = Boolean.parseBoolean(childTagArea.getAttribute("damageitem"));
 			}
 		}
 
@@ -50,10 +69,10 @@ public class ItemDefinition
 
 		if (equippable)
 			id.item = new EquippableItem(tagArea.getAttribute("name"), Integer.parseInt(tagArea.getAttribute("cost")), tagArea.getAttribute("description"),
-					itemUse, id.id, attack, defense, speed, range, type, style, weaponImage);
+					itemUse, spellUse, id.id, attack, defense, speed, range, type, style, weaponImage, useDamagesItem);
 		else
 			id.item = new Item(tagArea.getAttribute("name"), Integer.parseInt(tagArea.getAttribute("cost")), tagArea.getAttribute("description"),
-						itemUse, false, id.id);
+						itemUse, spellUse, false, useDamagesItem, id.id);
 
 		id.imageX = Integer.parseInt(tagArea.getAttribute("imageindexx"));
 		id.imageY = Integer.parseInt(tagArea.getAttribute("imageindexy"));

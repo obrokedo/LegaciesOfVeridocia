@@ -12,19 +12,16 @@ public class PriestMenu extends QuadMenu
 
 	@Override
 	public void initialize() {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	protected MenuUpdate onBack() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	protected MenuUpdate onConfirm() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }

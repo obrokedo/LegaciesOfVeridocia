@@ -49,6 +49,7 @@ public class HeroProgression implements Serializable
 		cs.setMovementType(promotedProgression.getMovementType());
 	}
 
+	//TODO This needs to make sure it uses all values from the LevelProgression script
 	public LevelUpResult getLevelUpResults(CombatSprite cs, StateInfo stateInfo)
 	{
 		Progression p = (cs.isPromoted() ? promotedProgression : unpromotedProgression);

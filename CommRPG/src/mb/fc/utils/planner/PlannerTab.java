@@ -5,27 +5,23 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Vector;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 
-public class PlannerTab extends JPanel implements ActionListener, ItemListener, ListSelectionListener
+public class PlannerTab implements ActionListener, TreeSelectionListener
 {
 	protected static final long serialVersionUID = 1L;
 
 	protected Hashtable<String, PlannerContainerDef> containersByName;
 	protected String[] containers;
-	protected JComboBox<String> list;
-	protected DefaultComboBoxModel<String> listModel;
 	protected ArrayList<PlannerContainer> listPC;
 	protected PlannerContainer currentPC;
 	protected int selectedPC;
@@ -33,37 +29,38 @@ public class PlannerTab extends JPanel implements ActionListener, ItemListener, 
 	protected JComboBox<String> typeComboBox;
 	protected int refersTo;
 	protected PlannerFrame plannerFrame;
-	protected PlannerAttributeList attributeList;
+	protected PlannerTree plannerTree;
 	private JPanel listPanel;
+	private String name;
+	private JPanel uiAspect;
 
-	public PlannerTab(Hashtable<String, PlannerContainerDef> containersByName,
+	public PlannerTab(String name, Hashtable<String, PlannerContainerDef> containersByName,
 			String[] containers, int refersTo, PlannerFrame plannerFrame)
 	{
-		super(new BorderLayout());
+		uiAspect = new JPanel(new BorderLayout());
 
+		this.name = name;
 		listPanel = new JPanel();
-		listModel = new DefaultComboBoxModel<String>();
-		list = new JComboBox<String>(listModel);
-		list.addItemListener(this);
 
 		listPC = new ArrayList<PlannerContainer>();
 
 		this.containersByName = containersByName;
 		this.containers = containers;
 
-		listPanel.add(list);
-
 		listPanel.setBackground(Color.DARK_GRAY);
 		listPanel.add(PlannerFrame.createActionButton("Add", "add", this));
 		listPanel.add(PlannerFrame.createActionButton("Remove", "remove", this));
 
 		// this.add(listPanel, BorderLayout.LINE_START);
-		this.add(listPanel, BorderLayout.PAGE_START);
+		// uiAspect.add(listPanel, BorderLayout.PAGE_START);
 
 		typeComboBox = new JComboBox<String>(containers);
 
 		this.refersTo = refersTo;
 		this.plannerFrame = plannerFrame;
+
+		plannerTree = new PlannerTree(name, listPC, this, new TabAttributeTransferHandler(listPC), this);
+		uiAspect.add(plannerTree.getUiAspect(), BorderLayout.LINE_START);
 	}
 
 	@Override
@@ -73,131 +70,132 @@ public class PlannerTab extends JPanel implements ActionListener, ItemListener, 
 		System.out.println("CONTAINER ACTION PERFORMED " + command);
 		if (command.equalsIgnoreCase("add"))
 		{
-			String type = containers[typeComboBox.getSelectedIndex()];
-			listPC.add(new PlannerContainer(containersByName.get(type), this));
-			PlannerContainerDef pcd = containersByName.get(type);
-			pcd.getDataLines().add("");
-
-			System.out.println("ADD ELEMENT");
-			listModel.addElement("(ID: " + listModel.getSize() + ") " + type);
-			System.out.println("AFTER ADD ELEMENT");
-			list.setSelectedIndex(listModel.getSize() - 1);
+			addNewContainer();
 		}
 		else if (command.equalsIgnoreCase("remove"))
 		{
-			int rc = JOptionPane.showConfirmDialog(this,
-					"Are you sure you'd like to delete the entire " + typeComboBox.getSelectedItem(),
-					"Confirm " + typeComboBox.getSelectedItem() + " deletion?", JOptionPane.YES_NO_OPTION);
-			if (rc != JOptionPane.OK_OPTION)
-				return;
-			int selected = list.getSelectedIndex();
-			plannerFrame.removeReferences(refersTo, selected);
-			currentPC.getPcdef().getDataLines().remove(selected);
-			this.remove(currentPC.getDefLine().getDefiningPanel());
-			this.remove(currentPCScroll);
-			this.repaint();
-
-			currentPC = null;
-			listModel.removeElementAt(selected);
-			listPC.remove(selected);
+			removeContainer(plannerTree.getSelectedIndex());
 		}
+	}
+
+	public void addNewContainer()
+	{
+		String newName = JOptionPane.showInputDialog("Enter the new objects name");
+		if (newName == null)
+			return;
+
+		String type = containers[typeComboBox.getSelectedIndex()];
+		PlannerContainer newPC = new PlannerContainer(containersByName.get(type), this);
+		listPC.add(newPC);
+		PlannerContainerDef pcd = containersByName.get(type);
+		pcd.getDataLines().add(newName);
+		newPC.getDefLine().getValues().add(newName);
+		System.out.println("ADD ELEMENT");
+		plannerTree.addItem(newName, listPC.size() - 1);
+		System.out.println("AFTER ADD ELEMENT");
+	}
+
+	public void removeContainer(int index)
+	{
+		int rc = JOptionPane.showConfirmDialog(uiAspect,
+				"Are you sure you'd like to delete the entire " + typeComboBox.getSelectedItem(),
+				"Confirm " + typeComboBox.getSelectedItem() + " deletion?", JOptionPane.YES_NO_OPTION);
+		if (rc != JOptionPane.OK_OPTION)
+			return;
+		plannerTree.removeItem(index);
+		plannerFrame.removeReferences(refersTo, index);
+		currentPC.getPcdef().getDataLines().remove(index);
+		uiAspect.remove(currentPC.getDefLine().getDefiningPanel());
+		uiAspect.remove(currentPCScroll);
+		uiAspect.repaint();
+
+		currentPC = null;
+		// TODO REMOVE HERE
+		listPC.remove(index);
 	}
 
 	public void commitChanges()
 	{
-		if (currentPC != null)
-		{
-			currentPC.commitChanges();
-			updateAttributeList(-1);
-		}
+		for (PlannerContainer pcs : listPC)
+			pcs.commitChanges();
 	}
 
 	public void setNewValues()
 	{
 		System.out.println("SET NEW VALUES");
 
-		list.removeItemListener(this);
 		if (currentPCScroll != null)
 		{
-			this.remove(currentPCScroll);
+			uiAspect.remove(currentPCScroll);
 		}
 
 		if (currentPC != null && currentPC.getDefLine() != null)
 		{
 			System.out.println("REMOVE DEF LINE");
-			this.remove(currentPC.getDefLine().getDefiningPanel());
+			uiAspect.remove(currentPC.getDefLine().getDefiningPanel());
 		}
 
-		for (int i = 0; i < this.getComponentCount(); i++)
+		for (int i = 0; i < uiAspect.getComponentCount(); i++)
 		{
-			if (this.getComponent(i) instanceof PlannerTimeBarViewer)
+			if (uiAspect.getComponent(i) instanceof PlannerTimeBarViewer)
 			{
-				this.remove(i);
+				uiAspect.remove(i);
 				i--;
 			}
 		}
+
 		if (currentPC != null)
 		{
 			currentPC.commitChanges();
-			listModel.removeElementAt(selectedPC);
-			listModel.insertElementAt("(ID: " + (selectedPC) + ") " + currentPC.getDescription(), selectedPC);
 			currentPC.getPcdef().getDataLines().set(selectedPC, currentPC.getDescription());
-			if (list.getSelectedIndex() == -1)
-				list.setSelectedIndex(0);
 		}
 
-		if (list.getSelectedIndex() != -1)
+		if (plannerTree.getSelectedIndex() != -1)
 		{
-			currentPC = listPC.get(list.getSelectedIndex());
-			selectedPC = list.getSelectedIndex();
-			System.out.println("NEW VALUES");
-			currentPC.setupUI();
+			currentPC = listPC.get(plannerTree.getSelectedIndex());
+			selectedPC = plannerTree.getSelectedIndex();
+			System.out.println("NEW VALUES " + selectedPC);
+			if (plannerTree.getSelectedAttributeIndex() != -1)
+				currentPC.setupUI(plannerTree.getSelectedAttributeIndex());
+			else
+				currentPC.setupUI();
+
 			JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-			panel.add(currentPC);
+			panel.add(currentPC.getUiAspect());
 			currentPCScroll = new JScrollPane(panel);
 			currentPCScroll.getVerticalScrollBar().setUnitIncrement(75);
 
-			this.add(currentPC.getDefLine().getDefiningPanel(), BorderLayout.PAGE_END);
-			this.add(currentPCScroll, BorderLayout.CENTER);
+			uiAspect.add(currentPC.getDefLine().getDefiningPanel(), BorderLayout.PAGE_END);
+			uiAspect.add(currentPCScroll, BorderLayout.CENTER);
 
 			if (currentPC.getDefLine().getPlDef().getTag().equalsIgnoreCase("Cinematic") && currentPC.getPlannerGraph() != null &&
 					PlannerFrame.SHOW_CIN)
 			{
-				this.add(currentPC.getPlannerGraph(), BorderLayout.PAGE_END);
+				uiAspect.add(currentPC.getPlannerGraph(), BorderLayout.PAGE_END);
 			}
 
-			updateAttributeList(0);
-
 			currentPCScroll.revalidate();
-			this.repaint();
+			uiAspect.validate();
+			uiAspect.repaint();
 		}
 		else
 		{
 			JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 			currentPCScroll = new JScrollPane(panel);
-			this.add(currentPCScroll, BorderLayout.CENTER);
-			this.revalidate();
+			uiAspect.add(currentPCScroll, BorderLayout.CENTER);
+			uiAspect.revalidate();
 		}
-
-		list.addItemListener(this);
 	}
 
 	public void updateAttributeList(int index)
 	{
-		if (attributeList == null)
-		{
-			attributeList = new PlannerAttributeList(currentPC, this, new TabAttributeTransferHandler(currentPC));
-			this.add(attributeList, BorderLayout.LINE_START);
-		}
-		else
-			attributeList.updateAttributeList(currentPC, index, new TabAttributeTransferHandler(currentPC));
-		this.validate();
+		plannerTree.updateTreeValues(name, listPC);
+		uiAspect.validate();
 	}
 
 	public void addPlannerContainer(PlannerContainer pc)
 	{
 		this.listPC.add(pc);
-		listModel.addElement("(ID: " + (this.listPC.size() - 1) + ") " + pc.getDescription());
 	}
 
 	public ArrayList<PlannerContainer> getListPC() {
@@ -206,14 +204,10 @@ public class PlannerTab extends JPanel implements ActionListener, ItemListener, 
 
 	public void clearValues()
 	{
-		list.removeItemListener(this);
-		listModel.removeAllElements();
 		this.currentPC = null;
 		this.listPC.clear();
 		System.out.println("CLEAR VALUES");
-		this.removeAll();
-		this.add(listPanel, BorderLayout.PAGE_START);
-		attributeList = null;
+		// plannerTree.updateTreeValues(name, listPC);
 		/*
 		if (currentPCScroll != null)
 		{
@@ -237,19 +231,17 @@ public class PlannerTab extends JPanel implements ActionListener, ItemListener, 
 			}
 		}
 		*/
-		this.revalidate();
-		this.repaint();
-		list.addItemListener(this);
+		uiAspect.revalidate();
+		uiAspect.repaint();
 		System.out.println("CLEARED CURRENT PC " + currentPC);
 	}
 
 	public boolean setSelectedListItem(int index)
 	{
 		System.out.println("SET SELECTED LIST ITEM " + index);
-		if (index < list.getModel().getSize())
+		if (index < listPC.size())
 		{
-			this.list.setSelectedIndex(index);
-			System.out.println("NOW SELECTED " + this.list.getSelectedIndex());
+			this.plannerTree.setSelectedIndex(index);
 			return true;
 		}
 		return false;
@@ -257,31 +249,12 @@ public class PlannerTab extends JPanel implements ActionListener, ItemListener, 
 
 	}
 
-	@Override
-	public void itemStateChanged(ItemEvent e) {
-		System.out.println("COMBO BOX SELECTED CHANGED");
-		if (e.getStateChange() == ItemEvent.SELECTED)
-			setNewValues();
-	}
-
-	@Override
-	public void valueChanged(ListSelectionEvent e) {
-		if (!e.getValueIsAdjusting())
-		{
-			if (currentPC != null)
-			{
-				currentPC.setupUI(attributeList.getSelectedIndex());
-				currentPCScroll.revalidate();
-			}
-		}
-	}
-
-	public class TabAttributeTransferHandler extends AttributeTransferHandler
+	public class TabAttributeTransferHandler extends TreeAttributeTransferHandler
 	{
 		private static final long serialVersionUID = 1L;
 
-		public TabAttributeTransferHandler(PlannerContainer currentPC) {
-			super(currentPC);
+		public TabAttributeTransferHandler(ArrayList<PlannerContainer> plannerPCs) {
+			super(plannerPCs);
 		}
 
 		@Override
@@ -303,7 +276,35 @@ public class PlannerTab extends JPanel implements ActionListener, ItemListener, 
 		return currentPC;
 	}
 
-	public JComboBox<String> getItemList() {
-		return list;
+	public Vector<String> getItemList() {
+		return plannerTree.getItemList();
+	}
+
+	public void refreshItem(PlannerContainer plannerContainer)
+	{
+		if (plannerTree != null && listPC != null)
+			plannerTree.refreshItem(plannerContainer, listPC.indexOf(plannerContainer));
+	}
+
+	public void addAttribute(String name, int index)
+	{
+		plannerTree.addAttribute(name, selectedPC, index);
+	}
+
+	public void addLineToContainerAtIndex(PlannerLine lineToAdd, int indexOfLine, int indexOfContainer)
+	{
+		listPC.get(indexOfContainer).addLine(lineToAdd, indexOfLine);
+	}
+
+	@Override
+	public void valueChanged(TreeSelectionEvent tse) {
+		if (tse.getNewLeadSelectionPath() != null && plannerTree.getSelectedIndex() != -1)
+		{
+			setNewValues();
+		}
+	}
+
+	public JPanel getUiAspect() {
+		return uiAspect;
 	}
 }

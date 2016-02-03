@@ -117,7 +117,8 @@ public abstract class CasterAI extends AI
 						continue;
 
 					// Check to see if the target is in range of this spell
-					if (!spell.getRange()[i - 1].isInDistance(distance))
+					if (!spell.getRange()[i - 1].isInDistance(distance) &&
+							(spell.isTargetsEnemy() || currentSprite != targetSprite))
 						continue;
 
 

@@ -8,6 +8,8 @@ import org.newdawn.slick.geom.Rectangle;
 
 public class SelectRectUI extends Rectangle
 {
+	private static final long serialVersionUID = 1L;
+
 	public SelectRectUI(float x, float y, float width, float height) {
 		super(x * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()],
 				y * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()],

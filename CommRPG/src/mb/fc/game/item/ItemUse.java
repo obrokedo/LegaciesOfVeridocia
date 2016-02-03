@@ -23,7 +23,7 @@ public class ItemUse
 		this.damage = damage;
 		this.mpDamage = mpDamage;
 		this.effects = effects;
-		this.range = Range.convertToRange(range);
+		this.range = Range.convertIntToRange(range);
 		this.area = area;
 		this.battleText = battleText;
 		this.singleUse = singleUse;

@@ -48,6 +48,10 @@ public class BattleCommand implements Serializable
 		return jSpell;
 	}
 
+	public void setjSpell(JSpell jSpell) {
+		this.jSpell = jSpell;
+	}
+
 	public void initializeSpell(StateInfo stateInfo) {
 		if (spell != null)
 		{
@@ -62,5 +66,9 @@ public class BattleCommand implements Serializable
 
 	public int getLevel() {
 		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
 	}
 }

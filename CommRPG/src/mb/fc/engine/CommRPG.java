@@ -145,7 +145,6 @@ public class CommRPG extends StateBasedGame   {
 
 
 			} catch (LWJGLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 

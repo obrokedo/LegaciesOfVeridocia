@@ -12,8 +12,9 @@ import mb.fc.cinematic.event.CinematicEvent;
 import mb.fc.loading.TextParser;
 import mb.fc.utils.XMLParser;
 import mb.fc.utils.XMLParser.TagArea;
+import mb.fc.utils.planner.cinematic.CinematicTimeline;
 
-public class PlannerContainer extends JPanel implements ActionListener
+public class PlannerContainer implements ActionListener
 {
 	private static final long serialVersionUID = 1L;
 
@@ -22,10 +23,11 @@ public class PlannerContainer extends JPanel implements ActionListener
 	private PlannerLine defLine;
 	private PlannerTimeBarViewer plannerGraph = null;
 	private PlannerTab parentTab;
+	private JPanel uiAspect = new JPanel();
 
 	public PlannerContainer(PlannerContainerDef pcdef, PlannerTab parentTab) {
 		super();
-		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+		uiAspect.setLayout(new BoxLayout(uiAspect, BoxLayout.PAGE_AXIS));
 		this.pcdef = pcdef;
 
 		this.defLine = new PlannerLine(pcdef.getDefiningLine(), true);
@@ -40,18 +42,18 @@ public class PlannerContainer extends JPanel implements ActionListener
 
 	public void setupUI(int index)
 	{
-		this.removeAll();
-		this.validate();
+		uiAspect.removeAll();
+		uiAspect.validate();
 
 		defLine.setupUI(pcdef.getAllowableLines(), this, 0, pcdef.getListOfLists(), parentTab);
-		this.add(defLine);
+		uiAspect.add(defLine.getUiAspect());
 
 		JPanel listPanel = new JPanel();
 		listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.PAGE_AXIS));
 		if (index != -1 && index < lines.size())
 		{
 			lines.get(index).setupUI(pcdef.getAllowableLines(), this, index + 1, pcdef.getListOfLists(), parentTab);
-			listPanel.add(lines.get(index));
+			listPanel.add(lines.get(index).getUiAspect());
 		}
 
 		/*
@@ -62,7 +64,7 @@ public class PlannerContainer extends JPanel implements ActionListener
 			i++;
 		} */
 
-		this.add(listPanel);
+		uiAspect.add(listPanel);
 
 		if (PlannerFrame.SHOW_CIN && pcdef.getDefiningLine().getTag().equalsIgnoreCase("Cinematic"))
 		{
@@ -89,6 +91,7 @@ public class PlannerContainer extends JPanel implements ActionListener
 								new HashSet<String>(), new HashSet<String>(), new HashSet<String>());
 						ces.addAll(0, initEvents);
 
+						System.out.println("PlannerContainer: generationGraph");
 						plannerGraph.generateGraph(ces, new CinematicTimeline(), Integer.parseInt(tas.get(0).getAttribute("camerax")), Integer.parseInt(tas.get(0).getAttribute("cameray")));
 					// this.add(ptbv);
 					}
@@ -98,36 +101,43 @@ public class PlannerContainer extends JPanel implements ActionListener
 
 		}
 
-		this.validate();
-		this.repaint();
+		uiAspect.validate();
+		uiAspect.repaint();
 		// this.add(new JScrollPane(listPanel));
 	}
 
 	public void addLine(PlannerLine line)
 	{
 		this.lines.add(line);
+		parentTab.refreshItem(this);
+		uiAspect.revalidate();
+		uiAspect.repaint();
 	}
 
 	public void addLine(PlannerLine line, int addIndex)
 	{
 		this.lines.add(addIndex, line);
+		parentTab.refreshItem(this);
+		uiAspect.revalidate();
+		uiAspect.repaint();
 	}
 
-	public void removeLine(int index)
+	public PlannerLine removeLine(int index)
 	{
-		lines.remove(index);
-		parentTab.updateAttributeList(Math.max(0, index - 1));
-		this.revalidate();
-		this.repaint();
+		PlannerLine pl = lines.remove(index);
+		parentTab.refreshItem(this);
+		uiAspect.revalidate();
+		uiAspect.repaint();
+		return pl;
 	}
 
 	public void duplicateLine(int index)
 	{
 		PlannerLine pl = lines.get(index);
 		lines.add(index + 1, new PlannerLine(pl));
-		parentTab.updateAttributeList(index + 1);
-		this.revalidate();
-		this.repaint();
+		parentTab.refreshItem(this);
+		uiAspect.revalidate();
+		uiAspect.repaint();
 	}
 
 	@Override
@@ -138,25 +148,25 @@ public class PlannerContainer extends JPanel implements ActionListener
 		{
 			int index = defLine.getSelectedItem();
 			this.lines.add(new PlannerLine(pcdef.getAllowableLines().get(index), false));
-			parentTab.updateAttributeList(lines.size() - 1);
+			parentTab.addAttribute(pcdef.getAllowableLines().get(index).getName(), lines.size() - 1);
 			// setupUI();
-			this.revalidate();
-			this.repaint();
+			uiAspect.revalidate();
+			uiAspect.repaint();
 		}
 		else if (action.startsWith("refresh"))
 		{
 			setupUI();
-			this.revalidate();
-			this.repaint();
+			uiAspect.revalidate();
+			uiAspect.repaint();
 		}
 		else if (action.startsWith("remove"))
 		{
 			int index = Integer.parseInt(action.split(" ")[1]) - 1;
 			lines.remove(index);
-			parentTab.updateAttributeList(Math.max(0, index - 1));
+			parentTab.refreshItem(this);
 			// setupUI();
-			this.revalidate();
-			this.repaint();
+			uiAspect.revalidate();
+			uiAspect.repaint();
 		}
 		else if (action.startsWith("moveup"))
 		{
@@ -166,10 +176,10 @@ public class PlannerContainer extends JPanel implements ActionListener
 			{
 				PlannerLine pl = lines.remove(index);
 				lines.add(index - 1, pl);
-				parentTab.updateAttributeList(index - 1);
+				parentTab.refreshItem(this);
 				// setupUI();
-				this.revalidate();
-				this.repaint();
+				uiAspect.revalidate();
+				uiAspect.repaint();
 			}
 		}
 		else if (action.startsWith("movedown"))
@@ -179,10 +189,10 @@ public class PlannerContainer extends JPanel implements ActionListener
 			{
 				PlannerLine pl = lines.remove(index);
 				lines.add(index + 1, pl);
-				parentTab.updateAttributeList(index + 1);
+				parentTab.refreshItem(this);
 				// setupUI();
-				this.revalidate();
-				this.repaint();
+				uiAspect.revalidate();
+				uiAspect.repaint();
 			}
 		}
 		else if (action.startsWith("duplicate"))
@@ -191,10 +201,10 @@ public class PlannerContainer extends JPanel implements ActionListener
 			PlannerLine pl = lines.get(index);
 			System.out.println("DUPLICATE");
 			lines.add(index + 1, new PlannerLine(pl));
-			parentTab.updateAttributeList(index + 1);
+			parentTab.refreshItem(this);
 			// setupUI();
-			this.revalidate();
-			this.repaint();
+			uiAspect.revalidate();
+			uiAspect.repaint();
 		}
 	}
 
@@ -224,5 +234,9 @@ public class PlannerContainer extends JPanel implements ActionListener
 
 	public PlannerTimeBarViewer getPlannerGraph() {
 		return plannerGraph;
+	}
+
+	public JPanel getUiAspect() {
+		return uiAspect;
 	}
 }

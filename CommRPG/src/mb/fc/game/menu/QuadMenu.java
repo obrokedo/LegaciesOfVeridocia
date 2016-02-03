@@ -41,6 +41,15 @@ public abstract class QuadMenu extends Menu
 		this(menuType, true, stateInfo);
 	}
 
+	/**
+	 * Creates a QuadMenu
+	 *
+	 * @param menuType the menu-type of this menu (used as an ID)
+	 * @param largeFlor a boolean indicating whether the large-flourish should be used. This is determined
+	 * 					by the width of the items that will be in the menu. For "narrow" images this should
+	 * 					by set to false, for "wide" items this should be true
+	 * @param stateInfo the relavant stateinfo that this menu will resuide in
+	 */
 	protected QuadMenu(int menuType, boolean largeFlor, StateInfo stateInfo) {
 		super(menuType);
 		this.largeFlor = largeFlor;

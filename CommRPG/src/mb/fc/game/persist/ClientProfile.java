@@ -25,13 +25,13 @@ public class ClientProfile implements Serializable
 	private ArrayList<CombatSprite> heroes;
 	private int gold;
 	private String name;
-	private transient ArrayList<Integer> startingHeroIds = null;
-	private int develLevel = 1;
+	private transient ArrayList<Integer> devHeroIds = null;
+	private transient int develLevel = 0;
 	private transient ArrayList<CombatSprite> networkHeroes;
 
 	public void setDevelParams(ArrayList<Integer> heroes, int level)
 	{
-		this.startingHeroIds.addAll(heroes);
+		this.devHeroIds.addAll(heroes);
 		develLevel = level;
 	}
 
@@ -39,20 +39,9 @@ public class ClientProfile implements Serializable
 	{
 		heroes = new ArrayList<>();
 		networkHeroes = new ArrayList<>();
-		startingHeroIds = new ArrayList<Integer>();
-		startingHeroIds.add(0);
-		startingHeroIds.add(1);
-		startingHeroIds.add(2);
+		devHeroIds = new ArrayList<Integer>();
 		gold = 100;
 		this.name = name;
-	}
-
-	public ArrayList<Integer> getStartingHeroIds() {
-		return startingHeroIds;
-	}
-
-	public void setStartingHeroIds(ArrayList<Integer> startingHeroIds) {
-		this.startingHeroIds = startingHeroIds;
 	}
 
 	public void addHero(CombatSprite hero)
@@ -63,7 +52,7 @@ public class ClientProfile implements Serializable
 	public ArrayList<CombatSprite> getHeroes() {
 		ArrayList<CombatSprite> hs = new ArrayList<>();
 		hs.addAll(heroes);
-		hs.addAll(networkHeroes);
+		// hs.addAll(networkHeroes);
 		Collections.sort(hs, new HeroComparator());
 		return hs;
 	}
@@ -139,5 +128,9 @@ public class ClientProfile implements Serializable
 
 	public int getDevelLevel() {
 		return develLevel;
+	}
+
+	public ArrayList<Integer> getDevelHeroIds() {
+		return devHeroIds;
 	}
 }

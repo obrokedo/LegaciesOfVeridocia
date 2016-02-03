@@ -11,7 +11,6 @@ import mb.fc.game.Range;
 import mb.fc.game.ai.AI;
 import mb.fc.game.ai.ClericAI;
 import mb.fc.game.battle.spell.KnownSpell;
-import mb.fc.game.constants.AttributeStrength;
 import mb.fc.game.constants.Direction;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.hudmenu.SpriteContextPanel;
@@ -24,6 +23,7 @@ import mb.fc.utils.AnimSprite;
 import mb.fc.utils.Animation;
 import mb.jython.GlobalPythonFactory;
 import mb.jython.JBattleEffect;
+import mb.jython.JLevelProgression;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -32,6 +32,7 @@ import org.newdawn.slick.Image;
 public class CombatSprite extends AnimatedSprite
 {
 	private static final long serialVersionUID = 1L;
+	public static final int MAXIMUM_ITEM_AMOUNT = 4;
 
 	private transient Color fadeColor = new Color(255, 255, 255, 255);
 
@@ -60,13 +61,10 @@ public class CombatSprite extends AnimatedSprite
 				currentMind, maxMind;
 
 
-	private int currentCounter, currentEvade,
-		currentDouble, currentCrit;
-
-	// Battle Action stats
-	private AttributeStrength 	counterStrength, evadeStrength,
-								doubleStrength, critStrength,
-								bodyStrength, mindStrength;
+	private int currentCounter, maxCounter,
+				currentEvade, maxEvade,
+				currentDouble, maxDouble,
+				currentCrit, maxCrit;
 
 	private transient AI ai;
 
@@ -108,41 +106,17 @@ public class CombatSprite extends AnimatedSprite
 			String name, String imageName, int hp, int mp, int attack, int defense, int speed, int move,
 				String movementType, int maxFireAffin, int maxElecAffin,
 				int maxColdAffin, int maxDarkAffin, int maxWaterAffin, int maxEarthAffin, int maxWindAffin,
-				int maxLightAffin, int maxBody, int maxMind, AttributeStrength counterStrength, AttributeStrength evadeStrength,
-				AttributeStrength doubleStrength, AttributeStrength critStrength, AttributeStrength bodyStrength,
-				AttributeStrength mindStrength, int level, int enemyId, ArrayList<KnownSpell> spells,
-				int id, String attackEffectId, int attackEffectChance)
+				int maxLightAffin, int maxBody, int maxMind, int maxCounter, int maxEvade,
+				int maxDouble, int maxCrit, int level,
+				int enemyId, ArrayList<KnownSpell> spells, int id, String attackEffectId, int attackEffectChance)
 	{
-		this(isLeader, name, imageName, null, hp, mp, attack,
-				defense, speed, move, movementType, maxFireAffin,
-				maxElecAffin, maxColdAffin, maxDarkAffin, maxWaterAffin,
-				maxEarthAffin, maxWindAffin, maxLightAffin, maxBody,
-				maxMind, counterStrength, evadeStrength,
-				doubleStrength, critStrength,
-				bodyStrength, mindStrength, level, 0, false, spells, id);
+		this(isLeader, name, imageName, null, level, 0, false, spells, id);
 		this.uniqueEnemyId = enemyId;
 		this.isHero = false;
 		this.attackEffectChance = attackEffectChance;
 		this.attackEffectId = attackEffectId;
-	}
 
-	/**
-	 * Constructor to create a hero CombatSprite
-	 */
-	public CombatSprite(boolean isLeader,
-			String name, String imageName, HeroProgression heroProgression, int hp, int mp, int attack,
-			int defense, int speed, int move, String movementType, int maxFireAffin, int maxElecAffin,
-			int maxColdAffin, int maxDarkAffin, int maxWaterAffin, int maxEarthAffin, int maxWindAffin,
-			int maxLightAffin, int maxBody, int maxMind, AttributeStrength counterStrength, AttributeStrength evadeStrength,
-			AttributeStrength doubleStrength, AttributeStrength critStrength, AttributeStrength bodyStrength,
-			AttributeStrength mindStrength, int level, int exp, boolean promoted, ArrayList<KnownSpell> spells, int id)
-	{
-		super(0, 0, imageName, id);
-
-		this.isPromoted = promoted;
-		this.level = level;
-		this.exp = 0;
-
+		// Set base states
 		currentHP = hp;
 		maxHP = hp;
 		currentMP = mp;
@@ -156,26 +130,73 @@ public class CombatSprite extends AnimatedSprite
 		maxAttack = attack;
 		currentDefense = defense;
 		maxDefense = defense;
+
+		// Set non-standard stats
+		this.maxFireAffin = this.currentFireAffin = maxFireAffin;
+		this.maxElecAffin = this.currentElecAffin = maxElecAffin;
+		this.maxColdAffin = this.currentColdAffin = maxColdAffin;
+		this.maxDarkAffin = this.currentDarkAffin = maxDarkAffin;
+		this.maxWaterAffin = this.currentWaterAffin = maxWaterAffin;
+		this.maxEarthAffin = this.currentEarthAffin = maxEarthAffin;
+		this.maxWindAffin = this.currentWindAffin = maxWindAffin;
+		this.maxLightAffin = this.currentLightAffin = maxLightAffin;
+		this.maxBody = this.currentBody = maxBody;
+		this.maxMind = this.currentMind = maxMind;
+		this.maxCounter = this.currentCounter = maxCounter;
+		this.maxEvade = this.currentEvade = maxEvade;
+		this.maxDouble = this.currentDouble = maxDouble;
+		this.maxCrit = this.currentCrit = maxCrit;
+	}
+
+
+	/**
+	 * Constructor to create a hero CombatSprite
+	 */
+	public CombatSprite(boolean isLeader,
+			String name, String imageName, HeroProgression heroProgression,
+			int level, int exp, boolean promoted, ArrayList<KnownSpell> spells, int id)
+	{
+		super(0, 0, imageName, id);
+
+		this.isPromoted = promoted;
+		this.level = level;
+		this.exp = 0;
+
+
 		dodges = true;
 
-		this.maxFireAffin = maxFireAffin;
-		this.maxElecAffin = maxElecAffin;
-		this.maxColdAffin = maxColdAffin;
-		this.maxDarkAffin = maxDarkAffin;
-		this.maxWaterAffin = maxWaterAffin;
-		this.maxEarthAffin = maxEarthAffin;
-		this.maxWindAffin = maxWindAffin;
-		this.maxLightAffin = maxLightAffin;
-		this.maxBody = maxBody;
-		this.maxMind = maxMind;
-		this.counterStrength = counterStrength;
-		this.evadeStrength = evadeStrength;
-		this.doubleStrength = doubleStrength;
-		this.critStrength = critStrength;
-		this.bodyStrength = bodyStrength;
-		this.mindStrength = mindStrength;
+		this.heroProgression = heroProgression;
 
+		// Handle attribute strengths for heroes
+		if (heroProgression != null)
+		{
+			// Stats in the progresion are set up as [0] = stat progression, [1] = stat start, [2] = stat end
+			currentHP = maxHP = (int) this.getCurrentProgression().getHp()[1];
+			maxMP = (int) this.getCurrentProgression().getMp()[1];
+			maxSpeed = (int) this.getCurrentProgression().getSpeed()[1];
+			maxMove = this.getCurrentProgression().getMove();
+			movementType = this.getCurrentProgression().getMovementType();
+			maxAttack = (int) this.getCurrentProgression().getAttack()[1];
+			maxDefense = (int) this.getCurrentProgression().getDefense()[1];
 
+			// Load non standard stats
+			JLevelProgression levelProgPython = GlobalPythonFactory.createLevelProgression();
+			this.maxCounter = levelProgPython.getBaseBattleStat(this.getCurrentProgression().getCounterStrength(), this);
+			this.maxEvade = levelProgPython.getBaseBattleStat(this.getCurrentProgression().getEvadeStrength(), this);
+			this.maxDouble = levelProgPython.getBaseBattleStat(this.getCurrentProgression().getDoubleStrength(), this);
+			this.maxCrit = levelProgPython.getBaseBattleStat(this.getCurrentProgression().getCritStrength(), this);
+			this.maxBody = levelProgPython.getBaseBodyMindStat(this.getCurrentProgression().getBodyStrength(), this);
+			this.maxMind = levelProgPython.getBaseBodyMindStat(this.getCurrentProgression().getMindStrength(), this);
+			// TODO PROMOTED PROGRESSION OF BATTLE ATTRIBUTES
+			this.maxFireAffin = this.getCurrentProgression().getFireAffin();
+			this.maxElecAffin = this.getCurrentProgression().getElecAffin();
+			this.maxColdAffin = this.getCurrentProgression().getColdAffin();
+			this.maxDarkAffin = this.getCurrentProgression().getDarkAffin();
+			this.maxWaterAffin = this.getCurrentProgression().getWaterAffin();
+			this.maxEarthAffin = this.getCurrentProgression().getEarthAffin();
+			this.maxWindAffin = this.getCurrentProgression().getWindAffin();
+			this.maxLightAffin = this.getCurrentProgression().getLightAffin();
+		}
 
 		this.isHero = true;
 		this.isLeader = isLeader;
@@ -183,7 +204,6 @@ public class CombatSprite extends AnimatedSprite
 		this.imageName = imageName;
 		this.items = new ArrayList<Item>();
 		this.equipped = new ArrayList<Boolean>();
-		this.heroProgression = heroProgression;
 
 		if (heroProgression != null)
 		{
@@ -228,6 +248,7 @@ public class CombatSprite extends AnimatedSprite
 	`	*/
 	}
 
+	//TODO Need to have a way to init a sprite without resetting stats
 	@Override
 	public void initializeSprite(StateInfo stateInfo)
 	{
@@ -248,6 +269,11 @@ public class CombatSprite extends AnimatedSprite
 			for (KnownSpell sd : spells)
 				sd.initializeFromLoad(stateInfo);
 		}
+
+		// TODO Does this work?!? We are persisting a jython object
+		for (JBattleEffect effect : battleEffects)
+			effect.initializeAnimation(stateInfo.getResourceManager());
+		//TODO Remove (all?) battle effects if this isn't an init mid battle
 
 		for (Item item : items)
 		{
@@ -285,6 +311,10 @@ public class CombatSprite extends AnimatedSprite
 		this.currentLightAffin = maxLightAffin;
 		this.currentBody = maxBody;
 		this.currentMind = maxMind;
+		this.currentCounter = maxCounter;
+		this.currentEvade = maxEvade;
+		this.currentDouble = maxDouble;
+		this.currentCrit = maxCrit;
 
 		fadeColor = new Color(255, 255, 255, 255);
 	}
@@ -440,7 +470,7 @@ public class CombatSprite extends AnimatedSprite
 			this.maxSpeed += item.getSpeed();
 		}
 
-		int index = items.indexOf(item);
+		int index = items.lastIndexOf(item);
 		this.equipped.set(index, true);
 
 		return oldItem;
@@ -691,6 +721,38 @@ public class CombatSprite extends AnimatedSprite
 		this.level = level;
 	}
 
+	public String levelUp()
+	{
+		this.level++;
+		JLevelProgression jlp = GlobalPythonFactory.createLevelProgression();
+		String text = jlp.levelUpHero(this);
+
+		int increase = jlp.getLevelUpBattleStat(this.getCurrentProgression().getCounterStrength(), this, level, isPromoted, this.maxCounter);
+		maxCounter += increase;
+		currentCounter += increase;
+
+		increase = jlp.getLevelUpBattleStat(this.getCurrentProgression().getCritStrength(), this, level, isPromoted, this.maxCrit);
+		maxCrit += increase;
+		currentCrit += increase;
+
+		increase = jlp.getLevelUpBattleStat(this.getCurrentProgression().getDoubleStrength(), this, level, isPromoted, this.maxDouble);
+		maxDouble += increase;
+		currentDouble += increase;
+
+		increase = jlp.getLevelUpBattleStat(this.getCurrentProgression().getEvadeStrength(), this, level, isPromoted, this.maxEvade);
+		maxEvade += increase;
+		currentEvade += increase;
+
+		increase = jlp.getLevelUpBodyMindStat(this.getCurrentProgression().getBodyProgression(), this, level, isPromoted);
+		maxBody += increase;
+		currentBody += increase;
+
+		increase = jlp.getLevelUpBodyMindStat(this.getCurrentProgression().getMindProgression(), this, level, isPromoted);
+		maxMind += increase;
+		currentMind += increase;
+		return text;
+	}
+
 	public int getExp() {
 		return exp;
 	}
@@ -849,30 +911,6 @@ public class CombatSprite extends AnimatedSprite
 
 	public int getMaxMind() {
 		return maxMind;
-	}
-
-	public AttributeStrength getCounterStrength() {
-		return counterStrength;
-	}
-
-	public AttributeStrength getEvadeStrength() {
-		return evadeStrength;
-	}
-
-	public AttributeStrength getDoubleStrength() {
-		return doubleStrength;
-	}
-
-	public AttributeStrength getCritStrength() {
-		return critStrength;
-	}
-
-	public AttributeStrength getBodyStrength() {
-		return bodyStrength;
-	}
-
-	public AttributeStrength getMindStrength() {
-		return mindStrength;
 	}
 
 	public boolean isDrawShadow() {

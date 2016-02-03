@@ -3,11 +3,14 @@ package mb.fc.utils.planner;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Vector;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -21,7 +24,7 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.text.NumberFormatter;
 
-public class PlannerLine extends JPanel
+public class PlannerLine
 {
 	private static final long serialVersionUID = 1L;
 
@@ -31,11 +34,12 @@ public class PlannerLine extends JPanel
 	private boolean isDefining;
 	private JComboBox<String> box;
 	private JPanel definingPanel;
+	private JPanel uiAspect;
 
 	public PlannerLine(PlannerLineDef plDef, boolean isDefining)
 	{
-		super();
-		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+		uiAspect = new JPanel();
+		uiAspect.setLayout(new BoxLayout(uiAspect, BoxLayout.PAGE_AXIS));
 		this.plDef = plDef;
 		this.components = new ArrayList<Component>();
 		this.values = new ArrayList<Object>();
@@ -44,8 +48,8 @@ public class PlannerLine extends JPanel
 
 	public PlannerLine(PlannerLine plannerLine)
 	{
-		super();
-		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+		uiAspect = new JPanel();
+		uiAspect.setLayout(new BoxLayout(uiAspect, BoxLayout.PAGE_AXIS));
 		this.plDef = plannerLine.plDef;
 		this.components = new ArrayList<Component>();
 		this.values = new ArrayList<Object>();
@@ -66,7 +70,7 @@ public class PlannerLine extends JPanel
 	{
 		if (commitChanges)
 			this.commitChanges();
-		this.removeAll();
+		uiAspect.removeAll();
 		JPanel headDescPanel = new JPanel(new BorderLayout());
 		JPanel headerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		if (isDefining)
@@ -134,7 +138,7 @@ public class PlannerLine extends JPanel
 
 			headDescPanel.add(headerPanel.add(new JLabel(this.plDef.getDescription())), BorderLayout.PAGE_END);
 			headDescPanel.add(headerPanel, BorderLayout.CENTER);
-			this.add(headDescPanel);
+			uiAspect.add(headDescPanel);
 		}
 
 
@@ -147,10 +151,12 @@ public class PlannerLine extends JPanel
 		{
 
 			PlannerValueDef pv = plDef.getPlannerValues().get(i);
-			JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+			// JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+			JPanel panel = new JPanel(new BorderLayout());
 			JLabel label = new JLabel(pv.getDisplayTag() + (pv.isOptional() ? "(Optional)" : ""));
+			label.setPreferredSize(new Dimension(150, 25));
 			JComponent c = null;
-			panel.add(label);
+			panel.add(label, BorderLayout.LINE_START);
 			switch (pv.getValueType())
 			{
 				case PlannerValueDef.TYPE_INT:
@@ -260,11 +266,17 @@ public class PlannerLine extends JPanel
 
 			label.setToolTipText(pv.getDisplayDescription());
 			c.setToolTipText(pv.getDisplayDescription());
+			JLabel descriptionLabel = new JLabel(pv.getDisplayDescription());
+			descriptionLabel.setOpaque(true);
+			descriptionLabel.setFont(descriptionLabel.getFont().deriveFont(Font.BOLD));
+			// descriptionLabel.setBackground(Color.DARK_GRAY);
+			panel.add(descriptionLabel, BorderLayout.PAGE_START);
 			panel.add(c);
 			components.add(c);
 			valuePanel.add(panel);
+			valuePanel.add(Box.createRigidArea(new Dimension(5, 15)));
 		}
-		this.add(valuePanel);
+		uiAspect.add(valuePanel);
 	}
 
 	public JPanel getDefiningPanel()
@@ -279,6 +291,7 @@ public class PlannerLine extends JPanel
 			for (int i = 0; i < plDef.getPlannerValues().size(); i++)
 			{
 				PlannerValueDef pv = plDef.getPlannerValues().get(i);
+				System.out.println(pv.getValueType());
 
 				switch (pv.getValueType())
 				{
@@ -385,5 +398,9 @@ public class PlannerLine extends JPanel
 
 	public PlannerLineDef getPlDef() {
 		return plDef;
+	}
+
+	public JPanel getUiAspect() {
+		return uiAspect;
 	}
 }

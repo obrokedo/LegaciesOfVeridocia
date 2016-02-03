@@ -1,4 +1,4 @@
-package mb.fc.utils.planner;
+package mb.fc.utils.planner.cinematic;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -14,8 +14,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map.Entry;
 import java.util.Vector;
+import java.util.logging.Logger;
 
 import javax.swing.BoxLayout;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -24,22 +26,32 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
-import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import mb.fc.engine.log.LoggingUtils;
+import mb.fc.loading.PlannerMap;
 import mb.fc.map.MapObject;
+import mb.fc.utils.planner.AttributeTransferHandler;
+import mb.fc.utils.planner.MapListRenderer;
 import mb.fc.utils.planner.MapListRenderer.MapCell;
+import mb.fc.utils.planner.PlannerAttributeList;
+import mb.fc.utils.planner.PlannerContainer;
+import mb.fc.utils.planner.PlannerContainerDef;
+import mb.fc.utils.planner.PlannerFrame;
+import mb.fc.utils.planner.PlannerLine;
+import mb.fc.utils.planner.PlannerLineDef;
+import mb.fc.utils.planner.PlannerTab;
 import mb.fc.utils.planner.PlannerTimeBarViewer.CameraLocation;
 
-public class MapPanel extends JPanel implements ActionListener, ChangeListener, ItemListener, ListSelectionListener, MouseMotionListener
+public class CinematicCreatorPanel implements ActionListener, ChangeListener, ItemListener,
+	ListSelectionListener, MouseMotionListener
 {
-	private static final long serialVersionUID = 1L;
-
-	private JTabbedPane parentTabbedPane;
-	private MapDisplayPanel mdp = null;
+	private static final Logger LOGGER = LoggingUtils.createLogger(CinematicCreatorPanel.class);
+	private PlannerFrame plannerFrame;
+	private CinematicMapDisplayPanel mdp = null;
 	private JLabel locationLabel = new JLabel("");
 	private JScrollPane mapScrollPane;
 	private JSlider timeSlider = new JSlider();
@@ -60,11 +72,14 @@ public class MapPanel extends JPanel implements ActionListener, ChangeListener, 
 	private int selectedCinIndex = 0;
 	private boolean movingToNextCin = false;
 	private boolean ignoreAttributeListChanges = false;
+	private JPanel uiAspect;
+	private int currentTilePixelX = 0, currentTilePixelY = 0;
+	private PlannerTab pt = null;
 
-	public MapPanel(JTabbedPane parentTabbedPane)
+	public CinematicCreatorPanel(PlannerFrame plannerFrame)
 	{
-		super(new BorderLayout());
-		this.parentTabbedPane = parentTabbedPane;
+		uiAspect = new JPanel(new BorderLayout());
+		this.plannerFrame = plannerFrame;
 
 		// this.add(locationInfoPanel, BorderLayout.LINE_START);
 
@@ -88,16 +103,17 @@ public class MapPanel extends JPanel implements ActionListener, ChangeListener, 
 		cinematicList.setListData(cinematicListItems);
 		cinematicList.addListSelectionListener(this);
 
-		parentTabbedPane.getComponentAt(PlannerFrame.TAB_CIN);
 		JPanel listPanel = new JPanel(new BorderLayout());
 		listPanel.add(cinematicListScrollPane, BorderLayout.CENTER);
-		PlannerTab pt = (PlannerTab) parentTabbedPane.getComponentAt(PlannerFrame.TAB_CIN);
-		cinematicIds.setModel(pt.getItemList().getModel());
+		pt =  plannerFrame.getPlannerTabAtIndex(PlannerFrame.TAB_CIN);
+		// This value needs to be updated
+		cinematicIds.setModel(new DefaultComboBoxModel<String>(pt.getItemList()));
 		listPanel.add(cinematicIds, BorderLayout.PAGE_START);
 		listPanel.setPreferredSize(new Dimension(200, 50));
-		this.add(listPanel, BorderLayout.LINE_START);
+		uiAspect.add(listPanel, BorderLayout.LINE_START);
 
-		this.add(locationLabel, BorderLayout.PAGE_END);
+		locationLabel.setFont(locationLabel.getFont().deriveFont(18f));
+		uiAspect.add(locationLabel, BorderLayout.PAGE_END);
 
 		JPanel timelinePanel = new JPanel(new BorderLayout());
 
@@ -117,7 +133,7 @@ public class MapPanel extends JPanel implements ActionListener, ChangeListener, 
 		timeSlider.addChangeListener(this);
 		timeSlider.setEnabled(false);
 		timelinePanel.add(timeSlider, BorderLayout.CENTER);
-		this.add(timelinePanel, BorderLayout.PAGE_START);
+		uiAspect.add(timelinePanel, BorderLayout.PAGE_START);
 
 		JPanel actionPanel = new JPanel();
 		actionPanel.setPreferredSize(new Dimension(200, 100));
@@ -153,27 +169,30 @@ public class MapPanel extends JPanel implements ActionListener, ChangeListener, 
 		attributeList.setPreferredSize(new Dimension(100, 400));
 		attributeList.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		rightPanel.add(attributeList, BorderLayout.PAGE_START);
-		this.add(rightPanel, BorderLayout.LINE_END);
+		uiAspect.add(rightPanel, BorderLayout.LINE_END);
 	}
 
-	public void loadMap(String map)
+	public void loadMap(PlannerMap map)
 	{
+		pt =  plannerFrame.getPlannerTabAtIndex(PlannerFrame.TAB_CIN);
+
 		if (mapScrollPane != null)
 		{
-			this.remove(mapScrollPane);
-			this.removeMouseMotionListener(this);
+			uiAspect.remove(mapScrollPane);
+			uiAspect.removeMouseMotionListener(this);
 		}
-		mdp = new MapDisplayPanel(map, this);
+		mdp = new CinematicMapDisplayPanel(map, this);
 		mapScrollPane = new JScrollPane(mdp);
-		this.add(mapScrollPane, BorderLayout.CENTER);
+		uiAspect.add(mapScrollPane, BorderLayout.CENTER);
+		mapScrollPane.getVerticalScrollBar().setUnitIncrement(map.getMapHeightInPixels() / 20);
+		mapScrollPane.getHorizontalScrollBar().setUnitIncrement(map.getMapWidthInPixels() / 20);
 		cinematicIds.addItemListener(this);
 		itemStateChanged(null);
-		this.repaint();
+		uiAspect.repaint();
 	}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -185,9 +204,40 @@ public class MapPanel extends JPanel implements ActionListener, ChangeListener, 
 				" Tiles Pixel X: " + (e.getX() / (mdp.getPlannerMap().getTileRenderWidth() * 2) * (mdp.getPlannerMap().getTileRenderWidth() * 2)) +
 				" Tiles Pixel Y: " + (e.getY() / (mdp.getPlannerMap().getTileRenderHeight() * 2) * (mdp.getPlannerMap().getTileRenderHeight() * 2)) +
 				" Walkable: " + mdp.getPlannerMap().isMarkedMoveable((e.getX() / mdp.getPlannerMap().getTileRenderWidth()) / 2,
-						(e.getY() / mdp.getPlannerMap().getTileRenderHeight()) / 2));
+						(e.getY() / mdp.getPlannerMap().getTileRenderHeight()) / 2) + " Remembered Tile Pixel X: " + currentTilePixelX + " Remembered Tile Pixel Y: " + currentTilePixelY);
+	}
 
+	public void middleButtonPushed(MouseEvent e) {
+		currentTilePixelX = (e.getX() / (mdp.getPlannerMap().getTileRenderWidth() * 2) * (mdp.getPlannerMap().getTileRenderWidth() * 2));
+		currentTilePixelY = (e.getY() / (mdp.getPlannerMap().getTileRenderHeight() * 2) * (mdp.getPlannerMap().getTileRenderHeight() * 2));
 
+		if (pt.getCurrentPC() == null)
+		{
+			pt.setSelectedListItem(cinematicIds.getSelectedIndex());
+			System.out.println("Set the selected index " + pt.getCurrentPC());
+		}
+
+		PlannerLine pl = pt.getCurrentPC().getLines().get(selectedCinIndex);
+
+		// Check to see if there is a move action selected, if so
+		// then open up the edit window with the new values entered. If
+		// the edit is cancelled then reset the original values
+		if (pl.getPlDef().getName().equalsIgnoreCase("Move") ||
+			pl.getPlDef().getName().equalsIgnoreCase("Halting Move") ||
+			pl.getPlDef().getName().equalsIgnoreCase("Move Forced Facing"))
+		{
+			int origX = (Integer) pl.getValues().get(1);
+			int origY = (Integer) pl.getValues().get(2);
+
+			pl.getValues().set(1, currentTilePixelX);
+			pl.getValues().set(2, currentTilePixelY);
+
+			if (!editCinematicLine())
+			{
+				pl.getValues().set(1, origX);
+				pl.getValues().set(2, origY);
+			}
+		}
 	}
 
 	public void locationClicked(MapObject mo)
@@ -217,7 +267,7 @@ public class MapPanel extends JPanel implements ActionListener, ChangeListener, 
 
 		cinematicList.setListData(cinematicListItems);
 
-		this.revalidate();
+		uiAspect.revalidate();
 		this.cinematicList.repaint();
 	}
 
@@ -227,21 +277,19 @@ public class MapPanel extends JPanel implements ActionListener, ChangeListener, 
 
 		if (arg0.getActionCommand().equalsIgnoreCase("trigger"))
 		{
-			PlannerTab pt = (PlannerTab) parentTabbedPane.getComponentAt(PlannerFrame.TAB_TRIGGER);
 			if (pt.setSelectedListItem(Integer.parseInt(mo.getParam("triggerid"))))
 			{
-				this.parentTabbedPane.setSelectedIndex(PlannerFrame.TAB_TRIGGER);
+				plannerFrame.setSelectedTabIndex(PlannerFrame.TAB_TRIGGER);
 				pt.setSelectedListItem(Integer.parseInt(mo.getParam("triggerid")));
-				System.out.println("TRIGGER ID " + Integer.parseInt(mo.getParam("triggerid")));
+				LOGGER.fine("TRIGGER ID " + Integer.parseInt(mo.getParam("triggerid")));
 			}
 		}
 		else if (arg0.getActionCommand().equalsIgnoreCase("enemy"))
 		{
-			PlannerTab pt = (PlannerTab) parentTabbedPane.getComponentAt(PlannerFrame.TAB_ENEMY);
 			if (pt.setSelectedListItem(Integer.parseInt(mo.getParam("enemyid"))))
 			{
-				this.parentTabbedPane.setSelectedIndex(PlannerFrame.TAB_ENEMY);
-				System.out.println("TRIGGER ID " + Integer.parseInt(mo.getParam("enemyid")));
+				plannerFrame.setSelectedTabIndex(PlannerFrame.TAB_ENEMY);
+				LOGGER.fine("TRIGGER ID " + Integer.parseInt(mo.getParam("enemyid")));
 			}
 		}
 		else if (arg0.getActionCommand().equalsIgnoreCase("cin"))
@@ -251,8 +299,7 @@ public class MapPanel extends JPanel implements ActionListener, ChangeListener, 
 			{
 				if (ct.cinematicTime.get(i) >= timeSlider.getValue())
 				{
-					PlannerTab pt = (PlannerTab) parentTabbedPane.getComponentAt(PlannerFrame.TAB_CIN);
-					this.parentTabbedPane.setSelectedIndex(PlannerFrame.TAB_CIN);
+					plannerFrame.setSelectedTabIndex(PlannerFrame.TAB_CIN);
 					pt.updateAttributeList(i);
 					break;
 				}
@@ -261,7 +308,7 @@ public class MapPanel extends JPanel implements ActionListener, ChangeListener, 
 		else if (arg0.getActionCommand().equalsIgnoreCase("prevaction"))
 		{
 			CinematicTimeline ct = mdp.getTimeline();
-			System.out.println("NEXT ACTION " + selectedCinIndex);
+			LOGGER.fine("NEXT ACTION " + selectedCinIndex);
 			if (selectedCinIndex > 0)
 			{
 				movingToNextCin = true;
@@ -272,7 +319,6 @@ public class MapPanel extends JPanel implements ActionListener, ChangeListener, 
 					--selectedCinIndex;
 					stateChanged(null);
 				}
-				System.out.println("AFTER SELECTED " + selectedCinIndex);
 			}
 		}
 		else if (arg0.getActionCommand().equalsIgnoreCase("nextaction"))
@@ -298,7 +344,6 @@ public class MapPanel extends JPanel implements ActionListener, ChangeListener, 
 		}
 		else if (arg0.getActionCommand().equalsIgnoreCase("dupaction"))
 		{
-			PlannerTab pt = (PlannerTab) parentTabbedPane.getComponentAt(PlannerFrame.TAB_CIN);
 			pt.getCurrentPC().duplicateLine(attributeList.getSelectedIndex());
 
 			selectedCinIndex++;
@@ -310,7 +355,6 @@ public class MapPanel extends JPanel implements ActionListener, ChangeListener, 
 		}
 		else if (arg0.getActionCommand().equalsIgnoreCase("remaction"))
 		{
-			PlannerTab pt = (PlannerTab) parentTabbedPane.getComponentAt(PlannerFrame.TAB_CIN);
 			pt.getCurrentPC().removeLine(attributeList.getSelectedIndex());
 
 			selectedCinIndex = Math.max(0, selectedCinIndex - 1);
@@ -335,17 +379,31 @@ public class MapPanel extends JPanel implements ActionListener, ChangeListener, 
 		*/
 	}
 
-	private void editCinematicLine()
+	private boolean editCinematicLine()
 	{
 		if (!timeSlider.isEnabled())
-			return;
+			return false;
 
-		PlannerTab pt = (PlannerTab) parentTabbedPane.getComponentAt(PlannerFrame.TAB_CIN);
+		/*
+		 * Depending on what order the map and text files were opened and
+		 * whether the "Cinematic" tab has been accessed yet it's possible
+		 * that the planner container has not yet been set. In this case
+		 * set it to the value that is selected in the cinematic creator.
+		 */
+		System.out.println("REMOVE ME: " + cinematicIds.getSelectedIndex());
+		if (pt.getCurrentPC() == null)
+		{
+			pt.setSelectedListItem(cinematicIds.getSelectedIndex());
+			System.out.println("Set the selected index " + pt.getCurrentPC());
+		}
+
 		PlannerLine pl = pt.getCurrentPC().getLines().get(selectedCinIndex);
 		PlannerContainerDef pcdef = pt.getPlannerContainerDef();
 		pl.setupUI(pcdef.getAllowableLines(), this, 1, pcdef.getListOfLists(), false, true, null);
 
-		JOptionPane.showConfirmDialog(this, pl, "Edit cinematic action", JOptionPane.OK_OPTION);
+		int rc = JOptionPane.showConfirmDialog(uiAspect, pl.getUiAspect(), "Edit cinematic action", JOptionPane.OK_OPTION);
+		if (rc == JOptionPane.NO_OPTION)
+			return false;
 
 		pl.commitChanges();
 
@@ -353,6 +411,7 @@ public class MapPanel extends JPanel implements ActionListener, ChangeListener, 
 		timeSlider.setMaximum((int) maxTime);
 		timeSlider.revalidate();
 		timeSlider.repaint();
+		return true;
 	}
 
 	public void addCinematicLineByName(String name, int actorIndex, int xLoc, int yLoc)
@@ -360,9 +419,11 @@ public class MapPanel extends JPanel implements ActionListener, ChangeListener, 
 		if (!timeSlider.isEnabled())
 			return;
 
-		PlannerTab pt = (PlannerTab) parentTabbedPane.getComponentAt(PlannerFrame.TAB_CIN);
 		PlannerContainerDef pcdef = pt.getPlannerContainerDef();
 		PlannerLine pl = new PlannerLine(getCinematicLineDefByName(name), false);
+		// TODO WHAT IS THAT?
+		// I think this sets the hero that this cinematic should be added
+		// for if an actor is currently selected
 		if (actorIndex != -1)
 			pl.getValues().add(cinematicListItems.get(actorIndex + 4).name);
 		if (xLoc != -1 && yLoc != -1)
@@ -371,7 +432,7 @@ public class MapPanel extends JPanel implements ActionListener, ChangeListener, 
 			pl.getValues().add(yLoc);
 		}
 		pl.setupUI(pcdef.getAllowableLines(), this, 1, pcdef.getListOfLists(), false, true, null);
-		int ret = JOptionPane.showConfirmDialog(this, pl, "Add cinematic action", JOptionPane.OK_CANCEL_OPTION);
+		int ret = JOptionPane.showConfirmDialog(uiAspect, pl.getUiAspect(), "Add cinematic action", JOptionPane.OK_CANCEL_OPTION);
 
 		if (ret == JOptionPane.YES_OPTION)
 		{
@@ -383,7 +444,7 @@ public class MapPanel extends JPanel implements ActionListener, ChangeListener, 
 			}
 			catch (IllegalArgumentException ex)
 			{
-				JOptionPane.showMessageDialog(this, "The cinematic item was not saved as a non-optional field was left blank");
+				JOptionPane.showMessageDialog(uiAspect, "The cinematic item was not saved as a non-optional field was left blank");
 				return;
 			}
 			if (ct.cinematicTime.size() == 0)
@@ -407,7 +468,7 @@ public class MapPanel extends JPanel implements ActionListener, ChangeListener, 
 				if (!found)
 					pt.getCurrentPC().addLine(pl);
 					*/
-				pt.getCurrentPC().addLine(pl, ++selectedCinIndex);
+				pt.addLineToContainerAtIndex(pl, ++selectedCinIndex, cinematicIds.getSelectedIndex());
 			}
 			movingToNextCin = true;
 			long maxTime = mdp.loadCinematicItem(cinematicIds.getSelectedIndex());
@@ -419,7 +480,6 @@ public class MapPanel extends JPanel implements ActionListener, ChangeListener, 
 
 	private PlannerLineDef getCinematicLineDefByName(String name)
 	{
-		PlannerTab pt = (PlannerTab) parentTabbedPane.getComponentAt(PlannerFrame.TAB_CIN);
 		PlannerContainerDef pcdef = pt.getPlannerContainerDef();
 
 		for (PlannerLineDef pld : pcdef.getAllowableLines())
@@ -430,8 +490,8 @@ public class MapPanel extends JPanel implements ActionListener, ChangeListener, 
 		return null;
 	}
 
-	public JTabbedPane getParentTabbedPane() {
-		return parentTabbedPane;
+	public PlannerFrame getPlannerFrame() {
+		return plannerFrame;
 	}
 
 	private class ActorAction implements Comparable<ActorAction>
@@ -563,7 +623,7 @@ public class MapPanel extends JPanel implements ActionListener, ChangeListener, 
 
 		setCurrentActionLabel();
 
-		this.revalidate();
+		uiAspect.revalidate();
 		this.cinematicList.repaint();
 		mdp.repaint();
 
@@ -585,11 +645,14 @@ public class MapPanel extends JPanel implements ActionListener, ChangeListener, 
 
 	@Override
 	public void itemStateChanged(ItemEvent e) {
-		loadCinematicItem(-1);
+		if (e == null || e.getStateChange() == ItemEvent.SELECTED)
+			loadCinematicItem(-1);
 	}
 
 	public void reloadCinematicItem()
 	{
+		// This value needs to be updated
+		cinematicIds.setModel(new DefaultComboBoxModel<String>(pt.getItemList()));
 		loadCinematicItem(timeSlider.getValue());
 	}
 
@@ -634,6 +697,7 @@ public class MapPanel extends JPanel implements ActionListener, ChangeListener, 
 			this.cinButton.setEnabled(true);
 			selectedCinIndex = 0;
 			this.setCurrentActionLabel();
+			mdp.getTimeline().dumpTimeline();
 		}
 	}
 
@@ -672,9 +736,6 @@ public class MapPanel extends JPanel implements ActionListener, ChangeListener, 
 						selectedCinIndex = newSelectedIndex;
 						stateChanged(null);
 					}
-
-
-					System.out.println("CLOWN FACE");
 				}
 			}
 		}
@@ -690,7 +751,6 @@ public class MapPanel extends JPanel implements ActionListener, ChangeListener, 
 
 	private void setCurrentActionLabel()
 	{
-		PlannerTab pt = (PlannerTab) parentTabbedPane.getComponentAt(PlannerFrame.TAB_CIN);
 		PlannerContainer pc = pt.getListPC().get(cinematicIds.getSelectedIndex());
 		if (selectedCinIndex < pc.getLines().size())
 		{
@@ -739,5 +799,9 @@ public class MapPanel extends JPanel implements ActionListener, ChangeListener, 
 
 			return rc;
 		}
+	}
+
+	public JPanel getUiAspect() {
+		return uiAspect;
 	}
 }

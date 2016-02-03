@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import mb.fc.engine.CommRPG;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.battle.command.BattleCommand;
+import mb.fc.game.constants.TextSpecialCharacters;
 import mb.fc.game.item.Item;
 import mb.fc.game.item.ItemUse;
 import mb.fc.game.sprite.CombatSprite;
@@ -19,6 +20,7 @@ import org.newdawn.slick.util.Log;
 public class BattleResults implements Serializable
 {
 	private static final long serialVersionUID = 1L;
+	private static final int ITEM_CHANCE_TO_BREAK = 15;
 	public boolean countered, doubleAttack;
 	public ArrayList<Boolean> dodged;
 	public ArrayList<Boolean> critted;
@@ -35,6 +37,8 @@ public class BattleResults implements Serializable
 	public boolean attackerDeath = false;
 	public String attackOverText = null;
 	public LevelUpResult levelUpResult = null;
+	public boolean itemDamaged = false;
+	public Item itemUsed = null;
 
 	// TODO Effects
 
@@ -57,6 +61,47 @@ public class BattleResults implements Serializable
 		br.dodged = new ArrayList<Boolean>();
 		br.critted = new ArrayList<Boolean>();
 		br.doubleAttack = false;
+
+		JSpell spell = null;
+		ItemUse itemUse = null;
+		int spellLevel = 0;
+
+		// Check to see if we're using an item
+		if (battleCommand.getCommand() == BattleCommand.COMMAND_ITEM) {
+			br.itemUsed = battleCommand.getItem();
+
+			// If the item has a spell use get the spell
+			// and check for single use
+			if (br.itemUsed.getSpellUse() != null) {
+				spell = br.itemUsed.getSpellUse().getSpell();
+				spellLevel = br.itemUsed.getSpellUse().getLevel() - 1;
+				battleCommand.setjSpell(spell);
+				battleCommand.setLevel(spellLevel + 1);
+				// Check to see if the item is single use, if so
+				// then remove the item from the attacker
+				if (br.itemUsed.getSpellUse().isSingleUse())
+					attacker.removeItem(br.itemUsed);
+			}
+			// We're just using the 'item use', retrieve that and see if
+			// this item was single use
+			else {
+				itemUse = br.itemUsed.getItemUse();
+
+				if (itemUse.isSingleUse())
+					attacker.removeItem(br.itemUsed);
+			}
+
+			// Check durability
+			if (br.itemUsed.useDamagesItem() && CommRPG.RANDOM.nextInt(100) <= ITEM_CHANCE_TO_BREAK) {
+				br.itemUsed.damageItem();
+				br.itemDamaged = true;
+			}
+
+		// Check to see if we're using a spell
+		} else if (battleCommand.getCommand() == BattleCommand.COMMAND_SPELL) {
+			spell = battleCommand.getSpell();
+			spellLevel = battleCommand.getLevel() - 1;
+		}
 
 		int expGained = 0;
 
@@ -153,10 +198,9 @@ public class BattleResults implements Serializable
 					}
 				}
 			}
-			else if (battleCommand.getCommand() == BattleCommand.COMMAND_SPELL)
+			// Check to see if the battle command indicates a spell is being used
+			else if (spell != null)
 			{
-				JSpell spell = battleCommand.getSpell();
-				int spellLevel = battleCommand.getLevel() - 1;
 				int damage = 0;
 
 				if (spell.getDamage() != null)
@@ -176,10 +220,11 @@ public class BattleResults implements Serializable
 				else
 					br.mpDamage.add(0);
 
+				// Check to see if a battle effect should be applied via this spell
+				JBattleEffect eff = null;
 				if (spell.getEffect(spellLevel) != null && CommRPG.RANDOM.nextInt(100) <= spell.getEffectChance(spellLevel))
 				{
-					JBattleEffect eff = spell.getEffect(spellLevel);
-					text = text + " " + eff.effectStartedText(attacker, target);
+					eff = spell.getEffect(spellLevel);
 					Log.debug("Battle Results: Spell Text: " + text);
 					br.targetEffects.add(eff);
 				}
@@ -197,21 +242,20 @@ public class BattleResults implements Serializable
 						br.attackerMPDamage.get(br.attackerMPDamage.size() - 1),
 						br.targetEffects.get(br.targetEffects.size() - 1));
 
+				// If a battle effect was applied then append that to the battle text
+				if (eff != null)
+					text = text + " " + eff.effectStartedText(attacker, target);
 				int exp = spell.getExpGained(spellLevel, attacker, target);
 
 				if (attacker.isHero())
 					expGained += exp;
-
 				br.critted.add(false);
 				br.dodged.add(false);
-				text = text + "}";
+				text = text + TextSpecialCharacters.CHAR_SOFT_STOP;
 			}
-			else if (battleCommand.getCommand() == BattleCommand.COMMAND_ITEM)
+			else if (itemUse != null)
 			{
-				Item item = battleCommand.getItem();
-				ItemUse itemUse = item.getItemUse();
-
-				text = itemUse.getBattleText(target.getName()) + "}";
+				text = itemUse.getBattleText(target.getName()) + TextSpecialCharacters.CHAR_SOFT_STOP;
 
 				int damage = 0;
 				if (itemUse.getDamage() != 0)
@@ -244,9 +288,6 @@ public class BattleResults implements Serializable
 				if (attacker.isHero())
 					expGained += exp;
 
-				if (item.getItemUse().isSingleUse())
-					attacker.removeItem(item);
-
 				br.critted.add(false);
 				br.dodged.add(false);
 			}
@@ -255,29 +296,29 @@ public class BattleResults implements Serializable
 					(br.battleCommand.getCommand() == BattleCommand.COMMAND_ATTACK && br.death && !br.attackerDeath))
 			{
 				br.death = true;
-				int idx = text.lastIndexOf("}");
+				int idx = text.lastIndexOf(TextSpecialCharacters.CHAR_SOFT_STOP);
 				if (idx != -1)
 					text = text.substring(0, idx);
 
-				idx = text.lastIndexOf("]");
+				idx = text.lastIndexOf(TextSpecialCharacters.CHAR_HARD_STOP);
 				if (idx != -1)
 					text = text.substring(0, idx);
 
-				text = text.replaceAll("}", "");
+				text = text.replaceAll(TextSpecialCharacters.CHAR_SOFT_STOP, "");
 				text = text + " " +jBattleFunctions.getCombatantDeathText(attacker, target);
 			}
 			else if (br.attackerDeath)
 			{
-				int idx = text.lastIndexOf("}");
+				int idx = text.lastIndexOf(TextSpecialCharacters.CHAR_SOFT_STOP);
 				if (idx != -1)
 					text = text.substring(0, idx);
 
-				idx = text.lastIndexOf("]");
+				idx = text.lastIndexOf(TextSpecialCharacters.CHAR_HARD_STOP);
 				if (idx != -1)
 					text = text.substring(0, idx);
 
-				text = text.replaceAll("}", "");
-				text = text + " " +jBattleFunctions.getCombatantDeathText(target, attacker);
+				text = text.replaceAll(TextSpecialCharacters.CHAR_SOFT_STOP, "");
+				text = text + " " + jBattleFunctions.getCombatantDeathText(target, attacker);
 			}
 			br.text.add(text);
 			index++;
@@ -292,9 +333,10 @@ public class BattleResults implements Serializable
 			{
 				attacker.setExp(attacker.getExp() + expGained);
 				br.attackOverText = attacker.getName() + " gained " + expGained +  " experience.}";
+				// If the hero has leveled up then set the level up results and the correct text
 				if (attacker.getExp() >= 100)
 				{
-					br.attackOverText += " |[ ";
+					br.attackOverText += " " + TextSpecialCharacters.CHAR_NEXT_CIN + TextSpecialCharacters.CHAR_LINE_BREAK + " ";
 					br.levelUpResult = attacker.getHeroProgression().getLevelUpResults(attacker, stateInfo);
 					br.attackOverText += br.levelUpResult.text;
 				}
@@ -306,7 +348,7 @@ public class BattleResults implements Serializable
 			br.attackOverText = targets.get(0).getName() + " gained " + expGained +  " experience.}";
 			if (targets.get(0).getExp() >= 100)
 			{
-				br.attackOverText += " |[ ";
+				br.attackOverText += " " + TextSpecialCharacters.CHAR_NEXT_CIN + TextSpecialCharacters.CHAR_LINE_BREAK + " ";
 				br.levelUpResult = targets.get(0).getHeroProgression().getLevelUpResults(targets.get(0), stateInfo);
 				br.attackOverText += br.levelUpResult.text;
 			}
@@ -386,7 +428,7 @@ public class BattleResults implements Serializable
 			br.attackerMPDamage.add(0);
 		}
 
-		text = text + "}";
+		text = text + TextSpecialCharacters.CHAR_SOFT_STOP;
 
 		return text;
 	}

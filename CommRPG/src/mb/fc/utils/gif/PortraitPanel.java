@@ -12,18 +12,22 @@ import java.awt.image.BufferedImage;
 import java.util.Hashtable;
 import java.util.Map;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class PortraitPanel extends JPanel implements ActionListener {
+	private static final long serialVersionUID = 1L;
+
 	private GifDecoder portraitDecoder;
 	private ImagePanel imagePanel;
 	private JButton leftButton;
 	private JButton rightButton;
 	private int currentIndex = 0;
 	private Hashtable<String, Integer> battleActions = new Hashtable<String, Integer>();
-	private JButton actionLabel;
+	private JLabel actionLabel;
 	private int yPortraitSplit = 0;
 
 	public PortraitPanel()
@@ -32,24 +36,37 @@ public class PortraitPanel extends JPanel implements ActionListener {
 		imagePanel = new ImagePanel();
 
 		JPanel sidePanel = new JPanel();
-		leftButton = createActionButton("< --", "left", sidePanel);
-		rightButton = createActionButton("-- >", "right", sidePanel);
+		sidePanel.setPreferredSize(new Dimension(150, 0));
+		sidePanel.add(Box.createRigidArea(new Dimension(0, 5)));
 		createActionButton("Start Talk", "Talk", sidePanel);
+		sidePanel.add(Box.createRigidArea(new Dimension(0, 5)));
 		createActionButton("Start Blink", "Blink", sidePanel);
+		sidePanel.add(Box.createRigidArea(new Dimension(0, 5)));
 		createActionButton("Start Idle", "Idle", sidePanel);
-		leftButton.setEnabled(false);
+
 		sidePanel.setLayout(new BoxLayout(sidePanel, BoxLayout.PAGE_AXIS));
-		actionLabel = new JButton("Unassigned");
-		actionLabel.setEnabled(false);
+		actionLabel = new JLabel(" Current Frame Animation: Unassigned");
+		actionLabel.setForeground(Color.white);
+		actionLabel.setPreferredSize(new Dimension(0, 30));
+		actionLabel.setBackground(Color.DARK_GRAY);
+		actionLabel.setOpaque(true);
+
 		System.out.println("CONSTRUCTOR");
-		sidePanel.add(actionLabel, BorderLayout.PAGE_START);
+		this.add(actionLabel, BorderLayout.PAGE_START);
 		this.add(sidePanel, BorderLayout.LINE_START);
 		this.add(imagePanel, BorderLayout.CENTER);
+
+		JPanel bottomPanel = new JPanel();
+		bottomPanel.setBackground(Color.DARK_GRAY);
+		leftButton = createActionButton("< --", "left", bottomPanel);
+		rightButton = createActionButton("-- >", "right", bottomPanel);
+		leftButton.setEnabled(false);
+		this.add(bottomPanel, BorderLayout.PAGE_END);
 	}
 
 	public void setPortraitDecoder(GifDecoder portraitDecoder) {
 		System.out.println("SET PORTRAIT");
-		actionLabel.setText("Unassigned");
+		actionLabel.setText(" Current Frame Animation: Unassigned");
 		this.battleActions.clear();
 		this.portraitDecoder = portraitDecoder;
 		currentIndex = 0;
@@ -109,28 +126,24 @@ public class PortraitPanel extends JPanel implements ActionListener {
 
 		@Override
 		public void mouseEntered(MouseEvent arg0) {
-			// TODO Auto-generated method stub
 
 		}
 
 
 		@Override
 		public void mouseExited(MouseEvent arg0) {
-			// TODO Auto-generated method stub
 
 		}
 
 
 		@Override
 		public void mousePressed(MouseEvent arg0) {
-			// TODO Auto-generated method stub
 
 		}
 
 
 		@Override
 		public void mouseReleased(MouseEvent arg0) {
-			// TODO Auto-generated method stub
 
 		}
 	}
@@ -145,12 +158,12 @@ public class PortraitPanel extends JPanel implements ActionListener {
 				leftButton.setEnabled(false);
 			rightButton.setEnabled(true);
 
-			actionLabel.setText("Unassigned");
+			actionLabel.setText(" Current Frame Animation: Unassigned");
 			for (Map.Entry<String, Integer> s : battleActions.entrySet())
 			{
 				if (s.getValue() == currentIndex)
 				{
-					actionLabel.setText(s.getKey());
+					actionLabel.setText(" Current Frame Animation: " + s.getKey());
 					break;
 				}
 			}
@@ -162,12 +175,12 @@ public class PortraitPanel extends JPanel implements ActionListener {
 				rightButton.setEnabled(false);
 			leftButton.setEnabled(true);
 
-			actionLabel.setText("Unassigned");
+			actionLabel.setText(" Current Frame Animation: Unassigned");
 			for (Map.Entry<String, Integer> s : battleActions.entrySet())
 			{
 				if (s.getValue() == currentIndex)
 				{
-					actionLabel.setText(s.getKey());
+					actionLabel.setText(" Current Frame Animation: " + s.getKey());
 
 					break;
 				}
@@ -176,7 +189,7 @@ public class PortraitPanel extends JPanel implements ActionListener {
 		else
 		{
 			battleActions.put(cmd, currentIndex);
-			actionLabel.setText(cmd);
+			actionLabel.setText(" Current Frame Animation: " + cmd);
 		}
 
 		System.out.println(actionLabel + " " + actionLabel.getText());
@@ -189,6 +202,7 @@ public class PortraitPanel extends JPanel implements ActionListener {
 		JButton b = new JButton(text);
 		b.addActionListener(this);
 		b.setActionCommand(command);
+		b.setMaximumSize(new Dimension(150, 25));
 		container.add(b);
 		return b;
 	}

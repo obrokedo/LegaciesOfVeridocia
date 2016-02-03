@@ -1,6 +1,5 @@
 package mb.fc.game.manager;
 
-import mb.fc.engine.message.IntMessage;
 import mb.fc.engine.message.Message;
 import mb.fc.engine.message.MessageType;
 import mb.fc.engine.message.ShopMessage;
@@ -9,11 +8,14 @@ import mb.fc.engine.message.SpriteContextMessage;
 import mb.fc.game.menu.DebugMenu;
 import mb.fc.game.menu.HeroStatMenu;
 import mb.fc.game.menu.HeroesStatMenu;
+import mb.fc.game.menu.Menu;
 import mb.fc.game.menu.Menu.MenuUpdate;
 import mb.fc.game.menu.PriestMenu2;
-import mb.fc.game.menu.ShopMenu;
 import mb.fc.game.menu.SpeechMenu;
 import mb.fc.game.menu.SystemMenu;
+import mb.fc.game.menu.shop.HeroesSellMenu;
+import mb.fc.game.menu.shop.ShopMenuTabled;
+import mb.fc.game.menu.shop.ShopOptionsMenu;
 
 public class MenuManager extends Manager
 {
@@ -42,12 +44,19 @@ public class MenuManager extends Manager
 		switch (menuUpdate)
 		{
 			case MENU_CLOSE:
-				if (stateInfo.getTopMenu() instanceof SpeechMenu)
+				Menu menu = stateInfo.getTopMenu();
+				if (menu instanceof SpeechMenu)
 				{
 					stateInfo.setWaiting();
 					stateInfo.sendMessage(MessageType.WAIT);
 				}
 				stateInfo.removeTopMenu();
+				if (menu.getMenuListener() != null)
+				{
+					menu.getMenuListener().valueSelected(stateInfo, menu.getExitValue());
+					menu.getMenuListener().menuClosed();
+				}
+
 				// stateInfo.addMenu(new ShopMenuTabled(stateInfo, .8, 1.2, new int[] {1, 1, 2, 2, 0, 0, 1, 1, 2, 2, 0, 0}));
 				// stateInfo.addSingleInstanceMenu(new HeroesStatMenu(stateInfo, true, 1));
 				stateInfo.setInputDelay(System.currentTimeMillis() + 200);
@@ -78,13 +87,22 @@ public class MenuManager extends Manager
 				break;
 			case SHOW_SHOP:
 				ShopMessage sm = (ShopMessage) message;
-				stateInfo.addMenu(new ShopMenu(stateInfo.getGc(), stateInfo, sm.getSellPercent(), sm.getBuyPercent(), sm.getItemIds()));
+				// stateInfo.addSingleInstanceMenu(new ShopMenuTabled(stateInfo, sm.getSellPercent(), sm.getBuyPercent(), sm.getItemIds()));
+				stateInfo.addSingleInstanceMenu(new ShopOptionsMenu(sm, stateInfo));
+				break;
+			case SHOW_SHOP_BUY:
+				sm = (ShopMessage) message;
+				stateInfo.addSingleInstanceMenu(new ShopMenuTabled(stateInfo, sm));
+				break;
+			case SHOW_SHOP_SELL:
+				stateInfo.addSingleInstanceMenu(new HeroesSellMenu(stateInfo, null));
 				break;
 			case SHOW_HEROES:
 				stateInfo.addSingleInstanceMenu(new HeroesStatMenu(stateInfo));
 				break;
 			case SHOW_HERO:
-				stateInfo.addMenu(new HeroStatMenu(stateInfo.getGc(), ((SpriteContextMessage) message).getSprite(stateInfo.getSprites()), stateInfo));
+				stateInfo.addMenu(new HeroStatMenu(stateInfo.getGc(), ((SpriteContextMessage) message).getCombatSprite(
+						stateInfo.getPsi().getClientProfile().getHeroes()), stateInfo));
 				break;
 			case SHOW_PRIEST:
 				stateInfo.addMenu(new PriestMenu2(stateInfo, stateInfo.getGc(), stateInfo.getClientProfile().getHeroes()));
@@ -92,8 +110,6 @@ public class MenuManager extends Manager
 			case SHOW_DEBUG:
 				stateInfo.addMenu(new DebugMenu(stateInfo.getGc()));
 				break;
-			case SHOW_SHOP_HERO_SELECT:
-				stateInfo.addSingleInstanceMenu(new HeroesStatMenu(stateInfo, true, ((IntMessage) message).getValue()));
 			default:
 				break;
 		}

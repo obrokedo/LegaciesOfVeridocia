@@ -8,10 +8,8 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
 import mb.fc.cinematic.event.CinematicEvent;
+import mb.fc.utils.planner.cinematic.CinematicTimeline;
 import de.jaret.util.date.Interval;
 import de.jaret.util.date.IntervalImpl;
 import de.jaret.util.date.JaretDate;
@@ -36,6 +34,7 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 
 	public PlannerTimeBarViewer(ArrayList<CinematicEvent> ces, CinematicTimeline ct, int cameraStartX, int cameraStartY)
 	{
+		System.out.println("PlannerTimeBarViewer: Constructor");
 		this.markers = new ArrayList<TimeBarMarkerImpl>();
 		generateGraph(ces, ct, cameraStartX, cameraStartY);
 
@@ -49,7 +48,6 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 		this._xScrollBar.addAdjustmentListener(this);
 		this._xScrollBar.setUnitIncrement(50);
 		this._xScrollBar.setBlockIncrement(50);
-		this._xScrollBar.getModel().addChangeListener(new Listen());
 	}
 
 	@Override
@@ -62,6 +60,7 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 
 	public void generateGraph(ArrayList<CinematicEvent> ces, CinematicTimeline cinematicTimeline, int cameraStartX, int cameraStartY)
 	{
+		System.out.println("Generate Graph");
 		DefaultTimeBarRowModel cameraRow = new DefaultTimeBarRowModel(new DefaultRowHeader("Camera"));
 		ZIntervalImpl cameraInterval = null;
 		DefaultTimeBarRowModel systemRow = new DefaultTimeBarRowModel(new DefaultRowHeader("System"));
@@ -97,7 +96,7 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 				// Actor Stuff
 				case ADD_ACTOR:
 					DefaultTimeBarRowModel dt = new DefaultTimeBarRowModel(new DefaultRowHeader("Actor: " + (String) ce.getParam(2)));
-					System.out.println("ADD ACTOR " + ce.getParam(2) + " " + ce.getParam(0) + " " + ce.getParam(1));
+					// System.out.println("ADD ACTOR " + ce.getParam(2) + " " + ce.getParam(0) + " " + ce.getParam(1));
 					ActorBar ab = new ActorBar(dt, (int) ce.getParam(0), (int) ce.getParam(1));
 					rowsByName.put((String) ce.getParam(2), ab);
 
@@ -456,7 +455,7 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 					TimeBarMarkerImpl tb = new TimeBarMarkerImpl(false, new JaretDate(currentTime));
 					this.markers.add(tb);
 					addMarker(tb);
-					currentTime += 100;
+					currentTime += 1;
 					tb = new TimeBarMarkerImpl(false, new JaretDate(currentTime));
 					this.markers.add(tb);
 					addMarker(tb);
@@ -607,6 +606,14 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 		public String following;
 		public long time;
 		public long duration;
+
+		@Override
+		public String toString() {
+			return "CameraLocation [locX=" + locX + ", locY=" + locY
+					+ ", endLocX=" + endLocX + ", endLocY=" + endLocY
+					+ ", following=" + following + ", time=" + time
+					+ ", duration=" + duration + "]";
+		}
 	}
 
 	private void stopEffects(long currentTime, ActorBar ab, String command)
@@ -623,9 +630,11 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 	{
 
 		ActorBar ab = rowsByName.get(ce.getParam(3));
+		// Get the current location that the actor is at
+		Point currentPoint =  ab.getActorLocationAtTime((int) currentTime, true);
 
-		int xDistance = Math.abs(ab.locX - (int) ce.getParam(0));
-		int yDistance = Math.abs(ab.locY - (int) ce.getParam(1));
+		int xDistance = Math.abs(currentPoint.x - (int) ce.getParam(0));
+		int yDistance = Math.abs(currentPoint.y - (int) ce.getParam(1));
 
 		boolean moveHor = false;
 		boolean moveDiag = false;
@@ -642,7 +651,7 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 		}
 		long duration = ((int) (Math.ceil(xDistance / (float) ce.getParam(2))) + (int) (Math.ceil(yDistance / (float) ce.getParam(2)))) * 20;
 
-		ZIntervalImpl zi = new ZMoveIntervalImpl(title + (int) ce.getParam(0) + " " + (int) ce.getParam(1), ab.locX, ab.locY, (int) ce.getParam(0), (int) ce.getParam(1),
+		ZIntervalImpl zi = new ZMoveIntervalImpl(title + (int) ce.getParam(0) + " " + (int) ce.getParam(1), currentPoint.x, currentPoint.y, (int) ce.getParam(0), (int) ce.getParam(1),
 				currentTime, duration, moveHor, moveDiag);
 		zi.setBegin(new JaretDate(currentTime));
 
@@ -671,7 +680,6 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 
 		@Override
 		public String toString() {
-			// TODO Auto-generated method stub
 			return title;
 		}
 
@@ -697,6 +705,12 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 
 		public int getLocY() {
 			return locY;
+		}
+
+		@Override
+		public String toString() {
+			return "ZLocationImpl [locX=" + locX + ", locY=" + locY
+					+ ", _begin=" + _begin + ", _end=" + _end + "]";
 		}
     }
 
@@ -756,11 +770,28 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 		public boolean isMoveDiag() {
 			return moveDiag;
 		}
+
+		@Override
+		public String toString() {
+			return "ZMoveIntervalImpl [startX=" + startX + ", startY=" + startY
+					+ ", endX=" + endX + ", endY=" + endY + ", duration="
+					+ duration + ", currentTime=" + currentTime + ", moveHor="
+					+ moveHor + ", moveDiag=" + moveDiag + ", title=" + title
+					+ "]";
+		}
     }
 
     public class ActorBar
     {
+    	/**
+    	 * These contain the actions as ZIntervalImpls, which can
+    	 * also be ZMoveIntervalImpls
+    	 */
     	public DefaultTimeBarRowModel dt;
+
+    	/**
+    	 * These contain ZLocationImpls
+    	 */
     	public DefaultTimeBarRowModel movementRowModel;
     	public int locX;
     	public int locY;
@@ -801,7 +832,6 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 
 			for (Interval i : actorIntervals)
 			{
-
 				if (((ZIntervalImpl) i).isMove())
 				{
 					ZMoveIntervalImpl zmi = (ZMoveIntervalImpl) i;
@@ -846,7 +876,7 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 
 			if (!moving)
 			{
-				if (!duringConstruction)
+				if (!duringConstruction && movementRowModel.getIntervals(new JaretDate(time)).size() > 0)
 				{
 					// List<Interval> moveList =  movementRowModel.getIntervals(new JaretDate(0), new JaretDate(time));
 					ZLocationImpl zli = (ZLocationImpl) movementRowModel.getIntervals(new JaretDate(time)).get(0);
@@ -894,7 +924,6 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 
 		@Override
 		public String getDescription() {
-			// TODO Auto-generated method stub
 			return "Can you see me";
 		}
 
@@ -907,7 +936,6 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 		public void renderMarker(TimeBarViewerDelegate delegate,
 				Graphics graphics, TimeBarMarker marker, int x,
 				boolean isDragged) {
-			// TODO Auto-generated method stub
 			super.renderMarker(delegate, graphics, marker, x, isDragged);
 		}
 
@@ -916,14 +944,5 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
     public class ZTimeBarRenderer extends DefaultTimeBarRenderer
     {
 
-    }
-
-    public class Listen implements ChangeListener
-    {
-    	@Override
-    	public void stateChanged(ChangeEvent e) {
-    		// TODO Auto-generated method stub
-    		System.out.println("FART");
-    	}
     }
 }

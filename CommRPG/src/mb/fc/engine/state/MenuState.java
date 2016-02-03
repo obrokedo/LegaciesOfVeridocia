@@ -1,14 +1,10 @@
 package mb.fc.engine.state;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
 
 import mb.fc.engine.CommRPG;
 import mb.fc.game.Camera;
+import mb.fc.game.dev.DevParams;
 import mb.fc.game.input.FCInput;
 import mb.fc.game.persist.ClientProfile;
 import mb.fc.game.persist.ClientProgress;
@@ -36,9 +32,19 @@ import org.newdawn.slick.util.Log;
  */
 public class MenuState extends LoadableGameState
 {
+	protected enum LoadTypeEnum
+	{
+		TOWN,
+		CINEMATIC,
+		BATTLE
+	}
+
+	private static final String PROFILE_EXTENSION = ".profile";
+	private static final String PROGRESS_EXTENSION = ".progress";
+
 	protected StateBasedGame game;
 	protected GameContainer gc;
-	protected String version = "DEV 1.27";
+	protected String version = "DEV 1.28";
 	protected Font font;
 	protected boolean initialized = false;
 	protected FCInput input;
@@ -118,22 +124,24 @@ public class MenuState extends LoadableGameState
 		}
 	}
 
-	public void start(GameContainer gc, int load, String map, String text, String entrance)
+	public void start(GameContainer gc, LoadTypeEnum loadType, String map, String text, String entrance)
 	{
 		persistentStateInfo.setEntranceLocation(entrance);
 
-		if (load == 1)
-			((CommRPG) game).setLoadingInfo(text, map,
-				(LoadableGameState) game.getState(CommRPG.STATE_GAME_CINEMATIC));
-		else if (load == 0)
+		switch (loadType)
 		{
-			((CommRPG) game).setLoadingInfo(text, map,
-					(LoadableGameState) game.getState(CommRPG.STATE_GAME_TOWN));
-		}
-		else if (load == 2)
-		{
-			((CommRPG) game).setLoadingInfo(text, map,
-					(LoadableGameState) game.getState(CommRPG.STATE_GAME_BATTLE));
+			case CINEMATIC:
+				((CommRPG) game).setLoadingInfo(text, map,
+					(LoadableGameState) game.getState(CommRPG.STATE_GAME_CINEMATIC));
+				break;
+			case TOWN:
+				((CommRPG) game).setLoadingInfo(text, map,
+						(LoadableGameState) game.getState(CommRPG.STATE_GAME_TOWN));
+				break;
+			case BATTLE:
+				((CommRPG) game).setLoadingInfo(text, map,
+						(LoadableGameState) game.getState(CommRPG.STATE_GAME_BATTLE));
+			break;
 		}
 
 		if (gc.isFullscreen())
@@ -166,7 +174,7 @@ public class MenuState extends LoadableGameState
 			if (input.isKeyDown(Input.KEY_ENTER))
 			{
 				if (menuIndex == 0 && stateIndex == 0)
-					start(container, 1, "eriumcastle", "eriumcastle", null);
+					start(container, LoadTypeEnum.TOWN, "eriumcastle", "eriumcastle", null);
 				else if (menuIndex == 0 && stateIndex == 1)
 				{
 					stateIndex = 0;
@@ -211,7 +219,6 @@ public class MenuState extends LoadableGameState
 
 	@Override
 	public int getID() {
-		// TODO Auto-generated method stub
 		return CommRPG.STATE_GAME_MENU;
 	}
 
@@ -223,47 +230,36 @@ public class MenuState extends LoadableGameState
 
 		File file = new File(".");
 
-		ArrayList<Integer> heroesToAdd = new ArrayList<>();
-		int level = 1;
 
 		for (String s : file.list())
 		{
-			if (s.endsWith(".profile"))
+			if (s.endsWith(PROFILE_EXTENSION))
 			{
 				clientProfile = ClientProfile.deserializeFromFile(s);
 			}
-			else if (s.endsWith(".progress"))
+			else if (s.endsWith(PROGRESS_EXTENSION))
 			{
 				clientProgress =  ClientProgress.deserializeFromFile(s);
 			}
-			else if (s.equalsIgnoreCase("DevParams") && CommRPG.DEV_MODE_ENABLED && !CommRPG.TEST_MODE_ENABLED)
-			{
-				BufferedReader br = null;
-				try
-				{
-					br = new BufferedReader(new InputStreamReader(new FileInputStream(new File("DevParams"))));
-					String line;
-					while ((line = br.readLine()) != null) {
-			            if (line.startsWith("HERO "))
-			            	heroesToAdd.add(Integer.parseInt(line.split(" ")[1]));
-			            else if (line.startsWith("LEVEL "))
-			            	level = Integer.parseInt(line.split(" ")[1]);
-			        }
-				}
-				catch (Exception ex) {}
-				finally
-				{
-					if (br != null)
-						try { br.close(); } catch (IOException e) {}
-				}
-			}
 		}
 
+		// Check to see if a client profile has been loaded.
 		if (clientProfile == null)
 		{
 			clientProfile = new ClientProfile("Test");
-			// clientProfile.serializeToFile();
-			Log.debug("CREATE AND SAVE PROFILE");
+
+			// If Dev mode is enabled, check to see if Dev Params
+			// were specified, if so then apply them to the client profile.
+			// If this is "Test" mode then don't apply the dev params as
+			// it may screw up the heroes in the party
+			if (CommRPG.DEV_MODE_ENABLED && !CommRPG.TEST_MODE_ENABLED)
+			{
+				DevParams devParams = DevParams.parseDevParams();
+				if (devParams != null)
+					devParams.applyToClientProfile(clientProfile);
+			}
+
+			Log.debug("Profile was created");
 		}
 
 		if (clientProgress == null)
@@ -273,14 +269,11 @@ public class MenuState extends LoadableGameState
 			clientProgress.serializeToFile(map, "north");
 		}
 
-		if (heroesToAdd.size() > 0 || level > 1)
-		{
-			clientProfile.setDevelParams(heroesToAdd, level);
-		}
-
 		try {
 			persistentStateInfo =
-				new PersistentStateInfo(clientProfile, clientProgress, (CommRPG) game, new Camera(gc.getWidth() - ((FCGameContainer) gc).getDisplayPaddingX() * 2,
+				new PersistentStateInfo(clientProfile, clientProgress,
+						(CommRPG) game,
+						new Camera(gc.getWidth() - ((FCGameContainer) gc).getDisplayPaddingX() * 2,
 						gc.getHeight()), gc, gc.getGraphics());
 		}
 		catch (Throwable t)

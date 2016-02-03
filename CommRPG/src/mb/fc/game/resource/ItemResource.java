@@ -28,5 +28,15 @@ public class ItemResource
 	public static void initializeItem(Item item, StateInfo stateInfo)
 	{
 		itemDefinitionsById.get(item.getItemId()).initializeItem(item, stateInfo);
+		// Check to see if the name is null then, if so then this item has be unserialized and
+		// needs it's transient fields back into it
+		if (item.getName() == null) {
+			item.copyItem(getItem(item.getItemId(), stateInfo));
+		}
+
+		// If there is a spell use defined, initialize it so the
+		// spell object can be loaded
+		if (item.getSpellUse() != null)
+			item.getSpellUse().initialize(stateInfo);
 	}
 }

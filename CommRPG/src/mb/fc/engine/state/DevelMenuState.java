@@ -130,7 +130,7 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 		{
 			CommRPG.TEST_MODE_ENABLED = true;
 			this.gameSetup(game, container);
-			start(gc, 1, "eriumcastle", "eriumcastle", null);
+			start(gc, LoadTypeEnum.CINEMATIC, "eriumcastle", "eriumcastle", null);
 		}
 
 		if (updateDelta > 0)
@@ -151,9 +151,9 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 			if (((y < 15 && x < 15) || (y > 550 && y < 635)) && mapSelector.getSelectedResource() != null &&
 				textSelector.getSelectedResource() != null)
 			{
-				int action = (y - 550) / 30;
+				LoadTypeEnum action = LoadTypeEnum.values()[(y - 550) / 30];
 				if (y < 15)
-					action = 0;
+					action = LoadTypeEnum.TOWN;
 
 				String entrance = null;
 
@@ -196,7 +196,7 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 
 		} catch (Throwable t) {
 			t.printStackTrace();
-			JOptionPane.showMessageDialog(null, "The selected map contains errors and may not be loaded");
+			JOptionPane.showMessageDialog(null, "The selected map contains errors and may not be loaded: " + t.getMessage());
 			entranceSelector = null;
 		}
 		return false;

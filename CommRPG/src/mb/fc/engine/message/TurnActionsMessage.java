@@ -6,6 +6,8 @@ import mb.fc.game.turnaction.TurnAction;
 
 public class TurnActionsMessage extends Message
 {
+	private static final long serialVersionUID = 1L;
+
 	private boolean forHero = false;
 	private ArrayList<TurnAction> turnActions;
 

@@ -31,13 +31,13 @@ public class EquippableItem extends Item
 	private String weaponImage;
 
 	public EquippableItem(String name, int cost, String description,
-			 ItemUse itemUse, int itemId, int attack, int defense, int speed,
-			 int range, int itemType, int itemStyle, String weaponImage) {
-		super(name, cost, description, itemUse, true, itemId);
+			 ItemUse itemUse, SpellItemUse spell, int itemId, int attack, int defense, int speed,
+			 int range, int itemType, int itemStyle, String weaponImage, boolean useDamagesItem) {
+		super(name, cost, description, itemUse, spell, true, useDamagesItem, itemId);
 		this.attack = attack;
 		this.defense = defense;
 		this.speed = speed;
-		this.range = Range.convertToRange(range);
+		this.range = Range.convertIntToRange(range);
 		this.itemType = itemType;
 		this.itemStyle = itemStyle;
 		this.equipped = false;

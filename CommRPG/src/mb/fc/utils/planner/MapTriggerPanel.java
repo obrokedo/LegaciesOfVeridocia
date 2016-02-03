@@ -39,7 +39,7 @@ public class MapTriggerPanel extends JPanel implements ActionListener
 		currentPC.setupUI();
 
 		JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		panel.add(currentPC);
+		panel.add(currentPC.getUiAspect());
 		JScrollPane currentPCScroll = new JScrollPane(panel);
 		currentPCScroll.getVerticalScrollBar().setUnitIncrement(75);
 		currentPC.getDefLine().getDefiningPanel().add(resetButton);

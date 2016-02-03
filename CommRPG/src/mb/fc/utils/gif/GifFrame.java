@@ -2,6 +2,7 @@ package mb.fc.utils.gif;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -78,7 +79,7 @@ public class GifFrame extends JFrame implements ActionListener, ChangeListener
 		if (battleFile == null || !battleFile.getName().endsWith(".gif"))
 		{
 			JOptionPane.showMessageDialog(this, "ERROR: Selected file must be a .gif");
-			System.exit(0);
+			return;
 		}
 		fc.setDialogTitle("Select Walking Animation Gif");
 		fc.showOpenDialog(this);
@@ -86,7 +87,7 @@ public class GifFrame extends JFrame implements ActionListener, ChangeListener
 		if (walkFile == null || !walkFile.getName().endsWith(".gif"))
 		{
 			JOptionPane.showMessageDialog(this, "ERROR: Selected file must be a .gif");
-			System.exit(0);
+			return;
 		}
 
 		fc.setDialogTitle("Select Portrait Animation Gif");
@@ -116,39 +117,61 @@ public class GifFrame extends JFrame implements ActionListener, ChangeListener
 		tabbedPane = new JTabbedPane();
 		JPanel backPanel = new JPanel(new BorderLayout());
 		JPanel sidePanel = new JPanel();
+		sidePanel.setPreferredSize(new Dimension(150, 0));
 		sidePanel.setLayout(new BoxLayout(sidePanel, BoxLayout.PAGE_AXIS));
+		sidePanel.add(Box.createRigidArea(new Dimension(0, 5)));
 		createActionButton("Set Stand", "Stand", sidePanel);
+		sidePanel.add(Box.createRigidArea(new Dimension(0, 5)));
 		createActionButton("Set Attack", "Attack", sidePanel);
+		sidePanel.add(Box.createRigidArea(new Dimension(0, 5)));
 		createActionButton("Set Winddown", "Winddown", sidePanel);
+		sidePanel.add(Box.createRigidArea(new Dimension(0, 5)));
 		createActionButton("Set Dodge", "Dodge", sidePanel);
+		sidePanel.add(Box.createRigidArea(new Dimension(0, 5)));
 		createActionButton("Set Spell", "Spell", sidePanel);
+		sidePanel.add(Box.createRigidArea(new Dimension(0, 5)));
 		createActionButton("Set Item", "Item", sidePanel);
+		sidePanel.add(Box.createRigidArea(new Dimension(0, 5)));
 		createActionButton("Set Special", "Special", sidePanel);
+		sidePanel.add(Box.createRigidArea(new Dimension(0, 5)));
 		playButton = createActionButton("Play Action", "play", sidePanel);
+		sidePanel.add(Box.createRigidArea(new Dimension(0, 5)));
 		createActionButton("Export Hero", "Export Hero", sidePanel);
+		sidePanel.add(Box.createRigidArea(new Dimension(0, 5)));
 		createActionButton("Export Enemy", "Export Enemy", sidePanel);
+		sidePanel.add(Box.createRigidArea(new Dimension(0, 5)));
 		createActionButton("Load New Gifs", "Load", sidePanel);
+		sidePanel.add(Box.createRigidArea(new Dimension(0, 5)));
 
 		sidePanel.add(new JLabel("X coordinate offset"));
 		xOffsetSpinner = new JSpinner();
 		xOffsetSpinner.setPreferredSize(new Dimension(200, 30));
-		xOffsetSpinner.setMaximumSize(new Dimension(400, 30));
+		xOffsetSpinner.setMaximumSize(new Dimension(150, 30));
 		xOffsetSpinner.addChangeListener(this);
 		xOffsetSpinner.setModel(new SpinnerNumberModel(0, -200, 200, 1));
+		xOffsetSpinner.setAlignmentX(Component.LEFT_ALIGNMENT);
 		sidePanel.add(xOffsetSpinner);
+		sidePanel.add(Box.createRigidArea(new Dimension(0, 5)));
 
 		sidePanel.add(new JLabel("Y coordinate offset"));
 		yOffsetSpinner = new JSpinner();
 		yOffsetSpinner.setPreferredSize(new Dimension(200, 30));
-		yOffsetSpinner.setMaximumSize(new Dimension(400, 30));
+		yOffsetSpinner.setMaximumSize(new Dimension(150, 30));
 		yOffsetSpinner.addChangeListener(this);
 		yOffsetSpinner.setModel(new SpinnerNumberModel(0, -200, 200, 1));
+		yOffsetSpinner.setAlignmentX(Component.LEFT_ALIGNMENT);
 		sidePanel.add(yOffsetSpinner);
-		sidePanel.add(Box.createVerticalGlue());
+		sidePanel.add(Box.createGlue());
+		sidePanel.add(Box.createRigidArea(new Dimension(0, 5)));
 
-		topLabel = new JLabel("Unassigned");
+		topLabel = new JLabel(" Current Frame Animation: Unassigned");
+		topLabel.setForeground(Color.white);
+		topLabel.setPreferredSize(new Dimension(0, 30));
+		topLabel.setBackground(Color.DARK_GRAY);
+		topLabel.setOpaque(true);
 
 		JPanel bottomPanel = new JPanel();
+		bottomPanel.setBackground(Color.DARK_GRAY);
 		leftButton = createActionButton("< --", "left", bottomPanel);
 		rightButton = createActionButton("-- >", "right", bottomPanel);
 		leftButton.setEnabled(false);
@@ -170,9 +193,9 @@ public class GifFrame extends JFrame implements ActionListener, ChangeListener
 		this.setContentPane(tabbedPane);
 
 		this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		this.setMinimumSize(new Dimension(500, 400));
+		this.setMinimumSize(new Dimension(500, 600));
 		this.pack();
-		this.setVisible(false);
+		// this.setVisible(true);
 	}
 
 	public void loadBattleGif(String file)
@@ -334,8 +357,9 @@ public class GifFrame extends JFrame implements ActionListener, ChangeListener
 				ImageIO.write(bim, "png", outputfile);
 				JOptionPane.showMessageDialog(this, "Animation successfully written to " + path.toString());
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
+				JOptionPane.showMessageDialog(null, "An error occurred while trying to save the animation:"
+						+ e.getMessage(), "Error saving animation", JOptionPane.ERROR_MESSAGE);
 			}
 	}
 
@@ -447,6 +471,8 @@ public class GifFrame extends JFrame implements ActionListener, ChangeListener
 		JButton b = new JButton(text);
 		b.addActionListener(this);
 		b.setActionCommand(command);
+		b.setAlignmentX(Component.LEFT_ALIGNMENT);
+		b.setMaximumSize(new Dimension(150, 20));
 		container.add(b);
 		return b;
 	}
@@ -461,14 +487,14 @@ public class GifFrame extends JFrame implements ActionListener, ChangeListener
 				leftButton.setEnabled(false);
 			rightButton.setEnabled(true);
 
-			topLabel.setText("Unassigned");
+			topLabel.setText(" Current Frame Animation: Unassigned");
 			playButton.setEnabled(false);
 			for (Map.Entry<String, Integer> s : battleActions.entrySet())
 			{
 				if (s.getValue() == currentIndex)
 				{
 					playButton.setEnabled(true);
-					topLabel.setText(s.getKey());
+					topLabel.setText(" Current Frame Animation: " + s.getKey());
 					break;
 				}
 			}
@@ -480,13 +506,13 @@ public class GifFrame extends JFrame implements ActionListener, ChangeListener
 				rightButton.setEnabled(false);
 			leftButton.setEnabled(true);
 
-			topLabel.setText("Unassigned");
+			topLabel.setText(" Current Frame Animation: Unassigned");
 			playButton.setEnabled(false);
 			for (Map.Entry<String, Integer> s : battleActions.entrySet())
 			{
 				if (s.getValue() == currentIndex)
 				{
-					topLabel.setText(s.getKey());
+					topLabel.setText(" Current Frame Animation: " + s.getKey());
 					playButton.setEnabled(true);
 					break;
 				}
@@ -508,7 +534,7 @@ public class GifFrame extends JFrame implements ActionListener, ChangeListener
 		else
 		{
 			battleActions.put(cmd, currentIndex);
-			topLabel.setText(cmd);
+			topLabel.setText(" Current Frame Animation: " + cmd);
 			playButton.setEnabled(true);
 		}
 	}

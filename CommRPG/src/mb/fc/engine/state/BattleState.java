@@ -150,7 +150,7 @@ public class BattleState extends LoadableGameState
 			throws SlickException
 	{
 		if (CommRPG.TEST_MODE_ENABLED)
-			delta *= 15;
+			delta *= 1;
 
 		stateInfo.processMessages();
 		if (stateInfo.isInitialized())

@@ -100,7 +100,7 @@ public class GifDecoder {
   protected byte[] pixelStack;
   protected byte[] pixels;
 
-  protected ArrayList frames; // frames read from current file
+  protected ArrayList<GifFrame> frames; // frames read from current file
   protected int frameCount;
   protected String fileName = null;
 
@@ -124,7 +124,7 @@ public class GifDecoder {
     //
     delay = -1;
     if ((n >= 0) && (n < frameCount)) {
-      delay = ((GifFrame) frames.get(n)).delay;
+      delay = frames.get(n).delay;
     }
     return delay;
   }
@@ -255,7 +255,7 @@ public class GifDecoder {
   public BufferedImage getFrame(int n) {
     BufferedImage im = null;
     if ((n >= 0) && (n < frameCount)) {
-      im = ((GifFrame) frames.get(n)).image;
+      im = frames.get(n).image;
     }
     return im;
   }
@@ -502,7 +502,7 @@ public class GifDecoder {
   protected void init() {
     status = STATUS_OK;
     frameCount = 0;
-    frames = new ArrayList();
+    frames = new ArrayList<>();
     gct = null;
     lct = null;
   }

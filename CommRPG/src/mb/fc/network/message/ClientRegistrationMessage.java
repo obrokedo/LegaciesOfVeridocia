@@ -4,6 +4,8 @@ import mb.fc.engine.message.Message;
 import mb.fc.engine.message.MessageType;
 
 public class ClientRegistrationMessage extends Message {
+	private static final long serialVersionUID = 1L;
+
 	private String name;
 	private int clientId;
 	private int heroAmount;

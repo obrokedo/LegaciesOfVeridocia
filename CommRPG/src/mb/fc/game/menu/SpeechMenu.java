@@ -8,9 +8,11 @@ import mb.fc.engine.message.MessageType;
 import mb.fc.engine.state.CinematicState;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.Timer;
+import mb.fc.game.constants.TextSpecialCharacters;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.input.FCInput;
 import mb.fc.game.input.KeyMapping;
+import mb.fc.game.listener.MenuListener;
 import mb.fc.game.ui.FCGameContainer;
 
 import org.newdawn.slick.Graphics;
@@ -23,7 +25,7 @@ public class SpeechMenu extends Menu
 	private int x;
 	private int y = 60 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
 	private int width;
-	private ArrayList<String> panelText;
+	protected ArrayList<String> panelText;
 	private int textIndex = 0;
 	private int triggerId = -1;
 	private Portrait portrait;
@@ -35,11 +37,7 @@ public class SpeechMenu extends Menu
 	private long waitUntil = -1;
 	private String waitingOn = null;
 	private Timer timer;
-	private static final String CHAR_PAUSE = "{";
-	private static final String CHAR_SOFT_STOP = "}";
-	private static final String CHAR_HARD_STOP = "]";
-	private static final String CHAR_LINE_BREAK = "[";
-	private static final String CHAR_NEXT_CIN = "|";
+
 
 	/**
 	 * Constructor to create a SpeechMenu to be displayed in an Attack Cinematic
@@ -70,7 +68,14 @@ public class SpeechMenu extends Menu
 	public SpeechMenu(String text, FCGameContainer gc, int triggerId,
 			Portrait portrait, StateInfo stateInfo)
 	{
+		this(text, gc, triggerId, portrait, stateInfo, null);
+	}
+
+	public SpeechMenu(String text, FCGameContainer gc, int triggerId,
+			Portrait portrait, StateInfo stateInfo, MenuListener listener)
+	{
 		super(Panel.PANEL_SPEECH);
+		this.listener = listener;
 		width = gc.getWidth() - 100 - gc.getDisplayPaddingX() * 2;
 		x = 50 + gc.getDisplayPaddingX();
 
@@ -89,10 +94,10 @@ public class SpeechMenu extends Menu
 			if (wordWidth + currentLineWidth <= maxTextWidth)
 			{
 				boolean lineBreak = false;
-				if (splitText[i].contains(CHAR_LINE_BREAK))
+				if (splitText[i].contains(TextSpecialCharacters.CHAR_LINE_BREAK))
 					lineBreak = true;
 
-				currentLine += " " + splitText[i].replace(CHAR_LINE_BREAK, "");
+				currentLine += " " + splitText[i].replace(TextSpecialCharacters.CHAR_LINE_BREAK, "");
 				currentLineWidth += wordWidth + spaceWidth;
 
 				if (lineBreak)
@@ -201,14 +206,14 @@ public class SpeechMenu extends Menu
 					else
 					{
 						String nextLetter = panelText.get(textIndex).substring(textMovingIndex, textMovingIndex + 1);
-						if (nextLetter.equalsIgnoreCase(CHAR_HARD_STOP))
+						if (nextLetter.equalsIgnoreCase(TextSpecialCharacters.CHAR_HARD_STOP))
 						{
 							textMoving = false;
 							if (portrait != null)
 								portrait.setTalking(false);
-							waitingOn = CHAR_HARD_STOP;
+							waitingOn = TextSpecialCharacters.CHAR_HARD_STOP;
 						}
-						else if (nextLetter.equalsIgnoreCase(CHAR_SOFT_STOP))
+						else if (nextLetter.equalsIgnoreCase(TextSpecialCharacters.CHAR_SOFT_STOP))
 						{
 							textMoving = false;
 							if (portrait != null)
@@ -224,20 +229,20 @@ public class SpeechMenu extends Menu
 							else
 							{
 								waitUntil = System.currentTimeMillis() + 2500;
-								waitingOn = CHAR_SOFT_STOP;
+								waitingOn = TextSpecialCharacters.CHAR_SOFT_STOP;
 							}
 						}
-						else if (nextLetter.equalsIgnoreCase(CHAR_PAUSE))
+						else if (nextLetter.equalsIgnoreCase(TextSpecialCharacters.CHAR_PAUSE))
 						{
 							textMoving = false;
 							if (portrait != null)
 								portrait.setTalking(false);
 							waitUntil = System.currentTimeMillis() + 400;
-							waitingOn = CHAR_PAUSE;
+							waitingOn = TextSpecialCharacters.CHAR_PAUSE;
 						}
-						else if (nextLetter.equalsIgnoreCase(CHAR_NEXT_CIN))
+						else if (nextLetter.equalsIgnoreCase(TextSpecialCharacters.CHAR_NEXT_CIN))
 						{
-							panelText.set(textIndex, panelText.get(textIndex).replaceFirst("\\" + CHAR_NEXT_CIN, ""));
+							panelText.set(textIndex, panelText.get(textIndex).replaceFirst("\\" + TextSpecialCharacters.CHAR_NEXT_CIN, ""));
 							return MenuUpdate.MENU_NEXT_ACTION;
 						}
 

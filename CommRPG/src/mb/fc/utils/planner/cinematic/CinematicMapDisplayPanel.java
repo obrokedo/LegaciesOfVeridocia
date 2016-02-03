@@ -1,4 +1,4 @@
-package mb.fc.utils.planner;
+package mb.fc.utils.planner.cinematic;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -19,40 +18,36 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 
 import mb.fc.cinematic.event.CinematicEvent;
-import mb.fc.loading.MapParser;
 import mb.fc.loading.PlannerMap;
-import mb.fc.loading.PlannerTilesetParser;
 import mb.fc.loading.TextParser;
 import mb.fc.map.MapObject;
 import mb.fc.utils.XMLParser;
 import mb.fc.utils.XMLParser.TagArea;
+import mb.fc.utils.planner.PlannerContainer;
+import mb.fc.utils.planner.PlannerFrame;
+import mb.fc.utils.planner.PlannerTab;
+import mb.fc.utils.planner.PlannerTimeBarViewer;
 import mb.fc.utils.planner.PlannerTimeBarViewer.ActorBar;
 import mb.fc.utils.planner.PlannerTimeBarViewer.StaticSprite;
-
-import org.newdawn.slick.SlickException;
-
+import mb.fc.utils.planner.PlannerTimeBarViewer.ZIntervalImpl;
 import de.jaret.util.date.Interval;
 import de.jaret.util.date.JaretDate;
 
-public class MapDisplayPanel extends JPanel implements ActionListener, MouseListener, MouseMotionListener
+public class CinematicMapDisplayPanel extends JPanel implements ActionListener, MouseListener, MouseMotionListener
 {
 	private static final long serialVersionUID = 1L;
 
 	private PlannerMap plannerMap;
 	private MapObject selectedMO;
-	private MapPanel mapPanel;
+	private CinematicCreatorPanel mapPanel;
 	private CinematicTimeline timeline;
 	private int mouseX, mouseY;
 	private JPopupMenu systemPopup, actorPopup, actorMovePopup;
-	private final Color UNSELECTED_MO_FILL_COLOR = new Color(0, 0, 255, 50);
-	private final Color UNSELECTED_MO_LINE_COLOR = new Color(0, 0, 255);
-
-	private final Color SELECTED_MO_FILL_COLOR = new Color(0, 255, 0, 50);
-	private final Color SELECTED_MO_LINE_COLOR = new Color(0, 255, 0);
 
 	private final Color SPRITE_FILL_COLOR = new Color(230, 230, 230, 50);
 	private final Color SPRITE_LINE_COLOR = new Color(230, 230, 230);
@@ -65,7 +60,7 @@ public class MapDisplayPanel extends JPanel implements ActionListener, MouseList
 
 	private PlannerContainer currentPC;
 
-	public MapDisplayPanel(String mapFile, MapPanel mapPanel)
+	public CinematicMapDisplayPanel(PlannerMap map, CinematicCreatorPanel mapPanel)
 	{
 		systemPopup = new JPopupMenu();
 		systemPopup.add(createMenuItem("Wait"));
@@ -122,15 +117,9 @@ public class MapDisplayPanel extends JPanel implements ActionListener, MouseList
 		actorMovePopup.add(createMenuItem("Move Forced Facing"));
 		actorMovePopup.add(createMenuItem("Move Actor in Loop"));
 
-		plannerMap = new PlannerMap();
+		plannerMap = map;
 		this.mapPanel = mapPanel;
 
-		try {
-			MapParser.parseMap(mapFile, plannerMap, new PlannerTilesetParser(), null);
-		} catch (IOException | SlickException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		this.setPreferredSize(new Dimension(plannerMap.getMapWidthInPixels(), plannerMap.getMapHeightInPixels()));
 		this.addMouseListener(this);
 		this.addMouseMotionListener(mapPanel);
@@ -203,7 +192,7 @@ public class MapDisplayPanel extends JPanel implements ActionListener, MouseList
 				Point actorPoint = ab.getValue().getActorLocationAtTime(time);
 
 				values.add("Current Location: " + actorPoint.x + " " + actorPoint.y);
-				values.add("Actor is Moving: " + moving);
+				// values.add("Actor is Moving: " + moving);
 				actorLocations.add(actorPoint);
 
 				addIntervals(ab.getValue().dt.getIntervals(new JaretDate(time)), values);
@@ -232,58 +221,27 @@ public class MapDisplayPanel extends JPanel implements ActionListener, MouseList
 	{
 		for (Interval i : intervals)
 		{
-			values.add(i.toString());
+			if (i instanceof ZIntervalImpl)
+				values.add(((ZIntervalImpl) i).title);
+			else
+				values.add(i.toString());
 		}
 	}
 
 	@Override
 	protected void paintComponent(Graphics g) {
-		g.setColor(Color.darkGray);
-		g.fillRect(0, 0, this.getWidth(), this.getHeight());
-		for (int i = 0; i < plannerMap.getMapWidth(); i++)
-		{
-			for (int j = 0; j < plannerMap.getMapHeight(); j++)
-			{
-				for (int k = 0; k < 5; k++)
-				{
-					if (k == 0 || plannerMap.getMapLayer(k)[j][i] != 0)
-						g.drawImage(plannerMap.getPlannerSprite(plannerMap.getMapLayer(k)[j][i]), i * plannerMap.getTileRenderWidth(), j * plannerMap.getTileRenderHeight(), this);
-				}
-			}
-		}
+		plannerMap.renderMap(g, this);
 
 		if (PlannerFrame.SHOW_CIN_LOCATION)
 		{
-			for (MapObject mo : plannerMap.getMapObjects())
-			{
-				int[] xP, yP;
-				xP = new int[mo.getShape().getPointCount()];
-				yP = new int[mo.getShape().getPointCount()];
-				for (int i = 0; i < xP.length; i++)
-				{
-					xP[i] = (int) mo.getShape().getPoint(i)[0];
-					yP[i] = (int) mo.getShape().getPoint(i)[1];
-				}
-
-				if (mo != this.selectedMO)
-					g.setColor(UNSELECTED_MO_FILL_COLOR);
-				else
-					g.setColor(SELECTED_MO_FILL_COLOR);
-				g.fillPolygon(xP, yP, xP.length);
-
-				if (mo != this.selectedMO)
-					g.setColor(UNSELECTED_MO_LINE_COLOR);
-				else
-					g.setColor(SELECTED_MO_LINE_COLOR);
-				g.drawPolygon(xP, yP, xP.length);
-			}
+			plannerMap.renderMapLocations(g, selectedMO);
 		}
 
 		for (Point sp : spriteLocations)
 		{
-			g.setColor(new Color(230, 230, 230, 50));
+			g.setColor(SPRITE_FILL_COLOR);
 			g.fillRect(sp.x, sp.y, plannerMap.getTileEffectiveWidth(), plannerMap.getTileEffectiveHeight());
-			g.setColor(new Color(230, 230, 230));
+			g.setColor(SPRITE_LINE_COLOR);
 			g.drawRect(sp.x, sp.y, plannerMap.getTileEffectiveWidth(), plannerMap.getTileEffectiveHeight());
 		}
 
@@ -311,19 +269,16 @@ public class MapDisplayPanel extends JPanel implements ActionListener, MouseList
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -405,6 +360,12 @@ public class MapDisplayPanel extends JPanel implements ActionListener, MouseList
 				}
 			}
 		}
+		else if (m.getButton() == MouseEvent.BUTTON2)
+		{
+			mapPanel.middleButtonPushed(m);
+		}
+
+		System.out.println(m.getButton());
 
 		this.repaint();
 	}
@@ -431,8 +392,9 @@ public class MapDisplayPanel extends JPanel implements ActionListener, MouseList
 		long maxTime = 0;
 		this.actorLocations.clear();
 
-		PlannerTab pt = (PlannerTab) mapPanel.getParentTabbedPane().getComponentAt(PlannerFrame.TAB_CIN);
-		currentPC = pt.getListPC().get(index);
+		PlannerTab pt = mapPanel.getPlannerFrame().getPlannerTabAtIndex(PlannerFrame.TAB_CIN);
+		pt.setSelectedListItem(index);
+		currentPC = pt.getCurrentPC();
 
 		try
 		{
@@ -448,6 +410,7 @@ public class MapDisplayPanel extends JPanel implements ActionListener, MouseList
 						new HashSet<String>(), new HashSet<String>(), new HashSet<String>());
 				ces.addAll(0, initEvents);
 				timeline = new CinematicTimeline();
+				System.out.println("LOAD INDEX: " + index);
 				new PlannerTimeBarViewer(ces, timeline, Integer.parseInt(tas.get(0).getParams().get("camerax")), Integer.parseInt(tas.get(0).getParams().get("cameray")));
 				maxTime = timeline.duration;
 			}
@@ -455,13 +418,18 @@ public class MapDisplayPanel extends JPanel implements ActionListener, MouseList
 			mapPanel.stateChanged(null);
 
 		}
-		catch (Exception ex) {ex.printStackTrace();}
+		catch (Exception ex) {
+			JOptionPane.showMessageDialog(this,
+					"An error occurred while parsing the cinematics, if you have just edited or added a new\n"
+					+ "event make sure that you have filled out all of the values. If this does not fix the\n"
+					+ "the problem then it is possible that your cinematic file has been corrupted." );
+			ex.printStackTrace();
+		}
 		return maxTime;
 	}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		// TODO Auto-generated method stub
 
 	}
 

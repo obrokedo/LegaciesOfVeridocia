@@ -15,7 +15,7 @@ public class SpellResource
 	{
 		spells = new Hashtable<String, JSpell>();
 		for (String spell : GlobalPythonFactory.createJSpell().getSpellList())
-		addSpell(spell, frm);
+			addSpell(spell, frm);
 	}
 
 	private static void addSpell(String spellId, FCResourceManager frm)

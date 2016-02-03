@@ -27,8 +27,8 @@ public class ClericAI extends CasterAI
 			handleHealingSpell(spell, knownSpell, i, tileWidth, tileHeight, currentSprite, targetSprite, stateInfo, baseConfidence, cost, attackPoint);
 	}
 
-	// TODO Lots to do here, they aren't really smart enough to move and taget them self, kind of need it's own AI for that?
-	// Somhow there is never a time when aura can get 2 people in it
+	// TODO Lots to do here, they aren't really smart enough to move and target them self, kind of need it's own AI for that?
+	// Somehow there is never a time when aura can get 2 people in it
 	private void handleHealingSpell(JSpell spell, KnownSpell knownSpell, int i, int tileWidth, int tileHeight, CombatSprite currentSprite,
 			CombatSprite targetSprite, StateInfo stateInfo, int baseConfidence, int cost, Point attackPoint)
 	{
@@ -73,16 +73,19 @@ public class ClericAI extends CasterAI
 			// the healing would provide or are at less then 50% health
 			for (CombatSprite ts : targetsInArea)
 			{
+				int effectiveDamage = spell.getEffectiveDamage(currentSprite, ts, i - 1);
 				// Check to see if the character is at less then 50% health or if the spell would use at least 75% of it's healing power
-				if (ts.getCurrentHP() * 1.0 / ts.getMaxHP() < .5 || (ts.getMaxHP() - ts.getCurrentHP()) / spell.getEffectiveDamage(currentSprite, ts, i - 1) > .75)
+				if (effectiveDamage != 0 && (ts.getCurrentHP() * 1.0 / ts.getMaxHP() < .5
+						|| (ts.getMaxHP() - ts.getCurrentHP()) / (1.0 * effectiveDamage) > .75))
 				{
 					currentConfidence += Math.min(50, (int)(50.0 *
 							// Get the percent of the max health that the spell can heal for and the percent of damage that
 							// the target is hurt for and the take the smaller of the two numbers. This prevents spells that
 							// can technically heal for a higher percent of max health getting a higher value (causing low
 							// level heal spells never to be used)
-							Math.min(1.0 * (ts.getMaxHP() - ts.getCurrentHP()) / ts.getMaxHP(), 1.0 *spell.getEffectiveDamage(currentSprite, ts, i - 1) / ts.getMaxHP())));
+							Math.min(1.0 * (ts.getMaxHP() - ts.getCurrentHP()) / ts.getMaxHP(), 1.0 * effectiveDamage / ts.getMaxHP())));
 				}
+				//TODO ADD A CHECK TO SEE IF IT WILL CURE A CONDITION
 				// If this target isn't hurt but will be in the spell area we just add a small amount of confidence,
 				// this won't be added unless at least one person in the radius needs healing
 				else
@@ -104,8 +107,10 @@ public class ClericAI extends CasterAI
 		}
 		else
 		{
+			int effectiveDamage = spell.getEffectiveDamage(currentSprite, targetSprite, i - 1);
 			if (targetSprite.getCurrentHP() * 1.0 / targetSprite.getMaxHP() < .5 ||
-					(targetSprite.getMaxHP() - targetSprite.getCurrentHP()) / spell.getEffectiveDamage(currentSprite, targetSprite, i - 1) > .75)
+					(targetSprite.getMaxHP() - targetSprite.getCurrentHP()) /
+						(1.0 * effectiveDamage) > .75)
 			{
 				currentConfidence += Math.min(50, (int)(50.0 *
 					// Get the percent of the max health that the spell can heal for and the percent of damage that
@@ -113,7 +118,7 @@ public class ClericAI extends CasterAI
 					// can technically heal for a higher percent of max health getting a higher value (causing low
 					// level heal spells never to be used)
 					Math.min(1.0 * (targetSprite.getMaxHP() - targetSprite.getCurrentHP()) / targetSprite.getMaxHP(),
-							1.0 *spell.getEffectiveDamage(currentSprite, targetSprite, i - 1) / targetSprite.getMaxHP())));
+							1.0 * effectiveDamage / targetSprite.getMaxHP())));
 
 				if (targetSprite == currentSprite && healSelf)
 					currentConfidence += 20;

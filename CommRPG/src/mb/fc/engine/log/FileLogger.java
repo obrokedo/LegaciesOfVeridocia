@@ -42,8 +42,8 @@ public class FileLogger extends DefaultLogSystem
 			e.printStackTrace(pw);
 			pw.close();
 		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
+			JOptionPane.showMessageDialog(null, "An error occurred trying to write to the error log:" + e.getMessage(), "Error writing to error log", JOptionPane.ERROR_MESSAGE);
 		}
 		writeError("-------");
 	}
@@ -66,8 +66,8 @@ public class FileLogger extends DefaultLogSystem
 			Files.write(FileSystems.getDefault().getPath(".", "ErrorLog"),
 					message.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "An error occurred trying to write to the error log:" + e.getMessage(), "Error writing to error log", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 }

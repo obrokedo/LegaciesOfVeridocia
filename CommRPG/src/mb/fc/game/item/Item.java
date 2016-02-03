@@ -8,25 +8,31 @@ public class Item implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 
-	private transient String name;
+	private transient String name = null;
 	private transient int cost;
 	private transient String description;
 	private transient boolean isUsuable;
 	private transient boolean isEquippable;
-	private int itemId;
 	private transient Image image;
 	private transient ItemUse itemUse;
+	private transient SpellItemUse spellUse;
+	private int itemId;
+	private ItemDurability durability = ItemDurability.PERFECT;
+	private boolean useDamagesItem = false;
 
-	public Item(String name, int cost, String description, ItemUse itemUse,
-			boolean isEquippable, int itemId) {
+	public Item(String name, int cost, String description, ItemUse itemUse, SpellItemUse spellUse,
+			boolean isEquippable, boolean useDamagesItem, int itemId) {
 		super();
 		this.name = name;
 		this.cost = cost;
 		this.description = description;
-		this.isUsuable = itemUse != null;
+		this.isUsuable = ((itemUse != null) || (spellUse != null));
+		this.spellUse = spellUse;
 		this.isEquippable = isEquippable;
+		this.useDamagesItem = useDamagesItem;
 		this.itemUse = itemUse;
 		this.itemId = itemId;
+		this.durability = ItemDurability.PERFECT;
 	}
 
 	public String getName() {
@@ -57,6 +63,14 @@ public class Item implements Serializable
 		return itemUse;
 	}
 
+	public SpellItemUse getSpellUse() {
+		return spellUse;
+	}
+
+	public boolean useDamagesItem() {
+		return useDamagesItem;
+	}
+
 	public static EquippableDifference getEquippableDifference(EquippableItem oldItem, EquippableItem newItem)
 	{
 		return new EquippableDifference(oldItem, newItem);
@@ -68,6 +82,31 @@ public class Item implements Serializable
 
 	public Image getImage() {
 		return image;
+	}
+
+	public ItemDurability getDurability() {
+		return durability;
+	}
+
+	public void setDurability(ItemDurability durability) {
+		this.durability = durability;
+	}
+
+	public void damageItem() {
+		switch (durability) {
+			case PERFECT:
+				durability = ItemDurability.DAMAGED;
+				break;
+			case DAMAGED:
+				durability = ItemDurability.BROKEN;
+				break;
+			case BROKEN:
+				break;
+		}
+	}
+
+	public void repairItem() {
+		durability = ItemDurability.PERFECT;
 	}
 
 	public static class EquippableDifference
@@ -89,5 +128,21 @@ public class Item implements Serializable
 				spd = newItem.getSpeed();
 			}
 		}
+	}
+
+	private enum ItemDurability {
+		PERFECT,
+		DAMAGED,
+		BROKEN
+	}
+
+	public void copyItem(Item item) {
+		this.cost = item.cost;
+		this.description = item.description;
+		this.isEquippable = item.isEquippable;
+		this.isUsuable = item.isUsuable;
+		this.itemUse = item.itemUse;
+		this.spellUse = item.spellUse;
+		this.name = item.name;
 	}
 }

@@ -35,7 +35,6 @@ public class SpriteRenderer extends Manager
 
 	@Override
 	public void recieveMessage(Message message) {
-		// TODO Auto-generated method stub
 
 	}
 }

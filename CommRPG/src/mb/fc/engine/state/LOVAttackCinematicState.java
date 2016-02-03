@@ -15,6 +15,7 @@ import mb.fc.game.combat.StandCombatAnimation;
 import mb.fc.game.combat.TransBGCombatAnimation;
 import mb.fc.game.combat.TransCombatAnimation;
 import mb.fc.game.combat.WaitCombatAnimation;
+import mb.fc.game.constants.TextSpecialCharacters;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.hudmenu.SpriteContextPanel;
 import mb.fc.game.input.FCInput;
@@ -131,7 +132,7 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 		/*****************************/
 		/** Setup battle animations **/
 		/*****************************/
-		if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_SPELL)
+		if (battleResults.battleCommand.getSpell() != null)
 		{
 			spellAnimation = new AnimationWrapper(frm.getSpriteAnimations().get(battleResults.battleCommand.getSpell().getName()),
 					battleResults.battleCommand.getLevel() + "", battleResults.battleCommand.getSpell().isLoops());
@@ -167,6 +168,7 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 		Image bgIm = battleBGSS.getSprite(frm.getMap().getBackgroundImageIndex() % battleBGSS.getHorizontalCount(),
 				frm.getMap().getBackgroundImageIndex() / battleBGSS.getHorizontalCount());
 		backgroundImage = bgIm.getScaledCopy((gc.getWidth() - gc.getDisplayPaddingX() * 2) / (float) bgIm.getWidth());
+		System.out.println("BACKGROUND " + backgroundImage.getWidth() + " " + backgroundImage.getHeight() + " " + ((gc.getWidth() - gc.getDisplayPaddingX() * 2) / (float) bgIm.getWidth()) );
 		bgXPos = gc.getDisplayPaddingX();
 		bgYPos = (gc.getHeight() - backgroundImage.getHeight()) / 2;
 		combatAnimationYOffset = bgYPos + backgroundImage.getHeight();
@@ -175,14 +177,30 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 		// The attacker will be standing in any case
 		addCombatAnimation(attacker.isHero(), new StandCombatAnimation(attacker));
 
+		//TODO CHECK TO SEE IF THE COMMAND WAS AN ITEM THAT CASTS A SPELL
 		boolean isSpell = battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_SPELL;
 		int distanceApart = 1;
 
 		if (isSpell)
 			textToDisplay.add(attacker.getName() + " casts " + battleResults.battleCommand.getSpell().getName() + " " +
-					battleResults.battleCommand.getLevel() + "]");
+					battleResults.battleCommand.getLevel() + TextSpecialCharacters.CHAR_HARD_STOP);
+		else if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_ITEM) {
+			// Check to see if the item being used has a spell effect, if so then display the correct
+			// text and set the isSpell boolean to true so that spell effects work correctly
+			if (battleResults.battleCommand.getItem().getSpellUse() != null) {
+				textToDisplay.add(attacker.getName() + " uses the " +
+						battleResults.battleCommand.getItem().getName() + "! " + TextSpecialCharacters.CHAR_SOFT_STOP +
+						attacker.getName() + " casts " + battleResults.battleCommand.getSpell().getName() + " " +
+						battleResults.battleCommand.getLevel() + TextSpecialCharacters.CHAR_HARD_STOP);
+				isSpell = true;
+			}
+			// Otherwise just display the generic use item text
+			else
+				textToDisplay.add(attacker.getName() + " uses the " +
+					battleResults.battleCommand.getItem().getName() + "!" + TextSpecialCharacters.CHAR_HARD_STOP);
+		}
 		else
-			textToDisplay.add(attacker.getName() + " attacks!]");
+			textToDisplay.add(attacker.getName() + " attacks!" + TextSpecialCharacters.CHAR_HARD_STOP);
 		CombatSprite target = battleResults.targets.get(0);
 
 		if (targetsAllies)
@@ -289,8 +307,10 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 			}
 		}
 
-		//////////////////////////////////////////////////////////////////////////
-
+		/*
+		 * Show the final frame where both parties (assuming they are alive)
+		 * are standing next to eachother.
+		 */
 		// Check to see if the attacker is still alive
 		if (!battleResults.attackerDeath)
 			addCombatAnimation(attacker.isHero(), new StandCombatAnimation(attacker));
@@ -316,6 +336,16 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 		else
 		{
 			addCombatAnimation(!attacker.isHero(), null);
+		}
+
+		// If the item was damaged then we'll use the animations from above
+		// and display the damaged item text, we need to add null animations
+		// to the lists so that they use the animations that were determined
+		// above for the final frame where the attack over text is displayed
+		if (battleResults.itemDamaged) {
+			textToDisplay.add("The " + battleResults.itemUsed.getName() + " was damaged due to use." + TextSpecialCharacters.CHAR_SOFT_STOP);
+			addCombatAnimation(true, null);
+			addCombatAnimation(false, null);
 		}
 
 		textToDisplay.add(battleResults.attackOverText);
@@ -567,7 +597,7 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 		// If this is test mode then we want to speed
 		// up the game
 		if (CommRPG.TEST_MODE_ENABLED)
-			delta *= 15;
+			delta *= 1;
 
 		// Update the input so that released keys are realized
 		input.update(delta);
@@ -858,7 +888,6 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 
 	@Override
 	public void musicSwapped(Music music, Music newMusic) {
-		// TODO Auto-generated method stub
 
 	}
 }

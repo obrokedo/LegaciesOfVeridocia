@@ -16,6 +16,7 @@ import mb.fc.network.message.BackedSpriteMessage;
 import mb.fc.network.message.ClientIDMessage;
 import mb.fc.network.message.ClientRegistrationMessage;
 import mb.fc.network.message.PlayerListMessage;
+import mb.jython.GlobalPythonFactory;
 import mb.tcp.network.Client;
 import mb.tcp.network.PacketHandler;
 
@@ -156,11 +157,10 @@ public class MultiplayerMenuState extends MenuState implements PacketHandler, St
 					System.out.println("TRY AND CONNECT");
 
 					// Add starting heroes if they haven't been added yet
-					if (persistentStateInfo.getClientProfile().getStartingHeroIds() != null)
+					if (persistentStateInfo.getClientProfile().getHeroes().size() == 0)
 					{
-						for (Integer heroId : persistentStateInfo.getClientProfile().getStartingHeroIds())
+						for (Integer heroId : GlobalPythonFactory.createConfigurationValues().getStartingHeroIds())
 							persistentStateInfo.getClientProfile().addHero(HeroResource.getHero(heroId));
-						persistentStateInfo.getClientProfile().setStartingHeroIds(null);
 					}
 
 					client = new TCPClient("127.0.0.1");
@@ -185,11 +185,10 @@ public class MultiplayerMenuState extends MenuState implements PacketHandler, St
 					System.out.println("TRY AND CONNECT");
 
 					// Add starting heroes if they haven't been added yet
-					if (persistentStateInfo.getClientProfile().getStartingHeroIds() != null)
+					if (persistentStateInfo.getClientProfile().getHeroes().size() == 0)
 					{
-						for (Integer heroId : persistentStateInfo.getClientProfile().getStartingHeroIds())
+						for (Integer heroId : GlobalPythonFactory.createConfigurationValues().getStartingHeroIds())
 							persistentStateInfo.getClientProfile().addHero(HeroResource.getHero(heroId));
-						persistentStateInfo.getClientProfile().setStartingHeroIds(null);
 					}
 
 					client = new TCPClient(ipField.getText());
@@ -297,7 +296,7 @@ public class MultiplayerMenuState extends MenuState implements PacketHandler, St
 			case START_GAME:
 				persistentStateInfo.setClient(this.client);
 				persistentStateInfo.setServer(server);
-				this.start(gc, 0, "TJBWoods1", "TJBWoods1", "north");
+				this.start(gc, LoadTypeEnum.TOWN, "TJBWoods1", "TJBWoods1", "north");
 				break;
 			case PLAYER_LIST:
 				this.players.clear();

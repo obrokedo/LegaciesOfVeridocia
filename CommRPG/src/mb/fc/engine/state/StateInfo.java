@@ -13,6 +13,7 @@ import mb.fc.engine.message.Message;
 import mb.fc.engine.message.MessageType;
 import mb.fc.game.Camera;
 import mb.fc.game.battle.LevelUpResult;
+import mb.fc.game.exception.BadResourceException;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.hudmenu.WaitPanel;
 import mb.fc.game.input.FCInput;
@@ -32,6 +33,7 @@ import mb.fc.game.ui.FCGameContainer;
 import mb.fc.loading.FCResourceManager;
 import mb.fc.map.Map;
 import mb.fc.map.MapObject;
+import mb.jython.GlobalPythonFactory;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.util.Log;
@@ -82,12 +84,6 @@ public class StateInfo
 	private ArrayList<CombatSprite> heroes;
 	private boolean showAttackCinematic = false;
 
-	/*
-	private Music playingMusic = null;
-	private float playingMusicPostion;
-	private String playingMusicName;
-	*/
-
 	private String currentMap;
 
 	public StateInfo(PersistentStateInfo psi, boolean isCombat, boolean isCinematic)
@@ -128,11 +124,21 @@ public class StateInfo
 		setWaiting();
 
 		// Add starting heroes if they haven't been added yet
-		if (psi.getClientProfile().getStartingHeroIds() != null)
+		if (psi.getClientProfile().getHeroes().size() == 0)
 		{
-			for (Integer heroId : psi.getClientProfile().getStartingHeroIds())
+			// Add the heroes specified in the configuration values,
+			// these are the heroes that the force will initially contain
+			for (Integer heroId : GlobalPythonFactory.createConfigurationValues().getStartingHeroIds())
 				psi.getClientProfile().addHero(HeroResource.getHero(heroId));
-			psi.getClientProfile().setStartingHeroIds(null);
+
+			// Add any heroes specified in the development params
+			if (psi.getClientProfile().getDevelHeroIds() != null)
+				for (Integer heroId : psi.getClientProfile().getDevelHeroIds())
+					psi.getClientProfile().addHero(HeroResource.getHero(heroId));
+
+			if (psi.getClientProfile().getHeroes().size() == 0)
+				throw new BadResourceException("No starting heroes have been specified. Update the ConfigurationValues "
+						+ "script to indicate the ids of the heroes that should start in the party.");
 		}
 
 		if (psi.getClientProfile().getDevelLevel() > 1)

@@ -1,12 +1,28 @@
 package mb.fc.loading;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Image;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.Hashtable;
+import java.util.Map.Entry;
+
+import javax.swing.JPanel;
 
 import mb.fc.map.Map;
+import mb.fc.map.MapObject;
+import mb.fc.utils.XMLParser.TagArea;
 
 public class PlannerMap extends Map {
+	private final Color UNSELECTED_MO_FILL_COLOR = new Color(0, 0, 255, 50);
+	private final Color UNSELECTED_MO_LINE_COLOR = new Color(0, 0, 255);
+
+	private final Color SELECTED_MO_FILL_COLOR = new Color(0, 255, 0, 50);
+	private final Color SELECTED_MO_LINE_COLOR = new Color(0, 255, 0);
+	private Hashtable<MapObject, TagArea> tagAreaByMapObject = new Hashtable<>();
+	private TagArea rootTagArea;
+
 	public void addTileset(Image[] sprites, int tileStartIndex,
 			int tileWidth, int tileHeight,
 			Hashtable<Integer, Integer> landEffectByTileId) {
@@ -40,9 +56,157 @@ public class PlannerMap extends Map {
 		return null;
 	}
 
+	public void renderMap(Graphics g, JPanel panel)
+	{
+		g.setColor(Color.darkGray);
+		g.fillRect(0, 0, panel.getWidth(), panel.getHeight());
+		for (int i = 0; i < getMapWidth(); i++)
+		{
+			for (int j = 0; j < getMapHeight(); j++)
+			{
+				for (int k = 0; k < 5; k++)
+				{
+					if (k == 0 || getMapLayer(k)[j][i] != 0)
+						g.drawImage(getPlannerSprite(getMapLayer(k)[j][i]), i * getTileRenderWidth(), j * getTileRenderHeight(), panel);
+				}
+			}
+		}
+	}
+
+	public void renderMapLocations(Graphics g, MapObject selectedMO)
+	{
+		renderMapLocations(g, selectedMO, true, true, true, true, true, true);
+	}
+
+	public void renderMapLocations(Graphics g, MapObject selectedMO, boolean displayBattleTrigger,
+			boolean displayEnemy, boolean displayOther, boolean displayTerrain, boolean displayTrigger,
+			boolean displayUnused)
+	{
+		for (MapObject mo : getMapObjects())
+		{
+			if (mo.getKey() == null || mo.getKey().length() == 0)
+			{
+				if (!displayUnused)
+					continue;
+			}
+			else
+			{
+				if (mo.getKey().equalsIgnoreCase("enemy") && !displayEnemy)
+					continue;
+				else if (mo.getKey().equalsIgnoreCase("battletrigger") && !displayBattleTrigger)
+					continue;
+				else if (mo.getKey().equalsIgnoreCase("terrain") && !displayTerrain)
+					continue;
+				else if (mo.getKey().equalsIgnoreCase("trigger") && !displayTrigger)
+					continue;
+				else if (!mo.getKey().equalsIgnoreCase("enemy") &&
+						!mo.getKey().equalsIgnoreCase("battletrigger")
+						&& !mo.getKey().equalsIgnoreCase("terrain") && !mo.getKey().equalsIgnoreCase("trigger")
+						&& !displayOther)
+					continue;
+			}
+
+			int[] xP, yP;
+			xP = new int[mo.getShape().getPointCount()];
+			yP = new int[mo.getShape().getPointCount()];
+			for (int i = 0; i < xP.length; i++)
+			{
+				xP[i] = (int) mo.getShape().getPoint(i)[0];
+				yP[i] = (int) mo.getShape().getPoint(i)[1];
+			}
+
+			if (mo != selectedMO)
+				g.setColor(UNSELECTED_MO_FILL_COLOR);
+			else
+				g.setColor(SELECTED_MO_FILL_COLOR);
+			g.fillPolygon(xP, yP, xP.length);
+
+			if (mo != selectedMO)
+				g.setColor(UNSELECTED_MO_LINE_COLOR);
+			else
+				g.setColor(SELECTED_MO_LINE_COLOR);
+			g.drawPolygon(xP, yP, xP.length);
+		}
+	}
+
 	@Override
 	public int getTileScale() {
-		// TODO Auto-generated method stub
 		return 1;
+	}
+
+	public void addMapObject(MapObject mo, TagArea ta) {
+		this.mapObjects.add(mo);
+		tagAreaByMapObject.put(mo, ta);
+	}
+
+	public String outputNewMap()
+	{
+		TagArea newRootTA = new TagArea(this.rootTagArea);
+
+		for (MapObject mo : this.mapObjects)
+		{
+			TagArea childTA = getNewChild(mo);
+
+			for (int i = 0; i < newRootTA.getChildren().size(); i++)
+			{
+				TagArea rootChildTA = newRootTA.getChildren().get(i);
+				// If the child is contained then we want to make a copy of this TagArea
+				// because the shallow copy we did for the root does not extend into its'
+				// children. So modifying this without a copy would mess up the original TAs
+				if (rootChildTA.getChildren().contains(tagAreaByMapObject.get(mo)))
+				{
+					// Create the new object
+					rootChildTA = new TagArea(rootChildTA);
+
+					rootChildTA.getChildren().remove(tagAreaByMapObject.get(mo));
+					rootChildTA.getChildren().add(childTA);
+					newRootTA.getChildren().remove(i);
+					newRootTA.getChildren().add(i, rootChildTA);
+					break;
+				}
+			}
+		}
+
+		return newRootTA.getOriginalText();
+	}
+
+	private TagArea getNewChild(MapObject mo)
+	{
+		TagArea ta = new TagArea(tagAreaByMapObject.get(mo));
+
+		for (int i = 0; i < ta.getChildren().size(); i++)
+		{
+			if (ta.getChildren().get(i).getTagType().equalsIgnoreCase("properties"))
+			{
+				ta.getChildren().remove(i);
+				break;
+			}
+		}
+
+		if (mo.getParams().size() > 0)
+		{
+			try {
+				TagArea propTA = new TagArea("<properties>");
+				String generatedProperty = "<property name=\"" + mo.getKey() + "\" value=\"";
+
+				for (Entry<String, String> param : mo.getParams().entrySet())
+				{
+					generatedProperty = generatedProperty + param.getKey() + "=" + param.getValue() + " ";
+				}
+
+				generatedProperty = generatedProperty.trim();
+
+				generatedProperty = generatedProperty + "\"/>";
+				propTA.getChildren().add(new TagArea(generatedProperty));
+				ta.getChildren().add(0, propTA);
+			} catch (IOException e) {
+			}
+		}
+
+		return ta;
+	}
+
+	public void setRootTagArea(TagArea rootTagArea) {
+		this.rootTagArea = rootTagArea;
 	}
 }

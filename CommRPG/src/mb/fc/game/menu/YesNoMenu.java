@@ -3,7 +3,7 @@ package mb.fc.game.menu;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.input.FCInput;
 import mb.fc.game.input.KeyMapping;
-import mb.fc.game.listener.YesNoListener;
+import mb.fc.game.listener.MenuListener;
 import mb.fc.game.ui.FCGameContainer;
 import mb.fc.game.ui.RectUI;
 import mb.fc.game.ui.SelectRectUI;
@@ -17,29 +17,27 @@ public class YesNoMenu extends SpeechMenu
 	private RectUI yesPanel, noPanel;
 	private TextUI yesText, noText;
 	private SelectRectUI selectRect;
-	private YesNoListener listener;
-	private boolean yesSelected;
+	private boolean yesSelected = true;
 
-	public YesNoMenu(String text, StateInfo stateInfo, YesNoListener listener) {
+	public YesNoMenu(String text, StateInfo stateInfo, MenuListener listener) {
 		this(text, NO_TRIGGER, null, stateInfo, listener);
 	}
 
 	public YesNoMenu(String text, int triggerId,
-			Portrait portrait, StateInfo stateInfo, YesNoListener listener) {
-		super(text, stateInfo.getGc(),triggerId, portrait, stateInfo);
+			Portrait portrait, StateInfo stateInfo, MenuListener listener) {
+		super(text, stateInfo.getGc(),triggerId, portrait, stateInfo, listener);
 		yesPanel = new RectUI(120, 146, 32, 32);
 		noPanel = new RectUI(170, 146, 32, 32);
 		yesText = new TextUI("Yes", 125, 148);
 		noText = new TextUI("No", 179, 148);
 		selectRect = new SelectRectUI(120, 146, 32, 32);
-		this.listener = listener;
 	}
 
 	@Override
 	public MenuUpdate handleUserInput(FCInput input, StateInfo stateInfo) {
 		if (input.isKeyDown(KeyMapping.BUTTON_1) || input.isKeyDown(KeyMapping.BUTTON_3))
 		{
-			listener.valueSelected(stateInfo, yesSelected);
+			System.out.println("YES NO CLOSED " + yesSelected + " " + this.panelText.get(0));
 			return MenuUpdate.MENU_CLOSE;
 		}
 		else if (input.isKeyDown(KeyMapping.BUTTON_LEFT))
@@ -51,6 +49,11 @@ public class YesNoMenu extends SpeechMenu
 		{
 			selectRect.setX(170);
 			yesSelected = false;
+		}
+		else if (input.isKeyDown(KeyMapping.BUTTON_2))
+		{
+			yesSelected = false;
+			return MenuUpdate.MENU_CLOSE;
 		}
 		return MenuUpdate.MENU_NO_ACTION;
 	}
@@ -75,4 +78,8 @@ public class YesNoMenu extends SpeechMenu
 		}
 	}
 
+	@Override
+	public Object getExitValue() {
+		return yesSelected;
+	}
 }

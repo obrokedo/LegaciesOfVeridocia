@@ -13,7 +13,7 @@ public class Message implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 
-	private MessageType messageType;
+	protected MessageType messageType;
 	private boolean immediate = false;
 	private boolean internal = false;
 
