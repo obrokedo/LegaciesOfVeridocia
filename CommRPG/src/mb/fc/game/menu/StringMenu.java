@@ -1,7 +1,6 @@
 package mb.fc.game.menu;
 
 import mb.fc.engine.state.StateInfo;
-import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.input.FCInput;
 import mb.fc.game.listener.StringListener;
 import mb.fc.game.ui.Button;
@@ -24,7 +23,7 @@ public class StringMenu extends Menu
 
 	public StringMenu(GameContainer gc, String text, StringListener listener)
 	{
-		super(Panel.PANEL_STRING);
+		super(PanelType.PANEL_STRING);
 		width = gc.getDefaultFont().getWidth(text) + 30;
 		this.text = text;
 		x = (gc.getWidth() - width) / 2;

@@ -207,7 +207,7 @@ public abstract class AI
 	private void performKamikazeeApproach(StateInfo stateInfo, int tileWidth, int tileHeight, CombatSprite currentSprite, MoveableSpace ms, ArrayList<TurnAction> turnActions)
 	{
 		CombatSprite target = this.getMostIsolatedHero(stateInfo, tileWidth, tileHeight, currentSprite, ms);
-		ms.addMoveActionsAlongPath(target.getLocX(), target.getLocY(), currentSprite, turnActions);
+		ms.addMoveActionsAlongPath((int) target.getLocX(), (int) target.getLocY(), currentSprite, turnActions);
 	}
 
 	private void performHesitantApproach(StateInfo stateInfo, int tileWidth, int tileHeight, CombatSprite currentSprite, MoveableSpace ms, ArrayList<TurnAction> turnActions)
@@ -220,7 +220,7 @@ public abstract class AI
 		else if (rand == 4)
 			move = 4;
 
-		ms.addMoveActionsAlongPath(target.getLocX(), target.getLocY(), currentSprite, turnActions, move);
+		ms.addMoveActionsAlongPath((int) target.getLocX(), (int) target.getLocY(), currentSprite, turnActions, move);
 	}
 
 	private void performReactiveApproach(StateInfo stateInfo, int tileWidth, int tileHeight, CombatSprite currentSprite, MoveableSpace ms, ArrayList<TurnAction> turnActions)
@@ -231,7 +231,7 @@ public abstract class AI
 	private void performFollowApproach(StateInfo stateInfo, int tileWidth, int tileHeight, CombatSprite currentSprite, MoveableSpace ms, ArrayList<TurnAction> turnActions)
 	{
 		if (targetCS.getCurrentHP() > 0)
-			ms.addMoveActionsAlongPath(targetCS.getLocX(), targetCS.getLocY(), currentSprite, turnActions);
+			ms.addMoveActionsAlongPath((int) targetCS.getLocX(), (int) targetCS.getLocY(), currentSprite, turnActions);
 		else
 		{
 			this.approachType = AI.APPROACH_HESITANT;

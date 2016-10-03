@@ -6,6 +6,6 @@ public class SpriteZComparator implements Comparator<Sprite> {
 
 	@Override
 	public int compare(Sprite o1, Sprite o2) {
-		return o1.getLocY() - o2.getLocY();
+		return (int) o1.getLocY() - (int) o2.getLocY();
 	}
 }

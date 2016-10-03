@@ -98,6 +98,7 @@ public class PlannerTree implements TreeModelListener
 					contextMenu = new JPopupMenu();
 					contextMenu.add(newMenuItem("Add Planner Item"));
 					contextMenu.add(newMenuItem("Remove Planner Item"));
+					contextMenu.add(newMenuItem("Duplicate Planner Item"));
 					contextMenu.add(new JSeparator());
 					for (PlannerLineDef pld : containerDef.getAllowableLines())
 						contextMenu.add(newMenuItem(pld.getName()));
@@ -152,6 +153,10 @@ public class PlannerTree implements TreeModelListener
 				else if (e.getActionCommand().equalsIgnoreCase("Remove Planner Item"))
 				{
 					parentTab.removeContainer(rootNode.getIndex(selectedNode));
+				}
+				else if (e.getActionCommand().equalsIgnoreCase("Duplicate Planner Item"))
+				{
+					parentTab.duplicateContainer(rootNode.getIndex(selectedNode));
 				}
 				else
 				{

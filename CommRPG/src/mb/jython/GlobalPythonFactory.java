@@ -159,9 +159,9 @@ public class GlobalPythonFactory
 		return spell;
 	}
 
-	public static JBattleEffect createJBattleEffect(String id)
+	public static JBattleEffect createJBattleEffect(String id, int effectLevel)
 	{
-		return battleEffect.init(id);
+		return battleEffect.init(id, effectLevel);
 	}
 
 	public static JLevelProgression createLevelProgression()

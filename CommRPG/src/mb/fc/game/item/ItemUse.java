@@ -16,6 +16,7 @@ public class ItemUse
 	private String battleText;
 	private boolean singleUse;
 
+	// TODO EFFECTS ARE NOT SUPPORTED FOR ITEM USE YET
 	public ItemUse(boolean targetsEnemy, int damage, int mpDamage,
 			JBattleEffect effects, int range, int area, String battleText, boolean singleUse) {
 		super();

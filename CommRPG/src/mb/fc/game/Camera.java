@@ -31,14 +31,14 @@ public class Camera
 		return viewport;
 	}
 
-	public int getLocationX()
+	public float getLocationX()
 	{
-		return (int) viewport.getX();
+		return viewport.getX();
 	}
 
-	public int getLocationY()
+	public float getLocationY()
 	{
-		return (int) viewport.getY();
+		return viewport.getY();
 	}
 
 	public void setLocation(float x, float y)

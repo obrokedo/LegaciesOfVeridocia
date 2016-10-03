@@ -5,21 +5,24 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Hashtable;
 
+import org.newdawn.slick.SlickException;
+
 import mb.fc.cinematic.Cinematic;
 import mb.fc.cinematic.event.CinematicEvent;
 import mb.fc.cinematic.event.CinematicEvent.CinematicEventType;
 import mb.fc.game.text.Speech;
+import mb.fc.game.trigger.TriggerCondition;
+import mb.fc.game.trigger.TriggerCondition.EnemyDeath;
 import mb.fc.game.trigger.TriggerEvent;
+import mb.fc.utils.StringUtils;
 import mb.fc.utils.XMLParser;
 import mb.fc.utils.XMLParser.TagArea;
-
-import org.newdawn.slick.SlickException;
 
 public class TextParser
 {
 	public static void parseText(String file, Hashtable<Integer, ArrayList<Speech>> speechesById,
 			Hashtable<Integer, TriggerEvent> triggerEventById, Hashtable<Integer, Cinematic> cinematicById,
-			FCResourceManager frm) throws IOException, SlickException
+			HashSet<TriggerCondition> conditions, FCResourceManager frm) throws IOException, SlickException
 	{
 		HashSet<String> animToLoad = new HashSet<String>();
 		HashSet<String> soundToLoad = new HashSet<String>();
@@ -67,9 +70,14 @@ public class TextParser
 					if (trigger != null)
 						triggerId = Integer.parseInt(trigger);
 
+					String customAnim = childTagArea.getAttribute("animportrait");
+					if (StringUtils.isEmpty(customAnim))
+						customAnim = null;
+
 					speeches.add(new Speech(message, requireIds, excludeIds, triggerId,
-							(childTagArea.getAttribute("heroportrait") == null ? -1 : Integer.parseInt(childTagArea.getAttribute("heroportrait"))),
-							(childTagArea.getAttribute("enemyportrait") == null ? -1 : Integer.parseInt(childTagArea.getAttribute("enemyportrait")))));
+							Integer.parseInt(childTagArea.getAttribute("heroportrait")),
+							Integer.parseInt(childTagArea.getAttribute("enemyportrait")),
+							customAnim));
 				}
 				speechesById.put(id, speeches);
 			}
@@ -132,18 +140,10 @@ public class TextParser
 						}
 						else if (tagArea.getChildren().get(k).getTagType().equalsIgnoreCase("setbattlecond"))
 						{
-							String leaders = actionParams.get("templeader");
-							int[] leaderIds = null;
-
-							if (leaders != null)
-							{
-								String[] splitLeader = leaders.split(",");
-								leaderIds = new int[splitLeader.length];
-								for (int i = 0; i < splitLeader.length; i++)
-									leaderIds[i] = Integer.parseInt(splitLeader[i]);
-							}
-
-							te.addTriggerType(te.new TriggerBattleCond(leaderIds, Boolean.parseBoolean(actionParams.get("allleaders"))));
+							te.addTriggerType(te.new TriggerBattleCond(
+									parsePositiveMultiInt("templeader", actionParams),
+									parsePositiveMultiInt("tempenemyleader", actionParams), 
+									Boolean.parseBoolean(actionParams.get("allleaders"))));
 						}
 						else if (tagArea.getChildren().get(k).getTagType().equalsIgnoreCase("loadmap"))
 						{
@@ -233,6 +233,20 @@ public class TextParser
 
 				cinematicById.put(cinematicId, new Cinematic(initEvents, events, cameraX, cameraY));
 			}
+			else if (tagArea.getTagType().equalsIgnoreCase("condition"))
+			{
+				TriggerCondition condition = new TriggerCondition(tagArea.getIntAttribute("triggerid"),
+						tagArea.getAttribute("description"));
+				for (TagArea ta : tagArea.getChildren())
+				{
+					if (ta.getTagType().equalsIgnoreCase("enemydeath"))
+					{
+						int unitId = ta.getIntAttribute("unitid");
+						condition.addCondition(new EnemyDeath(unitId));
+					}
+				}
+				conditions.add(condition);
+			}
 		}
 
 		/*
@@ -245,6 +259,25 @@ public class TextParser
 		for (String resource : soundToLoad)
 			frm.addSoundResource(resource);
 			*/
+	}
+	
+	private static int[] parsePositiveMultiInt(String leaderTag, Hashtable<String, String> actionParams)
+	{
+		String leaders = actionParams.get(leaderTag);
+		int[] leaderIds = new int[0];
+
+		if (leaders != null)
+		{
+			String[] splitLeader = leaders.split(",");
+			leaderIds = new int[splitLeader.length];
+			for (int i = 0; i < splitLeader.length; i++)
+				leaderIds[i] = Integer.parseInt(splitLeader[i]);
+			
+			if (leaderIds.length == 1 && leaderIds[0] == -1)
+				leaderIds = new int[0];
+		}
+		
+		return leaderIds;
 	}
 
 	public static ArrayList<CinematicEvent> parseCinematicEvents(TagArea tagArea, ArrayList<CinematicEvent> initEvents,
@@ -320,7 +353,8 @@ public class TextParser
 		else if (type.equalsIgnoreCase("speech"))
 			return new CinematicEvent(CinematicEventType.SPEECH, area.getAttribute("text"),
 					(area.getAttribute("heroportrait") == null ? -1 : Integer.parseInt(area.getAttribute("heroportrait"))),
-							(area.getAttribute("enemyportrait") == null ? -1 : Integer.parseInt(area.getAttribute("enemyportrait"))));
+							(area.getAttribute("enemyportrait") == null ? -1 : Integer.parseInt(area.getAttribute("enemyportrait"))),
+							area.getAttribute("animportrait"));
 		else if (type.equalsIgnoreCase("loadmap"))
 			return new CinematicEvent(CinematicEventType.LOAD_MAP, area.getAttribute("map"), area.getAttribute("enter"));
 		else if (type.equalsIgnoreCase("loadbattle"))

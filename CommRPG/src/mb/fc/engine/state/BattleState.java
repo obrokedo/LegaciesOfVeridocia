@@ -135,10 +135,13 @@ public class BattleState extends LoadableGameState
 			throws SlickException {
 		if (stateInfo.isInitialized())
 		{
-			tileMapRenderer.render(stateInfo.getCamera(), g, stateInfo.getGc());
+			float xOffset = stateInfo.getCamera().getLocationX() % stateInfo.getCurrentMap().getTileRenderWidth();
+			float yOffset = stateInfo.getCamera().getLocationY() % stateInfo.getCurrentMap().getTileRenderHeight();
+
+			tileMapRenderer.render(xOffset, yOffset, stateInfo.getCamera(), g, stateInfo.getGc());
 			turnManager.render(g);
 			spriteRenderer.render(g);
-			tileMapRenderer.renderForeground(stateInfo.getCamera(), g, stateInfo.getGc());
+			tileMapRenderer.renderForeground(xOffset, yOffset, stateInfo.getCamera(), g, stateInfo.getGc());
 			turnManager.renderCursor(g);
 			panelRenderer.render();
 			menuRenderer.render();
@@ -150,10 +153,12 @@ public class BattleState extends LoadableGameState
 			throws SlickException
 	{
 		if (CommRPG.TEST_MODE_ENABLED)
-			delta *= 1;
+			delta *= 15;
+
+		// delta /= 2;
 
 		stateInfo.processMessages();
-		if (stateInfo.isInitialized())
+		if (stateInfo.isInitialized() && !stateInfo.isWaiting())
 		{
 			menuManager.update(delta);
 			if (!menuManager.isBlocking())

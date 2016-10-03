@@ -12,7 +12,7 @@ public class InvisibleCombatAnimation extends CombatAnimation {
 	}
 
 	@Override
-	public void render(FCGameContainer fcCont, Graphics g, int yDrawPos) {
+	public void render(FCGameContainer fcCont, Graphics g, int yDrawPos, float scale) {
 
 	}
 

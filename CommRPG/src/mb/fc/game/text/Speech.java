@@ -11,9 +11,10 @@ public class Speech
 	private int triggerId;
 	private int heroPortrait;
 	private int enemyPortrait;
+	private String spriteAnimsName;
 
 	public Speech(String message, int[] requires, int[] excludes, int triggerId,
-			int heroPortrait, int enemyPortrait) {
+			int heroPortrait, int enemyPortrait, String spriteAnimsName) {
 		super();
 		this.message = message;
 		this.requires = requires;
@@ -21,6 +22,7 @@ public class Speech
 		this.triggerId = triggerId;
 		this.heroPortrait = heroPortrait;
 		this.enemyPortrait = enemyPortrait;
+		this.spriteAnimsName = spriteAnimsName;
 	}
 
 	public String getMessage() {
@@ -40,6 +42,6 @@ public class Speech
 	}
 
 	public Portrait getPortrait(StateInfo stateInfo) {
-		return Portrait.getPortrait(heroPortrait, enemyPortrait, stateInfo);
+		return Portrait.getPortrait(heroPortrait, enemyPortrait, spriteAnimsName, stateInfo);
 	}
 }

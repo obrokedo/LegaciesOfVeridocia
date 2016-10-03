@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Set;
 import java.util.Stack;
 
 import mb.fc.loading.FCResourceManager;
@@ -135,6 +136,32 @@ public class XMLParser
             if (params.containsKey(attribute))
                 return params.get(attribute);
             return null;
+        }
+        
+        public Integer getIntAttribute(String attribute)
+        {
+            if (params.containsKey(attribute))
+                return Integer.parseInt(params.get(attribute));
+            return null;
+        }
+        
+        public Boolean getBoolAttribute(String attribute)
+        {
+        	if (params.containsKey(attribute))
+                return Boolean.parseBoolean(params.get(attribute));
+            return null;
+        }
+
+        public String removeAttribute(String attribute)
+        {
+            if (params.containsKey(attribute))
+                return params.remove(attribute);
+            return null;
+        }
+
+        public Set<String> getAttributes()
+        {
+        	return params.keySet();
         }
 
         /**

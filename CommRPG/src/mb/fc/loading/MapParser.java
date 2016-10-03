@@ -307,9 +307,9 @@ public class MapParser
 					layer[y][x] = tileId;
 				}
 			}
-		} catch (IOException e) {
+		} catch (IOException | NullPointerException e) {
 			Log.error(e);
-			throw new BadMapException("Unable to decode base 64 block,");
+			throw new BadMapException("Unable to decode base 64 block, make sure that you have\n set the map type type to Base 64 gzip compressed");
 		}
 
 		return layer;

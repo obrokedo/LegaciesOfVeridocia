@@ -25,7 +25,7 @@ public class PriestMenu2 extends Menu implements CellRenderer<CombatSprite>, Men
 	private StateInfo stateInfo;
 
 	public PriestMenu2(StateInfo stateInfo, GameContainer gc, ArrayList<CombatSprite> heroes) {
-		super(Panel.PANEL_PRIEST);
+		super(PanelType.PANEL_PRIEST);
 		x = (gc.getWidth() - 390) / 2;
 		heroNames = new Table<CombatSprite>(x + 15, 215, new int[] {150}, new String[] {"Names"}, 7, heroes, this);
 		buttons = new ArrayList<Button>();

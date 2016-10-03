@@ -71,18 +71,20 @@ public enum Range {
 	{
 		switch (this)
 		{
+			case SELF_ONLY:
+				return AttackableSpace.AREA_0;
 			case ONE_ONLY:
-				return AttackableSpace.RANGE_1;
+				return AttackableSpace.AREA_1;
 			case TWO_AND_LESS:
-				return AttackableSpace.RANGE_2;
+				return AttackableSpace.AREA_2;
 			case THREE_AND_LESS:
-				return AttackableSpace.RANGE_3;
+				return AttackableSpace.AREA_3;
 			case TWO_NO_ONE:
-				return AttackableSpace.RANGE_2_NO_1;
+				return AttackableSpace.AREA_2_NO_1;
 			case THREE_NO_ONE:
-				return AttackableSpace.RANGE_3_NO_1;
+				return AttackableSpace.AREA_3_NO_1;
 			case THREE_NO_ONE_OR_TWO:
-				return AttackableSpace.RANGE_3_NO_1_2;
+				return AttackableSpace.AREA_3_NO_1_2;
 		}
 
 		return null;
@@ -125,6 +127,7 @@ public enum Range {
 			case 6:
 				return THREE_NO_ONE_OR_TWO;
 			default:
+				System.out.println();
 				throw new BadResourceException("Attempted to create a resource with an illegal range");
 		}
 	}

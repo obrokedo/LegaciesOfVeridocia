@@ -109,10 +109,13 @@ public class TownState extends LoadableGameState
 			throws SlickException {
 		if (stateInfo.isInitialized())
 		{
-			tileMapRenderer.render(stateInfo.getCamera(), g, stateInfo.getGc());
+			float xOffset = stateInfo.getCamera().getLocationX() % stateInfo.getCurrentMap().getTileRenderWidth();
+			float yOffset = stateInfo.getCamera().getLocationY() % stateInfo.getCurrentMap().getTileRenderHeight();
+
+			tileMapRenderer.render(xOffset, yOffset, stateInfo.getCamera(), g, stateInfo.getGc());
 			spriteRenderer.render(g);
 			cinematicManager.render(g);
-			tileMapRenderer.renderForeground(stateInfo.getCamera(), g, stateInfo.getGc());
+			tileMapRenderer.renderForeground(xOffset, yOffset, stateInfo.getCamera(), g, stateInfo.getGc());
 			panelRenderer.render();
 			menuRenderer.render();
 			cinematicManager.renderMenu(g);
@@ -120,11 +123,14 @@ public class TownState extends LoadableGameState
 		}
 	}
 
+	private boolean right;
+
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException
 	{
 		stateInfo.processMessages();
+
 		if (stateInfo.isInitialized() && !stateInfo.isWaiting())
 		{
 			menuManager.update(delta);
@@ -176,7 +182,7 @@ public class TownState extends LoadableGameState
 				}
 				else if (container.getInput().isKeyDown(Input.KEY_Z))
 				{
-					// stateInfo.sendMessage(new Message(MessageType.SHOW_HEROES));
+					// 	stateInfo.sendMessage(new Message(MessageType.SHOW_HEROES));
 					stateInfo.sendMessage(new ShopMessage(.8, 1.2, new int[] {1, 1, 2, 2, 0, 0, 1, 1, 2, 2, 0, 0}));
 				}
 			}

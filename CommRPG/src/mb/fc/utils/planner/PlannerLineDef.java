@@ -7,8 +7,8 @@ public class PlannerLineDef
 	private String tag;
 	private String name;
 	private String description;
-	private ArrayList<PlannerValueDef> plannerValues;	
-	
+	private ArrayList<PlannerValueDef> plannerValues;
+
 	public PlannerLineDef(String tag, String name, String description, ArrayList<PlannerValueDef> plannerValues) {
 		this.tag = tag;
 		this.name = name;
@@ -30,5 +30,9 @@ public class PlannerLineDef
 
 	public ArrayList<PlannerValueDef> getPlannerValues() {
 		return plannerValues;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }

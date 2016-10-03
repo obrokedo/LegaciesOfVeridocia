@@ -23,17 +23,19 @@ public class Message implements Serializable
 
 		switch (messageType)
 		{
-			case INTIIALIZE:
 			case PAUSE_MUSIC:
 			case RESUME_MUSIC:
 			case FADE_MUSIC:
 			case SOUND_EFFECT:
+			case MOVETO_SPRITELOC:
+			case OVERLAND_MOVE_MESSAGE:
 				immediate = true;
 				break;
 			case SHOW_BATTLEMENU:
 			case SHOW_SPELLMENU:
 			case SHOW_ITEM_MENU:
 			case SHOW_ITEM_OPTION_MENU:
+			case INTIIALIZE:
 				internal = true;
 				break;
 			default:

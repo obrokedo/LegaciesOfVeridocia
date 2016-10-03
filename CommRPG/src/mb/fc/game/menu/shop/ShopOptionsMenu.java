@@ -4,7 +4,6 @@ import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.MessageType;
 import mb.fc.engine.message.ShopMessage;
 import mb.fc.engine.state.StateInfo;
-import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.menu.QuadMenu;
 
 import org.newdawn.slick.Image;
@@ -14,7 +13,7 @@ public class ShopOptionsMenu extends QuadMenu
 	private ShopMessage shopMessage;
 
 	public ShopOptionsMenu(ShopMessage shopMessage, StateInfo stateInfo) {
-		super(Panel.PANEL_SHOP_OPTIONS, true, stateInfo);
+		super(PanelType.PANEL_SHOP_OPTIONS, true, stateInfo);
 		this.shopMessage = shopMessage;
 
 		icons = new Image[8];

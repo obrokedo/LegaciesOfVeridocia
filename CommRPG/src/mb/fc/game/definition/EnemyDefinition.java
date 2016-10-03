@@ -31,7 +31,8 @@ public class EnemyDefinition
 	private int level;
 	private String animations;
 	private String effectId = null;
-	private int effectChance = -1;
+	private String paletteName;
+	private int effectChance = -1, effectLevel = -1;
 
 	private ArrayList<Integer> spellsPerLevel;
 	private ArrayList<String> spellIds;
@@ -56,6 +57,11 @@ public class EnemyDefinition
 		hd.move = Integer.parseInt(tagArea.getAttribute("move"));
 		hd.movementType = tagArea.getAttribute("movementtype");
 		hd.animations = tagArea.getAttribute("animations");
+
+		if (hd.paletteName == null || hd.paletteName.trim().length() == 0)
+			hd.paletteName = null;
+		else
+			hd.animations = hd.animations + "-" + hd.paletteName;
 
 		// Load affinities
 		hd.maxFireAffin = Integer.parseInt(tagArea.getAttribute("fireAffin"));
@@ -105,6 +111,7 @@ public class EnemyDefinition
 			{
 				hd.effectId = childTagArea.getAttribute("effectid");
 				hd.effectChance = Integer.parseInt(childTagArea.getAttribute("effectchance"));
+				hd.effectLevel = Integer.parseInt(childTagArea.getAttribute("effectlevel"));
 			}
 		}
 
@@ -113,6 +120,12 @@ public class EnemyDefinition
 
 	public CombatSprite getEnemy(StateInfo stateInfo, int myId)
 	{
+		if (paletteName != null &&
+				!stateInfo.getResourceManager().getSpriteAnimations().containsKey(animations)) {
+			//TODO Load palette stuff
+			// stateInfo.getResourceManager().addResource(resource, null , 0, 0);
+		}
+
 		// Set up known spells
 		ArrayList<KnownSpell> knownSpells = new ArrayList<KnownSpell>();
 		for (int i = 0; i < spellsPerLevel.size(); i++)
@@ -126,7 +139,7 @@ public class EnemyDefinition
 				maxColdAffin, maxDarkAffin, maxWaterAffin, maxEarthAffin, maxWindAffin,
 				maxLightAffin, maxBody, maxMind, maxCounter, maxEvade,
 				maxDouble, maxCrit, level, myId, knownSpells, ENEMY_COUNT--,
-				effectId, effectChance);
+				effectId, effectChance, effectLevel);
 
 		// Add items to the combat sprite
 		for (int i = 0; i < items.size(); i++)

@@ -181,8 +181,21 @@ public class PersistentStateInfo implements PacketHandler
 		return client != null;
 	}
 
+	/**
+	 * Sends the specified message to all connected peers if the message
+	 * is not an internal message
+	 *
+	 * @param message the message to be sent
+	 */
+	public void sendMessageToPeers(Message message)
+	{
+		if (!message.isInternal() && isOnline())
+			client.sendMessage(message);
+	}
+
 	public void sendMessage(Message message)
 	{
+		System.out.println("PSI: " + message.getMessageType() + " " + message.isInternal() + " " + isOnline());
 		if (!message.isInternal() && isOnline())
 			client.sendMessage(message);
 		else

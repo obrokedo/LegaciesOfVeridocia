@@ -7,14 +7,16 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Stack;
 
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.util.Log;
+
 import mb.fc.engine.message.IntMessage;
 import mb.fc.engine.message.LoadMapMessage;
 import mb.fc.engine.message.Message;
 import mb.fc.engine.message.MessageType;
 import mb.fc.game.Camera;
-import mb.fc.game.battle.LevelUpResult;
-import mb.fc.game.exception.BadResourceException;
 import mb.fc.game.hudmenu.Panel;
+import mb.fc.game.hudmenu.Panel.PanelType;
 import mb.fc.game.hudmenu.WaitPanel;
 import mb.fc.game.input.FCInput;
 import mb.fc.game.listener.KeyboardListener;
@@ -23,7 +25,6 @@ import mb.fc.game.manager.Manager;
 import mb.fc.game.menu.Menu;
 import mb.fc.game.persist.ClientProfile;
 import mb.fc.game.persist.ClientProgress;
-import mb.fc.game.resource.HeroResource;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.sprite.Door;
 import mb.fc.game.sprite.Sprite;
@@ -33,10 +34,6 @@ import mb.fc.game.ui.FCGameContainer;
 import mb.fc.loading.FCResourceManager;
 import mb.fc.map.Map;
 import mb.fc.map.MapObject;
-import mb.jython.GlobalPythonFactory;
-
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.util.Log;
 
 /**
  * Central container to hold all information that is associated with a given state. AKA "The Dumping Ground"
@@ -61,7 +58,7 @@ public class StateInfo
 	private PersistentStateInfo psi;
 
 	// These values need to be reinitialized each time a map is loaded
-	private ArrayList<TriggerLocation> triggers;
+	private ArrayList<TriggerLocation> mapTriggers;
 	private ArrayList<Sprite> sprites;
 	private ArrayList<CombatSprite> combatSprites;
 	private ArrayList<Panel> panels;
@@ -100,7 +97,7 @@ public class StateInfo
 		this.managers = new ArrayList<Manager>();
 		this.messagesToProcess = new ArrayList<Message>();
 		this.newMessages = new ArrayList<Message>();
-		this.triggers = new ArrayList<TriggerLocation>();
+		this.mapTriggers = new ArrayList<TriggerLocation>();
 		this.fcInput = new FCInput();
 		this.heroes = new ArrayList<>();
 
@@ -122,37 +119,8 @@ public class StateInfo
 
 		this.initialized = false;
 		setWaiting();
-
-		// Add starting heroes if they haven't been added yet
-		if (psi.getClientProfile().getHeroes().size() == 0)
-		{
-			// Add the heroes specified in the configuration values,
-			// these are the heroes that the force will initially contain
-			for (Integer heroId : GlobalPythonFactory.createConfigurationValues().getStartingHeroIds())
-				psi.getClientProfile().addHero(HeroResource.getHero(heroId));
-
-			// Add any heroes specified in the development params
-			if (psi.getClientProfile().getDevelHeroIds() != null)
-				for (Integer heroId : psi.getClientProfile().getDevelHeroIds())
-					psi.getClientProfile().addHero(HeroResource.getHero(heroId));
-
-			if (psi.getClientProfile().getHeroes().size() == 0)
-				throw new BadResourceException("No starting heroes have been specified. Update the ConfigurationValues "
-						+ "script to indicate the ids of the heroes that should start in the party.");
-		}
-
-		if (psi.getClientProfile().getDevelLevel() > 1)
-		{
-			for (CombatSprite cs : psi.getClientProfile().getHeroes())
-			{
-				while (cs.getLevel() < psi.getClientProfile().getDevelLevel())
-				{
-					LevelUpResult lur = cs.getHeroProgression().getLevelUpResults(cs, this);
-					cs.setExp(100);
-					cs.getHeroProgression().levelUp(cs, lur, this.getResourceManager());
-				}
-			}
-		}
+		
+		psi.getClientProfile().initialize(this);
 
 		initializeSystems();
 
@@ -185,7 +153,7 @@ public class StateInfo
 	{
 		Log.debug("Initialize Systems");
 
-		triggers.clear();
+		mapTriggers.clear();
 		sprites.clear();
 		combatSprites.clear();
 		panels.clear();
@@ -218,11 +186,11 @@ public class StateInfo
 		{
 			if (!isCombat && mo.getKey().equalsIgnoreCase("trigger"))
 			{
-				triggers.add(new TriggerLocation(this, mo));
+				mapTriggers.add(new TriggerLocation(this, mo));
 			}
 			else if (isCombat && mo.getKey().equalsIgnoreCase("battletrigger"))
 			{
-				triggers.add(new TriggerLocation(this, mo));
+				mapTriggers.add(new TriggerLocation(this, mo));
 			}
 			else if (mo.getKey().equalsIgnoreCase("sprite"))
 			{
@@ -232,7 +200,11 @@ public class StateInfo
 			{
 				Door door = (Door) mo.getDoor(this, doorId++);
 				addSprite(door);
-				triggers.add(new TriggerLocation(this, mo, door));
+				mapTriggers.add(new TriggerLocation(this, mo, door));
+			}
+			else if (mo.getKey().equalsIgnoreCase("searcharea"))
+			{
+				addSprite(mo.getSearchArea(this));
 			}
 			/*
 			else if (mo.getKey().equalsIgnoreCase("roof"))
@@ -257,21 +229,19 @@ public class StateInfo
 	/************************/
 	public void sendMessage(Message message)
 	{
-		if (message.isImmediate())
+		System.out.println("SEND MESSAGE: " + message.getMessageType() + " " + psi.getClientId());
+		if (message.isImmediate()) {
 			sendMessageImpl(message);
+			// Send the message to our peers, these messages will not be received locally
+			psi.sendMessageToPeers(message);
+		}
 		else
 			psi.sendMessage(message);
-
-		/*
-		if (message.isImmediate())
-			sendMessageImpl(message);
-		else
-			newMessages.add(message);
-			*/
 	}
 
 	public void sendMessage(Message message, boolean ifHost)
 	{
+		System.out.println("SEND MESSAGE IF HOST: " + message.getMessageType() + " " + psi.getClientId() + " " + psi.isHost());
 		if (psi.isHost())
 			psi.sendMessage(message);
 
@@ -290,17 +260,8 @@ public class StateInfo
 	 */
 	public void sendMessage(MessageType messageType)
 	{
-		Message message = new Message(messageType);
-		if (message.isImmediate())
-			sendMessageImpl(message);
-		else
-			psi.sendMessage(message);
-		/*
-		if (message.isImmediate())
-			sendMessageImpl(message);
-		else
-			newMessages.add(message);
-			*/
+		sendMessage(new Message(messageType));
+		System.out.println("HERE");
 	}
 
 	public void sendMessage(MessageType messageType, boolean ifHost)
@@ -317,6 +278,7 @@ public class StateInfo
 
 	public void recieveMessage(Message message)
 	{
+		System.out.println("RECIEVE MESSAGE: " + message.getMessageType() + " " + psi.getClientId() + " " + psi.isHost());
 		newMessages.add(message);
 	}
 
@@ -362,7 +324,7 @@ public class StateInfo
 							// Start the whole battle
 							sendMessage(MessageType.NEXT_TURN);
 					}
-					this.removePanel(Panel.PANEL_WAIT);
+					this.removePanel(PanelType.PANEL_WAIT);
 					isWaiting = false;
 					break;
 				default:
@@ -414,7 +376,7 @@ public class StateInfo
 		return panels.size() > 0;
 	}
 
-	public boolean isMenuDisplayed(int panelType)
+	public boolean isMenuDisplayed(PanelType panelType)
 	{
 		for (Menu m : menus)
 			if (m.getPanelType() == panelType)
@@ -433,7 +395,7 @@ public class StateInfo
 			panel.panelRemoved(this);
 	}
 
-	public void removePanel(int panelType)
+	public void removePanel(PanelType panelType)
 	{
 		for (Panel m : panels)
 			if (m.getPanelType() == panelType)
@@ -442,23 +404,6 @@ public class StateInfo
 				m.panelRemoved(this);
 				break;
 			}
-	}
-
-	public void removeMenu(int menuType)
-	{
-		for (Menu m : menus)
-			if (m.getPanelType() == menuType)
-			{
-				menus.remove(m);
-				m.panelRemoved(this);
-				break;
-			}
-	}
-
-	public void removeMenu(Menu menu)
-	{
-		if (menus.remove(menu))
-			menu.panelRemoved(this);
 	}
 
 	public void addSingleInstanceMenu(Menu menu)
@@ -541,9 +486,9 @@ public class StateInfo
 	/****************************/
 	/* Plot Progression Methods	*/
 	/****************************/
-	public void checkTriggers(int mapX, int mapY, boolean immediate)
+	public void checkTriggersMovemenet(int mapX, int mapY, boolean immediate)
 	{
-		for (TriggerLocation trigger : triggers)
+		for (TriggerLocation trigger : mapTriggers)
 		{
 			if (trigger.contains(mapX, mapY))
 			{
@@ -552,6 +497,16 @@ public class StateInfo
 		}
 
 		this.getResourceManager().getMap().checkRoofs(mapX, mapY);
+	}
+	
+	public void checkTriggersEnemyDeath(CombatSprite cs)
+	{
+		getResourceManager().checkTriggerCondtions(this);
+	}
+	
+	public void checkTriggersHeroDeath(CombatSprite cs)
+	{
+		getResourceManager().checkTriggerCondtions(this);
 	}
 
 	public void setQuestComplete(int id)
@@ -597,8 +552,11 @@ public class StateInfo
 	public CombatSprite getCombatSpriteAtTile(int tileX, int tileY, Boolean targetsHero)
 	{
 		for (CombatSprite s : combatSprites)
-			if ((targetsHero == null || s.isHero() == targetsHero) && s.getTileX() == tileX && s.getTileY() == tileY)
+		{
+			if ((targetsHero == null || s.isHero() == targetsHero) && 
+					s.getTileX() == tileX && s.getTileY() == tileY && s.getCurrentHP() > 0)
 				return s;
+		}
 		return null;
 	}
 

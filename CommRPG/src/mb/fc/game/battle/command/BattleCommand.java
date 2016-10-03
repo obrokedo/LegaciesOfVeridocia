@@ -14,6 +14,7 @@ public class BattleCommand implements Serializable
 	public static final int COMMAND_ATTACK = 0;
 	public static final int COMMAND_SPELL = 1;
 	public static final int COMMAND_ITEM = 2;
+	public static final int COMMAND_TURN_PREVENTED = 3;
 
 	private int command;
 	private KnownSpell spell;
@@ -39,7 +40,7 @@ public class BattleCommand implements Serializable
 		this.level = level;
 		this.jSpell = jSpell;
 	}
-
+	
 	public int getCommand() {
 		return command;
 	}

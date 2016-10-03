@@ -82,6 +82,8 @@ public class CinematicActor implements Comparable<CinematicActor>
 	private float specialEffectCounter;
 	private Direction specialEffectDirection;
 
+	private int moveCounter = 0;
+
 	boolean isHeroBacked = false;
 	boolean isHeroPromoted = false;
 
@@ -425,6 +427,12 @@ public class CinematicActor implements Comparable<CinematicActor>
 
 		if (moving)
 		{
+			moveCounter += delta;
+			if (moveCounter > 30)
+			{
+
+			}
+
 			/*
 			movingDelta += delta;
 			while (movingDelta > jCinematicActor.getMoveUpdate())

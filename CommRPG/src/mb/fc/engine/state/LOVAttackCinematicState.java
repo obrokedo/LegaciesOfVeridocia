@@ -17,6 +17,7 @@ import mb.fc.game.combat.TransCombatAnimation;
 import mb.fc.game.combat.WaitCombatAnimation;
 import mb.fc.game.constants.TextSpecialCharacters;
 import mb.fc.game.hudmenu.Panel;
+import mb.fc.game.hudmenu.Panel.PanelType;
 import mb.fc.game.hudmenu.SpriteContextPanel;
 import mb.fc.game.input.FCInput;
 import mb.fc.game.menu.Menu.MenuUpdate;
@@ -84,6 +85,10 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 	private int SPELL_OVERLAY_MAX_ALPHA = 80;
 	private Color spellOverlayColor = null;
 
+	// The amount that the background has been scaled to fit the screen,
+	// other animations should be scaled up accordingly
+	private float backgroundScale;
+
 	private Music music;
 	private Music introMusic;
 	public static final int SPELL_FLASH_DURATION = 480;
@@ -121,9 +126,9 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 		for (CombatSprite cs : battleResults.targets)
 			cs.initializeBattleEffects(frm);
 
-		for (JBattleEffect eff : battleResults.targetEffects)
+		for (ArrayList<JBattleEffect> effs : battleResults.targetEffects)
 		{
-			if (eff != null)
+			for (JBattleEffect eff : effs)
 				eff.initializeAnimation(frm);
 		}
 
@@ -167,8 +172,9 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 		SpriteSheet battleBGSS = frm.getSpriteSheets().get("battlebg");
 		Image bgIm = battleBGSS.getSprite(frm.getMap().getBackgroundImageIndex() % battleBGSS.getHorizontalCount(),
 				frm.getMap().getBackgroundImageIndex() / battleBGSS.getHorizontalCount());
-		backgroundImage = bgIm.getScaledCopy((gc.getWidth() - gc.getDisplayPaddingX() * 2) / (float) bgIm.getWidth());
-		System.out.println("BACKGROUND " + backgroundImage.getWidth() + " " + backgroundImage.getHeight() + " " + ((gc.getWidth() - gc.getDisplayPaddingX() * 2) / (float) bgIm.getWidth()) );
+		backgroundScale = (gc.getWidth() - gc.getDisplayPaddingX() * 2) / (float) bgIm.getWidth();
+		backgroundImage = bgIm.getScaledCopy(backgroundScale);
+
 		bgXPos = gc.getDisplayPaddingX();
 		bgYPos = (gc.getHeight() - backgroundImage.getHeight()) / 2;
 		combatAnimationYOffset = bgYPos + backgroundImage.getHeight();
@@ -176,179 +182,202 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 		//////////////////////////////////////////////////////////////////////////
 		// The attacker will be standing in any case
 		addCombatAnimation(attacker.isHero(), new StandCombatAnimation(attacker));
-
-		//TODO CHECK TO SEE IF THE COMMAND WAS AN ITEM THAT CASTS A SPELL
-		boolean isSpell = battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_SPELL;
-		int distanceApart = 1;
-
-		if (isSpell)
-			textToDisplay.add(attacker.getName() + " casts " + battleResults.battleCommand.getSpell().getName() + " " +
-					battleResults.battleCommand.getLevel() + TextSpecialCharacters.CHAR_HARD_STOP);
-		else if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_ITEM) {
-			// Check to see if the item being used has a spell effect, if so then display the correct
-			// text and set the isSpell boolean to true so that spell effects work correctly
-			if (battleResults.battleCommand.getItem().getSpellUse() != null) {
-				textToDisplay.add(attacker.getName() + " uses the " +
-						battleResults.battleCommand.getItem().getName() + "! " + TextSpecialCharacters.CHAR_SOFT_STOP +
-						attacker.getName() + " casts " + battleResults.battleCommand.getSpell().getName() + " " +
-						battleResults.battleCommand.getLevel() + TextSpecialCharacters.CHAR_HARD_STOP);
-				isSpell = true;
-			}
-			// Otherwise just display the generic use item text
-			else
-				textToDisplay.add(attacker.getName() + " uses the " +
-					battleResults.battleCommand.getItem().getName() + "!" + TextSpecialCharacters.CHAR_HARD_STOP);
-		}
-		else
-			textToDisplay.add(attacker.getName() + " attacks!" + TextSpecialCharacters.CHAR_HARD_STOP);
+		
 		CombatSprite target = battleResults.targets.get(0);
 
-		if (targetsAllies)
+		// If the battle command is not TURN_PREVENTED then determine how the cinematic should
+		// be displayed
+		if (battleResults.battleCommand.getCommand() != BattleCommand.COMMAND_TURN_PREVENTED)
 		{
-			int i = 0;
-
-			//TODO SELF IS A TARGET
-			addCombatAnimation(!attacker.isHero(), null);
-
-			int selfIndex = battleResults.targets.indexOf(attacker);
-			if (selfIndex != -1)
-			{
-				battleResults.targets.add(0, battleResults.targets.remove(selfIndex));
-				battleResults.text.add(0, battleResults.text.remove(selfIndex));
-				battleResults.attackerHPDamage.add(0, battleResults.attackerHPDamage.remove(selfIndex));
-				// battleResults.attackerMPDamage.add(0, battleResults.attackerMPDamage.remove(selfIndex));
-				battleResults.hpDamage.add(0, battleResults.hpDamage.remove(selfIndex));
-				battleResults.mpDamage.add(0, battleResults.mpDamage.remove(selfIndex));
-				battleResults.targetEffects.add(0, battleResults.targetEffects.remove(selfIndex));
-
-				AttackCombatAnimation aca = new AttackCombatAnimation(attacker, battleResults, true, battleResults.critted.get(0));
-				addCombatAnimationWithNoSpeechNoReaction(attacker.isHero(), aca);
-				if (battleResults.targets.size() > 1)
-					addDamageAndTransitionOut(attacker, aca, isSpell, battleResults.targets.size() == 1, battleResults, 0);
+			//TODO CHECK TO SEE IF THE COMMAND WAS AN ITEM THAT CASTS A SPELL
+			boolean isSpell = battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_SPELL;
+			int distanceApart = 1;
+	
+			// This is a spell
+			if (isSpell)
+				textToDisplay.add(attacker.getName() + " casts " + battleResults.battleCommand.getSpell().getName() + " " +
+						battleResults.battleCommand.getLevel() + TextSpecialCharacters.CHAR_HARD_STOP);
+			// This is an item
+			else if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_ITEM) {
+				// Check to see if the item being used has a spell effect, if so then display the correct
+				// text and set the isSpell boolean to true so that spell effects work correctly
+				if (battleResults.battleCommand.getItem().getSpellUse() != null) {
+					textToDisplay.add(attacker.getName() + " uses the " +
+							battleResults.battleCommand.getItem().getName() + "! " + TextSpecialCharacters.CHAR_SOFT_STOP +
+							attacker.getName() + " casts " + battleResults.battleCommand.getSpell().getName() + " " +
+							battleResults.battleCommand.getLevel() + TextSpecialCharacters.CHAR_HARD_STOP);
+					isSpell = true;
+				}
+				// Otherwise just display the generic use item text
 				else
-					addDamage(attacker, aca, isSpell, battleResults, 0);
-
-
-				i = 1;
+					textToDisplay.add(attacker.getName() + " uses the " +
+						battleResults.battleCommand.getItem().getName() + "!" + TextSpecialCharacters.CHAR_HARD_STOP);
 			}
-			else
+			// This is an attack
+			else if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_ATTACK)
+				textToDisplay.add(attacker.getName() + " attacks!" + TextSpecialCharacters.CHAR_HARD_STOP);
+	
+			if (targetsAllies)
 			{
-				addActionAndTransitionOut(attacker, battleResults, isSpell, false);
-			}
-
-			for (; i < battleResults.targets.size(); i++)
-			{
-				addTransitionInAndOut(isSpell, battleResults.targets.get(i), battleResults, i,
-						i == battleResults.targets.size() - 1);
-			}
-
-			if (selfIndex == -1 || battleResults.targets.size() > 1)
-			{
-				StandCombatAnimation attackerStand = new StandCombatAnimation(attacker);
-				addCombatAnimationWithNoSpeechNoReaction(attacker.isHero(), new TransCombatAnimation(attackerStand, false));
-			}
-		}
-		else
-		{
-			distanceApart = Math.abs(attacker.getTileX() - target.getTileX()) + Math.abs(attacker.getTileY() - target.getTileY());
-			if (distanceApart == 1 || isSpell)
-			{
-				int attackCount = 0;
-
-				// If the targets aren't allies then they should stand
-				addCombatAnimation(target.isHero(), new StandCombatAnimation(target));
-				addAttackAction(attacker, target, battleResults, attackCount++, isSpell, false);
-
-				if (battleResults.countered)
+				int i = 0;
+	
+				//TODO SELF IS A TARGET
+				addCombatAnimation(!attacker.isHero(), null);
+	
+				int selfIndex = battleResults.targets.indexOf(attacker);
+				if (selfIndex != -1)
 				{
-					addCombatAnimation(attacker.isHero(), new StandCombatAnimation(attacker));
-					addCombatAnimation(target.isHero(), new StandCombatAnimation(target));
-					textToDisplay.add(target.getName() + "'s counter attack!");
-					addAttackAction(target, attacker, battleResults, attackCount++, isSpell, false);
+					battleResults.targets.add(0, battleResults.targets.remove(selfIndex));
+					battleResults.text.add(0, battleResults.text.remove(selfIndex));
+					battleResults.attackerHPDamage.add(0, battleResults.attackerHPDamage.remove(selfIndex));
+					// battleResults.attackerMPDamage.add(0, battleResults.attackerMPDamage.remove(selfIndex));
+					battleResults.hpDamage.add(0, battleResults.hpDamage.remove(selfIndex));
+					battleResults.mpDamage.add(0, battleResults.mpDamage.remove(selfIndex));
+					battleResults.targetEffects.add(0, battleResults.targetEffects.remove(selfIndex));
+	
+					AttackCombatAnimation aca = new AttackCombatAnimation(attacker, battleResults, true, battleResults.critted.get(0));
+					addCombatAnimationWithNoSpeechNoReaction(attacker.isHero(), aca);
+					if (battleResults.targets.size() > 1)
+						addDamageAndTransitionOut(attacker, aca, isSpell, battleResults.targets.size() == 1, battleResults, 0);
+					else
+						addDamage(attacker, aca, isSpell, battleResults, 0);
+	
+	
+					i = 1;
 				}
-
-				if (battleResults.doubleAttack)
+				else
 				{
-					addCombatAnimation(attacker.isHero(), new StandCombatAnimation(attacker));
-					addCombatAnimation(target.isHero(), new StandCombatAnimation(target));
-					textToDisplay.add(attacker.getName() + "'s second attack!");
-					addAttackAction(attacker, target, battleResults, attackCount++, isSpell, false);
+					addActionAndTransitionOut(attacker, battleResults, isSpell, false);
 				}
-			}
-			else
-			{
-				addCombatAnimation(target.isHero(), null);
-				addRangedAttack(attacker, target, 0);
-
-				if (battleResults.doubleAttack)
-				{
-					addCombatAnimation(attacker.isHero(), new StandCombatAnimation(attacker));
-					addCombatAnimation(target.isHero(), null);
-					textToDisplay.add(attacker.getName() + "'s second attack!");
-					addRangedAttack(attacker, target, 1);
-				}
-			}
-
-			if (battleResults.targets.size() > 1)
-			{
-				StandCombatAnimation targetStand = new StandCombatAnimation(target);
-				addCombatAnimationWithNoSpeechNoReaction(target.isHero(), new TransCombatAnimation(targetStand, true));
-
-				for (int i = 1; i < battleResults.targets.size(); i++)
+	
+				for (; i < battleResults.targets.size(); i++)
 				{
 					addTransitionInAndOut(isSpell, battleResults.targets.get(i), battleResults, i,
 							i == battleResults.targets.size() - 1);
 				}
-
-				// Remove the last set of actions because we don't want this target to move off the screen
-				heroCombatAnimations.remove(heroCombatAnimations.size() - 1);
-				enemyCombatAnimations.remove(enemyCombatAnimations.size() - 1);
-				textToDisplay.remove(textToDisplay.size() - 1);
+	
+				if (selfIndex == -1 || battleResults.targets.size() > 1)
+				{
+					StandCombatAnimation attackerStand = new StandCombatAnimation(attacker);
+					addCombatAnimationWithNoSpeechNoReaction(attacker.isHero(), new TransCombatAnimation(attackerStand, false));
+				}
 			}
-		}
-
-		/*
-		 * Show the final frame where both parties (assuming they are alive)
-		 * are standing next to eachother.
-		 */
-		// Check to see if the attacker is still alive
-		if (!battleResults.attackerDeath)
-			addCombatAnimation(attacker.isHero(), new StandCombatAnimation(attacker));
-		else
-			addCombatAnimation(attacker.isHero(), null);
-
-		if (!targetsAllies && (isSpell || distanceApart == 1))
-		{
-			int lastIndex = battleResults.targets.size() - 1;
-
-			// Check to see if the target is still alive
-			if ((battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_ATTACK && (!battleResults.death || battleResults.attackerDeath))
-					|| (battleResults.battleCommand.getCommand() != BattleCommand.COMMAND_ATTACK && battleResults.remainingHP.get(lastIndex) > 0))
+			// The action is against enemies
+			else
 			{
-				addCombatAnimation(!attacker.isHero(), new StandCombatAnimation(
-					battleResults.targets.get(lastIndex)));
+				distanceApart = Math.abs(attacker.getTileX() - target.getTileX()) + Math.abs(attacker.getTileY() - target.getTileY());
+				// If the attack is in melee range or a spell is being cast then the attacker will
+				// always stay on the screen
+				if (distanceApart == 1 || isSpell)
+				{
+					int attackCount = 0;
+	
+					// If the targets aren't allies then they should stand
+					addCombatAnimation(target.isHero(), new StandCombatAnimation(target));
+					addAttackAction(attacker, target, battleResults, attackCount++, isSpell, false);
+	
+					if (battleResults.countered)
+					{
+						addCombatAnimation(attacker.isHero(), new StandCombatAnimation(attacker));
+						addCombatAnimation(target.isHero(), new StandCombatAnimation(target));
+						textToDisplay.add(target.getName() + "'s counter attack!");
+						addAttackAction(target, attacker, battleResults, attackCount++, isSpell, false);
+					}
+	
+					if (battleResults.doubleAttack)
+					{
+						addCombatAnimation(attacker.isHero(), new StandCombatAnimation(attacker));
+						addCombatAnimation(target.isHero(), new StandCombatAnimation(target));
+						textToDisplay.add(attacker.getName() + "'s second attack!");
+						addAttackAction(attacker, target, battleResults, attackCount++, isSpell, false);
+					}
+				}
+				// This is a ranged attack
+				else
+				{
+					addCombatAnimation(target.isHero(), null);
+					addRangedAttack(attacker, target, 0);
+	
+					if (battleResults.doubleAttack)
+					{
+						addCombatAnimation(attacker.isHero(), new StandCombatAnimation(attacker));
+						addCombatAnimation(target.isHero(), null);
+						textToDisplay.add(attacker.getName() + "'s second attack!"  + TextSpecialCharacters.CHAR_HARD_STOP);
+						addRangedAttack(attacker, target, 1);
+					}
+				}
+	
+				// If there is more then one target they need to be transitioned in and out while the attacker stays
+				// in their final attack frame (or spell)
+				if (battleResults.targets.size() > 1)
+				{
+					StandCombatAnimation targetStand = new StandCombatAnimation(target);
+					addCombatAnimationWithNoSpeechNoReaction(target.isHero(), new TransCombatAnimation(targetStand, true));
+	
+					for (int i = 1; i < battleResults.targets.size(); i++)
+					{
+						addTransitionInAndOut(isSpell, battleResults.targets.get(i), battleResults, i,
+								i == battleResults.targets.size() - 1);
+					}
+	
+					// Remove the last set of actions because we don't want this target to move off the screen
+					heroCombatAnimations.remove(heroCombatAnimations.size() - 1);
+					enemyCombatAnimations.remove(enemyCombatAnimations.size() - 1);
+					textToDisplay.remove(textToDisplay.size() - 1);
+				}
+			}
+	
+			/*
+			 * Show the final frame where both parties (assuming they are alive)
+			 * are standing next to eachother.
+			 */
+			// Check to see if the attacker is still alive
+			if (!battleResults.attackerDeath)
+				addCombatAnimation(attacker.isHero(), new StandCombatAnimation(attacker));
+			else
+				addCombatAnimation(attacker.isHero(), null);
+	
+			if (!targetsAllies && (isSpell || distanceApart == 1))
+			{
+				int lastIndex = battleResults.targets.size() - 1;
+	
+				// Check to see if the target is still alive
+				if ((battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_ATTACK && (!battleResults.death || battleResults.attackerDeath))
+						|| (battleResults.battleCommand.getCommand() != BattleCommand.COMMAND_ATTACK && battleResults.remainingHP.get(lastIndex) > 0))
+				{
+					addCombatAnimation(!attacker.isHero(), new StandCombatAnimation(
+						battleResults.targets.get(lastIndex)));
+				}
+				else
+				{
+					addCombatAnimation(!attacker.isHero(), null);
+				}
 			}
 			else
 			{
 				addCombatAnimation(!attacker.isHero(), null);
 			}
+	
+			// If the item was damaged then we'll use the animations from above
+			// and display the damaged item text, we need to add null animations
+			// to the lists so that they use the animations that were determined
+			// above for the final frame where the attack over text is displayed
+			if (battleResults.itemDamaged) {
+				textToDisplay.add("The " + battleResults.itemUsed.getName() + " was damaged due to use." + TextSpecialCharacters.CHAR_SOFT_STOP);
+				addCombatAnimation(true, null);
+				addCombatAnimation(false, null);
+			}
+	
+			textToDisplay.add(battleResults.attackOverText);
+		} else {
+			// If we are targeting an enemy then show him standing on the screen
+			// if he was within one space
+			if (!targetsAllies && Math.abs(attacker.getTileX() - target.getTileX()) + 
+					Math.abs(attacker.getTileY() - target.getTileY()) == 1)
+			{
+				addCombatAnimation(target.isHero(), new StandCombatAnimation(target));
+			}
 		}
-		else
-		{
-			addCombatAnimation(!attacker.isHero(), null);
-		}
-
-		// If the item was damaged then we'll use the animations from above
-		// and display the damaged item text, we need to add null animations
-		// to the lists so that they use the animations that were determined
-		// above for the final frame where the attack over text is displayed
-		if (battleResults.itemDamaged) {
-			textToDisplay.add("The " + battleResults.itemUsed.getName() + " was damaged due to use." + TextSpecialCharacters.CHAR_SOFT_STOP);
-			addCombatAnimation(true, null);
-			addCombatAnimation(false, null);
-		}
-
-		textToDisplay.add(battleResults.attackOverText);
 
 		nextAction(null);
 	}
@@ -418,7 +447,6 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 		}
 		else
 		{
-			System.out.println(Math.max(2400, aca.getAnimationLength() + 200) + " " + aca.getAnimationLength());
 			StandCombatAnimation targetStand = new StandCombatAnimation(target,
 					(isSpell ? aca.getAnimationLength() + 200 : aca.getAnimationLengthMinusLast()));
 			addCombatAnimation(target.isHero(), targetStand);
@@ -442,8 +470,6 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 				addCombatAnimation(target.isHero(), new StandCombatAnimation(target));
 			}
 			textToDisplay.add(battleResults.text.get(index));
-
-			System.out.println("Has winddown: " + attacker.hasAnimation("Winddown"));
 
 			if (attacker.hasAnimation("Winddown"))
 			{
@@ -559,9 +585,9 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 
 		g.drawImage(backgroundImage, bgXPos, bgYPos);
 		if (heroCombatAnim != null)
-			heroCombatAnim.render(gc, g, combatAnimationYOffset);
+			heroCombatAnim.render(gc, g, combatAnimationYOffset, backgroundScale);
 		if (enemyCombatAnim != null)
-			enemyCombatAnim.render(gc, g, combatAnimationYOffset);
+			enemyCombatAnim.render(gc, g, combatAnimationYOffset, backgroundScale);
 		if (drawingSpell && spellFlash == null)
 		{
 			spellAnimation.drawAnimation((int) (gc.getDisplayPaddingX() + (spellTargetsHeroes ? 276 * SCREEN_SCALE : 50 * SCREEN_SCALE)),
@@ -597,7 +623,7 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 		// If this is test mode then we want to speed
 		// up the game
 		if (CommRPG.TEST_MODE_ENABLED)
-			delta *= 1;
+			delta *= 15;
 
 		// Update the input so that released keys are realized
 		input.update(delta);
@@ -799,7 +825,7 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 					heroHealthPanel = null;
 				else
 					heroHealthPanel = new SpriteContextPanel(
-							Panel.PANEL_HEALTH_BAR,
+							PanelType.PANEL_HEALTH_BAR,
 							hero.getParentSprite(), gc);
 				hero.initialize();
 				heroCombatAnim = hero;
@@ -814,7 +840,7 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 					enemyHealthPanel = null;
 				else
 					enemyHealthPanel = new SpriteContextPanel(
-							Panel.PANEL_TARGET_HEALTH_BAR,
+							PanelType.PANEL_TARGET_HEALTH_BAR,
 							enemy.getParentSprite(), gc);
 				enemy.initialize();
 				enemyCombatAnim = enemy;

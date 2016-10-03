@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.Hashtable;
 
 import mb.fc.engine.CommRPG;
+import mb.fc.game.exception.BadResourceException;
 import mb.jython.GlobalPythonFactory;
 import mb.jython.JConfigurationValues;
 
@@ -28,42 +29,6 @@ import org.newdawn.slick.geom.Shape;
  */
 public class Map
 {
-	/**
-	 * Table that defines how each type of battle unit's movement is effected by each type of terrain.
-	 * A value of 1000 means that the space is unmoveable in battle. A value of 10 is equivalent to 1 space
-	 */
-	private static final int[][] movementCostsByType2 = {
-														//Water   		Road   			Forest     		Sand    	H Sky
-														//	  	Grass  			Th Gras   	 	Hills  			L Sky	Impassable
-														// Normal
-														{1000, 	10, 	10, 	15, 	20, 	15, 	20, 	1000, 1000, 1000},
-														// Slow
-														{1000, 	10, 	10, 	15, 	25, 	25, 	25, 	1000, 1000, 1000},
-														// Fast
-														{1000, 	10, 	10, 	10, 	15, 	10, 	20, 	1000, 1000, 1000},
-														// Beast
-														{1000, 	10, 	10, 	10, 	10, 	15, 	15, 	1000, 1000, 1000},
-														// Tank
-														{1000, 	10, 	10, 	10, 	15, 	10, 	15, 	1000, 1000, 1000},
-
-
-														// Hovering
-														{10,   10, 		10, 	10, 	10, 	10, 	10, 	10,   1000, 1000},
-														// Flight
-														{10,	10, 	10, 	10, 	10, 	10, 	10, 	10,	  10,	1000},
-														// Free
-														{10, 	10, 	10, 	10, 	10, 	10, 	10, 	10,   10,	10},
-													};
-
-	/**
-	 * Describes the land effect of each terrain type for units that are not flying
-	 */
-													//Water   		Road   			Forest     		Sand    	H Sky
-													//	  	Grass  			Th Gras   	 	Hills  			L Sky	Impassable
-	private static final int[] terrainEffectByType2 = {0,  	10,  	0,  	20, 	40, 	30, 	0,  	0,    0, 0};
-
-
-
 	private Hashtable<String, Integer> terrainEffectByType = new Hashtable<String, Integer>();
 	private Hashtable<String, MovementCost> movementCostsByType = new Hashtable<String, Map.MovementCost>();
 
@@ -85,6 +50,9 @@ public class Map
 	private JConfigurationValues jConfigValues;
 
 	private float tileRatio = 2f;
+
+	private TileSet inUseTileset;
+
 	public static final float DESIRED_TILE_WIDTH = 24f;
 
 	public Map() {
@@ -221,12 +189,13 @@ public class Map
 		Collections.sort(tileSets, new TileSetComparator());
 	}
 
-	public Image getSprite(int index)
+	public void renderSprite(int index, float xLoc, float yLoc)
 	{
 		for (TileSet ts : tileSets)
-			if (index >= ts.getStartIndex())
-				return ts.getSprite(index);
-		return null;
+			if (index >= ts.getStartIndex()) {
+				ts.renderSprite(xLoc, yLoc, index);
+				return;
+			}
 	}
 
 	public int getMovementCostByType(String moverType, int tileX, int tileY)
@@ -243,8 +212,10 @@ public class Map
 			}
 			catch (NullPointerException e)
 			{
-				System.out.println(e);
-				throw e;
+				tile = overriddenTerrain.get(tti);
+				throw new BadResourceException("The specified map has incorrect terrain cost types or the enemy/hero "
+						+ "has an invalid movement type: Tile X "
+						+ tileX + " Tile Y " + tileY + " Mover Type " + moverType);
 			}
 		}
 		else
@@ -338,14 +309,41 @@ public class Map
 				this.ssWidth = spriteSheet.getHorizontalCount();
 		}
 
+		public void renderSprite(float x, float y, int index)
+		{
+			if (inUseTileset == null)
+			{
+				spriteSheet.startUse();
+				inUseTileset = this;
+			}
+			else if (inUseTileset != this)
+			{
+				inUseTileset.endUse();
+				spriteSheet.startUse();
+				inUseTileset = this;
+			}
+
+			// System.out.println((index - startIndex) % ssWidth + " " + (index - startIndex) / ssWidth);
+			// System.out.println("Bounds: " + spriteSheet.getHorizontalCount() + " " + spriteSheet.getVerticalCount());
+			spriteSheet.renderInUse((int) x, (int) y, (index - startIndex) % ssWidth, (index - startIndex) / ssWidth);
+			// spriteSheet.getSubImage(.drawEmbedded(x, y, tw, th);
+		}
+
 		public Image getSprite(int index) {
-			return spriteSheet.getSprite((index - startIndex) % ssWidth, (index - startIndex) / ssWidth);
+			// return spriteSheet.getSprite((index - startIndex) % ssWidth, (index - startIndex) / ssWidth);
+			return spriteSheet.getSubImage((index - startIndex) % ssWidth, (index - startIndex) / ssWidth);
+		}
+
+		public void endUse() {
+			spriteSheet.endUse();
 		}
 
 		public int getStartIndex() {
 			return startIndex;
 		}
 	}
+
+
 
 	public class TileSetComparator implements Comparator<TileSet>
 	{
@@ -458,5 +456,13 @@ public class Map
 
 	public void setMoveableLayer(int[][] moveableLayer) {
 		this.moveableLayer = moveableLayer;
+	}
+
+	public void endUse()
+	{
+		if (inUseTileset != null) {
+			inUseTileset.endUse();
+		}
+		inUseTileset = null;
 	}
 }

@@ -26,6 +26,7 @@ import mb.fc.game.sprite.Sprite;
 import mb.fc.game.sprite.StaticSprite;
 import mb.fc.game.ui.FCGameContainer;
 import mb.fc.map.Map;
+import mb.fc.utils.StringUtils;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -428,7 +429,7 @@ public class Cinematic {
 				cameraMoveToY = (int) ce.getParam(1)
 						* CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]
 						- stateInfo.getCamera().getViewportHeight() / 2;
-				int distance = Math.abs(stateInfo.getCamera().getLocationX()
+				float distance = Math.abs(stateInfo.getCamera().getLocationX()
 						- cameraMoveToX);
 				distance += Math.abs(stateInfo.getCamera().getLocationY()
 						- cameraMoveToY);
@@ -523,8 +524,11 @@ public class Cinematic {
 			case SPEECH:
 				int heroPortrait = (int) ce.getParam(1);
 				int enemyPortrait = (int) ce.getParam(2);
+				String specificAnim = (String) ce.getParam(3);
+				if (StringUtils.isEmpty(specificAnim))
+					specificAnim = null;
 
-				Portrait port = Portrait.getPortrait(heroPortrait, enemyPortrait, stateInfo);
+				Portrait port = Portrait.getPortrait(heroPortrait, enemyPortrait, specificAnim, stateInfo);
 				speechMenu = new SpeechMenu((String) ce.getParam(0),
 						stateInfo.getGc(), SpeechMenu.NO_TRIGGER, port, stateInfo);
 				break;

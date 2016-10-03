@@ -28,12 +28,18 @@ public class PlannerValueDef
 	public static final int REFERS_BODYMIND_GAIN = 22;
 	public static final int REFERS_AI = 23;
 	public static final int REFERS_TERRAIN = 24;
+	public static final int REFERS_PALETTE = 25;
+	// Extended weapon stats
+	public static final int REFERS_WEAPON_DAMAGE_TYPE = 26;
+	public static final int REFERS_AFFINITIES = 27;
+	public static final int REFERS_CONDITIONS = 28;
 
 	public static final int TYPE_STRING = 0;
 	public static final int TYPE_INT = 1;
 	public static final int TYPE_BOOLEAN = 2;
 	public static final int TYPE_MULTI_INT = 3;
 	public static final int TYPE_LONG_STRING = 4;
+	public static final int TYPE_UNBOUNDED_INT = 5;
 
 	// Refers to
 	private int refersTo;

@@ -5,7 +5,6 @@ import mb.fc.engine.message.MessageType;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.Range;
 import mb.fc.game.constants.Direction;
-import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.move.AttackableSpace;
 import mb.fc.game.sprite.CombatSprite;
 
@@ -15,7 +14,7 @@ import org.newdawn.slick.Image;
 public class BattleActionsMenu extends QuadMenu
 {
 	public BattleActionsMenu(StateInfo stateInfo) {
-		super(Panel.PANEL_BATTLE, stateInfo);
+		super(PanelType.PANEL_BATTLE, stateInfo);
 
 		icons = new Image[8];
 

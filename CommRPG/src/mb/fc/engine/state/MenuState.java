@@ -44,7 +44,7 @@ public class MenuState extends LoadableGameState
 
 	protected StateBasedGame game;
 	protected GameContainer gc;
-	protected String version = "DEV 1.28";
+	protected String version = CommRPG.VERSION;
 	protected Font font;
 	protected boolean initialized = false;
 	protected FCInput input;
@@ -256,7 +256,7 @@ public class MenuState extends LoadableGameState
 			{
 				DevParams devParams = DevParams.parseDevParams();
 				if (devParams != null)
-					devParams.applyToClientProfile(clientProfile);
+					clientProfile.setDevParams(devParams);
 			}
 
 			Log.debug("Profile was created");

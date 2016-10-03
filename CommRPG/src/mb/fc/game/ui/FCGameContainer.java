@@ -2,6 +2,8 @@ package mb.fc.game.ui;
 
 import mb.fc.engine.CommRPG;
 
+import javax.swing.JOptionPane;
+
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.Game;
@@ -41,6 +43,7 @@ public class FCGameContainer extends AppGameContainer
 				updateAndRender(delta);
 			} catch (Throwable e) {
 				((CommRPG) game).enterState(CommRPG.STATE_GAME_MENU_DEVEL);
+				JOptionPane.showMessageDialog(null, "An error occurred during execution " + e.getMessage());
 				return;
 			}
 		}

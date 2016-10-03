@@ -29,36 +29,39 @@ import org.newdawn.slick.geom.Rectangle;
  */
 public abstract class Panel
 {
-	public static final int PANEL_HEALTH_BAR = 0;
-	public static final int PANEL_LAND_EFFECT = 1;
-	public static final int PANEL_INITIATIVE = 3;
-	public static final int PANEL_ENEMY_HEALTH_BAR = 4;
-	public static final int PANEL_TEXT = 5;
-	public static final int PANEL_BATTLE = 6;
-	public static final int PANEL_MAPMOVE = 7;
-	public static final int PANEL_SPELL = 8;
-	public static final int PANEL_MAPATTACK = 9;
-	public static final int PANEL_CHAT = 10;
-	public static final int PANEL_SPEECH = 11;
-	public static final int PANEL_WAIT = 12;
-	public static final int PANEL_SYSTEM = 13;
-	public static final int PANEL_CONNECTIONS = 14;
-	public static final int PANEL_SHOP = 15;
-	public static final int PANEL_HEROS_OVERVIEW = 16;
-	public static final int PANEL_HEROS_STATS = 17;
-	public static final int PANEL_YES_NO = 18;
-	public static final int PANEL_PRIEST = 19;
-	public static final int PANEL_ASSIGN_HERO = 20;
-	public static final int PANEL_STRING = 21;
-	public static final int PANEL_BATTLE_MOVE = 22;
-	public static final int PANEL_ITEM = 23;
-	public static final int PANEL_ITEM_OPTIONS = 24;
-	public static final int PANEL_DEBUG = 25;
-	public static final int PANEL_TARGET_HEALTH_BAR = 26;
-	public static final int PANEL_MAP_ENTRY = 27;
-	public static final int PANEL_SHOP_OPTIONS = 28;
+	public enum PanelType
+	{
+		PANEL_HEALTH_BAR,
+		PANEL_LAND_EFFECT,
+		PANEL_INITIATIVE,
+		PANEL_ENEMY_HEALTH_BAR,
+		PANEL_TEXT,
+		PANEL_BATTLE,
+		PANEL_MAPMOVE,
+		PANEL_SPELL,
+		PANEL_MAPATTACK,
+		PANEL_CHAT,
+		PANEL_SPEECH,
+		PANEL_WAIT,
+		PANEL_SYSTEM,
+		PANEL_CONNECTIONS,
+		PANEL_SHOP,
+		PANEL_HEROS_OVERVIEW,
+		PANEL_HEROS_STATS,
+		PANEL_YES_NO,
+		PANEL_PRIEST,
+		PANEL_ASSIGN_HERO,
+		PANEL_STRING,
+		PANEL_BATTLE_MOVE,
+		PANEL_ITEM,
+		PANEL_ITEM_OPTIONS,
+		PANEL_DEBUG,
+		PANEL_TARGET_HEALTH_BAR,
+		PANEL_MAP_ENTRY,
+		PANEL_SHOP_OPTIONS,
+	}
 
-	protected int panelType;
+	protected PanelType panelType;
 	public final static Color COLOR_MOUSE_OVER = new Color(0, 0, 153);
 	public final static Color COLOR_FOREFRONT = Color.white;
 	protected static JMusicSelector MUSIC_SELECTOR;
@@ -69,7 +72,7 @@ public abstract class Panel
 	protected static JPanelRender renderer;
 
 
-	public Panel(int menuType) {
+	public Panel(PanelType menuType) {
 		super();
 		this.panelType = menuType;
 
@@ -117,7 +120,7 @@ public abstract class Panel
 
 	// public boolean
 
-	public int getPanelType() {
+	public PanelType getPanelType() {
 		return panelType;
 	}
 

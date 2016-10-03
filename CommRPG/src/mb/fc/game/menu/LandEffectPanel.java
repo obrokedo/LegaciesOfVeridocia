@@ -11,7 +11,7 @@ public class LandEffectPanel extends Panel
 	private int landEffect = 0;
 
 	public LandEffectPanel() {
-		super(Panel.PANEL_LAND_EFFECT);
+		super(PanelType.PANEL_LAND_EFFECT);
 	}
 
 	@Override

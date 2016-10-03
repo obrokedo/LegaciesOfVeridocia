@@ -37,7 +37,7 @@ public abstract class QuadMenu extends Menu
 	protected Color flashColor = new Color(100, 100, 100);
 	protected Timer timer;
 
-	protected QuadMenu(int menuType, StateInfo stateInfo) {
+	protected QuadMenu(PanelType menuType, StateInfo stateInfo) {
 		this(menuType, true, stateInfo);
 	}
 
@@ -50,7 +50,7 @@ public abstract class QuadMenu extends Menu
 	 * 					by set to false, for "wide" items this should be true
 	 * @param stateInfo the relavant stateinfo that this menu will resuide in
 	 */
-	protected QuadMenu(int menuType, boolean largeFlor, StateInfo stateInfo) {
+	protected QuadMenu(PanelType menuType, boolean largeFlor, StateInfo stateInfo) {
 		super(menuType);
 		this.largeFlor = largeFlor;
 		if (largeFlor)

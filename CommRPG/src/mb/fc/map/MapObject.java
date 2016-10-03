@@ -238,6 +238,24 @@ public class MapObject
 		return s;
 	}
 
+	public Sprite getSearchArea(StateInfo stateInfo)
+	{
+		int[] trigger = null;
+		if (params.containsKey("searchtrigger"))
+		{
+			String[] split = params.get("searchtrigger").split(",");
+			trigger = new int[split.length];
+			for (int i = 0; i < split.length; i++)
+				trigger[i] = Integer.parseInt(split[i]);
+		}
+
+		Sprite s = new StaticSprite(x, y, trigger);
+		s.initializeSprite(stateInfo);
+		s.setLocX(x);
+		s.setLocY(y);
+		return s;
+	}
+
 	public Sprite getDoor(StateInfo stateInfo, int doorId)
 	{
 		Image image = stateInfo.getResourceManager().getImages().get(params.get("image"));

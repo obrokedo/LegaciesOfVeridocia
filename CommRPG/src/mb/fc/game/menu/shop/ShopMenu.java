@@ -53,7 +53,7 @@ public class ShopMenu extends Menu implements MenuListener
 	private EquippableItem oldItem;
 
 	public ShopMenu(GameContainer gc, StateInfo stateInfo, double sellPercent, double buyPercent, int[] itemIds) {
-		super(Panel.PANEL_SHOP);
+		super(PanelType.PANEL_SHOP);
 		x = (gc.getWidth() - 700) / 2;
 		switchViewButton = new Button(x + 100, 35, 140, 20, "Switch to sell");
 		// itemSelectRect = new Rectangle(x + 15, 90, 655, 360);

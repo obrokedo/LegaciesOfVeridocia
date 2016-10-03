@@ -11,5 +11,7 @@ public class LevelUpResult implements Serializable
 	public int speedGain;
 	public int hitpointGain;
 	public int magicpointGain;
+	public int bodyGain;
+	public int mindGain;
 	public String text;
 }

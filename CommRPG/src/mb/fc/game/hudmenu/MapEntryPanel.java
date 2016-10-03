@@ -17,7 +17,7 @@ public class MapEntryPanel extends Panel
 	private Color fadeColor = new Color(255, 255, 255, 255);
 
 	public MapEntryPanel(String text) {
-		super(Panel.PANEL_MAP_ENTRY);
+		super(PanelType.PANEL_MAP_ENTRY);
 		entryString = text;
 		entryCharArray = entryString.toCharArray();
 		maxTime = 50 * entryCharArray.length + 2000;

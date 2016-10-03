@@ -21,7 +21,19 @@ public class Portrait
 	private int blinkCounter = 0;
 	private boolean portraitFound = true;
 
-	public static Portrait getPortrait(int heroId, int enemyId, StateInfo stateInfo)
+	/**
+	 * Retrieves a portrait for the hero with the given id if one is specified, or a portrait for
+	 * an enemy with the given id if one is specifed or a portrait contained in the specified spriteAnimName.
+	 * Returns null if none of the options are specified
+	 *
+	 * @param heroId the id of the hero whose portrait should be used, -1 if a hero portrait should not be used
+	 * @param enemyId the id of the enemy whose portrait should be used, -1 if an enemy portrait should not be used
+	 * @param spriteAnimName the name of the sprite animation contained in the resource manager that
+	 * 			the portrait should be retrieved from
+	 * @param stateInfo the StateInfo describing the current game state
+	 * @return The loaded portrait or null if no options are specified
+	 */
+	public static Portrait getPortrait(int heroId, int enemyId, String spriteAnimName, StateInfo stateInfo)
 	{
 		SpriteAnims sa = null;
 
@@ -43,13 +55,27 @@ public class Portrait
 			sa = stateInfo.getResourceManager().getSpriteAnimations().get(HeroResource.getAnimation(enemyId));
 			return getPortrait(sa, false);
 		}
+		else if (spriteAnimName != null) {
+			return getPortrait(stateInfo.getResourceManager().getSpriteAnimations().get(spriteAnimName), false);
+		}
 
 		return null;
 	}
 
+	/**
+	 * Retrieves the portrait for the given CombatSprite, if the given CombatSprite is a member
+	 * of the current party the Portrait will respect their promoted status.
+	 *
+	 * @param combatSprite the CombatSprite whose portrait should be retrieved
+	 * @return the portrait of the specified CombatSprite
+	 */
 	public static Portrait getPortrait(CombatSprite combatSprite)
 	{
-		return getPortrait(combatSprite.getSpriteAnims(), combatSprite.isPromoted());
+		Portrait p = getPortrait(combatSprite.getSpriteAnims(), combatSprite.isPromoted());
+		// Enemies can have portraits, but if one isn't specified assume that it shouldn't have one
+		if (!p.portraitFound && combatSprite.isHero())
+			return p;
+		return null;
 	}
 
 	private static Portrait getPortrait(SpriteAnims spriteAnim, boolean promoted)

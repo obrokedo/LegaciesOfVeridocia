@@ -8,14 +8,12 @@ public class ClientRegistrationMessage extends Message {
 
 	private String name;
 	private int clientId;
-	private int heroAmount;
 
 	public ClientRegistrationMessage(String name,
-			int clientId, int heroAmount) {
+			int clientId) {
 		super(MessageType.CLIENT_REGISTRATION);
 		this.name = name;
 		this.clientId = clientId;
-		this.heroAmount = heroAmount;
 	}
 
 	public String getName() {
@@ -24,9 +22,5 @@ public class ClientRegistrationMessage extends Message {
 
 	public int getClientId() {
 		return clientId;
-	}
-
-	public int getHeroAmount() {
-		return heroAmount;
 	}
 }

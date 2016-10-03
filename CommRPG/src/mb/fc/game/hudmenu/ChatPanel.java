@@ -13,7 +13,7 @@ public class ChatPanel extends Panel
 	private ArrayList<TimedMessage> timedMessages;
 
 	public ChatPanel() {
-		super(Panel.PANEL_CHAT);
+		super(PanelType.PANEL_CHAT);
 		this.timedMessages = new ArrayList<TimedMessage>();
 	}
 

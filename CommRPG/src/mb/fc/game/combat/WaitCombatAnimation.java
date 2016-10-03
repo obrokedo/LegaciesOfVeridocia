@@ -24,8 +24,8 @@ public class WaitCombatAnimation extends CombatAnimation
 	}
 
 	@Override
-	public void render(FCGameContainer fcCont, Graphics g, int yDrawPos) {
-		childAnimation.render(fcCont, g, yDrawPos);
+	public void render(FCGameContainer fcCont, Graphics g, int yDrawPos, float scale) {
+		childAnimation.render(fcCont, g, yDrawPos, scale);
 	}
 
 	@Override

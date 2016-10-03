@@ -95,6 +95,26 @@ public class PlannerTab implements ActionListener, TreeSelectionListener
 		System.out.println("AFTER ADD ELEMENT");
 	}
 
+	public void duplicateContainer(int index)
+	{
+		String newName = JOptionPane.showInputDialog("Enter the new objects name");
+		if (newName == null)
+			return;
+
+		PlannerContainer pc = listPC.get(index);
+		PlannerContainer dupPC = pc.duplicateContainer(newName);
+		listPC.add(dupPC);
+		String type = containers[typeComboBox.getSelectedIndex()];
+		PlannerContainerDef pcd = containersByName.get(type);
+		// Update the "list of lists" that contain the name of every item definied so that they
+		// may be refered to by REFER tags
+		pcd.getDataLines().add(newName);
+		System.out.println("DUP ELEMENT");
+		plannerTree.addItem(newName, listPC.size() - 1);
+		plannerTree.refreshItem(dupPC, listPC.size() - 1);
+		System.out.println("AFTER DUP ELEMENT");
+	}
+
 	public void removeContainer(int index)
 	{
 		int rc = JOptionPane.showConfirmDialog(uiAspect,
@@ -147,7 +167,13 @@ public class PlannerTab implements ActionListener, TreeSelectionListener
 		if (currentPC != null)
 		{
 			currentPC.commitChanges();
-			currentPC.getPcdef().getDataLines().set(selectedPC, currentPC.getDescription());
+			if (!currentPC.getDescription().equals(currentPC.getPcdef().getDataLines().get(selectedPC)))
+			{
+				plannerTree.updateTreeValues(name, listPC);
+
+				currentPC.getPcdef().getDataLines().set(selectedPC, currentPC.getDescription());
+				uiAspect.validate();
+			}
 		}
 
 		if (plannerTree.getSelectedIndex() != -1)

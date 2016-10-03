@@ -45,6 +45,12 @@ public class AnimationWrapper
 		setAnimation(animationName, loops);
 	}
 
+	/**
+	 * Set the animation to be displayed by name starting from the first frame of the animation
+	 *
+	 * @param animationName the animation that should be displayed
+	 * @param loops whether this animation should loop once it has finished
+	 */
 	public void setAnimation(String animationName, boolean loops)
 	{
 		Log.debug("Setting animation: " + animationName);
@@ -53,11 +59,13 @@ public class AnimationWrapper
 		if (animation == null)
 			throw new BadAnimationException("No animation for the action: " + animationName + " could be found.");
 		this.loops = loops;
-		animationIndex = 0;
-		animationDelta = 0;
+		resetCurrentAnimation();
 
 	}
 
+	/**
+	 * Sets this animation back to display the first animation frame with no time elapsed
+	 */
 	public void resetCurrentAnimation()
 	{
 		animationIndex = 0;
@@ -72,11 +80,12 @@ public class AnimationWrapper
 			animationDelta -= animation.frames.get(animationIndex).delay;
 			if (animationIndex + 1 >= animation.frames.size())
 			{
-				if (loops)
+				if (loops) {
 					animationIndex = 0;
+				}
 				else
 				{
-					animationDelta = animationDelta -= animation.frames.get(animationIndex).delay;
+					animationDelta -= animation.frames.get(animationIndex).delay;
 					return true;
 				}
 			}
@@ -88,11 +97,25 @@ public class AnimationWrapper
 		return false;
 	}
 
+	/**
+	 * Renders the animation with the animation being drawn at a position relative to the specified coordinates.
+	 *
+	 * @param x the x location that the animation should be drawn relative to
+	 * @param y the y location that the animation should be drawn relative to
+	 * @param g the graphics to draw to
+	 */
 	public void drawAnimation(int x, int y, Graphics g)
 	{
 		drawAnimation(x, y, null, g);
 	}
 
+	/**
+	 * Renders the given animation at the specified location, ignoring the animations locations
+	 *
+	 * @param x the x location to draw the animation at
+	 * @param y the y location to draw the animation at
+	 * @param g the graphics to draw to
+	 */
 	public void drawAnimationIgnoreOffset(int x, int y, Graphics g)
 	{
 		if (animation != null)
@@ -101,14 +124,23 @@ public class AnimationWrapper
 			{
 				if (as.imageIndex != -1)
 				{
-					g.drawImage(getRotatedImageIfNeeded(spriteAnims.getImageAtIndex(as.imageIndex), as), x, y);
+					g.drawImage(getRotatedImageIfNeeded(spriteAnims.getImageAtIndex(as.imageIndex), as, null), x, y);
 				}
 				else
-					drawWeapon(as, x, y, null, g);
+					drawWeapon(as, x, y, null, 1f, g);
 			}
 		}
 	}
 
+	/**
+	 * Renders the idle animation of a portrait, that is it renders the first AnimSprite (should be the mouth) at
+	 * location x, y + ySecond and the second AnimSprite (should be the head) at location x, y
+	 *
+	 * @param x the x location that the portrait should be drawn
+	 * @param y the y location that the top of the head should be drawn at
+	 * @param ySecond the offset from the given y position that the top of the mouth should be drawn at
+	 * @param g the graphics to draw to
+	 */
 	public void drawAnimationPortrait(int x, int y, int ySecond, Graphics g)
 	{
 		boolean first = true;
@@ -119,9 +151,9 @@ public class AnimationWrapper
 				if (as.imageIndex != -1)
 				{
 					if (first)
-						g.drawImage(getRotatedImageIfNeeded(spriteAnims.getImageAtIndex(as.imageIndex), as), x, y + ySecond);
+						g.drawImage(getRotatedImageIfNeeded(spriteAnims.getImageAtIndex(as.imageIndex), as, null), x, y + ySecond);
 					else
-						g.drawImage(getRotatedImageIfNeeded(spriteAnims.getImageAtIndex(as.imageIndex), as), x, y);
+						g.drawImage(getRotatedImageIfNeeded(spriteAnims.getImageAtIndex(as.imageIndex), as, null), x, y);
 				}
 
 				first = false;
@@ -129,82 +161,83 @@ public class AnimationWrapper
 		}
 	}
 
+	/**
+	 * Renders the animation with the animation being drawn at a position relative to the specified coordinates.
+	 * A filter may be specified to render the animation in a different color. Drawn at native scale
+	 *
+	 * @param x the x location that the animation should be drawn relative to
+	 * @param y the y location that the animation should be drawn relative to
+	 * @param filter the color that that the animation should be filtered through
+	 * @param g the graphics to draw to
+	 */
 	public void drawAnimation(int x, int y, Color filter, Graphics g)
 	{
-		if (animation != null)
-		{
-			for (AnimSprite as : animation.frames.get(animationIndex).sprites)
-			{
-				if (as.imageIndex != -1)
-				{
-					if (filter == null)
-						g.drawImage(getRotatedImageIfNeeded(spriteAnims.getImageAtIndex(as.imageIndex), as),
-								x + as.x * SCREEN_SCALE, y + as.y * SCREEN_SCALE);
-					else
-						g.drawImage(getRotatedImageIfNeeded(spriteAnims.getImageAtIndex(as.imageIndex), as),
-								x + as.x * SCREEN_SCALE, y + as.y * SCREEN_SCALE, filter);
-				}
-				else
-					drawWeapon(as, x, y, filter, g);
-			}
-		}
+		drawAnimation(x, y, filter, null, g);
 	}
 
-	public void drawAnimationNormalize(int x, int y, Color filter, Graphics g)
+	/**
+	 * Renders the animation with the animation being drawn at a position relative to the specified coordinates and
+	 * scaled at the specified amount. A filter may be specified to render the animation in a different color.
+	 *
+	 * @param x the x location that the animation should be drawn relative to
+	 * @param y the y location that the animation should be drawn relative to
+	 * @param filter the color that that the animation should be filtered through
+	 * @param scale the scale that the animation should be rendered to relative to it's normal size
+	 * @param g the graphics to draw to
+	 */
+	public void drawAnimation(int x, int y, Color filter, Float scale, Graphics g)
 	{
 		if (animation != null)
 		{
-			int xOff = Integer.MIN_VALUE;
-			int yOff = Integer.MIN_VALUE;
 			for (AnimSprite as : animation.frames.get(animationIndex).sprites)
 			{
 				if (as.imageIndex != -1)
 				{
-					if (xOff == Integer.MIN_VALUE)
-					{
-						xOff = -as.x;
-						yOff = -as.y;
-					}
-
 					if (filter == null)
-					{
-						if (as.y < 0)
-							g.drawImage(getRotatedImageIfNeeded(spriteAnims.getImageAtIndex(as.imageIndex), as),
-								x + (as.x + xOff) * SCREEN_SCALE, y + (as.y + yOff) * SCREEN_SCALE);
-						else
-							g.drawImage(getRotatedImageIfNeeded(spriteAnims.getImageAtIndex(as.imageIndex), as),
-									x + (as.x + xOff) * SCREEN_SCALE, y + (as.y - 3 + yOff) * SCREEN_SCALE);
-					}
+						g.drawImage(getRotatedImageIfNeeded(spriteAnims.getImageAtIndex(as.imageIndex), as, scale),
+								x + as.x * (scale == null ? 1 : scale) * SCREEN_SCALE, y + as.y * (scale == null ? 1 : scale) * SCREEN_SCALE);
 					else
-						g.drawImage(getRotatedImageIfNeeded(spriteAnims.getImageAtIndex(as.imageIndex), as),
-								x + (as.x + xOff) * SCREEN_SCALE, y + (as.y + yOff) * SCREEN_SCALE, filter);
+						g.drawImage(getRotatedImageIfNeeded(spriteAnims.getImageAtIndex(as.imageIndex), as, scale),
+								x + as.x * (scale == null ? 1 : scale) * SCREEN_SCALE, y + as.y * (scale == null ? 1 : scale) * SCREEN_SCALE, filter);
 				}
 				else
-					drawWeapon(as, x, y, filter, g);
+					drawWeapon(as, x, y, filter, scale, g);
 			}
 		}
 	}
 
-	protected void drawWeapon(AnimSprite as, int x, int y, Color filter, Graphics g)
+	protected void drawWeapon(AnimSprite as, int x, int y, Color filter, Float scale, Graphics g)
 	{
 		if (weapon != null)
 		{
 			if (filter == null)
-				g.drawImage(getRotatedImageIfNeeded(weapon, as),
-						x + as.x * SCREEN_SCALE, y + as.y * SCREEN_SCALE);
+				g.drawImage(getRotatedImageIfNeeded(weapon, as, scale),
+						x + as.x * (scale == null ? 1 : scale) * SCREEN_SCALE, y + as.y * (scale == null ? 1 : scale) * SCREEN_SCALE);
 			else
-				g.drawImage(getRotatedImageIfNeeded(weapon, as),
-						x + as.x * SCREEN_SCALE, y + as.y * SCREEN_SCALE, filter);
+				g.drawImage(getRotatedImageIfNeeded(weapon, as, scale),
+						x + as.x * (scale == null ? 1 : scale) * SCREEN_SCALE, y + as.y * (scale == null ? 1 : scale) * SCREEN_SCALE, filter);
 		}
 	}
 
-	protected Image getRotatedImageIfNeeded(Image image, AnimSprite as)
+	/**
+	 * Returns an image that is rotated and flipped to respect the orientation described by the AnimSprite
+	 *
+	 * @param image the image to flip/rotate as needed
+	 * @param as the AnimSprite that describes what the images orientation is
+	 * @param scale the size that this image should be scaled to relative to it's normal size. Value of
+	 * null should be specified if the image should not be scaled
+	 * @return an image that is rotated and flipped to respect the orientation described by the AnimSprite
+	 */
+	protected Image getRotatedImageIfNeeded(Image image, AnimSprite as, Float scale)
 	{
 		Image im = image;
 
-		if (as.angle != 0 || as.flipH || as.flipV)
+		if (as.angle != 0 || as.flipH || as.flipV || scale != null)
 		{
-			im = image.copy();
+			if (scale == null)
+				im = image.copy();
+			else
+				im = image.getScaledCopy(scale);
 
 			if (as.flipH || as.flipV)
 				im = im.getFlippedCopy(as.flipH, as.flipV);

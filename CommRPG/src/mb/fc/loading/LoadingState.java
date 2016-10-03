@@ -88,7 +88,7 @@ public class LoadingState extends BasicGameState
 					// Regardless of whether we are loading other resources, add the map and text files
 					// that were specified to be loaded
 					allLines.add(0, "map,map,/map/" + mapName + ".tmx");
-					allLines.add(0, "text,/text/" + textName);
+					allLines.add(0, "text,/mapdata/" + textName);
 
 				}
 				// If we are not loading the map then we just want to load the specified resources
@@ -114,6 +114,13 @@ public class LoadingState extends BasicGameState
 				{
 					resourceManager.addResource(line, loadingStatus, loadIndex, loadAmount);
 				}
+				catch (BadResourceException e)
+				{
+					Log.debug("Error loading resource: " + line);
+					errorMessage = "Error loading resource: " + line + ": " + e.getMessage();
+					e.printStackTrace();
+					throw e;
+				}
 				catch (Throwable e)
 				{
 					Log.debug("Error loading resource: " + line);
@@ -131,6 +138,7 @@ public class LoadingState extends BasicGameState
 			// This is the entry point into the actual game. Initialize static variables here
 			if (loadingMap && loadResources)
 			{
+				System.out.println("Initialize python");
 				GlobalPythonFactory.intialize();
 				Panel.intialize(resourceManager);
 				SpellResource.initSpells(resourceManager);

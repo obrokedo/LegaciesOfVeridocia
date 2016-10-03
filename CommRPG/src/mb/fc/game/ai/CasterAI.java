@@ -95,6 +95,9 @@ public abstract class CasterAI extends AI
 			CombatSprite targetSprite, int tileWidth, int tileHeight,
 			Point attackPoint, int distance, StateInfo stateInfo, int baseConfidence)
 	{
+		//TODO WHAT IS THIS DOING HERE?
+		if (currentSprite.getName().equalsIgnoreCase("Sharna"))
+			System.out.println();
 		/**********************************************************/
 		/* Check each of the spells to see if they should be cast */
 		/**********************************************************/

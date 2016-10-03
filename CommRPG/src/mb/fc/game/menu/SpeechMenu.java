@@ -74,7 +74,7 @@ public class SpeechMenu extends Menu
 	public SpeechMenu(String text, FCGameContainer gc, int triggerId,
 			Portrait portrait, StateInfo stateInfo, MenuListener listener)
 	{
-		super(Panel.PANEL_SPEECH);
+		super(PanelType.PANEL_SPEECH);
 		this.listener = listener;
 		width = gc.getWidth() - 100 - gc.getDisplayPaddingX() * 2;
 		x = 50 + gc.getDisplayPaddingX();

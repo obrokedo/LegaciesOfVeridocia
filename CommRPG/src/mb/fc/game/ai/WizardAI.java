@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.battle.spell.KnownSpell;
+import mb.fc.game.move.AttackableSpace;
 import mb.fc.game.sprite.CombatSprite;
 import mb.jython.JSpell;
 
@@ -27,16 +28,31 @@ public class WizardAI extends CasterAI
 			int currentConfidence = 0;
 			int area = spell.getArea()[i - 1];
 			ArrayList<CombatSprite> targetsInArea;
-			if (area > 1)
+			if (area > 1 || area == AttackableSpace.AREA_ALL_INDICATOR)
 			{
 				int killed = 0;
 
 				// If there are multiple targets then get the total percent damage done and then divide it by the area amount
 				// this will hopefully prevent wizards from casting higher level spells then they need to
-				targetsInArea = getNearbySprites(stateInfo, (currentSprite.isHero() ? !spell.isTargetsEnemy() : spell.isTargetsEnemy()),
-						tileWidth, tileHeight,
-						new Point(targetSprite.getTileX(), targetSprite.getTileY()), spell.getArea()[i - 1] - 1,
-							currentSprite);
+					if (area != AttackableSpace.AREA_ALL_INDICATOR) {
+					targetsInArea = getNearbySprites(stateInfo, (currentSprite.isHero() ? !spell.isTargetsEnemy() : spell.isTargetsEnemy()),
+							tileWidth, tileHeight,
+							new Point(targetSprite.getTileX(), targetSprite.getTileY()), spell.getArea()[i - 1] - 1,
+								currentSprite);
+					// If this is area all then just add all of the correct targets
+					} else {
+						targetsInArea = new ArrayList<>();
+						boolean targetHero = false;
+						if (spell.isTargetsEnemy())
+							targetHero = !currentSprite.isHero();
+						for (CombatSprite cs : stateInfo.getCombatSprites())
+						{
+							if (targetHero == cs.isHero())
+							{
+								targetsInArea.add(cs);
+							}
+						}
+					}
 
 				for (CombatSprite ts : targetsInArea)
 				{
@@ -54,7 +70,10 @@ public class WizardAI extends CasterAI
 					}
 				}
 
-				currentConfidence /= area;
+				if (area != AttackableSpace.AREA_ALL_INDICATOR)
+					currentConfidence /= area;
+				else 
+					currentConfidence /= targetsInArea.size();
 
 				// Add a confidence equal to the amount killed + 50
 				currentConfidence += killed * 50;

@@ -13,6 +13,7 @@ public class StaticSprite extends Sprite
 
 	private Image image;
 	private int[] triggerIds;
+	private final static String SEARCH_AREA_NAME = "SA--!!";
 
 	public StaticSprite(int locX, int locY, String name, Image image, int[] triggerIds)
 	{
@@ -24,8 +25,15 @@ public class StaticSprite extends Sprite
 		this.id = Integer.MIN_VALUE;
 	}
 
+	public StaticSprite(int locX, int locY, int[] triggerIds)
+	{
+		this(locX, locY, SEARCH_AREA_NAME, null, triggerIds);
+	}
+
 	@Override
 	public void render(Camera camera, Graphics graphics, FCGameContainer cont) {
+		if (image == null)
+			return;
 		graphics.drawImage(image, this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(),
 			this.getLocY() - camera.getLocationY());
 	}
@@ -39,7 +47,8 @@ public class StaticSprite extends Sprite
 		if (triggerIds != null)
 		{
 			for (Integer triggerId : triggerIds)
-				stateInfo.getResourceManager().getTriggerEventById(triggerId).perform(stateInfo);
+				if (triggerId != -1)
+					stateInfo.getResourceManager().getTriggerEventById(triggerId).perform(stateInfo);
 		}
 	}
 }

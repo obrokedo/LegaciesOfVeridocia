@@ -13,25 +13,56 @@ public abstract class JBattleEffect implements Serializable
 	protected boolean isNegativeEffect = false;
 	protected int duration;
 	protected int currentTurn;
-	protected int temporaryStat;
+	protected int effectChance;
+	protected int effectLevel;
 	protected String battleEffectId;
+	
 	private transient AnimationWrapper effectAnimation;
 
-	public abstract JBattleEffect init(String battleEffectId);
+	public abstract JBattleEffect init(String battleEffectId, int level);
 
 	protected abstract String performEffectImpl(CombatSprite target, int currentTurn);
 
-	public abstract String effectStarted(CombatSprite attacker, CombatSprite target);
+	public abstract void effectStarted(CombatSprite attacker, CombatSprite target);
 
 	public abstract String effectStartedText(CombatSprite attacker, CombatSprite target);
 
-	public abstract String effectEnded(CombatSprite target);
+	public abstract void effectEnded(CombatSprite target);
+	
+	public abstract String effectEndedText(CombatSprite target);
 
 	public abstract String getAnimationFile();
 
+	public abstract boolean isEffected(CombatSprite target);
+	
+	public abstract String getName();
+	
+	public boolean preventsMovement() {
+		return false;
+	}
+	
+	public boolean preventsAttack(){
+		return false;
+	}
+	
+	public boolean preventsSpells(){
+		return false;
+	}
+	
+	public boolean preventsItems(){
+		return false;
+	}
+	
+	public boolean preventsTurn(){
+		return false;
+	}
+
 	public void initializeAnimation(FCResourceManager frm)
 	{
-		effectAnimation = new AnimationWrapper(frm.getSpriteAnimations().get(getAnimationFile()), "Effect", true);
+		if (getAnimationFile() != null)
+			effectAnimation = new AnimationWrapper(frm.getSpriteAnimations().get(getAnimationFile()), "Effect", true);
+		else
+			effectAnimation = null;
 	}
 
 	public String performEffect(CombatSprite target)
@@ -45,7 +76,7 @@ public abstract class JBattleEffect implements Serializable
 
 	public boolean isDone()
 	{
-		return duration >= currentTurn;
+		return duration <= currentTurn;
 	}
 
 	public void setBattleEffectId(String battleEffectId) {
@@ -68,16 +99,8 @@ public abstract class JBattleEffect implements Serializable
 		return currentTurn;
 	}
 
-	public void setCurrentTurn(int currentTurn) {
-		this.currentTurn = currentTurn;
-	}
-
-	public int getTemporaryStat() {
-		return temporaryStat;
-	}
-
-	public void setTemporaryStat(int temporaryStat) {
-		this.temporaryStat = temporaryStat;
+	public void incrementTurn() {
+		this.currentTurn++;
 	}
 
 	public void setNegativeEffect(boolean isNegativeEffect) {
@@ -86,6 +109,22 @@ public abstract class JBattleEffect implements Serializable
 
 	public AnimationWrapper getEffectAnimation() {
 		return effectAnimation;
+	}
+
+	public int getEffectChance() {
+		return effectChance;
+	}
+
+	public void setEffectChance(int effectChance) {
+		this.effectChance = effectChance;
+	}
+	
+	public int getEffectLevel() {
+		return effectLevel;
+	}
+
+	public void setEffectLevel(int effectLevel) {
+		this.effectLevel = effectLevel;
 	}
 
 	public abstract String[] getBattleEffectList();

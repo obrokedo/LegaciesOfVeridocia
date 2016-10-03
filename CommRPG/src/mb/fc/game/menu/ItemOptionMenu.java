@@ -5,7 +5,6 @@ import mb.fc.engine.message.BattleSelectionMessage;
 import mb.fc.engine.message.MessageType;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.constants.Direction;
-import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.item.EquippableItem;
 import mb.fc.game.item.Item;
 
@@ -17,7 +16,7 @@ public class ItemOptionMenu extends QuadMenu
 	private Item item;
 
 	public ItemOptionMenu(StateInfo stateInfo) {
-		super(Panel.PANEL_ITEM_OPTIONS, stateInfo);
+		super(PanelType.PANEL_ITEM_OPTIONS, stateInfo);
 
 		icons = new Image[8];
 

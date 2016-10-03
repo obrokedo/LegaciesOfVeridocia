@@ -145,6 +145,8 @@ public class PlannerMap extends Map {
 
 		for (MapObject mo : this.mapObjects)
 		{
+			if (mo.getKey().equalsIgnoreCase("battleregion"))
+				System.out.println();
 			TagArea childTA = getNewChild(mo);
 
 			for (int i = 0; i < newRootTA.getChildren().size(); i++)
@@ -183,24 +185,25 @@ public class PlannerMap extends Map {
 			}
 		}
 
-		if (mo.getParams().size() > 0)
-		{
-			try {
-				TagArea propTA = new TagArea("<properties>");
-				String generatedProperty = "<property name=\"" + mo.getKey() + "\" value=\"";
 
+		try {
+			TagArea propTA = new TagArea("<properties>");
+			String generatedProperty = "<property name=\"" + mo.getKey() + "\" value=\"";
+
+			if (mo.getParams().size() > 0)
+			{
 				for (Entry<String, String> param : mo.getParams().entrySet())
 				{
 					generatedProperty = generatedProperty + param.getKey() + "=" + param.getValue() + " ";
 				}
-
-				generatedProperty = generatedProperty.trim();
-
-				generatedProperty = generatedProperty + "\"/>";
-				propTA.getChildren().add(new TagArea(generatedProperty));
-				ta.getChildren().add(0, propTA);
-			} catch (IOException e) {
 			}
+
+			generatedProperty = generatedProperty.trim();
+
+			generatedProperty = generatedProperty + "\"/>";
+			propTA.getChildren().add(new TagArea(generatedProperty));
+			ta.getChildren().add(0, propTA);
+		} catch (IOException e) {
 		}
 
 		return ta;

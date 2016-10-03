@@ -11,6 +11,7 @@ import mb.jython.JConfigurationValues;
 public class PlannerDefinitions {
 	private static String PATH_ANIMATIONS = "animations/animationsheets";
 	private static String PATH_SPRITE_IMAGE = "sprite";
+	private static String PATH_PALETTE = "palette";
 
 	public static void setupDefintions(ArrayList<ArrayList<String>> listOfLists,
 			Hashtable<String, PlannerContainerDef> containersByName)
@@ -18,6 +19,7 @@ public class PlannerDefinitions {
 		setupTriggerDefinition(listOfLists, containersByName);
 		setupTextDefinitions(listOfLists, containersByName);
 		setupHeroDefinitions(listOfLists, containersByName);
+		setupConditionDefinition(listOfLists, containersByName);
 		setupEnemyDefinitions(listOfLists, containersByName);
 		setupItemDefinitions(listOfLists, containersByName);
 		setupQuestDefinitions(listOfLists, containersByName);
@@ -28,7 +30,7 @@ public class PlannerDefinitions {
 
 	public static void setupRefererList(ArrayList<ArrayList<String>> listOfLists)
 	{
-		for (int i = 0; i < 24; i++)
+		for (int i = 0; i < 27; i++)
 			listOfLists.add(new ArrayList<String>());
 
 		// Setup AI Types
@@ -108,8 +110,9 @@ public class PlannerDefinitions {
 						f.replaceFirst(".png", ""));
 
 		// Setup Battle Effects
-		for (String effectName : GlobalPythonFactory.createJBattleEffect("NOTHING").getBattleEffectList())
+		for (String effectName : GlobalPythonFactory.createJBattleEffect("NOTHING", 1).getBattleEffectList())
 			listOfLists.get(PlannerValueDef.REFERS_EFFECT - 1).add(effectName);
+		listOfLists.get(PlannerValueDef.REFERS_EFFECT - 1).add("CUSTOM");
 
 		// Setup Attribute Strength
 		listOfLists.get(PlannerValueDef.REFERS_ATTRIBUTE_STRENGTH - 1).add(AttributeStrength.WEAK.name());
@@ -124,6 +127,19 @@ public class PlannerDefinitions {
 		JConfigurationValues jConfigValues = GlobalPythonFactory.createConfigurationValues();
 		for (String terrainType : jConfigValues.getTerrainTypes())
 			listOfLists.get(PlannerValueDef.REFERS_TERRAIN - 1).add(terrainType);
+
+		// Palette files
+		File palettes = new File(PATH_PALETTE);
+		for (String f : palettes.list())
+			listOfLists.get(PlannerValueDef.REFERS_PALETTE - 1).add(f);
+
+		// Setup affinities
+		for (String affinity : GlobalPythonFactory.createConfigurationValues().getAffinities())
+			listOfLists.get(PlannerValueDef.REFERS_AFFINITIES - 1).add(affinity);
+
+		// Setup weapon damage types
+		listOfLists.get(PlannerValueDef.REFERS_WEAPON_DAMAGE_TYPE - 1).add("NORMAL");
+		listOfLists.get(PlannerValueDef.REFERS_WEAPON_DAMAGE_TYPE - 1).addAll(listOfLists.get(PlannerValueDef.REFERS_AFFINITIES - 1));
 	}
 
 	public static void setupCinematicDefinitions(ArrayList<ArrayList<String>> listOfLists,
@@ -1009,11 +1025,15 @@ public class PlannerDefinitions {
 		definingValues.add(new PlannerValueDef(
 				PlannerValueDef.REFERS_HERO, PlannerValueDef.TYPE_INT,
 				"heroportrait", false, "Hero Portrait",
-				"The hero whose portrait should be shown for this text. This will only be respected when 'Portrait Index' is -1"));
+				"The hero whose portrait should be shown for this text."));
 		definingValues.add(new PlannerValueDef(
 				PlannerValueDef.REFERS_ENEMY, PlannerValueDef.TYPE_INT,
 				"enemyportrait", false, "Enemy Portrait",
-				"The enemy whose portrait should be shown for this text. This will only be respected when 'Portrait Index' is -1"));
+				"The enemy whose portrait should be shown for this text."));
+		definingValues.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_ANIMATIONS, PlannerValueDef.TYPE_STRING,
+				"animportrait", true, "Portrait From Animation",
+				"The animation that contains the portrait should be shown for this text."));
 
 		allowableLines
 				.add(new PlannerLineDef(
@@ -1176,6 +1196,126 @@ public class PlannerDefinitions {
 		allowableLines.add(new PlannerLineDef("equippable", "Equippable Item",
 				"Marks this item as equippable and defines stats for it",
 				definingValues));
+		//////////////////////////////// NEW STUFF
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_INT, "incmindam", false, "Minimum Damage Modifier",
+				"The percent amount equipping this item will modify the minimum damage percent"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_INT, "inccrit", false, "Critical Chance Modifier",
+				"The percent amount equipping this item will modify the critical chance percent"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_INT, "inccounter", false, "Counter Chance Modifier",
+				"The percent amount equipping this item will modify the counter chance percent"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_INT, "incdouble", false, "Double Chance Modifier",
+				"The percent amount equipping this item will modify the double chance percent"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_INT, "incevade", false, "Evade Chance Modifier",
+				"The percent amount equipping this item will modify the evade chance percent"));
+		// HP Regen
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_INT, "maxhpreg", false, "Max HP Regen",
+				"The maximum amount of HP regen this item can grant per round. If you do not"
+				+ " want a random range then this should equal the minimum amount"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_INT, "minhpreg", false, "Max HP Regen",
+				"The minimum amount of HP regen this item can grant per round. If you do not"
+				+ " want a random range then this should equal the maximum amount"));
+		// MP Regen
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_INT, "maxmpreg", false, "Max MP Regen",
+				"The maximum amount of MP regen this item can grant per round. If you do not"
+				+ " want a random range then this should equal the minimum amount"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_INT, "minmpreg", false, "Min MP Regen",
+				"The minimum amount of HP regen this item can grant per round. If you do not"
+				+ " want a random range then this should equal the maximum amount"));
+
+		// Battle Effect
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_EFFECT,
+				PlannerValueDef.TYPE_STRING, "effect", true, "Attack Effect",
+				"The effect type that can be applied on a successful hit with this weapon. A value of CUSTOM"
+				+ " means that this weapons effect will be passed to the BattleFunctions script to be performed."));
+
+		// Battle Effect Level
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_INT, "efflvl", true, "Attack Effect Level",
+				"The level of the battle effect that should be applied when it occurs"));
+
+		// Battle Effect Chance
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_INT, "effchc", false, "Attack Effect Chance",
+				"The chance that the associated battle effect will be applied on attack."));
+		// Custom Battle Effect Chance
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_BOOLEAN, "csteff", false, "Custom Effect Chance",
+				"If checked, the battle effect chance will be determined in the ConfigurationValues script."));
+
+		// Damage Affinity
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_WEAPON_DAMAGE_TYPE,
+				PlannerValueDef.TYPE_STRING, "dmgaff", false, "Damage Affinity",
+				"The affinity that will be used to determine damage for this weapon. A value other"
+				+ " then normal will cause the associated affinity to be applied to the damage"));
+
+		// Fire Affin
+		definingValues.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_UNBOUNDED_INT,
+				"fireAffin", false, "Fire Affinitiy",
+				"The amount to modify the equippers fire affinity."));
+
+		// Elec Affin
+		definingValues.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_UNBOUNDED_INT,
+				"elecAffin", false, "Electricity Affinitiy",
+				"The amount to modify the equippers elec affinity."));
+
+		// Cold Affin
+		definingValues.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_UNBOUNDED_INT,
+				"coldAffin", false, "Cold Affinitiy",
+				"The amount to modify the equippers cold affinity."));
+
+		// Dark Affin
+		definingValues.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_UNBOUNDED_INT,
+				"darkAffin", false, "Dark Affinitiy",
+				"The amount to modify the equippers dark affinity."));
+
+		// Water Affin
+		definingValues.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_UNBOUNDED_INT,
+				"waterAffin", false, "Water Affinitiy",
+				"The amount to modify the equippers water affinity."));
+
+		// Earth Affin
+		definingValues.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_UNBOUNDED_INT,
+				"earthAffin", false, "Earth Affinitiy",
+				"The amount to modify the equippers earth affinity."));
+
+		// Wind Affin
+		definingValues.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_UNBOUNDED_INT,
+				"windAffin", false, "Wind Affinitiy",
+				"The amount to modify the equippers wind affinity."));
+
+		// Light Affin
+		definingValues.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_UNBOUNDED_INT,
+				"lightAffin", false, "Light Affinitiy",
+				"The amount to modify the equippers light affinity."));
+
+		// OHKO chance
+		definingValues.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT,
+				"ohko", false, "OHKO Chance",
+				"The percent chance of a OHKO occurring on an attack."));
+
+		// OHKO on crit chance
+		definingValues.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT,
+				"ohkooc", false, "OHKO Chance on Critical",
+				"The percent chance of a OHKO occurring on a critical attack."));
 
 		// Use Custom
 		definingValues = new ArrayList<PlannerValueDef>();
@@ -1336,11 +1476,15 @@ public class PlannerDefinitions {
 		definingValues.add(new PlannerValueDef(
 				PlannerValueDef.REFERS_HERO, PlannerValueDef.TYPE_INT,
 				"heroportrait", false, "Hero Portrait",
-				"The hero whose portrait should be shown for this text. This will only be respected when 'Portrait Index' is -1"));
+				"The hero whose portrait should be shown for this text."));
 		definingValues.add(new PlannerValueDef(
 				PlannerValueDef.REFERS_ENEMY, PlannerValueDef.TYPE_INT,
 				"enemyportrait", false, "Enemy Portrait",
-				"The enemy whose portrait should be shown for this text. This will only be respected when 'Portrait Index' is -1"));
+				"The enemy whose portrait should be shown for this text."));
+		definingValues.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_ANIMATIONS, PlannerValueDef.TYPE_STRING,
+				"animportrait", true, "Portrait From Animation",
+				"The animation that contains the portrait should be shown for this text."));
 		allowableLines.add(new PlannerLineDef("string", "Message Text",
 				"A message that should be displayed", definingValues));
 
@@ -1378,49 +1522,49 @@ public class PlannerDefinitions {
 		definingValues.add(new PlannerValueDef(
 				PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT,
 				"fireAffin", false, "Fire Affinitiy",
-				"The heroes base fire affinity. Items can modify this value."));
+				"The enemies base fire affinity. Items can modify this value."));
 
 		// Elec Affin
 		definingValues.add(new PlannerValueDef(
 				PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT,
 				"elecAffin", false, "Electricity Affinitiy",
-				"The heroes base electricity affinity. Items can modify this value."));
+				"The enemies base electricity affinity. Items can modify this value."));
 
 		// Cold Affin
 		definingValues.add(new PlannerValueDef(
 				PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT,
 				"coldAffin", false, "Cold Affinitiy",
-				"The heroes base cold affinity. Items can modify this value."));
+				"The enemies base cold affinity. Items can modify this value."));
 
 		// Dark Affin
 		definingValues.add(new PlannerValueDef(
 				PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT,
 				"darkAffin", false, "Dark Affinitiy",
-				"The heroes base dark affinity. Items can modify this value."));
+				"The enemies base dark affinity. Items can modify this value."));
 
 		// Water Affin
 		definingValues.add(new PlannerValueDef(
 				PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT,
 				"waterAffin", false, "Water Affinitiy",
-				"The heroes base water affinity. Items can modify this value."));
+				"The enemies base water affinity. Items can modify this value."));
 
 		// Earth Affin
 		definingValues.add(new PlannerValueDef(
 				PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT,
 				"earthAffin", false, "Earth Affinitiy",
-				"The heroes base earth affinity. Items can modify this value."));
+				"The enemies base earth affinity. Items can modify this value."));
 
 		// Wind Affin
 		definingValues.add(new PlannerValueDef(
 				PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT,
 				"windAffin", false, "Wind Affinitiy",
-				"The heroes base wind affinity. Items can modify this value."));
+				"The enemies base wind affinity. Items can modify this value."));
 
 		// Light Affin
 		definingValues.add(new PlannerValueDef(
 				PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT,
 				"lightAffin", false, "Light Affinitiy",
-				"The heroes base light affinity. Items can modify this value."));
+				"The enemies base light affinity. Items can modify this value."));
 
 		// Body Strength
 		definingValues.add(new PlannerValueDef(
@@ -1474,6 +1618,10 @@ public class PlannerDefinitions {
 						PlannerValueDef.TYPE_STRING, "animations", false,
 						"Animation File",
 						"The name of the animation file that should be used for this enemy"));
+		// Palette Swap
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_PALETTE,
+				PlannerValueDef.TYPE_STRING, "palette", true, "Palette",
+				"The palette that should be used to modify the selected animation colors"));
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
 				PlannerValueDef.TYPE_BOOLEAN, "leader", false, "Is Leader",
 				"Whether this enemy is the leader of the force"));
@@ -1517,10 +1665,14 @@ public class PlannerDefinitions {
 		definingValues = new ArrayList<PlannerValueDef>();
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_EFFECT,
 				PlannerValueDef.TYPE_STRING, "effectid", false, "Effect ID",
-				"The ID of the effect that the enemies attack may cause"));
+				"The ID of the effect that the enemies attack may cause. A value of CUSTOM"
+				+ " means that this weapons effect will be passed to the BattleFunctions script to be performed."));
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
 				PlannerValueDef.TYPE_INT, "effectchance", false,
 				"Effect Chance", "The percent chance that the effect will occur"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_INT, "effectlevel", false,
+				"Effect Level", "The level of the effect that should be applied (1-4)"));
 		allowableLines.add(new PlannerLineDef("attackeffect", "Attack Effect",
 				"An effect that may occur on the enemy attack", definingValues));
 
@@ -1541,7 +1693,7 @@ public class PlannerDefinitions {
 				"The name of the hero"));
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
 				PlannerValueDef.TYPE_BOOLEAN, "promoted", false, "Promoted",
-				"If true, this hero is promoted"));
+				"If true, this hero is promoted when they initially join the party"));
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
 				PlannerValueDef.TYPE_INT, "level", false, "Level",
 				"Starting Level for the hero"));
@@ -1577,6 +1729,14 @@ public class PlannerDefinitions {
 						false,
 						"Promoted Progression",
 						"Whether this progression represents this heroes promoted or unpromoted progression"));
+		definingValues
+		.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_BOOLEAN,
+				"specialpromoted",
+				false,
+				"Special Promotion Progression",
+				"If checked, this progression will be used for the SPECIAL promotion path (as opposed to default). Selecting this supercedes the 'promoted' checkbox"));
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
 				PlannerValueDef.TYPE_INT, "move", false, "Starting Move",
 				"The heroes base move while in this progression"));
@@ -1657,49 +1817,49 @@ public class PlannerDefinitions {
 
 		// Fire Affin
 		definingValues.add(new PlannerValueDef(
-				PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT,
+				PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_UNBOUNDED_INT,
 				"fireAffin", false, "Fire Affinitiy",
 				"The heroes base fire affinity. Items can modify this value."));
 
 		// Elec Affin
 		definingValues.add(new PlannerValueDef(
-				PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT,
+				PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_UNBOUNDED_INT,
 				"elecAffin", false, "Electricity Affinitiy",
 				"The heroes base electricity affinity. Items can modify this value."));
 
 		// Cold Affin
 		definingValues.add(new PlannerValueDef(
-				PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT,
+				PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_UNBOUNDED_INT,
 				"coldAffin", false, "Cold Affinitiy",
 				"The heroes base cold affinity. Items can modify this value."));
 
 		// Dark Affin
 		definingValues.add(new PlannerValueDef(
-				PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT,
+				PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_UNBOUNDED_INT,
 				"darkAffin", false, "Dark Affinitiy",
 				"The heroes base dark affinity. Items can modify this value."));
 
 		// Water Affin
 		definingValues.add(new PlannerValueDef(
-				PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT,
+				PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_UNBOUNDED_INT,
 				"waterAffin", false, "Water Affinitiy",
 				"The heroes base water affinity. Items can modify this value."));
 
 		// Earth Affin
 		definingValues.add(new PlannerValueDef(
-				PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT,
+				PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_UNBOUNDED_INT,
 				"earthAffin", false, "Earth Affinitiy",
 				"The heroes base earth affinity. Items can modify this value."));
 
 		// Wind Affin
 		definingValues.add(new PlannerValueDef(
-				PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT,
+				PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_UNBOUNDED_INT,
 				"windAffin", false, "Wind Affinitiy",
 				"The heroes base wind affinity. Items can modify this value."));
 
 		// Light Affin
 		definingValues.add(new PlannerValueDef(
-				PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT,
+				PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_UNBOUNDED_INT,
 				"lightAffin", false, "Light Affinitiy",
 				"The heroes base light affinity. Items can modify this value."));
 
@@ -1768,6 +1928,12 @@ public class PlannerDefinitions {
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_SPELL,
 				PlannerValueDef.TYPE_STRING, "spellid", false, "Spell ID",
 				"The ID of the spell that this hero knows"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_BOOLEAN, "promotedprog", false,
+				"Promoted Progression", "If true, these spells will be gained at the indicated levels ONLY for promoted heroes using the DEFAULT progression path."));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_BOOLEAN, "specialpromoted", false,
+				"Special Promotion Progression", "If true, these spells will be gained at the indicated levels ONLY for promoted heroes using the SPECIAL progression path. Selecting this supercedes the 'Promoted Progression' option"));
 		definingValues
 				.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
 						PlannerValueDef.TYPE_STRING, "gained", false,
@@ -1884,11 +2050,15 @@ public class PlannerDefinitions {
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
 				PlannerValueDef.TYPE_BOOLEAN, "allleaders", false,
 				"Defeat when all leaders killed ",
-				"If true, then battle will only end in defeat if all of the leaders have been killed"));
+				"If true, then battle will only end in defeat if all of the hero leaders have been killed"));
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_HERO,
 				PlannerValueDef.TYPE_MULTI_INT, "templeader", true,
 				"Temporary Leaders. If killed battle ends ",
-				"The ID of the quest that must be complete for this to be shown"));
+				"The ids of the heroes that should be ruled as temporary leaders."));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_ENEMY,
+				PlannerValueDef.TYPE_MULTI_INT, "tempenemyleader", true,
+				"Temporary Enemy Leaders. If killed battle ends ",
+				"The type of enemies that should be ruled as temporary leaders."));
 		allowableLines.add(new PlannerLineDef("setbattlecond", "Set Battle Conditions",
 				"Set conditions for the battle, should only be called during battle initialization",
 				definingValues));
@@ -2083,6 +2253,44 @@ public class PlannerDefinitions {
 				PlannerValueDef.REFERS_TRIGGER - 1);
 		containersByName.put("trigger", triggerContainer);
 	}
+	
+	public static void setupConditionDefinition(ArrayList<ArrayList<String>> listOfLists,
+			Hashtable<String, PlannerContainerDef> containersByName) {
+		PlannerContainerDef conditionContainer;
+
+		// Setup defining line
+		ArrayList<PlannerValueDef> definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_STRING, "description", false,
+				"Description", "Description"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_TRIGGER,
+				PlannerValueDef.TYPE_INT, "triggerid", false, "Trigger ID",
+				"The ID of the trigger that should be activated upon condition completion"));
+
+		PlannerLineDef definingLine = new PlannerLineDef("condition", "Condition",
+				"", definingValues);
+
+		// Setup allowable containers
+		ArrayList<PlannerContainerDef> allowableContainers = new ArrayList<PlannerContainerDef>();
+
+		// Setup available types
+		ArrayList<PlannerLineDef> allowableLines = new ArrayList<PlannerLineDef>();
+
+		// Set Battle Condition - Enemy Death
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_INT, "unitid", false,
+				"Enemy Unit Id",
+				"The unit id (as specified on the map) of the enemy whose death will trigger this condition"));
+		allowableLines.add(new PlannerLineDef("enemydeath", "Set Battle Conditions - Enemy Death",
+				"Sets a condition for the battle that upon the specified enemies death, the specified trigger will be executed",
+				definingValues));
+
+		conditionContainer = new PlannerContainerDef(definingLine,
+				allowableContainers, allowableLines, listOfLists,
+				PlannerValueDef.REFERS_TRIGGER - 1);
+		containersByName.put("condition", conditionContainer);
+	}
 
 	public static void setupMapDefinitions(ArrayList<ArrayList<String>> listOfLists,
 			Hashtable<String, PlannerContainerDef> containersByName) {
@@ -2237,6 +2445,27 @@ public class PlannerDefinitions {
 				"Defines the area that any hero/enemy and the battle cursor can be moved to in a battle on this map",
 				definingValues));
 
+		// sprite
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_STRING, "image", false, "Image Name",
+				"The name of the image that should be displayed for this sprite"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_STRING, "name", false, "Name",
+				"The unique name of this sprite that should be used to identify it for use in triggers"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_TRIGGER,
+				PlannerValueDef.TYPE_INT, "searchtrigger", false, "Search Trigger",
+				"The trigger (not battle trigger) that should be executed when this sprite is 'investigated'"));
+		allowableLines.add(new PlannerLineDef("sprite", "sprite",
+				"Places a static sprite at this location", definingValues));
+
+		// search area
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_TRIGGER,
+				PlannerValueDef.TYPE_INT, "searchtrigger", false, "Search Trigger",
+				"The trigger (not battle trigger) that should be executed when this area is 'investigated'"));
+		allowableLines.add(new PlannerLineDef("searcharea", "searcharea",
+				"Places a searchable area at this location, it has no visible aspect", definingValues));
 
 		plannerContainer = new PlannerContainerDef(definingLine,
 				allowableContainers, allowableLines, listOfLists,

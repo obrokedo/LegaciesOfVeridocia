@@ -21,7 +21,7 @@ public class DebugMenu extends Menu
 	private TextField textField;
 
 	public DebugMenu(GameContainer gc) {
-		super(Menu.PANEL_DEBUG);
+		super(PanelType.PANEL_DEBUG);
 		textField = new TextField(gc, gc.getDefaultFont(), 60, gc.getHeight() - 45, gc.getWidth() - 120, 30);
 	}
 

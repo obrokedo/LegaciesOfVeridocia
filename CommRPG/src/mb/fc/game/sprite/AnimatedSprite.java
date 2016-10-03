@@ -53,12 +53,12 @@ public class AnimatedSprite extends Sprite
 		}
 	}
 
-	public static void drawShadow(Image originalIm, int locX, int locY, int displayPadding, Camera camera, boolean tileOffset)
+	public static void drawShadow(Image originalIm, float locX, float locY, int displayPadding, Camera camera, boolean tileOffset)
 	{
 		drawShadow(originalIm, locX, locY, displayPadding, camera, tileOffset, stateInfo);
 	}
 
-	public static void drawShadow(Image originalIm, int locX, int locY, int displayPadding, Camera camera, boolean tileOffset, StateInfo stateInfo)
+	public static void drawShadow(Image originalIm, float locX, float locY, int displayPadding, Camera camera, boolean tileOffset, StateInfo stateInfo)
 	{
 		Image i = (originalIm).getScaledCopy(originalIm.getWidth(), (int) (originalIm.getHeight() * .65));
 		i.drawSheared((int) (locX - camera.getLocationX() + displayPadding - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * SHADOW_OFFSET * (1.0 * originalIm.getHeight() / stateInfo.getTileHeight())),
@@ -148,7 +148,7 @@ public class AnimatedSprite extends Sprite
 	 * @param locX
 	 * @param locY
 	 */
-	public void setLocation(int locX, int locY)
+	public void setLocation(float locX, float locY)
 	{
 		super.setLocX(locX);
 		super.setLocY(locY);

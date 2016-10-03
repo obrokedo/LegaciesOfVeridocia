@@ -18,42 +18,42 @@ public class MapMoveMenu extends Panel
 	private int selected;
 	private Camera camera;
 	private int maxX;
-	private int maxY;	
-	
+	private int maxY;
+
 	public MapMoveMenu(StateInfo stateInfo) {
-		super(Panel.PANEL_MAPMOVE);
-		
+		super(PanelType.PANEL_MAPMOVE);
+
 		listeners = new ArrayList<MapListener>();
 		listeners.add(new MapListener(new Rectangle(20, 0, stateInfo.getGc().getWidth() - 40, 20), 1, 0, -CAMERA_MOVE));
 		listeners.add(new MapListener(new Rectangle(20, stateInfo.getGc().getHeight() - 20, stateInfo.getGc().getWidth() - 40, 20), 2, 0, CAMERA_MOVE));
 		listeners.add(new MapListener(new Rectangle(stateInfo.getGc().getWidth() - 20, 20, 20, stateInfo.getGc().getHeight() - 40), 3, CAMERA_MOVE, 0));
 		listeners.add(new MapListener(new Rectangle(0, 20, 20, stateInfo.getGc().getHeight() - 40), 4, -CAMERA_MOVE, 0));
-		
+
 		for (MouseListener ml : listeners)
 			stateInfo.registerMouseListener(ml);
 		Map map = stateInfo.getResourceManager().getMap();
 		maxX = map.getMapWidth() * stateInfo.getTileWidth() - stateInfo.getCamera().getViewportWidth();
 		maxY = map.getMapHeight() * stateInfo.getTileHeight() - stateInfo.getCamera().getViewportHeight();
-		
+
 		camera = stateInfo.getCamera();;
-		
+
 		selected = 0;
 	}
 
 	@Override
-	public void render(FCGameContainer gc, Graphics graphics) 
+	public void render(FCGameContainer gc, Graphics graphics)
 	{
 
-	}	
-	
+	}
+
 	private class MapListener implements MouseListener
 	{
 		private Rectangle triggerArea;
 		private int selectedId;
 		private int moveX;
 		private int moveY;
-		
-		
+
+
 		public MapListener(Rectangle triggerArea, int selectedId, int moveX, int moveY) {
 			this.triggerArea = triggerArea;
 			this.selectedId = selectedId;
@@ -64,25 +64,25 @@ public class MapMoveMenu extends Panel
 		@Override
 		public boolean mouseUpdate(int frameMX, int frameMY, int mapMX,
 				int mapMY, boolean leftClicked, boolean rightClicked,
-				StateInfo stateInfo) 
+				StateInfo stateInfo)
 		{
 			if (triggerArea.contains(frameMX, frameMY))
 			{
 				selected = this.selectedId;
 				// TODO Should the camera be directly influenced here?
-				int mX = camera.getLocationX() + moveX;
-				int mY = camera.getLocationY() + moveY;
-				
+				float mX = camera.getLocationX() + moveX;
+				float mY = camera.getLocationY() + moveY;
+
 				if (mX < 0)
 					mX = 0;
 				else if (mX > maxX)
 					mX = maxX;
-				
+
 				if (mY < 0)
 					mY = 0;
 				else if (mY > maxY)
 					mY = maxY;
-				
+
 				camera.setLocation(mX, mY);
 			}
 			else if (selected == selectedId)

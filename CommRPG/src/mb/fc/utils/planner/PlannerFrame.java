@@ -28,6 +28,7 @@ import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import mb.fc.engine.CommRPG;
 import mb.fc.engine.log.LoggingUtils;
 import mb.fc.loading.MapParser;
 import mb.fc.loading.PlannerMap;
@@ -38,6 +39,8 @@ import mb.fc.utils.planner.cinematic.CinematicCreatorPanel;
 import mb.fc.utils.planner.mapedit.MapEditorPanel;
 
 import org.newdawn.slick.SlickException;
+
+import com.googlecode.jfilechooserbookmarks.DefaultBookmarksPanel;
 
 public class PlannerFrame extends JFrame implements ActionListener,
 		ChangeListener {
@@ -50,7 +53,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 	private JTabbedPane jtp;
 	private File triggerFile;
 	private ArrayList<PlannerTab> plannerTabs = new ArrayList<PlannerTab>();
-	private static String version = "DEV 1.29";
+	private static String version = CommRPG.VERSION;
 	private CinematicCreatorPanel cinematicMapPanel;
 	private MapEditorPanel mapEditorPanel;
 	private PlannerMap plannerMap;
@@ -61,12 +64,13 @@ public class PlannerFrame extends JFrame implements ActionListener,
 	public static final int TAB_TRIGGER = 0;
 	public static final int TAB_CIN = 1;
 	public static final int TAB_TEXT = 2;
-	public static final int TAB_HERO = 3;
-	public static final int TAB_ENEMY = 4;
-	public static final int TAB_ITEM = 5;
-	public static final int TAB_QUEST = 6;
-	public static final int TAB_CIN_MAP = 7;
-	public static final int TAB_EDIT_MAP = 8;
+	public static final int TAB_CONDITIONS = 3;
+	public static final int TAB_HERO = 4;
+	public static final int TAB_ENEMY = 5;
+	public static final int TAB_ITEM = 6;
+	public static final int TAB_QUEST = 7;
+	public static final int TAB_CIN_MAP = 8;
+	public static final int TAB_EDIT_MAP = 9;
 
 	private static String PATH_ENEMIES = "definitions/Enemies";
 	private static String PATH_HEROES = "definitions/Heroes";
@@ -75,7 +79,9 @@ public class PlannerFrame extends JFrame implements ActionListener,
 	public static String PATH_MAPS = "map";
 
 	public static void main(String args[]) {
-		new PlannerFrame();
+		PlannerFrame pf = new PlannerFrame();
+		pf.setVisible(true);
+		pf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 	public PlannerFrame() {
@@ -189,7 +195,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 		stateChanged(null);
 	}
 
-	private void exportDataToFile(ArrayList<PlannerContainer> containers,
+	private boolean exportDataToFile(ArrayList<PlannerContainer> containers,
 			String pathToFile, boolean append) {
 		ArrayList<String> buffer = export(containers);
 
@@ -204,7 +210,9 @@ public class PlannerFrame extends JFrame implements ActionListener,
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "An error occurred while trying to save the data:"
 					+ e.getMessage(), "Error saving data", JOptionPane.ERROR_MESSAGE);
+			return false;
 		}
+		return true;
 	}
 
 	public static ArrayList<String> export(ArrayList<PlannerContainer> containers)
@@ -242,7 +250,8 @@ public class PlannerFrame extends JFrame implements ActionListener,
 			else if (pvd.getValueType() == PlannerValueDef.TYPE_STRING ||
 					pvd.getValueType() == PlannerValueDef.TYPE_LONG_STRING)
 				stringBuffer += "\"" + pl.getValues().get(i) + "\"";
-			else if (pvd.getValueType() == PlannerValueDef.TYPE_INT) {
+			else if (pvd.getValueType() == PlannerValueDef.TYPE_INT
+					|| pvd.getValueType() == PlannerValueDef.TYPE_UNBOUNDED_INT) {
 				if (pvd.getRefersTo() == PlannerValueDef.REFERS_NONE)
 					stringBuffer += pl.getValues().get(i);
 				else
@@ -345,7 +354,8 @@ public class PlannerFrame extends JFrame implements ActionListener,
 		for (PlannerValueDef pvd : pld.getPlannerValues()) {
 			if (pvd.getValueType() == PlannerValueDef.TYPE_STRING || pvd.getValueType() == PlannerValueDef.TYPE_LONG_STRING)
 				plannerLine.getValues().add(ta.getAttribute(pvd.getTag()));
-			else if (pvd.getValueType() == PlannerValueDef.TYPE_INT) {
+			else if (pvd.getValueType() == PlannerValueDef.TYPE_INT
+					|| pvd.getValueType() == PlannerValueDef.TYPE_UNBOUNDED_INT) {
 				if (pvd.getRefersTo() == PlannerValueDef.REFERS_NONE) {
 					LOGGER.fine("TAG: " + pvd.getTag() + " "
 							+ ta.getAttribute(pvd.getTag()));
@@ -387,10 +397,6 @@ public class PlannerFrame extends JFrame implements ActionListener,
 		}
 	}
 
-
-
-
-
 	private void initUI() {
 		jtp = new JTabbedPane();
 
@@ -398,7 +404,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 		PlannerTab tempPlannerTab = new PlannerTab("Triggers", containersByName,
 				new String[] { "trigger" }, PlannerValueDef.REFERS_TRIGGER, this);
 		plannerTabs.add(tempPlannerTab);
-		jtp.addTab("Triggers", tempPlannerTab.getUiAspect());
+		jtp.addTab("Trigger Actions", tempPlannerTab.getUiAspect());
 
 		// Add cinematics
 		tempPlannerTab = new PlannerTab("Cinematics", containersByName,
@@ -413,6 +419,12 @@ public class PlannerFrame extends JFrame implements ActionListener,
 		plannerTabs.add(tempPlannerTab);
 		jtp.addTab("Speech", tempPlannerTab.getUiAspect());
 
+		// Add trigger events
+		tempPlannerTab = new PlannerTab("Conditions", containersByName,
+				new String[] { "condition" }, PlannerValueDef.REFERS_CONDITIONS, this);
+		plannerTabs.add(tempPlannerTab);
+		jtp.addTab("Condition", tempPlannerTab.getUiAspect());
+		
 		// Add heroes
 		tempPlannerTab = new PlannerTab("Heroes", containersByName,
 				new String[] { "hero" }, PlannerValueDef.REFERS_HERO, this);
@@ -440,7 +452,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 		// Add maps
 		cinematicMapPanel = new CinematicCreatorPanel(this);
 		jtp.addTab("Cinematic Creator", cinematicMapPanel.getUiAspect());
-		mapEditorPanel = new MapEditorPanel(this);
+		mapEditorPanel = new MapEditorPanel(this, listOfLists);
 		jtp.addTab("Map Editor", mapEditorPanel.getUIAspect());
 		// jtp.addTab("Battle Functions", new PlannerFunctionPanel());
 		// jtp.addTab("Map Triggers", new MapTriggerPanel(containersByName));
@@ -448,6 +460,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 		jtp.setEnabledAt(TAB_TRIGGER, false);
 		jtp.setEnabledAt(TAB_CIN, false);
 		jtp.setEnabledAt(TAB_TEXT, false);
+		jtp.setEnabledAt(TAB_CONDITIONS, false);
 		jtp.setEnabledAt(TAB_CIN_MAP, false);
 		jtp.setEnabledAt(TAB_EDIT_MAP, false);
 		jtp.setSelectedIndex(TAB_HERO);
@@ -457,7 +470,6 @@ public class PlannerFrame extends JFrame implements ActionListener,
 		this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		this.pack();
 		this.setVisible(false);
-		// this.setVisible(true);
 	}
 
 	public static JButton createActionButton(String text, String action,
@@ -471,7 +483,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getActionCommand().equalsIgnoreCase("new")) {
-			JFileChooser fc = new JFileChooser(new File("."));
+			JFileChooser fc = createFileChooser();
 			int returnVal = fc.showSaveDialog(this);
 
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -484,6 +496,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 					plannerTabs.get(TAB_TRIGGER).clearValues();
 					plannerTabs.get(TAB_CIN).clearValues();
 					plannerTabs.get(TAB_TEXT).clearValues();
+					plannerTabs.get(TAB_CONDITIONS).clearValues();
 				}
 
 				triggerFile = fc.getSelectedFile();
@@ -502,9 +515,10 @@ public class PlannerFrame extends JFrame implements ActionListener,
 				jtp.setEnabledAt(TAB_TRIGGER, true);
 				jtp.setEnabledAt(TAB_CIN, true);
 				jtp.setEnabledAt(TAB_TEXT, true);
+				jtp.setEnabledAt(TAB_CONDITIONS, true);
 			}
 		} else if (arg0.getActionCommand().equalsIgnoreCase("open")) {
-			JFileChooser fc = new JFileChooser(new File("."));
+			JFileChooser fc = createFileChooser();
 			int returnVal = fc.showOpenDialog(this);
 
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -513,7 +527,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 				openFile(triggerFile);
 			}
 		} else if (arg0.getActionCommand().equalsIgnoreCase("openmap")) {
-			JFileChooser fc = new JFileChooser(new File("."));
+			JFileChooser fc = createFileChooser();
 			int returnVal = fc.showOpenDialog(this);
 
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -548,25 +562,30 @@ public class PlannerFrame extends JFrame implements ActionListener,
 			for (int i = 0; i < jtp.getTabCount() - 2; i++)
 				plannerTabs.get(i).setNewValues();
 
-			saveTriggers();
+			saveTriggers(true);
 		} else if (arg0.getActionCommand().equalsIgnoreCase("saveall")) {
 			plannerTabs.get(TAB_ENEMY).setNewValues();
-			exportDataToFile(plannerTabs.get(TAB_ENEMY).getListPC(),
-					PATH_ENEMIES, false);
+			boolean success = true;
+			if (!exportDataToFile(plannerTabs.get(TAB_ENEMY).getListPC(),
+					PATH_ENEMIES, false))
+				success = false;
 
 			plannerTabs.get(TAB_HERO).setNewValues();
-			exportDataToFile(plannerTabs.get(TAB_HERO).getListPC(),
-					PATH_HEROES, false);
+			if (!exportDataToFile(plannerTabs.get(TAB_HERO).getListPC(),
+					PATH_HEROES, false))
+				success = false;
 
 			plannerTabs.get(TAB_ITEM).setNewValues();
-			exportDataToFile(plannerTabs.get(TAB_ITEM).getListPC(),
-					PATH_ITEMS, false);
+			if (!exportDataToFile(plannerTabs.get(TAB_ITEM).getListPC(),
+					PATH_ITEMS, false))
+				success = false;
 
 			plannerTabs.get(TAB_QUEST).setNewValues();
-			exportDataToFile(plannerTabs.get(TAB_QUEST).getListPC(),
-					PATH_QUESTS, false);
+			if (!exportDataToFile(plannerTabs.get(TAB_QUEST).getListPC(),
+					PATH_QUESTS, false))
+				success = false;
 
-			saveTriggers();
+			saveTriggers(success);
 		} else if (arg0.getActionCommand().equalsIgnoreCase("exit")) {
 			System.exit(0);
 		}
@@ -583,7 +602,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 		}
 		else if (arg0.getActionCommand().equalsIgnoreCase("exportmap"))
 		{
-			JFileChooser fc = new JFileChooser(new File("."));
+			JFileChooser fc = createFileChooser();
 			int returnVal = fc.showSaveDialog(this);
 			File newMapFile = null;
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -592,6 +611,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 				Path path = Paths.get(newMapFile.getAbsolutePath());
 				try {
 					Files.write(path, plannerMap.outputNewMap().getBytes());
+					JOptionPane.showMessageDialog(this, "The map was exported successfully");
 				} catch (IOException e) {
 					e.printStackTrace();
 					JOptionPane.showMessageDialog(null, "An error occurred while trying to save the map:"
@@ -610,10 +630,12 @@ public class PlannerFrame extends JFrame implements ActionListener,
 		plannerTabs.get(TAB_TRIGGER).clearValues();
 		plannerTabs.get(TAB_CIN).clearValues();
 		plannerTabs.get(TAB_TEXT).clearValues();
-
+		plannerTabs.get(TAB_CONDITIONS).clearValues();
+		
 		plannerTabs.get(TAB_TRIGGER).updateAttributeList(-1);
 		plannerTabs.get(TAB_CIN).updateAttributeList(-1);
 		plannerTabs.get(TAB_TEXT).updateAttributeList(-1);
+		plannerTabs.get(TAB_CONDITIONS).updateAttributeList(-1);
 
 		this.setTitle("Planner: " + triggerFile.getName() + " " + version);
 
@@ -627,6 +649,9 @@ public class PlannerFrame extends JFrame implements ActionListener,
 			parseContainer(XMLParser.process(Files.readAllLines(
 					Paths.get(triggerFile.getAbsolutePath()),
 					StandardCharsets.UTF_8)), TAB_CIN, "cinematic");
+			parseContainer(XMLParser.process(Files.readAllLines(
+					Paths.get(triggerFile.getAbsolutePath()),
+					StandardCharsets.UTF_8)), TAB_CONDITIONS, "condition");
 		} catch (IOException e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "An error occurred while trying to open the file:"
@@ -638,22 +663,35 @@ public class PlannerFrame extends JFrame implements ActionListener,
 		jtp.setEnabledAt(TAB_TRIGGER, true);
 		jtp.setEnabledAt(TAB_CIN, true);
 		jtp.setEnabledAt(TAB_TEXT, true);
+		jtp.setEnabledAt(TAB_CONDITIONS, true);
 	}
 
-	private void saveTriggers() {
+	private void saveTriggers(boolean success) {
 		if (triggerFile != null) {
 			LOGGER.fine("SAVE");
 			plannerTabs.get(TAB_TRIGGER).setNewValues();
-			exportDataToFile(plannerTabs.get(TAB_TRIGGER).getListPC(),
-					triggerFile.getAbsolutePath(), false);
+			if (!exportDataToFile(plannerTabs.get(TAB_TRIGGER).getListPC(),
+					triggerFile.getAbsolutePath(), false))
+				success = false;
 
 			plannerTabs.get(TAB_TEXT).setNewValues();
-			exportDataToFile(plannerTabs.get(TAB_TEXT).getListPC(),
-					triggerFile.getAbsolutePath(), true);
+			if (!exportDataToFile(plannerTabs.get(TAB_TEXT).getListPC(),
+					triggerFile.getAbsolutePath(), true))
+				success = false;
 
 			plannerTabs.get(TAB_CIN).setNewValues();
-			exportDataToFile(plannerTabs.get(TAB_CIN).getListPC(),
-					triggerFile.getAbsolutePath(), true);
+			if (!exportDataToFile(plannerTabs.get(TAB_CIN).getListPC(),
+					triggerFile.getAbsolutePath(), true))
+				success = false;
+			
+			plannerTabs.get(TAB_CONDITIONS).setNewValues();
+			if (!exportDataToFile(plannerTabs.get(TAB_CONDITIONS).getListPC(),
+					triggerFile.getAbsolutePath(), true))
+				success = false;
+		}
+
+		if (success) {
+			JOptionPane.showMessageDialog(this, "The file was saved successfully");
 		}
 	}
 
@@ -667,7 +705,8 @@ public class PlannerFrame extends JFrame implements ActionListener,
 								.get(j);
 
 						if (pvd.getRefersTo() == referenceType
-								&& pvd.getValueType() == PlannerValueDef.TYPE_INT) {
+								&& pvd.getValueType() == PlannerValueDef.TYPE_INT ||
+									pvd.getValueType() == PlannerValueDef.TYPE_UNBOUNDED_INT) {
 							if ((int) pl.getValues().get(j) == referenceIndex + 1)
 								pl.getValues().set(j, 0);
 							else if ((int) pl.getValues().get(j) > referenceIndex + 1) {
@@ -705,5 +744,15 @@ public class PlannerFrame extends JFrame implements ActionListener,
 	public PlannerContainerDef getContainerDefByName(String name)
 	{
 		return this.containersByName.get(name);
+	}
+
+	public static JFileChooser createFileChooser()
+	{
+		JFileChooser jfc = new JFileChooser();
+		DefaultBookmarksPanel panel = new DefaultBookmarksPanel();
+		panel.setOwner(jfc);
+		jfc.setAccessory(panel);
+		jfc.setPreferredSize(new Dimension(800, 600));
+		return jfc;
 	}
 }

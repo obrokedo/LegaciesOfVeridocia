@@ -13,6 +13,8 @@ import mb.fc.game.sprite.Door;
 import mb.fc.game.sprite.Sprite;
 import mb.fc.map.Map;
 
+import org.newdawn.slick.util.Log;
+
 public class TownMoveManager extends Manager
 {
 	private ArrayList<MovingSprite> movers;
@@ -22,7 +24,6 @@ public class TownMoveManager extends Manager
 
 	@Override
 	public void initialize() {
-		// new OverlandMove(stateInfo);
 		movers = new ArrayList<MovingSprite>();
 		moving = false;
 	}
@@ -30,70 +31,95 @@ public class TownMoveManager extends Manager
 	public void update(int delta)
 	{
 		updateDelta += delta;
+		boolean currentSpriteJustFinishedMoving = false;
+		int moveRemainder = 0;
+
+		for (int i = 0; i < movers.size(); i++)
+		{
+			MovingSprite ms = movers.get(i);
+
+			if(ms.isFirstMove() && ms.getAnimatedSprite().getSpriteType() == Sprite.TYPE_COMBAT)
+			{
+				stateInfo.checkTriggersMovemenet((int) ms.getEndX(), (int) ms.getEndY(), true);
+			}
+
+			if (ms.update(delta))
+			{
+				movers.remove(i);
+				ms.getAnimatedSprite().doneMoving();
+				i--;
+
+				if (ms.getAnimatedSprite().getSpriteType() == Sprite.TYPE_COMBAT)
+					stateInfo.checkTriggersMovemenet((int) ms.getAnimatedSprite().getLocX(), (int) ms.getAnimatedSprite().getLocY(), false);
+				if (stateInfo.getCurrentSprite() == ms.getAnimatedSprite()) {
+					moving = false;
+					currentSpriteJustFinishedMoving = true;
+					moveRemainder = ms.getMoveRemainder();
+				}
+			}
+		}
+
+		if (currentSpriteJustFinishedMoving && moveRemainder > 0) {
+			checkInput();
+
+			for (int i = 0; i < movers.size(); i++)
+			{
+				if (stateInfo.getCurrentSprite() == movers.get(i).getAnimatedSprite()) {
+					movers.get(i).updateWithRemainder(moveRemainder);
+					break;
+				}
+			}
+		}
 
 		while (updateDelta >= UPDATE_TIME)
 		{
 			updateDelta -= UPDATE_TIME;
-			/******************************************/
-			/* Handle movement for the players Leader */
-			/******************************************/
-			CombatSprite current = stateInfo.getCurrentSprite();
 
-			// Check to see if we are done moving
-			if (!moving)
+			checkInput();
+		}
+
+		stateInfo.getCamera().centerOnSprite(stateInfo.getCurrentSprite(), stateInfo.getCurrentMap());
+	}
+
+	private void checkInput()
+	{
+		/******************************************/
+		/* Handle movement for the players Leader */
+		/******************************************/
+		CombatSprite current = stateInfo.getCurrentSprite();
+
+		// Check to see if we are done moving
+		if (!moving)
+		{
+			int sx = current.getTileX();
+			int sy = current.getTileY();
+
+			switch (stateInfo.getInput().getMostRecentDirection())
 			{
-				int sx = current.getTileX();
-				int sy = current.getTileY();
-
-				switch (stateInfo.getInput().getMostRecentDirection())
-				{
-					case KeyMapping.BUTTON_RIGHT:
-						if (!blocked(stateInfo.getResourceManager().getMap(), sx + 1, sy))
-							setMoving(Direction.RIGHT, current);
-						else
-							current.setFacing(Direction.RIGHT);
-						break;
-					case KeyMapping.BUTTON_LEFT:
-						if (!blocked(stateInfo.getResourceManager().getMap(), sx - 1, sy))
-							setMoving(Direction.LEFT, current);
-						else
-							current.setFacing(Direction.LEFT);
-						break;
-					case KeyMapping.BUTTON_UP:
-						if (!blocked(stateInfo.getResourceManager().getMap(), sx, sy - 1))
-							setMoving(Direction.UP, current);
-						else
-							current.setFacing(Direction.UP);
-						break;
-					case KeyMapping.BUTTON_DOWN:
-						if (!blocked(stateInfo.getResourceManager().getMap(), sx, sy + 1))
-							setMoving(Direction.DOWN, current);
-						else
-							current.setFacing(Direction.DOWN);
-						break;
-				}
-			}
-
-			for (int i = 0; i < movers.size(); i++)
-			{
-				MovingSprite ms = movers.get(i);
-
-				if(ms.isFirstMove() && ms.getAnimatedSprite().getSpriteType() == Sprite.TYPE_COMBAT)
-				{
-					stateInfo.checkTriggers(ms.getEndX(), ms.getEndY(), true);
-				}
-
-				if (ms.update())
-				{
-					movers.remove(i);
-					ms.getAnimatedSprite().doneMoving();
-					i--;
-
-					if (ms.getAnimatedSprite().getSpriteType() == Sprite.TYPE_COMBAT)
-						stateInfo.checkTriggers(ms.getAnimatedSprite().getLocX(), ms.getAnimatedSprite().getLocY(), false);
-					if (stateInfo.getCurrentSprite() == ms.getAnimatedSprite())
-						moving = false;
-				}
+				case KeyMapping.BUTTON_RIGHT:
+					if (!blocked(stateInfo.getResourceManager().getMap(), sx + 1, sy))
+						setMoving(Direction.RIGHT, current);
+					else
+						current.setFacing(Direction.RIGHT);
+					break;
+				case KeyMapping.BUTTON_LEFT:
+					if (!blocked(stateInfo.getResourceManager().getMap(), sx - 1, sy))
+						setMoving(Direction.LEFT, current);
+					else
+						current.setFacing(Direction.LEFT);
+					break;
+				case KeyMapping.BUTTON_UP:
+					if (!blocked(stateInfo.getResourceManager().getMap(), sx, sy - 1))
+						setMoving(Direction.UP, current);
+					else
+						current.setFacing(Direction.UP);
+					break;
+				case KeyMapping.BUTTON_DOWN:
+					if (!blocked(stateInfo.getResourceManager().getMap(), sx, sy + 1))
+						setMoving(Direction.DOWN, current);
+					else
+						current.setFacing(Direction.DOWN);
+					break;
 			}
 		}
 	}
@@ -102,33 +128,48 @@ public class TownMoveManager extends Manager
 	{
 		if (current == stateInfo.getCurrentSprite())
 			moving = true;
-		recieveMessage(new SpriteMoveMessage(current, direction));
+		stateInfo.sendMessage(new SpriteMoveMessage(current, direction));
+		// recieveMessage(new SpriteMoveMessage(current, direction));
 	}
 
 	private boolean blocked(Map map, int tx, int ty)
 	{
-		if (tx >= 0 && ty >= 0 && map.getMapEffectiveHeight() > ty && map.getMapEffectiveWidth() > tx && map.isMarkedMoveable(tx, ty))
+		if (tx >= 0 && ty >= 0 && map.getMapEffectiveHeight() > ty
+				&& map.getMapEffectiveWidth() > tx && map.isMarkedMoveable(tx, ty))
 		{
 			for (Sprite s : stateInfo.getSprites())
 			{
 				if (s.getTileX() == tx && s.getTileY() == ty && !(s instanceof Door))
+				{
+					Log.info("Blocked by sprite " + s.getTileX() + " " + s.getTileY() + " " + s.getAbsLocX() + " " + s.getAbsLocY());
+
 					return true;
+				}
 			}
 
 			return false;
 		}
+		else
+			Log.info("Blocked by tile");
 		return true;
 	}
 
 	@Override
 	public void recieveMessage(Message message)
 	{
-
 		switch (message.getMessageType())
 		{
 			case OVERLAND_MOVE_MESSAGE:
 				SpriteMoveMessage m = (SpriteMoveMessage) message;
 				AnimatedSprite sprite = m.getSprite(stateInfo.getSprites());
+
+				for (MovingSprite ms : movers)
+				{
+					if (ms.getAnimatedSprite().getId() == sprite.getId()) {
+						ms.addNextMovement(m.getDirection());
+						return;
+					}
+				}
 
 				int sx = sprite.getTileX();
 				int sy = sprite.getTileY();

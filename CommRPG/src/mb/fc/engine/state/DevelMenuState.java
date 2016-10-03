@@ -4,6 +4,14 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.particles.ParticleSystem;
+import org.newdawn.slick.state.StateBasedGame;
+
 import mb.fc.engine.CommRPG;
 import mb.fc.game.ui.ResourceSelector;
 import mb.fc.game.ui.ResourceSelector.ResourceSelectorListener;
@@ -18,13 +26,6 @@ import mb.fc.map.MapObject;
 import mb.fc.utils.gif.GifFrame;
 import mb.fc.utils.planner.PlannerFrame;
 
-import org.newdawn.slick.Color;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.state.StateBasedGame;
-
 /**
  * Development menu state that allows loading maps programatically
  *
@@ -36,6 +37,7 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 	private ResourceSelector mapSelector, textSelector, entranceSelector;
 	private PlannerFrame plannerFrame = new PlannerFrame();
 	private GifFrame quickAnimate = new GifFrame();
+	private ParticleSystem ps;
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
@@ -45,7 +47,7 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 		gameSetup(game, gc);
 		mapSelector = new ResourceSelector("Select Map", 0, true, "map", ".tmx", container);
 		mapSelector.setListener(this);
-		textSelector = new ResourceSelector("Select Text", 0, false, "text", "", container);
+		textSelector = new ResourceSelector("Select Text", 0, false, "mapdata", "", container);
 	}
 
 	@Override
@@ -91,6 +93,8 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 		g.drawString("F4 - Open Animation Viewer", container.getWidth() - 250, container.getHeight() - 60);
 		g.drawString("F5 - Run Test", container.getWidth() - 250, container.getHeight() - 30);
 
+		if (initialized)
+			ps.render();
 	}
 
 	@Override
@@ -109,7 +113,7 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 
 
 
-		if (container.getInput().isKeyPressed(Input.KEY_F2))
+		if (container.getInput().isKeyPressed(Input.KEY_F2) || container.getInput().isKeyPressed(Input.KEY_P))
 		{
 			if (!plannerFrame.isVisible())
 				plannerFrame.setVisible(true);
@@ -130,7 +134,14 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 		{
 			CommRPG.TEST_MODE_ENABLED = true;
 			this.gameSetup(game, container);
-			start(gc, LoadTypeEnum.CINEMATIC, "eriumcastle", "eriumcastle", null);
+			start(gc, LoadTypeEnum.CINEMATIC, "neweriumcastle", "neweriumcastle", null);
+		}
+
+		if (container.getInput().isKeyDown(Input.KEY_F7))
+		{
+			((CommRPG) game).toggleFullScreen();
+			updateDelta = 200;
+			System.out.println("TOGGLE");
 		}
 
 		if (updateDelta > 0)
@@ -166,11 +177,13 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 
 
 		}
+
+		if (initialized)
+			ps.update(delta);
 	}
 
 	@Override
 	public void stateLoaded(FCResourceManager resourceManager) {
-
 	}
 
 	@Override

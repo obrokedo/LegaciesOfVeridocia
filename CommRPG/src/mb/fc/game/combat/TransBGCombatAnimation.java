@@ -43,10 +43,18 @@ public class TransBGCombatAnimation extends CombatAnimation
 	public boolean update(int delta) {
 		this.totalTimePassed += delta;
 
-		if (transIn)
-			offsetLocX = (int) (1.0f * endLocX * (minimumTimePassed - totalTimePassed) / minimumTimePassed);
-		else
-			offsetLocX = (int) (1.0f * endLocX * totalTimePassed / minimumTimePassed);
+		if (transIn) {
+			if (endLocX > 0)
+				offsetLocX = Math.max(0, Math.min(endLocX, (int) (1.0f * endLocX * (minimumTimePassed - totalTimePassed) / minimumTimePassed)));
+			else
+				offsetLocX = Math.min(0, Math.max(endLocX, (int) (1.0f * endLocX * (minimumTimePassed - totalTimePassed) / minimumTimePassed)));
+		}
+		else {
+			if (endLocX > 0)
+				offsetLocX =Math.max(0, Math.min(endLocX, (int) (1.0f * endLocX * totalTimePassed / minimumTimePassed)));
+			else
+				offsetLocX = Math.min(0, Math.max(endLocX, (int) (1.0f * endLocX * totalTimePassed / minimumTimePassed)));
+		}
 
 		if (childAnimation != null)
 			childAnimation.xOffset = offsetLocX;
@@ -55,7 +63,7 @@ public class TransBGCombatAnimation extends CombatAnimation
 	}
 
 	@Override
-	public void render(FCGameContainer fcCont, Graphics g, int yDrawPos) {
+	public void render(FCGameContainer fcCont, Graphics g, int yDrawPos, float scale) {
 		g.setColor(Color.black);
 		g.fillRect(0, 0, fcCont.getWidth(), fcCont.getHeight());
 
@@ -64,7 +72,7 @@ public class TransBGCombatAnimation extends CombatAnimation
 		if (childAnimation != null)
 		{
 			if (childAnimation.getParentSprite().getCurrentHP() > 0)
-				childAnimation.render(fcCont, g, yDrawPos);
+				childAnimation.render(fcCont, g, yDrawPos, scale);
 		}
 
 		g.setColor(Color.black);

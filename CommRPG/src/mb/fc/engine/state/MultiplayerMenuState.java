@@ -3,7 +3,6 @@ package mb.fc.engine.state;
 import java.util.ArrayList;
 
 import mb.fc.engine.CommRPG;
-import mb.fc.engine.message.IntMessage;
 import mb.fc.engine.message.Message;
 import mb.fc.engine.message.MessageType;
 import mb.fc.game.listener.StringListener;
@@ -72,6 +71,8 @@ public class MultiplayerMenuState extends MenuState implements PacketHandler, St
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
 		g.setColor(Color.white);
+		g.drawRect(40, 135, 580, 300);
+		g.drawRect(39, 134, 582, 302);
 		clientNameField.render(container, g);
 		ipField.render(container, g);
 
@@ -159,8 +160,8 @@ public class MultiplayerMenuState extends MenuState implements PacketHandler, St
 					// Add starting heroes if they haven't been added yet
 					if (persistentStateInfo.getClientProfile().getHeroes().size() == 0)
 					{
-						for (Integer heroId : GlobalPythonFactory.createConfigurationValues().getStartingHeroIds())
-							persistentStateInfo.getClientProfile().addHero(HeroResource.getHero(heroId));
+						for (String heroName : GlobalPythonFactory.createConfigurationValues().getStartingHeroIds())
+							persistentStateInfo.getClientProfile().addHero(HeroResource.getHero(heroName));
 					}
 
 					client = new TCPClient("127.0.0.1");
@@ -187,8 +188,8 @@ public class MultiplayerMenuState extends MenuState implements PacketHandler, St
 					// Add starting heroes if they haven't been added yet
 					if (persistentStateInfo.getClientProfile().getHeroes().size() == 0)
 					{
-						for (Integer heroId : GlobalPythonFactory.createConfigurationValues().getStartingHeroIds())
-							persistentStateInfo.getClientProfile().addHero(HeroResource.getHero(heroId));
+						for (String heroName : GlobalPythonFactory.createConfigurationValues().getStartingHeroIds())
+							persistentStateInfo.getClientProfile().addHero(HeroResource.getHero(heroName));
 					}
 
 					client = new TCPClient(ipField.getText());
@@ -274,18 +275,13 @@ public class MultiplayerMenuState extends MenuState implements PacketHandler, St
 			case CLIENT_ID:
 				int clientId = ((ClientIDMessage) packet).getClientId();
 				// client.sendMessage(new ClientRegistrationMessage(persistentStateInfo.getClientProfile().getName(), clientId, persistentStateInfo.getClientProfile().getHeroes().size()));
-				client.sendMessage(new ClientRegistrationMessage(clientNameField.getText(), clientId, persistentStateInfo.getClientProfile().getHeroes().size()));
+				client.sendMessage(new ClientRegistrationMessage(clientNameField.getText(), clientId));
 				persistentStateInfo.setClientId(clientId);
 				System.out.println("CLIENT ID " + clientId);
+				for (CombatSprite cs : persistentStateInfo.getClientProfile().getHeroes())
+					cs.setId(persistentStateInfo.getClientId() * 256 + cs.getId());
 				break;
-			case CLIENT_HERO_START:
-				int startHeroId = ((IntMessage) packet).getValue();
-				ArrayList<CombatSprite> heroes = persistentStateInfo.getClientProfile().getHeroes();
-				for (int i = 0; i < persistentStateInfo.getClientProfile().getHeroes().size(); i++)
-				{
-					heroes.get(i).setId(startHeroId + i);
-				}
-				break;
+
 			case CLIENT_BROADCAST_HERO:
 				persistentStateInfo.getClientProfile().addNetworkHeroes(((BackedSpriteMessage) packet).getSprites());
 				System.out.println("ADDED HEROES " + persistentStateInfo.getClientProfile().getHeroes().size());
@@ -296,7 +292,7 @@ public class MultiplayerMenuState extends MenuState implements PacketHandler, St
 			case START_GAME:
 				persistentStateInfo.setClient(this.client);
 				persistentStateInfo.setServer(server);
-				this.start(gc, LoadTypeEnum.TOWN, "TJBWoods1", "TJBWoods1", "north");
+				this.start(gc, LoadTypeEnum.TOWN, "eriumcastle", "eriumcastle", "north");
 				break;
 			case PLAYER_LIST:
 				this.players.clear();

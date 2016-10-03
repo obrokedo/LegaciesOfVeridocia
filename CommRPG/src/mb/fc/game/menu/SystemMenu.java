@@ -12,23 +12,23 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Rectangle;
 
 public class SystemMenu extends Menu
-{	
+{
 	private ArrayList<SystemMenuMouseHandler> systemMenuMouseHandler;
 	private int x = 200;
 	private int y = 200;
-	
+
 	public SystemMenu(GameContainer gc) {
-		super(Panel.PANEL_SYSTEM);
+		super(PanelType.PANEL_SYSTEM);
 		x = (gc.getWidth() - 250) / 2;
 		systemMenuMouseHandler = new ArrayList<SystemMenuMouseHandler>();
 		systemMenuMouseHandler.add(new SystemMenuMouseHandler(new Rectangle(x + 20, y + 20, 210, 50), x + 75, "Connections", 0));
 		systemMenuMouseHandler.add(new SystemMenuMouseHandler(new Rectangle(x + 20, y + 90, 210, 50), x + 40, "Return to Main Menu", 1));
 		systemMenuMouseHandler.add(new SystemMenuMouseHandler(new Rectangle(x + 20, y + 160, 210, 50), x + 70, "Exit Program", 2));
-	}	
+	}
 
 	@Override
 	public void render(FCGameContainer gc, Graphics graphics) {
-		
+
 		Panel.drawPanelBox(x, y, 250, 230, graphics);
 		for (SystemMenuMouseHandler s : systemMenuMouseHandler)
 			s.render(gc, graphics);
@@ -39,20 +39,20 @@ public class SystemMenu extends Menu
 		/*
 		if (rightClick)
 			return true;
-		
+
 		for (SystemMenuMouseHandler s : systemMenuMouseHandler)
 			s.checkMouseInput(mouseX, mouseY, leftClick, stateInfo);
 			*/
 		return MenuUpdate.MENU_CLOSE;
 	}
-	
+
 	private class SystemMenuMouseHandler
 	{
 		private Rectangle rect;
 		private int textX;
 		private String text;
 		private boolean mouseOver = false;
-		
+
 		public SystemMenuMouseHandler(Rectangle rect, int textX, String text, int index) {
 			super();
 			this.rect = rect;
@@ -74,7 +74,7 @@ public class SystemMenu extends Menu
 			else
 			{
 				graphics.setColor(Panel.COLOR_FOREFRONT);
-				graphics.drawRect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());				
+				graphics.drawRect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
 				graphics.drawString(text, textX, rect.getY() + 15);
 			}
 		}

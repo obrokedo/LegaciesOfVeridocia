@@ -24,7 +24,10 @@ import org.newdawn.slick.util.Log;
 
 public class TriggerEvent
 {
+	public static final int TRIGGER_ID_EXIT = -2;
+
 	private ArrayList<TriggerType> triggerTypes = new ArrayList<TriggerType>();
+
 	private boolean retrigOnEnter;
 	private boolean nonRetrig;
 	private boolean triggerOnce;
@@ -58,16 +61,26 @@ public class TriggerEvent
 
 	public void perform(StateInfo stateInfo, boolean immediate)
 	{
-		if (triggerImmediately != immediate)
+		Log.debug("Beginning Trigger Perform: " + this.id);
+		if (triggerImmediately != immediate) {
+			Log.debug("Trigger will not be executed, movement is immediate " + immediate + " trigger is immediate " + triggerImmediately);
 			return;
+		}
+
+		if (!stateInfo.isInitialized() && this.id != 0) {
+			Log.debug("Trigger will not be performed because the state has been changed");
+			return;
+		}
 
 		// Check to see if this trigger meets all required quests
 		if (requires != null)
 		{
 			for (int i : requires)
 			{
-				if (i != -1 && !stateInfo.isQuestComplete(i))
+				if (i != -1 && !stateInfo.isQuestComplete(i)) {
+					Log.debug("Trigger will not be executed due to a failed requires " + i);
 					return;
+				}
 			}
 		}
 
@@ -77,8 +90,10 @@ public class TriggerEvent
 		{
 			for (int i : excludes)
 			{
-				if (i != -1 && stateInfo.isQuestComplete(i))
+				if (i != -1 && stateInfo.isQuestComplete(i)) {
+					Log.debug("Trigger will not be executed due to a failed excludes " + i);
 					return;
+				}
 			}
 		}
 
@@ -90,18 +105,25 @@ public class TriggerEvent
 				// If so we want this to be retriggered
 				if (!stateInfo.isInitialized()) // && retrigOnEnter && stateInfo.getClientProgress().isPreviouslyTriggered(id))
 				{
+					Log.debug("Trigger will be performed on strange path");
 					performTriggerImpl(stateInfo);
 				}
+				// The state has been changed and triggers should not be executed
+				else
+					Log.debug("Trigger will not be performed because the state has been changed on strange path");
 				return;
 			}
-			else
+			else {
 				stateInfo.getClientProgress().addNonretriggerableByMap(id);
+			}
 		}
 
 		if (triggerOnce)
 		{
-			if (triggered)
+			if (triggered) {
+				Log.debug("Trigger will not be triggered as it has already been triggered once");
 				return;
+			}
 			else
 				triggered = true;
 		}
@@ -111,6 +133,7 @@ public class TriggerEvent
 			stateInfo.getClientProgress().addRetriggerableByMap(id);
 		}
 
+		Log.debug("Trigger will be performed");
 		performTriggerImpl(stateInfo);
 	}
 
@@ -138,6 +161,7 @@ public class TriggerEvent
 
 		@Override
 		public boolean perform(StateInfo stateInfo) {
+			Log.debug("Completing Quest: " + questId);
 			stateInfo.sendMessage(new IntMessage(MessageType.COMPLETE_QUEST, questId));
 			return false;
 		}
@@ -188,17 +212,19 @@ public class TriggerEvent
 	public class TriggerBattleCond extends TriggerType
 	{
 		private int[] leaderIds;
+		private int[] enemyLeaderIds;
 		private boolean killAllLeaders;
 
-		public TriggerBattleCond(int[] leaderIds, boolean killAllLeaders) {
+		public TriggerBattleCond(int[] leaderIds, int[] enemyLeaderIds, boolean killAllLeaders) {
 			super();
 			this.leaderIds = leaderIds;
 			this.killAllLeaders = killAllLeaders;
+			this.enemyLeaderIds = enemyLeaderIds;
 		}
 
 		@Override
 		public boolean perform(StateInfo stateInfo) {
-			stateInfo.sendMessage(new BattleCondMessage(leaderIds, killAllLeaders), true);
+			stateInfo.sendMessage(new BattleCondMessage(leaderIds, enemyLeaderIds, killAllLeaders), true);
 			return false;
 		}
 	}

@@ -19,6 +19,7 @@ public class HeroDefinition
 	private String name;
 	private boolean leader;
 	private boolean promoted;
+	private boolean specialPromoted;
 	private int level;
 	private String animations;
 
@@ -78,6 +79,7 @@ public class HeroDefinition
 			hd.name = tagArea.getAttribute("name");
 			hd.id = Integer.parseInt(tagArea.getAttribute("id"));
 			hd.promoted = Boolean.parseBoolean(tagArea.getAttribute("promoted"));
+			hd.specialPromoted = Boolean.parseBoolean(tagArea.getAttribute("specialpromoted"));
 			hd.level = Integer.parseInt(tagArea.getAttribute("level"));
 			hd.animations = tagArea.getAttribute("animations");
 
@@ -142,12 +144,21 @@ public class HeroDefinition
 			{
 				if (childTagArea.getTagType().equalsIgnoreCase("spellprogression"))
 				{
-					String[] splitSpell = childTagArea.getAttribute("gained").split(",");
-					int[] splitLevel = new int[splitSpell.length];
-					hd.spellIds.add(childTagArea.getAttribute("spellid"));
-					for (int i = 0; i < splitSpell.length; i++)
-						splitLevel[i] = Integer.parseInt(splitSpell[i]);
-					hd.spellsPerLevel.add(splitLevel);
+					// Check to make sure that this progression is for the current hero definition
+					boolean spellPromoted = Boolean.parseBoolean(childTagArea.getAttribute("promotedprog"));
+					boolean spellSpecialPromoted = Boolean.parseBoolean(childTagArea.getAttribute("specialpromoted"));
+					
+					if ((hd.specialPromoted && spellSpecialPromoted) ||
+							(hd.promoted && spellPromoted) || 
+							(!hd.promoted && !hd.specialPromoted && !spellPromoted && !spellSpecialPromoted))
+					{
+						String[] splitSpell = childTagArea.getAttribute("gained").split(",");
+						int[] splitLevel = new int[splitSpell.length];
+						hd.spellIds.add(childTagArea.getAttribute("spellid"));
+						for (int i = 0; i < splitSpell.length; i++)
+							splitLevel[i] = Integer.parseInt(splitSpell[i].trim());
+						hd.spellsPerLevel.add(splitLevel);
+					}
 				}
 				else if (childTagArea.getTagType().equalsIgnoreCase("item"))
 				{
@@ -210,7 +221,7 @@ public class HeroDefinition
 					String[] splitItems = childTagArea.getAttribute("usuableitems").split(",");
 					int[] splitIds = new int[splitItems.length];
 					for (int i = 0; i < splitItems.length; i++)
-						splitIds[i] = Integer.parseInt(splitItems[i]);
+						splitIds[i] = Integer.parseInt(splitItems[i].trim());
 
 					hd.usuableWeapons[index] = splitIds;
 				}
@@ -293,11 +304,11 @@ public class HeroDefinition
 			// Check what spells are already known
 			boolean known = false;
 			int maxLevel = 0;
-			for (int j = 1; j < spellsPerLevel.get(i).length; j++)
+			for (int j = 0; j < spellsPerLevel.get(i).length; j++)
 			{
 				if (spellsPerLevel.get(i)[j] <= level)
 				{
-					maxLevel = j;
+					maxLevel = j + 1;
 					known = true;
 				}
 			}
@@ -323,6 +334,10 @@ public class HeroDefinition
 		}
 
 		return cs;
+	}
+
+	public String getName() {
+		return name;
 	}
 
 	public int getId() {

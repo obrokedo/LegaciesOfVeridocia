@@ -93,17 +93,11 @@ public class InitiativeManager extends Manager
 
 	private void getNextTurn()
 	{
-		ArrayList<CombatSprite> initOrder = new ArrayList<CombatSprite>();
-		for (CombatSprite s : stateInfo.getCombatSprites())
-		{
-			initOrder.add(s);
-		}
-
 		CombatSprite nextTurn = null;
 
 		while (nextTurn == null)
 		{
-			for (CombatSprite cs : initOrder)
+			for (CombatSprite cs : stateInfo.getCombatSprites())
 			{
 				// Increase the sprites initiaitive by 7 and potentially an addtional 1 based on speed
 				cs.setCurrentInit(cs.getCurrentInit() + 7 + (CommRPG.RANDOM.nextInt(100) < cs.getCurrentSpeed() ? 1 : 0));
@@ -119,23 +113,14 @@ public class InitiativeManager extends Manager
 
 		nextTurn.setCurrentInit(0);
 		stateInfo.sendMessage(new SpriteContextMessage(MessageType.COMBATANT_TURN, nextTurn), true);
-
-		Collections.sort(initOrder, new InitComparator());
-
-		stateInfo.sendMessage(new SpriteContextMessage(MessageType.SET_INIT_ORDER, initOrder), true);
 	}
 
 	public void initializeInitOrder()
 	{
-		ArrayList<CombatSprite> initOrder = new ArrayList<CombatSprite>();
 		for (CombatSprite s : stateInfo.getCombatSprites())
 		{
 			s.setCurrentInit(s.getMaxSpeed());
-
-			initOrder.add(s);
 		}
-
-		stateInfo.sendMessage(new SpriteContextMessage(MessageType.SET_INIT_ORDER, initOrder), true);
 	}
 
 	@Override
@@ -145,11 +130,6 @@ public class InitiativeManager extends Manager
 			case NEXT_TURN:
 				updateOnTurn();
 				break;
-			/*
-			case MessageType.SET_INIT_ORDER:
-				initMenu.initOrder = ((MultiSpriteContextMessage) message).getSprites();
-				break;
-				*/
 			case INTIIALIZE:
 				initializeAfterSprites();
 				break;

@@ -3,7 +3,6 @@ package mb.fc.game.menu.shop;
 import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.ShopMessage;
 import mb.fc.engine.state.StateInfo;
-import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.input.FCInput;
 import mb.fc.game.input.KeyMapping;
 import mb.fc.game.item.EquippableItem;
@@ -58,7 +57,7 @@ public class ShopMenuTabled extends Menu implements MenuListener
 	protected TextUI itemNameText1, itemNameText2, itemCostText, goldTitleText, goldAmountText;
 
 	public ShopMenuTabled(StateInfo stateInfo, ShopMessage shopMessage) {
-		super(Panel.PANEL_SHOP);
+		super(PanelType.PANEL_SHOP);
 
 		this.sellPercent = shopMessage.getSellPercent();
 		this.buyPercent = shopMessage.getBuyPercent();

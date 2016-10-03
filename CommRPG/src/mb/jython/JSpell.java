@@ -28,12 +28,13 @@ public abstract class JSpell implements Serializable
 	 */
 	protected String name;
 	protected int[] costs;
-	protected boolean targetsEnemy;
+	protected boolean targetsEnemy, targetsAllies;
 	protected int maxLevel;
 	protected int[] damage;
 	protected int[] mpDamage;
-	protected String[] effects;
-	protected int[] effectChance;
+	protected String[][] effects;
+	protected int[][] effectLevel;
+	protected int[][] effectChance;
 	protected Range[] range;
 	protected int[] area;
 	protected String id;
@@ -109,7 +110,7 @@ public abstract class JSpell implements Serializable
 	public abstract int getEffectiveDamage(CombatSprite attacker, CombatSprite target, int spellLevel);
 
 	/**
-	 * Gets the BattleEffect for the spell at a given level
+	 * Gets the BattleEffects for the spell at a given level
 	 * A value of null will be returned for a given index if there is no
 	 * BattleEffect for that level
 	 *
@@ -117,17 +118,19 @@ public abstract class JSpell implements Serializable
 	 * A value of null will be returned for a given index if there is no
 	 * BattleEffect for that level
 	 */
-	public JBattleEffect getEffect(int level) {
-		if (effects == null || effects.length <= level || effects[level] == null)
+	public JBattleEffect[] getEffects(int spellLevel) {
+		if (effects == null || effects.length <= spellLevel || 
+				effects[spellLevel] == null || effects[spellLevel].length == 0)
 			return null;
-		return GlobalPythonFactory.createJBattleEffect(effects[level]);
-	}
+		JBattleEffect[] instantiatedEffects = new JBattleEffect[effects[spellLevel].length];
+		for (int i = 0; i < instantiatedEffects.length; i++)
+		{
 
-	public int getEffectChance(int level)
-	{
-		if (effectChance == null || effectChance.length <= level || effectChance[level] == -1)
-			return -1;
-		return effectChance[level];
+			instantiatedEffects[i] = GlobalPythonFactory.createJBattleEffect(effects[spellLevel][i], effectLevel[spellLevel][i]);
+			instantiatedEffects[i].setEffectChance(effectChance[spellLevel][i]);
+		}
+
+		return instantiatedEffects;
 	}
 
 	/**
@@ -226,7 +229,7 @@ public abstract class JSpell implements Serializable
 	 * @see /scripts/Spells.py
 	 */
 	public abstract String getBattleText(CombatSprite target, int damage, int mpDamage, int attackerHPDamage,
-			int attackerMPDamage, JBattleEffect battleEffect);
+			int attackerMPDamage);
 
 	/**
 	 * Gets the color that the spell overlay should appear as for the given spell.
@@ -250,7 +253,13 @@ public abstract class JSpell implements Serializable
 	protected void setTargetsEnemy(boolean targetsEnemy) {
 		this.targetsEnemy = targetsEnemy;
 	}
+	protected void setTargetsAllies(boolean targetsAllies) {
+		this.targetsAllies = targetsAllies;
+	}
 	protected void setMaxLevel(int maxLevel) {
+		this.effects = new String[maxLevel][];
+		this.effectChance = new int[maxLevel][];
+		this.effectLevel = new int[maxLevel][];
 		this.maxLevel = maxLevel;
 	}
 	protected void setDamage(int[] damage) {
@@ -259,11 +268,14 @@ public abstract class JSpell implements Serializable
 	protected void setMpDamage(int[] mpDamage) {
 		this.mpDamage = mpDamage;
 	}
-	protected void setEffects(String[] effects) {
-		this.effects = effects;
+	protected void setEffects(String[] effects, int spellLevel) {
+		this.effects[spellLevel - 1] = effects;
 	}
-	public void setEffectChance(int[] effectChance) {
-		this.effectChance = effectChance;
+	protected void setEffectLevel(int[] effectLevel, int spellLevel) {
+		this.effectLevel[spellLevel - 1] = effectLevel;
+	}
+	public void setEffectChance(int[] effectChance, int spellLevel) {
+		this.effectChance[spellLevel - 1] = effectChance;
 	}
 	protected void setRange(Range[] range) {
 		this.range = range;

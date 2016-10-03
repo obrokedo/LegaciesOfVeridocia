@@ -134,6 +134,10 @@ public class PlannerLine
 				copyButton.setActionCommand("duplicate " + index);
 				copyButton.addActionListener(aListener);
 				headerPanel.add(copyButton);
+				JButton saveButton = new JButton("Save Values");
+				saveButton.setActionCommand("save " + index);
+				saveButton.addActionListener(aListener);
+				headerPanel.add(saveButton);
 			}
 
 			headDescPanel.add(headerPanel.add(new JLabel(this.plDef.getDescription())), BorderLayout.PAGE_END);
@@ -159,12 +163,16 @@ public class PlannerLine
 			panel.add(label, BorderLayout.LINE_START);
 			switch (pv.getValueType())
 			{
+				case PlannerValueDef.TYPE_UNBOUNDED_INT:
 				case PlannerValueDef.TYPE_INT:
 					if (pv.getRefersTo() == PlannerValueDef.REFERS_NONE)
 					{
 						SpinnerNumberModel snm = null;
 
-						snm = new SpinnerNumberModel(0, -1, Integer.MAX_VALUE, 1);
+						if (pv.getValueType() == PlannerValueDef.TYPE_INT)
+							snm = new SpinnerNumberModel(0, -1, Integer.MAX_VALUE, 1);
+						else
+							snm = new SpinnerNumberModel(0, Integer.MIN_VALUE, Integer.MAX_VALUE, 1);
 
 						if (values.size() > i)
 							snm.setValue(values.get(i));
@@ -237,6 +245,8 @@ public class PlannerLine
 					else
 					{
 						Vector<String> items = new Vector<String>(listOfLists.get(pv.getRefersTo() - 1));
+						if (pv.isOptional())
+							items.add(0, "");
 						c = new JComboBox<String>(items);
 						if (values.size() > i)
 							((JComboBox<?>) c).setSelectedItem(values.get(i));
@@ -333,6 +343,7 @@ public class PlannerLine
 						else
 							values.set(i, ((JTextArea) components.get(i)).getText());
 						break;
+					case PlannerValueDef.TYPE_UNBOUNDED_INT:
 					case PlannerValueDef.TYPE_INT:
 						if (pv.getRefersTo() == PlannerValueDef.REFERS_NONE)
 						{

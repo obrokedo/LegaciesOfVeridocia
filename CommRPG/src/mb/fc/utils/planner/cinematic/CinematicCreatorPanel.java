@@ -53,6 +53,7 @@ public class CinematicCreatorPanel implements ActionListener, ChangeListener, It
 	private PlannerFrame plannerFrame;
 	private CinematicMapDisplayPanel mdp = null;
 	private JLabel locationLabel = new JLabel("");
+	private JLabel rememberedLocationLabel = new JLabel("");
 	private JScrollPane mapScrollPane;
 	private JSlider timeSlider = new JSlider();
 	private JList<MapCell> cinematicList = new JList<>();
@@ -113,7 +114,12 @@ public class CinematicCreatorPanel implements ActionListener, ChangeListener, It
 		uiAspect.add(listPanel, BorderLayout.LINE_START);
 
 		locationLabel.setFont(locationLabel.getFont().deriveFont(18f));
-		uiAspect.add(locationLabel, BorderLayout.PAGE_END);
+		rememberedLocationLabel.setFont(rememberedLocationLabel.getFont().deriveFont(18f));
+		JPanel locationPanel = new JPanel(new BorderLayout());
+		locationPanel.setPreferredSize(new Dimension(0, 20));
+		locationPanel.add(locationLabel, BorderLayout.LINE_START);
+		locationPanel.add(rememberedLocationLabel, BorderLayout.LINE_END);
+		uiAspect.add(locationPanel, BorderLayout.PAGE_END);
 
 		JPanel timelinePanel = new JPanel(new BorderLayout());
 
@@ -198,13 +204,14 @@ public class CinematicCreatorPanel implements ActionListener, ChangeListener, It
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		locationLabel.setText("Abs X: " + e.getX() + " Abs Y: " + e.getY() +
+		locationLabel.setText("  Abs X: " + e.getX() + " Abs Y: " + e.getY() +
 				" Tile X: " + (e.getX() / mdp.getPlannerMap().getTileRenderWidth()) / 2 +
 				" Tile Y: " + (e.getY() / mdp.getPlannerMap().getTileRenderHeight()) / 2 +
 				" Tiles Pixel X: " + (e.getX() / (mdp.getPlannerMap().getTileRenderWidth() * 2) * (mdp.getPlannerMap().getTileRenderWidth() * 2)) +
 				" Tiles Pixel Y: " + (e.getY() / (mdp.getPlannerMap().getTileRenderHeight() * 2) * (mdp.getPlannerMap().getTileRenderHeight() * 2)) +
 				" Walkable: " + mdp.getPlannerMap().isMarkedMoveable((e.getX() / mdp.getPlannerMap().getTileRenderWidth()) / 2,
-						(e.getY() / mdp.getPlannerMap().getTileRenderHeight()) / 2) + " Remembered Tile Pixel X: " + currentTilePixelX + " Remembered Tile Pixel Y: " + currentTilePixelY);
+						(e.getY() / mdp.getPlannerMap().getTileRenderHeight()) / 2));
+		rememberedLocationLabel.setText("Remembered Tile Pixel X: " + currentTilePixelX + " Remembered Tile Pixel Y: " + currentTilePixelY + "  ");
 	}
 
 	public void middleButtonPushed(MouseEvent e) {

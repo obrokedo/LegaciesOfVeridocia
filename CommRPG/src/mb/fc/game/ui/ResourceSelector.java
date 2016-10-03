@@ -23,15 +23,15 @@ public class ResourceSelector {
 		File dir = new File(rootFolder);
 		resourceFiles.clear();
 
-		for (String map : dir.list())
+		for (File file : dir.listFiles())
 		{
-			if (map.startsWith("."))
+			if (file.isDirectory() || file.getName().startsWith("."))
 				continue;
 
-			if (map.endsWith(suffix))
+			if (file.getName().endsWith(suffix))
 			{
-				resourceFiles.add(map);
-				int width = gc.getDefaultFont().getWidth(map);
+				resourceFiles.add(file.getName());
+				int width = gc.getDefaultFont().getWidth(file.getName());
 
 				if (width > longestNameWidth)
 					longestNameWidth = width;

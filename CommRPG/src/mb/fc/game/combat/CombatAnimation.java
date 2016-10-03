@@ -54,7 +54,8 @@ public class CombatAnimation
 		animationWrapper.update(delta);
 		for (JBattleEffect be : parentSprite.getBattleEffects())
 		{
-			be.getEffectAnimation().update(delta);
+			if (be.getEffectAnimation() != null)
+				be.getEffectAnimation().update(delta);
 		}
 		if (minimumTimePassed > -1 && totalTimePassed >= minimumTimePassed)
 			return true;
@@ -62,7 +63,7 @@ public class CombatAnimation
 		return !blocks;
 	}
 
-	public void render(FCGameContainer fcCont, Graphics g, int yDrawPos)
+	public void render(FCGameContainer fcCont, Graphics g, int yDrawPos, float scale)
 	{
 		int x = fcCont.getDisplayPaddingX() + xOffset; // + (parentSprite.isHero() ? xOffset : -xOffset);
 		int y = yDrawPos + yOffset;
@@ -70,11 +71,13 @@ public class CombatAnimation
 		if (displayPlatform)
 			g.drawImage(LOVAttackCinematicState.FLOOR_IMAGE, x + 220 * SCREEN_SCALE, y - 15 * SCREEN_SCALE);
 
-		animationWrapper.drawAnimation(x, y, renderColor, g);
+		animationWrapper.drawAnimation(x, y, renderColor, scale, g);
 
+		// TODO Scale battle animations
 		for (JBattleEffect be : parentSprite.getBattleEffects())
 		{
-			be.getEffectAnimation().drawAnimation(xOffset + (int) (fcCont.getDisplayPaddingX() + (parentSprite.isHero() ? 276 * SCREEN_SCALE : 50 * SCREEN_SCALE)),
+			if (be.getEffectAnimation() != null)
+				be.getEffectAnimation().drawAnimation(xOffset + (int) (fcCont.getDisplayPaddingX() + (parentSprite.isHero() ? 276 * SCREEN_SCALE : 50 * SCREEN_SCALE)),
 					yDrawPos, g);
 		}
 	}

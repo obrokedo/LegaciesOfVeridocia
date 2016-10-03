@@ -7,6 +7,7 @@ import mb.fc.game.Timer;
 import mb.fc.game.battle.BattleResults;
 import mb.fc.game.battle.command.BattleCommand;
 import mb.fc.game.hudmenu.Panel;
+import mb.fc.game.hudmenu.Panel.PanelType;
 import mb.fc.game.hudmenu.SpriteContextPanel;
 import mb.fc.game.input.FCInput;
 import mb.fc.game.menu.Menu.MenuUpdate;
@@ -671,7 +672,7 @@ public class AttackCinematicState extends LoadableGameState
 		bgYPos = (gc.getHeight() - backgroundImage.getHeight()) / 2;
 
 		this.attacker = attacker;
-		attackerMenu = new SpriteContextPanel((attacker.isHero() ? Panel.PANEL_HEALTH_BAR : Panel.PANEL_TARGET_HEALTH_BAR), attacker, gc);
+		attackerMenu = new SpriteContextPanel((attacker.isHero() ? PanelType.PANEL_HEALTH_BAR : PanelType.PANEL_TARGET_HEALTH_BAR), attacker, gc);
 		attackerAnim = attacker.getAnimation("UnStand");
 
 		if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_SPELL)
@@ -721,7 +722,7 @@ public class AttackCinematicState extends LoadableGameState
 		this.targetMenus = new ArrayList<Panel>();
 		for (CombatSprite cs : targets)
 		{
-			targetMenus.add(new SpriteContextPanel((targets.get(0).isHero() ? Panel.PANEL_HEALTH_BAR : Panel.PANEL_TARGET_HEALTH_BAR), cs, gc));
+			targetMenus.add(new SpriteContextPanel((targets.get(0).isHero() ? PanelType.PANEL_HEALTH_BAR : PanelType.PANEL_TARGET_HEALTH_BAR), cs, gc));
 		}
 		targetAnim = targets.get(targetIndex).getAnimation("UnStand");
 

@@ -78,6 +78,8 @@ public class CommRPG extends StateBasedGame   {
 
 	private static int fullScreenWidth, fullScreenHeight;
 
+	public static final String VERSION = "DEV 1.31";
+
 	public static final String GAME_TITLE = "Legacies of Veridocia";
 
 	public static boolean TEST_MODE_ENABLED = false; //true;
@@ -156,6 +158,7 @@ public class CommRPG extends StateBasedGame   {
 				for (DisplayMode dm : Display.getAvailableDisplayModes())
 					Log.debug("Supported display modes " + dm);
 				container.setDisplayPaddingX(0);
+				Log.debug("Game scale is set to " + GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);
 				try
 				{
 					container.setDisplayMode(320 * GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], 240 * GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], false);
@@ -171,10 +174,11 @@ public class CommRPG extends StateBasedGame   {
 			// container.setDisplayPaddingX(100);
 			// container.setDisplayMode(200 + 320 * GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], 240 * GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], false);
 
-			// container.setShowFPS(true);
+
+			container.setShowFPS(true);
 			container.setVSync(true);
 			container.setAlwaysRender(true);
-			container.setTargetFrameRate(60);
+			// container.setTargetFrameRate(144);
 			container.start();
 		}
 		catch (Throwable ex)
@@ -201,8 +205,6 @@ public class CommRPG extends StateBasedGame   {
 		LoadingState.loading = true;
 		loadingState = new LoadingState(STATE_GAME_LOADING);
 		this.addState(new MenuState());
-		// this.addState(new MultiplayerMenuState());
-
 		this.addState(new LOVAttackCinematicState());
 		this.addState(new DevelMenuState());
 		this.addState(new DevelAnimationViewState());
@@ -232,6 +234,20 @@ public class CommRPG extends StateBasedGame   {
 				*/
 
 
+		/*************************************/
+		/* Uncomment for multiplayer support */
+		/*************************************/
+		/*
+		this.addState(new MultiplayerMenuState());
+		loadingState.setLoadingInfo("/menu/MainMenu", null, false, true,
+				new FCResourceManager(),
+					(LoadableGameState) this.getState(STATE_GAME_MENU_MULTI),
+						new FCLoadingRenderSystem(gameContainer));
+						*/
+
+		/******************************/
+		/* Comment during multiplayer */
+		/******************************/
 
 		loadingState.setLoadingInfo("/menu/MainMenu", null, false, true,
 				new FCResourceManager(),
@@ -239,12 +255,8 @@ public class CommRPG extends StateBasedGame   {
 						new FCLoadingRenderSystem(gameContainer));
 
 
-		/*
-		loadingState.setLoadingInfo("/menu/MainMenu", null, false, true,
-				new FCResourceManager(),
-					(LoadableGameState) this.getState(STATE_GAME_MENU_MULTI),
-						new FCLoadingRenderSystem(gameContainer));
-						*/
+
+
 
 		this.enterState(STATE_GAME_LOADING);
 	}

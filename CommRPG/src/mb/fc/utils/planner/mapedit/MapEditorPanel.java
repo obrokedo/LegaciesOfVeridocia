@@ -7,7 +7,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Map.Entry;
+import java.util.ArrayList;
 import java.util.Vector;
 
 import javax.swing.Box;
@@ -45,11 +45,12 @@ public class MapEditorPanel implements ActionListener {
 	private JScrollPane mapScrollPane;
 	private JPanel sidePanel;
 	private JComboBox<String> moCombo;
+	private ArrayList<ArrayList<String>> listOfLists;
 	private boolean displayEnemy = true, displayTerrain = true, displayTrigger = true,
 			displayBattleTrigger = true, displayOther = true, displayUnused = true;
 	// private Hashtable<String, ArrayList<String>> entrancesByMap = new Hashtable<>();
 
-	public MapEditorPanel(PlannerFrame plannerFrame)
+	public MapEditorPanel(PlannerFrame plannerFrame, ArrayList<ArrayList<String>> listOfLists)
 	{
 		mapPanel = new MapEditorRenderPanel(this);
 		backPanel = new JPanel(new BorderLayout());
@@ -71,6 +72,7 @@ public class MapEditorPanel implements ActionListener {
 
 		backPanel.add(locationVisiblePanel, BorderLayout.PAGE_START);
 		this.plannerFrame = plannerFrame;
+		this.listOfLists = listOfLists;
 	}
 
 	private JCheckBox createCheckBox(String text, String actionCommand)
@@ -142,21 +144,51 @@ public class MapEditorPanel implements ActionListener {
 		JLabel type;
 
 		if (mo.getKey() != null && mo.getKey().length() > 0)
-			type = new JLabel(" " + mo.getKey().toUpperCase());
+			type = new JLabel(" " + mo.getKey().toUpperCase() + " (" + (mo.getName() == null ? "Unnamed" : mo.getName()) + ")");
 		else
-			type = new JLabel(" UNASSIGNED TYPE");
+			type = new JLabel(" UNASSIGNED TYPE (" + (mo.getName() == null ? "Unnamed" : mo.getName()) + ")");
 
 		type.setAlignmentX(Component.LEFT_ALIGNMENT);
 		type.setFont(type.getFont().deriveFont(Font.BOLD));
 		sidePanel.add(type);
+
+
+		// Convert fields with REFERS that are by ID to their long name. Otherwise
+		// add the value to the panel
+		PlannerContainerDef pcdef = this.plannerFrame.getContainerDefByName("mapedit");
+		PlannerLineDef plannerLineDef = getLineDefByName(pcdef, mo.getKey());
+
+		for (PlannerValueDef val : plannerLineDef.getPlannerValues())
+		{
+			String valueSet = null;
+			if (val.getValueType() == PlannerValueDef.TYPE_INT && val.getRefersTo() != PlannerValueDef.REFERS_NONE)
+			{
+				int index = 0;
+				if (mo.getParam(val.getTag()) != null)
+					index = Integer.parseInt(mo.getParam(val.getTag()));
+				if (index < 0)
+					valueSet = "NO VALUE SELECTED";
+				else
+					valueSet = listOfLists.get(val.getRefersTo() - 1).get(index);
+			}
+			else
+				valueSet = mo.getParam(val.getTag());
+
+			JLabel entLabel = new JLabel(" " + val.getTag() + " = " + valueSet);
+			sidePanel.add(entLabel);
+			entLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+		}
+
+
+		/*
 		for (Entry<String, String> ent : mo.getParams().entrySet())
 		{
 			JLabel entLabel = new JLabel(" " + ent.getKey() + " = " + ent.getValue());
 			sidePanel.add(entLabel);
 			entLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 		}
+		*/
 
-		PlannerContainerDef pcdef = this.plannerFrame.getContainerDefByName("mapedit");
 		Vector<String> comboItems = new Vector<>();
 		for (PlannerLineDef pld : pcdef.getAllowableLines())
 		{
@@ -172,12 +204,7 @@ public class MapEditorPanel implements ActionListener {
 		editButton.addActionListener(this);
 		editButton.setActionCommand("editmo");
 
-		JButton setButton = new JButton("Set Map Object Type");
-		setButton.addActionListener(this);
-		setButton.setActionCommand("setmo");
-
 		sidePanel.add(editButton);
-		sidePanel.add(setButton);
 		sidePanel.add(Box.createGlue());
 
 		sidePanel.revalidate();
@@ -229,21 +256,7 @@ public class MapEditorPanel implements ActionListener {
 		}
 		else if ("setmo".equalsIgnoreCase(command))
 		{
-			MapObject mo = this.mapPanel.getSelectedMapObject();
-			if (mo.getKey() != null && mo.getKey().length() > 0)
-			{
-				int rc = JOptionPane.showConfirmDialog(mapPanel, "This map object already has a type set, if you continue the\n"
-						+ "the values that are currently saved in this object will be discarded.\n"
-						+ "Are you sure you want to continue?", "Confirm Old Value Override", JOptionPane.YES_NO_OPTION);
-				if (rc != JOptionPane.OK_OPTION)
-				{
-					return;
-				}
-			}
-
-			mo.setKey((String) moCombo.getSelectedItem());
-			mo.getParams().clear();
-			this.mouseDown(mo);
+			setMapObject();
 		}
 		else if ("editmo".equalsIgnoreCase(command))
 		{
@@ -251,8 +264,31 @@ public class MapEditorPanel implements ActionListener {
 		}
 	}
 
+	public void setMapObject()
+	{
+		MapObject mo = this.mapPanel.getSelectedMapObject();
+		if (mo.getKey() != null && mo.getKey().length() > 0)
+		{
+			if (mo.getKey().equalsIgnoreCase((String) moCombo.getSelectedItem()))
+					return;
+			int rc = JOptionPane.showConfirmDialog(mapPanel, "This map object already has a type set, if you continue the\n"
+					+ "the values that are currently saved in this object will be discarded.\n"
+					+ "Are you sure you want to continue?", "Confirm Old Value Override", JOptionPane.YES_NO_OPTION);
+			if (rc != JOptionPane.OK_OPTION)
+			{
+				return;
+			}
+		}
+
+		mo.setKey((String) moCombo.getSelectedItem());
+		mo.getParams().clear();
+		this.mouseDown(mo);
+	}
+
 	public void editMapObject()
 	{
+		setMapObject();
+
 		MapObject mo = this.mapPanel.getSelectedMapObject();
 
 		PlannerContainerDef pcdef = this.plannerFrame.getContainerDefByName("mapedit");
@@ -270,9 +306,22 @@ public class MapEditorPanel implements ActionListener {
 		for (PlannerValueDef val : pl.getPlDef().getPlannerValues())
 		{
 			if (val.getValueType() == PlannerValueDef.TYPE_INT && val.getRefersTo() != PlannerValueDef.REFERS_NONE)
-				pl.getValues().add(Integer.parseInt(mo.getParam(val.getTag())) + 1);
-			else if (val.getValueType() == PlannerValueDef.TYPE_INT)
-				pl.getValues().add(Integer.parseInt(mo.getParam(val.getTag())));
+			{
+				try {
+					pl.getValues().add(Integer.parseInt(mo.getParam(val.getTag())) + 1);
+				}
+				catch (NumberFormatException e) {
+					pl.getValues().add(0);
+				}
+			}
+			else if (val.getValueType() == PlannerValueDef.TYPE_INT) {
+				try {
+					pl.getValues().add(Integer.parseInt(mo.getParam(val.getTag())));
+				}
+				catch (NumberFormatException e) {
+					pl.getValues().add(0);
+				}
+			}
 			else
 				pl.getValues().add(mo.getParam(val.getTag()));
 		}

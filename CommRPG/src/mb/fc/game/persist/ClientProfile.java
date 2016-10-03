@@ -16,7 +16,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import org.newdawn.slick.util.Log;
+
+import mb.fc.engine.state.StateInfo;
+import mb.fc.game.battle.LevelUpResult;
+import mb.fc.game.dev.DevParams;
+import mb.fc.game.exception.BadResourceException;
+import mb.fc.game.resource.HeroResource;
 import mb.fc.game.sprite.CombatSprite;
+import mb.jython.GlobalPythonFactory;
 
 public class ClientProfile implements Serializable
 {
@@ -25,21 +33,17 @@ public class ClientProfile implements Serializable
 	private ArrayList<CombatSprite> heroes;
 	private int gold;
 	private String name;
-	private transient ArrayList<Integer> devHeroIds = null;
-	private transient int develLevel = 0;
 	private transient ArrayList<CombatSprite> networkHeroes;
+	private transient DevParams devParams;
 
-	public void setDevelParams(ArrayList<Integer> heroes, int level)
-	{
-		this.devHeroIds.addAll(heroes);
-		develLevel = level;
+	public void setDevParams(DevParams devParams) {
+		this.devParams = devParams;
 	}
 
 	public ClientProfile(String name)
 	{
 		heroes = new ArrayList<>();
 		networkHeroes = new ArrayList<>();
-		devHeroIds = new ArrayList<Integer>();
 		gold = 100;
 		this.name = name;
 	}
@@ -52,7 +56,8 @@ public class ClientProfile implements Serializable
 	public ArrayList<CombatSprite> getHeroes() {
 		ArrayList<CombatSprite> hs = new ArrayList<>();
 		hs.addAll(heroes);
-		// hs.addAll(networkHeroes);
+		if (networkHeroes != null)
+			hs.addAll(networkHeroes);
 		Collections.sort(hs, new HeroComparator());
 		return hs;
 	}
@@ -121,16 +126,63 @@ public class ClientProfile implements Serializable
 
 	    return null;
 	}
+	
+	public void initialize(StateInfo stateInfo)
+	{
+		// Add starting heroes if they haven't been added yet
+		if (getHeroes().size() == 0)
+		{
+			// Add the heroes specified in the configuration values,
+			// these are the heroes that the force will initially contain
+			for (String heroName : GlobalPythonFactory.createConfigurationValues().getStartingHeroIds())
+				addHero(HeroResource.getHero(heroName));
+			
+			applyDevParams(stateInfo);
+		}
+	}
+	
+	private void applyDevParams(StateInfo stateInfo)
+	{
+		if (devParams == null)
+			return;
+		
+
+		// Add any heroes specified in the development params
+		if (devParams.getHeroesToAdd() != null)
+			for (Integer heroId : devParams.getHeroesToAdd())
+			{
+				Log.debug("DevParams adding hero with id: " + heroId + " to the party");
+				addHero(HeroResource.getHero(heroId));
+			}
+		
+		if (devParams.getHeroNamesToAdd() != null)
+			for (String heroName : devParams.getHeroNamesToAdd())
+			{
+				Log.debug("DevParams adding hero with name: " + heroName + " to the party");
+				addHero(HeroResource.getHero(heroName));
+			}
+
+		if (getHeroes().size() == 0)
+			throw new BadResourceException("No starting heroes have been specified. Update the ConfigurationValues "
+					+ "script to indicate the ids of the heroes that should start in the party.");
+
+		if (devParams.getLevel() > 1)
+		{
+			Log.debug("DevParams setting hero level to: " + devParams.getLevel());
+			
+			for (CombatSprite cs : getHeroes())
+			{
+				while (cs.getLevel() < devParams.getLevel())
+				{
+					LevelUpResult lur = cs.getHeroProgression().getLevelUpResults(cs, stateInfo);
+					cs.setExp(100);
+					cs.getHeroProgression().levelUp(cs, lur, stateInfo.getResourceManager());
+				}
+			}
+		}
+	}
 
 	public String getName() {
 		return name;
-	}
-
-	public int getDevelLevel() {
-		return develLevel;
-	}
-
-	public ArrayList<Integer> getDevelHeroIds() {
-		return devHeroIds;
 	}
 }

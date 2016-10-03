@@ -410,7 +410,6 @@ public class CinematicMapDisplayPanel extends JPanel implements ActionListener, 
 						new HashSet<String>(), new HashSet<String>(), new HashSet<String>());
 				ces.addAll(0, initEvents);
 				timeline = new CinematicTimeline();
-				System.out.println("LOAD INDEX: " + index);
 				new PlannerTimeBarViewer(ces, timeline, Integer.parseInt(tas.get(0).getParams().get("camerax")), Integer.parseInt(tas.get(0).getParams().get("cameray")));
 				maxTime = timeline.duration;
 			}

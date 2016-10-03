@@ -61,8 +61,8 @@ public class Sprite implements Serializable
 		this.visible = visible;
 	}
 
-	public int getLocX() {
-		return (int) spriteBounds.getX();
+	public float getLocX() {
+		return spriteBounds.getX();
 	}
 
 	public void setLocX(float locX) {
@@ -70,8 +70,8 @@ public class Sprite implements Serializable
 		tileX = (int) (locX / stateInfo.getTileWidth());
 	}
 
-	public int getLocY() {
-		return (int) spriteBounds.getY();
+	public float getLocY() {
+		return spriteBounds.getY();
 	}
 
 	public float getAbsLocX()
@@ -125,5 +125,6 @@ public class Sprite implements Serializable
 
 	public void setId(int id) {
 		this.id = id;
+		System.out.println("Set hero ID " + id);
 	}
 }

@@ -49,9 +49,9 @@ public class TransCombatAnimation extends CombatAnimation
 	}
 
 	@Override
-	public void render(FCGameContainer fcCont, Graphics g, int yDrawPos) {
+	public void render(FCGameContainer fcCont, Graphics g, int yDrawPos, float scale) {
 		g.setColor(Color.white);
-		childAnimation.render(fcCont, g, yDrawPos);
+		childAnimation.render(fcCont, g, yDrawPos, scale);
 	}
 
 	@Override

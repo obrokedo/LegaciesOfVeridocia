@@ -24,7 +24,7 @@ public abstract class Menu extends Panel
 		MENU_NEXT_ACTION
 	}
 
-	public Menu(int menuType) {
+	public Menu(PanelType menuType) {
 		super(menuType);
 	}
 

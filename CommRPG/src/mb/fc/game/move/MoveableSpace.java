@@ -3,6 +3,14 @@ package mb.fc.game.move;
 import java.awt.Point;
 import java.util.ArrayList;
 
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.util.pathfinding.AStarPathFinder;
+import org.newdawn.slick.util.pathfinding.Path;
+import org.newdawn.slick.util.pathfinding.PathFindingContext;
+import org.newdawn.slick.util.pathfinding.TileBasedMap;
+
 import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.LocationMessage;
 import mb.fc.engine.message.MessageType;
@@ -19,14 +27,7 @@ import mb.fc.game.turnaction.TurnAction;
 import mb.fc.game.ui.FCGameContainer;
 import mb.fc.map.Map;
 import mb.jython.GlobalPythonFactory;
-
-import org.newdawn.slick.Color;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.geom.Rectangle;
-import org.newdawn.slick.util.pathfinding.AStarPathFinder;
-import org.newdawn.slick.util.pathfinding.Path;
-import org.newdawn.slick.util.pathfinding.PathFindingContext;
-import org.newdawn.slick.util.pathfinding.TileBasedMap;
+import mb.jython.JBattleEffect;
 
 /**
  * Displays the possible moveable range for the currently acting CombatSprite, this also
@@ -60,7 +61,17 @@ public class MoveableSpace implements KeyboardListener, TileBasedMap
 		ms.map = stateInfo.getResourceManager().getMap();
 		ms.mapWidth = ms.map.getMapEffectiveWidth();
 		ms.mapHeight = ms.map.getMapEffectiveHeight();
-		ms.moveableTiles = new int[currentSprite.getCurrentMove() * 2 + 1][currentSprite.getCurrentMove() * 2 + 1];
+		int currentMove = currentSprite.getCurrentMove();
+		
+		// Check to see if we can move
+		for (JBattleEffect effect : currentSprite.getBattleEffects()) {
+			if (effect.preventsMovement()) {
+				currentMove = 0;
+				break;
+			}
+		}
+		
+		ms.moveableTiles = new int[currentMove * 2 + 1][currentMove * 2 + 1];
 		for (int i = 0; i < ms.moveableTiles.length; i++)
 			for (int j = 0; j < ms.moveableTiles.length; j++)
 				ms.moveableTiles[i][j] = -1;
@@ -70,8 +81,8 @@ public class MoveableSpace implements KeyboardListener, TileBasedMap
 		int mapSpriteY = currentSprite.getTileY();
 
 		ms.spriteMovementType = currentSprite.getMovementType();
-		ms.topX = mapSpriteX - currentSprite.getCurrentMove();
-		ms.topY = mapSpriteY - currentSprite.getCurrentMove();
+		ms.topX = mapSpriteX - currentMove;
+		ms.topY = mapSpriteY - currentMove;
 
 		// Check to see if there are any sprites in your moveable area that you will not be able to move through
 		Rectangle checkMoveableRect = new Rectangle(ms.topX,  ms.topY, ms.moveableTiles.length + 1, ms.moveableTiles.length + 1);
@@ -95,9 +106,9 @@ public class MoveableSpace implements KeyboardListener, TileBasedMap
 
 		// Add the move cost of the current tile as it will be subtracted from the sprites move. Use 10 as the lowest cost so tha we can
 		// have half-values (1.5, 2.5) without making the cost a double
-		ms.determineMoveableSpacesRecursive(currentSprite.getCurrentMove()  * 10 + ms.map.getMovementCostByType(currentSprite.getMovementType(),
-			mapSpriteX, mapSpriteY), currentSprite.getCurrentMove(),
-				currentSprite.getCurrentMove(), mapSpriteX, mapSpriteY);
+		ms.determineMoveableSpacesRecursive(currentMove  * 10 + ms.map.getMovementCostByType(currentSprite.getMovementType(),
+			mapSpriteX, mapSpriteY), currentMove,
+				currentMove, mapSpriteX, mapSpriteY);
 
 		// For any spaces that had sprites in them change the special place holder 99 that makes them unmovable
 		// to -1 so they aren't shown as moveable
@@ -133,8 +144,8 @@ public class MoveableSpace implements KeyboardListener, TileBasedMap
 
 	public void renderMoveable(FCGameContainer gc, Camera camera, Graphics graphics)
 	{
-		int camX = camera.getLocationX();
-		int camY = camera.getLocationY();
+		float camX = camera.getLocationX();
+		float camY = camera.getLocationY();
 
 		for (int i = 0; i < moveableTiles.length; i++)
 		{
@@ -252,6 +263,7 @@ public class MoveableSpace implements KeyboardListener, TileBasedMap
 					currentSprite.getTileY(), mapX / tileWidth, mapY / tileHeight);
 		checkMoveable = true;
 
+
 		// If we found a path then traverse the path to find the last spot we can move to
 		if (path != null)
 		{
@@ -366,6 +378,7 @@ public class MoveableSpace implements KeyboardListener, TileBasedMap
 	 * @param checkEvents A boolean indicating whether user input should be checked on update
 	 */
 	public void setCheckEvents(boolean checkEvents) {
+		System.out.println("Set check events " + checkEvents);
 		this.checkEvents = checkEvents;
 	}
 

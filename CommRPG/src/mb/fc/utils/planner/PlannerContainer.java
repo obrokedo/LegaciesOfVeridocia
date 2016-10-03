@@ -35,6 +35,20 @@ public class PlannerContainer implements ActionListener
 		this.parentTab = parentTab;
 	}
 
+	public PlannerContainer(String newName, PlannerContainer copyContainer)
+	{
+		super();
+		uiAspect.setLayout(new BoxLayout(uiAspect, BoxLayout.PAGE_AXIS));
+		this.pcdef = copyContainer.pcdef;
+
+		this.defLine = new PlannerLine(copyContainer.defLine);
+		this.defLine.getValues().set(0, newName);
+		this.lines = new ArrayList<PlannerLine>();
+		this.parentTab = copyContainer.parentTab;
+		for (PlannerLine l : copyContainer.lines)
+			this.lines.add(new PlannerLine(l));
+	}
+
 	public void setupUI()
 	{
 		setupUI(0);
@@ -140,6 +154,11 @@ public class PlannerContainer implements ActionListener
 		uiAspect.repaint();
 	}
 
+	public PlannerContainer duplicateContainer(String newName)
+	{
+		return new PlannerContainer(newName, this);
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent a) {
 		String action = a.getActionCommand();
@@ -203,6 +222,14 @@ public class PlannerContainer implements ActionListener
 			lines.add(index + 1, new PlannerLine(pl));
 			parentTab.refreshItem(this);
 			// setupUI();
+			uiAspect.revalidate();
+			uiAspect.repaint();
+		}
+		else if (action.startsWith("save")) {
+			int index = Integer.parseInt(action.split(" ")[1]) - 1;
+			PlannerLine pl = lines.get(index);
+			pl.commitChanges();
+			parentTab.refreshItem(this);
 			uiAspect.revalidate();
 			uiAspect.repaint();
 		}

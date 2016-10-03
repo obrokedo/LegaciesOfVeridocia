@@ -1,5 +1,8 @@
 package mb.fc.game.move;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.MessageType;
 import mb.fc.engine.state.StateInfo;
@@ -12,60 +15,77 @@ public class MovingSprite
 	private AnimatedSprite animatedSprite;
 	private int moveIndex;
 	private Direction direction;
-	private int endX, endY;
+	private float endX, endY;
 	private StateInfo stateInfo;
 	private boolean isFirstMove = true;
-	public static int MOVE_SPEED = 11;
+	private int moveRemainder = 0;
+	private Queue<Direction> nextMoveQueue = null;
+	// public static int MOVE_SPEED = 11;
+	public static int MOVE_SPEED = 220;
 	public static int STAND_ANIMATION_SPEED = 10;
 	public static int WALK_ANIMATION_SPEED = 4;
 
 	public MovingSprite(AnimatedSprite combatSprite, Direction dir, StateInfo stateInfo) {
 		super();
 		this.animatedSprite = combatSprite;
-		this.direction = dir;
 		this.stateInfo = stateInfo;
-
 		combatSprite.setAnimationUpdate(WALK_ANIMATION_SPEED);
+		initializeDirection(dir);
+	}
 
+	private void initializeDirection(Direction dir) {
+		this.direction = dir;
+		this.moveIndex = 0;
 		switch (direction)
 		{
 			case UP:
-				endX = combatSprite.getLocX();
-				endY = combatSprite.getLocY() - stateInfo.getTileHeight();
+				endX = animatedSprite.getLocX();
+				endY = animatedSprite.getLocY() - stateInfo.getTileHeight();
 				break;
 			case DOWN:
-				endX = combatSprite.getLocX();
-				endY = combatSprite.getLocY() + stateInfo.getTileHeight();
+				endX = animatedSprite.getLocX();
+				endY = animatedSprite.getLocY() + stateInfo.getTileHeight();
 				break;
 			case LEFT:
-				endX = combatSprite.getLocX() - stateInfo.getTileWidth();
-				endY = combatSprite.getLocY();
+				endX = animatedSprite.getLocX() - stateInfo.getTileWidth();
+				endY = animatedSprite.getLocY();
 				break;
 			case RIGHT:
-				endX = combatSprite.getLocX() + stateInfo.getTileWidth();
-				endY = combatSprite.getLocY();
+				MOVE_SPEED = 220;
+				endX = animatedSprite.getLocX() + stateInfo.getTileWidth();
+				endY = animatedSprite.getLocY();
 				break;
 		}
 	}
 
-	public boolean update(boolean fastMove)
+	public boolean update(int delta, boolean fastMove)
 	{
 		isFirstMove = false;
 		int moveSpeed = MOVE_SPEED;
 		if (stateInfo.isCombat() && (!((CombatSprite) animatedSprite).isHero() || fastMove))
 			moveSpeed /= 2;
 
-		if (stateInfo.isCombat() && moveIndex == 0)
+		if (stateInfo.isCombat() && isFirstMove)
 			stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, "step", 1f, false));
 
-		moveIndex++;
+		moveIndex += delta;
 
-		if (moveIndex == moveSpeed)
+		if (moveIndex >= moveSpeed)
 		{
+			moveRemainder = moveIndex - moveSpeed;
+			moveIndex = moveSpeed;
 			animatedSprite.setLocation(endX, endY);
 
 			if (animatedSprite == stateInfo.getCurrentSprite())
 				stateInfo.getCamera().centerOnSprite(animatedSprite, stateInfo.getCurrentMap());
+
+			// Check to see if we have queued moves, if so start the next move
+			if (nextMoveQueue != null && nextMoveQueue.size() > 0)
+			{
+				initializeDirection(nextMoveQueue.remove());
+				this.updateWithRemainder(moveRemainder);
+				return false;
+			}
 
 			animatedSprite.setAnimationUpdate(STAND_ANIMATION_SPEED);
 			return true;
@@ -92,8 +112,9 @@ public class MovingSprite
 				break;
 		}
 
-		if (animatedSprite == stateInfo.getCurrentSprite())
+		if (animatedSprite == stateInfo.getCurrentSprite()) {
 			stateInfo.getCamera().centerOnSprite(animatedSprite, stateInfo.getCurrentMap());
+		}
 
 		return false;
 	}
@@ -102,16 +123,24 @@ public class MovingSprite
 		return isFirstMove;
 	}
 
-	public boolean update()
+	public boolean update(int delta)
 	{
-		return update(false);
+		return update(delta, false);
 	}
 
-	public int getEndX() {
+	public boolean updateWithRemainder(int delta)
+	{
+		boolean retVal = update(delta, false);
+		this.isFirstMove = true;
+		this.moveRemainder = 0;
+		return retVal;
+	}
+
+	public float getEndX() {
 		return endX;
 	}
 
-	public int getEndY() {
+	public float getEndY() {
 		return endY;
 	}
 
@@ -123,11 +152,13 @@ public class MovingSprite
 		return direction;
 	}
 
-	public int getMoveIndex() {
-		return moveIndex;
+	public int getMoveRemainder() {
+		return moveRemainder;
 	}
 
-	public void setMoveIndex(int moveIndex) {
-		this.moveIndex = moveIndex;
+	public void addNextMovement(Direction dir) {
+		if (nextMoveQueue == null)
+			nextMoveQueue = new LinkedList<>();
+		nextMoveQueue.add(dir);
 	}
 }

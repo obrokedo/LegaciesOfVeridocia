@@ -2,6 +2,11 @@ package mb.fc.game.sprite;
 
 import java.util.ArrayList;
 
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.util.Log;
+
 import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.MessageType;
 import mb.fc.engine.message.SpriteContextMessage;
@@ -12,7 +17,7 @@ import mb.fc.game.ai.AI;
 import mb.fc.game.ai.ClericAI;
 import mb.fc.game.battle.spell.KnownSpell;
 import mb.fc.game.constants.Direction;
-import mb.fc.game.hudmenu.Panel;
+import mb.fc.game.hudmenu.Panel.PanelType;
 import mb.fc.game.hudmenu.SpriteContextPanel;
 import mb.fc.game.item.EquippableItem;
 import mb.fc.game.item.Item;
@@ -24,10 +29,6 @@ import mb.fc.utils.Animation;
 import mb.jython.GlobalPythonFactory;
 import mb.jython.JBattleEffect;
 import mb.jython.JLevelProgression;
-
-import org.newdawn.slick.Color;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 
 public class CombatSprite extends AnimatedSprite
 {
@@ -88,9 +89,10 @@ public class CombatSprite extends AnimatedSprite
 	private int kills;
 	private int defeat;
 	private ArrayList<JBattleEffect> battleEffects;
-	private Image currentWeaponImage = null;
+	private transient Image currentWeaponImage = null;
 	private String attackEffectId;
 	private int attackEffectChance;
+	private int attackEffectLevel;
 	private boolean drawShadow = true;
 
 
@@ -108,13 +110,15 @@ public class CombatSprite extends AnimatedSprite
 				int maxColdAffin, int maxDarkAffin, int maxWaterAffin, int maxEarthAffin, int maxWindAffin,
 				int maxLightAffin, int maxBody, int maxMind, int maxCounter, int maxEvade,
 				int maxDouble, int maxCrit, int level,
-				int enemyId, ArrayList<KnownSpell> spells, int id, String attackEffectId, int attackEffectChance)
+				int enemyId, ArrayList<KnownSpell> spells, int id, 
+				String attackEffectId, int attackEffectChance, int attackEffectLevel)
 	{
 		this(isLeader, name, imageName, null, level, 0, false, spells, id);
 		this.uniqueEnemyId = enemyId;
 		this.isHero = false;
 		this.attackEffectChance = attackEffectChance;
 		this.attackEffectId = attackEffectId;
+		this.attackEffectLevel = attackEffectLevel;
 
 		// Set base states
 		currentHP = hp;
@@ -146,6 +150,7 @@ public class CombatSprite extends AnimatedSprite
 		this.maxEvade = this.currentEvade = maxEvade;
 		this.maxDouble = this.currentDouble = maxDouble;
 		this.maxCrit = this.currentCrit = maxCrit;
+		this.battleEffects = new ArrayList<>();
 	}
 
 
@@ -273,6 +278,7 @@ public class CombatSprite extends AnimatedSprite
 		// TODO Does this work?!? We are persisting a jython object
 		for (JBattleEffect effect : battleEffects)
 			effect.initializeAnimation(stateInfo.getResourceManager());
+		
 		//TODO Remove (all?) battle effects if this isn't an init mid battle
 
 		for (Item item : items)
@@ -290,7 +296,7 @@ public class CombatSprite extends AnimatedSprite
 		this.currentSpeed = this.maxSpeed;
 		if (currentHP > 0)
 		{
-			this.currentHP = this.maxHP;
+			this.currentHP = maxHP;
 			this.currentMP = this.maxMP;
 		}
 		else
@@ -334,14 +340,27 @@ public class CombatSprite extends AnimatedSprite
 	@Override
 	public void render(Camera camera, Graphics graphics, FCGameContainer cont)
 	{
+		graphics.setColor(Color.white);
+		if (this.isHero && stateInfo.getPsi().getClientId() != this.clientId) {
+			graphics.drawString("x", this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(),
+					this.getLocY() - camera.getLocationY() - stateInfo.getResourceManager().getMap().getTileEffectiveHeight() / 2);
+		}
 		for (AnimSprite as : currentAnim.frames.get(imageIndex).sprites)
 		{
-			if (drawShadow)
-			{
-				AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), this.getLocX(), this.getLocY(), cont.getDisplayPaddingX(), camera, true);
+			Image im = spriteAnims.getImageAtIndex(as.imageIndex);
+			if (as.flipH) {
+				im = im.getFlippedCopy(true, false);
+			}
+			if (as.flipV) {
+				im = im.getFlippedCopy(false, true);
 			}
 
-			graphics.drawImage(spriteAnims.getImageAtIndex(as.imageIndex), this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(),
+			if (drawShadow)
+			{
+				AnimatedSprite.drawShadow(im, this.getLocX(), this.getLocY(), cont.getDisplayPaddingX(), camera, true);
+			}
+
+			graphics.drawImage(im, this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(),
 					this.getLocY() - camera.getLocationY() - stateInfo.getResourceManager().getMap().getTileEffectiveHeight() / 2, fadeColor);
 		}
 	}
@@ -449,25 +468,24 @@ public class CombatSprite extends AnimatedSprite
 		{
 			if (this.isHero)
 			{
+				this.unequipItem(oldItem);
+				/*
 				this.currentAttack -= oldItem.getAttack();
 				this.currentDefense -= oldItem.getDefense();
 				this.currentSpeed -= oldItem.getSpeed();
 				this.maxAttack -= oldItem.getAttack();
 				this.maxDefense -= oldItem.getDefense();
 				this.maxSpeed -= oldItem.getSpeed();
+				int index = items.indexOf(oldItem);
+				this.equipped.set(index, false);
+				*/
 			}
-			int index = items.indexOf(oldItem);
-			this.equipped.set(index, false);
 		}
 
+		// TODO Do enemies get item bonuses?
 		if (this.isHero)
 		{
-			this.currentAttack += item.getAttack();
-			this.currentDefense += item.getDefense();
-			this.currentSpeed += item.getSpeed();
-			this.maxAttack += item.getAttack();
-			this.maxDefense += item.getDefense();
-			this.maxSpeed += item.getSpeed();
+			toggleEquipWeapon(item, true);
 		}
 
 		int index = items.lastIndexOf(item);
@@ -475,17 +493,46 @@ public class CombatSprite extends AnimatedSprite
 
 		return oldItem;
 	}
-
+	
 	public void unequipItem(EquippableItem item)
 	{
-		this.currentAttack -= item.getAttack();
-		this.currentDefense -= item.getDefense();
-		this.currentSpeed -= item.getSpeed();
-		this.maxAttack -= item.getAttack();
-		this.maxDefense -= item.getDefense();
-		this.maxSpeed -= item.getSpeed();
+		toggleEquipWeapon(item, false);
 		int index = items.indexOf(item);
 		this.equipped.set(index, false);
+	}
+	
+	private void toggleEquipWeapon(EquippableItem item, boolean equip)
+	{
+		// Non extended stats
+		this.currentAttack += ((equip ? 1 : -1) * item.getAttack());
+		this.currentDefense += ((equip ? 1 : -1) * item.getDefense());
+		this.currentSpeed += ((equip ? 1 : -1) * item.getSpeed());
+		this.maxAttack += ((equip ? 1 : -1) * item.getAttack());
+		this.maxDefense += ((equip ? 1 : -1) * item.getDefense());
+		this.maxSpeed += ((equip ? 1 : -1) * item.getSpeed());
+		
+		// Extended Stats
+		/*
+		 * incmindam=7 inccrit=0 inccounter=0 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minhpreg=0 
+	 * effect="" efflvl=-1 effchc=0 csteff=false dmgaff="NORMAL" ohko=0 ohkooc=0
+		 */
+		
+		this.maxFireAffin += ((equip ? 1 : -1) * item.getFireAffinity());
+		this.maxElecAffin += ((equip ? 1 : -1) * item.getElecAffinity());
+		this.maxColdAffin += ((equip ? 1 : -1) * item.getColdAffin());
+		this.maxDarkAffin += ((equip ? 1 : -1) * item.getDarkAffin());
+		this.maxWaterAffin += ((equip ? 1 : -1) * item.getWaterAffin());
+		this.maxEarthAffin += ((equip ? 1 : -1) * item.getEarthAffin());
+		this.maxWindAffin += ((equip ? 1 : -1) * item.getWindAffin());
+		this.maxLightAffin += ((equip ? 1 : -1) * item.getLightAffin());
+		this.currentFireAffin += ((equip ? 1 : -1) * item.getFireAffinity());
+		this.currentElecAffin += ((equip ? 1 : -1) * item.getElecAffinity());
+		this.currentColdAffin += ((equip ? 1 : -1) * item.getColdAffin());
+		this.currentDarkAffin += ((equip ? 1 : -1) * item.getDarkAffin());
+		this.currentWaterAffin += ((equip ? 1 : -1) * item.getWaterAffin());
+		this.currentEarthAffin += ((equip ? 1 : -1) * item.getEarthAffin());
+		this.currentWindAffin += ((equip ? 1 : -1) * item.getWindAffin());
+		this.currentLightAffin += ((equip ? 1 : -1) * item.getLightAffin());
 	}
 
 	public Range getAttackRange()
@@ -709,6 +756,10 @@ public class CombatSprite extends AnimatedSprite
 	public boolean isLeader() {
 		return isLeader;
 	}
+	
+	public void setLeader(boolean isLeader) {
+		this.isLeader = isLeader;
+	}
 
 	/************************/
 	/* Handle Progression	*/
@@ -726,6 +777,8 @@ public class CombatSprite extends AnimatedSprite
 		this.level++;
 		JLevelProgression jlp = GlobalPythonFactory.createLevelProgression();
 		String text = jlp.levelUpHero(this);
+		
+		Log.debug("Leveling up heroes non-displayed stats: " + this.getName());
 
 		int increase = jlp.getLevelUpBattleStat(this.getCurrentProgression().getCounterStrength(), this, level, isPromoted, this.maxCounter);
 		maxCounter += increase;
@@ -796,17 +849,33 @@ public class CombatSprite extends AnimatedSprite
 	{
 		this.battleEffects.add(battleEffect);
 	}
+	
+	public void removeBattleEffect(JBattleEffect battleEffect)
+	{
+		Log.debug("Removed " + battleEffect.getName() + " from " + this.getName());
+		this.battleEffects.remove(battleEffect);
+	}
 
 	public Image getCurrentWeaponImage() {
 		return currentWeaponImage;
 	}
-
-	public String getAttackEffectId() {
-		return attackEffectId;
+	
+	public JBattleEffect getAttackEffect()
+	{
+		JBattleEffect eff = null;
+		if (attackEffectId != null)
+		{
+			eff = GlobalPythonFactory.createJBattleEffect(attackEffectId, attackEffectLevel);
+			eff.setEffectChance(attackEffectChance);
+		}
+		return eff;
 	}
-
-	public int getAttackEffectChance() {
-		return attackEffectChance;
+	
+	public void setAttackEffect(String attackEffectId, int attackEffectChance, int attackEffectLevel)
+	{
+		this.attackEffectChance = attackEffectChance;
+		this.attackEffectId = attackEffectId;
+		this.attackEffectLevel = attackEffectLevel;
 	}
 
 	public void initializeBattleEffects(FCResourceManager frm)
@@ -822,7 +891,7 @@ public class CombatSprite extends AnimatedSprite
 
 	public void triggerOverEvent(StateInfo stateInfo)
 	{
-		stateInfo.addPanel(new SpriteContextPanel(Panel.PANEL_HEALTH_BAR, this, stateInfo.getGc()));
+		stateInfo.addPanel(new SpriteContextPanel(PanelType.PANEL_HEALTH_BAR, this, stateInfo.getGc()));
 	}
 
 	public int getClientId() {
@@ -915,5 +984,73 @@ public class CombatSprite extends AnimatedSprite
 
 	public boolean isDrawShadow() {
 		return drawShadow;
+	}
+	
+	public int getModifiedCounter()
+	{
+		int mod = 0;
+		for (int i = 0; i < this.equipped.size(); i++)
+			if (this.equipped.get(i))
+				mod += ((EquippableItem) this.getItem(i)).getIncreasedCounter();
+		return getCurrentCounter() + mod;
+	}
+
+	public int getCurrentCounter() {
+		return currentCounter;
+	}
+
+	public void setCurrentCounter(int currentCounter) {
+		this.currentCounter = currentCounter;
+	}
+	
+	public int getModifiedEvade()
+	{
+		int mod = 0;
+		for (int i = 0; i < this.equipped.size(); i++)
+			if (this.equipped.get(i))
+				mod += ((EquippableItem) this.getItem(i)).getIncreasedEvade();
+		return getCurrentEvade() + mod;
+	}
+
+	public int getCurrentEvade() {
+		return currentEvade;
+	}
+
+	public void setCurrentEvade(int currentEvade) {
+		this.currentEvade = currentEvade;
+	}
+	
+	public int getModifiedDouble()
+	{
+		int mod = 0;
+		for (int i = 0; i < this.equipped.size(); i++)
+			if (this.equipped.get(i))
+				mod += ((EquippableItem) this.getItem(i)).getIncreasedDouble();
+		return getCurrentDouble() + mod;
+	}
+
+	public int getCurrentDouble() {
+		return currentDouble;
+	}
+
+	public void setCurrentDouble(int currentDouble) {
+		this.currentDouble = currentDouble;
+	}
+	
+	public int getModifiedCrit()
+	{
+		int mod = 0;
+		for (int i = 0; i < this.equipped.size(); i++)
+			if (this.equipped.get(i))
+				mod += ((EquippableItem) this.getItem(i)).getIncreasedCrit();
+		return getCurrentCrit() + mod;
+	}
+
+	public int getCurrentCrit() {
+		return currentCrit;
+	}
+
+	public void setCurrentCrit(int currentCrit) {
+		this.currentCrit = currentCrit;
 	}
 }

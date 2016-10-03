@@ -1,12 +1,14 @@
 package mb.fc.game.combat;
 
+import java.util.ArrayList;
+
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
+
 import mb.fc.engine.CommRPG;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.ui.FCGameContainer;
 import mb.jython.JBattleEffect;
-
-import org.newdawn.slick.Color;
-import org.newdawn.slick.Graphics;
 
 public class DamagedCombatAnimation extends CombatAnimation
 {
@@ -15,24 +17,30 @@ public class DamagedCombatAnimation extends CombatAnimation
 	private CombatAnimation childAnimation;
 	private int hpDamage;
 	private int mpDamage;
-	private JBattleEffect battleEffect;
+	private ArrayList<JBattleEffect> battleEffects;
 	private CombatSprite attacker;
 	private boolean isNegativeEffect = false;
 	private int battleResultIndex;
 
 	public DamagedCombatAnimation(CombatAnimation childAnimation, int hpDamage, int mpDamage,
-			JBattleEffect battleEffect, CombatSprite attacker, int battleResultIndex)
+			ArrayList<JBattleEffect> battleEffects, CombatSprite attacker, int battleResultIndex)
 	{
 		super();
 		this.minimumTimePassed = 200;
 		this.childAnimation = childAnimation;
 		this.hpDamage = hpDamage;
 		this.mpDamage = mpDamage;
-		this.battleEffect = battleEffect;
+		this.battleEffects = battleEffects;
 		this.attacker = attacker;
 		this.battleResultIndex = battleResultIndex;
-		if (hpDamage < 0 || mpDamage < 0 || (battleEffect != null && battleEffect.isNegativeEffect()))
+		if (hpDamage < 0 || mpDamage < 0)
 			isNegativeEffect =  true;
+		
+		for (JBattleEffect eff : battleEffects)
+		{
+			if (eff.isNegativeEffect())
+				isNegativeEffect = true;
+		}
 	}
 
 	@Override
@@ -49,8 +57,8 @@ public class DamagedCombatAnimation extends CombatAnimation
 	}
 
 	@Override
-	public void render(FCGameContainer fcCont, Graphics g, int yDrawPos) {
-		childAnimation.render(fcCont, g, yDrawPos);
+	public void render(FCGameContainer fcCont, Graphics g, int yDrawPos, float scale) {
+		childAnimation.render(fcCont, g, yDrawPos, scale);
 	}
 
 	@Override
@@ -60,9 +68,11 @@ public class DamagedCombatAnimation extends CombatAnimation
 
 		childAnimation.parentSprite.modifyCurrentHP(hpDamage);
 		childAnimation.parentSprite.modifyCurrentMP(mpDamage);
-		if (battleEffect != null)
+		for (JBattleEffect battleEffect : battleEffects)
 		{
-			childAnimation.parentSprite.addBattleEffect(battleEffect);
+			// If the duration is 0, it is instantaneous so don't bother adding it to the target
+			if (battleEffect.getDuration() != 0)
+				childAnimation.parentSprite.addBattleEffect(battleEffect);
 			battleEffect.effectStarted(null, childAnimation.parentSprite);
 		}
 	}

@@ -289,9 +289,9 @@ public class GifFrame extends JFrame implements ActionListener, ChangeListener
 			  {
 				  animStrings.add("<cell index=\"" + count + "\" delay=\"" + battleGifDecoder.getDelay(index) + "\">");
 				  if (!hero)
-					  animStrings.add("<spr name=\"/Unpromoted/Frame" + index + "\" x=\"" + (70 + (int) xOffsetSpinner.getValue()) + "\" y=\"" + (-60 + (int) yOffsetSpinner.getValue()) + "\" z=\"0\"/>");
+					  animStrings.add("<spr name=\"/Unpromoted/Frame" + index + "\" x=\"" + (65 + (int) xOffsetSpinner.getValue()) + "\" y=\"" + (-48 + (int) yOffsetSpinner.getValue()) + "\" z=\"0\"/>");
 				  else
-					  animStrings.add("<spr name=\"/Unpromoted/Frame" + index + "\" x=\"" + (290 + (int) xOffsetSpinner.getValue()) + "\" y=\"" + (-60 + (int) yOffsetSpinner.getValue()) + "\" z=\"0\"/>");
+					  animStrings.add("<spr name=\"/Unpromoted/Frame" + index + "\" x=\"" + (241 + (int) xOffsetSpinner.getValue()) + "\" y=\"" + (-48 + (int) yOffsetSpinner.getValue()) + "\" z=\"0\"/>");
 				  animStrings.add("</cell>");
 
 				  count++;
@@ -453,7 +453,11 @@ public class GifFrame extends JFrame implements ActionListener, ChangeListener
 				}
 
 				g.setColor(Color.red);
-				g.drawRect(drawX + 18, this.getHeight() / 2, 50, 50);
+				g.drawRect(drawX + 18, this.getHeight() / 2, 40, 40);
+
+				g.setColor(Color.blue);
+
+				g.drawLine(drawX + 18, this.getHeight() / 2 + 48, drawX + 58, this.getHeight() / 2 + 48);
 				// g.drawRect(this.getWidth() / 2 - 25, this.getHeight() / 2, 50, 50);
 			}
 		}

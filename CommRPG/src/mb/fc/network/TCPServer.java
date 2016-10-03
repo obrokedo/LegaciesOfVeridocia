@@ -5,7 +5,6 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-import mb.fc.engine.message.IntMessage;
 import mb.fc.engine.message.Message;
 import mb.fc.engine.message.MessageType;
 import mb.fc.network.message.ClientIDMessage;
@@ -19,7 +18,6 @@ public class TCPServer extends Server
 	private int id = 0;
 	private Integer waitCount = 0;
 	private Hashtable<Integer, ClientInfo> clientInfoById;
-	private int startHeroId = 0;
 
 	public TCPServer() {
 		super(5000);
@@ -52,6 +50,10 @@ public class TCPServer extends Server
 			case PUBLIC_SPEECH:
 				this.tellEveryone(message);
 				break;
+			/*
+			 * When a wait message is received, the server will wait until all of the clients
+			 * have issued a WAIT message and then the server will issue a CONTINUE message
+			 */
 			case WAIT:
 				synchronized (waitCount)
 				{
@@ -68,18 +70,12 @@ public class TCPServer extends Server
 				synchronized (clientInfoById)
 				{
 					clientInfoById.put(crm.getClientId(), new ClientInfo(crm.getName(), crm.getClientId()));
-					try {
-						tellSomeone(new IntMessage(MessageType.CLIENT_HERO_START, startHeroId), this.clientOutputStreams.get(crm.getClientId()));
-						startHeroId += crm.getHeroAmount();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
 				}
 				tellEveryone(new PlayerListMessage(getConnectedClientInfo()));
 				break;
 			case CLIENT_BROADCAST_HERO:
-				tellEveryoneElse(message, clientOutputStreams.get(clientNumber));
+			case OVERLAND_MOVE_MESSAGE:
+				tellEveryoneElse(message, clientNumber);
 				break;
 			default:
 				this.tellEveryone(message);

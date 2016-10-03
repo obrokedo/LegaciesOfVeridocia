@@ -3,6 +3,7 @@ package mb.fc.game.resource;
 import java.util.Hashtable;
 
 import mb.fc.game.definition.HeroDefinition;
+import mb.fc.game.exception.BadResourceException;
 import mb.fc.game.sprite.CombatSprite;
 
 public class HeroResource
@@ -17,6 +18,17 @@ public class HeroResource
 	public static CombatSprite getHero(int heroId)
 	{
 		return heroDefinitionsById.get(heroId).getHero();
+	}
+	
+	public static CombatSprite getHero(String heroName)
+	{
+		for (HeroDefinition hd : heroDefinitionsById.values())
+		{
+			if (hd.getName().equalsIgnoreCase(heroName))
+				return hd.getHero();
+		}
+		
+		throw new BadResourceException("Unable to find a hero with the name: " + heroName + " Did you misspell the name in DevParams?");
 	}
 
 	public static String getAnimation(int heroId)

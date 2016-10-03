@@ -39,7 +39,7 @@ public class HeroesStatMenu extends Menu implements MenuListener
 
 	public HeroesStatMenu(StateInfo stateInfo, MenuListener listener)
 	{
-		super(Panel.PANEL_HEROS_OVERVIEW);
+		super(PanelType.PANEL_HEROS_OVERVIEW);
 		heroes = new ArrayList<>(stateInfo.getPsi().getClientProfile().getHeroes());
 		updateCurrentHero();
 		this.listener = listener;

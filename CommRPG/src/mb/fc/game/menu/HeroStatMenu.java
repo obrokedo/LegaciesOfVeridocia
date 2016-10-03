@@ -25,7 +25,7 @@ public class HeroStatMenu extends Menu
 	private Portrait portrait;
 
 	public HeroStatMenu(GameContainer gc, CombatSprite selectedSprite, StateInfo stateInfo) {
-		super(Panel.PANEL_HEROS_STATS);
+		super(PanelType.PANEL_HEROS_STATS);
 		x = (gc.getWidth() - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 230) / 2;
 		y = (gc.getHeight() - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 192) / 2;
 		this.selectedSprite = selectedSprite;

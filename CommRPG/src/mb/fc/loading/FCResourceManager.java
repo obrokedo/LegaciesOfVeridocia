@@ -8,28 +8,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Hashtable;
 
 import javax.swing.JOptionPane;
 
-import mb.fc.cinematic.Cinematic;
-import mb.fc.engine.CommRPG;
-import mb.fc.game.definition.EnemyDefinition;
-import mb.fc.game.definition.HeroDefinition;
-import mb.fc.game.definition.ItemDefinition;
-import mb.fc.game.exception.BadResourceException;
-import mb.fc.game.resource.EnemyResource;
-import mb.fc.game.resource.HeroResource;
-import mb.fc.game.resource.ItemResource;
-import mb.fc.game.text.Speech;
-import mb.fc.game.trigger.TriggerEvent;
-import mb.fc.map.Map;
-import mb.fc.utils.SpriteAnims;
-import mb.fc.utils.XMLParser;
-import mb.fc.utils.XMLParser.TagArea;
-
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.ImageBuffer;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
@@ -38,6 +24,24 @@ import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.util.Log;
 import org.newdawn.slick.util.ResourceLoader;
+
+import mb.fc.cinematic.Cinematic;
+import mb.fc.engine.CommRPG;
+import mb.fc.engine.state.StateInfo;
+import mb.fc.game.definition.EnemyDefinition;
+import mb.fc.game.definition.HeroDefinition;
+import mb.fc.game.definition.ItemDefinition;
+import mb.fc.game.exception.BadResourceException;
+import mb.fc.game.resource.EnemyResource;
+import mb.fc.game.resource.HeroResource;
+import mb.fc.game.resource.ItemResource;
+import mb.fc.game.text.Speech;
+import mb.fc.game.trigger.TriggerCondition;
+import mb.fc.game.trigger.TriggerEvent;
+import mb.fc.map.Map;
+import mb.fc.utils.SpriteAnims;
+import mb.fc.utils.XMLParser;
+import mb.fc.utils.XMLParser.TagArea;
 
 public class FCResourceManager {
 	public static final String ANIMATIONS_FOLDER = "animations/animationsheets";
@@ -57,6 +61,7 @@ public class FCResourceManager {
 	private Hashtable<String, SpriteAnims> spriteAnimations = new Hashtable<String, SpriteAnims>();
 	private Hashtable<String, Music> musicByTitle = new Hashtable<String, Music>();
 	private Hashtable<String, Sound> soundByTitle = new Hashtable<String, Sound>();
+	private HashSet<TriggerCondition> conditions = new HashSet<>();
 	private Hashtable<String, UnicodeFont> unicodeFonts = new Hashtable<String, UnicodeFont>();
 
 	// These values need to be initialized each time a map is loaded
@@ -152,7 +157,7 @@ public class FCResourceManager {
 		}
 		else if (split[0].equalsIgnoreCase("text"))
 		{
-			TextParser.parseText(split[1], speechesById, triggerEventById, cinematicById, this);
+			TextParser.parseText(split[1], speechesById, triggerEventById, cinematicById, conditions, this);
 		}
 		else if (split[0].equalsIgnoreCase("herodefs"))
 		{
@@ -263,6 +268,24 @@ public class FCResourceManager {
 				if (file.getName().endsWith(".png"))
 				{
 					Log.debug("Anim sheet " + file.getName());
+					/*
+					if (file.getName().equalsIgnoreCase("Darkling Ooze.png"))
+					{
+						String[] oldColors = "000000#311862#5a41a4#7d6be6#4a244a#e7e7e7#000033#6b496b#cba9cb#a2ae84#94926b#7e7550#eeceac".split("#");
+						String[] newColors = "000000#9f0505#bf3636#d11a1a#4a244a#e7e7e7#5e0000#6b496b#d07070#a2ae84#94926b#7e7550#eeceac".split("#");
+						Hashtable<Color, Color> colorMap = new Hashtable<>();
+						for (int i = 0; i < oldColors.length; i++) {
+							colorMap.put(new Color(Integer.parseInt(oldColors[i], 16)), new Color(Integer.parseInt(newColors[i], 16)));
+						}
+
+						Image i = new Image(file.getPath(), transparent);
+						i = swapColors(i, colorMap);
+						// ((SwappableImage) i).swapColors(new Color(90, 65, 164), new Color(0, 0, 0));
+
+						images.put(file.getName().replace(".png", ""), i);
+					}
+					else
+					*/
 					images.put(file.getName().replace(".png", ""), new Image(file.getPath(), transparent));
 				}
 			}
@@ -323,6 +346,28 @@ public class FCResourceManager {
 		}
 	}
 
+	public static Image swapColors( Image img, Hashtable<Color, Color> colorMap ){
+
+		ImageBuffer imBuffer = new ImageBuffer(img.getWidth(), img.getHeight());
+
+		for (int x = 0; x < img.getWidth(); x++)
+		{
+			for (int y = 0; y < img.getHeight(); y++)
+			{
+				Color oldColor = img.getColor(x, y);
+				if (colorMap.containsKey(oldColor))
+				{
+					Color newColor = colorMap.get(oldColor);
+					imBuffer.setRGBA(x, y, newColor.getRed(), newColor.getGreen(), newColor.getBlue(), newColor.getAlpha());
+				}
+				else
+					imBuffer.setRGBA(x, y, oldColor.getRed(), oldColor.getGreen(), oldColor.getBlue(), oldColor.getAlpha());
+			}
+		}
+
+		return imBuffer.getImage();
+    }
+
 	public Hashtable<String, Image> getImages() {
 		return images;
 	}
@@ -363,9 +408,9 @@ public class FCResourceManager {
 	public TriggerEvent getTriggerEventById(int id)
 	{
 		// TODO This is just to exit the game on hero death
-		if (id == -2)
+		if (id == TriggerEvent.TRIGGER_ID_EXIT)
 		{
-			TriggerEvent te = new TriggerEvent(-2, false, false, false, false, null, null);
+			TriggerEvent te = new TriggerEvent(TriggerEvent.TRIGGER_ID_EXIT, false, false, false, false, null, null);
 			te.addTriggerType(te.new TriggerExit());
 			return te;
 		}
@@ -376,6 +421,14 @@ public class FCResourceManager {
 	public Cinematic getCinematicById(int id)
 	{
 		return cinematicById.get(id);
+	}
+	
+	public void checkTriggerCondtions(StateInfo stateInfo)
+	{
+		for (TriggerCondition tc : this.conditions)
+		{
+			tc.executeCondtions(stateInfo);
+		}
 	}
 
 	public static ArrayList<String> readAllLines(String file) throws IOException

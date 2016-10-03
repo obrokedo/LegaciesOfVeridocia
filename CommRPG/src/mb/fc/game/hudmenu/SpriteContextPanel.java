@@ -12,7 +12,7 @@ public class SpriteContextPanel extends Panel
 {
 	private CombatSprite sprite;
 
-	public SpriteContextPanel(int menuType, CombatSprite sprite, GameContainer gc) {
+	public SpriteContextPanel(PanelType menuType, CombatSprite sprite, GameContainer gc) {
 		super(menuType);
 		this.sprite = sprite;
 	}
@@ -21,14 +21,16 @@ public class SpriteContextPanel extends Panel
 	public void render(FCGameContainer gc, Graphics graphics) {
 		switch (panelType)
 		{
-			case Panel.PANEL_HEALTH_BAR:
+			case PANEL_HEALTH_BAR:
 				displayHealth(gc, graphics, 0);
 				break;
-			case Panel.PANEL_ENEMY_HEALTH_BAR:
+			case PANEL_ENEMY_HEALTH_BAR:
 				displayHealth(gc, graphics, 1);
 				break;
-			case Panel.PANEL_TARGET_HEALTH_BAR:
+			case PANEL_TARGET_HEALTH_BAR:
 				displayHealth(gc, graphics, 2);
+				break;
+			default:
 				break;
 		}
 	}
@@ -76,7 +78,7 @@ public class SpriteContextPanel extends Panel
 		else
 			graphics.drawString(sprite.getName(), x + 10, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * -7 + 2);
 		graphics.drawString("HP", x + 10, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 4 - 1);
-		graphics.drawString(sprite.getCurrentHP() + "/" + sprite.getMaxHP(),
+		graphics.drawString(Math.max(0, sprite.getCurrentHP()) + "/" + sprite.getMaxHP(),
 				x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 22 + healthWidth,
 				 y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 4 - 1);
 		if (sprite.getMaxMP() != 0)
