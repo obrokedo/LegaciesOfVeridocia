@@ -1,6 +1,8 @@
 package mb.fc.game.menu;
 
-import mb.fc.engine.CommRPG;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+
 import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.IntMessage;
 import mb.fc.engine.message.MessageType;
@@ -8,10 +10,8 @@ import mb.fc.engine.state.StateInfo;
 import mb.fc.game.constants.Direction;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.item.Item;
-import mb.fc.game.ui.FCGameContainer;
-
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
+import mb.fc.game.ui.PaddedGameContainer;
+import mb.fc.utils.StringUtils;
 
 public class ItemMenu extends QuadMenu
 {
@@ -19,7 +19,7 @@ public class ItemMenu extends QuadMenu
 
 	public ItemMenu(StateInfo stateInfo) {
 		super(PanelType.PANEL_ITEM, false, stateInfo);
-		emptySpot = stateInfo.getResourceManager().getSpriteSheets().get("items").getSprite(17, 1);
+		emptySpot = stateInfo.getResourceManager().getSpriteSheet("items").getSprite(17, 1);
 
 		this.enabled = new boolean[4];
 		this.icons = new Image[4];
@@ -53,22 +53,22 @@ public class ItemMenu extends QuadMenu
 	}
 
 	@Override
-	protected void renderTextBox(FCGameContainer gc, Graphics graphics)
+	protected void renderTextBox(PaddedGameContainer gc, Graphics graphics)
 	{
 		String[] split = getText(selected).split(" ", 2);
 
-		Panel.drawPanelBox(CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 195 + gc.getDisplayPaddingX(),
-			CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 195 - 7 * (split.length == 1 ? 0 : 1),
+		Panel.drawPanelBox(195,
+			195 - 7 * (split.length == 1 ? 0 : 1),
 			getTextboxWidth(),
-			CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 15 * (split.length == 1 ? 1 : 2) + 12, graphics);
+			15 * (split.length == 1 ? 1 : 2) + 12, graphics);
 
 		graphics.setColor(COLOR_FOREFRONT);
 
-		graphics.drawString(split[0], CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 202 + gc.getDisplayPaddingX(),
-				CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 190 + 3 - 7 * (split.length == 1 ? 0 : 1));
+		StringUtils.drawString(split[0], 202,
+				190 + 3 - 7 * (split.length == 1 ? 0 : 1), graphics);
 		if (split.length > 1)
-			graphics.drawString(split[1], CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 202 + gc.getDisplayPaddingX(),
-				CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 205 + 3 - 7);
+			StringUtils.drawString(split[1], 202,
+				205 + 3 - 7, graphics);
 	}
 
 	@Override
@@ -88,6 +88,6 @@ public class ItemMenu extends QuadMenu
 	@Override
 	public int getTextboxWidth()
 	{
-		return CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 95;
+		return 95;
 	}
 }

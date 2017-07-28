@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.Camera;
-import mb.fc.game.ui.FCGameContainer;
+import mb.fc.game.ui.PaddedGameContainer;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Rectangle;
@@ -43,7 +43,7 @@ public class Sprite implements Serializable
 
 	}
 
-	public void render(Camera camera, Graphics graphics, FCGameContainer cont)
+	public void render(Camera camera, Graphics graphics, PaddedGameContainer cont)
 	{
 
 	}

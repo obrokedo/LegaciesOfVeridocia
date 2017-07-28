@@ -1,6 +1,6 @@
 package mb.fc.game.hudmenu;
 
-import mb.fc.game.ui.FCGameContainer;
+import mb.fc.game.ui.PaddedGameContainer;
 
 import org.newdawn.slick.Graphics;
 
@@ -11,7 +11,7 @@ public class WaitPanel extends Panel
 	}
 
 	@Override
-	public void render(FCGameContainer gc, Graphics graphics)
+	public void render(PaddedGameContainer gc, Graphics graphics)
 	{
 		Panel.drawPanelBox(160, 340, 630, 60, graphics);
 		graphics.setColor(Panel.COLOR_FOREFRONT);

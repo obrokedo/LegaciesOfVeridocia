@@ -19,6 +19,8 @@ import mb.fc.game.menu.shop.ShopOptionsMenu;
 
 public class MenuManager extends Manager
 {
+	private static DebugMenu DEBUG_MENU;
+	
 	@Override
 	public void initialize()
 	{
@@ -67,6 +69,9 @@ public class MenuManager extends Manager
 			case MENU_ACTION_LONG:
 				stateInfo.setInputDelay(System.currentTimeMillis() + 200);
 				break;
+			case MENU_NEXT_ACTION:
+				stateInfo.sendMessage(MessageType.CIN_NEXT_ACTION);
+				break;
 			default:
 				break;
 		}
@@ -80,10 +85,10 @@ public class MenuManager extends Manager
 			case SPEECH:
 				SpeechMessage spm = (SpeechMessage) message;
 				stateInfo.addMenu(new SpeechMenu(spm.getText(),
-						stateInfo.getGc(), spm.getTriggerId(), spm.getPortrait(), stateInfo));
+						stateInfo.getFCGameContainer(), spm.getTriggerId(), spm.getPortrait(), stateInfo));
 				break;
 			case SHOW_SYSTEM_MENU:
-				stateInfo.addSingleInstanceMenu(new SystemMenu(stateInfo.getGc()));
+				stateInfo.addSingleInstanceMenu(new SystemMenu(stateInfo.getFCGameContainer()));
 				break;
 			case SHOW_SHOP:
 				ShopMessage sm = (ShopMessage) message;
@@ -101,14 +106,17 @@ public class MenuManager extends Manager
 				stateInfo.addSingleInstanceMenu(new HeroesStatMenu(stateInfo));
 				break;
 			case SHOW_HERO:
-				stateInfo.addMenu(new HeroStatMenu(stateInfo.getGc(), ((SpriteContextMessage) message).getCombatSprite(
-						stateInfo.getPsi().getClientProfile().getHeroes()), stateInfo));
+				stateInfo.addMenu(new HeroStatMenu(stateInfo.getFCGameContainer(), ((SpriteContextMessage) message).getCombatSprite(
+						stateInfo.getAllHeroes()), stateInfo));
 				break;
 			case SHOW_PRIEST:
-				stateInfo.addMenu(new PriestMenu2(stateInfo, stateInfo.getGc(), stateInfo.getClientProfile().getHeroes()));
+				stateInfo.addMenu(new PriestMenu2(stateInfo, stateInfo.getFCGameContainer(), stateInfo.getAllHeroes()));
 				break;
 			case SHOW_DEBUG:
-				stateInfo.addMenu(new DebugMenu(stateInfo.getGc()));
+				if (DEBUG_MENU == null)
+					DEBUG_MENU = new DebugMenu(stateInfo.getFCGameContainer());
+				DEBUG_MENU.clearText();
+				stateInfo.addMenu(DEBUG_MENU);
 				break;
 			default:
 				break;

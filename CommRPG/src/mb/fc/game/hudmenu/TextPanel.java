@@ -1,6 +1,7 @@
 package mb.fc.game.hudmenu;
 
-import mb.fc.game.ui.FCGameContainer;
+import mb.fc.engine.CommRPG;
+import mb.fc.game.ui.PaddedGameContainer;
 
 import org.newdawn.slick.Graphics;
 
@@ -20,14 +21,14 @@ public class TextPanel extends Panel
 	}
 
 	@Override
-	public void render(FCGameContainer gc, Graphics graphics)
+	public void render(PaddedGameContainer gc, Graphics graphics)
 	{
 		int x = 275;
 
 		if (location == LOCATION_CENTER)
 			x = 140;
-		Panel.drawPanelBox(x, gc.getHeight() - 140, gc.getWidth() - 280 , 135, graphics);
+		Panel.drawPanelBox(x, CommRPG.GAME_SCREEN_SIZE.height - 140, CommRPG.GAME_SCREEN_SIZE.width - 280 , 135, graphics);
 		graphics.setColor(Panel.COLOR_FOREFRONT);
-		graphics.drawString(text, x + 15, gc.getHeight() - 125);
+		graphics.drawString(text, x + 15, CommRPG.GAME_SCREEN_SIZE.height - 125);
 	}
 }

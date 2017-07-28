@@ -1,7 +1,10 @@
 package mb.fc.game.ai;
 
 import java.awt.Point;
+import java.io.Serializable;
 import java.util.ArrayList;
+
+import org.newdawn.slick.util.Log;
 
 import mb.fc.engine.CommRPG;
 import mb.fc.engine.state.StateInfo;
@@ -13,9 +16,7 @@ import mb.fc.game.turnaction.TargetSpriteAction;
 import mb.fc.game.turnaction.TurnAction;
 import mb.fc.game.turnaction.WaitAction;
 
-import org.newdawn.slick.util.Log;
-
-public abstract class AI
+public abstract class AI implements Serializable
 {
 	// BESERKER
 	// CASTER
@@ -43,6 +44,12 @@ public abstract class AI
 		super();
 		this.approachType = approachType;
 		this.canHeal = canHeal;
+	}
+	
+	public void reinitialize(StateInfo stateInfo)
+	{
+		if (targetCS != null)
+			targetCS = stateInfo.getCombatantById(targetCS.getId());
 	}
 
 	public ArrayList<TurnAction> performAI(StateInfo stateInfo, MoveableSpace ms, CombatSprite currentSprite)
@@ -73,6 +80,8 @@ public abstract class AI
 		{
 			for (AttackableEntity as : attackableSprites)
 			{
+				this.initialize();
+
 				if (as.getCombatSprite().isHero() != currentSprite.isHero())
 				{
 					// If we have a target approach type then we want to ignore any hero who is not the target,

@@ -1,7 +1,5 @@
 package mb.fc.game.ui;
 
-import mb.fc.engine.CommRPG;
-
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.Graphics;
@@ -14,8 +12,8 @@ public class TextUI
 	public TextUI(String text, int x, int y, int unscaleX)
 	{
 		this.text = text;
-		this.x = x * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] + unscaleX;
-		this.y = y * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
+		this.x = x + unscaleX;
+		this.y = y;
 	}
 
 	public TextUI(String text, int x, int y)
@@ -46,10 +44,10 @@ public class TextUI
 	}
 
 	public void setX(int x) {
-		this.x = x * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
+		this.x = x;
 	}
 
 	public void setY(int y) {
-		this.y = y * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
+		this.y = y;
 	}
 }

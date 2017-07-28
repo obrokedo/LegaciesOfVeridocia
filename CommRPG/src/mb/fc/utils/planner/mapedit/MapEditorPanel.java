@@ -27,14 +27,13 @@ import mb.fc.utils.planner.PlannerContainerDef;
 import mb.fc.utils.planner.PlannerFrame;
 import mb.fc.utils.planner.PlannerLine;
 import mb.fc.utils.planner.PlannerLineDef;
+import mb.fc.utils.planner.PlannerReference;
 import mb.fc.utils.planner.PlannerValueDef;
 
 
 public class MapEditorPanel implements ActionListener {
 	private static final String COMMAND_DISPLAY_ENEMY = "dispenemy";
 	private static final String COMMAND_DISPLAY_TERRAIN = "dispterrain";
-	private static final String COMMAND_DISPLAY_TRIGGER = "disptrigger";
-	private static final String COMMAND_DISPLAY_BATTLE_TRIGGER = "dispbattletrigger";
 	private static final String COMMAND_DISPLAY_OTHER = "dispother";
 	private static final String COMMAND_DISPLAY_UNUSED = "dispunused";
 
@@ -45,12 +44,12 @@ public class MapEditorPanel implements ActionListener {
 	private JScrollPane mapScrollPane;
 	private JPanel sidePanel;
 	private JComboBox<String> moCombo;
-	private ArrayList<ArrayList<String>> listOfLists;
-	private boolean displayEnemy = true, displayTerrain = true, displayTrigger = true,
-			displayBattleTrigger = true, displayOther = true, displayUnused = true;
+	private ArrayList<ArrayList<PlannerReference>> listOfLists;
+	private boolean displayEnemy = true, displayTerrain = true,
+		displayOther = true, displayUnused = true;
 	// private Hashtable<String, ArrayList<String>> entrancesByMap = new Hashtable<>();
 
-	public MapEditorPanel(PlannerFrame plannerFrame, ArrayList<ArrayList<String>> listOfLists)
+	public MapEditorPanel(PlannerFrame plannerFrame, ArrayList<ArrayList<PlannerReference>> listOfLists)
 	{
 		mapPanel = new MapEditorRenderPanel(this);
 		backPanel = new JPanel(new BorderLayout());
@@ -65,8 +64,6 @@ public class MapEditorPanel implements ActionListener {
 
 		locationVisiblePanel.add(createCheckBox("Enemies", COMMAND_DISPLAY_ENEMY));
 		locationVisiblePanel.add(createCheckBox("Terrain", COMMAND_DISPLAY_TERRAIN));
-		locationVisiblePanel.add(createCheckBox("Triggers", COMMAND_DISPLAY_TRIGGER));
-		locationVisiblePanel.add(createCheckBox("Battle Triggers", COMMAND_DISPLAY_BATTLE_TRIGGER));
 		locationVisiblePanel.add(createCheckBox("Others", COMMAND_DISPLAY_OTHER));
 		locationVisiblePanel.add(createCheckBox("Unused", COMMAND_DISPLAY_UNUSED));
 
@@ -158,25 +155,28 @@ public class MapEditorPanel implements ActionListener {
 		PlannerContainerDef pcdef = this.plannerFrame.getContainerDefByName("mapedit");
 		PlannerLineDef plannerLineDef = getLineDefByName(pcdef, mo.getKey());
 
-		for (PlannerValueDef val : plannerLineDef.getPlannerValues())
+		if (plannerLineDef != null)
 		{
-			String valueSet = null;
-			if (val.getValueType() == PlannerValueDef.TYPE_INT && val.getRefersTo() != PlannerValueDef.REFERS_NONE)
+			for (PlannerValueDef val : plannerLineDef.getPlannerValues())
 			{
-				int index = 0;
-				if (mo.getParam(val.getTag()) != null)
-					index = Integer.parseInt(mo.getParam(val.getTag()));
-				if (index < 0)
-					valueSet = "NO VALUE SELECTED";
+				String valueSet = null;
+				if (val.getValueType() == PlannerValueDef.TYPE_INT && val.getRefersTo() != PlannerValueDef.REFERS_NONE)
+				{
+					int index = 0;
+					if (mo.getParam(val.getTag()) != null)
+						index = Integer.parseInt(mo.getParam(val.getTag()));
+					if (index < 0)
+						valueSet = "NO VALUE SELECTED";
+					else
+						valueSet = listOfLists.get(val.getRefersTo() - 1).get(index).getName();
+				}
 				else
-					valueSet = listOfLists.get(val.getRefersTo() - 1).get(index);
+					valueSet = mo.getParam(val.getTag());
+	
+				JLabel entLabel = new JLabel(" " + val.getTag() + " = " + valueSet);
+				sidePanel.add(entLabel);
+				entLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 			}
-			else
-				valueSet = mo.getParam(val.getTag());
-
-			JLabel entLabel = new JLabel(" " + val.getTag() + " = " + valueSet);
-			sidePanel.add(entLabel);
-			entLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 		}
 
 
@@ -229,11 +229,6 @@ public class MapEditorPanel implements ActionListener {
 			displayEnemy = ((JCheckBox) aEv.getSource()).isSelected();
 			mapPanel.repaint();
 		}
-		else if (COMMAND_DISPLAY_BATTLE_TRIGGER.equalsIgnoreCase(command))
-		{
-			displayBattleTrigger = ((JCheckBox) aEv.getSource()).isSelected();
-			mapPanel.repaint();
-		}
 		else if (COMMAND_DISPLAY_OTHER.equalsIgnoreCase(command))
 		{
 			displayOther = ((JCheckBox) aEv.getSource()).isSelected();
@@ -242,11 +237,6 @@ public class MapEditorPanel implements ActionListener {
 		else if (COMMAND_DISPLAY_TERRAIN.equalsIgnoreCase(command))
 		{
 			displayTerrain = ((JCheckBox) aEv.getSource()).isSelected();
-			mapPanel.repaint();
-		}
-		else if (COMMAND_DISPLAY_TRIGGER.equalsIgnoreCase(command))
-		{
-			displayTrigger = ((JCheckBox) aEv.getSource()).isSelected();
 			mapPanel.repaint();
 		}
 		else if (COMMAND_DISPLAY_UNUSED.equalsIgnoreCase(command))
@@ -368,14 +358,6 @@ public class MapEditorPanel implements ActionListener {
 
 	public boolean isDisplayTerrain() {
 		return displayTerrain;
-	}
-
-	public boolean isDisplayTrigger() {
-		return displayTrigger;
-	}
-
-	public boolean isDisplayBattleTrigger() {
-		return displayBattleTrigger;
 	}
 
 	public boolean isDisplayOther() {

@@ -19,9 +19,13 @@ import java.util.concurrent.TimeUnit;
 
 import org.newdawn.slick.util.Log;
 
+import mb.fc.engine.state.StateInfo;
+import mb.fc.game.sprite.CombatSprite;
+
 public class ClientProgress implements Serializable
 {
 	private static final long serialVersionUID = 1L;
+	public static final String PROGRESS_EXTENSION = ".progress";
 
 	private HashSet<Integer> questsCompleted;
 	private Hashtable<String, ArrayList<Integer>> retriggerablesPerMap;
@@ -29,8 +33,12 @@ public class ClientProgress implements Serializable
 	private String map;
 	private String location;
 	private String name;
+	private String mapData;
 	private long timePlayed;
-	private boolean isBattle;
+	private boolean isBattle = false;
+	private ArrayList<CombatSprite> battleEnemySprites;
+	private ArrayList<Integer> battleHeroSpriteIds;
+	private Integer currentTurn;
 	private static final String BATTLE_PREFIX = "!!";
 	private transient long lastSaveTime;
 
@@ -53,10 +61,8 @@ public class ClientProgress implements Serializable
 		return questsCompleted.contains(questId);
 	}
 
-	public void serializeToFile(String map, String location)
+	public void serializeToFile()
 	{
-		this.map = map;
-		this.location = location;
 		this.timePlayed += (System.currentTimeMillis() - lastSaveTime);
 		this.lastSaveTime = System.currentTimeMillis();
 		try
@@ -97,8 +103,9 @@ public class ClientProgress implements Serializable
 		return map;
 	}
 
-	public void setMap(String map, boolean isBattle) {
+	public void setMap(String map, String mapData, boolean isBattle) {
 		this.map = map;
+		this.mapData = mapData;
 		if (isBattle)
 		{
 			this.isBattle = isBattle;
@@ -153,5 +160,61 @@ public class ClientProgress implements Serializable
 			return false;
 
 		return nonretriggerablesPerMap.get((isBattle ? BATTLE_PREFIX + map : map)).contains(triggerId);
+	}
+
+	public boolean isBattle() {
+		return isBattle;
+	}
+
+	public void setBattle(boolean isBattle) {
+		this.isBattle = isBattle;
+	}
+
+	public ArrayList<CombatSprite> getBattleSprites(StateInfo stateInfo) {
+		for (Integer heroID : battleHeroSpriteIds)
+		{
+			this.battleEnemySprites.add(stateInfo.getHeroById(heroID));
+		}
+		
+		return battleEnemySprites;
+	}
+
+	public void setBattleSprites(ArrayList<CombatSprite> battleSprites) {
+		if (battleSprites == null)
+		{
+			this.battleHeroSpriteIds = null;
+			this.battleEnemySprites = null;
+		}
+		else
+		{
+			battleHeroSpriteIds = new ArrayList<>();
+			battleEnemySprites = new ArrayList<>();
+			for (CombatSprite cs : battleSprites)
+			{
+				if (cs.isHero())
+					battleHeroSpriteIds.add(cs.getId());
+				else
+					battleEnemySprites.add(cs);
+			}
+		}
+	}
+
+	public Integer getCurrentTurn() {
+		return currentTurn;
+	}
+
+	public void setCurrentTurn(CombatSprite currentTurn) {
+		if (currentTurn == null)
+			this.currentTurn = null;
+		else
+			this.currentTurn = currentTurn.getId();
+	}
+
+	public String getMapData() {
+		return mapData;
+	}
+
+	public void setMapData(String mapData) {
+		this.mapData = mapData;
 	}
 }

@@ -2,7 +2,7 @@ package mb.fc.game.sprite;
 
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.Camera;
-import mb.fc.game.ui.FCGameContainer;
+import mb.fc.game.ui.PaddedGameContainer;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -13,7 +13,7 @@ public class StaticSprite extends Sprite
 
 	private Image image;
 	private int[] triggerIds;
-	private final static String SEARCH_AREA_NAME = "SA--!!";
+	private final static String SEARCH_AREA_NAME = "SEARCHAREA--!!";
 
 	public StaticSprite(int locX, int locY, String name, Image image, int[] triggerIds)
 	{
@@ -31,11 +31,11 @@ public class StaticSprite extends Sprite
 	}
 
 	@Override
-	public void render(Camera camera, Graphics graphics, FCGameContainer cont) {
+	public void render(Camera camera, Graphics graphics, PaddedGameContainer cont) {
 		if (image == null)
 			return;
-		graphics.drawImage(image, this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(),
-			this.getLocY() - camera.getLocationY());
+		graphics.drawImage(image, Math.round(this.getLocX() - camera.getLocationX()),
+			Math.round(this.getLocY() - camera.getLocationY()));
 	}
 
 	public void setImage(Image image) {

@@ -2,23 +2,25 @@ package mb.fc.cinematic;
 
 import java.util.ArrayList;
 
-import mb.fc.engine.CommRPG;
+import org.lwjgl.opengl.GL11;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.util.pathfinding.Path;
+import org.newdawn.slick.util.pathfinding.Path.Step;
+
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.Camera;
 import mb.fc.game.constants.Direction;
 import mb.fc.game.exception.BadAnimationException;
 import mb.fc.game.sprite.AnimatedSprite;
-import mb.fc.game.ui.FCGameContainer;
+import mb.fc.game.sprite.CombatSprite;
+import mb.fc.game.ui.PaddedGameContainer;
 import mb.fc.utils.AnimSprite;
 import mb.fc.utils.Animation;
 import mb.fc.utils.SpriteAnims;
 import mb.jython.GlobalPythonFactory;
 import mb.jython.JCinematicActor;
-
-import org.lwjgl.opengl.GL11;
-import org.newdawn.slick.Color;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 
 /**
  * Defines an "Actor" in a cinematic and contains the state information
@@ -60,6 +62,8 @@ public class CinematicActor implements Comparable<CinematicActor>
 	private float locY;
 	private int moveToLocX;
 	private int moveToLocY;
+	private Path movePath;
+	private int movePathIndex;
 	private boolean haltingMove;
 	private float moveSpeed;
 	private boolean loopMoving = false;
@@ -108,28 +112,34 @@ public class CinematicActor implements Comparable<CinematicActor>
 			currentAnim = this.spriteAnims.getAnimation(initialAnimation);
 
 		this.setAnimation(initialAnimation, 1000, false, true);
-		this.locX = x * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
-		this.locY = y * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
+		this.locX = x;
+		this.locY = y;
 		this.visible = visible;
 	}
 
 	public CinematicActor(AnimatedSprite sprite, StateInfo stateInfo)
 	{
 		jCinematicActor = GlobalPythonFactory.createJCinematicActor();
+		// Set the sprite that is in the town or battle to invisible
 		sprite.setVisible(false);
+		this.isHeroBacked = true;
+		this.isHeroPromoted = false;
+		if (sprite instanceof CombatSprite)
+			this.isHeroPromoted = ((CombatSprite) sprite).isPromoted();
 		this.sprite = sprite;
 		this.spriteAnims = sprite.getSpriteAnims();
 		currentAnim = sprite.getCurrentAnim();
 		this.facing = sprite.getFacing();
+		// For sprite backed actors, compensate for their usual offset
 		this.locX = sprite.getLocX();
 		this.locY = sprite.getLocY() - stateInfo.getResourceManager().getMap().getTileRenderHeight();
+		
 	}
-
-	public void render(Graphics graphics, Camera camera, FCGameContainer cont, StateInfo stateInfo)
+	
+	public void render(Graphics graphics, Camera camera, PaddedGameContainer cont, StateInfo stateInfo)
 	{
 		if (!visible)
 			return;
-
 		if (specialEffectType == SE_FALL_ON_FACE)
 			renderFaceDown(graphics, camera, cont);
 		else if (specialEffectType == SE_LAY_ON_SIDE_RIGHT)
@@ -152,32 +162,30 @@ public class CinematicActor implements Comparable<CinematicActor>
 				switch (specialEffectType)
 				{
 					case SE_NONE:
-
-						AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), (int) this.getLocX(), (int) this.getLocY(), cont.getDisplayPaddingX(), camera, false, stateInfo);
-
-						graphics.drawImage(im, locX - camera.getLocationX() + cont.getDisplayPaddingX(),
-								locY - camera.getLocationY());
+						AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), this.getLocX(),  this.getLocY(), camera, false, stateInfo);
+						graphics.drawImage(im, Math.round(locX - camera.getLocationX()),
+								Math.round(locY - camera.getLocationY()));
 						break;
 					case SE_GROW:
 					case SE_SHRINK:
 						Image scaled = im.getScaledCopy(specialEffectCounter);
 
-						AnimatedSprite.drawShadow(scaled, (int) (this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX() + (im.getWidth() - scaled.getWidth()) / 2),
-								(int) (this.getLocY() - camera.getLocationY() + im.getHeight() - scaled.getHeight()), cont.getDisplayPaddingX(), camera, false, stateInfo);
+						AnimatedSprite.drawShadow(scaled, (this.getLocX() - camera.getLocationX()  + (im.getWidth() - scaled.getWidth()) / 2),
+								 (this.getLocY() - camera.getLocationY() + im.getHeight() - scaled.getHeight()), camera, false, stateInfo);
 
-						scaled.draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX() + (im.getWidth() - scaled.getWidth()) / 2,
+						scaled.draw(this.getLocX() - camera.getLocationX()  + (im.getWidth() - scaled.getWidth()) / 2,
 								this.getLocY() - camera.getLocationY() + im.getHeight() - scaled.getHeight());
 						break;
 					case SE_QUIVER:
 
-						AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), (int) (this.getLocX() + (specialEffectCounter % 2 == 0 ? 0 : (-2 + specialEffectCounter) * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()])),
-								(int) this.getLocY(), cont.getDisplayPaddingX(), camera, false, stateInfo);
+						AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), (int) (this.getLocX() + (specialEffectCounter % 2 == 0 ? 0 : (-2 + specialEffectCounter))),
+								(int) this.getLocY(), camera, false, stateInfo);
 
-						graphics.drawImage(im, locX - camera.getLocationX() + cont.getDisplayPaddingX() + (specialEffectCounter % 2 == 0 ? 0 : (-2 + specialEffectCounter) * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]),
+						graphics.drawImage(im, locX - camera.getLocationX()  + (specialEffectCounter % 2 == 0 ? 0 : (-2 + specialEffectCounter)),
 								locY - camera.getLocationY());
 						break;
 					case SE_FLASH:
-						AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), (int) this.getLocX(), (int) this.getLocY(), cont.getDisplayPaddingX(), camera, false, stateInfo);
+						AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), (int) this.getLocX(), (int) this.getLocY(), camera, false, stateInfo);
 
 						Image whiteIm = im;
 
@@ -193,7 +201,7 @@ public class CinematicActor implements Comparable<CinematicActor>
 
 						// 4. bind any colors, draw any sprites
 						flashColor.bind();
-						whiteIm.drawEmbedded(locX - camera.getLocationX() + cont.getDisplayPaddingX(),
+						whiteIm.drawEmbedded(locX - camera.getLocationX() ,
 								locY - camera.getLocationY(), whiteIm.getWidth(), whiteIm.getHeight());
 
 						// 5. stop rendering the sprite sheet
@@ -204,9 +212,9 @@ public class CinematicActor implements Comparable<CinematicActor>
 								GL11.GL_TEXTURE_ENV_MODE, GL11.GL_MODULATE);
 
 						/*
-						graphics.drawImage(im, locX - camera.getLocationX() + cont.getDisplayPaddingX(),
+						graphics.drawImage(im, locX - camera.getLocationX() ,
 								locY - camera.getLocationY());
-						graphics.drawImage(whiteIm, locX - camera.getLocationX() + cont.getDisplayPaddingX(),
+						graphics.drawImage(whiteIm, locX - camera.getLocationX() ,
 								locY - camera.getLocationY(), flashColor);
 								*/
 						break;
@@ -214,43 +222,43 @@ public class CinematicActor implements Comparable<CinematicActor>
 						// Only draw the nod if we are on SE counter 1
 						if (specialEffectCounter == 1)
 						{
-							AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), (int) this.getLocX(), (int) this.getLocY(), cont.getDisplayPaddingX(), camera, false, stateInfo);
+							AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), (int) this.getLocX(), (int) this.getLocY(), camera, false, stateInfo);
 
 							// This is the lower portion of the sprite
-							im.getSubImage(0, 10 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], im.getWidth(), 14 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]).draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(),
-									this.getLocY() - camera.getLocationY() + 10 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);
+							im.getSubImage(0, 10, im.getWidth(), 14).draw(this.getLocX() - camera.getLocationX() ,
+									this.getLocY() - camera.getLocationY() + 10);
 							// This is the head of the sprite
-							im.getSubImage(0, 0, im.getWidth(), 10 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]).draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(),
-									this.getLocY() - camera.getLocationY() + 1 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);
+							im.getSubImage(0, 0, im.getWidth(), 10).draw(this.getLocX() - camera.getLocationX() ,
+									this.getLocY() - camera.getLocationY() + 1);
 						}
 						else
 						{
-							AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), (int) this.getLocX(), (int) this.getLocY(), cont.getDisplayPaddingX(), camera, false, stateInfo);
+							AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), (int) this.getLocX(), (int) this.getLocY(), camera, false, stateInfo);
 
-							graphics.drawImage(im, locX - camera.getLocationX() + cont.getDisplayPaddingX(),
+							graphics.drawImage(im, locX - camera.getLocationX() ,
 									locY - camera.getLocationY());
 						}
 						break;
 					case SE_HEAD_SHAKE:
-						AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), (int) this.getLocX(), (int) this.getLocY(), cont.getDisplayPaddingX(), camera, false, stateInfo);
+						AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), (int) this.getLocX(), (int) this.getLocY(), camera, false, stateInfo);
 
-						im.getSubImage(0, 10 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()],
-								im.getWidth(), 14 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]).draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(),
-								this.getLocY() - camera.getLocationY() + 10 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);
+						im.getSubImage(0, 10,
+								im.getWidth(), 14).draw(this.getLocX() - camera.getLocationX() ,
+								this.getLocY() - camera.getLocationY() + 10);
 
 						switch ((int) specialEffectCounter % 4)
 						{
 							case 0:
 							case 2:
-								im.getSubImage(0, 0, im.getWidth(), 10 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]).draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(),
+								im.getSubImage(0, 0, im.getWidth(), 10).draw(this.getLocX() - camera.getLocationX() ,
 									this.getLocY() - camera.getLocationY());
 								break;
 							case 1:
-								im.getSubImage(0, 0, im.getWidth(), 10 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]).draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX() + 1 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()],
+								im.getSubImage(0, 0, im.getWidth(), 10).draw(this.getLocX() - camera.getLocationX()  + 1,
 										this.getLocY() - camera.getLocationY());
 								break;
 							case 3:
-								im.getSubImage(0, 0, im.getWidth(), 10 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]).draw(this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX() - 1 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()],
+								im.getSubImage(0, 0, im.getWidth(), 10).draw(this.getLocX() - camera.getLocationX()  - 1,
 										this.getLocY() - camera.getLocationY());
 								break;
 						}
@@ -261,8 +269,8 @@ public class CinematicActor implements Comparable<CinematicActor>
 						if (trembleVal > 0)
 						{
 							im = spriteAnims.getImageAtIndex(as.imageIndex).getScaledCopy(
-									spriteAnims.getImageAtIndex(as.imageIndex).getWidth() - trembleVal * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()],
-									spriteAnims.getImageAtIndex(as.imageIndex).getHeight() - trembleVal * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);
+									spriteAnims.getImageAtIndex(as.imageIndex).getWidth() - trembleVal,
+									spriteAnims.getImageAtIndex(as.imageIndex).getHeight() - trembleVal);
 						}
 						else
 						{
@@ -270,18 +278,18 @@ public class CinematicActor implements Comparable<CinematicActor>
 							trembleVal = 0;
 						}
 
-						AnimatedSprite.drawShadow(im, (int) (this.getLocX() + (trembleVal * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]) / 2),
-								(int) this.getLocY() + trembleVal * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], cont.getDisplayPaddingX(), camera, false, stateInfo);
+						AnimatedSprite.drawShadow(im, (int) (this.getLocX() + (trembleVal) / 2),
+								(int) this.getLocY() + trembleVal, camera, false, stateInfo);
 
-						graphics.drawImage(im, locX - camera.getLocationX() + cont.getDisplayPaddingX() + (trembleVal * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]) / 2,
-								locY - camera.getLocationY() + trembleVal * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);
+						graphics.drawImage(im, locX - camera.getLocationX()  + (trembleVal) / 2,
+								locY - camera.getLocationY() + trembleVal);
 						break;
 				}
 			}
 		}
 	}
 
-	private void renderFaceDown(Graphics graphics, Camera camera, FCGameContainer cont)
+	private void renderFaceDown(Graphics graphics, Camera camera, PaddedGameContainer cont)
 	{
 		if (isHeroBacked)
 			renderOnDirection(spriteAnims.getCharacterAnimation("Up", isHeroPromoted).frames.get(0).sprites, graphics, camera, cont);
@@ -289,7 +297,7 @@ public class CinematicActor implements Comparable<CinematicActor>
 			renderOnDirection(spriteAnims.getAnimation("UnUp").frames.get(0).sprites, graphics, camera, cont);
 	}
 
-	private void renderOnBack(Graphics graphics, Camera camera, FCGameContainer cont)
+	private void renderOnBack(Graphics graphics, Camera camera, PaddedGameContainer cont)
 	{
 		if (isHeroBacked)
 			renderOnDirection(spriteAnims.getCharacterAnimation("Down", isHeroPromoted).frames.get(0).sprites, graphics, camera, cont);
@@ -297,7 +305,7 @@ public class CinematicActor implements Comparable<CinematicActor>
 			renderOnDirection(spriteAnims.getAnimation("UnDown").frames.get(0).sprites, graphics, camera, cont);
 	}
 
-	private void renderOnSideLeft(Graphics graphics, Camera camera, FCGameContainer cont)
+	private void renderOnSideLeft(Graphics graphics, Camera camera, PaddedGameContainer cont)
 	{
 		if (isHeroBacked)
 			renderOnDirection(spriteAnims.getCharacterAnimation("Left", isHeroPromoted).frames.get(0).sprites, graphics, camera, cont);
@@ -305,7 +313,7 @@ public class CinematicActor implements Comparable<CinematicActor>
 			renderOnDirection(spriteAnims.getAnimation("UnLeft").frames.get(0).sprites, graphics, camera, cont);
 	}
 
-	private void renderOnSideRight(Graphics graphics, Camera camera, FCGameContainer cont)
+	private void renderOnSideRight(Graphics graphics, Camera camera, PaddedGameContainer cont)
 	{
 		if (isHeroBacked)
 			renderOnDirection(spriteAnims.getCharacterAnimation("Right", isHeroPromoted).frames.get(0).sprites, graphics, camera, cont);
@@ -313,7 +321,7 @@ public class CinematicActor implements Comparable<CinematicActor>
 			renderOnDirection(spriteAnims.getAnimation("UnRight").frames.get(0).sprites, graphics, camera, cont);
 	}
 
-	private void renderOnDirection(ArrayList<AnimSprite> sprites, Graphics graphics, Camera camera, FCGameContainer cont)
+	private void renderOnDirection(ArrayList<AnimSprite> sprites, Graphics graphics, Camera camera, PaddedGameContainer cont)
 	{
 		for (AnimSprite as : sprites)
 		{
@@ -334,7 +342,7 @@ public class CinematicActor implements Comparable<CinematicActor>
 
 			}
 
-			graphics.drawImage(im, locX - camera.getLocationX() + cont.getDisplayPaddingX(),
+			graphics.drawImage(im, locX - camera.getLocationX(),
 					locY - camera.getLocationY());
 		}
 	}
@@ -367,7 +375,7 @@ public class CinematicActor implements Comparable<CinematicActor>
 			return false;
 	}
 
-	public void update(int delta, Cinematic cinematic)
+	public void update(int delta, Cinematic cinematic, StateInfo stateInfo)
 	{
 		animDelta += delta;
 		while (animDelta > animUpdate)
@@ -482,6 +490,22 @@ public class CinematicActor implements Comparable<CinematicActor>
 						// Set the directions directly so the facing does not change
 						this.locX = startLoopX;
 						this.locY = startLoopY;
+					}
+				}
+				// Check to see if we are moving along a path,
+				// if so then we may need to set the next move location
+				else if (movePath != null)
+				{
+					if (this.locX == this.moveToLocX &&
+							this.locY == this.moveToLocY)
+					{
+						movePathIndex++;
+						if (movePathIndex < movePath.getLength())
+						{
+							Step step = this.movePath.getStep(movePathIndex);
+							this.moveToLocX = step.getX();
+							this.moveToLocY = step.getY() - (this.sprite != null ? stateInfo.getCurrentMap().getTileEffectiveHeight() / 2 : 0);
+						}
 					}
 				}
 			// }
@@ -696,7 +720,7 @@ public class CinematicActor implements Comparable<CinematicActor>
 			else if (locY < this.locY)
 				setFacing(Direction.UP);
 		}
-		this.locY = locY;
+		this.locY = locY ;
 	}
 
 	public void setSpinning(int spinSpeed, int spinDuration)
@@ -772,13 +796,14 @@ public class CinematicActor implements Comparable<CinematicActor>
 		this.animUpdate = time / currentAnim.frames.size();
 	}
 
-	public void moveToLocation(int moveToLocX, int moveToLocY, float speed, boolean haltingMove, int direction, boolean moveHorFirst, boolean moveDiag)
+	public void moveToLocation(int moveToLocX, int moveToLocY, float speed, boolean haltingMove, 
+			int direction, boolean moveHorFirst, boolean moveDiag)
 	{
 		this.loopMoving = false;
-		this.moveToLocX = moveToLocX * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
-		this.moveToLocY = moveToLocY * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
+		this.moveToLocX = moveToLocX;
+		this.moveToLocY = moveToLocY;
 		this.haltingMove = haltingMove;
-		this.moveSpeed = speed * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
+		this.moveSpeed = speed;
 		this.animDelta = 0;
 		this.animUpdate = (long) jCinematicActor.getAnimSpeedForMoveSpeed(speed);
 		this.moveHorFirst = moveHorFirst;
@@ -791,6 +816,23 @@ public class CinematicActor implements Comparable<CinematicActor>
 		else
 			this.forceFacingMove = false;
 		moving = true;
+		movePath = null;
+	}
+	
+	public void moveAlongPath(Path path, float speed, boolean haltingMove, StateInfo stateInfo)
+	{
+		if (path.getLength() > 1)
+		{
+			this.moving = true;
+			this.haltingMove = haltingMove;
+			this.movePathIndex = 1;
+			this.movePath = path;
+			this.animUpdate = (long) jCinematicActor.getAnimSpeedForMoveSpeed(speed);
+			Step step = this.movePath.getStep(movePathIndex);
+			this.moveToLocX = step.getX();
+			this.moveToLocY = step.getY() - (this.sprite != null ? stateInfo.getCurrentMap().getTileEffectiveHeight() / 2 : 0);
+			this.moveSpeed = speed;
+		}
 	}
 
 	public void loopMoveToLocation(int moveToLocX, int moveToLocY, float speed)
@@ -799,6 +841,7 @@ public class CinematicActor implements Comparable<CinematicActor>
 		this.startLoopY = this.locY;
 		moveToLocation(moveToLocX, moveToLocY, speed, haltingMove, -1, false, false);
 		this.loopMoving = true;
+		this.movePath = null;
 	}
 
 	public void stopLoopMove()
@@ -824,6 +867,16 @@ public class CinematicActor implements Comparable<CinematicActor>
 
 	public void setVisible(boolean visible) {
 		this.visible = visible;
+	}
+	
+	public void spriteRemoved(StateInfo stateInfo)
+	{
+		if (sprite != null)
+		{
+			sprite.setLocX(locX);
+			sprite.setLocY(locY);
+			stateInfo.removeCombatSprite((CombatSprite) sprite);
+		}
 	}
 
 	public void resetSprite(StateInfo stateInfo)

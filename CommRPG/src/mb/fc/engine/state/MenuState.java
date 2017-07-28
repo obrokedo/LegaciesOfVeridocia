@@ -2,18 +2,6 @@ package mb.fc.engine.state;
 
 import java.io.File;
 
-import mb.fc.engine.CommRPG;
-import mb.fc.game.Camera;
-import mb.fc.game.dev.DevParams;
-import mb.fc.game.input.FCInput;
-import mb.fc.game.persist.ClientProfile;
-import mb.fc.game.persist.ClientProgress;
-import mb.fc.game.ui.FCGameContainer;
-import mb.fc.loading.FCLoadingRenderSystem;
-import mb.fc.loading.FCResourceManager;
-import mb.fc.loading.LoadableGameState;
-import mb.fc.loading.LoadingState;
-
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
@@ -24,23 +12,35 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.util.Log;
 
+import mb.fc.engine.CommRPG;
+import mb.fc.game.Camera;
+import mb.fc.game.dev.DevParams;
+import mb.fc.game.input.FCInput;
+import mb.fc.game.persist.ClientProfile;
+import mb.fc.game.persist.ClientProgress;
+import mb.fc.game.ui.PaddedGameContainer;
+import mb.fc.loading.FCLoadingRenderSystem;
+import mb.fc.loading.FCResourceManager;
+import mb.fc.loading.LoadableGameState;
+import mb.fc.loading.LoadingState;
+import mb.fc.utils.StringUtils;
+import mb.jython.GlobalPythonFactory;
+import mb.jython.JConfigurationValues;
+
 /**
  * State that handles the main menu
  *
  * @author Broked
- *
+ *9
  */
 public class MenuState extends LoadableGameState
 {
-	protected enum LoadTypeEnum
+	public enum LoadTypeEnum
 	{
 		TOWN,
 		CINEMATIC,
 		BATTLE
 	}
-
-	private static final String PROFILE_EXTENSION = ".profile";
-	private static final String PROGRESS_EXTENSION = ".progress";
 
 	protected StateBasedGame game;
 	protected GameContainer gc;
@@ -73,34 +73,34 @@ public class MenuState extends LoadableGameState
 	}
 
 	@Override
-	public void render(GameContainer container, StateBasedGame game, Graphics g)
-			throws SlickException
+	public void doRender(PaddedGameContainer container, StateBasedGame game, Graphics g)
 	{
+
 		if (initialized)
 		{
 			// g.setColor(new Color(171, 194, 208));
 			// g.fillRect(0, 0, gc.getWidth(), gc.getHeight());
 			// g.drawImage(bgImage, 0, 0);
-			bgImage.draw(((FCGameContainer) gc).getDisplayPaddingX(), 0, 1.25f);
+			bgImage.draw(0, 0, 1.25f);
 			if (stateIndex == 0)
 			{
 				if (menuIndex == 0)
 					g.setColor(Color.red);
 				else
 					g.setColor(Color.black);
-				g.drawString("Press Enter to Start Demo", (container.getWidth() - g.getFont().getWidth("Press Enter to Start Demo")) / 2, container.getHeight() * .005f + 90);
+				StringUtils.drawString("Press Enter to Start Demo", 120, 90, g);
 
 				if (menuIndex == 1)
 					g.setColor(Color.red);
 				else
 					g.setColor(Color.black);
-				g.drawString("Credits", (container.getWidth() - g.getFont().getWidth("Credits")) / 2, container.getHeight() * .005f + 120);
+				StringUtils.drawString("Credits", 145, 110, g);
 
 				if (menuIndex == 2)
 					g.setColor(Color.red);
 				else
 					g.setColor(Color.black);
-				g.drawString("Exit", (container.getWidth() - g.getFont().getWidth("Exit")) / 2, container.getHeight() * .005f + 150);
+				StringUtils.drawString("Exit", 150, 130, g);
 			}
 			else if (stateIndex == 1)
 			{
@@ -124,23 +124,18 @@ public class MenuState extends LoadableGameState
 		}
 	}
 
-	public void start(GameContainer gc, LoadTypeEnum loadType, String map, String text, String entrance)
+	public void start(LoadTypeEnum loadType, String map, String mapData, String entrance)
 	{
-		persistentStateInfo.setEntranceLocation(entrance);
-
 		switch (loadType)
 		{
 			case CINEMATIC:
-				((CommRPG) game).setLoadingInfo(text, map,
-					(LoadableGameState) game.getState(CommRPG.STATE_GAME_CINEMATIC));
+				persistentStateInfo.loadCinematic(mapData, map, 0);
 				break;
 			case TOWN:
-				((CommRPG) game).setLoadingInfo(text, map,
-						(LoadableGameState) game.getState(CommRPG.STATE_GAME_TOWN));
+				persistentStateInfo.loadMap(mapData, map, entrance);
 				break;
 			case BATTLE:
-				((CommRPG) game).setLoadingInfo(text, map,
-						(LoadableGameState) game.getState(CommRPG.STATE_GAME_BATTLE));
+				persistentStateInfo.loadBattle(mapData, map, entrance, 0);
 			break;
 		}
 
@@ -151,7 +146,7 @@ public class MenuState extends LoadableGameState
 	}
 
 	@Override
-	public void update(GameContainer container, StateBasedGame game, int delta)
+	public void doUpdate(PaddedGameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
 		if (initialized)
 		{
@@ -173,8 +168,10 @@ public class MenuState extends LoadableGameState
 
 			if (input.isKeyDown(Input.KEY_ENTER))
 			{
+				JConfigurationValues jcv = GlobalPythonFactory.createConfigurationValues();
 				if (menuIndex == 0 && stateIndex == 0)
-					start(container, LoadTypeEnum.TOWN, "eriumcastle", "eriumcastle", null);
+					start(LoadTypeEnum.valueOf(jcv.getStartingState()), 
+							jcv.getStartingMap(), jcv.getStartingMapData(), jcv.getStartingLocation());
 				else if (menuIndex == 0 && stateIndex == 1)
 				{
 					stateIndex = 0;
@@ -212,7 +209,7 @@ public class MenuState extends LoadableGameState
 	public void stateLoaded(FCResourceManager resourceManager) {
 		gameSetup(game, gc);
 		font = resourceManager.getFontByName("menufont");
-		bgImage = resourceManager.getImages().get("mainbg");
+		bgImage = resourceManager.getImage("mainbg");
 		initialized = true;
 
 	}
@@ -226,18 +223,17 @@ public class MenuState extends LoadableGameState
 	{
 		ClientProgress clientProgress = null;
 		ClientProfile clientProfile = null;
-		String map = "";
 
 		File file = new File(".");
 
 
 		for (String s : file.list())
 		{
-			if (s.endsWith(PROFILE_EXTENSION))
+			if (s.endsWith(ClientProfile.PROFILE_EXTENSION))
 			{
 				clientProfile = ClientProfile.deserializeFromFile(s);
 			}
-			else if (s.endsWith(PROGRESS_EXTENSION))
+			else if (s.endsWith(ClientProgress.PROGRESS_EXTENSION))
 			{
 				clientProgress =  ClientProgress.deserializeFromFile(s);
 			}
@@ -264,17 +260,16 @@ public class MenuState extends LoadableGameState
 
 		if (clientProgress == null)
 		{
-			Log.debug("CREATE PROGRESS");
-			clientProgress = new ClientProgress("Quest");
-			clientProgress.serializeToFile(map, "north");
+			Log.debug("Create Progress");
+			clientProgress = new ClientProgress("Test");
+			clientProgress.serializeToFile();
 		}
 
 		try {
 			persistentStateInfo =
 				new PersistentStateInfo(clientProfile, clientProgress,
 						(CommRPG) game,
-						new Camera(gc.getWidth() - ((FCGameContainer) gc).getDisplayPaddingX() * 2,
-						gc.getHeight()), gc, gc.getGraphics());
+						new Camera(CommRPG.GAME_SCREEN_SIZE.width, CommRPG.GAME_SCREEN_SIZE.height), gc);
 		}
 		catch (Throwable t)
 		{

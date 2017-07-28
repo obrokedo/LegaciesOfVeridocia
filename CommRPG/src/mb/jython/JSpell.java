@@ -2,12 +2,12 @@ package mb.jython;
 
 import java.io.Serializable;
 
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Image;
+
 import mb.fc.game.Range;
 import mb.fc.game.battle.spell.KnownSpell;
 import mb.fc.game.sprite.CombatSprite;
-
-import org.newdawn.slick.Color;
-import org.newdawn.slick.Image;
 
 /**
  * Interface to call the Spells python methods that will determine
@@ -240,6 +240,16 @@ public abstract class JSpell implements Serializable
 	 * @see /scripts/Spells.py
 	 */
 	public abstract Color getSpellOverlayColor(int spellLevel);
+	
+	public abstract String getSpellAnimationFile(int spellLevel);
+	
+	public abstract String getSpellRainAnimationFile(int spellLevel);
+	
+	public abstract String getSpellRainAnimationName(int spellLevel);
+	
+	public abstract int getSpellRainFrequency(int spellLevel);
+	
+	public abstract JParticleEmitter getEmitter(int spellLevel);
 
 	/*****************************************************************************/
 	/* Protected methods used by the Python scripts to set values for this spell */

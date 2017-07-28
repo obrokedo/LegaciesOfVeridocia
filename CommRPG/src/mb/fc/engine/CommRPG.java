@@ -1,22 +1,9 @@
 package mb.fc.engine;
 
+import java.awt.Dimension;
 import java.util.Random;
 
 import javax.swing.JOptionPane;
-
-import mb.fc.engine.log.FileLogger;
-import mb.fc.engine.state.BattleState;
-import mb.fc.engine.state.CinematicState;
-import mb.fc.engine.state.DevelAnimationViewState;
-import mb.fc.engine.state.DevelMenuState;
-import mb.fc.engine.state.LOVAttackCinematicState;
-import mb.fc.engine.state.MenuState;
-import mb.fc.engine.state.TownState;
-import mb.fc.game.ui.FCGameContainer;
-import mb.fc.loading.FCLoadingRenderSystem;
-import mb.fc.loading.FCResourceManager;
-import mb.fc.loading.LoadableGameState;
-import mb.fc.loading.LoadingState;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
@@ -25,6 +12,23 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.util.Log;
+
+import mb.fc.engine.config.DefaultEngineConfiguration;
+import mb.fc.engine.config.EngineConfigurator;
+import mb.fc.engine.log.FileLogger;
+import mb.fc.engine.state.BattleState;
+import mb.fc.engine.state.CinematicState;
+import mb.fc.engine.state.LOVAttackCinematicState;
+import mb.fc.engine.state.MenuState;
+import mb.fc.engine.state.TownState;
+import mb.fc.engine.state.devel.DevelAnimationViewState;
+import mb.fc.engine.state.devel.DevelMenuState;
+import mb.fc.game.ui.PaddedGameContainer;
+import mb.fc.loading.FCLoadingRenderSystem;
+import mb.fc.loading.FCResourceManager;
+import mb.fc.loading.LoadableGameState;
+import mb.fc.loading.LoadingState;
+import mb.fc.loading.TextParser;
 
 /**
  * Entry point to the CommRPG game
@@ -63,7 +67,9 @@ public class CommRPG extends StateBasedGame   {
 	 */
 	public static final int STATE_GAME_TOWN = 10;
 
-
+	public static final Dimension GAME_SCREEN_SIZE = new Dimension(320, 240);
+	public static int GAME_SCREEN_SCALE = 3;
+	public static int GAME_SCREEN_PADDING = 0;
 
 	/**
 	 * A global random number generator
@@ -74,19 +80,25 @@ public class CommRPG extends StateBasedGame   {
 
 	public static String IP;
 
-	public static final int[] GLOBAL_WORLD_SCALE = new int[] {3, 2};
-
 	private static int fullScreenWidth, fullScreenHeight;
 
-	public static final String VERSION = "DEV 1.31";
+	public static final String VERSION = "DEV 1.33 11-3-16";
 
 	public static final String GAME_TITLE = "Legacies of Veridocia";
 
 	public static boolean TEST_MODE_ENABLED = false; //true;
 
 	public static boolean DEV_MODE_ENABLED = true;
+	
+	public static boolean BATTLE_MODE_OPTIMIZE = false;
+	
+	public static boolean MUTE_MUSIC = false;
 
 	private static DEBUG_HOLDER DH;
+	
+	public static TextParser TEXT_PARSER = new TextParser();
+	
+	protected EngineConfigurator engineConfiguratior = new DefaultEngineConfiguration();
 
 	private class DEBUG_HOLDER
 	{
@@ -117,7 +129,8 @@ public class CommRPG extends StateBasedGame   {
 		try
 		{
 			CommRPG fc = new CommRPG();
-			FCGameContainer container = new FCGameContainer(fc);
+			Log.debug("Starting engine version " + VERSION) ;
+			PaddedGameContainer container = new PaddedGameContainer(fc);
 
 			// TODO We want to keep the same screen resolution ratio but then just expand the vertical black bars. Potentially put menus in the bars
 			fullScreenWidth = 0;
@@ -141,9 +154,9 @@ public class CommRPG extends StateBasedGame   {
 				}
 
 				Log.debug("Fullscreen dimensions: " + fullScreenWidth + " " + fullScreenHeight);
-
-				// GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] = fullScreenHeight / 240;
-				container.setDisplayPaddingX((fullScreenWidth - (GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 320)) / 2);
+				GAME_SCREEN_SCALE = fullScreenHeight / 240;
+				container.setDisplayPaddingX((fullScreenWidth - GAME_SCREEN_SIZE.width * GAME_SCREEN_SCALE) / 2);
+				GAME_SCREEN_PADDING = container.getDisplayPaddingX();
 
 
 			} catch (LWJGLException e) {
@@ -158,27 +171,27 @@ public class CommRPG extends StateBasedGame   {
 				for (DisplayMode dm : Display.getAvailableDisplayModes())
 					Log.debug("Supported display modes " + dm);
 				container.setDisplayPaddingX(0);
-				Log.debug("Game scale is set to " + GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);
+				
 				try
 				{
-					container.setDisplayMode(320 * GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], 240 * GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], false);
+					container.setDisplayMode(320 * 3, 240 * 3, false);
+					GAME_SCREEN_SCALE = 3;
+					container.setDisplayPaddingX(0);
+					GAME_SCREEN_PADDING = 0;
 				}
 				catch (SlickException se)
 				{
-					GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] = 2;
-					container.setDisplayMode(320 * GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], 240 * GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], false);
+					container.setDisplayMode(320, 240, false);
 				}
 			}
 			else
 				container.setDisplayMode(fullScreenWidth, fullScreenHeight, true);
-			// container.setDisplayPaddingX(100);
-			// container.setDisplayMode(200 + 320 * GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], 240 * GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], false);
 
 
 			container.setShowFPS(true);
 			container.setVSync(true);
 			container.setAlwaysRender(true);
-			// container.setTargetFrameRate(144);
+			container.setTargetFrameRate(60);
 			container.start();
 		}
 		catch (Throwable ex)
@@ -202,7 +215,6 @@ public class CommRPG extends StateBasedGame   {
 	@Override
 	public void initStatesList(GameContainer gameContainer) throws SlickException
 	{
-		LoadingState.loading = true;
 		loadingState = new LoadingState(STATE_GAME_LOADING);
 		this.addState(new MenuState());
 		this.addState(new LOVAttackCinematicState());
@@ -273,10 +285,13 @@ public class CommRPG extends StateBasedGame   {
 	public void setLoadingInfo(String text, String map, LoadableGameState nextState,
 			FCResourceManager fcResourceManager)
 	{
-		loadingState.setLoadingInfo(text, map, true, false,
+		if (fcResourceManager != null)
+			loadingState.setLoadingInfo(text, map, true, false,
 				fcResourceManager,
 					nextState,
 						new FCLoadingRenderSystem(this.getContainer()));
+		else
+			setLoadingInfo(text, map, nextState);
 	}
 
 	/**
@@ -300,18 +315,34 @@ public class CommRPG extends StateBasedGame   {
 	{
 		if (this.getContainer().isFullscreen())
 		{
-			 ((FCGameContainer)this.getContainer()).setDisplayMode(320 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()],
-					240 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], false);
-			 ((FCGameContainer)this.getContainer()).setDisplayPaddingX(0);
+			 ((PaddedGameContainer)this.getContainer()).setDisplayMode(320 * 3,
+					240 * 3, false);
+			 ((PaddedGameContainer)this.getContainer()).setDisplayPaddingX(0);
 			 this.getContainer().setMouseGrabbed(false);
+			 GAME_SCREEN_PADDING = 0;
+			 GAME_SCREEN_SCALE = 3;
 		}
 		else
 		{
 			if (fullScreenWidth != 0)
 			{
-				 ((FCGameContainer)this.getContainer()).setDisplayMode(fullScreenWidth, fullScreenHeight, true);
-				 ((FCGameContainer)this.getContainer()).setDisplayPaddingX((fullScreenWidth - (GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 320)) / 2);
+				
+				GAME_SCREEN_SCALE = fullScreenHeight / 240;
+				((PaddedGameContainer) this.getContainer()).setDisplayPaddingX((fullScreenWidth - GAME_SCREEN_SIZE.width * GAME_SCREEN_SCALE) / 2);
+				GAME_SCREEN_PADDING = ((PaddedGameContainer) this.getContainer()).getDisplayPaddingX();
+				 ((PaddedGameContainer)this.getContainer()).setDisplayMode(fullScreenWidth, fullScreenHeight, true);
+				 ((PaddedGameContainer)this.getContainer()).setDisplayPaddingX((fullScreenWidth - 320) / 2);
 			}
 		}
+	}
+	
+	public static int getTestMultiplier()
+	{
+		return 15;
+	}
+	
+	public void setEngineConfiguration(EngineConfigurator engineConfiguration)
+	{
+		this.engineConfiguratior = engineConfiguration;
 	}
 }

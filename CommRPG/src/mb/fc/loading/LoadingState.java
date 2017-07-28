@@ -20,7 +20,6 @@ import org.newdawn.slick.util.Log;
 
 public class LoadingState extends BasicGameState
 {
-	public static boolean loading = false;
 	private String mapName;
 	private String textName;
 	private LoadableGameState nextState;
@@ -87,7 +86,10 @@ public class LoadingState extends BasicGameState
 
 					// Regardless of whether we are loading other resources, add the map and text files
 					// that were specified to be loaded
-					allLines.add(0, "map,map,/map/" + mapName + ".tmx");
+					if (!mapName.endsWith(".tmx"))
+						allLines.add(0, "map,map,/map/" + mapName + ".tmx");
+					else
+						allLines.add(0, "map,map,/map/" + mapName);
 					allLines.add(0, "text,/mapdata/" + textName);
 
 				}
@@ -150,7 +152,6 @@ public class LoadingState extends BasicGameState
 			// then map data will be updated in the current resource manager
 			if (loadResources)
 				nextState.stateLoaded(resourceManager);
-			LoadingState.loading = false;
 			nextState.initAfterLoad();
 			game.enterState(nextState.getID(), new EmptyTransition(), new FadeInTransition(Color.black, 250));
 		}
@@ -161,6 +162,7 @@ public class LoadingState extends BasicGameState
 			FCResourceManager resourceManager, LoadableGameState nextState,
 				FCLoadingRenderSystem loadingRenderer)
 	{
+		this.errorMessage = null;
 		this.textName = textName;
 		this.mapName = mapName;
 		this.loadingMap = loadMap;

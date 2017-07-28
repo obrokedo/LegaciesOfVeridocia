@@ -30,7 +30,7 @@ public class ClericAI extends CasterAI
 
 	// TODO Lots to do here, they aren't really smart enough to move and target them self, kind of need it's own AI for that?
 	// Somehow there is never a time when aura can get 2 people in it
-	private void handleHealingSpell(JSpell spell, KnownSpell knownSpell, int i, int tileWidth, int tileHeight, CombatSprite currentSprite,
+	private void handleHealingSpell(JSpell spell, KnownSpell knownSpell, int spellLevel, int tileWidth, int tileHeight, CombatSprite currentSprite,
 			CombatSprite targetSprite, StateInfo stateInfo, int baseConfidence, int cost, Point attackPoint)
 	{
 		boolean healSelf = false;
@@ -39,7 +39,7 @@ public class ClericAI extends CasterAI
 
 
 		int currentConfidence = 0;
-		int area = spell.getArea()[i - 1];
+		int area = spell.getArea()[spellLevel - 1];
 		ArrayList<CombatSprite> targetsInArea;
 		if (area > 1 || area == AttackableSpace.AREA_ALL_INDICATOR)
 		{
@@ -51,7 +51,7 @@ public class ClericAI extends CasterAI
 			if (area != AttackableSpace.AREA_ALL_INDICATOR) {
 				targetsInArea = getNearbySprites(stateInfo, (currentSprite.isHero() ? !spell.isTargetsEnemy() : spell.isTargetsEnemy()),
 						tileWidth, tileHeight,
-						castPoint, spell.getArea()[i - 1] - 1, currentSprite);
+						castPoint, spell.getArea()[spellLevel - 1] - 1, currentSprite);
 			// If this is area all then just add all of the correct targets
 			} else {
 				targetsInArea = new ArrayList<>();
@@ -70,9 +70,9 @@ public class ClericAI extends CasterAI
 			// Check to see if the point that the healer would move to would be in the radius of the spell. Make sure
 			// we don't add the hero multiple times though. If this is a spell that hits everyone
 			// then don't bother checking
-			if (targetSprite != currentSprite && spell.getArea()[i - 1] != AttackableSpace.AREA_ALL_INDICATOR)
+			if (targetSprite != currentSprite && spell.getArea()[spellLevel - 1] != AttackableSpace.AREA_ALL_INDICATOR)
 			{
-				if (Math.abs(castPoint.x - attackPoint.x) + Math.abs(castPoint.y - attackPoint.y) <= spell.getArea()[i - 1] - 1)
+				if (Math.abs(castPoint.x - attackPoint.x) + Math.abs(castPoint.y - attackPoint.y) <= spell.getArea()[spellLevel - 1] - 1)
 				{
 					targetsInArea.add(currentSprite);
 					healedSelf = true;
@@ -90,10 +90,11 @@ public class ClericAI extends CasterAI
 			// the healing would provide or are at less then 50% health
 			for (CombatSprite ts : targetsInArea)
 			{
-				int effectiveDamage = spell.getEffectiveDamage(currentSprite, ts, i - 1);
+				int effectiveDamage = spell.getEffectiveDamage(currentSprite, ts, spellLevel - 1);
+				int maxDamage = spell.getDamage()[spellLevel - 1];
 				// Check to see if the character is at less then 50% health or if the spell would use at least 75% of it's healing power
 				if (effectiveDamage != 0 && (ts.getCurrentHP() * 1.0 / ts.getMaxHP() < .5
-						|| (ts.getMaxHP() - ts.getCurrentHP()) / (1.0 * effectiveDamage) > .75))
+						|| (ts.getMaxHP() - ts.getCurrentHP()) / (1.0 * maxDamage) > .75))
 				{
 					currentConfidence += Math.min(50, (int)(50.0 *
 							// Get the percent of the max health that the spell can heal for and the percent of damage that
@@ -124,10 +125,13 @@ public class ClericAI extends CasterAI
 		}
 		else
 		{
-			int effectiveDamage = spell.getEffectiveDamage(currentSprite, targetSprite, i - 1);
+			int effectiveDamage = spell.getEffectiveDamage(currentSprite, targetSprite, spellLevel - 1);
+			int maxDamage = spell.getDamage()[spellLevel - 1];
+			Log.debug("Check healing: Effective Healing: " + effectiveDamage + " Percent left " + (targetSprite.getCurrentHP() * 1.0 / targetSprite.getMaxHP()) +
+					" Amount of heal power: " + (targetSprite.getMaxHP() - targetSprite.getCurrentHP()) / (1.0 * maxDamage));
 			if (targetSprite.getCurrentHP() * 1.0 / targetSprite.getMaxHP() < .5 ||
 					(targetSprite.getMaxHP() - targetSprite.getCurrentHP()) /
-						(1.0 * effectiveDamage) > .75)
+						(1.0 * maxDamage) > .75)
 			{
 				currentConfidence += Math.min(50, (int)(50.0 *
 					// Get the percent of the max health that the spell can heal for and the percent of damage that
@@ -152,18 +156,18 @@ public class ClericAI extends CasterAI
 		currentConfidence -= cost;
 
 		Log.debug(" Cleric Spell confidence " + currentConfidence + " name " +
-		targetSprite.getName() + " " + targetSprite.getUniqueEnemyId() + " spell " + spell.getName() + " level " + i);
+		targetSprite.getName() + " " + targetSprite.getUniqueEnemyId() + " spell " + spell.getName() + " level " + spellLevel);
 
 		// Check to see if this is the most confident
-		mostConfident = checkForMaxConfidence(mostConfident, currentConfidence, spell, knownSpell, i, targetsInArea, false, true);
+		mostConfident = checkForMaxConfidence(mostConfident, currentConfidence, spell, knownSpell, spellLevel, targetsInArea, false, true);
 	}
 
-	private void handleDamagingSpell(JSpell spell, KnownSpell knownSpell, int i, int tileWidth, int tileHeight, CombatSprite currentSprite,
+	private void handleDamagingSpell(JSpell spell, KnownSpell knownSpell, int spellLevel, int tileWidth, int tileHeight, CombatSprite currentSprite,
 			CombatSprite targetSprite, StateInfo stateInfo, int baseConfidence, int cost, int distance)
 	{
 		boolean willKill = false;
 		int currentConfidence = 0;
-		int area = spell.getArea()[i - 1];
+		int area = spell.getArea()[spellLevel - 1];
 		ArrayList<CombatSprite> targetsInArea;
 		if (area > 1 || area == AttackableSpace.AREA_ALL_INDICATOR)
 		{
@@ -174,7 +178,7 @@ public class ClericAI extends CasterAI
 			if (area != AttackableSpace.AREA_ALL_INDICATOR) {
 				targetsInArea = getNearbySprites(stateInfo, (currentSprite.isHero() ? !spell.isTargetsEnemy() : spell.isTargetsEnemy()),
 						tileWidth, tileHeight,
-						new Point(targetSprite.getTileX(), targetSprite.getTileY()), spell.getArea()[i - 1] - 1,
+						new Point(targetSprite.getTileX(), targetSprite.getTileY()), spell.getArea()[spellLevel - 1] - 1,
 							currentSprite);
 			// If this is area all then just add all of the correct targets
 			} else {
@@ -193,21 +197,21 @@ public class ClericAI extends CasterAI
 
 			for (CombatSprite ts : targetsInArea)
 			{
-				if (ts.getCurrentHP() + spell.getEffectiveDamage(currentSprite, ts, i - 1) <= 0)
+				if (ts.getCurrentHP() + spell.getEffectiveDamage(currentSprite, ts, spellLevel - 1) <= 0)
 				{
 					killed++;
 					willKill = true;
 				}
 				else
 				{
-					currentConfidence += Math.min(30, (int)(-30.0 * spell.getEffectiveDamage(currentSprite, ts, i - 1) / ts.getMaxHP()));
+					currentConfidence += Math.min(30, (int)(-30.0 * spell.getEffectiveDamage(currentSprite, ts, spellLevel - 1) / ts.getMaxHP()));
 				}
 
 			}
 
 			if (area != AttackableSpace.AREA_ALL_INDICATOR)
 				currentConfidence /= area;
-			else 
+			else
 				currentConfidence /= targetsInArea.size();
 
 			// Add a confidence equal to the amount killed + 50
@@ -216,13 +220,13 @@ public class ClericAI extends CasterAI
 		else
 		{
 
-			if (targetSprite.getCurrentHP() + spell.getEffectiveDamage(currentSprite, targetSprite, i - 1) <= 0)
+			if (targetSprite.getCurrentHP() + spell.getEffectiveDamage(currentSprite, targetSprite, spellLevel - 1) <= 0)
 			{
 				currentConfidence += 50;
 				willKill = true;
 			}
 			else
-				currentConfidence += Math.min(30, (int)(-30.0 * spell.getEffectiveDamage(currentSprite, targetSprite, i - 1) / targetSprite.getMaxHP()));
+				currentConfidence += Math.min(30, (int)(-30.0 * spell.getEffectiveDamage(currentSprite, targetSprite, spellLevel - 1) / targetSprite.getMaxHP()));
 			targetsInArea = null;
 		}
 
@@ -233,10 +237,10 @@ public class ClericAI extends CasterAI
 
 		currentConfidence += distance - 1;
 
-		Log.debug("Cleric Spell confidence " + currentConfidence + " name " + targetSprite.getName() + " " + targetSprite.getUniqueEnemyId() + " spell " + spell.getName() + " level " + i);
+		Log.debug("Cleric Spell confidence " + currentConfidence + " name " + targetSprite.getName() + " " + targetSprite.getUniqueEnemyId() + " spell " + spell.getName() + " level " + spellLevel);
 
 		// Check to see if this is the most confident
-		mostConfident = checkForMaxConfidence(mostConfident, currentConfidence, spell, knownSpell, i, targetsInArea, willKill, false);
+		mostConfident = checkForMaxConfidence(mostConfident, currentConfidence, spell, knownSpell, spellLevel, targetsInArea, willKill, false);
 	}
 
 	@Override

@@ -2,10 +2,11 @@ package mb.fc.game.menu;
 
 import java.util.ArrayList;
 
+import mb.fc.engine.CommRPG;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.input.FCInput;
-import mb.fc.game.ui.FCGameContainer;
+import mb.fc.game.ui.PaddedGameContainer;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -19,7 +20,7 @@ public class SystemMenu extends Menu
 
 	public SystemMenu(GameContainer gc) {
 		super(PanelType.PANEL_SYSTEM);
-		x = (gc.getWidth() - 250) / 2;
+		x = (CommRPG.GAME_SCREEN_SIZE.width - 250) / 2;
 		systemMenuMouseHandler = new ArrayList<SystemMenuMouseHandler>();
 		systemMenuMouseHandler.add(new SystemMenuMouseHandler(new Rectangle(x + 20, y + 20, 210, 50), x + 75, "Connections", 0));
 		systemMenuMouseHandler.add(new SystemMenuMouseHandler(new Rectangle(x + 20, y + 90, 210, 50), x + 40, "Return to Main Menu", 1));
@@ -27,7 +28,7 @@ public class SystemMenu extends Menu
 	}
 
 	@Override
-	public void render(FCGameContainer gc, Graphics graphics) {
+	public void render(PaddedGameContainer gc, Graphics graphics) {
 
 		Panel.drawPanelBox(x, y, 250, 230, graphics);
 		for (SystemMenuMouseHandler s : systemMenuMouseHandler)

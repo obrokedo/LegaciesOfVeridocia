@@ -1,5 +1,7 @@
 package mb.fc.renderer;
 
+import org.newdawn.slick.Graphics;
+
 import mb.fc.engine.message.Message;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.manager.Manager;
@@ -11,12 +13,12 @@ public class PanelRenderer extends Manager
 
 	}
 
-	public void render()
+	public void render(Graphics graphics)
 	{
 		// displayMenubar();
 		if (stateInfo.arePanelsDisplayed())
 			for (Panel m : stateInfo.getPanels())
-				m.render(stateInfo.getGc(), stateInfo.getGraphics());
+				m.render(stateInfo.getFCGameContainer(), graphics);
 	}
 
 	@Override

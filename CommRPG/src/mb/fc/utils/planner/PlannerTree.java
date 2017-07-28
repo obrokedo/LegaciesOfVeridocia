@@ -173,17 +173,33 @@ public class PlannerTree implements TreeModelListener
 		}
 
 	}
+	
+	public void updateTreeLabel(int index, String newVal)
+	{
+		DefaultMutableTreeNode dmtn = (DefaultMutableTreeNode) attributeTreeModel.getChild(attributeTreeModel.getRoot(), index);
+		dmtn.setUserObject(newVal);
+		attributeTreeModel.nodeChanged(dmtn);
+	}
+	
+	public String getTreeLabel(int index) {
+		return (String) ((DefaultMutableTreeNode) attributeTreeModel.getChild(attributeTreeModel.getRoot(), index)).getUserObject();
+	}
 
 	public void updateTreeValues(String rootName, ArrayList<PlannerContainer> listPC)
 	{
+		System.out.println("Update tree values. Root name: " + rootName) ;
+		attributeTreeModel.removeTreeModelListener(this);
 		containerDef = parentTab.containersByName.get(parentTab.containers[0]);
 
+		TreePath currentlySelected = attributeTree.getSelectionPath();
+		DefaultMutableTreeNode item = null;
+		
 		int itemIndex = 0;
 		while (rootNode.getChildCount() > 0)
 			attributeTreeModel.removeNodeFromParent((MutableTreeNode) rootNode.getChildAt(0));
 		for (PlannerContainer pc : listPC)
 		{
-			DefaultMutableTreeNode item = new DefaultMutableTreeNode(pc.getDefLine().getValues().get(0));
+			item = new DefaultMutableTreeNode(pc.getDefLine().getValues().get(0));
 			attributeTreeModel.insertNodeInto(item, (MutableTreeNode) attributeTreeModel.getRoot(), itemIndex);
 			int attIndex = 0;
 			for (PlannerLine pl : pc.getLines())
@@ -196,6 +212,8 @@ public class PlannerTree implements TreeModelListener
 
 		this.plannerContainers = listPC;
 		attributeTree.setSelectionPath(new TreePath(attributeTree.getModel().getRoot()));
+		// attributeTree.setSelectionPath(currentlySelected);
+		attributeTreeModel.addTreeModelListener(this);
 	}
 
 	public void refreshItem(PlannerContainer pc, int containerIndex)
@@ -274,6 +292,7 @@ public class PlannerTree implements TreeModelListener
 
 	public void addItem(String name, int itemIndex)
 	{
+		System.out.println("ADD ITEM " + name + " " + itemIndex);
 		DefaultMutableTreeNode dmtn = new DefaultMutableTreeNode(name);
 		attributeTreeModel.insertNodeInto(dmtn,
 				rootNode, itemIndex);
@@ -282,6 +301,7 @@ public class PlannerTree implements TreeModelListener
 
 	public void removeItem(int itemIndex)
 	{
+		System.out.println("REMOVE ITEM " + itemIndex);
 		attributeTreeModel.removeNodeFromParent((MutableTreeNode) attributeTreeModel.getChild(rootNode, itemIndex));
 	}
 

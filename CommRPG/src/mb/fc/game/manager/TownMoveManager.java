@@ -40,7 +40,7 @@ public class TownMoveManager extends Manager
 
 			if(ms.isFirstMove() && ms.getAnimatedSprite().getSpriteType() == Sprite.TYPE_COMBAT)
 			{
-				stateInfo.checkTriggersMovemenet((int) ms.getEndX(), (int) ms.getEndY(), true);
+				stateInfo.checkTriggersMovement((int) ms.getEndX(), (int) ms.getEndY(), true);
 			}
 
 			if (ms.update(delta))
@@ -50,7 +50,7 @@ public class TownMoveManager extends Manager
 				i--;
 
 				if (ms.getAnimatedSprite().getSpriteType() == Sprite.TYPE_COMBAT)
-					stateInfo.checkTriggersMovemenet((int) ms.getAnimatedSprite().getLocX(), (int) ms.getAnimatedSprite().getLocY(), false);
+					stateInfo.checkTriggersMovement((int) ms.getAnimatedSprite().getLocX(), (int) ms.getAnimatedSprite().getLocY(), false);
 				if (stateInfo.getCurrentSprite() == ms.getAnimatedSprite()) {
 					moving = false;
 					currentSpriteJustFinishedMoving = true;

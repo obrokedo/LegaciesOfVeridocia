@@ -1,6 +1,11 @@
 package mb.fc.game.menu.shop;
 
-import mb.fc.engine.CommRPG;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Font;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
+import org.newdawn.slick.geom.Polygon;
+
 import mb.fc.engine.message.ShopMessage;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.input.FCInput;
@@ -13,15 +18,9 @@ import mb.fc.game.menu.SpeechMenu;
 import mb.fc.game.menu.YesNoMenu;
 import mb.fc.game.resource.ItemResource;
 import mb.fc.game.sprite.CombatSprite;
-import mb.fc.game.ui.FCGameContainer;
+import mb.fc.game.ui.PaddedGameContainer;
 import mb.fc.game.ui.RectUI;
 import mb.fc.game.ui.TextUI;
-
-import org.newdawn.slick.Color;
-import org.newdawn.slick.Font;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
-import org.newdawn.slick.geom.Polygon;
 
 public class ShopMenuTabled extends Menu implements MenuListener
 {
@@ -72,17 +71,17 @@ public class ShopMenuTabled extends Menu implements MenuListener
 		itemName = selectedItem.getName().split(" ");
 
 		rightArrow = new Polygon(new float[] {
-				285 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], 13 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()],
-				289 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], 17 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()],
-				285 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], 21 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]});
+				285, 13,
+				289, 17,
+				285, 21});
 
 
 		leftArrow = new Polygon(new float[] {
-				35 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], 13 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()],
-				31 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], 17 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()],
-				35 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], 21 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]});
+				35, 13,
+				31, 17,
+				35, 21});
 
-		itemPanel = new RectUI(27, 2, -54, 32, 0, 0, stateInfo.getGc().getWidth(), 0);
+		itemPanel = new RectUI(27, 2, -54, 32, 0, 0, stateInfo.getFCGameContainer().getPaddedWidth(), 0);
 		itemNamePanel = new RectUI(27, 34, 68, 37);
 		selectedItemRect = new RectUI(36,  6,  24,  24);
 		updateSelectedItem();
@@ -149,7 +148,7 @@ public class ShopMenuTabled extends Menu implements MenuListener
 	}
 
 	@Override
-	public void render(FCGameContainer gc, Graphics graphics) {
+	public void render(PaddedGameContainer gc, Graphics graphics) {
 		if (currentStep != ShopStepEnum.IS_COST_OK && currentStep != ShopStepEnum.SELECT_ITEM)
 			return;
 
@@ -162,14 +161,14 @@ public class ShopMenuTabled extends Menu implements MenuListener
 		// Draw items and price
 		for (int i = (selectedItemIndex < 9 ? 0 : selectedItemIndex - 8); i < Math.min(items.length,  (selectedItemIndex < 9 ? 9 : selectedItemIndex + 1)); i++)
 		{
-			items[i].getImage().draw(36 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] +
-				(28 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * (i - (selectedItemIndex < 9 ? 0 : selectedItemIndex - 8))),
-					6 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);
+			items[i].getImage().draw(36 +
+				(28 * (i - (selectedItemIndex < 9 ? 0 : selectedItemIndex - 8))),
+					6);
 
-			graphics.rotate(gc.getWidth() / 2, gc.getHeight() / 2, 90);
-			graphics.drawString((int) (items[i].getCost() * buyPercent) + "", 49 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], 216 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] -
-					(28 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * (i - (selectedItemIndex < 9 ? 0 : selectedItemIndex - 8))));
-			graphics.rotate(gc.getWidth() / 2, gc.getHeight() / 2, -90);
+			graphics.rotate(gc.getPaddedWidth() / 2, gc.getHeight() / 2, 90);
+			graphics.drawString((int) (items[i].getCost() * buyPercent) + "", 49, 216 -
+					(28 * (i - (selectedItemIndex < 9 ? 0 : selectedItemIndex - 8))));
+			graphics.rotate(gc.getPaddedWidth() / 2, gc.getHeight() / 2, -90);
 		}
 
 		// Draw item name
@@ -214,7 +213,7 @@ public class ShopMenuTabled extends Menu implements MenuListener
 
 	private void showBuyPanel(StateInfo stateInfo)
 	{
-		speechMenu = new SpeechMenu("What would you like to buy?]", stateInfo.getGc(),
+		speechMenu = new SpeechMenu("What would you like to buy?]", stateInfo.getFCGameContainer(),
 				SpeechMenu.NO_TRIGGER, null, stateInfo);
 		currentStep = ShopStepEnum.SELECT_ITEM;
 	}
@@ -240,7 +239,7 @@ public class ShopMenuTabled extends Menu implements MenuListener
 				{
 					currentStep = ShopStepEnum.WHO_WILL_USE;
 					speechMenu = null;
-					stateInfo.addMenu(new SpeechMenu("Who will use this?]", stateInfo.getGc(),
+					stateInfo.addMenu(new SpeechMenu("Who will use this?]", stateInfo.getFCGameContainer(),
 							SpeechMenu.NO_TRIGGER, null, stateInfo, this));
 					//
 				}
@@ -253,7 +252,7 @@ public class ShopMenuTabled extends Menu implements MenuListener
 				if (value == null)
 				{
 					currentStep = ShopStepEnum.SALE_COMPLETED;
-					stateInfo.addMenu(new SpeechMenu("I'm sorry we can't strike a deal...]", stateInfo.getGc(),
+					stateInfo.addMenu(new SpeechMenu("I'm sorry we can't strike a deal...]", stateInfo.getFCGameContainer(),
 							SpeechMenu.NO_TRIGGER, null, stateInfo, this));
 				}
 				else
@@ -276,7 +275,7 @@ public class ShopMenuTabled extends Menu implements MenuListener
 							gold -= (int) (selectedItem.getCost() * buyPercent);
 							goldAmountText.setText(gold + "");
 							currentStep = ShopStepEnum.SALE_COMPLETED;
-							stateInfo.addMenu(new SpeechMenu("A pleasure doing business with ya'!]", stateInfo.getGc(),
+							stateInfo.addMenu(new SpeechMenu("A pleasure doing business with ya'!]", stateInfo.getFCGameContainer(),
 									SpeechMenu.NO_TRIGGER, null, stateInfo, this));
 						}
 					}
@@ -284,7 +283,7 @@ public class ShopMenuTabled extends Menu implements MenuListener
 					else
 					{
 						currentStep = ShopStepEnum.WHO_WILL_USE;
-						stateInfo.addMenu(new SpeechMenu(selectedHero.getName() + " can't carry anything else... Who should use this?]", stateInfo.getGc(),
+						stateInfo.addMenu(new SpeechMenu(selectedHero.getName() + " can't carry anything else... Who should use this?]", stateInfo.getFCGameContainer(),
 								SpeechMenu.NO_TRIGGER, null, stateInfo, this));
 					}
 				}
@@ -300,7 +299,7 @@ public class ShopMenuTabled extends Menu implements MenuListener
 				gold += (int) (equipped.getCost() * sellPercent);
 				goldAmountText.setText(gold + "");
 				currentStep = ShopStepEnum.SALE_COMPLETED;
-				stateInfo.addMenu(new SpeechMenu("A pleasure doing business with ya'!]", stateInfo.getGc(),
+				stateInfo.addMenu(new SpeechMenu("A pleasure doing business with ya'!]", stateInfo.getFCGameContainer(),
 						SpeechMenu.NO_TRIGGER, null, stateInfo, this));
 				break;
 			case EQUIP_NOW:
@@ -317,7 +316,7 @@ public class ShopMenuTabled extends Menu implements MenuListener
 						selectedHero.addItem(selectedItem);
 						selectedHero.equipItem((EquippableItem) selectedItem);
 						currentStep = ShopStepEnum.SALE_COMPLETED;
-						stateInfo.addMenu(new SpeechMenu("A pleasure doing business with ya'!]", stateInfo.getGc(),
+						stateInfo.addMenu(new SpeechMenu("A pleasure doing business with ya'!]", stateInfo.getFCGameContainer(),
 								SpeechMenu.NO_TRIGGER, null, stateInfo, this));
 					}
 					else
@@ -334,7 +333,7 @@ public class ShopMenuTabled extends Menu implements MenuListener
 					gold -= (int) (selectedItem.getCost() * buyPercent);
 					goldAmountText.setText(gold + "");
 					currentStep = ShopStepEnum.SALE_COMPLETED;
-					stateInfo.addMenu(new SpeechMenu("A pleasure doing business with ya'!]", stateInfo.getGc(),
+					stateInfo.addMenu(new SpeechMenu("A pleasure doing business with ya'!]", stateInfo.getFCGameContainer(),
 							SpeechMenu.NO_TRIGGER, null, stateInfo, this));
 				}
 				break;

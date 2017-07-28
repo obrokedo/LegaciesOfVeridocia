@@ -30,7 +30,7 @@ public class SpriteAnims
 		animations.put(name, anim);
 	}
 
-	public void initialize(Image image, float magnify)
+	public void initialize(Image image)
 	{
 		images = new ArrayList<Image>();
 
@@ -40,7 +40,7 @@ public class SpriteAnims
 			Image subImage = image.getSubImage((int) r.getX(), (int) r.getY(), (int) r.getWidth(),
 					(int) r.getHeight());
 			subImage.setFilter(Image.FILTER_NEAREST);
-			images.add(subImage.getScaledCopy(magnify));
+			images.add(subImage);
 		}
 	}
 

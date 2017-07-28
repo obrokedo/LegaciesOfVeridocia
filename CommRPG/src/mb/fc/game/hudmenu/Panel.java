@@ -4,18 +4,6 @@ import java.awt.Font;
 
 import javax.swing.JOptionPane;
 
-import mb.fc.engine.CommRPG;
-import mb.fc.engine.message.AudioMessage;
-import mb.fc.engine.message.MessageType;
-import mb.fc.engine.state.StateInfo;
-import mb.fc.game.exception.BadResourceException;
-import mb.fc.game.menu.Menu.MenuUpdate;
-import mb.fc.game.ui.FCGameContainer;
-import mb.fc.loading.FCResourceManager;
-import mb.jython.GlobalPythonFactory;
-import mb.jython.JMusicSelector;
-import mb.jython.JPanelRender;
-
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -23,6 +11,17 @@ import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.geom.Rectangle;
+
+import mb.fc.engine.message.AudioMessage;
+import mb.fc.engine.message.MessageType;
+import mb.fc.engine.state.StateInfo;
+import mb.fc.game.exception.BadResourceException;
+import mb.fc.game.menu.Menu.MenuUpdate;
+import mb.fc.game.ui.PaddedGameContainer;
+import mb.fc.loading.FCResourceManager;
+import mb.jython.GlobalPythonFactory;
+import mb.jython.JMusicSelector;
+import mb.jython.JPanelRender;
 
 /**
  * A container to display information to the screen that does not generally need to be interacted with.
@@ -86,12 +85,12 @@ public abstract class Panel
 	@SuppressWarnings("unchecked")
 	public static void intialize(FCResourceManager frm)
 	{
-		MENU_BORDER = frm.getSpriteSheets().get("menuborder");
+		MENU_BORDER = frm.getSpriteSheet("menuborder");
 		PANEL_FONT = frm.getFontByName("menufont");
 		MUSIC_SELECTOR = GlobalPythonFactory.createJMusicSelector();
 
 		Font awtFont = new Font("Times New Roman", Font.ITALIC, 24);
-		UnicodeFont ufont = new UnicodeFont(awtFont, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 15, false, true);
+		UnicodeFont ufont = new UnicodeFont(awtFont, 45, false, true);
 		ufont.getEffects().add(new ColorEffect(java.awt.Color.WHITE));
 		ufont.addAsciiGlyphs();
 		ufont.addGlyphs(400, 600);
@@ -111,7 +110,7 @@ public abstract class Panel
         renderer =  GlobalPythonFactory.createJPanelRender();
 	}
 
-	public abstract void render(FCGameContainer gc, Graphics graphics);
+	public abstract void render(PaddedGameContainer gc, Graphics graphics);
 
 	public MenuUpdate update(int delta)
 	{
@@ -146,15 +145,15 @@ public abstract class Panel
 
 		graphics.fillRect(x, y, width, height);
 
-		MENU_BORDER.getSprite(4, 0).draw(x, y + height - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 4, x + width, y + height, 4, 0, 5, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 4);
-		MENU_BORDER.getSprite(5, 0).draw(x, y, x + width, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 4, 4, 0, 5, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 4);
-		MENU_BORDER.getSprite(6, 0).draw(x, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 4, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 4, height - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 8);
-		MENU_BORDER.getSprite(7, 0).draw(x + width - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 4, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 4, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 4, height - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 8);
+		MENU_BORDER.getSprite(4, 0).draw(x, y + height - 4, width, 4);
+		MENU_BORDER.getSprite(5, 0).draw(x, y, width, 4);
+		MENU_BORDER.getSprite(6, 0).draw(x, y + 4, 4, height - 8);
+		MENU_BORDER.getSprite(7, 0).draw(x + width - 4, y + 4, 4, height - 8);
 
-		MENU_BORDER.getSprite(0, 0).draw(x, y + height - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 4);
+		MENU_BORDER.getSprite(0, 0).draw(x, y + height - 4);
 		MENU_BORDER.getSprite(1, 0).draw(x, y);
-		MENU_BORDER.getSprite(2, 0).draw(x + width - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 4, y + height - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 4);
-		MENU_BORDER.getSprite(3, 0).draw(x + width - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 4, y);
+		MENU_BORDER.getSprite(2, 0).draw(x + width - 4, y + height - 4);
+		MENU_BORDER.getSprite(3, 0).draw(x + width - 4, y);
 
 		/*
 		MENU_BORDER.getSprite(4, 0).draw(x, y + height - 12, x + width, y + height, 4, 0, 5, 12);

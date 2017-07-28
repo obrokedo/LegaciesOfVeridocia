@@ -1,11 +1,10 @@
 package mb.fc.game.ui;
 
-import mb.fc.engine.CommRPG;
-import mb.fc.game.hudmenu.Panel;
-
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Rectangle;
+
+import mb.fc.game.hudmenu.Panel;
 
 public class RectUI extends Rectangle
 {
@@ -13,10 +12,10 @@ public class RectUI extends Rectangle
 
 	public RectUI(float x, float y, float width, float height,
 			int nonScaleX, int nonScaleY, int nonScaleWidth, int nonScaleHeight) {
-		super(x * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] + nonScaleX,
-				y * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] + nonScaleY,
-					width * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] + nonScaleWidth,
-						height * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] + nonScaleHeight);
+		super(x + nonScaleX,
+				y + nonScaleY,
+					width + nonScaleWidth,
+						height + nonScaleHeight);
 	}
 
 	public RectUI(float x, float y, float width, float height)
@@ -48,12 +47,12 @@ public class RectUI extends Rectangle
 
 	@Override
 	public void setX(float x) {
-		super.setX(x * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);
+		super.setX(x);
 	}
 
 	@Override
 	public void setY(float y) {
-		super.setY(y * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);
+		super.setY(y);
 	}
 
 

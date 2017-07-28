@@ -24,7 +24,7 @@ import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.sprite.Sprite;
 import mb.fc.game.turnaction.MoveToTurnAction;
 import mb.fc.game.turnaction.TurnAction;
-import mb.fc.game.ui.FCGameContainer;
+import mb.fc.game.ui.PaddedGameContainer;
 import mb.fc.map.Map;
 import mb.jython.GlobalPythonFactory;
 import mb.jython.JBattleEffect;
@@ -142,7 +142,7 @@ public class MoveableSpace implements KeyboardListener, TileBasedMap
 		return ms;
 	}
 
-	public void renderMoveable(FCGameContainer gc, Camera camera, Graphics graphics)
+	public void renderMoveable(PaddedGameContainer gc, Camera camera, Graphics graphics)
 	{
 		float camX = camera.getLocationX();
 		float camY = camera.getLocationY();
@@ -154,7 +154,7 @@ public class MoveableSpace implements KeyboardListener, TileBasedMap
 				if (moveableTiles[j][i] != -1)
 				{
 					graphics.setColor(MOVEABLE_COLOR);
-					graphics.fillRect((i + topX) * tileWidth - camX + gc.getDisplayPaddingX(),
+					graphics.fillRect((i + topX) * tileWidth - camX,
 							(j + topY) * tileHeight - camY,
 							tileWidth - 1, tileHeight - 1);
 				}

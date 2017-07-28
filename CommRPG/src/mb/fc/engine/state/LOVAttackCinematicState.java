@@ -2,6 +2,20 @@ package mb.fc.engine.state;
 
 import java.util.ArrayList;
 
+import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
+import org.newdawn.slick.Music;
+import org.newdawn.slick.MusicListener;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
+import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.EmptyTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
+
 import mb.fc.engine.CommRPG;
 import mb.fc.game.battle.BattleResults;
 import mb.fc.game.battle.command.BattleCommand;
@@ -23,33 +37,20 @@ import mb.fc.game.input.FCInput;
 import mb.fc.game.menu.Menu.MenuUpdate;
 import mb.fc.game.menu.SpeechMenu;
 import mb.fc.game.sprite.CombatSprite;
-import mb.fc.game.ui.FCGameContainer;
+import mb.fc.game.ui.PaddedGameContainer;
 import mb.fc.loading.FCResourceManager;
 import mb.fc.loading.LoadableGameState;
+import mb.fc.particle.AnimatedParticleSystem;
 import mb.fc.utils.AnimationWrapper;
 import mb.fc.utils.HeroAnimationWrapper;
+import mb.fc.utils.StringUtils;
 import mb.jython.GlobalPythonFactory;
 import mb.jython.JBattleEffect;
 import mb.jython.JMusicSelector;
-
-import org.newdawn.slick.Color;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
-import org.newdawn.slick.Music;
-import org.newdawn.slick.MusicListener;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.Sound;
-import org.newdawn.slick.SpriteSheet;
-import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.state.transition.EmptyTransition;
-import org.newdawn.slick.state.transition.FadeOutTransition;
+import mb.jython.JParticleEmitter;
 
 public class LOVAttackCinematicState extends LoadableGameState implements MusicListener
 {
-	private static float SCREEN_SCALE = CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
-
 	private static final int WAIT_TIME = 200;
 
 	private JMusicSelector musicSelector = null;
@@ -67,7 +68,7 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 	private SpeechMenu textMenu;
 	private FCInput input;
 	private boolean consumedText = false;
-	private FCGameContainer gc;
+	private PaddedGameContainer gc;
 	private int bgXPos, bgYPos, combatAnimationYOffset;
 	private Image backgroundImage;
 	private BattleResults battleResults;
@@ -84,6 +85,7 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 	private int spellOverlayFadeIn = 0;
 	private int SPELL_OVERLAY_MAX_ALPHA = 80;
 	private Color spellOverlayColor = null;
+	private AnimatedParticleSystem rainParticleSystem;
 
 	// The amount that the background has been scaled to fit the screen,
 	// other animations should be scaled up accordingly
@@ -95,7 +97,7 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 	public static Image FLOOR_IMAGE;
 
 	public void setBattleInfo(CombatSprite attacker, FCResourceManager frm,
-			BattleResults battleResults, FCGameContainer gc)
+			BattleResults battleResults, PaddedGameContainer gc)
 	{
 		this.gc = gc;
 		this.battleResults = battleResults;
@@ -104,7 +106,7 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 
 		// Get the land tile image for the current target
 		// TODO Change this on a by-target basis
-		FLOOR_IMAGE = frm.getImages().get("attackplatform");
+		FLOOR_IMAGE = frm.getImage("attackplatform");
 
 		input = new FCInput();
 		gc.getInput().addKeyListener(input);
@@ -119,6 +121,7 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 		drawingSpell = false;
 		spellStarted = false;
 		drawingSpellCounter = 0;
+		spellOverlayFadeIn = 0;
 		spellFlash = null;
 		textMenu = null;
 
@@ -139,13 +142,44 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 		/*****************************/
 		if (battleResults.battleCommand.getSpell() != null)
 		{
-			spellAnimation = new AnimationWrapper(frm.getSpriteAnimations().get(battleResults.battleCommand.getSpell().getName()),
-					battleResults.battleCommand.getLevel() + "", battleResults.battleCommand.getSpell().isLoops());
+			spellAnimation = new AnimationWrapper(frm.getSpriteAnimation(
+					battleResults.battleCommand.getSpell().getSpellAnimationFile(battleResults.battleCommand.getLevel())));
+			
+			// Get the correct animation from the animation set
+			String animationString = Integer.toString(battleResults.battleCommand.getLevel());
+			boolean loops = battleResults.battleCommand.getSpell().isLoops();
+			if (spellAnimation.hasAnimation(animationString))
+				spellAnimation.setAnimation(animationString, loops);
+			else
+				spellAnimation.setAnimation("1", loops);
+				
 			spellOverlayColor = battleResults.battleCommand.getSpell().getSpellOverlayColor(battleResults.battleCommand.getLevel());
 			spellTargetsHeroes = battleResults.targets.get(0).isHero();
+			
+			String rainFile = battleResults.battleCommand.getSpell().getSpellRainAnimationFile(battleResults.battleCommand.getLevel());
+			if (rainFile != null)
+			{
+				/*rainParticleSystem.addEmitter(new RainEmitter(
+						180, 
+						battleResults.battleCommand.getSpell().getSpellRainFrequency(battleResults.battleCommand.getLevel()), 
+								!battleResults.targets.get(0).isHero()));
+								*/
+				// Image im = frm.getImage(rainFile);
+				String rainAnimation =  battleResults.battleCommand.getSpell().getSpellRainAnimationName(battleResults.battleCommand.getLevel());
+				rainParticleSystem = new AnimatedParticleSystem(rainFile, rainAnimation, frm);
+				JParticleEmitter emitter = battleResults.battleCommand.getSpell().getEmitter(battleResults.battleCommand.getLevel());
+				emitter.initialize(battleResults.targets.get(0).isHero());
+				rainParticleSystem.addEmitter(emitter);
+			}
+			else
+				rainParticleSystem = null;
 		}
-		else
+		else {
 			spellAnimation = null;
+			rainParticleSystem = null;
+		}
+		
+		
 
 		boolean targetsAllies = battleResults.targets.get(0).isHero() == attacker.isHero();
 
@@ -156,7 +190,9 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 
 		String mus = musicSelector.getAttackMusic(attacker, targetsAllies);
 		music = frm.getMusicByName(mus);
-		introMusic = frm.getMusicByName(mus + "_L");
+		// Why the fuck is there a _L postfix?
+		if (frm.containsMusic(mus + "_L"))
+			introMusic = frm.getMusicByName(mus + "_L");
 
 		if (introMusic == null)
 		{
@@ -169,20 +205,20 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 			introMusic.play();
 		}
 
-		SpriteSheet battleBGSS = frm.getSpriteSheets().get("battlebg");
+		SpriteSheet battleBGSS = frm.getSpriteSheet("battlebg");
 		Image bgIm = battleBGSS.getSprite(frm.getMap().getBackgroundImageIndex() % battleBGSS.getHorizontalCount(),
 				frm.getMap().getBackgroundImageIndex() / battleBGSS.getHorizontalCount());
-		backgroundScale = (gc.getWidth() - gc.getDisplayPaddingX() * 2) / (float) bgIm.getWidth();
+		backgroundScale = CommRPG.GAME_SCREEN_SIZE.width / (float) bgIm.getWidth();
 		backgroundImage = bgIm.getScaledCopy(backgroundScale);
 
-		bgXPos = gc.getDisplayPaddingX();
-		bgYPos = (gc.getHeight() - backgroundImage.getHeight()) / 2;
+		bgXPos = 0;
+		bgYPos = (CommRPG.GAME_SCREEN_SIZE.height - backgroundImage.getHeight()) / 2;
 		combatAnimationYOffset = bgYPos + backgroundImage.getHeight();
 
 		//////////////////////////////////////////////////////////////////////////
 		// The attacker will be standing in any case
 		addCombatAnimation(attacker.isHero(), new StandCombatAnimation(attacker));
-		
+
 		CombatSprite target = battleResults.targets.get(0);
 
 		// If the battle command is not TURN_PREVENTED then determine how the cinematic should
@@ -192,7 +228,7 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 			//TODO CHECK TO SEE IF THE COMMAND WAS AN ITEM THAT CASTS A SPELL
 			boolean isSpell = battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_SPELL;
 			int distanceApart = 1;
-	
+
 			// This is a spell
 			if (isSpell)
 				textToDisplay.add(attacker.getName() + " casts " + battleResults.battleCommand.getSpell().getName() + " " +
@@ -203,9 +239,7 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 				// text and set the isSpell boolean to true so that spell effects work correctly
 				if (battleResults.battleCommand.getItem().getSpellUse() != null) {
 					textToDisplay.add(attacker.getName() + " uses the " +
-							battleResults.battleCommand.getItem().getName() + "! " + TextSpecialCharacters.CHAR_SOFT_STOP +
-							attacker.getName() + " casts " + battleResults.battleCommand.getSpell().getName() + " " +
-							battleResults.battleCommand.getLevel() + TextSpecialCharacters.CHAR_HARD_STOP);
+							battleResults.battleCommand.getItem().getName() + "! " + TextSpecialCharacters.CHAR_HARD_STOP);
 					isSpell = true;
 				}
 				// Otherwise just display the generic use item text
@@ -216,14 +250,14 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 			// This is an attack
 			else if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_ATTACK)
 				textToDisplay.add(attacker.getName() + " attacks!" + TextSpecialCharacters.CHAR_HARD_STOP);
-	
+
 			if (targetsAllies)
 			{
 				int i = 0;
-	
+
 				//TODO SELF IS A TARGET
 				addCombatAnimation(!attacker.isHero(), null);
-	
+
 				int selfIndex = battleResults.targets.indexOf(attacker);
 				if (selfIndex != -1)
 				{
@@ -234,28 +268,28 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 					battleResults.hpDamage.add(0, battleResults.hpDamage.remove(selfIndex));
 					battleResults.mpDamage.add(0, battleResults.mpDamage.remove(selfIndex));
 					battleResults.targetEffects.add(0, battleResults.targetEffects.remove(selfIndex));
-	
+
 					AttackCombatAnimation aca = new AttackCombatAnimation(attacker, battleResults, true, battleResults.critted.get(0));
 					addCombatAnimationWithNoSpeechNoReaction(attacker.isHero(), aca);
 					if (battleResults.targets.size() > 1)
 						addDamageAndTransitionOut(attacker, aca, isSpell, battleResults.targets.size() == 1, battleResults, 0);
 					else
 						addDamage(attacker, aca, isSpell, battleResults, 0);
-	
-	
+
+
 					i = 1;
 				}
 				else
 				{
 					addActionAndTransitionOut(attacker, battleResults, isSpell, false);
 				}
-	
+
 				for (; i < battleResults.targets.size(); i++)
 				{
 					addTransitionInAndOut(isSpell, battleResults.targets.get(i), battleResults, i,
 							i == battleResults.targets.size() - 1);
 				}
-	
+
 				if (selfIndex == -1 || battleResults.targets.size() > 1)
 				{
 					StandCombatAnimation attackerStand = new StandCombatAnimation(attacker);
@@ -271,11 +305,11 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 				if (distanceApart == 1 || isSpell)
 				{
 					int attackCount = 0;
-	
+
 					// If the targets aren't allies then they should stand
 					addCombatAnimation(target.isHero(), new StandCombatAnimation(target));
 					addAttackAction(attacker, target, battleResults, attackCount++, isSpell, false);
-	
+
 					if (battleResults.countered)
 					{
 						addCombatAnimation(attacker.isHero(), new StandCombatAnimation(attacker));
@@ -283,7 +317,7 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 						textToDisplay.add(target.getName() + "'s counter attack!");
 						addAttackAction(target, attacker, battleResults, attackCount++, isSpell, false);
 					}
-	
+
 					if (battleResults.doubleAttack)
 					{
 						addCombatAnimation(attacker.isHero(), new StandCombatAnimation(attacker));
@@ -297,7 +331,7 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 				{
 					addCombatAnimation(target.isHero(), null);
 					addRangedAttack(attacker, target, 0);
-	
+
 					if (battleResults.doubleAttack)
 					{
 						addCombatAnimation(attacker.isHero(), new StandCombatAnimation(attacker));
@@ -306,27 +340,27 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 						addRangedAttack(attacker, target, 1);
 					}
 				}
-	
+
 				// If there is more then one target they need to be transitioned in and out while the attacker stays
 				// in their final attack frame (or spell)
 				if (battleResults.targets.size() > 1)
 				{
 					StandCombatAnimation targetStand = new StandCombatAnimation(target);
 					addCombatAnimationWithNoSpeechNoReaction(target.isHero(), new TransCombatAnimation(targetStand, true));
-	
+
 					for (int i = 1; i < battleResults.targets.size(); i++)
 					{
 						addTransitionInAndOut(isSpell, battleResults.targets.get(i), battleResults, i,
 								i == battleResults.targets.size() - 1);
 					}
-	
+
 					// Remove the last set of actions because we don't want this target to move off the screen
 					heroCombatAnimations.remove(heroCombatAnimations.size() - 1);
 					enemyCombatAnimations.remove(enemyCombatAnimations.size() - 1);
 					textToDisplay.remove(textToDisplay.size() - 1);
 				}
 			}
-	
+
 			/*
 			 * Show the final frame where both parties (assuming they are alive)
 			 * are standing next to eachother.
@@ -336,11 +370,11 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 				addCombatAnimation(attacker.isHero(), new StandCombatAnimation(attacker));
 			else
 				addCombatAnimation(attacker.isHero(), null);
-	
+
 			if (!targetsAllies && (isSpell || distanceApart == 1))
 			{
 				int lastIndex = battleResults.targets.size() - 1;
-	
+
 				// Check to see if the target is still alive
 				if ((battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_ATTACK && (!battleResults.death || battleResults.attackerDeath))
 						|| (battleResults.battleCommand.getCommand() != BattleCommand.COMMAND_ATTACK && battleResults.remainingHP.get(lastIndex) > 0))
@@ -357,7 +391,7 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 			{
 				addCombatAnimation(!attacker.isHero(), null);
 			}
-	
+
 			// If the item was damaged then we'll use the animations from above
 			// and display the damaged item text, we need to add null animations
 			// to the lists so that they use the animations that were determined
@@ -367,12 +401,12 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 				addCombatAnimation(true, null);
 				addCombatAnimation(false, null);
 			}
-	
+
 			textToDisplay.add(battleResults.attackOverText);
 		} else {
 			// If we are targeting an enemy then show him standing on the screen
 			// if he was within one space
-			if (!targetsAllies && Math.abs(attacker.getTileX() - target.getTileX()) + 
+			if (!targetsAllies && Math.abs(attacker.getTileX() - target.getTileX()) +
 					Math.abs(attacker.getTileY() - target.getTileY()) == 1)
 			{
 				addCombatAnimation(target.isHero(), new StandCombatAnimation(target));
@@ -387,16 +421,16 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 		StandCombatAnimation sca = new StandCombatAnimation(target);
 		addActionAndTransitionOut(attacker, battleResults, false, true);
 		addCombatAnimationWithNoSpeechNoReaction(attacker.isHero(), new TransBGCombatAnimation(backgroundImage, bgXPos, bgYPos,
-				gc.getWidth(), null, false, attacker.isHero()));
+				CommRPG.GAME_SCREEN_SIZE.width, null, false, attacker.isHero()));
 		addCombatAnimationWithNoSpeechNoReaction(attacker.isHero(), new TransBGCombatAnimation(backgroundImage, bgXPos, bgYPos,
-				gc.getWidth(), sca, true, !attacker.isHero()));
+				CommRPG.GAME_SCREEN_SIZE.width, sca, true, !attacker.isHero()));
 
 		addAttackAction(attacker, target, battleResults, index, false, true);
 
 		addCombatAnimationWithNoSpeechNoReaction(target.isHero(), new TransBGCombatAnimation(backgroundImage, bgXPos, bgYPos,
-				gc.getWidth(), sca, false, target.isHero()));
+				CommRPG.GAME_SCREEN_SIZE.width, sca, false, target.isHero()));
 		addCombatAnimationWithNoSpeechNoReaction(target.isHero(), new TransBGCombatAnimation(backgroundImage, bgXPos, bgYPos,
-				gc.getWidth(), new StandCombatAnimation(attacker), true, !target.isHero()));
+				CommRPG.GAME_SCREEN_SIZE.width, new StandCombatAnimation(attacker), true, !target.isHero()));
 
 		addCombatAnimation(target.isHero(), new InvisibleCombatAnimation());
 		addCombatAnimation(attacker.isHero(), new StandCombatAnimation(attacker));
@@ -414,10 +448,10 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 		else
 		{
 			if (attacker.isHero())
-				aca = new AttackCombatAnimation(new AnimationWrapper(frm.getSpriteAnimations().get("Ranged"),
+				aca = new AttackCombatAnimation(new AnimationWrapper(frm.getSpriteAnimation("Ranged"),
 					"Ranged", false, attacker.getCurrentWeaponImage()), attacker);
 			else
-				aca = new AttackCombatAnimation(new AnimationWrapper(frm.getSpriteAnimations().get("EnemyRanged"),
+				aca = new AttackCombatAnimation(new AnimationWrapper(frm.getSpriteAnimation("EnemyRanged"),
 						"Ranged", false, attacker.getCurrentWeaponImage()), attacker);
 		}
 		addCombatAnimation(attacker.isHero(), aca);
@@ -575,12 +609,12 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 	}
 
 	@Override
-	public void render(GameContainer container, StateBasedGame game, Graphics g)
-			throws SlickException {
+	public void doRender(PaddedGameContainer container, StateBasedGame game, Graphics g) 
+	{
 		if (spellFlash != null)
 		{
 			g.setColor(spellFlash);
-			g.fillRect(0, 0, container.getWidth(), container.getHeight());
+			g.fillRect(0, 0, CommRPG.GAME_SCREEN_SIZE.width, CommRPG.GAME_SCREEN_SIZE.height);
 		}
 
 		g.drawImage(backgroundImage, bgXPos, bgYPos);
@@ -590,8 +624,8 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 			enemyCombatAnim.render(gc, g, combatAnimationYOffset, backgroundScale);
 		if (drawingSpell && spellFlash == null)
 		{
-			spellAnimation.drawAnimation((int) (gc.getDisplayPaddingX() + (spellTargetsHeroes ? 276 * SCREEN_SCALE : 50 * SCREEN_SCALE)),
-					combatAnimationYOffset, g);
+			spellAnimation.drawAnimation((int) ( (spellTargetsHeroes ? 276 : 70)),
+					combatAnimationYOffset - 30, g);
 		}
 		if (textMenu != null)
 			textMenu.render(gc, g);
@@ -600,11 +634,19 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 			heroHealthPanel.render(gc, g);
 		if (enemyHealthPanel != null)
 			enemyHealthPanel.render(gc, g);
-
+		
 		if (drawingSpell && spellFlash == null)
 		{
+			if (rainParticleSystem != null)
+				rainParticleSystem.render();
+			
+		}
+		
+		// Draw the spell overlay fade in
+		if (spellOverlayFadeIn > 0)
+		{
 			g.setColor(spellOverlayColor);
-			g.fillRect(0, 0, gc.getWidth(), gc.getHeight());
+			g.fillRect(0, 0, CommRPG.GAME_SCREEN_SIZE.width, CommRPG.GAME_SCREEN_SIZE.height);
 		}
 
 		// If dev mode is enabled and we're at the end of the cinematic
@@ -613,17 +655,17 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 		if (CommRPG.DEV_MODE_ENABLED && heroCombatAnimations.size() == 0)
 		{
 			g.setColor(Color.white);
-			g.drawString("Press R to restart attack cinematic", 20, 90);
+			StringUtils.drawString("Press R to restart attack cinematic", 20, 90, g);
 		}
 	}
 
 	@Override
-	public void update(GameContainer container, StateBasedGame game, int delta)
+	public void doUpdate(PaddedGameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
 		// If this is test mode then we want to speed
 		// up the game
 		if (CommRPG.TEST_MODE_ENABLED)
-			delta *= 15;
+			delta *= CommRPG.getTestMultiplier();
 
 		// Update the input so that released keys are realized
 		input.update(delta);
@@ -646,9 +688,11 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 		{
 			heroAnimationFinished = heroCombatAnim.update(delta);
 			if (heroCombatAnim.isDrawSpell())
+			{
 				currentAnimDrawSpell = true;
+			}
 		}
-
+		
 		// If there is a enemy combat animation check to see if it has
 		// completed and whether the current animation should be drawn
 		// with a spell
@@ -657,7 +701,9 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 			enemyAnimationFinished = enemyCombatAnim.update(delta);
 
 			if (enemyCombatAnim.isDrawSpell())
+			{
 				currentAnimDrawSpell = true;
+			}
 		}
 
 		// If the current animation says a spell should be drawn,
@@ -762,6 +808,11 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 		// update the spells animation
 		if (drawingSpell)
 			spellUpdate(delta);
+		else if (spellOverlayFadeIn > 0)
+		{
+			spellOverlayFadeIn -= 2;
+			spellOverlayColor.a = spellOverlayFadeIn / 255.0f;
+		}
 	}
 
 	/**
@@ -808,6 +859,8 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 			// Update the spell animation as it should
 			// be rendering at this point
 			spellAnimation.update(delta);
+			if (rainParticleSystem != null)
+				rainParticleSystem.update(delta);
 		}
 	}
 
@@ -848,7 +901,6 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 
 				// TODO I'M NOT SURE IF I LIKE THIS HERE MORE OR IN THE DAMAGEDCOMBATANIMATION
 				if (enemyCombatAnim.isDamaging()) damagedSprite = (DamagedCombatAnimation) enemyCombatAnim;
-
 			}
 
 			if (damagedSprite != null)
@@ -856,7 +908,15 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 				attacker.modifyCurrentHP(battleResults.attackerHPDamage.get(damagedSprite.getBattleResultIndex()));
 				attacker.modifyCurrentMP(battleResults.attackerMPDamage.get(damagedSprite.getBattleResultIndex()));
 
-				playOnHitSound(attacker.isHero() == damagedSprite.getParentSprite().isHero(),
+				// Check to see if this is a counter attack situation and the "attacker"
+				// is actually the target
+				if (battleResults.countered && damagedSprite.getParentSprite() == attacker)
+				{
+					playOnHitSound(battleResults.targets.get(0), attacker.isHero() == damagedSprite.getParentSprite().isHero(),
+							damagedSprite.getBattleResultIndex());
+				}
+				else
+					playOnHitSound(attacker, attacker.isHero() == damagedSprite.getParentSprite().isHero(),
 						damagedSprite.getBattleResultIndex());
 			}
 		}
@@ -872,22 +932,22 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 		}
 	}
 
-	private void playOnHitSound(boolean targetsAreAllies, int index)
+	private void playOnHitSound(CombatSprite actionAttacker, boolean targetsAreAllies, int index)
 	{
 		String sound = null;
 		if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_ATTACK)
 		{
-			if (attacker.getEquippedWeapon() != null)
-				sound = musicSelector.getAttackHitSoundEffect(attacker.isHero(), battleResults.critted.get(index),
-						battleResults.dodged.get(index), attacker.getEquippedWeapon().getItemStyle());
+			if (actionAttacker.getEquippedWeapon() != null)
+				sound = musicSelector.getAttackHitSoundEffect(actionAttacker.isHero(), battleResults.critted.get(index),
+						battleResults.dodged.get(index), actionAttacker.getEquippedWeapon().getItemStyle());
 			else
-				sound = musicSelector.getAttackHitSoundEffect(attacker.isHero(), battleResults.critted.get(index),
+				sound = musicSelector.getAttackHitSoundEffect(actionAttacker.isHero(), battleResults.critted.get(index),
 						battleResults.dodged.get(index), -1);
 		}
 		else if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_ITEM)
-			sound = musicSelector.getUseItemSoundEffect(attacker.isHero(), targetsAreAllies, battleResults.battleCommand.getItem().getName());
+			sound = musicSelector.getUseItemSoundEffect(actionAttacker.isHero(), targetsAreAllies, battleResults.battleCommand.getItem().getName());
 		else if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_SPELL)
-			sound = musicSelector.getSpellHitSoundEffect(attacker.isHero(), targetsAreAllies, battleResults.battleCommand.getSpell().getName());
+			sound = musicSelector.getSpellHitSoundEffect(actionAttacker.isHero(), targetsAreAllies, battleResults.battleCommand.getSpell().getName());
 
 		if (sound != null)
 		{

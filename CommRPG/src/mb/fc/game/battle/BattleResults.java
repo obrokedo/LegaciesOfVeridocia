@@ -3,8 +3,6 @@ package mb.fc.game.battle;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import org.newdawn.slick.util.Log;
-
 import mb.fc.engine.CommRPG;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.battle.command.BattleCommand;
@@ -16,6 +14,8 @@ import mb.jython.GlobalPythonFactory;
 import mb.jython.JBattleEffect;
 import mb.jython.JBattleFunctions;
 import mb.jython.JSpell;
+
+import org.newdawn.slick.util.Log;
 
 public class BattleResults implements Serializable
 {
@@ -66,7 +66,7 @@ public class BattleResults implements Serializable
 		ItemUse itemUse = null;
 		int spellLevel = 0;
 		String preventEffectName = null;
-		
+
 		for (JBattleEffect effect : attacker.getBattleEffects()) {
 			if ((battleCommand.getCommand() == BattleCommand.COMMAND_ITEM && effect.preventsItems()) ||
 					(battleCommand.getCommand() == BattleCommand.COMMAND_ATTACK && effect.preventsAttack()) ||
@@ -75,9 +75,9 @@ public class BattleResults implements Serializable
 					battleCommand = new BattleCommand(BattleCommand.COMMAND_TURN_PREVENTED);
 					preventEffectName = effect.getBattleEffectId();
 					break;
-			}		
+			}
 		}
-		
+
 		if (battleCommand.getCommand() == BattleCommand.COMMAND_TURN_PREVENTED) {
 			br.text.add(attacker.getName() + " was unable to act due to the " + preventEffectName);
 			// Remove all but one target as that's the most that will
@@ -86,7 +86,7 @@ public class BattleResults implements Serializable
 				br.targets.remove(1);
 			}
 		}
-		
+
 		// Check to see if we're using an item
 		if (battleCommand.getCommand() == BattleCommand.COMMAND_ITEM) {
 			br.itemUsed = battleCommand.getItem();
@@ -130,24 +130,24 @@ public class BattleResults implements Serializable
 		for (int targetIndex = 0; targetIndex < targets.size(); targetIndex++)
 		{
 			CombatSprite target = targets.get(targetIndex);
-			
+
 			String text = null;
 
 			// If we are doing a simple attack command then we need to get the dodge chance and calculate damage dealt
 			if (battleCommand.getCommand() == BattleCommand.COMMAND_ATTACK)
 			{
 				int damage = 0;
+				int sumDamage = 0;
 
 				// Normal Attack
 				text = addAttack(attacker, target, br, stateInfo, jBattleFunctions, false);
 				damage = br.hpDamage.get(0);
+				sumDamage = damage;
 				br.remainingHP.add(target.getCurrentHP() + damage);
 
 				if (attacker.isHero())
 				{
-					if (damage != 0)
-						expGained += getExperienceByDamage(damage, attacker.getLevel(), target);
-					else
+					if (damage == 0)
 						expGained += 1;
 				}
 
@@ -174,7 +174,7 @@ public class BattleResults implements Serializable
 						if (target.isHero())
 						{
 							if (damage != 0)
-								expGained += getExperienceByDamage(damage, attacker.getLevel(), target);
+								expGained += getExperienceByDamage(damage, target, attacker);
 							else
 								expGained += 1;
 						}
@@ -195,31 +195,27 @@ public class BattleResults implements Serializable
 							br.text.add(text);
 							text = addAttack(attacker, target, br, stateInfo, jBattleFunctions, false);
 							damage = br.hpDamage.get(br.hpDamage.size() - 1);
+							sumDamage += damage;
 
+							if (damage == 0)
+								expGained += 1;
+							
 							// Add the targets remaining HP
 							br.remainingHP.add(br.remainingHP.get(0) + damage);
 							if (br.remainingHP.get(br.remainingHP.size() - 1) <= 0)
 								br.death = true;
 
-							if (attacker.isHero())
-							{
-								if (damage != 0)
-								{
-									int level = attacker.getLevel();
-									if (attacker.isPromoted())
-										level += 10;
-									expGained += getExperienceByDamage(damage, level, target);
-								}
-								else
-									expGained += 1;
-							}
-							else if (br.death)
-								expGained = 0;
-
 							br.doubleAttack = true;
 						}
 					}
 				}
+				
+				if (attacker.isHero() && sumDamage != 0)
+				{
+					expGained += getExperienceByDamage(sumDamage, attacker, target);
+				}
+				else if (br.attackerDeath)
+					expGained = 0;
 			}
 			// Check to see if the battle command indicates a spell is being used
 			else if (spell != null)
@@ -242,23 +238,27 @@ public class BattleResults implements Serializable
 					br.mpDamage.add(spell.getMpDamage()[spellLevel]);
 				else
 					br.mpDamage.add(0);
-				
-				ArrayList<JBattleEffect> appliedEffects = new ArrayList<>();
 
-				// Check to see if a battle effect should be applied via this spell
-				JBattleEffect[] effs = null;
-				if ((effs = spell.getEffects(spellLevel)) != null)
+				ArrayList<JBattleEffect> appliedEffects = new ArrayList<>();
+				
+				// This spell will NOT kill the target so effects should still be applied
+				if (target.getCurrentHP() + damage > 0)
 				{
-					for (JBattleEffect eff : effs)
+					// Check to see if a battle effect should be applied via this spell
+					JBattleEffect[] effs = null;
+					if ((effs = spell.getEffects(spellLevel)) != null)
 					{
-						if (eff.isEffected(target))
+						for (JBattleEffect eff : effs)
 						{
-							Log.debug(target.getName() + " was affected by " + eff.getBattleEffectId());
-							appliedEffects.add(eff);
+							if (eff.isEffected(target))
+							{
+								Log.debug(target.getName() + " was affected by " + eff.getBattleEffectId());
+								appliedEffects.add(eff);
+							}
 						}
 					}
 				}
-				
+
 				br.targetEffects.add(appliedEffects);
 
 				br.attackerHPDamage.add(0);
@@ -272,7 +272,7 @@ public class BattleResults implements Serializable
 						br.attackerMPDamage.get(br.attackerMPDamage.size() - 1));
 
 				// br.targetEffects.get(br.targetEffects.size() - 1)
-				
+
 				// If a battle effect was applied then append that to the battle text
 				for (JBattleEffect eff : appliedEffects) {
 					String effectText = eff.effectStartedText(attacker, target);
@@ -283,7 +283,7 @@ public class BattleResults implements Serializable
 						else
 							text = text + " " + effectText;
 					}
-						
+
 				}
 				int exp = spell.getExpGained(spellLevel, attacker, target);
 
@@ -316,7 +316,7 @@ public class BattleResults implements Serializable
 					br.mpDamage.add(0);
 
 				ArrayList<JBattleEffect> appliedEffects = new ArrayList<>();
-				
+
 				JBattleEffect eff = null;
 				if ((eff = itemUse.getEffects()) != null && eff.isEffected(target))
 				{
@@ -325,7 +325,7 @@ public class BattleResults implements Serializable
 				}
 
 				br.targetEffects.add(appliedEffects);
-				
+
 				for (JBattleEffect effect : appliedEffects)
 				{
 					String effectText = eff.effectStartedText(attacker, target);
@@ -382,6 +382,10 @@ public class BattleResults implements Serializable
 		// The maximum exp you can ever get is 49
 		expGained = Math.min(49, expGained);
 
+		// In optimize mode no exp should be gained
+		if (CommRPG.BATTLE_MODE_OPTIMIZE)
+			expGained = 0;
+		
 		if (attacker.isHero())
 		{
 			if (!br.attackerDeath)
@@ -431,7 +435,7 @@ public class BattleResults implements Serializable
 				text = jBattleFunctions.getDodgeText(attacker, target);
 			else
 				text = jBattleFunctions.getBlockText(attacker, target);
-			br.targetEffects.add(null);
+			br.targetEffects.add(new ArrayList<JBattleEffect>());
 			br.attackerHPDamage.add(0);
 			br.attackerMPDamage.add(0);
 			br.dodged.add(true);
@@ -471,17 +475,21 @@ public class BattleResults implements Serializable
 			br.mpDamage.add(0);
 
 			ArrayList<JBattleEffect> appliedEffects = new ArrayList<>();
-			
-			JBattleEffect eff = null;
-			if ((eff = attacker.getAttackEffect()) != null && eff.isEffected(target))
+
+			// This spell will NOT kill the target so effects should still be applied
+			if (target.getCurrentHP() + damage > 0)
 			{
-				appliedEffects.add(eff);
-				Log.debug(target.getName() + " was affected by " + eff.getBattleEffectId());
-				String effectText = eff.effectStartedText(attacker, target);
-				if (effectText != null)
-					text = text + " " + effectText;
+				JBattleEffect eff = null;
+				if ((eff = attacker.getAttackEffect()) != null && eff.isEffected(target))
+				{
+					appliedEffects.add(eff);
+					Log.debug(target.getName() + " was affected by " + eff.getBattleEffectId());
+					String effectText = eff.effectStartedText(attacker, target);
+					if (effectText != null)
+						text = text + " " + effectText;
+				}
 			}
-			
+
 			br.targetEffects.add(appliedEffects);
 
 			br.attackerHPDamage.add(0);
@@ -538,8 +546,13 @@ public class BattleResults implements Serializable
 	}
 	*/
 
-	private static int getExperienceByDamage(int damage, int attackerLevel, CombatSprite target)
+	private static int getExperienceByDamage(int damage, CombatSprite attacker, CombatSprite target)
 	{
+		int attackerLevel = attacker.getLevel();
+		if (attacker.isPromoted())
+		{
+			attackerLevel += 10;
+		}
 		return GlobalPythonFactory.createJBattleFunctions().getExperienceGainedByDamage(damage, attackerLevel, target);
 		/*
 		int maxExp = Math.max(1, Math.min(49, (target.getLevel() - attackerLevel) * 7 + 35));

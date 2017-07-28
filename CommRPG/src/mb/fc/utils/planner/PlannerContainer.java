@@ -9,7 +9,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 import mb.fc.cinematic.event.CinematicEvent;
-import mb.fc.loading.TextParser;
+import mb.fc.engine.CommRPG;
 import mb.fc.utils.XMLParser;
 import mb.fc.utils.XMLParser.TagArea;
 import mb.fc.utils.planner.cinematic.CinematicTimeline;
@@ -86,7 +86,7 @@ public class PlannerContainer implements ActionListener
 			{
 				ArrayList<PlannerContainer> pcs = new ArrayList<PlannerContainer>();
 				pcs.add(this);
-				ArrayList<String> results = PlannerFrame.export(pcs);
+				ArrayList<String> results = PlannerIO.export(pcs);
 
 				ArrayList<TagArea> tas = XMLParser.process(results);
 				if (tas.size() > 0)
@@ -94,14 +94,14 @@ public class PlannerContainer implements ActionListener
 					ArrayList<CinematicEvent> initEvents = new ArrayList<CinematicEvent>();
 					if (plannerGraph == null)
 					{
-						ArrayList<CinematicEvent> ces = TextParser.parseCinematicEvents(tas.get(0), initEvents,
+						ArrayList<CinematicEvent> ces = CommRPG.TEXT_PARSER.parseCinematicEvents(tas.get(0), initEvents,
 								new HashSet<String>(), new HashSet<String>(), new HashSet<String>());
 						ces.addAll(0, initEvents);
 						plannerGraph = new PlannerTimeBarViewer(ces, new CinematicTimeline(), Integer.parseInt(tas.get(0).getAttribute("camerax")), Integer.parseInt(tas.get(0).getAttribute("cameray")));
 					}
 					else
 					{
-						ArrayList<CinematicEvent> ces = TextParser.parseCinematicEvents(tas.get(0), initEvents,
+						ArrayList<CinematicEvent> ces = CommRPG.TEXT_PARSER.parseCinematicEvents(tas.get(0), initEvents,
 								new HashSet<String>(), new HashSet<String>(), new HashSet<String>());
 						ces.addAll(0, initEvents);
 

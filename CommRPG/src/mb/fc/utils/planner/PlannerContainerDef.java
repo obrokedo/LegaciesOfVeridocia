@@ -6,12 +6,12 @@ public class PlannerContainerDef
 {
 	private PlannerLineDef definingLine;
 	private ArrayList<PlannerLineDef> allowableLines;
-	private ArrayList<ArrayList<String>> listOfLists;
+	private ArrayList<ArrayList<PlannerReference>> listOfLists;
 	private int writeToIndex;
 
 	public PlannerContainerDef(PlannerLineDef definingLine,
 			ArrayList<PlannerContainerDef> allowableContainers,
-			ArrayList<PlannerLineDef> allowableLines, ArrayList<ArrayList<String>> listOfLists,
+			ArrayList<PlannerLineDef> allowableLines, ArrayList<ArrayList<PlannerReference>> listOfLists,
 			int writeToIndex)
 	{
 		this.definingLine = definingLine;
@@ -35,12 +35,12 @@ public class PlannerContainerDef
 	 * @return the "list of lists" that contain the name of every item definied so that they
 	 * may be refered to by REFER tags.
 	 */
-	public ArrayList<String> getDataLines()
+	public ArrayList<PlannerReference> getDataLines()
 	{
 		return listOfLists.get(writeToIndex);
 	}
 
-	public ArrayList<ArrayList<String>> getListOfLists() {
+	public ArrayList<ArrayList<PlannerReference>> getListOfLists() {
 		return listOfLists;
 	}
 }

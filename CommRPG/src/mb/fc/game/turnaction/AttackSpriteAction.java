@@ -34,7 +34,7 @@ public class AttackSpriteAction extends TurnAction
 	}
 
 	@Override
-	public boolean perform(TurnManager turnManager, StateInfo stateInfo) {
+	public boolean perform(int delta, TurnManager turnManager, StateInfo stateInfo) {
 		if (!turnManager.getCurrentSprite().isHero())
 			stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, "menuselect", 1f, false));
 		ArrayList<CombatSprite> targArray = new ArrayList<>();

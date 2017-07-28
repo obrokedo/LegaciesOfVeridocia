@@ -29,13 +29,17 @@ public class Message implements Serializable
 			case SOUND_EFFECT:
 			case MOVETO_SPRITELOC:
 			case OVERLAND_MOVE_MESSAGE:
+			case NEXT_TURN:
 				immediate = true;
 				break;
 			case SHOW_BATTLEMENU:
 			case SHOW_SPELLMENU:
 			case SHOW_ITEM_MENU:
 			case SHOW_ITEM_OPTION_MENU:
+				internal = true;
+				break;
 			case INTIIALIZE:
+				immediate = true;
 				internal = true;
 				break;
 			default:

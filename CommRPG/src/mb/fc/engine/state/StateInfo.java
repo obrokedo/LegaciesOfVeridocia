@@ -7,14 +7,16 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Stack;
 
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.util.Log;
 
+import mb.fc.engine.message.BooleanMessage;
 import mb.fc.engine.message.IntMessage;
 import mb.fc.engine.message.LoadMapMessage;
 import mb.fc.engine.message.Message;
 import mb.fc.engine.message.MessageType;
+import mb.fc.engine.message.SpriteContextMessage;
 import mb.fc.game.Camera;
+import mb.fc.game.exception.BadResourceException;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.hudmenu.Panel.PanelType;
 import mb.fc.game.hudmenu.WaitPanel;
@@ -26,11 +28,9 @@ import mb.fc.game.menu.Menu;
 import mb.fc.game.persist.ClientProfile;
 import mb.fc.game.persist.ClientProgress;
 import mb.fc.game.sprite.CombatSprite;
-import mb.fc.game.sprite.Door;
 import mb.fc.game.sprite.Sprite;
 import mb.fc.game.sprite.SpriteZComparator;
-import mb.fc.game.trigger.TriggerLocation;
-import mb.fc.game.ui.FCGameContainer;
+import mb.fc.game.ui.PaddedGameContainer;
 import mb.fc.loading.FCResourceManager;
 import mb.fc.map.Map;
 import mb.fc.map.MapObject;
@@ -58,7 +58,6 @@ public class StateInfo
 	private PersistentStateInfo psi;
 
 	// These values need to be reinitialized each time a map is loaded
-	private ArrayList<TriggerLocation> mapTriggers;
 	private ArrayList<Sprite> sprites;
 	private ArrayList<CombatSprite> combatSprites;
 	private ArrayList<Panel> panels;
@@ -75,13 +74,8 @@ public class StateInfo
 	/* These values are retrieved from the persistent */
 	/* state info									  */
 	/**************************************************/
-	private Camera camera;
-	private FCGameContainer gc;
-	private Graphics graphics;
 	private ArrayList<CombatSprite> heroes;
 	private boolean showAttackCinematic = false;
-
-	private String currentMap;
 
 	public StateInfo(PersistentStateInfo psi, boolean isCombat, boolean isCinematic)
 	{
@@ -97,15 +91,8 @@ public class StateInfo
 		this.managers = new ArrayList<Manager>();
 		this.messagesToProcess = new ArrayList<Message>();
 		this.newMessages = new ArrayList<Message>();
-		this.mapTriggers = new ArrayList<TriggerLocation>();
 		this.fcInput = new FCInput();
 		this.heroes = new ArrayList<>();
-
-		camera = psi.getCamera();
-		gc = psi.getGc();
-		graphics = psi.getGraphics();
-
-		this.currentMap = psi.getClientProgress().getMap();
 	}
 
 	/************************/
@@ -125,18 +112,53 @@ public class StateInfo
 		initializeSystems();
 
 		if (isCombat)
-			this.heroes.addAll(getClientProfile().getHeroes());
+			this.heroes.addAll(getClientProfile().getHeroesInParty());
 		else
-			this.heroes.addAll(getClientProfile().getLeaderList());
+			this.heroes.add(getClientProfile().getMainCharacter());
+		
+		/*
+		 * If the first time into the game we start with a battle then the
+		 * client progress will say that we are in battle, but we don't actually have
+		 * any battle information yet (current turn, sprites...), so check
+		 * to make sure we're not in this case which would cause us to avoid
+		 * loading.
+		 * 
+		 * Technically we could use "isCombat" variable as well, but we'd still need
+		 * to check the current turn
+		 */
+		boolean isBattleInitialized = false;
+		if (psi.getClientProgress().isBattle() && psi.getClientProgress().getCurrentTurn() != null)
+		{
+			Log.debug("Initializing battle from load");
+			isBattleInitialized = true;
+			/*
+			 * Set the combat sprites and current sprite for this battle. Although it may be
+			 * reasonably assumed that the CombatSprites stored in the client progress would
+			 * be the same (in memory) as the CombatSprites in the client profile, this is not
+			 * the case. 
+			 */
+			this.addAllCombatSprites(psi.getClientProgress().getBattleSprites(this));
+			for (CombatSprite cs : this.combatSprites)
+			{
+				if (cs.getId() == psi.getClientProgress().getCurrentTurn())
+				{
+					this.currentSprite = cs;
+					break;
+				}
+			}
+		}
+		else if (isCombat)
+		{
+			Log.debug("Initializing NEW battle");
+		}
 
-
-		sendMessage(MessageType.INTIIALIZE);
+		sendMessage(new BooleanMessage(MessageType.INTIIALIZE, isBattleInitialized));
 
 		if (this.getClientProgress().getRetriggerablesByMap() != null)
 			for (Integer triggerId : this.getClientProgress().getRetriggerablesByMap())
 				getResourceManager().getTriggerEventById(triggerId).perform(this);
 
-		gc.getInput().addKeyListener(fcInput);
+		psi.getGc().getInput().addKeyListener(fcInput);
 
 		if (psi.isOnline())
 			sendMessage(MessageType.WAIT);
@@ -144,8 +166,18 @@ public class StateInfo
 		{
 			initialized = true;
 			if (isCombat)
-				// Start the whole battle
-				sendMessage(MessageType.NEXT_TURN);
+			{
+				// If the battle initialized just restart the current turn
+				if (isBattleInitialized)
+				{
+					sendMessage(new SpriteContextMessage(MessageType.COMBATANT_TURN, currentSprite), true);
+				}
+				else
+				{
+					// Start the whole battle
+					sendMessage(MessageType.NEXT_TURN);
+				}
+			}
 		}
 	}
 
@@ -153,7 +185,6 @@ public class StateInfo
 	{
 		Log.debug("Initialize Systems");
 
-		mapTriggers.clear();
 		sprites.clear();
 		combatSprites.clear();
 		panels.clear();
@@ -167,9 +198,7 @@ public class StateInfo
 
 		for (Manager m : managers)
 			m.initializeSystem(this);
-		initializeMapObjects();
-
-		this.currentMap = psi.getClientProgress().getMap();
+		this.getCurrentMap().initializeObjects(isCombat, this);
 
 		if (!isCinematic)
 		{
@@ -177,42 +206,6 @@ public class StateInfo
 			psi.getResourceManager().getTriggerEventById(0).perform(this);
 		}
 
-	}
-
-	private void initializeMapObjects()
-	{
-		int doorId = 500;
-		for (MapObject mo : getResourceManager().getMap().getMapObjects())
-		{
-			if (!isCombat && mo.getKey().equalsIgnoreCase("trigger"))
-			{
-				mapTriggers.add(new TriggerLocation(this, mo));
-			}
-			else if (isCombat && mo.getKey().equalsIgnoreCase("battletrigger"))
-			{
-				mapTriggers.add(new TriggerLocation(this, mo));
-			}
-			else if (mo.getKey().equalsIgnoreCase("sprite"))
-			{
-				addSprite(mo.getSprite(this));
-			}
-			else if (mo.getKey().equalsIgnoreCase("door"))
-			{
-				Door door = (Door) mo.getDoor(this, doorId++);
-				addSprite(door);
-				mapTriggers.add(new TriggerLocation(this, mo, door));
-			}
-			else if (mo.getKey().equalsIgnoreCase("searcharea"))
-			{
-				addSprite(mo.getSearchArea(this));
-			}
-			/*
-			else if (mo.getKey().equalsIgnoreCase("roof"))
-			{
-				addSprite(mo.getSprite(this));
-			}
-			*/
-		}
 	}
 
 	public void registerManager(Manager m)
@@ -261,7 +254,6 @@ public class StateInfo
 	public void sendMessage(MessageType messageType)
 	{
 		sendMessage(new Message(messageType));
-		System.out.println("HERE");
 	}
 
 	public void sendMessage(MessageType messageType, boolean ifHost)
@@ -295,23 +287,31 @@ public class StateInfo
 					sendMessage(MessageType.PAUSE_MUSIC);
 
 					LoadMapMessage lmm = (LoadMapMessage) m;
-					psi.loadMap(lmm.getMap(), lmm.getLocation());
+					psi.loadMap(lmm.getMapData(), lmm.getMap(), lmm.getLocation());
 					break MESSAGES;
 				case START_BATTLE:
 					sendMessage(MessageType.PAUSE_MUSIC);
 
 					LoadMapMessage lmb = (LoadMapMessage) m;
-					psi.loadBattle(lmb.getBattle(), lmb.getMap(), lmb.getLocation(), lmb.getBattleBG());
+					psi.loadBattle(lmb.getMapData(), lmb.getMap(),lmb.getLocation(), lmb.getBattleBG());
 					break MESSAGES;
 				case LOAD_CINEMATIC:
 					sendMessage(MessageType.PAUSE_MUSIC);
 
 					LoadMapMessage lmc = (LoadMapMessage) m;
-					psi.loadCinematic(lmc.getMap(), lmc.getCinematicID());
+					psi.loadCinematic(lmc.getMapData(), lmc.getMap(), lmc.getCinematicID());
 					break;
 				case SAVE:
 					getClientProfile().serializeToFile();
-					getClientProgress().serializeToFile(currentMap, "priest");
+					getClientProgress().serializeToFile();
+					break;
+				case SAVE_BATTLE:
+					getClientProgress().setBattle(true);
+					getClientProgress().setBattleSprites(combatSprites);
+					getClientProgress().setCurrentTurn(currentSprite);
+					getClientProfile().serializeToFile();
+					getClientProgress().serializeToFile();
+					System.exit(0);
 					break;
 				case COMPLETE_QUEST:
 					this.setQuestComplete(((IntMessage) m).getValue());
@@ -486,27 +486,28 @@ public class StateInfo
 	/****************************/
 	/* Plot Progression Methods	*/
 	/****************************/
-	public void checkTriggersMovemenet(int mapX, int mapY, boolean immediate)
+	public void checkTriggersMovement(int mapX, int mapY, boolean immediate)
 	{
-		for (TriggerLocation trigger : mapTriggers)
+		for (MapObject mo : this.getCurrentMap().getMapObjects())
 		{
-			if (trigger.contains(mapX, mapY))
+			if (mo.contains(mapX, mapY))
 			{
-				trigger.perform(this, immediate);
+				this.getResourceManager().checkTriggerCondtions(mo.getName(), immediate, this);
 			}
 		}
+		this.getResourceManager().checkTriggerCondtions(null, false, this);
 
 		this.getResourceManager().getMap().checkRoofs(mapX, mapY);
 	}
 	
 	public void checkTriggersEnemyDeath(CombatSprite cs)
 	{
-		getResourceManager().checkTriggerCondtions(this);
+		getResourceManager().checkTriggerCondtions(null, false, this);
 	}
 	
 	public void checkTriggersHeroDeath(CombatSprite cs)
 	{
-		getResourceManager().checkTriggerCondtions(this);
+		getResourceManager().checkTriggerCondtions(null, false, this);
 	}
 
 	public void setQuestComplete(int id)
@@ -581,6 +582,23 @@ public class StateInfo
 	/****************************/
 	/* General Mutator Methods	*/
 	/****************************/
+
+	public CombatSprite getHeroById(int id)
+	{
+		for (CombatSprite cs : getAllHeroes())
+			if (cs.getId() == id)
+				return cs;
+		throw new BadResourceException("Attempted to access a hero with ID: " + id + " who does not exist");
+	}
+	
+	public CombatSprite getCombatantById(int id)
+	{
+		for (CombatSprite cs : combatSprites)
+			if (cs.getId() == id)
+				return cs;
+		return null;
+	}
+	
 	// Special care needs to be taken to ensure that the sprites and combat sprites are in sync with each other.
 	// Thus the actual lists should never be directly exposed
 
@@ -618,9 +636,9 @@ public class StateInfo
 
 	// I hate that this has to be here, but I don't have a good way of knowing when a sprite has been removed via an iterator
 	// so I need to have it removed programatically
-
 	public void removeCombatSprite(CombatSprite cs)
 	{
+		sprites.remove(cs);
 		combatSprites.remove(cs);
 	}
 
@@ -629,7 +647,16 @@ public class StateInfo
 		sprites.addAll(ss);
 		combatSprites.addAll(ss);
 	}
-
+	
+	public void addAllCombatSprites(Iterable<CombatSprite> css)
+	{
+		for (CombatSprite ss : css)
+		{
+			sprites.add(ss);
+			combatSprites.add(ss);
+		}
+	}
+	
 	public FCInput getInput() {
 		return fcInput;
 	}
@@ -651,15 +678,11 @@ public class StateInfo
 	}
 
 	public Camera getCamera() {
-		return camera;
+		return psi.getCamera();
 	}
 
-	public FCGameContainer getGc() {
-		return gc;
-	}
-
-	public Graphics getGraphics() {
-		return graphics;
+	public PaddedGameContainer getFCGameContainer() {
+		return psi.getGc();
 	}
 
 	public boolean isCombat() {
@@ -669,8 +692,12 @@ public class StateInfo
 	public void setResourceManager(FCResourceManager resourceManager) {
 		psi.setResourceManager(resourceManager);
 	}
+	
+	public Iterable<CombatSprite> getAllHeroes() {
+		return this.psi.getClientProfile().getHeroes();
+	}
 
-	public ArrayList<CombatSprite> getHeroes() {
+	public Iterable<CombatSprite> getHeroesInState() {
 		return heroes;
 	}
 
@@ -706,7 +733,7 @@ public class StateInfo
 		this.currentSprite = currentSprite;
 	}
 
-	public PersistentStateInfo getPsi() {
+	public PersistentStateInfo getPersistentStateInfo() {
 		return psi;
 	}
 
@@ -721,30 +748,4 @@ public class StateInfo
 			this.isWaiting = true;
 		}
 	}
-
-	/*
-	public Music getPlayingMusic() {
-		return playingMusic;
-	}
-
-	public void setPlayingMusic(Music playingMusic) {
-		this.playingMusic = playingMusic;
-	}
-
-	public String getPlayingMusicName() {
-		return playingMusicName;
-	}
-
-	public void setPlayingMusicName(String playingMusicName) {
-		this.playingMusicName = playingMusicName;
-	}
-
-	public float getPlayingMusicPostion() {
-		return playingMusicPostion;
-	}
-
-	public void setPlayingMusicPostion(float playingMusicPostion) {
-		this.playingMusicPostion = playingMusicPostion;
-	}
-	*/
 }

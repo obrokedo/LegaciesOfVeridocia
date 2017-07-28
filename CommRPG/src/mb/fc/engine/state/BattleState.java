@@ -1,7 +1,14 @@
 package mb.fc.engine.state;
 
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.state.StateBasedGame;
+
 import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.MessageType;
+import mb.fc.game.manager.CinematicManager;
 import mb.fc.game.manager.InitiativeManager;
 import mb.fc.game.manager.KeyboardManager;
 import mb.fc.game.manager.MenuManager;
@@ -9,18 +16,13 @@ import mb.fc.game.manager.PanelManager;
 import mb.fc.game.manager.SoundManager;
 import mb.fc.game.manager.SpriteManager;
 import mb.fc.game.manager.TurnManager;
+import mb.fc.game.ui.PaddedGameContainer;
 import mb.fc.loading.FCResourceManager;
 import mb.fc.loading.LoadableGameState;
 import mb.fc.renderer.MenuRenderer;
 import mb.fc.renderer.PanelRenderer;
 import mb.fc.renderer.SpriteRenderer;
 import mb.fc.renderer.TileMapRenderer;
-
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.state.StateBasedGame;
 
 /**
  * State that drives and renders battle movement and menus. This does not
@@ -40,6 +42,7 @@ public class BattleState extends LoadableGameState
 	private MenuManager menuManager;
 	private KeyboardManager keyboardManager;
 	private SoundManager soundManager;
+	private CinematicManager cinematicManager;
 
 	private InitiativeManager initManager;
 	private TurnManager turnManager;
@@ -81,6 +84,8 @@ public class BattleState extends LoadableGameState
 		stateInfo.registerManager(turnManager);
 		this.soundManager = new SoundManager();
 		stateInfo.registerManager(soundManager);
+		this.cinematicManager = new CinematicManager(false);
+		stateInfo.registerManager(cinematicManager);
 	}
 
 
@@ -131,29 +136,30 @@ public class BattleState extends LoadableGameState
 	}
 
 	@Override
-	public void render(GameContainer container, StateBasedGame game, Graphics g)
-			throws SlickException {
+	public void doRender(PaddedGameContainer container, StateBasedGame game, Graphics g) {
 		if (stateInfo.isInitialized())
 		{
 			float xOffset = stateInfo.getCamera().getLocationX() % stateInfo.getCurrentMap().getTileRenderWidth();
 			float yOffset = stateInfo.getCamera().getLocationY() % stateInfo.getCurrentMap().getTileRenderHeight();
 
-			tileMapRenderer.render(xOffset, yOffset, stateInfo.getCamera(), g, stateInfo.getGc());
+			tileMapRenderer.render(xOffset, yOffset, stateInfo.getCamera(), g, stateInfo.getFCGameContainer());
 			turnManager.render(g);
 			spriteRenderer.render(g);
-			tileMapRenderer.renderForeground(xOffset, yOffset, stateInfo.getCamera(), g, stateInfo.getGc());
+			cinematicManager.render(g);
+			tileMapRenderer.renderForeground(xOffset, yOffset, stateInfo.getCamera(), g, stateInfo.getFCGameContainer());
 			turnManager.renderCursor(g);
-			panelRenderer.render();
-			menuRenderer.render();
+			cinematicManager.renderPostEffects(g);
+			panelRenderer.render(g);
+			menuRenderer.render(g);
 		}
 	}
 
 	@Override
-	public void update(GameContainer container, StateBasedGame game, int delta)
+	public void doUpdate(PaddedGameContainer container, StateBasedGame game, int delta)
 			throws SlickException
 	{
 		if (CommRPG.TEST_MODE_ENABLED)
-			delta *= 15;
+			delta *= CommRPG.getTestMultiplier();
 
 		// delta /= 2;
 
@@ -161,13 +167,15 @@ public class BattleState extends LoadableGameState
 		if (stateInfo.isInitialized() && !stateInfo.isWaiting())
 		{
 			menuManager.update(delta);
-			if (!menuManager.isBlocking())
+			cinematicManager.update(delta);
+			if (!menuManager.isBlocking() && !cinematicManager.isBlocking())
 			{
 				//hudMenuManager.update();
 				keyboardManager.update();
+				turnManager.update(game, delta);
 			}
 
-			turnManager.update(game, delta);
+			stateInfo.getCurrentMap().update(delta);
 			spriteManager.update(delta);
 			soundManager.update(delta);
 
@@ -196,6 +204,11 @@ public class BattleState extends LoadableGameState
 			}
 
 			stateInfo.getInput().update(delta);
+		}
+		
+		if (stateInfo.getInput().isKeyDown(Input.KEY_F8))
+		{
+			stateInfo.sendMessage(MessageType.SAVE_BATTLE);
 		}
 	}
 

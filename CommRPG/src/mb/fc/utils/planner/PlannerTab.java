@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Vector;
 
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -33,6 +34,7 @@ public class PlannerTab implements ActionListener, TreeSelectionListener
 	private JPanel listPanel;
 	private String name;
 	private JPanel uiAspect;
+	private boolean renamingItem = false;
 
 	public PlannerTab(String name, Hashtable<String, PlannerContainerDef> containersByName,
 			String[] containers, int refersTo, PlannerFrame plannerFrame)
@@ -61,6 +63,10 @@ public class PlannerTab implements ActionListener, TreeSelectionListener
 
 		plannerTree = new PlannerTree(name, listPC, this, new TabAttributeTransferHandler(listPC), this);
 		uiAspect.add(plannerTree.getUiAspect(), BorderLayout.LINE_START);
+		JButton bigSaveButton = new JButton("Save");
+		bigSaveButton.setActionCommand("save");
+		bigSaveButton.addActionListener(this);
+		uiAspect.add(bigSaveButton, BorderLayout.PAGE_END);
 	}
 
 	@Override
@@ -75,6 +81,8 @@ public class PlannerTab implements ActionListener, TreeSelectionListener
 		else if (command.equalsIgnoreCase("remove"))
 		{
 			removeContainer(plannerTree.getSelectedIndex());
+		} else if (command.equalsIgnoreCase("save")) {
+			commitChanges();
 		}
 	}
 
@@ -88,7 +96,7 @@ public class PlannerTab implements ActionListener, TreeSelectionListener
 		PlannerContainer newPC = new PlannerContainer(containersByName.get(type), this);
 		listPC.add(newPC);
 		PlannerContainerDef pcd = containersByName.get(type);
-		pcd.getDataLines().add(newName);
+		pcd.getDataLines().add(new PlannerReference(newName));
 		newPC.getDefLine().getValues().add(newName);
 		System.out.println("ADD ELEMENT");
 		plannerTree.addItem(newName, listPC.size() - 1);
@@ -108,7 +116,7 @@ public class PlannerTab implements ActionListener, TreeSelectionListener
 		PlannerContainerDef pcd = containersByName.get(type);
 		// Update the "list of lists" that contain the name of every item definied so that they
 		// may be refered to by REFER tags
-		pcd.getDataLines().add(newName);
+		pcd.getDataLines().add(new PlannerReference(newName));
 		System.out.println("DUP ELEMENT");
 		plannerTree.addItem(newName, listPC.size() - 1);
 		plannerTree.refreshItem(dupPC, listPC.size() - 1);
@@ -123,9 +131,7 @@ public class PlannerTab implements ActionListener, TreeSelectionListener
 		if (rc != JOptionPane.OK_OPTION)
 			return;
 		plannerTree.removeItem(index);
-		plannerFrame.removeReferences(refersTo, index);
-		currentPC.getPcdef().getDataLines().remove(index);
-		uiAspect.remove(currentPC.getDefLine().getDefiningPanel());
+		PlannerReference.removeReferences(refersTo, index);
 		uiAspect.remove(currentPCScroll);
 		uiAspect.repaint();
 
@@ -149,29 +155,17 @@ public class PlannerTab implements ActionListener, TreeSelectionListener
 			uiAspect.remove(currentPCScroll);
 		}
 
-		if (currentPC != null && currentPC.getDefLine() != null)
-		{
-			System.out.println("REMOVE DEF LINE");
-			uiAspect.remove(currentPC.getDefLine().getDefiningPanel());
-		}
-
-		for (int i = 0; i < uiAspect.getComponentCount(); i++)
-		{
-			if (uiAspect.getComponent(i) instanceof PlannerTimeBarViewer)
-			{
-				uiAspect.remove(i);
-				i--;
-			}
-		}
-
 		if (currentPC != null)
 		{
 			currentPC.commitChanges();
-			if (!currentPC.getDescription().equals(currentPC.getPcdef().getDataLines().get(selectedPC)))
+			// Check to see if the description (name) has been renamed
+			if (!currentPC.getDescription().equalsIgnoreCase(plannerTree.getTreeLabel(selectedPC)))
 			{
-				plannerTree.updateTreeValues(name, listPC);
-
-				currentPC.getPcdef().getDataLines().set(selectedPC, currentPC.getDescription());
+				System.out.println("OH MY I'M RENAMED");
+				renamingItem = true;
+				plannerTree.updateTreeLabel(selectedPC, currentPC.getDescription());
+				renamingItem = false;
+				currentPC.getPcdef().getDataLines().get(selectedPC).setName(currentPC.getDescription());
 				uiAspect.validate();
 			}
 		}
@@ -191,14 +185,7 @@ public class PlannerTab implements ActionListener, TreeSelectionListener
 			currentPCScroll = new JScrollPane(panel);
 			currentPCScroll.getVerticalScrollBar().setUnitIncrement(75);
 
-			uiAspect.add(currentPC.getDefLine().getDefiningPanel(), BorderLayout.PAGE_END);
 			uiAspect.add(currentPCScroll, BorderLayout.CENTER);
-
-			if (currentPC.getDefLine().getPlDef().getTag().equalsIgnoreCase("Cinematic") && currentPC.getPlannerGraph() != null &&
-					PlannerFrame.SHOW_CIN)
-			{
-				uiAspect.add(currentPC.getPlannerGraph(), BorderLayout.PAGE_END);
-			}
 
 			currentPCScroll.revalidate();
 			uiAspect.validate();
@@ -324,7 +311,9 @@ public class PlannerTab implements ActionListener, TreeSelectionListener
 
 	@Override
 	public void valueChanged(TreeSelectionEvent tse) {
-		if (tse.getNewLeadSelectionPath() != null && plannerTree.getSelectedIndex() != -1)
+		if (tse.getNewLeadSelectionPath() != null && 
+				plannerTree.getSelectedIndex() != -1 && 
+				!renamingItem)
 		{
 			setNewValues();
 		}

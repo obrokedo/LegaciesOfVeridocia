@@ -2,6 +2,7 @@ package mb.fc.game.menu;
 
 import java.util.ArrayList;
 
+import mb.fc.engine.CommRPG;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.input.FCInput;
@@ -9,7 +10,7 @@ import mb.fc.game.listener.MenuListener;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.ui.Button;
 import mb.fc.game.ui.CellRenderer;
-import mb.fc.game.ui.FCGameContainer;
+import mb.fc.game.ui.PaddedGameContainer;
 import mb.fc.game.ui.Table;
 
 import org.newdawn.slick.Color;
@@ -24,9 +25,9 @@ public class PriestMenu2 extends Menu implements CellRenderer<CombatSprite>, Men
 	private int x;
 	private StateInfo stateInfo;
 
-	public PriestMenu2(StateInfo stateInfo, GameContainer gc, ArrayList<CombatSprite> heroes) {
+	public PriestMenu2(StateInfo stateInfo, GameContainer gc, Iterable<CombatSprite> heroes) {
 		super(PanelType.PANEL_PRIEST);
-		x = (gc.getWidth() - 390) / 2;
+		x = (CommRPG.GAME_SCREEN_SIZE.width - 390) / 2;
 		heroNames = new Table<CombatSprite>(x + 15, 215, new int[] {150}, new String[] {"Names"}, 7, heroes, this);
 		buttons = new ArrayList<Button>();
 		buttons.add(new Button(x + 190, 215, 180, 25, "Save Game"));
@@ -71,13 +72,13 @@ public class PriestMenu2 extends Menu implements CellRenderer<CombatSprite>, Men
 	}
 
 	@Override
-	public void render(FCGameContainer gc, Graphics graphics)
+	public void render(PaddedGameContainer gc, Graphics graphics)
 	{
 		Panel.drawPanelBox(x, 200, 390, 270, graphics);
 		heroNames.render(gc, graphics);
 
 		for (Button b : buttons)
-			b.render(gc, graphics);
+			b.render( graphics);
 
 		graphics.setColor(Panel.COLOR_FOREFRONT);
 		graphics.drawString("Gold: " + stateInfo.getClientProfile().getGold(), x + 190, 415);

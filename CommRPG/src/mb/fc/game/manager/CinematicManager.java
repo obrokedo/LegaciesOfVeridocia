@@ -9,6 +9,12 @@ import org.newdawn.slick.Graphics;
 public class CinematicManager extends Manager
 {
 	private Cinematic cinematic;
+	private boolean initializeCamera = true;
+
+	public CinematicManager(boolean initializeCamera) {
+		super();
+		this.initializeCamera = initializeCamera;
+	}
 
 	@Override
 	public void initialize() {
@@ -30,19 +36,13 @@ public class CinematicManager extends Manager
 	public void render(Graphics g)
 	{
 		if (cinematic != null)
-			cinematic.render(g, stateInfo.getCamera(), stateInfo.getGc(), stateInfo);
-	}
-
-	public void renderMenu(Graphics g)
-	{
-		if (cinematic != null)
-			cinematic.renderMenus(stateInfo.getGc(), g);
+			cinematic.render(g, stateInfo.getCamera(), stateInfo.getFCGameContainer(), stateInfo);
 	}
 
 	public void renderPostEffects(Graphics g)
 	{
 		if (cinematic != null)
-			cinematic.renderPostEffects(g, stateInfo.getCamera(), stateInfo.getGc(), stateInfo);
+			cinematic.renderPostEffects(g, stateInfo.getCamera(), stateInfo.getFCGameContainer(), stateInfo);
 	}
 
 	@Override
@@ -53,7 +53,11 @@ public class CinematicManager extends Manager
 			case SHOW_CINEMATIC:
 				IntMessage im = (IntMessage) message;
 				cinematic = stateInfo.getResourceManager().getCinematicById(im.getValue());
-				cinematic.initialize(stateInfo);
+				cinematic.initialize(stateInfo, initializeCamera);
+				break;
+			case CIN_NEXT_ACTION:
+				if (cinematic != null)
+					cinematic.nextAction(stateInfo);
 				break;
 			default:
 				break;

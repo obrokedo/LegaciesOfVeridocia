@@ -1,10 +1,11 @@
 package mb.fc.game.menu;
 
+import mb.fc.engine.CommRPG;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.input.FCInput;
 import mb.fc.game.listener.StringListener;
 import mb.fc.game.ui.Button;
-import mb.fc.game.ui.FCGameContainer;
+import mb.fc.game.ui.PaddedGameContainer;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -26,7 +27,7 @@ public class StringMenu extends Menu
 		super(PanelType.PANEL_STRING);
 		width = gc.getDefaultFont().getWidth(text) + 30;
 		this.text = text;
-		x = (gc.getWidth() - width) / 2;
+		x = (CommRPG.GAME_SCREEN_SIZE.width - width) / 2;
 		this.listener = listener;
 		okButton = new Button(width / 2 - 20 + x, 235, 40, 20, "Ok");
 		textField = new TextField(gc, gc.getDefaultFont(), x + 15, 195, width - 30, 25);
@@ -47,13 +48,13 @@ public class StringMenu extends Menu
 	}
 
 	@Override
-	public void render(FCGameContainer gc, Graphics graphics)
+	public void render(PaddedGameContainer gc, Graphics graphics)
 	{
 		graphics.setColor(Color.blue);
 		// Panel.drawPanelBox(x, 150, width, 120, graphics);
 		graphics.setColor(COLOR_FOREFRONT);
 		graphics.drawString(text, x + 15, 165);
-		okButton.render(gc, graphics);
+		okButton.render(graphics);
 		textField.render(gc, graphics);
 	}
 }

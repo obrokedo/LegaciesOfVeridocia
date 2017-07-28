@@ -1,12 +1,13 @@
 package mb.fc.game.manager;
 
-import mb.fc.engine.message.AudioMessage;
-import mb.fc.engine.message.IntMessage;
-import mb.fc.engine.message.Message;
-
 import org.newdawn.slick.Music;
 import org.newdawn.slick.MusicListener;
 import org.newdawn.slick.Sound;
+
+import mb.fc.engine.CommRPG;
+import mb.fc.engine.message.AudioMessage;
+import mb.fc.engine.message.IntMessage;
+import mb.fc.engine.message.Message;
 
 public class SoundManager extends Manager implements MusicListener
 {
@@ -90,6 +91,9 @@ public class SoundManager extends Manager implements MusicListener
 	@Override
 	public void recieveMessage(Message message)
 	{
+		if (CommRPG.MUTE_MUSIC)
+			return;
+		
 		switch (message.getMessageType())
 		{
 			case SOUND_EFFECT:

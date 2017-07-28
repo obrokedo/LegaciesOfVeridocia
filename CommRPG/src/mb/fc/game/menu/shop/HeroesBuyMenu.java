@@ -2,7 +2,8 @@ package mb.fc.game.menu.shop;
 
 import java.util.ArrayList;
 
-import mb.fc.engine.CommRPG;
+import org.newdawn.slick.Graphics;
+
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.item.EquippableItem;
 import mb.fc.game.item.Item;
@@ -10,8 +11,6 @@ import mb.fc.game.item.Item.EquippableDifference;
 import mb.fc.game.listener.MenuListener;
 import mb.fc.game.menu.HeroesStatMenu;
 import mb.fc.game.sprite.CombatSprite;
-
-import org.newdawn.slick.Graphics;
 
 public class HeroesBuyMenu extends HeroesStatMenu
 {
@@ -35,7 +34,7 @@ public class HeroesBuyMenu extends HeroesStatMenu
 		{
 			int type = ((EquippableItem) selectedShopItem).getItemType();
 
-			for (CombatSprite hero : stateInfo.getPsi().getClientProfile().getHeroes())
+			for (CombatSprite hero : stateInfo.getAllHeroes())
 			{
 				EquippableDifference ed = null;
 				if (hero.isEquippable((EquippableItem) selectedShopItem))
@@ -61,8 +60,8 @@ public class HeroesBuyMenu extends HeroesStatMenu
 	{
 		if (view == VIEW_DIFFS)
 		{
-			graphics.drawString(differences.get(index), xOffset + 92 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()],
-					yOffsetBot + (128 + 15 * (index - (selectedIndex < 12 ? 0 : selectedIndex - 11))) * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);
+			graphics.drawString(differences.get(index), xOffset + 92,
+					yOffsetBot + (128 + 15 * (index - (selectedIndex < 12 ? 0 : selectedIndex - 11))));
 		}
 	}
 

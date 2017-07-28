@@ -26,7 +26,7 @@ public class Table<T>
 	private int itemsPerScreen;
 	private CellRenderer<T> renderer;
 	
-	public Table(int x, int y, int[] columnWidths, String[] columnHeaders, int itemsPerScreen, ArrayList<T> items, CellRenderer<T> renderer)
+	public Table(int x, int y, int[] columnWidths, String[] columnHeaders, int itemsPerScreen, Iterable<T> items, CellRenderer<T> renderer)
 	{
 		int tableWidth = 0;
 		int tableHeight = (itemsPerScreen + 1) * 30;
@@ -48,7 +48,9 @@ public class Table<T>
 		this.itemsPerScreen = itemsPerScreen;
 		
 		this.columnHeaders = columnHeaders;
-		this.items = items;
+		this.items = new ArrayList<>();
+		for (T i : items)
+			this.items.add(i);
 		this.renderer = renderer;
 	}
 	

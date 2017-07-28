@@ -2,14 +2,13 @@ package mb.fc.loading;
 
 import java.util.Hashtable;
 
-import mb.fc.engine.CommRPG;
-import mb.fc.map.Map;
-
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.util.Log;
+
+import mb.fc.map.Map;
 
 public class TilesetParser
 {
@@ -19,7 +18,7 @@ public class TilesetParser
 		Image tileSheetImage = new Image(image, trans);
 		Log.debug("LOAD TILESET " + tileSheetImage);
 		tileSheetImage.setFilter(Image.FILTER_NEAREST);
-		SpriteSheet ss = new SpriteSheet(tileSheetImage.getScaledCopy(CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * tileResize), tileWidth, tileHeight);
+		SpriteSheet ss = new SpriteSheet(tileSheetImage.getScaledCopy(tileResize), tileWidth, tileHeight);
 		map.addTileset(ss, startIndex, tileWidth, tileHeight, landEffectByTileId);
 	}
 }

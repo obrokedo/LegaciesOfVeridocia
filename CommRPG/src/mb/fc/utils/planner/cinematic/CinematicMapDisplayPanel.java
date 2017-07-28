@@ -22,21 +22,24 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 
+import de.jaret.util.date.Interval;
+import de.jaret.util.date.JaretDate;
 import mb.fc.cinematic.event.CinematicEvent;
+import mb.fc.engine.CommRPG;
 import mb.fc.loading.PlannerMap;
-import mb.fc.loading.TextParser;
 import mb.fc.map.MapObject;
 import mb.fc.utils.XMLParser;
 import mb.fc.utils.XMLParser.TagArea;
 import mb.fc.utils.planner.PlannerContainer;
 import mb.fc.utils.planner.PlannerFrame;
+import mb.fc.utils.planner.PlannerIO;
 import mb.fc.utils.planner.PlannerTab;
 import mb.fc.utils.planner.PlannerTimeBarViewer;
 import mb.fc.utils.planner.PlannerTimeBarViewer.ActorBar;
+import mb.fc.utils.planner.PlannerTimeBarViewer.MovingSprite;
 import mb.fc.utils.planner.PlannerTimeBarViewer.StaticSprite;
 import mb.fc.utils.planner.PlannerTimeBarViewer.ZIntervalImpl;
-import de.jaret.util.date.Interval;
-import de.jaret.util.date.JaretDate;
+import mb.fc.utils.planner.PlannerTimeBarViewer.ZMoveIntervalImpl;
 
 public class CinematicMapDisplayPanel extends JPanel implements ActionListener, MouseListener, MouseMotionListener
 {
@@ -53,6 +56,7 @@ public class CinematicMapDisplayPanel extends JPanel implements ActionListener, 
 	private final Color SPRITE_LINE_COLOR = new Color(230, 230, 230);
 
 	private ArrayList<Point> actorLocations = new ArrayList<Point>();
+	private ArrayList<ZMoveIntervalImpl> actorMoving = new ArrayList<>();
 	private ArrayList<Point> spriteLocations = new ArrayList<Point>();
 	private int selectedActor = -1;
 	private int popupType = 0;
@@ -77,6 +81,7 @@ public class CinematicMapDisplayPanel extends JPanel implements ActionListener, 
 		systemPopup.add(createMenuItem("Fade to black"));
 		systemPopup.add(createMenuItem("Flash Screen"));
 		systemPopup.add(createMenuItem("Camera Pan"));
+		systemPopup.add(createMenuItem("Camera Move To Actor"));
 		systemPopup.add(createMenuItem("Shake Camera"));
 		systemPopup.add(createMenuItem("Show Speech Box"));
 		systemPopup.add(createMenuItem("Load Map"));
@@ -113,6 +118,7 @@ public class CinematicMapDisplayPanel extends JPanel implements ActionListener, 
 
 		actorMovePopup = new JPopupMenu();
 		actorMovePopup.add(createMenuItem("Halting Move"));
+		actorMovePopup.add(createMenuItem("Halting Move with Pathfinding"));
 		actorMovePopup.add(createMenuItem("Move"));
 		actorMovePopup.add(createMenuItem("Move Forced Facing"));
 		actorMovePopup.add(createMenuItem("Move Actor in Loop"));
@@ -168,6 +174,7 @@ public class CinematicMapDisplayPanel extends JPanel implements ActionListener, 
 	public ArrayList<ArrayList<String>> getActorValuesAtTime(int time, ArrayList<String> names)
 	{
 		actorLocations.clear();
+		actorMoving.clear();
 		ArrayList<ArrayList<String>> lol = new ArrayList<ArrayList<String>>();
 
 		ArrayList<Entry<String, ActorBar>> listOfActorEntrys = new ArrayList<>(timeline.rowsByName.entrySet());
@@ -187,13 +194,13 @@ public class CinematicMapDisplayPanel extends JPanel implements ActionListener, 
 			{
 				names.add(ab.getKey());
 
-				boolean moving = false;
-
-				Point actorPoint = ab.getValue().getActorLocationAtTime(time);
+				MovingSprite movingSprite = ab.getValue().getActorLocationAtTime(time);
+				Point actorPoint = movingSprite.currentPoint;
 
 				values.add("Current Location: " + actorPoint.x + " " + actorPoint.y);
 				// values.add("Actor is Moving: " + moving);
 				actorLocations.add(actorPoint);
+				actorMoving.add(movingSprite.moveInterval);
 
 				addIntervals(ab.getValue().dt.getIntervals(new JaretDate(time)), values);
 
@@ -204,17 +211,17 @@ public class CinematicMapDisplayPanel extends JPanel implements ActionListener, 
 		return lol;
 	}
 
-	public Point getActorLocationAtTime(int time, String name)
+	public MovingSprite getActorLocationAtTime(int time, String name)
 	{
 		if (!timeline.rowsByName.containsKey(name))
-			return new Point(0, 0);
+			return new MovingSprite(new Point(0, 0));
 
 		ActorBar ab = timeline.rowsByName.get(name);
 
 		if (ab.isActorInScene(time))
 			return ab.getActorLocationAtTime(time);
 
-		return new Point(0, 0);
+		return new MovingSprite(new Point(0, 0));
 	}
 
 	private void addIntervals(List<Interval> intervals, ArrayList<String> values)
@@ -246,16 +253,52 @@ public class CinematicMapDisplayPanel extends JPanel implements ActionListener, 
 		}
 
 		g.setColor(Color.red);
-		int i = 0;
-		for (Point ap : actorLocations)
+		for (int a = 0; a < actorLocations.size(); a++)
 		{
+			Point ap = actorLocations.get(a);
 			g.setColor(Color.red);
-			if (selectedActor != -1 && i == selectedActor)
+			if (selectedActor != -1 && a == selectedActor)
 				g.setColor(Color.yellow);
 			g.fillRect(ap.x, ap.y, plannerMap.getTileEffectiveWidth(), plannerMap.getTileEffectiveHeight());
 			g.setColor(Color.white);
 			g.drawRect(ap.x, ap.y, plannerMap.getTileEffectiveWidth(), plannerMap.getTileEffectiveHeight());
-			i++;
+			
+			ZMoveIntervalImpl zmi = actorMoving.get(a);
+			if (zmi != null)
+			{
+				g.setColor(Color.YELLOW);
+				if (zmi.isMoveDiag())
+				{
+					g.drawLine(ap.x + plannerMap.getTileEffectiveWidth() / 2, 
+							ap.y + plannerMap.getTileEffectiveWidth() / 2, 
+							zmi.getEndX() + plannerMap.getTileEffectiveWidth() / 2, 
+							zmi.getEndY() + plannerMap.getTileEffectiveWidth() / 2);
+				}
+				else if (zmi.isMoveHor())
+				{
+					g.drawLine(ap.x + plannerMap.getTileEffectiveWidth() / 2, 
+							ap.y + plannerMap.getTileEffectiveWidth() / 2, 
+							zmi.getEndX() + plannerMap.getTileEffectiveWidth() / 2, 
+							ap.y + plannerMap.getTileEffectiveWidth() / 2);
+					g.drawLine(zmi.getEndX() + plannerMap.getTileEffectiveWidth() / 2, 
+							ap.y + plannerMap.getTileEffectiveWidth() / 2, 
+							zmi.getEndX() + plannerMap.getTileEffectiveWidth() / 2, 
+							zmi.getEndY() + plannerMap.getTileEffectiveWidth() / 2);
+				}
+				else
+				{
+					g.drawLine(ap.x + plannerMap.getTileEffectiveWidth() / 2, 
+							ap.y + plannerMap.getTileEffectiveWidth() / 2, 
+							ap.x + plannerMap.getTileEffectiveWidth() / 2, 
+							zmi.getEndY() + plannerMap.getTileEffectiveWidth() / 2);
+					g.drawLine(ap.x + plannerMap.getTileEffectiveWidth() / 2, 
+							zmi.getEndY() + plannerMap.getTileEffectiveWidth() / 2, 
+							zmi.getEndX() + plannerMap.getTileEffectiveWidth() / 2, 
+							zmi.getEndY() + plannerMap.getTileEffectiveWidth() / 2);
+				}
+				
+				g.drawRect(zmi.getEndX(), zmi.getEndY(), plannerMap.getTileEffectiveWidth(), plannerMap.getTileEffectiveHeight());
+			}
 		}
 
 		g.setColor(Color.white);
@@ -400,13 +443,13 @@ public class CinematicMapDisplayPanel extends JPanel implements ActionListener, 
 		{
 			ArrayList<PlannerContainer> pcs = new ArrayList<PlannerContainer>();
 			pcs.add(currentPC);
-			ArrayList<String> results = PlannerFrame.export(pcs);
+			ArrayList<String> results = PlannerIO.export(pcs);
 
 			ArrayList<TagArea> tas = XMLParser.process(results);
 			if (tas.size() > 0)
 			{
 				ArrayList<CinematicEvent> initEvents = new ArrayList<CinematicEvent>();
-				ArrayList<CinematicEvent> ces = TextParser.parseCinematicEvents(tas.get(0), initEvents,
+				ArrayList<CinematicEvent> ces = CommRPG.TEXT_PARSER.parseCinematicEvents(tas.get(0), initEvents,
 						new HashSet<String>(), new HashSet<String>(), new HashSet<String>());
 				ces.addAll(0, initEvents);
 				timeline = new CinematicTimeline();

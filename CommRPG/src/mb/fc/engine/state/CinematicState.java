@@ -1,19 +1,25 @@
 package mb.fc.engine.state;
 
-import mb.fc.cinematic.Cinematic;
-import mb.fc.engine.CommRPG;
-import mb.fc.game.manager.SoundManager;
-import mb.fc.game.sprite.CombatSprite;
-import mb.fc.loading.FCResourceManager;
-import mb.fc.loading.LoadableGameState;
-import mb.fc.renderer.TileMapRenderer;
-
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
+
+import mb.fc.engine.CommRPG;
+import mb.fc.engine.message.IntMessage;
+import mb.fc.engine.message.MessageType;
+import mb.fc.game.manager.CinematicManager;
+import mb.fc.game.manager.MenuManager;
+import mb.fc.game.manager.SoundManager;
+import mb.fc.game.sprite.CombatSprite;
+import mb.fc.game.ui.PaddedGameContainer;
+import mb.fc.loading.FCResourceManager;
+import mb.fc.loading.LoadableGameState;
+import mb.fc.renderer.MenuRenderer;
+import mb.fc.renderer.TileMapRenderer;
+import mb.fc.utils.StringUtils;
 
 /**
  * Dedicated state that renders Cinematics
@@ -25,7 +31,10 @@ public class CinematicState extends LoadableGameState
 {
 	private TileMapRenderer tileMapRenderer;
 	private SoundManager soundManager;
-	private Cinematic cinematic;
+	private MenuManager menuManager;
+	private MenuRenderer menuRenderer;
+	private CinematicManager cinematicManager;
+	// private Cinematic cinematic;
 
 	// TODO THIS IS A DEBUG TOOL
 	public static float cinematicSpeed = 1;
@@ -41,6 +50,12 @@ public class CinematicState extends LoadableGameState
 		stateInfo.registerManager(tileMapRenderer);
 		this.soundManager = new SoundManager();
 		stateInfo.registerManager(soundManager);
+		this.menuManager = new MenuManager();
+		stateInfo.registerManager(menuManager);
+		this.menuRenderer = new MenuRenderer();
+		stateInfo.registerManager(menuRenderer);
+		this.cinematicManager = new CinematicManager(true);
+		stateInfo.registerManager(cinematicManager);
 	}
 
 
@@ -57,7 +72,7 @@ public class CinematicState extends LoadableGameState
 	@Override
 	public void initAfterLoad() {
 		stateInfo.initState();
-		for (CombatSprite cs : stateInfo.getClientProfile().getHeroes())
+		for (CombatSprite cs : stateInfo.getAllHeroes())
 			cs.initializeSprite(stateInfo);
 	}
 
@@ -67,8 +82,9 @@ public class CinematicState extends LoadableGameState
 		super.enter(container, game);
 
 		// Get the first cinematic
-		cinematic = stateInfo.getResourceManager().getCinematicById(stateInfo.getPsi().getCinematicID());
-		cinematic.initialize(stateInfo);
+		stateInfo.sendMessage(new IntMessage(MessageType.SHOW_CINEMATIC, stateInfo.getPersistentStateInfo().getCinematicID()));
+		// cinematic = stateInfo.getResourceManager().getCinematicById(stateInfo.getPsi().getCinematicID());
+		// cinematic.initialize(stateInfo);
 		stateInfo.setInitialized(true);
 		stateInfo.getInput().clear();
 	}
@@ -82,41 +98,46 @@ public class CinematicState extends LoadableGameState
 	}
 
 	@Override
-	public void render(GameContainer container, StateBasedGame game, Graphics g)
-			throws SlickException
+	public void doRender(PaddedGameContainer container, StateBasedGame game, Graphics g)
 	{
 		if (stateInfo.isInitialized())
 		{
+			// stateInfo.getCamera().realSetLocation();
+
 			float xOffset = stateInfo.getCamera().getLocationX() % stateInfo.getCurrentMap().getTileRenderWidth();
 			float yOffset = stateInfo.getCamera().getLocationY() % stateInfo.getCurrentMap().getTileRenderHeight();
 
-			tileMapRenderer.render(xOffset, yOffset, stateInfo.getCamera(), g, stateInfo.getGc());
-			cinematic.render(g, stateInfo.getCamera(), stateInfo.getGc(), stateInfo);
-			tileMapRenderer.renderForeground(xOffset, yOffset, stateInfo.getCamera(), g, stateInfo.getGc());
-			cinematic.renderPostEffects(g, stateInfo.getCamera(), stateInfo.getGc(), stateInfo);
-			cinematic.renderMenus(stateInfo.getGc(), g);
+			tileMapRenderer.render(xOffset, yOffset, stateInfo.getCamera(), g, stateInfo.getFCGameContainer());
+			cinematicManager.render(g);
+			// cinematic.render(g, stateInfo.getCamera(), stateInfo.getGc(), stateInfo);
+			tileMapRenderer.renderForeground(xOffset, yOffset, stateInfo.getCamera(), g, stateInfo.getFCGameContainer());
+			cinematicManager.renderPostEffects(g);
+			// cinematic.renderPostEffects(g, stateInfo.getCamera(), stateInfo.getGc(), stateInfo);
+			menuRenderer.render(g);
 			if (cinematicSpeed != 1)
 			{
 				g.setColor(Color.red);
-				g.drawString("Cinematic speed: " + cinematicSpeed, 15, 15);
+				StringUtils.drawString("Cinematic speed: " + cinematicSpeed, 15, 15, g);
 			}
 		}
 
 	}
 
 	@Override
-	public void update(GameContainer container, StateBasedGame game, int delta)
+	public void doUpdate(PaddedGameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
 		// If this is test mode then we want to speed
 		// up the game
 		if (CommRPG.TEST_MODE_ENABLED)
-			delta *= 15;
+			delta *= CommRPG.getTestMultiplier();
 
 		if (stateInfo.isInitialized())
 		{
 			stateInfo.processMessages();
-			cinematic.update((int) (delta * cinematicSpeed), stateInfo.getCamera(), stateInfo.getInput(), stateInfo.getResourceManager().getMap(), stateInfo);
-
+			menuManager.update(delta);
+			// cinematic.update((int) (delta * cinematicSpeed), stateInfo.getCamera(), stateInfo.getInput(), stateInfo.getResourceManager().getMap(), stateInfo);
+			cinematicManager.update((int) (delta * cinematicSpeed));
+			stateInfo.getCurrentMap().update(delta);
 			if (System.currentTimeMillis() > stateInfo.getInputDelay())
 			{
 				if (stateInfo.getInput().isKeyDown(Input.KEY_F11))

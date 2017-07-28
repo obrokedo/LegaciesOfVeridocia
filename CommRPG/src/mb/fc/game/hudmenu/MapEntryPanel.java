@@ -2,7 +2,7 @@ package mb.fc.game.hudmenu;
 
 import mb.fc.engine.CommRPG;
 import mb.fc.game.menu.Menu.MenuUpdate;
-import mb.fc.game.ui.FCGameContainer;
+import mb.fc.game.ui.PaddedGameContainer;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -24,7 +24,7 @@ public class MapEntryPanel extends Panel
 	}
 
 	@Override
-	public void render(FCGameContainer gc, Graphics graphics) {
+	public void render(PaddedGameContainer gc, Graphics graphics) {
 
 		if (!waiting)
 		{
@@ -47,7 +47,7 @@ public class MapEntryPanel extends Panel
 				}
 				else
 					graphics.setColor(Color.white);
-				graphics.drawString("" + entryCharArray[i], previousLocation, gc.getHeight() - 30 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);
+				graphics.drawString("" + entryCharArray[i], previousLocation, CommRPG.GAME_SCREEN_SIZE.height - 30);
 				previousLocation += SPEECH_FONT.getWidth(entryCharArray[i] + "");
 			}
 		}

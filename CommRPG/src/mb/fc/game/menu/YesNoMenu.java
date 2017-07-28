@@ -4,7 +4,7 @@ import mb.fc.engine.state.StateInfo;
 import mb.fc.game.input.FCInput;
 import mb.fc.game.input.KeyMapping;
 import mb.fc.game.listener.MenuListener;
-import mb.fc.game.ui.FCGameContainer;
+import mb.fc.game.ui.PaddedGameContainer;
 import mb.fc.game.ui.RectUI;
 import mb.fc.game.ui.SelectRectUI;
 import mb.fc.game.ui.TextUI;
@@ -25,7 +25,7 @@ public class YesNoMenu extends SpeechMenu
 
 	public YesNoMenu(String text, int triggerId,
 			Portrait portrait, StateInfo stateInfo, MenuListener listener) {
-		super(text, stateInfo.getGc(),triggerId, portrait, stateInfo, listener);
+		super(text, stateInfo.getFCGameContainer(),triggerId, portrait, stateInfo, listener);
 		yesPanel = new RectUI(120, 146, 32, 32);
 		noPanel = new RectUI(170, 146, 32, 32);
 		yesText = new TextUI("Yes", 125, 148);
@@ -59,7 +59,7 @@ public class YesNoMenu extends SpeechMenu
 	}
 
 	@Override
-	public void render(FCGameContainer gc, Graphics graphics)
+	public void render(PaddedGameContainer gc, Graphics graphics)
 	{
 		super.render(gc, graphics);
 

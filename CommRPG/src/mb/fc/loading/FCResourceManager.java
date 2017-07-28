@@ -37,7 +37,7 @@ import mb.fc.game.resource.HeroResource;
 import mb.fc.game.resource.ItemResource;
 import mb.fc.game.text.Speech;
 import mb.fc.game.trigger.TriggerCondition;
-import mb.fc.game.trigger.TriggerEvent;
+import mb.fc.game.trigger.Trigger;
 import mb.fc.map.Map;
 import mb.fc.utils.SpriteAnims;
 import mb.fc.utils.XMLParser;
@@ -66,7 +66,7 @@ public class FCResourceManager {
 
 	// These values need to be initialized each time a map is loaded
 	private Hashtable<Integer, ArrayList<Speech>> speechesById = new Hashtable<Integer, ArrayList<Speech>>();
-	private Hashtable<Integer, TriggerEvent> triggerEventById = new Hashtable<Integer, TriggerEvent>();
+	private Hashtable<Integer, Trigger> triggerEventById = new Hashtable<Integer, Trigger>();
 	private Hashtable<Integer, Cinematic> cinematicById = new Hashtable<Integer, Cinematic>();
 	private Map map = new Map();
 
@@ -106,12 +106,12 @@ public class FCResourceManager {
 			Image nImage = new Image(split[2], transparent);
 			nImage.setFilter(Image.FILTER_NEAREST);
 			images.put(split[1], nImage.getScaledCopy(split.length == 4 ?
-					Float.parseFloat(split[3]) * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] : CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]));
+					Float.parseFloat(split[3]) : 1));
 		}
 		else if (split[0].equalsIgnoreCase("ss"))
 		{
-
-			float scale = CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
+			System.out.println("LOAD SPRITE SHEET " + split[1]);
+			float scale = 1;
 			if (split.length == 7)
 			{
 				if (Float.parseFloat(split[6]) == -1)
@@ -140,7 +140,7 @@ public class FCResourceManager {
 							+ "Either change the name of the desired image in the 'sprite' folder to the correct name\n"
 							+ "or update the animation file to refer to the correct image. Keep in mind that image names\n"
 							+ "ARE case sensitive");
-			sa.initialize(images.get(sa.getSpriteSheet()), CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);
+			sa.initialize(images.get(sa.getSpriteSheet()));
 			spriteAnimations.put(split[1], sa);
 		}
 		else if (split[0].equalsIgnoreCase("animsheet"))
@@ -152,12 +152,12 @@ public class FCResourceManager {
 		else if (split[0].equalsIgnoreCase("fsa"))
 		{
 			SpriteAnims sa = SpriteAnims.parseAnimations(split[2]);
-			sa.initialize(images.get(sa.getSpriteSheet()), CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);// 1.88f);
+			sa.initialize(images.get(sa.getSpriteSheet()));// 1.88f);
 			spriteAnimations.put(split[1], sa);
 		}
 		else if (split[0].equalsIgnoreCase("text"))
 		{
-			TextParser.parseText(split[1], speechesById, triggerEventById, cinematicById, conditions, this);
+			CommRPG.TEXT_PARSER.parseText(split[1], speechesById, triggerEventById, cinematicById, conditions, this);
 		}
 		else if (split[0].equalsIgnoreCase("herodefs"))
 		{
@@ -212,7 +212,7 @@ public class FCResourceManager {
 			try
 			{
 				Font awtFont = Font.createFont(Font.TRUETYPE_FONT, inputStream);
-				UnicodeFont ufont = new UnicodeFont(awtFont, Integer.parseInt(split[3]) * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], false, false);
+				UnicodeFont ufont = new UnicodeFont(awtFont, Integer.parseInt(split[3]), false, false);
 				ufont.getEffects().add(new ColorEffect(java.awt.Color.WHITE));
 				ufont.addAsciiGlyphs();
 				ufont.addGlyphs(400, 600);
@@ -299,7 +299,7 @@ public class FCResourceManager {
 				{
 					Image nIm = new Image(file.getPath(), transparent);
 					nIm.setFilter(Image.FILTER_NEAREST);
-					images.put(file.getName().replace(".png", ""), nIm.getScaledCopy(CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]));
+					images.put(file.getName().replace(".png", ""), nIm);
 				}
 			}
 		}
@@ -312,7 +312,7 @@ public class FCResourceManager {
 				{
 					Image nIm = new Image(file.getPath(), transparent);
 					nIm.setFilter(Image.FILTER_NEAREST);
-					images.put(file.getName().replace(".png", ""), nIm.getScaledCopy(CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]));
+					images.put(file.getName().replace(".png", ""), nIm);
 				}
 			}
 		}
@@ -333,7 +333,7 @@ public class FCResourceManager {
 										+ "or update the animation file to refer to the correct image. Keep in mind that image names\n"
 										+ "ARE case sensitive");
 					}
-					sa.initialize(images.get(sa.getSpriteSheet()), CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);// 1.88f);
+					sa.initialize(images.get(sa.getSpriteSheet()));// 1.88f);
 					spriteAnimations.put(file.getName().replace(".anim", ""), sa);
 				}
 			}
@@ -368,30 +368,51 @@ public class FCResourceManager {
 		return imBuffer.getImage();
     }
 
-	public Hashtable<String, Image> getImages() {
-		return images;
+	public Image getImage(String image) {
+		if (!images.containsKey(image))
+			throw new BadResourceException("Unable to find image: " + image);
+		return images.get(image);
 	}
 
-	public Hashtable<String, SpriteSheet> getSpriteSheets() {
-		return spriteSheets;
+	public SpriteSheet getSpriteSheet(String name) {
+		if (!spriteSheets.containsKey(name))
+			throw new BadResourceException("Unable to find  sprite sheet: " + name);
+		return spriteSheets.get(name);
 	}
 
-	public Hashtable<String, SpriteAnims> getSpriteAnimations() {
-		return spriteAnimations;
+	public SpriteAnims getSpriteAnimation(String spriteAnim) {
+		if (!spriteAnimations.containsKey(spriteAnim))
+			throw new BadResourceException("Unable to find animation: " + spriteAnim);
+		return spriteAnimations.get(spriteAnim);
+	}
+
+	public boolean containsSpriteAnimation(String spriteAnim) {
+		return spriteAnimations.containsKey(spriteAnim);
 	}
 
 	public UnicodeFont getFontByName(String name)
 	{
+		if (!unicodeFonts.containsKey(name))
+			throw new BadResourceException("Unable to find font: " + name);
 		return unicodeFonts.get(name);
 	}
 
 	public Sound getSoundByName(String name)
 	{
+		if (!soundByTitle.containsKey(name))
+			throw new BadResourceException("Unable to find sound: " + name);
 		return soundByTitle.get(name);
+	}
+	
+	public boolean containsMusic(String name)
+	{
+		return musicByTitle.containsKey(name);
 	}
 
 	public Music getMusicByName(String name)
 	{
+		if (!musicByTitle.containsKey(name))
+			throw new BadResourceException("Unable to find music: " + name);
 		return musicByTitle.get(name);
 	}
 
@@ -405,29 +426,42 @@ public class FCResourceManager {
 		return speechesById.get(id);
 	}
 
-	public TriggerEvent getTriggerEventById(int id)
+	public Trigger getTriggerEventById(int id)
 	{
 		// TODO This is just to exit the game on hero death
-		if (id == TriggerEvent.TRIGGER_ID_EXIT)
+		if (id == Trigger.TRIGGER_ID_EXIT)
 		{
-			TriggerEvent te = new TriggerEvent(TriggerEvent.TRIGGER_ID_EXIT, false, false, false, false, null, null);
-			te.addTriggerType(te.new TriggerExit());
+			Trigger te = new Trigger(Trigger.TRIGGER_ID_EXIT, false, false, false, false, null, null);
+			te.addTriggerable(te.new TriggerExit());
 			return te;
 		}
 
-		return triggerEventById.get(id);
+		Trigger retTE = triggerEventById.get(id);
+		if (retTE == null)
+			throw new BadResourceException("The specified trigger " + id + " could not be found");
+		return retTE;
+	}
+	
+	public void addTriggerEvent(int id, Trigger trigger)
+	{
+		this.triggerEventById.put(id, trigger);
+	}
+	
+	public void addTriggerCondition(TriggerCondition triggerCondition)
+	{
+		this.conditions.add(triggerCondition);
 	}
 
 	public Cinematic getCinematicById(int id)
 	{
 		return cinematicById.get(id);
 	}
-	
-	public void checkTriggerCondtions(StateInfo stateInfo)
+
+	public void checkTriggerCondtions(String locationEntered, boolean immediate, StateInfo stateInfo)
 	{
 		for (TriggerCondition tc : this.conditions)
 		{
-			tc.executeCondtions(stateInfo);
+			tc.executeCondtions(locationEntered, immediate, stateInfo);
 		}
 	}
 

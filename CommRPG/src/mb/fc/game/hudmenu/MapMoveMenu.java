@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.Camera;
 import mb.fc.game.listener.MouseListener;
-import mb.fc.game.ui.FCGameContainer;
+import mb.fc.game.ui.PaddedGameContainer;
 import mb.fc.map.Map;
 
 import org.newdawn.slick.Graphics;
@@ -24,10 +24,10 @@ public class MapMoveMenu extends Panel
 		super(PanelType.PANEL_MAPMOVE);
 
 		listeners = new ArrayList<MapListener>();
-		listeners.add(new MapListener(new Rectangle(20, 0, stateInfo.getGc().getWidth() - 40, 20), 1, 0, -CAMERA_MOVE));
-		listeners.add(new MapListener(new Rectangle(20, stateInfo.getGc().getHeight() - 20, stateInfo.getGc().getWidth() - 40, 20), 2, 0, CAMERA_MOVE));
-		listeners.add(new MapListener(new Rectangle(stateInfo.getGc().getWidth() - 20, 20, 20, stateInfo.getGc().getHeight() - 40), 3, CAMERA_MOVE, 0));
-		listeners.add(new MapListener(new Rectangle(0, 20, 20, stateInfo.getGc().getHeight() - 40), 4, -CAMERA_MOVE, 0));
+		listeners.add(new MapListener(new Rectangle(20, 0, stateInfo.getFCGameContainer().getPaddedWidth() - 40, 20), 1, 0, -CAMERA_MOVE));
+		listeners.add(new MapListener(new Rectangle(20, stateInfo.getFCGameContainer().getHeight() - 20, stateInfo.getFCGameContainer().getPaddedWidth() - 40, 20), 2, 0, CAMERA_MOVE));
+		listeners.add(new MapListener(new Rectangle(stateInfo.getFCGameContainer().getPaddedWidth() - 20, 20, 20, stateInfo.getFCGameContainer().getHeight() - 40), 3, CAMERA_MOVE, 0));
+		listeners.add(new MapListener(new Rectangle(0, 20, 20, stateInfo.getFCGameContainer().getHeight() - 40), 4, -CAMERA_MOVE, 0));
 
 		for (MouseListener ml : listeners)
 			stateInfo.registerMouseListener(ml);
@@ -41,7 +41,7 @@ public class MapMoveMenu extends Panel
 	}
 
 	@Override
-	public void render(FCGameContainer gc, Graphics graphics)
+	public void render(PaddedGameContainer gc, Graphics graphics)
 	{
 
 	}
@@ -83,7 +83,7 @@ public class MapMoveMenu extends Panel
 				else if (mY > maxY)
 					mY = maxY;
 
-				camera.setLocation(mX, mY);
+				camera.setLocation(mX, mY, stateInfo);
 			}
 			else if (selected == selectedId)
 				selected = 0;

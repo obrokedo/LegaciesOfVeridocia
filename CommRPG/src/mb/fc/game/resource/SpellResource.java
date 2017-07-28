@@ -22,7 +22,7 @@ public class SpellResource
 	{
 		JSpell s =  GlobalPythonFactory.createJSpell();
 		s = s.init(spellId);
-		s.setSpellIcon(frm.getSpriteSheets().get("spellicons").getSubImage(s.getSpellIconId(), 0));
+		s.setSpellIcon(frm.getSpriteSheet("spellicons").getSubImage(s.getSpellIconId(), 0));
 		spells.put(spellId, s);
 	}
 

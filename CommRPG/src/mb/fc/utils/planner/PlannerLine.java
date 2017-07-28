@@ -8,8 +8,11 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
+import java.util.stream.Collectors;
 
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -26,14 +29,11 @@ import javax.swing.text.NumberFormatter;
 
 public class PlannerLine
 {
-	private static final long serialVersionUID = 1L;
-
 	private PlannerLineDef plDef;
 	private ArrayList<Component> components;
 	private ArrayList<Object> values;
 	private boolean isDefining;
 	private JComboBox<String> box;
-	private JPanel definingPanel;
 	private JPanel uiAspect;
 
 	public PlannerLine(PlannerLineDef plDef, boolean isDefining)
@@ -59,14 +59,14 @@ public class PlannerLine
 	}
 
 	public void setupUI(ArrayList<PlannerLineDef> allowableValues, ActionListener aListener,
-			int index, ArrayList<ArrayList<String>> listOfLists, PlannerTab parentTab)
+			int index, ArrayList<ArrayList<PlannerReference>> referenceListByReferenceType, PlannerTab parentTab)
 	{
 		setupUI(allowableValues, aListener,
-				index, listOfLists, true, true, parentTab);
+				index, referenceListByReferenceType, true, true, parentTab);
 	}
 
 	public void setupUI(ArrayList<PlannerLineDef> allowableValues, ActionListener aListener,
-			int index, ArrayList<ArrayList<String>> listOfLists, boolean displayButtons, boolean commitChanges, PlannerTab parentTab)
+			int index, ArrayList<ArrayList<PlannerReference>> referenceListByReferenceType, boolean displayButtons, boolean commitChanges, PlannerTab parentTab)
 	{
 		if (commitChanges)
 			this.commitChanges();
@@ -89,6 +89,9 @@ public class PlannerLine
 		{
 			headerLabel.setForeground(Color.WHITE);
 
+			/**
+			 * I believe that this is dead code I removed the "defining panel"
+			 * 7-7-17... so if it continues to work this can be removed
 			if (definingPanel == null)
 			{
 				System.out.println("CREATE NEW DEFIINING PANEL");
@@ -113,6 +116,7 @@ public class PlannerLine
 				}
 				definingPanel = headerPanel;
 			}
+			*/
 		}
 		else
 		{
@@ -140,7 +144,19 @@ public class PlannerLine
 				headerPanel.add(saveButton);
 			}
 
-			headDescPanel.add(headerPanel.add(new JLabel(this.plDef.getDescription())), BorderLayout.PAGE_END);
+			JTextArea descriptionArea = new JTextArea(this.plDef.getDescription());
+			descriptionArea.setOpaque(false);
+			descriptionArea.setFont(descriptionArea.getFont().deriveFont(Font.BOLD));
+			descriptionArea.setForeground(Color.black);
+			//descriptionArea.setLineWrap(true);
+			//descriptionArea.setWrapStyleWord(true);
+			descriptionArea.setEditable(false);
+			descriptionArea.setBackground(Color.LIGHT_GRAY);
+			descriptionArea.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+			
+			JLabel descriptionLabel = new JLabel(convertToConstantWidth(this.plDef.getDescription()));
+			
+			headDescPanel.add(headerPanel.add(descriptionLabel), BorderLayout.PAGE_END);
 			headDescPanel.add(headerPanel, BorderLayout.CENTER);
 			uiAspect.add(headDescPanel);
 		}
@@ -177,6 +193,7 @@ public class PlannerLine
 						if (values.size() > i)
 							snm.setValue(values.get(i));
 						c = new JSpinner(snm);
+						((JSpinner.NumberEditor) ((JSpinner) c).getEditor()).getTextField().setHorizontalAlignment(JTextField.LEFT);
 
 						((NumberFormatter) ((JSpinner.NumberEditor) ((JSpinner) c).getEditor()).getTextField().getFormatter()).setAllowsInvalid(false);
 					}
@@ -184,18 +201,18 @@ public class PlannerLine
 					{
 						Vector<String> items = new Vector<String>();
 						items.add("No value selected");
-						items.addAll(listOfLists.get(pv.getRefersTo() - 1));
+						items.addAll(getReferenceStringList(referenceListByReferenceType, pv));
 						c = new JComboBox<String>(items);
 						if (values.size() > i)
-							((JComboBox<?>) c).setSelectedIndex(((int) values.get(i)));
+							((JComboBox<?>) c).setSelectedItem(((PlannerReference) values.get(i)).getName());
 					}
 					break;
 				case PlannerValueDef.TYPE_MULTI_INT:
 					Vector<String> mitems = new Vector<String>();
 					mitems.add("No value selected");
-					mitems.addAll(listOfLists.get(pv.getRefersTo() - 1));
+					mitems.addAll(getReferenceStringList(referenceListByReferenceType, pv));
 
-					c = new MultiIntPanel(listOfLists.get(pv.getRefersTo() - 1));
+					c = new MultiIntPanel(getReferenceStringList(referenceListByReferenceType, pv));
 					JButton ab = new JButton("Add Item");
 					ab.addActionListener((MultiIntPanel) c);
 					ab.setActionCommand("ADD");
@@ -207,13 +224,14 @@ public class PlannerLine
 					c.add(rb);
 					if (values.size() > i)
 					{
-						String[] vals = ((String) values.get(i)).split(",");
+						@SuppressWarnings("unchecked")
+						ArrayList<PlannerReference> vals = ((ArrayList<PlannerReference>) values.get(i));
 
-						for (String s : vals)
+						for (PlannerReference plannerRef : vals)
 						{
 							JComboBox<String> jcb = new JComboBox<String>(mitems);
-							if (s.length() > 0)
-								jcb.setSelectedIndex(Integer.parseInt(s));
+							if (plannerRef.getName().length() > 0)
+								jcb.setSelectedItem(plannerRef.getName());
 							c.add(jcb);
 						}
 					}
@@ -244,12 +262,12 @@ public class PlannerLine
 					}
 					else
 					{
-						Vector<String> items = new Vector<String>(listOfLists.get(pv.getRefersTo() - 1));
+						Vector<String> items = new Vector<String>(getReferenceStringList(referenceListByReferenceType, pv));
 						if (pv.isOptional())
 							items.add(0, "");
 						c = new JComboBox<String>(items);
 						if (values.size() > i)
-							((JComboBox<?>) c).setSelectedItem(values.get(i));
+							((JComboBox<?>) c).setSelectedItem(((PlannerReference) values.get(i)).getName());
 					}
 					break;
 				case PlannerValueDef.TYPE_LONG_STRING:
@@ -276,10 +294,30 @@ public class PlannerLine
 
 			label.setToolTipText(pv.getDisplayDescription());
 			c.setToolTipText(pv.getDisplayDescription());
+			
+			/*
 			JLabel descriptionLabel = new JLabel(pv.getDisplayDescription());
 			descriptionLabel.setOpaque(true);
 			descriptionLabel.setFont(descriptionLabel.getFont().deriveFont(Font.BOLD));
+			*/
+			/*
+			JTextArea descriptionArea = new JTextArea(pv.getDisplayDescription());
+			descriptionArea.setOpaque(false);
+			descriptionArea.setFont(descriptionArea.getFont().deriveFont(Font.BOLD));
+			descriptionArea.setForeground(Color.black);
+			descriptionArea.setLineWrap(true);
+			descriptionArea.setWrapStyleWord(true);
+			descriptionArea.setEditable(false);
+			descriptionArea.setBackground(Color.GRAY);
+			descriptionArea.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+			*/
+			// descriptionArea.setEnabled(false);
+			
 			// descriptionLabel.setBackground(Color.DARK_GRAY);
+			JLabel descriptionLabel = new JLabel(convertToConstantWidth(pv.getDisplayDescription()));
+			descriptionLabel.setOpaque(true);
+			descriptionLabel.setFont(descriptionLabel.getFont().deriveFont(Font.BOLD));
+			
 			panel.add(descriptionLabel, BorderLayout.PAGE_START);
 			panel.add(c);
 			components.add(c);
@@ -288,10 +326,32 @@ public class PlannerLine
 		}
 		uiAspect.add(valuePanel);
 	}
-
-	public JPanel getDefiningPanel()
+	
+	private List<String> getReferenceStringList(ArrayList<ArrayList<PlannerReference>> referenceListByReferenceType,
+			PlannerValueDef pv) {
+		return referenceListByReferenceType.get(pv.getRefersTo() - 1).stream().map(referTo -> referTo.getName()).collect(Collectors.toList());
+	}
+	
+	private String convertToConstantWidth(String str)
 	{
-		return definingPanel;
+		String[] splitDesc = str.split(" ");
+		String newDesc = "<html>";
+		
+		String line = "";
+		for (int i = 0; i < splitDesc.length; i++)
+		{
+			if (line.length() > 140)
+			{
+				line = line + "<br>";
+				newDesc = newDesc + line;
+				line = "";
+			}
+			
+			line = line + " " + splitDesc[i];
+		}
+		newDesc = newDesc + line;
+		newDesc = newDesc + "</html>";
+		return newDesc;
 	}
 
 	public void commitChanges()
@@ -301,7 +361,6 @@ public class PlannerLine
 			for (int i = 0; i < plDef.getPlannerValues().size(); i++)
 			{
 				PlannerValueDef pv = plDef.getPlannerValues().get(i);
-				System.out.println(pv.getValueType());
 
 				switch (pv.getValueType())
 				{
@@ -382,6 +441,12 @@ public class PlannerLine
 
 			components.clear();
 		}
+		
+		ArrayList<String> badReferences = new ArrayList<>();
+		PlannerReference.establishLineReference(PlannerFrame.referenceListByReferenceType, badReferences, null, this);
+		if (badReferences.size() > 0) { 
+			PlannerReference.displayBadReferences(badReferences);
+		}
 	}
 
 	public ArrayList<Component> getPlannerLineComponents() {
@@ -413,5 +478,11 @@ public class PlannerLine
 
 	public JPanel getUiAspect() {
 		return uiAspect;
+	}
+
+	@Override
+	public String toString() {
+		return "PlannerLine [plDef=" + plDef + ", components=" + components + ", values=" + values + ", isDefining="
+				+ isDefining + ", box=" + box + ", uiAspect=" + uiAspect + "]";
 	}
 }

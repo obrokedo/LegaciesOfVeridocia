@@ -42,9 +42,13 @@ public class AttackCombatAnimation extends CombatAnimation
 			this.animationWrapper.setAnimation("Spell", false);
 			castingSpell = true;
 		}
-		else if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_ITEM
-				 && animationWrapper.hasAnimation("Item"))
-			this.animationWrapper.setAnimation("Item", false);
+		else if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_ITEM)
+		{
+			if ( animationWrapper.hasAnimation("Item"))
+				this.animationWrapper.setAnimation("Item", false);
+			if (battleResults.battleCommand.getSpell() != null)
+				castingSpell = true;
+		}
 
 		this.blocks = blockingAnimation;
 

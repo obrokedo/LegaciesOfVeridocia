@@ -1,17 +1,18 @@
 package mb.fc.game.menu;
 
-import mb.fc.engine.CommRPG;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+
 import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.BattleSelectionMessage;
 import mb.fc.engine.message.MessageType;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.battle.spell.KnownSpell;
+import mb.fc.game.constants.Direction;
 import mb.fc.game.hudmenu.Panel;
-import mb.fc.game.ui.FCGameContainer;
-
-import org.newdawn.slick.Color;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
+import mb.fc.game.ui.PaddedGameContainer;
+import mb.fc.utils.StringUtils;
 
 public class SpellMenu extends QuadMenu
 {
@@ -21,7 +22,7 @@ public class SpellMenu extends QuadMenu
 
 	public SpellMenu(StateInfo stateInfo) {
 		super(PanelType.PANEL_SPELL, false, stateInfo);
-		emptySpot = stateInfo.getResourceManager().getSpriteSheets().get("spellicons").getSubImage(15, 0);
+		emptySpot = stateInfo.getResourceManager().getSpriteSheet("spellicons").getSubImage(15, 0);
 
 		this.enabled = new boolean[4];
 		this.icons = new Image[4];
@@ -32,6 +33,7 @@ public class SpellMenu extends QuadMenu
 	@Override
 	public void initialize()
 	{
+		this.selected = Direction.UP;
 		choseSpell = false;
 
 		for (int i = 0; i < 4; i++)
@@ -91,23 +93,24 @@ public class SpellMenu extends QuadMenu
 	}
 
 	@Override
-	protected void renderTextBox(FCGameContainer gc, Graphics graphics) {
+	protected void renderTextBox(PaddedGameContainer gc, Graphics graphics) {
 		graphics.setColor(Panel.COLOR_FOREFRONT);
 
-		Panel.drawPanelBox(CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 198 + gc.getDisplayPaddingX(),
-				CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 200 - 40, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 75,
-				CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 36 + 18, graphics);
+		Panel.drawPanelBox(198,
+				200 - 40, 75,
+				36 + 18, graphics);
 
 		KnownSpell overSpell = stateInfo.getCurrentSprite().getSpellsDescriptors().get(getSelectedInt());
 
 		graphics.setColor(COLOR_FOREFRONT);
-		graphics.drawString(text[getSelectedInt()], CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 205 + gc.getDisplayPaddingX(), CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 195 - 35);
+		StringUtils.drawString(text[getSelectedInt()], 205, 160, graphics);
 		if (choseSpell)
 		{
 			graphics.setColor(Color.red);
-			graphics.drawRoundRect(CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 200 + 5 + gc.getDisplayPaddingX(),
-					CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 215 - 35,
-					CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 64, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 7 + 10, 4);
+			graphics.setLineWidth(2);
+			graphics.drawRoundRect(204,
+					183,
+					64, 11, 4);
 		}
 		else
 			selectedLevel = 0;
@@ -117,21 +120,21 @@ public class SpellMenu extends QuadMenu
 			if (i <= selectedLevel)
 			{
 				graphics.setColor(Color.yellow);
-				graphics.fillRoundRect(CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 200 + 10 + i * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 15 + gc.getDisplayPaddingX(),
-						CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 215 - 30,
-						CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 14, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 7, 4);
+				graphics.fillRoundRect(206 + i * 15,
+						185,
+						14, 7, 4);
 				graphics.setColor(COLOR_FOREFRONT);
 			}
-			graphics.drawRoundRect(CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 200 + 10 + i * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 15 + gc.getDisplayPaddingX(),
-					CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 215 - 30,
-					CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 14, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 7, 4);
+			graphics.drawRoundRect(206 + i * 15,
+					185,
+					14, 7, 4);
 		}
 		// graphics.drawString(spellName, 410, 399);
-		graphics.drawString("Cost:", CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 205 + gc.getDisplayPaddingX(), CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 215 - 30);
+		StringUtils.drawString("Cost:", 205, 185, graphics);
 
 		if (stateInfo.getCurrentSprite().getCurrentMP() < overSpell.getSpell().getCosts()[selectedLevel])
 			graphics.setColor(Color.red);
-		graphics.drawString(overSpell.getSpell().getCosts()[selectedLevel] + "", CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 245 + gc.getDisplayPaddingX(), CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 215 - 30);
+		StringUtils.drawString(overSpell.getSpell().getCosts()[selectedLevel] + "", 245, 185, graphics);
 	}
 
 	@Override

@@ -33,6 +33,9 @@ public class PlannerValueDef
 	public static final int REFERS_WEAPON_DAMAGE_TYPE = 26;
 	public static final int REFERS_AFFINITIES = 27;
 	public static final int REFERS_CONDITIONS = 28;
+	
+	public static final int REFERS_OPERATOR = 29;
+	public static final int REFERS_LOCATIONS = 30;
 
 	public static final int TYPE_STRING = 0;
 	public static final int TYPE_INT = 1;
@@ -93,5 +96,11 @@ public class PlannerValueDef
 
 	public String getDisplayDescription() {
 		return displayDescription;
+	}
+
+	@Override
+	public String toString() {
+		return "PlannerValueDef [refersTo=" + refersTo + ", valueType=" + valueType + ", tag=" + tag + ", optional="
+				+ optional + ", displayTag=" + displayTag + ", displayDescription=" + displayDescription + "]";
 	}
 }

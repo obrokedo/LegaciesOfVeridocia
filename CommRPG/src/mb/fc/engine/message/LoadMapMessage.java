@@ -11,24 +11,25 @@ public class LoadMapMessage extends Message
 	private static final long serialVersionUID = 1L;
 
 	private String map;
-	private String battle;
+	private String mapData;
 	private String location;
 	private int cinematicID;
 	private int battleBG;
 
-	public LoadMapMessage(MessageType messageType, String map, String battle, String location, int battleBG)
+	public LoadMapMessage(MessageType messageType, String map, String mapData, String location, int battleBG)
 	{
 		super(messageType);
 		this.map = map;
-		this.battle = battle;
+		this.mapData = mapData;
 		this.location = location;
 		this.battleBG = battleBG;
 	}
 
-	public LoadMapMessage(MessageType messageType, String map, int cinematicID)
+	public LoadMapMessage(MessageType messageType, String map, String mapData, int cinematicID)
 	{
 		super(messageType);
 		this.map = map;
+		this.mapData = mapData;
 		this.cinematicID = cinematicID;
 	}
 
@@ -36,8 +37,8 @@ public class LoadMapMessage extends Message
 		return map;
 	}
 
-	public String getBattle() {
-		return battle;
+	public String getMapData() {
+		return mapData;
 	}
 
 	public String getLocation() {

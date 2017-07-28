@@ -19,7 +19,7 @@ public class BattleActionsMenu extends QuadMenu
 		icons = new Image[8];
 
 		for (int i = 0; i < icons.length; i++)
-			icons[i] = stateInfo.getResourceManager().getSpriteSheets().get("actionicons").getSubImage(i % 4, i / 4);
+			icons[i] = stateInfo.getResourceManager().getSpriteSheet("actionicons").getSubImage(i % 4, i / 4);
 
 		text = new String[] {"Attack", "Magic", "Items", "Stay"};
 		enabled = new boolean[4];

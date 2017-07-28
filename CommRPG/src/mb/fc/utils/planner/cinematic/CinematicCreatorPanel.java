@@ -407,7 +407,6 @@ public class CinematicCreatorPanel implements ActionListener, ChangeListener, It
 		PlannerLine pl = pt.getCurrentPC().getLines().get(selectedCinIndex);
 		PlannerContainerDef pcdef = pt.getPlannerContainerDef();
 		pl.setupUI(pcdef.getAllowableLines(), this, 1, pcdef.getListOfLists(), false, true, null);
-
 		int rc = JOptionPane.showConfirmDialog(uiAspect, pl.getUiAspect(), "Edit cinematic action", JOptionPane.OK_OPTION);
 		if (rc == JOptionPane.NO_OPTION)
 			return false;
@@ -439,6 +438,9 @@ public class CinematicCreatorPanel implements ActionListener, ChangeListener, It
 			pl.getValues().add(yLoc);
 		}
 		pl.setupUI(pcdef.getAllowableLines(), this, 1, pcdef.getListOfLists(), false, true, null);
+		// pl.getUiAspect().setPreferredSize(new Dimension(480, pl.getUiAspect().getPreferredSize().height + 50));
+		//JScrollPane jsp = new JScrollPane(pl.getUiAspect());
+		//jsp.setPreferredSize(new Dimension(600, jsp.getPreferredSize().height));
 		int ret = JOptionPane.showConfirmDialog(uiAspect, pl.getUiAspect(), "Add cinematic action", JOptionPane.OK_CANCEL_OPTION);
 
 		if (ret == JOptionPane.YES_OPTION)
@@ -600,7 +602,7 @@ public class CinematicCreatorPanel implements ActionListener, ChangeListener, It
 		Point cameraPoint;
 		if (cameraLocations.following != null)
 		{
-			Point actorPoint = mdp.getActorLocationAtTime(timeSlider.getValue(), cameraLocations.following);
+			Point actorPoint = mdp.getActorLocationAtTime(timeSlider.getValue(), cameraLocations.following).currentPoint;
 
 			if (actorPoint.x < 160)
 				actorPoint.x = 0;

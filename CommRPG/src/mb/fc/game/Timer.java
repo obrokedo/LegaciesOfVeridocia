@@ -26,7 +26,7 @@ public class Timer
 	{
 		if (timerDelta >= timerUpdate)
 		{
-			timerDelta -= timerUpdate;
+			timerDelta = 0;
 			return true;
 		}
 

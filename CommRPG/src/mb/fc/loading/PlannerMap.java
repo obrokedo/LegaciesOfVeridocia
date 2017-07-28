@@ -22,6 +22,12 @@ public class PlannerMap extends Map {
 	private final Color SELECTED_MO_LINE_COLOR = new Color(0, 255, 0);
 	private Hashtable<MapObject, TagArea> tagAreaByMapObject = new Hashtable<>();
 	private TagArea rootTagArea;
+	private String mapName;
+
+	public PlannerMap(String mapName) {
+		super();
+		this.mapName = mapName;
+	}
 
 	public void addTileset(Image[] sprites, int tileStartIndex,
 			int tileWidth, int tileHeight,
@@ -66,8 +72,8 @@ public class PlannerMap extends Map {
 			{
 				for (int k = 0; k < 5; k++)
 				{
-					if (k == 0 || getMapLayer(k)[j][i] != 0)
-						g.drawImage(getPlannerSprite(getMapLayer(k)[j][i]), i * getTileRenderWidth(), j * getTileRenderHeight(), panel);
+					if (k == 0 || getMapLayer(k).getTiles()[j][i] != 0)
+						g.drawImage(getPlannerSprite(getMapLayer(k).getTiles()[j][i]), i * getTileRenderWidth(), j * getTileRenderHeight(), panel);
 				}
 			}
 		}
@@ -75,11 +81,11 @@ public class PlannerMap extends Map {
 
 	public void renderMapLocations(Graphics g, MapObject selectedMO)
 	{
-		renderMapLocations(g, selectedMO, true, true, true, true, true, true);
+		renderMapLocations(g, selectedMO, true, true, true, true);
 	}
 
-	public void renderMapLocations(Graphics g, MapObject selectedMO, boolean displayBattleTrigger,
-			boolean displayEnemy, boolean displayOther, boolean displayTerrain, boolean displayTrigger,
+	public void renderMapLocations(Graphics g, MapObject selectedMO,
+			boolean displayEnemy, boolean displayOther, boolean displayTerrain,
 			boolean displayUnused)
 	{
 		for (MapObject mo : getMapObjects())
@@ -93,11 +99,7 @@ public class PlannerMap extends Map {
 			{
 				if (mo.getKey().equalsIgnoreCase("enemy") && !displayEnemy)
 					continue;
-				else if (mo.getKey().equalsIgnoreCase("battletrigger") && !displayBattleTrigger)
-					continue;
-				else if (mo.getKey().equalsIgnoreCase("terrain") && !displayTerrain)
-					continue;
-				else if (mo.getKey().equalsIgnoreCase("trigger") && !displayTrigger)
+				if (mo.getKey().equalsIgnoreCase("terrain") && !displayTerrain)
 					continue;
 				else if (!mo.getKey().equalsIgnoreCase("enemy") &&
 						!mo.getKey().equalsIgnoreCase("battletrigger")
@@ -114,6 +116,8 @@ public class PlannerMap extends Map {
 				xP[i] = (int) mo.getShape().getPoint(i)[0];
 				yP[i] = (int) mo.getShape().getPoint(i)[1];
 			}
+			
+			String name = mo.getName();
 
 			if (mo != selectedMO)
 				g.setColor(UNSELECTED_MO_FILL_COLOR);
@@ -125,13 +129,14 @@ public class PlannerMap extends Map {
 				g.setColor(UNSELECTED_MO_LINE_COLOR);
 			else
 				g.setColor(SELECTED_MO_LINE_COLOR);
+			
 			g.drawPolygon(xP, yP, xP.length);
+			if (name != null)
+			{
+				g.setColor(Color.white);
+				g.drawString(name, xP[0] + 5, yP[0] + 15);
+			}
 		}
-	}
-
-	@Override
-	public int getTileScale() {
-		return 1;
 	}
 
 	public void addMapObject(MapObject mo, TagArea ta) {
@@ -211,5 +216,9 @@ public class PlannerMap extends Map {
 
 	public void setRootTagArea(TagArea rootTagArea) {
 		this.rootTagArea = rootTagArea;
+	}
+
+	public String getMapName() {
+		return mapName;
 	}
 }

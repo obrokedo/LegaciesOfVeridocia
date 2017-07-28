@@ -1,7 +1,7 @@
 package mb.fc.game.combat;
 
 import mb.fc.game.sprite.CombatSprite;
-import mb.fc.game.ui.FCGameContainer;
+import mb.fc.game.ui.PaddedGameContainer;
 
 import org.newdawn.slick.Graphics;
 
@@ -24,7 +24,7 @@ public class WaitCombatAnimation extends CombatAnimation
 	}
 
 	@Override
-	public void render(FCGameContainer fcCont, Graphics g, int yDrawPos, float scale) {
+	public void render(PaddedGameContainer fcCont, Graphics g, int yDrawPos, float scale) {
 		childAnimation.render(fcCont, g, yDrawPos, scale);
 	}
 
@@ -35,7 +35,7 @@ public class WaitCombatAnimation extends CombatAnimation
 
 	@Override
 	public boolean isDrawSpell() {
-		return childAnimation.isDrawSpell();
+		return false;
 	}
 
 	@Override

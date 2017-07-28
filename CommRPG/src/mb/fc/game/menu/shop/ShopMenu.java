@@ -2,6 +2,7 @@ package mb.fc.game.menu.shop;
 
 import java.util.ArrayList;
 
+import mb.fc.engine.CommRPG;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.input.FCInput;
@@ -13,7 +14,7 @@ import mb.fc.game.menu.Menu;
 import mb.fc.game.resource.ItemResource;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.ui.Button;
-import mb.fc.game.ui.FCGameContainer;
+import mb.fc.game.ui.PaddedGameContainer;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -54,7 +55,7 @@ public class ShopMenu extends Menu implements MenuListener
 
 	public ShopMenu(GameContainer gc, StateInfo stateInfo, double sellPercent, double buyPercent, int[] itemIds) {
 		super(PanelType.PANEL_SHOP);
-		x = (gc.getWidth() - 700) / 2;
+		x = (CommRPG.GAME_SCREEN_SIZE.width - 700) / 2;
 		switchViewButton = new Button(x + 100, 35, 140, 20, "Switch to sell");
 		// itemSelectRect = new Rectangle(x + 15, 90, 655, 360);
 		itemUpRect = new Rectangle(x + 670, 91, 15, 15);
@@ -64,7 +65,9 @@ public class ShopMenu extends Menu implements MenuListener
 		buyButton = new Button(x + 570, 680, 100, 20, "Buy");
 		// charSelectRect = new Rectangle(x + 15, 475, 655, 180);
 
-		this.heroes = stateInfo.getClientProfile().getHeroes();
+		this.heroes =  new ArrayList<CombatSprite>();
+		for (CombatSprite cs : stateInfo.getAllHeroes())
+			this.heroes.add(cs);
 		this.gold = stateInfo.getClientProfile().getGold();
 		items = new ArrayList<Item>();
 		differences = new ArrayList<String>();
@@ -234,7 +237,7 @@ public class ShopMenu extends Menu implements MenuListener
 	}
 
 	@Override
-	public void render(FCGameContainer gc, Graphics graphics) {
+	public void render(PaddedGameContainer gc, Graphics graphics) {
 		Panel.drawPanelBox(x, 25, 700, 700, graphics);
 
 
@@ -243,7 +246,7 @@ public class ShopMenu extends Menu implements MenuListener
 		// Draw Shop Type
 		graphics.drawString("Shop", x + 15, 35);
 
-		switchViewButton.render(gc, graphics);
+		switchViewButton.render(graphics);
 
 		// Draw items box
 		if (mouseOverItems != -1)
@@ -268,7 +271,7 @@ public class ShopMenu extends Menu implements MenuListener
 
 
 		// Draw buy buttons
-		buyButton.render(gc, graphics);
+		buyButton.render(graphics);
 
 		graphics.drawString("Gold: " + gold, x + 15, 680);
 

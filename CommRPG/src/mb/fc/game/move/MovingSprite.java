@@ -60,13 +60,17 @@ public class MovingSprite
 
 	public boolean update(int delta, boolean fastMove)
 	{
-		isFirstMove = false;
+		
 		int moveSpeed = MOVE_SPEED;
 		if (stateInfo.isCombat() && (!((CombatSprite) animatedSprite).isHero() || fastMove))
 			moveSpeed /= 2;
 
 		if (stateInfo.isCombat() && isFirstMove)
+		{
 			stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, "step", 1f, false));
+		}
+		
+		isFirstMove = false;
 
 		moveIndex += delta;
 

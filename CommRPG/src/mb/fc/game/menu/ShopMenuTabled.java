@@ -1,27 +1,6 @@
 package mb.fc.game.menu;
 
-import mb.fc.engine.CommRPG;
-import mb.fc.engine.state.StateInfo;
-import mb.fc.game.hudmenu.Panel;
-import mb.fc.game.input.FCInput;
-import mb.fc.game.input.KeyMapping;
-import mb.fc.game.item.EquippableItem;
-import mb.fc.game.item.Item;
-import mb.fc.game.listener.YesNoListener;
-import mb.fc.game.resource.ItemResource;
-import mb.fc.game.ui.FCGameContainer;
-import mb.fc.game.ui.RectUI;
-import mb.fc.game.ui.TextUI;
-
-import org.newdawn.slick.Color;
-import org.newdawn.slick.Font;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Polygon;
-
-public class ShopMenuTabled extends Menu implements YesNoListener
+public class ShopMenuTabled { /* extends Menu implements YesNoListener
 {
 	protected double sellPercent;
 	protected double buyPercent;
@@ -94,7 +73,7 @@ public class ShopMenuTabled extends Menu implements YesNoListener
 				31 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], 17 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()],
 				35 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], 21 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]});
 
-		itemPanel = new RectUI(27, 2, -54, 32, 0, 0, stateInfo.getGc().getWidth(), 0);
+		itemPanel = new RectUI(27, 2, -54, 32, 0, 0, CommRPG.GAME_SCREEN_SIZE.width, 0);
 		itemNamePanel = new RectUI(27, 34, 68, 37);
 		selectedItemRect = new RectUI(36,  6,  24,  24);
 		updateSelectedItem();
@@ -232,4 +211,5 @@ public class ShopMenuTabled extends Menu implements YesNoListener
 			showBuyPanel(stateInfo);
 		return false;
 	}
+	*/
 }

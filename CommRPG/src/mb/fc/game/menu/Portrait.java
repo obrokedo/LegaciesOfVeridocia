@@ -39,12 +39,12 @@ public class Portrait
 
 		if (enemyId != -1)
 		{
-			sa = stateInfo.getResourceManager().getSpriteAnimations().get(EnemyResource.getAnimation(enemyId));
+			sa = stateInfo.getResourceManager().getSpriteAnimation(EnemyResource.getAnimation(enemyId));
 			return getPortrait(sa, false);
 		}
 		else if (heroId != -1)
 		{
-			for (CombatSprite cs : stateInfo.getPsi().getClientProfile().getHeroes())
+			for (CombatSprite cs : stateInfo.getAllHeroes())
 			{
 				if (cs.getHeroProgression().getHeroID() == heroId)
 				{
@@ -52,11 +52,11 @@ public class Portrait
 				}
 			}
 
-			sa = stateInfo.getResourceManager().getSpriteAnimations().get(HeroResource.getAnimation(enemyId));
+			sa = stateInfo.getResourceManager().getSpriteAnimation(HeroResource.getAnimation(enemyId));
 			return getPortrait(sa, false);
 		}
 		else if (spriteAnimName != null) {
-			return getPortrait(stateInfo.getResourceManager().getSpriteAnimations().get(spriteAnimName), false);
+			return getPortrait(stateInfo.getResourceManager().getSpriteAnimation(spriteAnimName), false);
 		}
 
 		return null;
@@ -73,7 +73,7 @@ public class Portrait
 	{
 		Portrait p = getPortrait(combatSprite.getSpriteAnims(), combatSprite.isPromoted());
 		// Enemies can have portraits, but if one isn't specified assume that it shouldn't have one
-		if (!p.portraitFound && combatSprite.isHero())
+		if (p.portraitFound && combatSprite.isHero())
 			return p;
 		return null;
 	}
@@ -109,27 +109,27 @@ public class Portrait
 
 	public void render(int x, int y, Graphics graphics)
 	{
-		Panel.drawPanelBox(x, y, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 62,
-				CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 78, graphics, Color.black);
+		Panel.drawPanelBox(x, y, 62,
+				78, graphics, Color.black);
 
 		if (!portraitFound)
 		{
 			graphics.setColor(Color.red);
-			graphics.fillRect(x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 7,
-					y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 7, 100, 100);
+			graphics.fillRect(x + 7,
+					y + 7, 100, 100);
 			return;
 		}
 
-		idleAnim.drawAnimationPortrait(x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 7,
-				y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 7, topHeight, graphics);
+		idleAnim.drawAnimationPortrait(x + 7,
+				y + 7, topHeight, graphics);
 
 		if (isBlinking)
-			blinkAnim.drawAnimationIgnoreOffset(x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 7,
-				y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 7, graphics);
+			blinkAnim.drawAnimationIgnoreOffset(x + 7,
+				y + 7, graphics);
 
 		if (isTalking)
-			talkAnim.drawAnimationIgnoreOffset(x + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 7,
-					y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 7 + topHeight, graphics);
+			talkAnim.drawAnimationIgnoreOffset(x + 7,
+					y + 7 + topHeight, graphics);
 	}
 
 	public void update(long delta)

@@ -14,15 +14,15 @@ import mb.fc.engine.state.StateInfo;
 import mb.fc.game.Camera;
 import mb.fc.game.Range;
 import mb.fc.game.ai.AI;
-import mb.fc.game.ai.ClericAI;
 import mb.fc.game.battle.spell.KnownSpell;
 import mb.fc.game.constants.Direction;
+import mb.fc.game.dev.DevHeroAI;
 import mb.fc.game.hudmenu.Panel.PanelType;
 import mb.fc.game.hudmenu.SpriteContextPanel;
 import mb.fc.game.item.EquippableItem;
 import mb.fc.game.item.Item;
 import mb.fc.game.resource.ItemResource;
-import mb.fc.game.ui.FCGameContainer;
+import mb.fc.game.ui.PaddedGameContainer;
 import mb.fc.loading.FCResourceManager;
 import mb.fc.utils.AnimSprite;
 import mb.fc.utils.Animation;
@@ -62,12 +62,12 @@ public class CombatSprite extends AnimatedSprite
 				currentMind, maxMind;
 
 
-	private int currentCounter, maxCounter,
-				currentEvade, maxEvade,
-				currentDouble, maxDouble,
-				currentCrit, maxCrit;
+	private int baseCounter, maxCounter,
+				baseEvade, maxEvade,
+				baseDouble, maxDouble,
+				baseCrit, maxCrit;
 
-	private transient AI ai;
+	private AI ai;
 
 	private boolean isHero = false;
 	private boolean isLeader = false;
@@ -110,7 +110,7 @@ public class CombatSprite extends AnimatedSprite
 				int maxColdAffin, int maxDarkAffin, int maxWaterAffin, int maxEarthAffin, int maxWindAffin,
 				int maxLightAffin, int maxBody, int maxMind, int maxCounter, int maxEvade,
 				int maxDouble, int maxCrit, int level,
-				int enemyId, ArrayList<KnownSpell> spells, int id, 
+				int enemyId, ArrayList<KnownSpell> spells, int id,
 				String attackEffectId, int attackEffectChance, int attackEffectLevel)
 	{
 		this(isLeader, name, imageName, null, level, 0, false, spells, id);
@@ -146,10 +146,10 @@ public class CombatSprite extends AnimatedSprite
 		this.maxLightAffin = this.currentLightAffin = maxLightAffin;
 		this.maxBody = this.currentBody = maxBody;
 		this.maxMind = this.currentMind = maxMind;
-		this.maxCounter = this.currentCounter = maxCounter;
-		this.maxEvade = this.currentEvade = maxEvade;
-		this.maxDouble = this.currentDouble = maxDouble;
-		this.maxCrit = this.currentCrit = maxCrit;
+		this.maxCounter = this.baseCounter = maxCounter;
+		this.maxEvade = this.baseEvade = maxEvade;
+		this.maxDouble = this.baseDouble = maxDouble;
+		this.maxCrit = this.baseCrit = maxCrit;
 		this.battleEffects = new ArrayList<>();
 	}
 
@@ -226,15 +226,15 @@ public class CombatSprite extends AnimatedSprite
 		this.spells = spells;
 
 		this.battleEffects = new ArrayList<>();
-		// this.battleEffects.add(GlobalPythonFactory.createJBattleEffect(0));
+		
 		this.spriteType = Sprite.TYPE_COMBAT;
 		this.id = id;
 		this.attackEffectId = null;
 
 		if (CommRPG.TEST_MODE_ENABLED)
 		{
-			this.ai = new ClericAI(1);
-			if (this.isHero && this.isLeader)
+			this.ai = new DevHeroAI(1);
+			if (this.isHero && this.isLeader && !CommRPG.BATTLE_MODE_OPTIMIZE)
 			{
 				this.setMaxHP(99);
 				this.setMaxAttack(99);
@@ -263,12 +263,6 @@ public class CombatSprite extends AnimatedSprite
 
 		currentAnim = spriteAnims.getCharacterAnimation("Down", this.isPromoted);
 
-		if (isHero)
-		{
-			super.setLocX(-1);
-			super.setLocY(-1);
-		}
-
 		if (spells != null && spells.size() > 0)
 		{
 			for (KnownSpell sd : spells)
@@ -278,7 +272,7 @@ public class CombatSprite extends AnimatedSprite
 		// TODO Does this work?!? We are persisting a jython object
 		for (JBattleEffect effect : battleEffects)
 			effect.initializeAnimation(stateInfo.getResourceManager());
-		
+
 		//TODO Remove (all?) battle effects if this isn't an init mid battle
 
 		for (Item item : items)
@@ -288,15 +282,21 @@ public class CombatSprite extends AnimatedSprite
 
 		if (this.getEquippedWeapon() != null && this.getEquippedWeapon().getWeaponImage() != null)
 		{
-			currentWeaponImage = stateInfo.getResourceManager().getImages().get(this.getEquippedWeapon().getWeaponImage());
+			currentWeaponImage = stateInfo.getResourceManager().getImage(this.getEquippedWeapon().getWeaponImage());
 		}
 
+		fadeColor = new Color(255, 255, 255, 255);
+	}
+	
+	public void initializeStats()
+	{	
+		this.visible = true;
 		this.currentAttack = this.maxAttack;
 		this.currentDefense = this.maxDefense;
 		this.currentSpeed = this.maxSpeed;
 		if (currentHP > 0)
 		{
-			this.currentHP = maxHP;
+			this.currentHP = this.maxHP;
 			this.currentMP = this.maxMP;
 		}
 		else
@@ -317,12 +317,19 @@ public class CombatSprite extends AnimatedSprite
 		this.currentLightAffin = maxLightAffin;
 		this.currentBody = maxBody;
 		this.currentMind = maxMind;
-		this.currentCounter = maxCounter;
-		this.currentEvade = maxEvade;
-		this.currentDouble = maxDouble;
-		this.currentCrit = maxCrit;
-
-		fadeColor = new Color(255, 255, 255, 255);
+		this.baseCounter = maxCounter;
+		this.baseEvade = maxEvade;
+		this.baseDouble = maxDouble;
+		this.baseCrit = maxCrit;
+		this.battleEffects.clear();
+		
+		if (isHero)
+		{
+			super.setLocX(-1);
+			super.setLocY(-1);
+		}
+		
+		// addBattleEffect(GlobalPythonFactory.createJBattleEffect("Burn", 1));
 	}
 
 	@Override
@@ -332,17 +339,25 @@ public class CombatSprite extends AnimatedSprite
 
 		if (currentHP <= 0)
 		{
+			if (this.getFacing() == Direction.DOWN)
+				this.setFacing(Direction.RIGHT);
+			else if (this.getFacing() == Direction.RIGHT)
+				this.setFacing(Direction.UP);
+			else if (this.getFacing() == Direction.UP)
+				this.setFacing(Direction.LEFT);
+			else if (this.getFacing() == Direction.LEFT)
+				this.setFacing(Direction.DOWN);
 			currentHP -= 25;
 			fadeColor.a = (255 + currentHP) / 255.0f;
 		}
 	}
 
 	@Override
-	public void render(Camera camera, Graphics graphics, FCGameContainer cont)
+	public void render(Camera camera, Graphics graphics, PaddedGameContainer cont)
 	{
 		graphics.setColor(Color.white);
-		if (this.isHero && stateInfo.getPsi().getClientId() != this.clientId) {
-			graphics.drawString("x", this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(),
+		if (this.isHero && stateInfo.getPersistentStateInfo().getClientId() != this.clientId) {
+			graphics.drawString("x", this.getLocX() - camera.getLocationX(),
 					this.getLocY() - camera.getLocationY() - stateInfo.getResourceManager().getMap().getTileEffectiveHeight() / 2);
 		}
 		for (AnimSprite as : currentAnim.frames.get(imageIndex).sprites)
@@ -357,10 +372,10 @@ public class CombatSprite extends AnimatedSprite
 
 			if (drawShadow)
 			{
-				AnimatedSprite.drawShadow(im, this.getLocX(), this.getLocY(), cont.getDisplayPaddingX(), camera, true);
+				AnimatedSprite.drawShadow(im, this.getLocX(), this.getLocY(), camera, true);
 			}
 
-			graphics.drawImage(im, this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(),
+			graphics.drawImage(im, this.getLocX() - camera.getLocationX(),
 					this.getLocY() - camera.getLocationY() - stateInfo.getResourceManager().getMap().getTileEffectiveHeight() / 2, fadeColor);
 		}
 	}
@@ -493,14 +508,14 @@ public class CombatSprite extends AnimatedSprite
 
 		return oldItem;
 	}
-	
+
 	public void unequipItem(EquippableItem item)
 	{
 		toggleEquipWeapon(item, false);
 		int index = items.indexOf(item);
 		this.equipped.set(index, false);
 	}
-	
+
 	private void toggleEquipWeapon(EquippableItem item, boolean equip)
 	{
 		// Non extended stats
@@ -510,13 +525,13 @@ public class CombatSprite extends AnimatedSprite
 		this.maxAttack += ((equip ? 1 : -1) * item.getAttack());
 		this.maxDefense += ((equip ? 1 : -1) * item.getDefense());
 		this.maxSpeed += ((equip ? 1 : -1) * item.getSpeed());
-		
+
 		// Extended Stats
 		/*
-		 * incmindam=7 inccrit=0 inccounter=0 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minhpreg=0 
+		 * incmindam=7 inccrit=0 inccounter=0 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minhpreg=0
 	 * effect="" efflvl=-1 effchc=0 csteff=false dmgaff="NORMAL" ohko=0 ohkooc=0
 		 */
-		
+
 		this.maxFireAffin += ((equip ? 1 : -1) * item.getFireAffinity());
 		this.maxElecAffin += ((equip ? 1 : -1) * item.getElecAffinity());
 		this.maxColdAffin += ((equip ? 1 : -1) * item.getColdAffin());
@@ -756,7 +771,7 @@ public class CombatSprite extends AnimatedSprite
 	public boolean isLeader() {
 		return isLeader;
 	}
-	
+
 	public void setLeader(boolean isLeader) {
 		this.isLeader = isLeader;
 	}
@@ -774,27 +789,26 @@ public class CombatSprite extends AnimatedSprite
 
 	public String levelUp()
 	{
-		this.level++;
 		JLevelProgression jlp = GlobalPythonFactory.createLevelProgression();
 		String text = jlp.levelUpHero(this);
-		
+
 		Log.debug("Leveling up heroes non-displayed stats: " + this.getName());
 
 		int increase = jlp.getLevelUpBattleStat(this.getCurrentProgression().getCounterStrength(), this, level, isPromoted, this.maxCounter);
 		maxCounter += increase;
-		currentCounter += increase;
+		baseCounter += increase;
 
 		increase = jlp.getLevelUpBattleStat(this.getCurrentProgression().getCritStrength(), this, level, isPromoted, this.maxCrit);
 		maxCrit += increase;
-		currentCrit += increase;
+		baseCrit += increase;
 
 		increase = jlp.getLevelUpBattleStat(this.getCurrentProgression().getDoubleStrength(), this, level, isPromoted, this.maxDouble);
 		maxDouble += increase;
-		currentDouble += increase;
+		baseDouble += increase;
 
 		increase = jlp.getLevelUpBattleStat(this.getCurrentProgression().getEvadeStrength(), this, level, isPromoted, this.maxEvade);
 		maxEvade += increase;
-		currentEvade += increase;
+		baseEvade += increase;
 
 		increase = jlp.getLevelUpBodyMindStat(this.getCurrentProgression().getBodyProgression(), this, level, isPromoted);
 		maxBody += increase;
@@ -847,19 +861,31 @@ public class CombatSprite extends AnimatedSprite
 
 	public void addBattleEffect(JBattleEffect battleEffect)
 	{
+		
+		for (int i = 0; i < this.battleEffects.size(); i++)
+		{
+			JBattleEffect be = this.battleEffects.get(i);
+
+			if (be.getBattleEffectId().equalsIgnoreCase(battleEffect.getBattleEffectId()))
+			{
+				be.effectEnded(this);
+				battleEffects.remove(i);
+				i--;
+			}
+		}
 		this.battleEffects.add(battleEffect);
 	}
-	
+
 	public void removeBattleEffect(JBattleEffect battleEffect)
 	{
-		Log.debug("Removed " + battleEffect.getName() + " from " + this.getName());
+		Log.debug("Removed " + battleEffect.getBattleEffectId() + " from " + this.getName());
 		this.battleEffects.remove(battleEffect);
 	}
 
 	public Image getCurrentWeaponImage() {
 		return currentWeaponImage;
 	}
-	
+
 	public JBattleEffect getAttackEffect()
 	{
 		JBattleEffect eff = null;
@@ -870,7 +896,7 @@ public class CombatSprite extends AnimatedSprite
 		}
 		return eff;
 	}
-	
+
 	public void setAttackEffect(String attackEffectId, int attackEffectChance, int attackEffectLevel)
 	{
 		this.attackEffectChance = attackEffectChance;
@@ -891,7 +917,7 @@ public class CombatSprite extends AnimatedSprite
 
 	public void triggerOverEvent(StateInfo stateInfo)
 	{
-		stateInfo.addPanel(new SpriteContextPanel(PanelType.PANEL_HEALTH_BAR, this, stateInfo.getGc()));
+		stateInfo.addPanel(new SpriteContextPanel(PanelType.PANEL_HEALTH_BAR, this, stateInfo.getFCGameContainer()));
 	}
 
 	public int getClientId() {
@@ -982,75 +1008,167 @@ public class CombatSprite extends AnimatedSprite
 		return maxMind;
 	}
 
+	/**
+	 * Returns a boolean indicating whether this CombatSprite should have a shadow drawn for it
+	 * and by extension whether the battle platform should be displayed for it
+	 * 
+	 * @return a boolean indicating whether this CombatSprite should have a shadow drawn for it
+	 * and by extension whether the battle platform should be displayed for it
+	 */
 	public boolean isDrawShadow() {
 		return drawShadow;
 	}
-	
+
+	/**
+	 * Returns an integer value representing this CombatSprite's base "counter" chance modified by
+	 * it's equipped items
+	 * 
+	 * @return an integer value representing this CombatSprite's base "counter" chance modified by
+	 * it's equipped items
+	 */
 	public int getModifiedCounter()
 	{
 		int mod = 0;
 		for (int i = 0; i < this.equipped.size(); i++)
 			if (this.equipped.get(i))
 				mod += ((EquippableItem) this.getItem(i)).getIncreasedCounter();
-		return getCurrentCounter() + mod;
+		return getBaseCounter() + mod;
 	}
 
-	public int getCurrentCounter() {
-		return currentCounter;
+	/**
+	 * Returns an integer value representing this CombatSprite's base "counter" chance (not 
+	 * modified by equipment)
+	 * 
+	 * @return an integer value representing this CombatSprite's base "counter" chance (not 
+	 * modified by equipment)
+	 */
+	public int getBaseCounter() {
+		return baseCounter;
 	}
 
-	public void setCurrentCounter(int currentCounter) {
-		this.currentCounter = currentCounter;
+	/**
+	 * Sets this CombatSprite's base counter chance
+	 * 
+	 * @param currentCounter an integer to be used as the CombatSprites new base counter stat
+	 */
+	public void setBaseCounter(int currentCounter) {
+		this.baseCounter = currentCounter;
 	}
-	
+
+	/**
+	 * Returns an integer value representing this CombatSprite's base "evade" chance modified by
+	 * it's equipped items
+	 * 
+	 * @return an integer value representing this CombatSprite's base "evade" chance modified by
+	 * it's equipped items
+	 */
 	public int getModifiedEvade()
 	{
 		int mod = 0;
 		for (int i = 0; i < this.equipped.size(); i++)
 			if (this.equipped.get(i))
 				mod += ((EquippableItem) this.getItem(i)).getIncreasedEvade();
-		return getCurrentEvade() + mod;
+		return getBaseEvade() + mod;
 	}
 
-	public int getCurrentEvade() {
-		return currentEvade;
+	/**
+	 * Returns an integer value representing this CombatSprite's base "evade" chance (not 
+	 * modified by equipment)
+	 * 
+	 * @return an integer value representing this CombatSprite's base "evade" chance (not 
+	 * modified by equipment)
+	 */
+	public int getBaseEvade() {
+		return baseEvade;
 	}
 
-	public void setCurrentEvade(int currentEvade) {
-		this.currentEvade = currentEvade;
+	/**
+	 * Sets this CombatSprite's base evade chance
+	 * 
+	 * @param currentCounter an integer to be used as the CombatSprites new base evade stat
+	 */
+	public void setBaseEvade(int currentEvade) {
+		this.baseEvade = currentEvade;
 	}
-	
+
+	/**
+	 * Returns an integer value representing this CombatSprite's base "double" chance modified by
+	 * it's equipped items
+	 * 
+	 * @return an integer value representing this CombatSprite's base "double" chance modified by
+	 * it's equipped items
+	 */
 	public int getModifiedDouble()
 	{
 		int mod = 0;
 		for (int i = 0; i < this.equipped.size(); i++)
 			if (this.equipped.get(i))
 				mod += ((EquippableItem) this.getItem(i)).getIncreasedDouble();
-		return getCurrentDouble() + mod;
+		return getBaseDouble() + mod;
 	}
 
-	public int getCurrentDouble() {
-		return currentDouble;
+	/**
+	 * Returns an integer value representing this CombatSprite's base "double" chance (not 
+	 * modified by equipment)
+	 * 
+	 * @return an integer value representing this CombatSprite's base "double" chance (not 
+	 * modified by equipment)
+	 */
+	public int getBaseDouble() {
+		return baseDouble;
 	}
 
-	public void setCurrentDouble(int currentDouble) {
-		this.currentDouble = currentDouble;
+	/**
+	 * Sets this CombatSprite's base double chance
+	 * 
+	 * @param currentCounter an integer to be used as the CombatSprites new base double stat
+	 */
+	public void setBaseDouble(int currentDouble) {
+		this.baseDouble = currentDouble;
 	}
-	
+
+	/**
+	 * Returns an integer value representing this CombatSprite's base "critical" chance modified by
+	 * it's equipped items
+	 * 
+	 * @return an integer value representing this CombatSprite's base "critical" chance modified by
+	 * it's equipped items
+	 */
 	public int getModifiedCrit()
 	{
 		int mod = 0;
 		for (int i = 0; i < this.equipped.size(); i++)
 			if (this.equipped.get(i))
 				mod += ((EquippableItem) this.getItem(i)).getIncreasedCrit();
-		return getCurrentCrit() + mod;
+		return getBaseCrit() + mod;
 	}
 
-	public int getCurrentCrit() {
-		return currentCrit;
+	/**
+	 * Returns an integer value representing this CombatSprite's base "critical" chance (not 
+	 * modified by equipment)
+	 * 
+	 * @return an integer value representing this CombatSprite's base "critical" chance (not 
+	 * modified by equipment)
+	 */
+	public int getBaseCrit() {
+		return baseCrit;
 	}
 
-	public void setCurrentCrit(int currentCrit) {
-		this.currentCrit = currentCrit;
+	/**
+	 * Sets this CombatSprite's base critical chance
+	 * 
+	 * @param currentCounter an integer to be used as the CombatSprites new base critical stat
+	 */
+	public void setBaseCrit(int currentCrit) {
+		this.baseCrit = currentCrit;
 	}
+
+
+	@Override
+	public String toString() {
+		return "CombatSprite [name=" + name+ " level=" + level + ", isHero=" + isHero + ", isLeader=" + isLeader + ", isPromoted="
+				+ isPromoted + ", uniqueEnemyId=" + uniqueEnemyId + ", id=" + id + ", tileX=" + this.getTileX() + ", tileY=" + this.getTileY() + "]";
+	}
+	
+	
 }

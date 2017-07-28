@@ -121,7 +121,7 @@ public class EnemyDefinition
 	public CombatSprite getEnemy(StateInfo stateInfo, int myId)
 	{
 		if (paletteName != null &&
-				!stateInfo.getResourceManager().getSpriteAnimations().containsKey(animations)) {
+				!stateInfo.getResourceManager().containsSpriteAnimation(animations)) {
 			//TODO Load palette stuff
 			// stateInfo.getResourceManager().addResource(resource, null , 0, 0);
 		}
@@ -165,4 +165,10 @@ public class EnemyDefinition
 	{
 		ENEMY_COUNT = -1;
 	}
+	
+	public static void setNextEnemyId(int nextId)
+	{
+		ENEMY_COUNT = nextId;
+	}
+	
 }

@@ -1,19 +1,17 @@
 package mb.fc.game.combat;
 
-import mb.fc.engine.CommRPG;
-import mb.fc.engine.state.LOVAttackCinematicState;
-import mb.fc.game.sprite.CombatSprite;
-import mb.fc.game.ui.FCGameContainer;
-import mb.fc.utils.AnimationWrapper;
-import mb.jython.JBattleEffect;
-
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
+import mb.fc.engine.CommRPG;
+import mb.fc.engine.state.LOVAttackCinematicState;
+import mb.fc.game.sprite.CombatSprite;
+import mb.fc.game.ui.PaddedGameContainer;
+import mb.fc.utils.AnimationWrapper;
+import mb.jython.JBattleEffect;
+
 public class CombatAnimation
 {
-	protected static float SCREEN_SCALE = CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
-
 	protected AnimationWrapper animationWrapper;
 	protected int totalTimePassed = 0;
 	protected int minimumTimePassed = -1;
@@ -63,21 +61,22 @@ public class CombatAnimation
 		return !blocks;
 	}
 
-	public void render(FCGameContainer fcCont, Graphics g, int yDrawPos, float scale)
+	public void render(PaddedGameContainer fcCont, Graphics g, int yDrawPos, float scale)
 	{
-		int x = fcCont.getDisplayPaddingX() + xOffset; // + (parentSprite.isHero() ? xOffset : -xOffset);
+		int x = xOffset; // + (parentSprite.isHero() ? xOffset : -xOffset);
 		int y = yDrawPos + yOffset;
 
 		if (displayPlatform)
-			g.drawImage(LOVAttackCinematicState.FLOOR_IMAGE, x + 220 * SCREEN_SCALE, y - 15 * SCREEN_SCALE);
+			g.drawImage(LOVAttackCinematicState.FLOOR_IMAGE, x + 220, y - 15);
 
-		animationWrapper.drawAnimation(x, y, renderColor, scale, g);
+		if (renderColor != null || parentSprite.getCurrentHP() > 0)
+			animationWrapper.drawAnimation(x, y, renderColor, scale, g);
 
 		// TODO Scale battle animations
 		for (JBattleEffect be : parentSprite.getBattleEffects())
 		{
 			if (be.getEffectAnimation() != null)
-				be.getEffectAnimation().drawAnimation(xOffset + (int) (fcCont.getDisplayPaddingX() + (parentSprite.isHero() ? 276 * SCREEN_SCALE : 50 * SCREEN_SCALE)),
+				be.getEffectAnimation().drawAnimation(xOffset + (int) ((parentSprite.isHero() ? 276 : 50)),
 					yDrawPos, g);
 		}
 	}

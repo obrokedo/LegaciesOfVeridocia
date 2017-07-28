@@ -76,6 +76,10 @@ public class FCInput implements KeyListener
 
 	}
 
+	public HashSet<Integer> getKeysPressed() {
+		return keysPressed;
+	}
+
 	@Override
 	public void keyPressed(int key, char c) {
 		keysPressed.add(key);

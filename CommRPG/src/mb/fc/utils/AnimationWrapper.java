@@ -2,18 +2,15 @@ package mb.fc.utils;
 
 import java.util.Set;
 
-import mb.fc.engine.CommRPG;
-import mb.fc.game.exception.BadAnimationException;
-
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.util.Log;
 
+import mb.fc.game.exception.BadAnimationException;
+
 public class AnimationWrapper
 {
-	protected static float SCREEN_SCALE = CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
-
 	protected SpriteAnims spriteAnims;
 	protected Animation animation;
 	protected int animationIndex;
@@ -195,13 +192,32 @@ public class AnimationWrapper
 				{
 					if (filter == null)
 						g.drawImage(getRotatedImageIfNeeded(spriteAnims.getImageAtIndex(as.imageIndex), as, scale),
-								x + as.x * (scale == null ? 1 : scale) * SCREEN_SCALE, y + as.y * (scale == null ? 1 : scale) * SCREEN_SCALE);
+								x + as.x * (scale == null ? 1 : scale), y + as.y * (scale == null ? 1 : scale));
 					else
 						g.drawImage(getRotatedImageIfNeeded(spriteAnims.getImageAtIndex(as.imageIndex), as, scale),
-								x + as.x * (scale == null ? 1 : scale) * SCREEN_SCALE, y + as.y * (scale == null ? 1 : scale) * SCREEN_SCALE, filter);
+								x + as.x * (scale == null ? 1 : scale), y + as.y * (scale == null ? 1 : scale), filter);
 				}
 				else
 					drawWeapon(as, x, y, filter, scale, g);
+			}
+		}
+	}
+	
+	public void drawAnimationDirect(int x, int y, Float scale, boolean flip)
+	{
+		if (animation != null)
+		{
+			for (AnimSprite as : animation.frames.get(animationIndex).sprites)
+			{
+				if (as.imageIndex != -1)
+				{
+					if (!flip)
+						getRotatedImageIfNeeded(spriteAnims.getImageAtIndex(as.imageIndex), as, scale).draw(
+								x + as.x * (scale == null ? 1 : scale), y + as.y * (scale == null ? 1 : scale));
+					else
+						getRotatedImageIfNeeded(spriteAnims.getImageAtIndex(as.imageIndex), as, scale).getFlippedCopy(true, false).draw(
+								x + as.x * (scale == null ? 1 : scale), y + as.y * (scale == null ? 1 : scale));
+				}
 			}
 		}
 	}
@@ -212,10 +228,10 @@ public class AnimationWrapper
 		{
 			if (filter == null)
 				g.drawImage(getRotatedImageIfNeeded(weapon, as, scale),
-						x + as.x * (scale == null ? 1 : scale) * SCREEN_SCALE, y + as.y * (scale == null ? 1 : scale) * SCREEN_SCALE);
+						x + as.x * (scale == null ? 1 : scale), y + as.y * (scale == null ? 1 : scale));
 			else
 				g.drawImage(getRotatedImageIfNeeded(weapon, as, scale),
-						x + as.x * (scale == null ? 1 : scale) * SCREEN_SCALE, y + as.y * (scale == null ? 1 : scale) * SCREEN_SCALE, filter);
+						x + as.x * (scale == null ? 1 : scale), y + as.y * (scale == null ? 1 : scale), filter);
 		}
 	}
 

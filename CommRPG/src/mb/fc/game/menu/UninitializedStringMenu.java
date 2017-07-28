@@ -4,7 +4,7 @@ import mb.fc.engine.state.StateInfo;
 import mb.fc.game.input.FCInput;
 import mb.fc.game.listener.StringListener;
 import mb.fc.game.ui.Button;
-import mb.fc.game.ui.FCGameContainer;
+import mb.fc.game.ui.PaddedGameContainer;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -21,7 +21,7 @@ public class UninitializedStringMenu extends StringMenu
 		cinButton = new Button(width / 2 + 20  + x, 235, 50, 20, "Cin");
 	}
 	
-	public boolean handleMouseInput(int mouseX, int mouseY, boolean leftClick)
+	public boolean handleMouseInput(int mouseX, int mouseY, boolean leftClick, int delta)
 	{		
 		if (okButton.handleUserInput(mouseX, mouseY, leftClick))
 		{
@@ -54,13 +54,13 @@ public class UninitializedStringMenu extends StringMenu
 
 
 	@Override
-	public void render(FCGameContainer gc, Graphics graphics) {
+	public void render(PaddedGameContainer gc, Graphics graphics) {
 		graphics.setColor(Color.blue);
 		graphics.fillRect(x, 150, width, 120);
 		graphics.setColor(COLOR_FOREFRONT);
 		graphics.drawString(text, x + 15, 165);
-		okButton.render(gc, graphics);
-		cinButton.render(gc, graphics);
+		okButton.render(graphics);
+		cinButton.render(graphics);
 		textField.render(gc, graphics);
 	}	
 }

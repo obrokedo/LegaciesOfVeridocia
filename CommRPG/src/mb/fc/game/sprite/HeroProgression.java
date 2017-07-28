@@ -88,7 +88,7 @@ public class HeroProgression implements Serializable
 				if (spellLevels[i][j] == (cs.getLevel() + 1))
 				{
 					JSpell spell = SpellResource.getSpell(spellIds.get(i), stateInfo);
-					text += " " + cs.getName() + " learned " + spell.getName() + " " + j + "}[";
+					text += " " + cs.getName() + " learned " + spell.getName() + " " + (j + 1) + "}[";
 				}
 			}
 		}
@@ -100,7 +100,7 @@ public class HeroProgression implements Serializable
 
 	public void levelUp(CombatSprite cs, LevelUpResult level, FCResourceManager frm)
 	{
-		Log.debug("Applying level-up for " + cs.getName() + " Level: " + cs.getLevel() + 1);
+		Log.debug("Applying level-up for " + cs.getName() + " Level: " + (cs.getLevel() + 1));
 		
 		cs.setLevel(cs.getLevel() + 1);
 		cs.setExp(cs.getExp() - 100);
@@ -136,7 +136,7 @@ public class HeroProgression implements Serializable
 						{
 							if (sd.getSpellId().equalsIgnoreCase(spell.getId()))
 							{
-								sd.setMaxLevel((byte) j);
+								sd.setMaxLevel((byte) (j + 1));
 								found = true;
 								break;
 							}

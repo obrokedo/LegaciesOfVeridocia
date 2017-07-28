@@ -11,6 +11,7 @@ import java.util.zip.GZIPInputStream;
 import mb.fc.game.exception.BadMapException;
 import mb.fc.game.sprite.AnimatedSprite;
 import mb.fc.map.Map;
+import mb.fc.map.MapLayer;
 import mb.fc.map.MapObject;
 import mb.fc.utils.XMLParser;
 import mb.fc.utils.XMLParser.TagArea;
@@ -52,10 +53,6 @@ public class MapParser
 		}
 		else
 			map.setOriginalTileWidth(tileWidth);
-
-		tileWidth *= map.getTileScale();
-		tileHeight *= map.getTileScale();
-
 
 		Log.debug("Tile Dimensions " + tileWidth  + " " + tileHeight);
 
@@ -99,15 +96,47 @@ public class MapParser
 			}
 			else if (childArea.getTagType().equalsIgnoreCase("layer"))
 			{
-				int[][] layer = null;
+				MapLayer layer = null;
 				try
 				{
 					layer = decodeLayer(childArea, width, height); // new int[height][width];
 					if (childArea.getParams().get("name").startsWith("walk") ||
-							childArea.getParams().get("name").startsWith("Walk"))
+							childArea.getParams().get("name").startsWith("Walk") ||
+							layer.containsParam("walk"))
 						map.setMoveableLayer(layer);
+					else if (layer.containsParam("flash"))
+					{
+						String value = layer.getParam("flash");
+						if (value.indexOf("duration=") == -1 || value.indexOf("offset=") == -1)
+							throw new BadMapException("Unable to parse map due to incorrectly formated 'flashing' layer. The 'flash' key should define parameters 'offset=###' and 'duration=###'");
+						String[] values = value.split(" ");
+						for (String s : values)
+						{
+							String[] flashSplit = s.split("=");
+							try
+							{
+								if (flashSplit[0].equalsIgnoreCase("duration"))
+								{
+									layer.setFlashDuration(Integer.parseInt(flashSplit[1]));
+								}
+								
+								if (flashSplit[0].equalsIgnoreCase("offset"))
+								{
+									layer.setFlashOffset(Integer.parseInt(flashSplit[1]));
+								}
+							} catch (NumberFormatException nfe) {
+								nfe.printStackTrace();
+								throw new BadMapException("Numeric values must be specified for 'flashing' attributes 'duration' and 'offset'");
+							}
+							
+						}
+						
+						map.addFlashingLayer(layer);
+					}
 					else
+					{
 						map.addLayer(layer);
+					}
 				}
 				catch (BadMapException ex)
 				{
@@ -129,14 +158,12 @@ public class MapParser
 				{
 					MapObject mapObject = new MapObject();
 					mapObject.setName(objectTag.getAttribute("name"));
-					mapObject.setX((int) (map.getTileScale() * Integer.parseInt(objectTag.getAttribute("x")) * tileResize));
-					mapObject.setY((int) (map.getTileScale() * Integer.parseInt(objectTag.getAttribute("y")) * tileResize));
+					mapObject.setX((int) (Integer.parseInt(objectTag.getAttribute("x")) * tileResize));
+					mapObject.setY((int) (Integer.parseInt(objectTag.getAttribute("y")) * tileResize));
 					if (objectTag.getAttribute("width") != null)
-						mapObject.setWidth((int) (map.getTileScale() *
-								Integer.parseInt(objectTag.getAttribute("width")) * tileResize));
+						mapObject.setWidth((int) (Integer.parseInt(objectTag.getAttribute("width")) * tileResize));
 					if (objectTag.getAttribute("height") != null)
-						mapObject.setHeight((int) (map.getTileScale() *
-								Integer.parseInt(objectTag.getAttribute("height"))  * tileResize));
+						mapObject.setHeight((int) (Integer.parseInt(objectTag.getAttribute("height"))  * tileResize));
 					for (TagArea propArea : objectTag.getChildren())
 					{
 						if (propArea.getTagType().equalsIgnoreCase("properties"))
@@ -162,8 +189,8 @@ public class MapParser
 							for (String point : points)
 							{
 								String[] p = point.split(",");
-								pointList.add(new Point((int) (map.getTileScale() * Integer.parseInt(p[0])  * tileResize),
-										(int) (map.getTileScale() * Integer.parseInt(p[1])  * tileResize)));
+								pointList.add(new Point((int) (Integer.parseInt(p[0])  * tileResize),
+										(int) (Integer.parseInt(p[1])  * tileResize)));
 							}
 
 							mapObject.setPolyPoints(pointList);
@@ -285,26 +312,44 @@ public class MapParser
 		return out;
 	}
 
-	public static int [][] decodeLayer(TagArea tagArea, int layerWidth, int layerHeight)
+	public static MapLayer decodeLayer(TagArea tagArea, int layerWidth, int layerHeight)
 	{
 		int[][] layer = new int[layerHeight][layerWidth];
+		MapLayer mapLayer = new MapLayer(layer);
 
 		try
 		{
-			String cdata = tagArea.getChildren().get(0).getValue();
-			char[] enc = cdata.toCharArray();
-			byte[] dec = decodeBase64(enc);
-			GZIPInputStream is = new GZIPInputStream(
-					new ByteArrayInputStream(dec));
-
-			for (int y = 0; y < layerHeight; y++) {
-				for (int x = 0; x < layerWidth; x++) {
-					int tileId = 0;
-					tileId |= is.read();
-					tileId |= is.read() << 8;
-					tileId |= is.read() << 16;
-					tileId |= is.read() << 24;
-					layer[y][x] = tileId;
+			
+			for (TagArea childTagArea : tagArea.getChildren())
+			{
+				System.out.println(childTagArea.getTagType());
+				if (childTagArea.getTagType().equalsIgnoreCase("properties"))
+				{
+					for (TagArea propertyTagArea : childTagArea.getChildren())
+					{
+						mapLayer.addParam(propertyTagArea.getParams().get("name"), 
+								propertyTagArea.getParams().get("value"));
+					}
+				}
+				else if (childTagArea.getTagType().equalsIgnoreCase("data"))
+				{
+					String cdata = childTagArea.getValue();
+					System.out.println(cdata);
+					char[] enc = cdata.toCharArray();
+					byte[] dec = decodeBase64(enc);
+					GZIPInputStream is = new GZIPInputStream(
+							new ByteArrayInputStream(dec));
+		
+					for (int y = 0; y < layerHeight; y++) {
+						for (int x = 0; x < layerWidth; x++) {
+							int tileId = 0;
+							tileId |= is.read();
+							tileId |= is.read() << 8;
+							tileId |= is.read() << 16;
+							tileId |= is.read() << 24;
+							layer[y][x] = tileId;
+						}
+					}
 				}
 			}
 		} catch (IOException | NullPointerException e) {
@@ -312,6 +357,6 @@ public class MapParser
 			throw new BadMapException("Unable to decode base 64 block, make sure that you have\n set the map type type to Base 64 gzip compressed");
 		}
 
-		return layer;
+		return mapLayer;
 	}
 }

@@ -9,7 +9,8 @@ import mb.fc.game.constants.Direction;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.input.FCInput;
 import mb.fc.game.input.KeyMapping;
-import mb.fc.game.ui.FCGameContainer;
+import mb.fc.game.ui.PaddedGameContainer;
+import mb.fc.utils.StringUtils;
 
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.Color;
@@ -54,11 +55,11 @@ public abstract class QuadMenu extends Menu
 		super(menuType);
 		this.largeFlor = largeFlor;
 		if (largeFlor)
-			this.flourish = stateInfo.getResourceManager().getImages().get("largeflor");
+			this.flourish = stateInfo.getResourceManager().getImage("largeflor");
 		else
-			this.flourish = stateInfo.getResourceManager().getImages().get("smallflor");
-		this.selectSide = stateInfo.getResourceManager().getImages().get("selectside");
-		this.selectTop = stateInfo.getResourceManager().getImages().get("selecttop");
+			this.flourish = stateInfo.getResourceManager().getImage("smallflor");
+		this.selectSide = stateInfo.getResourceManager().getImage("selectside");
+		this.selectTop = stateInfo.getResourceManager().getImage("selecttop");
 		this.stateInfo = stateInfo;
 		this.paintSelectionCursor = false;
 		this.timer = new Timer(16);
@@ -127,35 +128,34 @@ public abstract class QuadMenu extends Menu
 		return 0;
 	}
 
-	protected void renderTextBox(FCGameContainer gc, Graphics graphics)
+	protected void renderTextBox(PaddedGameContainer gc, Graphics graphics)
 	{
-		Panel.drawPanelBox(CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 205 + gc.getDisplayPaddingX(),
-				CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 195,
+		Panel.drawPanelBox(205,
+				195,
 				getTextboxWidth(),
-				CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 15 + 12, graphics);
+				23, graphics);
 
 		graphics.setColor(COLOR_FOREFRONT);
 
-		graphics.drawString(getText(selected), CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 212 + gc.getDisplayPaddingX(),
-				CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 190 + 3);
+		StringUtils.drawString(getText(selected), 212, 193, graphics);
 	}
 
 	@Override
-	public final void render(FCGameContainer gc, Graphics graphics)
+	public final void render(PaddedGameContainer gc, Graphics graphics)
 	{
 		renderTextBox(gc, graphics);
 
 		int iconWidth = getIconImage(Direction.UP, false).getWidth();
 		int iconHeight = getIconImage(Direction.UP, false).getHeight();
 
-		int x = (gc.getWidth() - iconWidth) / 2;
-		int y = gc.getHeight() - iconHeight * 2 - 25;
+		int x = (CommRPG.GAME_SCREEN_SIZE.width - iconWidth) / 2;
+		int y = CommRPG.GAME_SCREEN_SIZE.height - iconHeight * 2 - 25;
 
 		if (isOptionEnabled(Direction.UP))
 		{
 			if (selected == Direction.UP)
-				graphics.drawImage(selectTop, (gc.getWidth() - selectTop.getWidth()) / 2, y - selectTop.getHeight() +  CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * selectCount);
-			drawImage(getIconImage(Direction.UP, (selected == Direction.UP ? blink : false)), x, y - (selected == Direction.UP ? CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * selectCount : 0), graphics, Direction.UP);
+				graphics.drawImage(selectTop, (CommRPG.GAME_SCREEN_SIZE.width - selectTop.getWidth()) / 2, y - selectTop.getHeight() - selectCount);
+			drawImage(getIconImage(Direction.UP, (selected == Direction.UP ? blink : false)), x, y - (selected == Direction.UP ? selectCount : 0), graphics, Direction.UP);
 		}
 		else
 			graphics.drawImage(getIconImage(Direction.UP, false), x, y, disabledColor);
@@ -163,8 +163,8 @@ public abstract class QuadMenu extends Menu
 		if (isOptionEnabled(Direction.LEFT))
 		{
 			if (selected == Direction.LEFT)
-				graphics.drawImage(selectSide, x - iconWidth - selectSide.getWidth() + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 3 - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * selectCount, (float) (y + iconHeight - .5 * selectSide.getHeight()));
-			drawImage(getIconImage(Direction.LEFT, (selected == Direction.LEFT ? blink : false)), x - iconWidth - (selected == Direction.LEFT ? CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * selectCount : 0), (float) (y + iconHeight * .5), graphics, Direction.LEFT);
+				graphics.drawImage(selectSide, x - iconWidth - selectSide.getWidth() + 3 - selectCount, (float) (y + iconHeight - .5 * selectSide.getHeight()));
+			drawImage(getIconImage(Direction.LEFT, (selected == Direction.LEFT ? blink : false)), x - iconWidth - (selected == Direction.LEFT ? selectCount : 0), (float) (y + iconHeight * .5), graphics, Direction.LEFT);
 		}
 		else
 			graphics.drawImage(getIconImage(Direction.LEFT, false), x - iconWidth, (float) (y + iconHeight * .5), disabledColor);
@@ -173,8 +173,8 @@ public abstract class QuadMenu extends Menu
 		if (isOptionEnabled(Direction.RIGHT))
 		{
 			if (selected == Direction.RIGHT)
-				graphics.drawImage(selectSide.getFlippedCopy(true, false), x + iconWidth * 2 - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 3 + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * selectCount, (float) (y + iconHeight - .5 * selectSide.getHeight()));
-			drawImage(getIconImage(Direction.RIGHT, (selected == Direction.RIGHT ? blink : false)), x + iconWidth + (selected == Direction.RIGHT ? CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * selectCount : 0), (float) (y + iconHeight * .5), graphics, Direction.RIGHT);
+				graphics.drawImage(selectSide.getFlippedCopy(true, false), x + iconWidth * 2 - 3 + selectCount, (float) (y + iconHeight - .5 * selectSide.getHeight()));
+			drawImage(getIconImage(Direction.RIGHT, (selected == Direction.RIGHT ? blink : false)), x + iconWidth + (selected == Direction.RIGHT ? selectCount : 0), (float) (y + iconHeight * .5), graphics, Direction.RIGHT);
 		}
 		else
 			graphics.drawImage(getIconImage(Direction.RIGHT, false), x + iconWidth, (float) (y + iconHeight * .5), disabledColor);
@@ -183,8 +183,8 @@ public abstract class QuadMenu extends Menu
 		if (isOptionEnabled(Direction.DOWN))
 		{
 			if (selected == Direction.DOWN)
-				graphics.drawImage(selectTop.getFlippedCopy(false, true), (gc.getWidth() - selectTop.getWidth()) / 2, y + iconHeight * 2 -  CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * selectCount);
-			drawImage(getIconImage(Direction.DOWN, (selected == Direction.DOWN ? blink : false)), x, y + iconHeight + (selected == Direction.DOWN ? CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * selectCount : 0), graphics, Direction.DOWN);
+				graphics.drawImage(selectTop.getFlippedCopy(false, true), (CommRPG.GAME_SCREEN_SIZE.width - selectTop.getWidth()) / 2, y + iconHeight * 2 + selectCount);
+			drawImage(getIconImage(Direction.DOWN, (selected == Direction.DOWN ? blink : false)), x, y + iconHeight + (selected == Direction.DOWN ? selectCount : 0), graphics, Direction.DOWN);
 		}
 		else
 			graphics.drawImage(getIconImage(Direction.DOWN, false), x, y + iconHeight, disabledColor);
@@ -231,7 +231,7 @@ public abstract class QuadMenu extends Menu
 	@Override
 	public MenuUpdate handleUserInput(FCInput input, StateInfo stateInfo)
 	{
-		if (stateInfo.getCurrentSprite().getClientId() != stateInfo.getPsi().getClientId())
+		if (stateInfo.getCurrentSprite().getClientId() != stateInfo.getPersistentStateInfo().getClientId())
 			return MenuUpdate.MENU_NO_ACTION;
 
 		if (input.isKeyDown(KeyMapping.BUTTON_2))
@@ -302,7 +302,7 @@ public abstract class QuadMenu extends Menu
 
 	protected int getTextboxWidth()
 	{
-		return CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 57;
+		return 57;
 	}
 
 	protected void drawImage(Image image, float x, float y, Graphics g, Direction dir)

@@ -13,7 +13,8 @@ import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.input.FCInput;
 import mb.fc.game.input.KeyMapping;
 import mb.fc.game.listener.MenuListener;
-import mb.fc.game.ui.FCGameContainer;
+import mb.fc.game.ui.PaddedGameContainer;
+import mb.fc.utils.StringUtils;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.util.Log;
@@ -23,7 +24,7 @@ public class SpeechMenu extends Menu
 	public static final int NO_TRIGGER = -1;
 
 	private int x;
-	private int y = 60 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
+	private int y = 60;
 	private int width;
 	protected ArrayList<String> panelText;
 	private int textIndex = 0;
@@ -45,7 +46,7 @@ public class SpeechMenu extends Menu
 	 * @param text the text that should be displayed in the speech menu
 	 * @param gc the graphics container that the menu will be displayed in
 	 */
-	public SpeechMenu(String text, FCGameContainer gc)
+	public SpeechMenu(String text, PaddedGameContainer gc)
 	{
 		this(text, gc, NO_TRIGGER, null, null);
 		y = 0;
@@ -62,25 +63,25 @@ public class SpeechMenu extends Menu
 	 */
 	public SpeechMenu(String text, StateInfo stateInfo)
 	{
-		this(text, stateInfo.getGc(), NO_TRIGGER, null, stateInfo);
+		this(text, stateInfo.getFCGameContainer(), NO_TRIGGER, null, stateInfo);
 	}
 
-	public SpeechMenu(String text, FCGameContainer gc, int triggerId,
+	public SpeechMenu(String text, PaddedGameContainer gc, int triggerId,
 			Portrait portrait, StateInfo stateInfo)
 	{
 		this(text, gc, triggerId, portrait, stateInfo, null);
 	}
 
-	public SpeechMenu(String text, FCGameContainer gc, int triggerId,
+	public SpeechMenu(String text, PaddedGameContainer gc, int triggerId,
 			Portrait portrait, StateInfo stateInfo, MenuListener listener)
 	{
 		super(PanelType.PANEL_SPEECH);
 		this.listener = listener;
-		width = gc.getWidth() - 100 - gc.getDisplayPaddingX() * 2;
-		x = 50 + gc.getDisplayPaddingX();
+		width = CommRPG.GAME_SCREEN_SIZE.width - 30;
+		x = 15;
 
-		int maxTextWidth = width;
-		int spaceWidth = SPEECH_FONT.getWidth("_");
+		int maxTextWidth = width - 10;
+		int spaceWidth = StringUtils.getStringWidth("_", SPEECH_FONT);
 		String[] splitText = text.split(" ");
 		int currentLineWidth = 0;
 		String currentLine = "";
@@ -89,7 +90,7 @@ public class SpeechMenu extends Menu
 
 		for (int i = 0; i < splitText.length; i++)
 		{
-			int wordWidth = SPEECH_FONT.getWidth(splitText[i]);
+			int wordWidth = StringUtils.getStringWidth(splitText[i], SPEECH_FONT);
 
 			if (wordWidth + currentLineWidth <= maxTextWidth)
 			{
@@ -103,7 +104,7 @@ public class SpeechMenu extends Menu
 				if (lineBreak)
 				{
 					currentLineWidth = 0;
-					panelText.add(currentLine);
+					panelText.add(currentLine.trim());
 					currentLine = "";
 				}
 			}
@@ -111,13 +112,13 @@ public class SpeechMenu extends Menu
 			{
 				i--;
 				currentLineWidth = 0;
-				panelText.add(currentLine);
+				panelText.add(currentLine.trim());
 				currentLine = "";
 			}
 		}
 
 		if (currentLineWidth > 0)
-			panelText.add(currentLine);
+			panelText.add(currentLine.trim());
 
 		this.triggerId = triggerId;
 
@@ -133,31 +134,29 @@ public class SpeechMenu extends Menu
 	}
 
 	@Override
-	public void render(FCGameContainer gc, Graphics graphics)
+	public void render(PaddedGameContainer gc, Graphics graphics)
 	{
 		int posY = 2;
 		if (isAttackCinematic)
 			posY = 1;
 
-		Panel.drawPanelBox(x, gc.getHeight() - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * (posY + 1) * 20 + y, width , CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * (posY + 1) * 20 - 5, graphics);
+		Panel.drawPanelBox(x, CommRPG.GAME_SCREEN_SIZE.height - (posY + 1) * 20 + y, width, (posY + 1) * (20 + (posY == 1 ? 1 : 0)) - 5, graphics);
 
 		if (!initialized)
 			return;
 
 		graphics.setFont(SPEECH_FONT);
 		graphics.setColor(Panel.COLOR_FOREFRONT);
-		// graphics.setFont(ufont);
 
 		for (int i = Math.max(0, textIndex - posY); i <= textIndex; i++)
 		{
-			graphics.drawString((i == textIndex ? panelText.get(i).substring(0, textMovingIndex) : panelText.get(i)), x + 15,
-					gc.getHeight() - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * (posY + 1) * 20 + 10 +  (i - textIndex + (textIndex >= posY ? posY : textIndex)) * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 15 - (posY == 1 ? 5 : 0));
+			StringUtils.drawString((i == textIndex ? panelText.get(i).substring(0, textMovingIndex) : panelText.get(i)), x + 2,
+					CommRPG.GAME_SCREEN_SIZE.height - (posY + 1) * 24 + 15 + (i - textIndex + (textIndex >= posY ? posY : textIndex)) * 15 - (posY == 1 ? 5 : 0), graphics);
 		}
 
 		if (portrait != null)
 		{
-			portrait.render(x, y + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 12, graphics);
-			// graphics.drawImage(portrait, x, 25);
+			portrait.render(x, y + 12, graphics);
 		}
 	}
 
@@ -179,7 +178,7 @@ public class SpeechMenu extends Menu
 					initialized = true;
 				}
 				else
-					y = Math.max(y - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 8, 0);
+					y = Math.max(y - 8, 0);
 			}
 
 			for (int i = 0; i < (CinematicState.cinematicSpeed > 1 ? CinematicState.cinematicSpeed : 1); i++)

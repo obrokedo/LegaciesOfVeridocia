@@ -220,7 +220,7 @@ public class MapObject
 	public Sprite getSprite(StateInfo stateInfo)
 	{
 		String name = params.get("name");
-		Image image = stateInfo.getResourceManager().getImages().get(params.get("image"));
+		Image image = stateInfo.getResourceManager().getImage(params.get("image"));
 
 		int[] trigger = null;
 		if (params.containsKey("searchtrigger"))
@@ -258,12 +258,22 @@ public class MapObject
 
 	public Sprite getDoor(StateInfo stateInfo, int doorId)
 	{
-		Image image = stateInfo.getResourceManager().getImages().get(params.get("image"));
+		Image image = stateInfo.getResourceManager().getImage(params.get("image"));
 
 		Sprite s = new Door(doorId, x, y, image);
 		s.initializeSprite(stateInfo);
 		s.setLocX(x);
 		s.setLocY(y);
 		return s;
+	}
+	
+	public boolean contains(int mapX, int mapY)
+	{
+		return shape.contains(mapX + 1, mapY + 1);
+	}
+	
+	public boolean contains(CombatSprite cs)
+	{
+		return shape.contains(cs.getLocX() + 1, cs.getLocY() + 1);
 	}
 }

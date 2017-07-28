@@ -32,9 +32,9 @@ public class MapEditorRenderPanel extends JPanel implements MouseListener
 		if (plannerMap != null)
 		{
 			plannerMap.renderMap(g, this);
-			plannerMap.renderMapLocations(g, selectedMapObject, parentPanel.isDisplayBattleTrigger(),
+			plannerMap.renderMapLocations(g, selectedMapObject,
 					parentPanel.isDisplayEnemy(), parentPanel.isDisplayOther(), parentPanel.isDisplayTerrain(),
-					parentPanel.isDisplayTrigger(), parentPanel.isDisplayUnused());
+					parentPanel.isDisplayUnused());
 		}
 	}
 
@@ -79,11 +79,7 @@ public class MapEditorRenderPanel extends JPanel implements MouseListener
 					{
 						if (mo.getKey().equalsIgnoreCase("enemy") && !parentPanel.isDisplayEnemy())
 							continue;
-						else if (mo.getKey().equalsIgnoreCase("battletrigger") && !parentPanel.isDisplayBattleTrigger())
-							continue;
 						else if (mo.getKey().equalsIgnoreCase("terrain") && !parentPanel.isDisplayTerrain())
-							continue;
-						else if (mo.getKey().equalsIgnoreCase("trigger") && !parentPanel.isDisplayTrigger())
 							continue;
 						else if (!mo.getKey().equalsIgnoreCase("enemy") &&
 								!mo.getKey().equalsIgnoreCase("battletrigger")

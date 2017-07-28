@@ -14,7 +14,7 @@ public class SpriteRenderer extends Manager
 		{
 			if (s.isVisible())
 			{
-				s.render(stateInfo.getCamera(), g, stateInfo.getGc());
+				s.render(stateInfo.getCamera(), g, stateInfo.getFCGameContainer());
 				/*
 				switch (s.getSpriteType())
 				{

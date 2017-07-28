@@ -153,7 +153,7 @@ public class ItemDefinition
 
 	public void initializeItem(Item i, StateInfo stateInfo)
 	{
-		i.setImage(stateInfo.getResourceManager().getSpriteSheets().get("items").getSprite(imageX, imageY));
+		i.setImage(stateInfo.getResourceManager().getSpriteSheet("items").getSprite(imageX, imageY));
 	}
 
 	public int getId() {

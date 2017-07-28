@@ -1,12 +1,11 @@
 package mb.fc.game.menu.shop;
 
-import mb.fc.engine.CommRPG;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
+
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.listener.MenuListener;
 import mb.fc.game.menu.HeroesStatMenu;
-
-import org.newdawn.slick.Color;
-import org.newdawn.slick.Graphics;
 
 public class HeroesSellMenu extends HeroesStatMenu
 {
@@ -22,10 +21,10 @@ public class HeroesSellMenu extends HeroesStatMenu
 		if (selectingItemState)
 		{
 			g.setColor(Color.white);
-			//graphics.drawString("EQ", xOffset + 190 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()],
-			// yOffsetTop + (42 + i * 20) * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]);
-			g.drawRect(xOffset + 207 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()],
-					yOffsetTop + 28 + (42 + selectingItemIndex * 20) * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()], 200, 60);
+			//graphics.drawString("EQ", xOffset + 190,
+			// yOffsetTop + (42 + i * 20));
+			g.drawRect(xOffset + 207,
+					yOffsetTop + 28 + (42 + selectingItemIndex * 20), 200, 60);
 		}
 	}
 

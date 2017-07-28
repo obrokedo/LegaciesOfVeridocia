@@ -8,5 +8,6 @@ public class Door extends StaticSprite
 
 	public Door(int doorId, int locX, int locY, Image image) {
 		super(locX, locY, "door" + doorId, image, null);
+		this.id = doorId;
 	}
 }

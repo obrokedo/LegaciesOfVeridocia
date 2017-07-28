@@ -1,9 +1,12 @@
 package mb.fc.game;
 
-import mb.fc.game.sprite.Sprite;
-import mb.fc.map.Map;
+import java.awt.Point;
 
 import org.newdawn.slick.geom.Rectangle;
+
+import mb.fc.engine.state.StateInfo;
+import mb.fc.game.sprite.Sprite;
+import mb.fc.map.Map;
 
 /**
  * Contains information that indicates which portion of a map should be displayed at any given time.
@@ -27,10 +30,6 @@ public class Camera
 				camera.viewport.getWidth(), camera.viewport.getHeight());
 	}
 
-	public Rectangle getViewport() {
-		return viewport;
-	}
-
 	public float getLocationX()
 	{
 		return viewport.getX();
@@ -41,10 +40,57 @@ public class Camera
 		return viewport.getY();
 	}
 
-	public void setLocation(float x, float y)
+	public void setLocation(float x, float y, StateInfo stateInfo)
 	{
+		if (x + getViewportWidth() > stateInfo.getCurrentMap().getMapWidthInPixels())
+			x = stateInfo.getCurrentMap().getMapWidthInPixels() - getViewportWidth();
+		if (y + getViewportHeight() > stateInfo.getCurrentMap().getMapHeightInPixels())
+			y = stateInfo.getCurrentMap().getMapHeightInPixels() - getViewportHeight();
 		viewport.setLocation(x, y);
+		// nextX = x;
+		// nextY = y;
 	}
+	
+	public boolean canMoveTowards(float x, float y, StateInfo stateInfo)
+	{
+		
+		boolean cantMoveHor = x == this.getLocationX();
+		if (!cantMoveHor)
+			cantMoveHor = (x < 0 && this.getLocationX() == 0) || x == this.getLocationX();
+		if (!cantMoveHor)
+			cantMoveHor = x + getViewportWidth() > stateInfo.getCurrentMap().getMapWidthInPixels() &&  // Cant move right
+				this.getLocationX() == stateInfo.getCurrentMap().getMapWidthInPixels() - getViewportWidth();
+		boolean cantMoveVert = y == this.getLocationY();
+		if (!cantMoveVert)
+				cantMoveVert = y < 0 && this.getLocationY() == 0;
+		if (!cantMoveVert)
+			cantMoveVert = y + getViewportHeight() > stateInfo.getCurrentMap().getMapHeightInPixels() &&  // Cant move down
+				this.getLocationY() == stateInfo.getCurrentMap().getMapHeightInPixels() - getViewportHeight();
+
+		boolean b = !(cantMoveVert && cantMoveHor);
+		return b;
+	}
+
+	private void setX(float x)
+	{
+		// nextX = x;
+		viewport.setX(x);
+	}
+
+	private void setY(float y)
+	{
+		// nextY = y;
+		viewport.setY(y);
+	}
+
+	/*
+	float nextX, nextY;
+
+	public void realSetLocation()
+	{
+		viewport.setLocation(nextX, nextY);
+	}
+	*/
 
 	public int getViewportWidth()
 	{
@@ -59,43 +105,49 @@ public class Camera
 	public void centerOnSprite(Sprite sprite, Map map)
 	{
 		if (sprite.getLocX() < getViewportWidth() / 2)
-			viewport.setX(0);
+			setX(0);
 		else if (sprite.getLocX() > map.getMapWidthInPixels() - getViewportWidth() / 2)
 		{
-			viewport.setX(Math.max(0, map.getMapWidthInPixels() - getViewportWidth()));
+			setX(Math.max(0, map.getMapWidthInPixels() - getViewportWidth()));
 		}
 		else
-			viewport.setX(Math.max(0, sprite.getLocX() - getViewportWidth() / 2));
+			setX(Math.max(0, sprite.getLocX() - getViewportWidth() / 2));
 
 		if (sprite.getLocY() < getViewportHeight() / 2)
-			viewport.setY(0);
+			setY(0);
 		else if (sprite.getLocY() > map.getMapHeightInPixels() - getViewportHeight() / 2)
 		{
-			viewport.setY(Math.max(0, map.getMapHeightInPixels() - getViewportHeight()));
+			setY(Math.max(0, map.getMapHeightInPixels() - getViewportHeight()));
 		}
 		else
-			viewport.setY(Math.max(0, sprite.getLocY() - getViewportHeight() / 2));
+			setY(Math.max(0, sprite.getLocY() - getViewportHeight() / 2));
 	}
 
 	public void centerOnPoint(float locX, float locY, Map map)
 	{
 		if (locX < getViewportWidth() / 2)
-			viewport.setX(0);
+			setX(0);
 		else if (locX > map.getMapWidthInPixels() - getViewportWidth() / 2)
 		{
-			viewport.setX(Math.max(0, map.getMapWidthInPixels() - getViewportWidth()));
+			setX(Math.max(0, map.getMapWidthInPixels() - getViewportWidth()));
 		}
 		else
-			viewport.setX(Math.max(0, locX - getViewportWidth() / 2));
+			setX(Math.max(0, locX - getViewportWidth() / 2));
 
 		if (locY < getViewportHeight() / 2)
-			viewport.setY(0);
+			setY(0);
 		else if (locY >  map.getMapHeightInPixels() - getViewportHeight() / 2)
 		{
-			viewport.setY(Math.max(0, map.getMapHeightInPixels() - getViewportHeight()));
+			setY(Math.max(0, map.getMapHeightInPixels() - getViewportHeight()));
 		}
 		else
-			viewport.setY(Math.max(0, locY - getViewportHeight() / 2));
+			setY(Math.max(0, locY - getViewportHeight() / 2));
+	}
+	
+	public Point getCenterOfCamera(Map map)
+	{
+		return new Point((int) this.getLocationX() + getViewportWidth() / 2,
+				(int) this.getLocationY() + getViewportHeight() / 2);
 	}
 
 	public Camera duplicate()

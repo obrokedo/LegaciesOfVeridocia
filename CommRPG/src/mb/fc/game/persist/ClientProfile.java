@@ -15,6 +15,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 
 import org.newdawn.slick.util.Log;
 
@@ -25,12 +26,15 @@ import mb.fc.game.exception.BadResourceException;
 import mb.fc.game.resource.HeroResource;
 import mb.fc.game.sprite.CombatSprite;
 import mb.jython.GlobalPythonFactory;
+import mb.jython.JConfigurationValues;
 
 public class ClientProfile implements Serializable
 {
 	private static final long serialVersionUID = 1L;
-
+	public static final String PROFILE_EXTENSION = ".profile";
+	
 	private ArrayList<CombatSprite> heroes;
+	private HashSet<Integer> inBattleHeroIds;
 	private int gold;
 	private String name;
 	private transient ArrayList<CombatSprite> networkHeroes;
@@ -43,6 +47,7 @@ public class ClientProfile implements Serializable
 	public ClientProfile(String name)
 	{
 		heroes = new ArrayList<>();
+		inBattleHeroIds = new HashSet<>();
 		networkHeroes = new ArrayList<>();
 		gold = 100;
 		this.name = name;
@@ -51,6 +56,11 @@ public class ClientProfile implements Serializable
 	public void addHero(CombatSprite hero)
 	{
 		this.heroes.add(hero);
+		JConfigurationValues configValues = GlobalPythonFactory.createConfigurationValues();
+		int maxHeros = configValues.getMaxPartySize();
+		
+		if (this.inBattleHeroIds.size() < maxHeros)
+			this.inBattleHeroIds.add(hero.getId());
 	}
 
 	public ArrayList<CombatSprite> getHeroes() {
@@ -59,6 +69,17 @@ public class ClientProfile implements Serializable
 		if (networkHeroes != null)
 			hs.addAll(networkHeroes);
 		Collections.sort(hs, new HeroComparator());
+		return hs;
+	}
+	
+	public ArrayList<CombatSprite> getHeroesInParty()
+	{
+		ArrayList<CombatSprite> hs = new ArrayList<>();
+		for (CombatSprite hero : heroes)
+		{
+			if (inBattleHeroIds.contains(hero.getId()))
+				hs.add(hero);
+		}
 		return hs;
 	}
 
@@ -74,14 +95,13 @@ public class ClientProfile implements Serializable
 	public void addNetworkHeroes(ArrayList<CombatSprite> networkHeroes) {
 		this.networkHeroes.addAll(networkHeroes);
 	}
-
-	public ArrayList<CombatSprite> getLeaderList()
+	
+	public CombatSprite getMainCharacter()
 	{
-		ArrayList<CombatSprite> css = new ArrayList<CombatSprite>();
 		for (CombatSprite cs : this.getHeroes())
 			if (cs.isLeader())
-				css.add(cs);
-		return css;
+				return cs;
+		throw new BadResourceException("No heroes exist in the party that are marked as the 'Leader'");
 	}
 
 	public int getGold() {

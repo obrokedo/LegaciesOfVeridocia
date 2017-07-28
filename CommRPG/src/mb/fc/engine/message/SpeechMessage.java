@@ -35,4 +35,11 @@ public class SpeechMessage extends Message
 	public Portrait getPortrait() {
 		return portrait;
 	}
+
+	@Override
+	public boolean isImmediate() {
+		return true;
+	}
+	
+	
 }

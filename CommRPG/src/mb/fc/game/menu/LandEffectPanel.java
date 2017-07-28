@@ -1,10 +1,10 @@
 package mb.fc.game.menu;
 
-import mb.fc.engine.CommRPG;
-import mb.fc.game.hudmenu.Panel;
-import mb.fc.game.ui.FCGameContainer;
-
 import org.newdawn.slick.Graphics;
+
+import mb.fc.game.hudmenu.Panel;
+import mb.fc.game.ui.PaddedGameContainer;
+import mb.fc.utils.StringUtils;
 
 public class LandEffectPanel extends Panel
 {
@@ -15,12 +15,17 @@ public class LandEffectPanel extends Panel
 	}
 
 	@Override
-	public void render(FCGameContainer gc, Graphics graphics) {
-		Panel.drawPanelBox(gc.getDisplayPaddingX() + 15, 15, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 57, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 43, graphics);
+	public void render(PaddedGameContainer gc, Graphics graphics) {
+		Panel.drawPanelBox(8, 5, 80, 35, graphics);
+		// Panel.drawPanelBox( 15, 5, 57, 43, graphics);
 		graphics.setColor(Panel.COLOR_FOREFRONT);
-		graphics.drawString("Land", gc.getDisplayPaddingX() +  CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 13 + 16, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 1);
-		graphics.drawString("Effect:", gc.getDisplayPaddingX() +  CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 6 + 15, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 13);
-		graphics.drawString(landEffect + "%", gc.getDisplayPaddingX() +  CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 17 + 20, CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 26);
+		StringUtils.drawString("Land", 20, 2, graphics);
+		StringUtils.drawString("Effect", 14, 14, graphics);
+		if (landEffect == 0)
+			StringUtils.drawString(" " + landEffect + "%", 60, 8, graphics);
+		else
+			StringUtils.drawString(" " + landEffect + "%", 60, 8, graphics);
+		// StringUtils.drawString(landEffect + "%", 37, 26, graphics);
 	}
 
 	public void setLandEffect(int landEffect) {

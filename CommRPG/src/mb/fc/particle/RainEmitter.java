@@ -5,34 +5,43 @@ import org.newdawn.slick.particles.Particle;
 import org.newdawn.slick.particles.ParticleEmitter;
 import org.newdawn.slick.particles.ParticleSystem;
 
+import mb.fc.engine.CommRPG;
+
 public class RainEmitter implements ParticleEmitter
 {
 
 	private int width;
 
 	/** The particle emission rate */
-	private int interval = 50;
+	private int interval = 100;
 	/** Time til the next particle */
 	private int timer;
 	/** The size of the initial particles */
-	private float size = 40;
+	private float size = 20;
+	
+	private int drawLeft = 0;
 
-	public RainEmitter(int width) {
+	public RainEmitter(int width, int interval, boolean onLeft) {
 		super();
 		this.width = width;
+		this.interval = interval;
+		if (!onLeft)
+		{
+			drawLeft = CommRPG.GAME_SCREEN_SIZE.width - width + 10;
+		}
 	}
 
 	@Override
 	public void update(ParticleSystem system, int delta) {
 		timer -= delta;
 		if (timer <= 0) {
-			timer = interval - 40;
+			timer = interval;
 			Particle p = system.getNewParticle(this, 1000);
 			// p.setColor(1, 1, 1, 0.5f);
 
-			p.setPosition((float) (Math.random() * width), 0);
-			p.setSize((float) (size * 2.5));
-			p.setLife(2500);
+			p.setPosition((float) (Math.random() * width) + drawLeft, 0);
+			p.setSize(size);
+			p.setLife(400);
 
 			p.setVelocity(-.01f,.1f,3f + (float) Math.random() * 2f);
 		}

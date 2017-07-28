@@ -36,6 +36,7 @@ public class GlobalPythonFactory
 	private static JBattleEffect battleEffect = null;
 	private static JLevelProgression levelProgression = null;
 	private static JConfigurationValues configurationValues = null;
+	private static JParticleEmitter particleEmitter = null;
 
 	/**
 	 * A boolean flag indicating whether this factory has been initialized.
@@ -92,7 +93,7 @@ public class GlobalPythonFactory
         battleEffect = (JBattleEffect) (new JythonObjectFactory(JBattleEffect.class, "BattleEffect", "BattleEffect")).createObject();
         levelProgression = (JLevelProgression) (new JythonObjectFactory(JLevelProgression.class, "LevelProgression", "LevelProgression")).createObject();
         configurationValues = (JConfigurationValues) (new JythonObjectFactory(JConfigurationValues.class, "ConfigurationValues", "ConfigurationValues")).createObject();
-	}
+    }
 
 	/**
 	 * Gets a script-backed JCinematicActor. This
@@ -161,7 +162,7 @@ public class GlobalPythonFactory
 
 	public static JBattleEffect createJBattleEffect(String id, int effectLevel)
 	{
-		return battleEffect.init(id, effectLevel);
+		return battleEffect.initEffect(id, effectLevel);
 	}
 
 	public static JLevelProgression createLevelProgression()

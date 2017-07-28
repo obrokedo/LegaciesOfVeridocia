@@ -2,7 +2,7 @@ package mb.fc.utils.planner;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 import javax.swing.JComboBox;
@@ -12,9 +12,9 @@ public class MultiIntPanel extends JPanel implements ActionListener
 {
 	private static final long serialVersionUID = 1L;
 	
-	public ArrayList<String> mitems;
+	public List<String> mitems;
 	
-	public MultiIntPanel(ArrayList<String> mitems) {
+	public MultiIntPanel(List<String> mitems) {
 		super();
 		this.mitems = mitems;
 	}

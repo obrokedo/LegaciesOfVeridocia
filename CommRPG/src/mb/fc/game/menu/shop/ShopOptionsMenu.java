@@ -19,7 +19,7 @@ public class ShopOptionsMenu extends QuadMenu
 		icons = new Image[8];
 
 		for (int i = 0; i < icons.length; i++)
-			icons[i] = stateInfo.getResourceManager().getSpriteSheets().get("actionicons").getSubImage(i % 4 + 11, i / 4);
+			icons[i] = stateInfo.getResourceManager().getSpriteSheet("actionicons").getSubImage(i % 4 + 11, i / 4);
 		enabled = new boolean[4];
 		for (int i = 0; i < enabled.length; i++)
 			enabled[i] = true;

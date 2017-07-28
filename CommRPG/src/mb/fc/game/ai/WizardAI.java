@@ -18,15 +18,15 @@ public class WizardAI extends CasterAI
 	}
 
 	@Override
-	protected void handleSpell(JSpell spell,  KnownSpell knownSpell, int i, int tileWidth, int tileHeight, CombatSprite currentSprite,
+	protected void handleSpell(JSpell spell,  KnownSpell knownSpell, int spellLevel, int tileWidth, int tileHeight, CombatSprite currentSprite,
 			CombatSprite targetSprite, StateInfo stateInfo, int baseConfidence, int cost, Point attackPoint, int distance)
 	{
 		// Check to see if this spell does damage, if so then use the damage to determine the confidence
-		if (spell.getDamage() != null && spell.getDamage().length >= i && spell.getDamage()[0] < 0)
+		if (spell.getDamage() != null && spell.getDamage().length >= spellLevel && spell.getDamage()[0] < 0)
 		{
 			boolean willKill = false;
 			int currentConfidence = 0;
-			int area = spell.getArea()[i - 1];
+			int area = spell.getArea()[spellLevel - 1];
 			ArrayList<CombatSprite> targetsInArea;
 			if (area > 1 || area == AttackableSpace.AREA_ALL_INDICATOR)
 			{
@@ -37,7 +37,7 @@ public class WizardAI extends CasterAI
 					if (area != AttackableSpace.AREA_ALL_INDICATOR) {
 					targetsInArea = getNearbySprites(stateInfo, (currentSprite.isHero() ? !spell.isTargetsEnemy() : spell.isTargetsEnemy()),
 							tileWidth, tileHeight,
-							new Point(targetSprite.getTileX(), targetSprite.getTileY()), spell.getArea()[i - 1] - 1,
+							new Point(targetSprite.getTileX(), targetSprite.getTileY()), spell.getArea()[spellLevel - 1] - 1,
 								currentSprite);
 					// If this is area all then just add all of the correct targets
 					} else {
@@ -56,7 +56,7 @@ public class WizardAI extends CasterAI
 
 				for (CombatSprite ts : targetsInArea)
 				{
-					if (ts.getCurrentHP() + spell.getEffectiveDamage(currentSprite, ts, i - 1) <= 0)
+					if (ts.getCurrentHP() + spell.getEffectiveDamage(currentSprite, ts, spellLevel - 1) <= 0)
 					{
 						killed++;
 						willKill = true;
@@ -66,7 +66,7 @@ public class WizardAI extends CasterAI
 						// TODO WHY ARE WE USING THEIR MAX HEALTH HERE? PERCENTAGE OF CURRENT HEALTH IS SUFFICIENT WITH
 						// A MAX PERCENT OF -1. OTHERWISE WE WILL ALMOST ALWAYS USE HIGHER LEVEL SPELLS
 						// ALSO, WHY DO WE HAVE CURRENT CONFIDENCE BE MAXED TO -50? IT SHOULD BE MINNED TO 0
-						currentConfidence += Math.min(50, (int)(-50.0 * spell.getEffectiveDamage(currentSprite, ts, i - 1) / ts.getMaxHP()));
+						currentConfidence += Math.min(50, (int)(-50.0 * spell.getEffectiveDamage(currentSprite, ts, spellLevel - 1) / ts.getMaxHP()));
 					}
 				}
 
@@ -80,13 +80,13 @@ public class WizardAI extends CasterAI
 			}
 			else
 			{
-				if (targetSprite.getCurrentHP() + spell.getEffectiveDamage(currentSprite, targetSprite, i - 1) <= 0)
+				if (targetSprite.getCurrentHP() + spell.getEffectiveDamage(currentSprite, targetSprite, spellLevel - 1) <= 0)
 				{
 					currentConfidence += 50;
 					willKill = true;
 				}
 				else
-					currentConfidence += Math.min(50, (int)(-50.0 * spell.getEffectiveDamage(currentSprite, targetSprite, i - 1) / targetSprite.getMaxHP()));
+					currentConfidence += Math.min(50, (int)(-50.0 * spell.getEffectiveDamage(currentSprite, targetSprite, spellLevel - 1) / targetSprite.getMaxHP()));
 				targetsInArea = null;
 			}
 
@@ -96,10 +96,10 @@ public class WizardAI extends CasterAI
 			// Subtract the mp cost of the spell
 			currentConfidence -= cost;
 
-			Log.debug("Wizard Spell confidence " + currentConfidence + " name " + targetSprite.getName() + " spell " + spell.getName() + " level " + i);
+			Log.debug("Wizard Spell confidence " + currentConfidence + " name " + targetSprite.getName() + " spell " + spell.getName() + " level " + spellLevel);
 
 			// Check to see if this is the most confident
-			mostConfident = checkForMaxConfidence(mostConfident, currentConfidence, spell, knownSpell, i, targetsInArea, willKill, false);
+			mostConfident = checkForMaxConfidence(mostConfident, currentConfidence, spell, knownSpell, spellLevel, targetsInArea, willKill, false);
 		}
 	}
 

@@ -1,21 +1,30 @@
 package mb.fc.cinematic;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Hashtable;
 
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.util.Log;
+import org.newdawn.slick.util.pathfinding.Path;
+
 import mb.fc.cinematic.event.CinematicEvent;
+import mb.fc.cinematic.event.CinematicEvent.CinematicEventType;
 import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.IntMessage;
 import mb.fc.engine.message.MessageType;
+import mb.fc.engine.message.SpeechMessage;
 import mb.fc.engine.state.CinematicState;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.Camera;
 import mb.fc.game.constants.Direction;
 import mb.fc.game.exception.BadResourceException;
+import mb.fc.game.hudmenu.Panel.PanelType;
 import mb.fc.game.input.FCInput;
-import mb.fc.game.menu.Menu.MenuUpdate;
 import mb.fc.game.menu.Portrait;
 import mb.fc.game.menu.SpeechMenu;
 import mb.fc.game.resource.HeroResource;
@@ -24,14 +33,9 @@ import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.sprite.NPCSprite;
 import mb.fc.game.sprite.Sprite;
 import mb.fc.game.sprite.StaticSprite;
-import mb.fc.game.ui.FCGameContainer;
+import mb.fc.game.ui.PaddedGameContainer;
 import mb.fc.map.Map;
 import mb.fc.utils.StringUtils;
-
-import org.newdawn.slick.Color;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.util.Log;
 
 /**
  * Defines CinematicEvents that should be executed to display a cinematic and handles/renders
@@ -72,12 +76,6 @@ public class Cinematic {
 	private ArrayList<CinematicActor> forefrontActors;
 
 	/**
-	 * The currently displayed SpeechMenu, while this is displayed the scene
-	 * is "blocked". This value will be null if no SpeechMenu is being displayed
-	 */
-	private SpeechMenu speechMenu;
-
-	/**
 	 * The amount of CombatSprites currently on the screen who are performing "halting moves".
 	 * While this value is non-zero the scene is "blocked"
 	 */
@@ -94,6 +92,12 @@ public class Cinematic {
 	 * is non-zero the scene is "blocked"
 	 */
 	private int waitTime;
+	
+	/**
+	 * Whether this cinematic is happening in the "CinematicState" if so
+	 * the cameras location will be initialized and non-offset sprites will be assumed
+	 */
+	private boolean inCinematicState = true;
 
 	/*************************/
 	/* Scene Fade Parameters */
@@ -211,8 +215,8 @@ public class Cinematic {
 		this.haltedMovers = 0;
 		this.haltedAnims = 0;
 		this.waitTime = 0;
-		this.cameraStartX = cameraX * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
-		this.cameraStartY = cameraY * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
+		this.cameraStartX = cameraX;
+		this.cameraStartY = cameraY;
 	}
 
 	/**
@@ -220,9 +224,13 @@ public class Cinematic {
 	 * marked "initialize"
 	 *
 	 * @param stateInfo the StateInfo that holds information for the current state
+	 * @param inCinematicState whether we are in the cinematic state or not,
+	 * 			if so the cameras location will be initialized and non-offset tile location will be assumed
 	 */
-	public void initialize(StateInfo stateInfo) {
-		stateInfo.getCamera().setLocation(cameraStartX, cameraStartY);
+	public void initialize(StateInfo stateInfo, boolean inCinematicState) {
+		this.inCinematicState = inCinematicState;
+		if (inCinematicState)
+			stateInfo.getCamera().setLocation(cameraStartX, cameraStartY, stateInfo);
 
 		for (CinematicEvent ce : initializeEvents)
 			handleEvent(ce, stateInfo);
@@ -296,9 +304,11 @@ public class Cinematic {
 					yDel = -Math.min(cameraMoveSpeed, camera.getLocationY()
 							- cameraMoveToY);
 
-				if (xDel != 0 || yDel != 0) {
+				if ((xDel != 0 || yDel != 0) 
+						// Make sure we're not trying to pan off the screen in
+						&& camera.canMoveTowards(cameraMoveToX, cameraMoveToY, stateInfo)) {
 					camera.setLocation(camera.getLocationX() + xDel,
-							camera.getLocationY() + yDel);
+							camera.getLocationY() + yDel, stateInfo);
 				} else {
 					cameraMoveToX = -1;
 					cameraMoveToY = -1;
@@ -308,11 +318,13 @@ public class Cinematic {
 
 		for (CinematicActor ca : actors.values())
 		{
-			ca.update(delta, this);
+			ca.update(delta, this, stateInfo);
 			if (ca == cameraFollow)
 			{
 				camera.centerOnPoint(cameraFollow.getLocX(),
-						cameraFollow.getLocY(), map);
+						cameraFollow.getLocY() + 
+						(inCinematicState ? 0 : stateInfo.getResourceManager().getMap().getTileRenderHeight()), 
+						map);
 			}
 		}
 
@@ -322,43 +334,36 @@ public class Cinematic {
 			cameraShakeDuration -= delta;
 			// Reset the camera to the correct location
 			camera.setLocation(camera.getLocationX() - lastCameraShake,
-					camera.getLocationY() - lastCameraShake);
+					camera.getLocationY() - lastCameraShake, stateInfo);
 			if (cameraShakeDuration > 0) {
 				int newCameraShake = CommRPG.RANDOM
 						.nextInt(cameraShakeSeverity * 2) - cameraShakeSeverity;
 				camera.setLocation(camera.getLocationX() + newCameraShake,
-						camera.getLocationY() + newCameraShake);
+						camera.getLocationY() + newCameraShake, stateInfo);
 				lastCameraShake = newCameraShake;
 			} else
 				cameraShaking = false;
 		}
 
-
-		if (speechMenu != null)
-		{
-			speechMenu.handleUserInput(input, stateInfo);
-			MenuUpdate mu = speechMenu.update(delta, stateInfo);
-			if (mu == MenuUpdate.MENU_CLOSE)
-				speechMenu = null;
-			else if (mu == MenuUpdate.MENU_NEXT_ACTION)
-			{
-				CinematicEvent ce = cinematicEvents.remove(0);
-				handleEvent(ce, stateInfo);
-			}
-		}
-
 		// If nothing is currently blocking then continue processing the
 		// cinematics
 		while (waitTime == 0 && haltedAnims == 0 && haltedMovers == 0
-				&& cameraMoveToX == -1 && speechMenu == null
+				&& cameraMoveToX == -1 && !stateInfo.isMenuDisplayed(PanelType.PANEL_SPEECH)
 				&& cinematicEvents.size() > 0) {
 			CinematicEvent ce = cinematicEvents.remove(0);
 			handleEvent(ce, stateInfo);
 		}
 
 		return waitTime == 0 && haltedAnims == 0 && haltedMovers == 0
-				&& cameraMoveToX == -1 && speechMenu == null
+				&& cameraMoveToX == -1 && !stateInfo.isMenuDisplayed(PanelType.PANEL_SPEECH)
 				&& cinematicEvents.size() == 0;
+	}
+	
+	private CinematicActor getCinematicActorByName(String actorName, CinematicEventType cinematicEventType) {
+		CinematicActor ca = actors.get(actorName);
+		if (ca == null)
+			throw new BadResourceException(String.format("A cinematic event of type: %s referenced an actor name %s before that actor has been defined in the scene\n. Either add the actor by that name to the scene prior to this or ensure that the name is spelled correctly", cinematicEventType.toString(), actorName));
+		return ca;
 	}
 
 	/**
@@ -372,62 +377,47 @@ public class Cinematic {
 		CinematicActor ca = null;
 		switch (ce.getType()) {
 			case HALTING_MOVE:
-				ca = actors.get(ce.getParam(3));
-				if (ca == null)
-					throw new BadResourceException(
-							"A cinematic event of type: " + ce.getType() + " referenced an actor name " + ce.getParam(3)
-							+ " before that actor has been defined in the scene\n. Either add the actor by that name to the scene prior to this or "
-							+ "ensure that the name is spelled correctly");
-				ca.moveToLocation((int) ce.getParam(0),
-						(int) ce.getParam(1), (float) ce.getParam(2), true, -1, (boolean) ce.getParam(4), (boolean) ce.getParam(5));
+				ca = getCinematicActorByName((String) ce.getParam(3), ce.getType());
+				moveActorToLocation(ca, (int) ce.getParam(0),
+						(int) ce.getParam(1), (float) ce.getParam(2), true, -1, (boolean) ce.getParam(4), (boolean) ce.getParam(5), stateInfo);
 				haltedMovers++;
 				break;
+			case HALTING_MOVE_PATHFIND:
+				ca = getCinematicActorByName((String) ce.getParam(3), ce.getType());
+				
+				Point p = stateInfo.getCamera().getCenterOfCamera(stateInfo.getCurrentMap());
+				Path path = stateInfo.getCurrentMap().findPixelPathWithPixels
+						((int) ca.getLocX(), (int) ca.getLocY() + 
+								(!this.inCinematicState ? stateInfo.getCurrentMap().getTileEffectiveHeight() / 2 : 0), 
+								(int) ce.getParam(0), (int) ce.getParam(1), stateInfo);
+				ca.moveAlongPath(path, (float) ce.getParam(2), true, stateInfo);
+				haltedMovers++;
+				System.out.println(path);
+				break;
 			case MOVE:
-				ca = actors.get(ce.getParam(3));
-				if (ca == null)
-					throw new BadResourceException(
-							"A cinematic event of type: " + ce.getType() + " referenced an actor name " + ce.getParam(3)
-							+ " before that actor has been defined in the scene\n. Either add the actor by that name to the scene prior to this or "
-							+ "ensure that the name is spelled correctly");
-				ca.moveToLocation((int) ce.getParam(0),
-						(int) ce.getParam(1), (float) ce.getParam(2), false, -1, (boolean) ce.getParam(4), (boolean) ce.getParam(5));
+				ca = getCinematicActorByName((String) ce.getParam(3), ce.getType());
+				moveActorToLocation(ca, (int) ce.getParam(0),
+						(int) ce.getParam(1), (float) ce.getParam(2), false, -1, (boolean) ce.getParam(4), (boolean) ce.getParam(5), stateInfo);
 				break;
 			case MOVE_ENFORCE_FACING:
-				ca = actors.get(ce.getParam(3));
-				if (ca == null)
-					throw new BadResourceException(
-							"A cinematic event of type: " + ce.getType() + " referenced an actor name " + ce.getParam(3)
-							+ " before that actor has been defined in the scene\n. Either add the actor by that name to the scene prior to this or "
-							+ "ensure that the name is spelled correctly");
-				ca.moveToLocation((int) ce.getParam(0),
+				ca = getCinematicActorByName((String) ce.getParam(3), ce.getType());
+				moveActorToLocation(ca, (int) ce.getParam(0),
 						(int) ce.getParam(1), (float) ce.getParam(2), false,
-						(int) ce.getParam(4), (boolean) ce.getParam(5), (boolean) ce.getParam(6));
+						(int) ce.getParam(4), (boolean) ce.getParam(5), (boolean) ce.getParam(6), stateInfo);
 				break;
 			case LOOP_MOVE:
-				ca = actors.get(ce.getParam(0));
-				if (ca == null)
-					throw new BadResourceException(
-							"A cinematic event of type: " + ce.getType() + " referenced an actor name " + ce.getParam(3)
-							+ " before that actor has been defined in the scene\n. Either add the actor by that name to the scene prior to this or "
-							+ "ensure that the name is spelled correctly");
+				ca = getCinematicActorByName((String) ce.getParam(0), ce.getType());
 				ca.loopMoveToLocation((int) ce.getParam(1),
 						(int) ce.getParam(2), (float) ce.getParam(3));
 				break;
 			case STOP_LOOP_MOVE:
-				ca = actors.get(ce.getParam(0));
-				if (ca == null)
-					throw new BadResourceException(
-							"A cinematic event of type: " + ce.getType() + " referenced an actor name " + ce.getParam(3)
-							+ " before that actor has been defined in the scene\n. Either add the actor by that name to the scene prior to this or "
-							+ "ensure that the name is spelled correctly");
+				ca = getCinematicActorByName((String) ce.getParam(0), ce.getType());
 				ca.stopLoopMove();
 				break;
 			case CAMERA_MOVE:
 				cameraMoveToX = (int) ce.getParam(0)
-						* CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]
 						- stateInfo.getCamera().getViewportWidth() / 2;
 				cameraMoveToY = (int) ce.getParam(1)
-						* CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]
 						- stateInfo.getCamera().getViewportHeight() / 2;
 				float distance = Math.abs(stateInfo.getCamera().getLocationX()
 						- cameraMoveToX);
@@ -436,35 +426,39 @@ public class Cinematic {
 				cameraMoveSpeed = distance / (1.0f * ((int) ce.getParam(2)) / CAMERA_UPDATE);
 				cameraFollow = null;
 				break;
+			case CAMERA_MOVE_TO_ACTOR:
+				ca = actors.get(ce.getParam(0));
+				cameraMoveToX = (int) (ca.getLocX()
+						- stateInfo.getCamera().getViewportWidth() / 2);
+				cameraMoveToY = (int) (ca.getLocY()
+						- stateInfo.getCamera().getViewportHeight() / 2) 
+						+ (inCinematicState ? 0 : stateInfo.getResourceManager().getMap().getTileRenderHeight());
+				distance = Math.abs(stateInfo.getCamera().getLocationX()
+						- cameraMoveToX);
+				distance += Math.abs(stateInfo.getCamera().getLocationY()
+						- cameraMoveToY);
+				cameraMoveSpeed = distance / (1.0f * ((int) ce.getParam(1)) / CAMERA_UPDATE);
+				cameraFollow = null;
+				break;
 			case CAMERA_CENTER:
 				stateInfo
 						.getCamera()
 						.centerOnPoint(
-								(int) ce.getParam(0)
-										* CommRPG.GLOBAL_WORLD_SCALE[CommRPG
-												.getGameInstance()],
-								(int) ce.getParam(1)
-										* CommRPG.GLOBAL_WORLD_SCALE[CommRPG
-												.getGameInstance()],
+								(int) ce.getParam(0),
+								(int) ce.getParam(1),
 								stateInfo.getCurrentMap());
 				cameraFollow = null;
 				break;
 			case CAMERA_FOLLOW:
-				ca = actors.get(ce.getParam(0));
-				if (ca == null)
-					throw new BadResourceException(
-							"A cinematic event of type: " + ce.getType() + " referenced an actor name " + ce.getParam(3)
-							+ " before that actor has been defined in the scene\n. Either add the actor by that name to the scene prior to this or "
-							+ "ensure that the name is spelled correctly");
+				ca = getCinematicActorByName((String) ce.getParam(0), ce.getType());
 				cameraFollow = ca;
 				stateInfo.getCamera().centerOnPoint(cameraFollow.getLocX(),
-						cameraFollow.getLocY(), stateInfo.getCurrentMap());
+						cameraFollow.getLocY() + (inCinematicState ? 0 : stateInfo.getResourceManager().getMap().getTileRenderHeight()), stateInfo.getCurrentMap());
 				break;
 			case CAMERA_SHAKE:
 				lastCameraShake = 0;
 				cameraShakeDuration = (int) ce.getParam(0);
-				cameraShakeSeverity = (int) ce.getParam(1)
-						* CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()];
+				cameraShakeSeverity = (int) ce.getParam(1);
 				cameraShaking = true;
 				break;
 			case ADD_ACTOR:
@@ -474,27 +468,23 @@ public class Cinematic {
 				int associated = (int) ce.getParam(6);
 				if (associated >= 0)
 				{
-					for (CombatSprite cs : stateInfo.getPsi().getClientProfile().getHeroes())
+					
+					CombatSprite cs = stateInfo.getHeroById(associated);
+					if (cs != null)
 					{
-						if (cs.getId() == associated)
-						{
-							isHeroAss = true;
-							isHeroPro = cs.isPromoted();
-							break;
-						}
+						isHeroAss = true;
+						isHeroPro = cs.isPromoted();
 					}
 
 					if (!isHeroAss)
 					{
-						throw new BadResourceException("Attempted to add an actor to the scene that is associated with a hero that has\n"
-								+ "not yet joined the party. If you want the association to work then you first must add them to the force");
+						throw new BadResourceException("Attempted to add an actor to the scene that is associated with a hero that has\n not yet joined the party. If you want the association to work then you first must add them to the force");
 					}
 				}
 
 				ca = new CinematicActor(
 						stateInfo.getResourceManager()
-						.getSpriteAnimations()
-						.get(ce.getParam(3)), (String) ce
+						.getSpriteAnimation((String) ce.getParam(3)), (String) ce
 						.getParam(4), (int) ce.getParam(0),
 				(int) ce.getParam(1), (boolean) ce.getParam(5),
 				isHeroAss, isHeroPro);
@@ -506,12 +496,11 @@ public class Cinematic {
 				sortedActors.add(ca);
 				break;
 			case ADD_STATIC_SPRITE:
-				Image im = stateInfo.getResourceManager().getImages().get(ce.getParam(3));
+				Image im = stateInfo.getResourceManager().getImage((String) ce.getParam(3));
 				if (im == null)
-					throw new BadResourceException("Attempted to add a static sprite with an image that has not loaded: " + ce.getParam(3) + "\n."
-							+ "Static sprite images must appear in the 'sprite' resource folder and ARE case sensitive");
-				staticSprites.add(new StaticSprite((int) ce.getParam(0) * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()],
-						(int) ce.getParam(1) * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()],
+					throw new BadResourceException(String.format("Attempted to add a static sprite with an image that has not loaded: %s \n. Static sprite images must appear in the 'sprite' resource folder and ARE case sensitive", ce.getParam(3)));
+				staticSprites.add(new StaticSprite((int) ce.getParam(0),
+						(int) ce.getParam(1),
 						(String) ce.getParam(2), im, null));
 				break;
 			case REMOVE_STATIC_SPRITE:
@@ -521,6 +510,65 @@ public class Cinematic {
 						staticSprites.remove(i--);
 
 				break;
+			case ASSOCIATE_AS_ACTOR:
+				ca = null;
+				if ((int) ce.getParam(1) >= 0)
+				{
+					for (Sprite s : stateInfo.getSprites()) {
+						if (s.getSpriteType() == Sprite.TYPE_COMBAT
+								&& ((CombatSprite) s).isHero()
+								&& ((CombatSprite) s).getId() == (int) ce
+										.getParam(1)) {
+							ca = new CinematicActor(
+									(AnimatedSprite) s, stateInfo);
+							break;
+						}
+					}
+				}
+				else if ((int) ce.getParam(2) != 0)
+				{
+					for (Sprite s : stateInfo.getSprites()) {
+						if (s.getSpriteType() == Sprite.TYPE_COMBAT
+								&& !((CombatSprite) s).isHero()
+								&& ((CombatSprite) s).getUniqueEnemyId() == (int) ce
+										.getParam(2)) {
+							ca = new CinematicActor(
+									(AnimatedSprite) s, stateInfo);
+							break;
+						}
+					}
+				}
+				else if (((int) ce.getParam(3)) != 0)
+				{
+					for (Sprite s : stateInfo.getSprites()) {
+						if (s.getSpriteType() == Sprite.TYPE_NPC
+								&& ((NPCSprite) s).getUniqueNPCId() == (int) ce
+										.getParam(3)) {
+							ca = new CinematicActor(
+									(AnimatedSprite) s, stateInfo);
+							break;
+						}
+					}
+				}
+
+				if (ca != null)
+				{
+					actors.put((String) ce.getParam(0), ca);
+					sortedActors.add(ca);
+				}
+
+				break;
+			case ASSOCIATE_NPC_AS_ACTOR:
+				for (Sprite s : stateInfo.getSprites()) {
+					if (s.getSpriteType() == Sprite.TYPE_NPC
+							&& ((NPCSprite) s).getUniqueNPCId() == (int) ce
+									.getParam(0)) {
+						actors.put((String) ce.getParam(1), new CinematicActor(
+								(AnimatedSprite) s, stateInfo));
+						break;
+					}
+				}
+				break;
 			case SPEECH:
 				int heroPortrait = (int) ce.getParam(1);
 				int enemyPortrait = (int) ce.getParam(2);
@@ -528,22 +576,22 @@ public class Cinematic {
 				if (StringUtils.isEmpty(specificAnim))
 					specificAnim = null;
 
+				
 				Portrait port = Portrait.getPortrait(heroPortrait, enemyPortrait, specificAnim, stateInfo);
-				speechMenu = new SpeechMenu((String) ce.getParam(0),
-						stateInfo.getGc(), SpeechMenu.NO_TRIGGER, port, stateInfo);
+				stateInfo.sendMessage(new SpeechMessage((String) ce.getParam(0), SpeechMenu.NO_TRIGGER, port));
 				break;
 			case LOAD_MAP:
-				stateInfo.getPsi().loadMap((String) ce.getParam(0),
-						(String) ce.getParam(1));
+				stateInfo.getPersistentStateInfo().loadMap((String) ce.getParam(0),
+						(String) ce.getParam(1), (String) ce.getParam(2));
 				CinematicState.cinematicSpeed = 1;
 				break;
 			case LOAD_BATTLE:
-				stateInfo.getPsi().loadBattle((String) ce.getParam(0),
+				stateInfo.getPersistentStateInfo().loadBattle((String) ce.getParam(0),
 						(String) ce.getParam(1), (String) ce.getParam(2), (int) ce.getParam(3));
 				CinematicState.cinematicSpeed = 1;
 				break;
 			case LOAD_CIN:
-				stateInfo.getPsi().loadCinematic((String) ce.getParam(0), (int) ce.getParam(1));
+				stateInfo.getPersistentStateInfo().loadCinematic((String) ce.getParam(0), (String) ce.getParam(1), (int) ce.getParam(2));
 				CinematicState.cinematicSpeed = 1;
 				break;
 			case HALTING_ANIMATION:
@@ -612,49 +660,15 @@ public class Cinematic {
 						(boolean) ce.getParam(1));
 				break;
 			case REMOVE_ACTOR:
-				sortedActors.remove(actors.remove(ce.getParam(0)));
+				CinematicActor remAct = actors.remove(ce.getParam(0));
+				remAct.spriteRemoved(stateInfo);
+				sortedActors.remove(remAct);
 				break;
 			case FACING:
 				int dir = (int) ce.getParam(1);
 				actors.get(ce.getParam(0)).setFacing(dir);
 				break;
-			case ASSOCIATE_AS_ACTOR:
-				ca = null;
-				if ((boolean) ce.getParam(2))
-				{
-					ca = new CinematicActor(stateInfo.getCurrentSprite(), stateInfo);
-				}
-				else if (((int) ce.getParam(1)) != 0)
-				{
-					for (Sprite s : stateInfo.getSprites()) {
-						if (s.getSpriteType() == Sprite.TYPE_NPC
-								&& ((NPCSprite) s).getUniqueNPCId() == (int) ce
-										.getParam(1)) {
-							ca = new CinematicActor(
-									(AnimatedSprite) s, stateInfo);
-							break;
-						}
-					}
-				}
-
-				if (ca != null)
-				{
-					actors.put((String) ce.getParam(0), ca);
-					sortedActors.add(ca);
-				}
-
-				break;
-			case ASSOCIATE_NPC_AS_ACTOR:
-				for (Sprite s : stateInfo.getSprites()) {
-					if (s.getSpriteType() == Sprite.TYPE_NPC
-							&& ((NPCSprite) s).getUniqueNPCId() == (int) ce
-									.getParam(0)) {
-						actors.put((String) ce.getParam(1), new CinematicActor(
-								(AnimatedSprite) s, stateInfo));
-						break;
-					}
-				}
-				break;
+			
 			case PLAY_MUSIC:
 				stateInfo.sendMessage(new AudioMessage(MessageType.PLAY_MUSIC,
 						(String) ce.getParam(0), ((int) ce.getParam(1)) / 100.0f,
@@ -723,11 +737,18 @@ public class Cinematic {
 			case ADD_HERO:
 				CombatSprite addHeroSprite = HeroResource.getHero((int) ce.getParam(0));
 				addHeroSprite.initializeSprite(stateInfo);
-				stateInfo.getPsi().getClientProfile().addHero(addHeroSprite);
+				stateInfo.getPersistentStateInfo().getClientProfile().addHero(addHeroSprite);
 				break;
 			default:
 				break;
 		}
+	}
+	
+	private void moveActorToLocation(CinematicActor ca, int moveToLocX, int moveToLocY, float speed, boolean haltingMove, 
+			int direction, boolean moveHorFirst, boolean moveDiag, StateInfo stateInfo)
+	{
+		ca.moveToLocation(moveToLocX, moveToLocY - (!this.inCinematicState ? stateInfo.getCurrentMap().getTileEffectiveHeight() / 2 : 0), 
+				speed, haltingMove, direction, moveHorFirst, moveDiag);;
 	}
 
 	/**
@@ -738,7 +759,7 @@ public class Cinematic {
 	 * @param cont the FCGameContainer that this game is displayed in
 	 * @param stateInfo the StateInfo that holds information for the current state
 	 */
-	public void render(Graphics graphics, Camera camera, FCGameContainer cont,
+	public void render(Graphics graphics, Camera camera, PaddedGameContainer cont,
 			StateInfo stateInfo) {
 		rendering = true;
 
@@ -752,17 +773,6 @@ public class Cinematic {
 	}
 
 	/**
-	 * Renders the menus in this scene
-	 *
-	 * @param cont the FCGameContainer that this game is displayed in
-	 * @param graphics the graphics to draw to
-	 */
-	public void renderMenus(FCGameContainer cont, Graphics g) {
-		if (speechMenu != null)
-			speechMenu.render(cont, g);
-	}
-
-	/**
 	 * Render the foreground actors and effects
 	 *
 	 * @param graphics the graphics to draw to
@@ -770,7 +780,7 @@ public class Cinematic {
 	 * @param cont the FCGameContainer that this game is displayed in
 	 * @param stateInfo the StateInfo that holds information for the current state
 	 */
-	public void renderPostEffects(Graphics graphics, Camera camera, FCGameContainer cont,
+	public void renderPostEffects(Graphics graphics, Camera camera, PaddedGameContainer cont,
 			StateInfo stateInfo) {
 		for (CinematicActor ca : forefrontActors)
 		{
@@ -780,7 +790,7 @@ public class Cinematic {
 		if (fadingColor != null)
 		{
 			graphics.setColor(fadingColor);
-			graphics.fillRect(0, 0, cont.getWidth(), cont.getHeight());
+			graphics.fillRect(0, 0, camera.getViewportWidth(), camera.getViewportHeight());
 		}
 
 
@@ -803,6 +813,18 @@ public class Cinematic {
 	public void decreaseAnims() {
 		haltedAnims = Math.max(haltedAnims - 1, 0);
 	}
+	
+	/**
+	 * Performs the next action in the Cinematic regardless of whether a halting action is occurring or
+	 * a menu is being shown 
+	 * 
+	 * @param stateInfo the stateInfo that defines the state this cinematic is being run in
+	 */
+	public void nextAction(StateInfo stateInfo)
+	{
+		CinematicEvent ce = cinematicEvents.remove(0);
+		handleEvent(ce, stateInfo);
+	}
 
 	/**
 	 * Resets all of the actors in the scene to be visible and
@@ -815,5 +837,6 @@ public class Cinematic {
 	{
 		for (CinematicActor ca : actors.values())
 			ca.resetSprite(stateInfo);
+		stateInfo.sendMessage(MessageType.CIN_END);
 	}
 }

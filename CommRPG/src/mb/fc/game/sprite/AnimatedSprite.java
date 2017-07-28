@@ -1,19 +1,18 @@
 package mb.fc.game.sprite;
 
-import mb.fc.engine.CommRPG;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.Camera;
 import mb.fc.game.constants.Direction;
 import mb.fc.game.exception.BadResourceException;
 import mb.fc.game.move.MovingSprite;
-import mb.fc.game.ui.FCGameContainer;
+import mb.fc.game.ui.PaddedGameContainer;
 import mb.fc.utils.AnimSprite;
 import mb.fc.utils.Animation;
 import mb.fc.utils.SpriteAnims;
-
-import org.newdawn.slick.Color;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 
 public class AnimatedSprite extends Sprite
 {
@@ -43,27 +42,27 @@ public class AnimatedSprite extends Sprite
 	}
 
 	@Override
-	public void render(Camera camera, Graphics graphics, FCGameContainer cont) {
+	public void render(Camera camera, Graphics graphics, PaddedGameContainer cont) {
 		for (AnimSprite as : currentAnim.frames.get(imageIndex).sprites)
 		{
-			AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), this.getLocX(), this.getLocY(), cont.getDisplayPaddingX(), camera, true);
+			AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), this.getLocX(), this.getLocY(), camera, true);
 
-			graphics.drawImage(spriteAnims.getImageAtIndex(as.imageIndex), this.getLocX() - camera.getLocationX() + cont.getDisplayPaddingX(),
+			graphics.drawImage(spriteAnims.getImageAtIndex(as.imageIndex), this.getLocX() - camera.getLocationX(),
 					this.getLocY() - camera.getLocationY() - stateInfo.getResourceManager().getMap().getTileEffectiveHeight() / 2);
 		}
 	}
 
-	public static void drawShadow(Image originalIm, float locX, float locY, int displayPadding, Camera camera, boolean tileOffset)
+	public static void drawShadow(Image originalIm, float locX, float locY, Camera camera, boolean tileOffset)
 	{
-		drawShadow(originalIm, locX, locY, displayPadding, camera, tileOffset, stateInfo);
+		drawShadow(originalIm, locX, locY, camera, tileOffset, stateInfo);
 	}
 
-	public static void drawShadow(Image originalIm, float locX, float locY, int displayPadding, Camera camera, boolean tileOffset, StateInfo stateInfo)
+	public static void drawShadow(Image originalIm, float locX, float locY, Camera camera, boolean tileOffset, StateInfo stateInfo)
 	{
 		Image i = (originalIm).getScaledCopy(originalIm.getWidth(), (int) (originalIm.getHeight() * .65));
-		i.drawSheared((int) (locX - camera.getLocationX() + displayPadding - CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * SHADOW_OFFSET * (1.0 * originalIm.getHeight() / stateInfo.getTileHeight())),
+		i.drawSheared((float) (locX - camera.getLocationX() - SHADOW_OFFSET * (1.0 * originalIm.getHeight() / stateInfo.getTileHeight())),
 				locY - camera.getLocationY() - (tileOffset ? stateInfo.getResourceManager().getMap().getTileEffectiveHeight() / 2 : 0) + originalIm.getHeight() - i.getHeight(),
-				(int) (CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * SHADOW_OFFSET * (1.0 * originalIm.getHeight() / stateInfo.getTileHeight())),
+				(int) (SHADOW_OFFSET * (1.0 * originalIm.getHeight() / stateInfo.getTileHeight())),
 				0, SHADOW_COLOR);
 	}
 
@@ -72,7 +71,7 @@ public class AnimatedSprite extends Sprite
 		super.initializeSprite(stateInfo);
 
 		imageIndex = 0;
-		spriteAnims = stateInfo.getResourceManager().getSpriteAnimations().get(imageName);
+		spriteAnims = stateInfo.getResourceManager().getSpriteAnimation(imageName);
 		if (spriteAnims == null)
 			throw new BadResourceException("Unable to initialize sprite " + this.name +".\n"
 					+ "Associated animation file " + imageName + ".anim could not be found.\n"

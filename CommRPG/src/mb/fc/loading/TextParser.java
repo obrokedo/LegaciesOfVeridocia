@@ -10,18 +10,24 @@ import org.newdawn.slick.SlickException;
 import mb.fc.cinematic.Cinematic;
 import mb.fc.cinematic.event.CinematicEvent;
 import mb.fc.cinematic.event.CinematicEvent.CinematicEventType;
+import mb.fc.game.exception.BadResourceException;
 import mb.fc.game.text.Speech;
+import mb.fc.game.trigger.Conditional;
+import mb.fc.game.trigger.Trigger;
 import mb.fc.game.trigger.TriggerCondition;
-import mb.fc.game.trigger.TriggerCondition.EnemyDeath;
-import mb.fc.game.trigger.TriggerEvent;
+import mb.fc.game.trigger.TriggerCondition.HeroEntersLocation;
+import mb.fc.game.trigger.TriggerCondition.HeroInBattle;
+import mb.fc.game.trigger.TriggerCondition.LocationContainsUnits;
+import mb.fc.game.trigger.TriggerCondition.UnitDeath;
+import mb.fc.game.trigger.Triggerable;
 import mb.fc.utils.StringUtils;
 import mb.fc.utils.XMLParser;
 import mb.fc.utils.XMLParser.TagArea;
 
 public class TextParser
 {
-	public static void parseText(String file, Hashtable<Integer, ArrayList<Speech>> speechesById,
-			Hashtable<Integer, TriggerEvent> triggerEventById, Hashtable<Integer, Cinematic> cinematicById,
+	public void parseText(String file, Hashtable<Integer, ArrayList<Speech>> speechesById,
+			Hashtable<Integer, Trigger> triggerEventById, Hashtable<Integer, Cinematic> cinematicById,
 			HashSet<TriggerCondition> conditions, FCResourceManager frm) throws IOException, SlickException
 	{
 		HashSet<String> animToLoad = new HashSet<String>();
@@ -40,7 +46,6 @@ public class TextParser
 				for (TagArea childTagArea : tagArea.getChildren())
 				{
 					int triggerId = -1;
-					int portraitId = -1;
 					String message = childTagArea.getAttribute("message");
 					String requires = childTagArea.getAttribute("require");
 					String excludes = childTagArea.getAttribute("exclude");
@@ -118,101 +123,118 @@ public class TextParser
 						excludeIds[i] = Integer.parseInt(splitEx[i]);
 				}
 
-				TriggerEvent te = new TriggerEvent(id, retrigOnEnter, nonRetrig, triggerOnce, triggerImmediately, requireIds, excludeIds);
+				Trigger te = new Trigger(id, retrigOnEnter, nonRetrig, triggerOnce, triggerImmediately, requireIds, excludeIds);
 				if (tagArea.getChildren().size() > 0)
 				{
 					for (int k = 0; k < tagArea.getChildren().size(); k++)
 					{
 						Hashtable<String, String> actionParams = tagArea.getChildren().get(k).getParams();
 
-						if (tagArea.getChildren().get(k).getTagType().equalsIgnoreCase("completequest"))
+						String tagType = tagArea.getChildren().get(k).getTagType();
+						if (tagType.equalsIgnoreCase("completequest"))
 						{
-							te.addTriggerType(te.new TriggerCompleteQuest(Integer.parseInt(actionParams.get("questid"))));
+							te.addTriggerable(te.new TriggerCompleteQuest(Integer.parseInt(actionParams.get("questid"))));
 						}
-						else if (tagArea.getChildren().get(k).getTagType().equalsIgnoreCase("startbattle"))
+						else if (tagType.equalsIgnoreCase("startbattle"))
 						{
 							int battleBackgroundIndex = 0;
 
 							if (actionParams.containsKey("battbg"))
 								battleBackgroundIndex = Integer.parseInt(actionParams.get("battbg"));
-							te.addTriggerType(te.new TriggerStartBattle(actionParams.get("battletriggers"),
+							te.addTriggerable(te.new TriggerStartBattle(actionParams.get("battletriggers"),
 									actionParams.get("battlemap"), actionParams.get("entrance"), battleBackgroundIndex));
 						}
-						else if (tagArea.getChildren().get(k).getTagType().equalsIgnoreCase("setbattlecond"))
+						else if (tagType.equalsIgnoreCase("setbattlecond"))
 						{
-							te.addTriggerType(te.new TriggerBattleCond(
+							te.addTriggerable(te.new TriggerBattleCond(
 									parsePositiveMultiInt("templeader", actionParams),
 									parsePositiveMultiInt("tempenemyleader", actionParams), 
 									Boolean.parseBoolean(actionParams.get("allleaders"))));
 						}
-						else if (tagArea.getChildren().get(k).getTagType().equalsIgnoreCase("loadmap"))
+						else if (tagType.equalsIgnoreCase("loadmap"))
 						{
-							te.addTriggerType(te.new TriggerEnter(actionParams.get("map"), actionParams.get("enter")));
+							te.addTriggerable(te.new TriggerEnter(actionParams.get("map"), actionParams.get("mapdata"), actionParams.get("enter")));
 						}
-						else if (tagArea.getChildren().get(k).getTagType().equalsIgnoreCase("showshop"))
+						else if (tagType.equalsIgnoreCase("showshop"))
 						{
-							te.addTriggerType(te.new TriggerShowShop(actionParams.get("shop")));
+							te.addTriggerable(te.new TriggerShowShop(actionParams.get("shop")));
 						}
-						else if (tagArea.getChildren().get(k).getTagType().equalsIgnoreCase("showpriest"))
+						else if (tagType.equalsIgnoreCase("showpriest"))
 						{
-							te.addTriggerType(te.new TriggerShowPriest());
+							te.addTriggerable(te.new TriggerShowPriest());
 						}
-						else if (tagArea.getChildren().get(k).getTagType().equalsIgnoreCase("addhero"))
+						else if (tagType.equalsIgnoreCase("addhero"))
 						{
-							te.addTriggerType(te.new TriggerAddHero(Integer.parseInt(actionParams.get("heroid"))));
+							te.addTriggerable(te.new TriggerAddHero(Integer.parseInt(actionParams.get("heroid"))));
 						}
-						else if (tagArea.getChildren().get(k).getTagType().equalsIgnoreCase("playmusic"))
+						else if (tagType.equalsIgnoreCase("playmusic"))
 						{
-							te.addTriggerType(te.new TriggerPlayMusic(actionParams.get("music")));
+							te.addTriggerable(te.new TriggerPlayMusic(actionParams.get("music")));
 							musicToLoad.add(actionParams.get("music"));
 						}
-						else if (tagArea.getChildren().get(k).getTagType().equalsIgnoreCase("playsound"))
+						else if (tagType.equalsIgnoreCase("playsound"))
 						{
-							te.addTriggerType(te.new TriggerPlaySound(actionParams.get("sound"), Integer.parseInt(actionParams.get("volume"))));
+							te.addTriggerable(te.new TriggerPlaySound(actionParams.get("sound"), Integer.parseInt(actionParams.get("volume"))));
 							soundToLoad.add(actionParams.get("sound"));
 						}
-						else if (tagArea.getChildren().get(k).getTagType().equalsIgnoreCase("changeai"))
+						else if (tagType.equalsIgnoreCase("changeai"))
 						{
-							te.addTriggerType(te.new TriggerChangeAI(actionParams.get("aitype"),
+							te.addTriggerable(te.new TriggerChangeAI(actionParams.get("aitype"),
 									actionParams.get("id"), actionParams.get("targetid"), actionParams.get("heroid"),
 									actionParams.get("x"), actionParams.get("y")));
 						}
-						else if (tagArea.getChildren().get(k).getTagType().equalsIgnoreCase("showtext"))
+						else if (tagType.equalsIgnoreCase("showtext"))
 						{
-							te.addTriggerType(te.new TriggerShowText(Integer.parseInt(actionParams.get("textid"))));
+							te.addTriggerable(te.new TriggerShowText(Integer.parseInt(actionParams.get("textid"))));
 						}
-						else if (tagArea.getChildren().get(k).getTagType().equalsIgnoreCase("showcin"))
+						else if (tagType.equalsIgnoreCase("showcin"))
 						{
-							te.addTriggerType(te.new TriggerShowCinematic(Integer.parseInt(actionParams.get("cinid"))));
+							te.addTriggerable(te.new TriggerShowCinematic(Integer.parseInt(actionParams.get("cinid"))));
 						}
-						else if (tagArea.getChildren().get(k).getTagType().equalsIgnoreCase("loadcin"))
+						else if (tagType.equalsIgnoreCase("loadcin"))
 						{
-							te.addTriggerType(te.new TriggerLoadCinematic(actionParams.get("map"), Integer.parseInt(actionParams.get("cinid"))));
+							te.addTriggerable(te.new TriggerLoadCinematic(actionParams.get("map"), actionParams.get("mapdata"), Integer.parseInt(actionParams.get("cinid"))));
 						}
-						else if (tagArea.getChildren().get(k).getTagType().equalsIgnoreCase("showroof"))
+						else if (tagType.equalsIgnoreCase("showroof"))
 						{
-							te.addTriggerType(te.new TriggerToggleRoof(Integer.parseInt(actionParams.get("roofid")), true));
+							te.addTriggerable(te.new TriggerToggleRoof(Integer.parseInt(actionParams.get("roofid")), true));
 						}
-						else if (tagArea.getChildren().get(k).getTagType().equalsIgnoreCase("hideroof"))
+						else if (tagType.equalsIgnoreCase("hideroof"))
 						{
-							te.addTriggerType(te.new TriggerToggleRoof(Integer.parseInt(actionParams.get("roofid")), false));
+							te.addTriggerable(te.new TriggerToggleRoof(Integer.parseInt(actionParams.get("roofid")), false));
 						}
-						else if (tagArea.getChildren().get(k).getTagType().equalsIgnoreCase("removesprite"))
+						else if (tagType.equalsIgnoreCase("removesprite"))
 						{
-							te.addTriggerType(te.new TriggerRemoveSprite(actionParams.get("name")));
+							te.addTriggerable(te.new TriggerRemoveSprite(actionParams.get("name")));
 						}
-						else if (tagArea.getChildren().get(k).getTagType().equalsIgnoreCase("changesprite"))
+						else if (tagType.equalsIgnoreCase("changesprite"))
 						{
-							te.addTriggerType(te.new TriggerChangeSprite(actionParams.get("name"), actionParams.get("image")));
+							te.addTriggerable(te.new TriggerChangeSprite(actionParams.get("name"), actionParams.get("image")));
 							spriteToLoad.add(actionParams.get("image"));
 						}
-						else if (tagArea.getChildren().get(k).getTagType().equalsIgnoreCase("additem"))
+						else if (tagType.equalsIgnoreCase("additem"))
 						{
-							te.addTriggerType(te.new TriggerAddItem(Integer.parseInt(actionParams.get("itemid"))));
+							te.addTriggerable(te.new TriggerAddItem(Integer.parseInt(actionParams.get("itemid"))));
 						}
-						else if (tagArea.getChildren().get(k).getTagType().equalsIgnoreCase("exit"))
+						else if (tagType.equalsIgnoreCase("exit"))
 						{
-							te.addTriggerType(te.new TriggerExit());
+							te.addTriggerable(te.new TriggerExit());
+						}
+						else if (tagType.equalsIgnoreCase("reviveheroes"))
+						{
+							te.addTriggerable(te.new TriggerReviveHeroes());
+						}
+						else if (tagType.equalsIgnoreCase("killenemies"))
+						{
+							te.addTriggerable(te.new TriggerKillEnemies(Integer.parseInt(actionParams.get("unitid"))));
+						}
+						else
+						{
+							Triggerable trigger = handleCustomTrigger(tagType, actionParams);
+							if (trigger == null)
+								throw new BadResourceException("Unable to parse trigger with key " + tagType);
+							else
+								te.addTriggerable(trigger);
 						}
 
 					}
@@ -242,7 +264,37 @@ public class TextParser
 					if (ta.getTagType().equalsIgnoreCase("enemydeath"))
 					{
 						int unitId = ta.getIntAttribute("unitid");
-						condition.addCondition(new EnemyDeath(unitId));
+						condition.addCondition(new UnitDeath(unitId, true));
+					}
+					else if (ta.getTagType().equalsIgnoreCase("herodeath"))
+					{
+						int unitId = ta.getIntAttribute("unitid");
+						condition.addCondition(new UnitDeath(unitId, false));
+					}
+					else if (ta.getTagType().equalsIgnoreCase("enterloc"))
+					{
+						String location = ta.getAttribute("location");
+						condition.addCondition(new HeroEntersLocation(location, ta.getBoolAttribute("immediate")));
+					}
+					else if (ta.getTagType().equalsIgnoreCase("loccontains"))
+					{
+						condition.addCondition(new LocationContainsUnits(
+								ta.getAttribute("location"), 
+								ta.getBoolAttribute("enemy"), 
+								ta.getIntAttribute("amount"),
+								ta.getAttribute("operator")));
+					}
+					else if (ta.getTagType().equalsIgnoreCase("heroinbat"))
+					{
+						condition.addCondition(new HeroInBattle(ta.getIntAttribute("id")));
+					}
+					else
+					{
+						Conditional conditional = handleCustomCondition(ta.getTagType(), ta.getParams());
+						if (conditional == null)
+							throw new BadResourceException("Unable to parse conditional with key: " + ta.getTagType());
+						else
+							condition.addCondition(conditional);
 					}
 				}
 				conditions.add(condition);
@@ -280,7 +332,7 @@ public class TextParser
 		return leaderIds;
 	}
 
-	public static ArrayList<CinematicEvent> parseCinematicEvents(TagArea tagArea, ArrayList<CinematicEvent> initEvents,
+	public ArrayList<CinematicEvent> parseCinematicEvents(TagArea tagArea, ArrayList<CinematicEvent> initEvents,
 			HashSet<String> animToLoad, HashSet<String> musicToLoad, HashSet<String> soundToLoad)
 	{
 		ArrayList<CinematicEvent> events = new ArrayList<CinematicEvent>();
@@ -296,7 +348,7 @@ public class TextParser
 		return events;
 	}
 
-	private static CinematicEvent parseCinematicEvent(TagArea area, ArrayList<CinematicEvent> initEvents,
+	private CinematicEvent parseCinematicEvent(TagArea area, ArrayList<CinematicEvent> initEvents,
 			HashSet<String> animToLoad, HashSet<String> musicToLoad, HashSet<String> soundToLoad)
 	{
 		String type = area.getTagType();
@@ -322,13 +374,17 @@ public class TextParser
 			return new CinematicEvent(CinematicEventType.REMOVE_STATIC_SPRITE, area.getAttribute("spriteid"));
 		else if (type.equalsIgnoreCase("assactor"))
 			return new CinematicEvent(CinematicEventType.ASSOCIATE_AS_ACTOR, area.getAttribute("name"),
-					Integer.parseInt(area.getAttribute("npcid")), Boolean.parseBoolean(area.getAttribute("hero")));
+					Integer.parseInt(area.getAttribute("hero")), Integer.parseInt(area.getAttribute("enemyid")), Integer.parseInt(area.getAttribute("npcid")));
 		else if (type.equalsIgnoreCase("camerafollow"))
 			return new CinematicEvent(CinematicEventType.CAMERA_FOLLOW, area.getAttribute("name"));
 		else if (type.equalsIgnoreCase("haltingmove"))
 			return new CinematicEvent(CinematicEventType.HALTING_MOVE, Integer.parseInt(area.getAttribute("x")),
 					Integer.parseInt(area.getAttribute("y")), Float.parseFloat(area.getAttribute("speed")), area.getAttribute("name"),
 					Boolean.parseBoolean(area.getAttribute("movehor")), Boolean.parseBoolean(area.getAttribute("movediag")));
+		else if (type.equalsIgnoreCase("haltingmovepath"))
+			return new CinematicEvent(CinematicEventType.HALTING_MOVE_PATHFIND, Integer.parseInt(area.getAttribute("x")),
+					Integer.parseInt(area.getAttribute("y")), Float.parseFloat(area.getAttribute("speed")), area.getAttribute("name"),
+					false, false);
 		else if (type.equalsIgnoreCase("move"))
 			return new CinematicEvent(CinematicEventType.MOVE, Integer.parseInt(area.getAttribute("x")),
 					Integer.parseInt(area.getAttribute("y")), Float.parseFloat(area.getAttribute("speed")), area.getAttribute("name"),
@@ -350,17 +406,19 @@ public class TextParser
 		else if (type.equalsIgnoreCase("cameramove"))
 			return new CinematicEvent(CinematicEventType.CAMERA_MOVE, Integer.parseInt(area.getAttribute("x")),
 					Integer.parseInt(area.getAttribute("y")), Integer.parseInt(area.getAttribute("time")));
+		else if (type.equalsIgnoreCase("cameramovetoactor"))
+			return new CinematicEvent(CinematicEventType.CAMERA_MOVE_TO_ACTOR, area.getAttribute("actor"), Integer.parseInt(area.getAttribute("time")));
 		else if (type.equalsIgnoreCase("speech"))
 			return new CinematicEvent(CinematicEventType.SPEECH, area.getAttribute("text"),
 					(area.getAttribute("heroportrait") == null ? -1 : Integer.parseInt(area.getAttribute("heroportrait"))),
 							(area.getAttribute("enemyportrait") == null ? -1 : Integer.parseInt(area.getAttribute("enemyportrait"))),
 							area.getAttribute("animportrait"));
 		else if (type.equalsIgnoreCase("loadmap"))
-			return new CinematicEvent(CinematicEventType.LOAD_MAP, area.getAttribute("map"), area.getAttribute("enter"));
+			return new CinematicEvent(CinematicEventType.LOAD_MAP, area.getAttribute("mapdata"), area.getAttribute("map"), area.getAttribute("enter"));
 		else if (type.equalsIgnoreCase("loadbattle"))
-			return new CinematicEvent(CinematicEventType.LOAD_BATTLE, area.getAttribute("textfile"), area.getAttribute("map"), area.getAttribute("entrance"), Integer.parseInt(area.getAttribute("battbg")));
+			return new CinematicEvent(CinematicEventType.LOAD_BATTLE, area.getAttribute("mapdata"), area.getAttribute("map"), area.getAttribute("entrance"), Integer.parseInt(area.getAttribute("battbg")));
 		else if (type.equalsIgnoreCase("loadcin"))
-			return new CinematicEvent(CinematicEventType.LOAD_CIN, area.getAttribute("map"), Integer.parseInt(area.getAttribute("cinid")));
+			return new CinematicEvent(CinematicEventType.LOAD_CIN, area.getAttribute("mapdata"), area.getAttribute("map"), Integer.parseInt(area.getAttribute("cinid")));
 		else if (type.equalsIgnoreCase("wait"))
 			return new CinematicEvent(CinematicEventType.WAIT, Integer.parseInt(area.getAttribute("time")));
 		else if (type.equalsIgnoreCase("spin"))
@@ -450,7 +508,27 @@ public class TextParser
 				return null;
 			}
 			return ce;
+		} else {
+			CinematicEvent cinematicEvent = handleCustomCinematic(type, area.getParams());
+			if (cinematicEvent == null)
+				throw new BadResourceException("Unable to parse cinematic event with key " + type);
+			else
+				return cinematicEvent;
 		}
+	}
+	
+	public CinematicEvent handleCustomCinematic(String tag, Hashtable<String, String> params)
+	{
+		return null;
+	}
+	
+	public Triggerable handleCustomTrigger(String tag, Hashtable<String, String> params)
+	{
+		return null;
+	}
+	
+	public Conditional handleCustomCondition(String tag, Hashtable<String, String> params)
+	{
 		return null;
 	}
 }

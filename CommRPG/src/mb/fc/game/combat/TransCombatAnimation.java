@@ -1,7 +1,7 @@
 package mb.fc.game.combat;
 
 import mb.fc.game.sprite.CombatSprite;
-import mb.fc.game.ui.FCGameContainer;
+import mb.fc.game.ui.PaddedGameContainer;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -23,9 +23,9 @@ public class TransCombatAnimation extends CombatAnimation
 		this.childAnimation = childAnimation;
 		this.isHero = childAnimation.getParentSprite().isHero();
 		if (isHero)
-			maxOffset = (int) (250 * SCREEN_SCALE);
+			maxOffset = (int) 250;
 		else
-			maxOffset = (int) (-150 * SCREEN_SCALE);
+			maxOffset = (int) -150;
 
 		if (!out)
 			childAnimation.xOffset = maxOffset;
@@ -49,7 +49,7 @@ public class TransCombatAnimation extends CombatAnimation
 	}
 
 	@Override
-	public void render(FCGameContainer fcCont, Graphics g, int yDrawPos, float scale) {
+	public void render(PaddedGameContainer fcCont, Graphics g, int yDrawPos, float scale) {
 		g.setColor(Color.white);
 		childAnimation.render(fcCont, g, yDrawPos, scale);
 	}

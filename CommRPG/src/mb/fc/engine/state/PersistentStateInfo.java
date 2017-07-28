@@ -6,7 +6,7 @@ import mb.fc.game.Camera;
 import mb.fc.game.persist.ClientProfile;
 import mb.fc.game.persist.ClientProgress;
 import mb.fc.game.sprite.CombatSprite;
-import mb.fc.game.ui.FCGameContainer;
+import mb.fc.game.ui.PaddedGameContainer;
 import mb.fc.loading.FCResourceManager;
 import mb.fc.loading.LoadableGameState;
 import mb.fc.network.TCPClient;
@@ -30,8 +30,7 @@ public class PersistentStateInfo implements PacketHandler
 {
 	private Camera camera;
 	private CommRPG game;
-	private FCGameContainer gc;
-	private Graphics graphics;
+	private PaddedGameContainer gc;
 	private ClientProfile clientProfile;
 	private ClientProgress clientProgress;
 	private FCResourceManager resourceManager;
@@ -42,13 +41,12 @@ public class PersistentStateInfo implements PacketHandler
 	private TCPClient client = null;
 	private StateInfo currentStateInfo;
 
-	public PersistentStateInfo(ClientProfile clientProfile, ClientProgress clientProgress, CommRPG game, Camera camera,
-			GameContainer gc, Graphics graphics)
+	public PersistentStateInfo(ClientProfile clientProfile, ClientProgress clientProgress, 
+			CommRPG game, Camera camera, GameContainer gc)
 	{
 		this.game = game;
 		this.camera = camera;
-		this.gc = (FCGameContainer) gc;
-		this.graphics = graphics;
+		this.gc = (PaddedGameContainer) gc;
 		this.clientProfile = clientProfile;
 		this.clientProgress = clientProgress;
 		this.entranceLocation = getClientProgress().getLocation();
@@ -57,41 +55,41 @@ public class PersistentStateInfo implements PacketHandler
 	/********************/
 	/* Map Management	*/
 	/********************/
-	public void loadMap(String map, String entrance)
+	public void loadMap(String mapData, String map, String entrance)
 	{
 		this.entranceLocation = entrance;
 
 		gc.getInput().removeAllKeyListeners();
 
-		getClientProgress().setMap(map, false);
+		getClientProgress().setMap(map, mapData, false);
 
-		getGame().setLoadingInfo(map, map,
-				(LoadableGameState) getGame().getState(CommRPG.STATE_GAME_TOWN),
-					getResourceManager());
+		getGame().setLoadingInfo(mapData, map,
+				(LoadableGameState) getGame().getState(CommRPG.STATE_GAME_TOWN), getResourceManager());
 		getGame().enterState(CommRPG.STATE_GAME_LOADING, new FadeOutTransition(Color.black, 250), new EmptyTransition());
 	}
 
-	public void loadBattle(String text, String map, String entrance, int battleBGIndex)
+	public void loadBattle(String mapData, String map, String entrance, int battleBGIndex)
 	{
 		this.entranceLocation = entrance;
 
 		gc.getInput().removeAllKeyListeners();
 
-		getClientProgress().setMap(map, true);
+		getClientProgress().setMap(map, mapData, true);
 
-		getGame().setLoadingInfo(text, map,
-				(LoadableGameState) getGame().getState(CommRPG.STATE_GAME_BATTLE),
-					getResourceManager());
+		getGame().setLoadingInfo(mapData, map,
+				(LoadableGameState) getGame().getState(CommRPG.STATE_GAME_BATTLE), getResourceManager());
 		getGame().enterState(CommRPG.STATE_GAME_LOADING, new FadeOutTransition(Color.black, 250), new EmptyTransition());
 	}
 
-	public void loadCinematic(String map, int cinematicID)
+	public void loadCinematic(String mapData, String map, int cinematicID)
 	{
 		gc.getInput().removeAllKeyListeners();
 
 		this.cinematicID = cinematicID;
+		
+		getClientProgress().setMap(map, mapData, false);
 
-		getGame().setLoadingInfo(map, map,
+		getGame().setLoadingInfo(mapData, map,
 				(LoadableGameState) getGame().getState(CommRPG.STATE_GAME_CINEMATIC),
 					getResourceManager());
 		getGame().enterState(CommRPG.STATE_GAME_LOADING, new FadeOutTransition(Color.black, 250), new EmptyTransition());
@@ -101,12 +99,8 @@ public class PersistentStateInfo implements PacketHandler
 		return camera;
 	}
 
-	public FCGameContainer getGc() {
+	public PaddedGameContainer getGc() {
 		return gc;
-	}
-
-	public Graphics getGraphics() {
-		return graphics;
 	}
 
 	public void setQuestComplete(int id)
@@ -145,10 +139,6 @@ public class PersistentStateInfo implements PacketHandler
 
 	public int getCinematicID() {
 		return cinematicID;
-	}
-
-	public void setEntranceLocation(String entranceLocation) {
-		this.entranceLocation = entranceLocation;
 	}
 
 	public int getClientId() {

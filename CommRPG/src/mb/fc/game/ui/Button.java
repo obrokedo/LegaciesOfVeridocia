@@ -1,11 +1,11 @@
 package mb.fc.game.ui;
 
-import mb.fc.game.hudmenu.Panel;
-
 import org.newdawn.slick.Color;
-import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Rectangle;
+
+import mb.fc.game.hudmenu.Panel;
+import mb.fc.utils.StringUtils;
 
 public class Button 
 {
@@ -14,16 +14,27 @@ public class Button
 	private String text;
 	private boolean displayBorder = true;
 	private boolean enabled = true;
+	private boolean visible = true;
+	private Color foreground = Color.white;
+	private boolean scaleText = false;
 	
 	public Button(int x, int y, int width, int height, String text) {
+		this(x, y, width, height, text, false);
+	}
+	
+	public Button(int x, int y, int width, int height, String text, boolean scaleText) {
 		super();
 		this.rect = new Rectangle(x, y, width, height);
 		this.mouseOver = false;
 		this.text = text;
+		this.scaleText = scaleText;
 	}
 
 	public boolean handleUserInput(int mouseX, int mouseY, boolean leftClick)
 	{
+		if (!visible)
+			return false;
+		
 		if (enabled && rect.contains(mouseX, mouseY))
 		{
 			mouseOver = true;
@@ -35,21 +46,31 @@ public class Button
 		return false;
 	}
 	
-	public void render(GameContainer gc, Graphics graphics)
+	public void render(Graphics graphics)
 	{
+		if (!visible)
+			return;
+		
 		if (mouseOver)
 		{
 			graphics.setColor(Panel.COLOR_MOUSE_OVER);				
 			Panel.fillRect(rect, graphics);
 		}
+		else {
+			graphics.setColor(new Color(45, 45, 45));
+			Panel.fillRect(rect, graphics);
+		}
 		
 		if (enabled)
-			graphics.setColor(Panel.COLOR_FOREFRONT);
+			graphics.setColor(foreground);
 		else
 			graphics.setColor(Color.lightGray);
 		if (displayBorder)
 			Panel.drawRect(rect, graphics);
-		graphics.drawString(text, rect.getX() + 5, rect.getY() + 2);
+		if (scaleText)
+			StringUtils.drawString(text, (int) rect.getX() + 5, (int) rect.getY() + 2, graphics);
+		else
+			graphics.drawString(text, (int) rect.getX() + 5, (int) rect.getY() + 2);
 	}
 
 	public void setText(String text) {
@@ -64,5 +85,34 @@ public class Button
 	public void setEnabled(boolean enabled)
 	{
 		this.enabled = enabled;
+	}
+
+	public boolean isVisible() {
+		return visible;
+	}
+
+	public void setVisible(boolean visible) {
+		this.visible = visible;
+	}
+
+	public String getText() {
+		return text;
+	}
+	
+	public void setWidth(int width) {
+		System.out.println("STTING WIDTH " + width + " " + text);
+		this.rect.setWidth(width);
+	}
+	
+	public void setX(int x) {
+		this.rect.setX(x);
+	}
+	
+	public void setY(int y) {
+		this.rect.setY(y);
+	}
+	
+	public void setForegroundColor(Color color) {
+		this.foreground = color;
 	}
 }

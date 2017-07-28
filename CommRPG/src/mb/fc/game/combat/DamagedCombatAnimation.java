@@ -7,7 +7,7 @@ import org.newdawn.slick.Graphics;
 
 import mb.fc.engine.CommRPG;
 import mb.fc.game.sprite.CombatSprite;
-import mb.fc.game.ui.FCGameContainer;
+import mb.fc.game.ui.PaddedGameContainer;
 import mb.jython.JBattleEffect;
 
 public class DamagedCombatAnimation extends CombatAnimation
@@ -50,14 +50,14 @@ public class DamagedCombatAnimation extends CombatAnimation
 		childAnimation.update(delta);
 		if (isNegativeEffect)
 		{
-			childAnimation.xOffset = (int) ((CommRPG.RANDOM.nextInt(20) - 10) * SCREEN_SCALE);
-			childAnimation.yOffset = (int) ((CommRPG.RANDOM.nextInt(20) - 10) * SCREEN_SCALE);
+			childAnimation.xOffset = (int) ((CommRPG.RANDOM.nextInt(20) - 10));
+			childAnimation.yOffset = (int) ((CommRPG.RANDOM.nextInt(20) - 10));
 		}
 		return totalTimePassed >= minimumTimePassed;
 	}
 
 	@Override
-	public void render(FCGameContainer fcCont, Graphics g, int yDrawPos, float scale) {
+	public void render(PaddedGameContainer fcCont, Graphics g, int yDrawPos, float scale) {
 		childAnimation.render(fcCont, g, yDrawPos, scale);
 	}
 
@@ -70,10 +70,10 @@ public class DamagedCombatAnimation extends CombatAnimation
 		childAnimation.parentSprite.modifyCurrentMP(mpDamage);
 		for (JBattleEffect battleEffect : battleEffects)
 		{
-			// If the duration is 0, it is instantaneous so don't bother adding it to the target
-			if (battleEffect.getDuration() != 0)
+			// If the effect is already done then it is instantaneous so don't bother adding it to the target
+			if (!battleEffect.isDone())
 				childAnimation.parentSprite.addBattleEffect(battleEffect);
-			battleEffect.effectStarted(null, childAnimation.parentSprite);
+			battleEffect.effectStarted(attacker, childAnimation.parentSprite);
 		}
 	}
 

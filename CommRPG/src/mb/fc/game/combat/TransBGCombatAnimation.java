@@ -1,6 +1,7 @@
 package mb.fc.game.combat;
 
-import mb.fc.game.ui.FCGameContainer;
+import mb.fc.engine.CommRPG;
+import mb.fc.game.ui.PaddedGameContainer;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -63,9 +64,9 @@ public class TransBGCombatAnimation extends CombatAnimation
 	}
 
 	@Override
-	public void render(FCGameContainer fcCont, Graphics g, int yDrawPos, float scale) {
+	public void render(PaddedGameContainer fcCont, Graphics g, int yDrawPos, float scale) {
 		g.setColor(Color.black);
-		g.fillRect(0, 0, fcCont.getWidth(), fcCont.getHeight());
+		g.fillRect(0, 0, CommRPG.GAME_SCREEN_SIZE.width, CommRPG.GAME_SCREEN_SIZE.height);
 
 		g.drawImage(backgroundImage, bgXLoc + offsetLocX, bgYLoc);
 
@@ -76,8 +77,8 @@ public class TransBGCombatAnimation extends CombatAnimation
 		}
 
 		g.setColor(Color.black);
-		g.fillRect(0, 0, fcCont.getDisplayPaddingX(), fcCont.getHeight());
-		g.fillRect(fcCont.getDisplayPaddingX() + backgroundImage.getWidth(), 0, fcCont.getDisplayPaddingX(), fcCont.getHeight());
+		g.fillRect(0, 0, 0, fcCont.getHeight());
+		g.fillRect(backgroundImage.getWidth(), 0, 0, fcCont.getHeight());
 	}
 
 

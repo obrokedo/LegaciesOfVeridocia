@@ -1,25 +1,6 @@
 package mb.fc.game.menu;
 
-import java.util.ArrayList;
-
-import mb.fc.engine.state.StateInfo;
-import mb.fc.game.hudmenu.Panel;
-import mb.fc.game.input.FCInput;
-import mb.fc.game.item.EquippableItem;
-import mb.fc.game.item.Item;
-import mb.fc.game.item.Item.EquippableDifference;
-import mb.fc.game.listener.YesNoListener;
-import mb.fc.game.resource.ItemResource;
-import mb.fc.game.sprite.CombatSprite;
-import mb.fc.game.ui.Button;
-import mb.fc.game.ui.FCGameContainer;
-
-import org.newdawn.slick.Color;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.geom.Rectangle;
-
-public class ShopMenu extends Menu implements YesNoListener
+public class ShopMenu { /* extends Menu implements YesNoListener
 {
 	private int x;
 
@@ -53,7 +34,7 @@ public class ShopMenu extends Menu implements YesNoListener
 
 	public ShopMenu(GameContainer gc, StateInfo stateInfo, double sellPercent, double buyPercent, int[] itemIds) {
 		super(Panel.PANEL_SHOP);
-		x = (gc.getWidth() - 700) / 2;
+		x = (CommRPG.GAME_SCREEN_SIZE.width - 700) / 2;
 		switchViewButton = new Button(x + 100, 35, 140, 20, "Switch to sell");
 		// itemSelectRect = new Rectangle(x + 15, 90, 655, 360);
 		itemUpRect = new Rectangle(x + 670, 91, 15, 15);
@@ -200,6 +181,7 @@ public class ShopMenu extends Menu implements YesNoListener
 			itemOffset = Math.min(itemOffset + 1, items.size() - 12);
 		*/
 
+	/*
 		return MenuUpdate.MENU_CLOSE;
 	}
 
@@ -322,6 +304,7 @@ public class ShopMenu extends Menu implements YesNoListener
 		graphics.setColor(Color.red);
 		Menu.drawRect(charSelectRect, graphics);
 		*/
+	/*
 	}
 
 	private void renderBuy(Graphics graphics)
@@ -392,5 +375,5 @@ public class ShopMenu extends Menu implements YesNoListener
 			}
 		}
 		return false;
-	}
+	} */
 }

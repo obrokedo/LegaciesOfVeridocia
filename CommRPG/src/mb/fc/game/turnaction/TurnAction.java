@@ -25,6 +25,8 @@ public class TurnAction implements Serializable
 	public static final int ACTION_MANUAL_MOVE_CURSOR = 10;
 	public static final int ACTION_CHECK_SPEECH_END_TURN = 11;
 	public static final int ACTION_WAIT_FOR_SPEECH = 12;
+	public static final int ACTION_PERFORM_EFFECTS = 13;
+	public static final int ACTION_CURRENT_SPRITE_DEATH = 14;
 	
 	public int action;
 
@@ -33,5 +35,5 @@ public class TurnAction implements Serializable
 		this.action = action;
 	}
 
-	public boolean perform(TurnManager turnManager, StateInfo stateInfo) {return false;}
+	public boolean perform(int delta, TurnManager turnManager, StateInfo stateInfo) {return false;}
 }

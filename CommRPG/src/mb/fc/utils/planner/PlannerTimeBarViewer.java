@@ -118,6 +118,11 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 						dt.addInterval(zi);
 					}
 					break;
+				case ASSOCIATE_AS_ACTOR:
+					dt = new DefaultTimeBarRowModel(new DefaultRowHeader("Actor: " + (String) ce.getParam(0)));
+					ab = new ActorBar(dt, 0, 0);
+					rowsByName.put((String) ce.getParam(0), ab);
+					break;
 				case ADD_STATIC_SPRITE:
 					int ssX = (int) ce.getParam(0);
 					int ssY = (int) ce.getParam(1);
@@ -140,6 +145,9 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 					break;
 				case HALTING_MOVE:
 					currentTime += handleMove(currentTime, ce, rowsByName, "Halting Move to ", false);
+					break;
+				case HALTING_MOVE_PATHFIND:
+					currentTime += handleMove(currentTime, ce, rowsByName, "Halting Move Pathfind to ", false);
 					break;
 				case LOOP_MOVE:
 					 ab = rowsByName.get(ce.getParam(0));
@@ -357,55 +365,17 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 
 				// Camera Stuff
 				case CAMERA_MOVE:
-					if (cameraInterval != null)
-						cameraInterval.setEnd(new JaretDate(currentTime));
-
-					zi = new ZIntervalImpl("Move Camera to  " + (int) ce.getParam(0) + " " + (int) ce.getParam(1));
-					zi.setBegin(new JaretDate(currentTime));
-					zi.setEnd(new JaretDate(currentTime + (int) ce.getParam(2)));
-					cameraInterval = zi;
-					cameraRow.addInterval(zi);
-
-					cl = new CameraLocation();
-					CameraLocation oldLoc = cameraLocations.get(cameraLocations.size() - 1);
-					if (oldLoc.following != null)
-					{
-						ActorBar followingAB = rowsByName.get(oldLoc.following);
-						Point followingPoint = followingAB.getActorLocationAtTime((int) currentTime - 1, true);
-
-						if (followingPoint.x < 160)
-							followingPoint.x = 0;
-						else
-							followingPoint.x = (Math.max(0, followingPoint.x - 160));
-
-						if (followingPoint.y < 120)
-							followingPoint.y = 0;
-						else
-							followingPoint.y = (Math.max(0, followingPoint.y - 120));
-
-						cl.locX = followingPoint.x;
-						cl.locY = followingPoint.y;
-					}
-					else
-					{
-						cl.locX = oldLoc.locX;
-						cl.locY = oldLoc.locY;
-					}
-
-					cl.endLocX = (int) ce.getParam(0) - 160;
-					cl.endLocY = (int) ce.getParam(1) - 120;
-					cl.time = currentTime;
-					cl.duration = (int) ce.getParam(2);
-					System.out.println(cl);
-					cameraLocations.add(cl);
-
-					cl = new CameraLocation();
-					cl.locX = (int) ce.getParam(0) - 160;
-					cl.locY = (int) ce.getParam(1) - 120;
-					cl.time = currentTime + (int) ce.getParam(2);
-					cameraLocations.add(cl);
+					this.moveCameraToLocation(currentTime, cameraInterval, cameraLocations, cameraRow, rowsByName, 
+							(int) ce.getParam(0), (int) ce.getParam(1), (int) ce.getParam(2));
 					break;
-
+				case CAMERA_MOVE_TO_ACTOR:
+					ActorBar followingAB = rowsByName.get(ce.getParam(0));
+					Point followingPoint = followingAB.getActorLocationAtTime((int) currentTime - 1, true).currentPoint;
+					int destX = followingPoint.x;
+					int destY = followingPoint.y;
+					this.moveCameraToLocation(currentTime, cameraInterval, cameraLocations, cameraRow, rowsByName, 
+							destX, destY, (int) ce.getParam(1));
+					break;
 				case CAMERA_CENTER:
 					if (cameraInterval != null)
 						cameraInterval.setEnd(new JaretDate(currentTime));
@@ -470,20 +440,7 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 					zi.setEnd(new JaretDate(currentTime));
 					systemRow.addInterval(zi);
 					break;
-					/*
-				case ASSOCIATE_NPC_AS_ACTOR:
-					for (Sprite s : stateInfo.getSprites())
-					{
-						if (s.getSpriteType() == Sprite.TYPE_NPC && ((NPCSprite) s).getUniqueNPCId() == (int) ce.getParam(0))
-						{
-							actors.put((String) ce.getParam(1), new CinematicActor((AnimatedSprite) s));
-							break;
-						}
-					}
-					break;
-
 				// Music stuff
-				 */
 				case PLAY_MUSIC:
 					if (soundInterval != null)
 						soundInterval.setEnd(new JaretDate(currentTime));
@@ -598,6 +555,58 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 		cinematicTimeline.cameraLocations = cameraLocations;
 		cinematicTimeline.staticSprites = staticSprites;
 	}
+	
+	private void moveCameraToLocation(long currentTime, ZIntervalImpl cameraInterval, ArrayList<CameraLocation> cameraLocations, 
+			DefaultTimeBarRowModel cameraRow, Hashtable<String, ActorBar> rowsByName, int camDestX, int camDestY, int duration)
+	{
+		if (cameraInterval != null)
+			cameraInterval.setEnd(new JaretDate(currentTime));
+
+		ZIntervalImpl zi = new ZIntervalImpl("Move Camera to  " + camDestX + " " + camDestY);
+		zi.setBegin(new JaretDate(currentTime));
+		zi.setEnd(new JaretDate(currentTime + duration));
+		cameraInterval = zi;
+		cameraRow.addInterval(zi);
+
+		CameraLocation cl = new CameraLocation();
+		CameraLocation oldLoc = cameraLocations.get(cameraLocations.size() - 1);
+		if (oldLoc.following != null)
+		{
+			ActorBar followingAB = rowsByName.get(oldLoc.following);
+			Point followingPoint = followingAB.getActorLocationAtTime((int) currentTime - 1, true).currentPoint;
+
+			if (followingPoint.x < 160)
+				followingPoint.x = 0;
+			else
+				followingPoint.x = (Math.max(0, followingPoint.x - 160));
+
+			if (followingPoint.y < 120)
+				followingPoint.y = 0;
+			else
+				followingPoint.y = (Math.max(0, followingPoint.y - 120));
+
+			cl.locX = followingPoint.x;
+			cl.locY = followingPoint.y;
+		}
+		else
+		{
+			cl.locX = oldLoc.locX;
+			cl.locY = oldLoc.locY;
+		}
+
+		cl.endLocX = camDestX - 160;
+		cl.endLocY = camDestY - 120;
+		cl.time = currentTime;
+		cl.duration = duration;
+		System.out.println(cl);
+		cameraLocations.add(cl);
+
+		cl = new CameraLocation();
+		cl.locX = camDestX - 160;
+		cl.locY = camDestY - 120;
+		cl.time = currentTime + duration;
+		cameraLocations.add(cl);
+	}
 
 	public class CameraLocation
 	{
@@ -631,7 +640,7 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 
 		ActorBar ab = rowsByName.get(ce.getParam(3));
 		// Get the current location that the actor is at
-		Point currentPoint =  ab.getActorLocationAtTime((int) currentTime, true);
+		Point currentPoint =  ab.getActorLocationAtTime((int) currentTime, true).currentPoint;
 
 		int xDistance = Math.abs(currentPoint.x - (int) ce.getParam(0));
 		int yDistance = Math.abs(currentPoint.y - (int) ce.getParam(1));
@@ -817,24 +826,27 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 			this.locY = locY;
 		}
 
-		public Point getActorLocationAtTime(int time)
+		public MovingSprite getActorLocationAtTime(int time)
 		{
 			return getActorLocationAtTime(time, false);
 		}
 
-		public Point getActorLocationAtTime(int time, boolean duringConstruction)
+		public MovingSprite getActorLocationAtTime(int time, boolean duringConstruction)
 		{
 			List<Interval> actorIntervals = dt.getIntervals(new JaretDate(time));
 
 			boolean moving = false;
 
 			Point actorPoint = null;
+			
+			MovingSprite movingSprite = new MovingSprite();
 
 			for (Interval i : actorIntervals)
 			{
 				if (((ZIntervalImpl) i).isMove())
 				{
 					ZMoveIntervalImpl zmi = (ZMoveIntervalImpl) i;
+					movingSprite.moveInterval = zmi;
 					int xDiff = zmi.getEndX() - zmi.getStartX();
 					int yDiff = zmi.getEndY() - zmi.getStartY();
 					int totalMove = Math.abs(xDiff) + Math.abs(yDiff);
@@ -873,7 +885,7 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 				}
 
 			}
-
+			
 			if (!moving)
 			{
 				if (!duringConstruction && movementRowModel.getIntervals(new JaretDate(time)).size() > 0)
@@ -885,8 +897,10 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 				else
 					actorPoint = new Point(this.locX, this.locY);
 			}
+			
+			movingSprite.currentPoint = actorPoint;
 
-			return actorPoint;
+			return movingSprite;
 		}
 
 		public boolean isActorInScene(int time)
@@ -898,6 +912,18 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 			}
 			return true;
 		}
+    }
+    
+    public static class MovingSprite
+    {
+    	public Point currentPoint;
+    	public ZMoveIntervalImpl moveInterval;
+		public MovingSprite(Point currentPoint) {
+			super();
+			this.currentPoint = currentPoint;
+		}
+    	
+    	public MovingSprite() {}
     }
 
     public class StaticSprite

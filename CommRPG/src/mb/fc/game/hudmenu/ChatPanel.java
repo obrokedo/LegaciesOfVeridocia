@@ -3,7 +3,7 @@ package mb.fc.game.hudmenu;
 import java.util.ArrayList;
 
 import mb.fc.game.menu.Menu.MenuUpdate;
-import mb.fc.game.ui.FCGameContainer;
+import mb.fc.game.ui.PaddedGameContainer;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -25,12 +25,12 @@ public class ChatPanel extends Panel
 	}
 
 	@Override
-	public void render(FCGameContainer gc, Graphics graphics)
+	public void render(PaddedGameContainer gc, Graphics graphics)
 	{
 		int startY = gc.getHeight() - 50;
 		graphics.setColor(Color.white);
 		for (int i = 0; i < timedMessages.size(); i++)
-			graphics.drawString(timedMessages.get(i).getName(), 50 + gc.getDisplayPaddingX(), startY - 30 * i);
+			graphics.drawString(timedMessages.get(i).getName(), 50, startY - 30 * i);
 	}
 
 	@Override

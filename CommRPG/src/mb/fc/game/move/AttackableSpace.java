@@ -17,7 +17,7 @@ import mb.fc.game.input.KeyMapping;
 import mb.fc.game.listener.KeyboardListener;
 import mb.fc.game.listener.MouseListener;
 import mb.fc.game.sprite.CombatSprite;
-import mb.fc.game.ui.FCGameContainer;
+import mb.fc.game.ui.PaddedGameContainer;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -86,12 +86,12 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 											{-1, -1, -1,  1, -1, -1, -1}};
 
 	public static final int[][] AREA_ALL = {{}};
-	
+
 	public static final int AREA_ALL_INDICATOR = 0;
 
 
 
-	public AttackableSpace(StateInfo stateInfo, CombatSprite currentSprite, boolean targetsHero, 
+	public AttackableSpace(StateInfo stateInfo, CombatSprite currentSprite, boolean targetsHero,
 			int[][] range, int[][] area)
 	{
 		this.currentSprite = currentSprite;
@@ -108,10 +108,10 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 			this.area = AttackableSpace.AREA_0;
 			this.range = AttackableSpace.AREA_0;
 		}
-		
+
 		this.areaOffset = (this.area.length - 1) / 2;
 		this.rangeOffset = (this.range.length - 1) / 2;
-		
+
 		for (int i = 0; i < this.range.length; i++)
 		{
 			for (int j = 0; j < this.range[0].length; j++)
@@ -151,13 +151,13 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 		if (currentSprite.isHero())
 			stateInfo.registerMouseListener(this);
 
-		cursorImage = stateInfo.getResourceManager().getImages().get("battlecursor");
+		cursorImage = stateInfo.getResourceManager().getImage("battlecursor");
 	}
 
 	/**
 	 * This displays the white "targeting" rectangle during a characters attack phase
 	 */
-	public void render(FCGameContainer gc, Camera camera, Graphics graphics)
+	public void render(PaddedGameContainer gc, Camera camera, Graphics graphics)
 	{
 		graphics.setColor(ATTACKABLE_COLOR);
 		for (int i = 0; i < range.length; i++)
@@ -166,7 +166,7 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 			{
 				if (range[j][i] != -1 && (i != rangeOffset || j != rangeOffset || targetsHero == currentSprite.isHero()))
 				{
-					graphics.fillRect(gc.getDisplayPaddingX() + (spriteTileX - rangeOffset + i) * tileWidth - camera.getLocationX(),
+					graphics.fillRect((spriteTileX - rangeOffset + i) * tileWidth - camera.getLocationX(),
 							(spriteTileY - rangeOffset + j) * tileHeight - camera.getLocationY(), tileWidth, tileHeight);
 				}
 			}
@@ -181,7 +181,7 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 				for (int j = 0; j < area[0].length; j++)
 				{
 					if (area[i][j] == 1)
-						cursorImage.draw(selectX + (tileWidth * (i - areaOffset)) - camera.getLocationX() + gc.getDisplayPaddingX(),
+						cursorImage.draw(selectX + (tileWidth * (i - areaOffset)) - camera.getLocationX(),
 								selectY + (tileHeight * (j - areaOffset)) - camera.getLocationY());
 				}
 			}
@@ -210,7 +210,7 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 			currentSprite.setFacing(Direction.UP);
 
 		stateInfo.removePanel(PanelType.PANEL_ENEMY_HEALTH_BAR);
-		stateInfo.addPanel(new SpriteContextPanel(PanelType.PANEL_ENEMY_HEALTH_BAR, targetsInRange.get(selectedTarget), stateInfo.getGc()));
+		stateInfo.addPanel(new SpriteContextPanel(PanelType.PANEL_ENEMY_HEALTH_BAR, targetsInRange.get(selectedTarget), stateInfo.getFCGameContainer()));
 
 		stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, "menumove", 1f, false));
 	}
@@ -260,7 +260,7 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 			stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, "menuselect", 1f, false));
 
 			ArrayList<CombatSprite> sprites = new ArrayList<CombatSprite>();
-			
+
 			if (!targetsAll) {
 				for (int i = 0; i < area.length; i++)
 				{

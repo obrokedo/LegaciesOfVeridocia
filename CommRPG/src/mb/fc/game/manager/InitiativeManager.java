@@ -1,10 +1,9 @@
 package mb.fc.game.manager;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 
 import mb.fc.engine.CommRPG;
+import mb.fc.engine.message.BooleanMessage;
 import mb.fc.engine.message.Message;
 import mb.fc.engine.message.MessageType;
 import mb.fc.engine.message.SpriteContextMessage;
@@ -88,6 +87,8 @@ public class InitiativeManager extends Manager
 
 	public void updateOnTurn()
 	{
+		if (stateInfo.getCurrentSprite() == null)
+			initializeAfterSprites();
 		getNextTurn();
 	}
 
@@ -101,12 +102,16 @@ public class InitiativeManager extends Manager
 			{
 				// Increase the sprites initiaitive by 7 and potentially an addtional 1 based on speed
 				cs.setCurrentInit(cs.getCurrentInit() + 7 + (CommRPG.RANDOM.nextInt(100) < cs.getCurrentSpeed() ? 1 : 0));
-				if (cs.getCurrentInit() >= 100)
+				if (cs.getCurrentInit() >= 100 && cs.getCurrentHP() > 0)
 				{
 					if (nextTurn == null || cs.getCurrentInit() > nextTurn.getCurrentInit() ||
 						(cs.getCurrentInit() == nextTurn.getCurrentInit() &&
 							cs.getCurrentSpeed() > nextTurn.getCurrentInit()))
+					{
 							nextTurn = cs;
+							if (stateInfo.getCurrentSprite() == null)
+								stateInfo.getCamera().centerOnSprite(cs, stateInfo.getCurrentMap());
+					}
 				}
 			}
 		}
@@ -117,6 +122,7 @@ public class InitiativeManager extends Manager
 
 	public void initializeInitOrder()
 	{
+		
 		for (CombatSprite s : stateInfo.getCombatSprites())
 		{
 			s.setCurrentInit(s.getMaxSpeed());
@@ -129,9 +135,6 @@ public class InitiativeManager extends Manager
 		{
 			case NEXT_TURN:
 				updateOnTurn();
-				break;
-			case INTIIALIZE:
-				initializeAfterSprites();
 				break;
 			default:
 				break;

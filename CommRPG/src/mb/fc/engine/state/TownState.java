@@ -1,5 +1,11 @@
 package mb.fc.engine.state;
 
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.state.StateBasedGame;
+
 import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.MessageType;
 import mb.fc.engine.message.ShopMessage;
@@ -9,18 +15,13 @@ import mb.fc.game.manager.PanelManager;
 import mb.fc.game.manager.SoundManager;
 import mb.fc.game.manager.SpriteManager;
 import mb.fc.game.manager.TownMoveManager;
+import mb.fc.game.ui.PaddedGameContainer;
 import mb.fc.loading.FCResourceManager;
 import mb.fc.loading.LoadableGameState;
 import mb.fc.renderer.MenuRenderer;
 import mb.fc.renderer.PanelRenderer;
 import mb.fc.renderer.SpriteRenderer;
 import mb.fc.renderer.TileMapRenderer;
-
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.state.StateBasedGame;
 
 /**
  * State that handles movement in town/overland, NPCs and
@@ -65,7 +66,7 @@ public class TownState extends LoadableGameState
 		stateInfo.registerManager(menuManager);
 		this.townMoveManager = new TownMoveManager();
 		stateInfo.registerManager(townMoveManager);
-		this.cinematicManager = new CinematicManager();
+		this.cinematicManager = new CinematicManager(false);
 		stateInfo.registerManager(cinematicManager);
 		this.soundManager = new SoundManager();
 		stateInfo.registerManager(soundManager);
@@ -105,28 +106,25 @@ public class TownState extends LoadableGameState
 	}
 
 	@Override
-	public void render(GameContainer container, StateBasedGame game, Graphics g)
-			throws SlickException {
+	public void doRender(PaddedGameContainer container, StateBasedGame game, Graphics g) 
+	{
 		if (stateInfo.isInitialized())
 		{
 			float xOffset = stateInfo.getCamera().getLocationX() % stateInfo.getCurrentMap().getTileRenderWidth();
 			float yOffset = stateInfo.getCamera().getLocationY() % stateInfo.getCurrentMap().getTileRenderHeight();
 
-			tileMapRenderer.render(xOffset, yOffset, stateInfo.getCamera(), g, stateInfo.getGc());
+			tileMapRenderer.render(xOffset, yOffset, stateInfo.getCamera(), g, stateInfo.getFCGameContainer());
 			spriteRenderer.render(g);
 			cinematicManager.render(g);
-			tileMapRenderer.renderForeground(xOffset, yOffset, stateInfo.getCamera(), g, stateInfo.getGc());
-			panelRenderer.render();
-			menuRenderer.render();
-			cinematicManager.renderMenu(g);
+			tileMapRenderer.renderForeground(xOffset, yOffset, stateInfo.getCamera(), g, stateInfo.getFCGameContainer());
+			panelRenderer.render(g);
 			cinematicManager.renderPostEffects(g);
+			menuRenderer.render(g);
 		}
 	}
 
-	private boolean right;
-
 	@Override
-	public void update(GameContainer container, StateBasedGame game, int delta)
+	public void doUpdate(PaddedGameContainer container, StateBasedGame game, int delta)
 			throws SlickException
 	{
 		stateInfo.processMessages();
@@ -140,6 +138,7 @@ public class TownState extends LoadableGameState
 				panelManager.update(delta);
 				townMoveManager.update(delta);
 			}
+			stateInfo.getCurrentMap().update(delta);
 			spriteManager.update(delta);
 			soundManager.update(delta);
 
