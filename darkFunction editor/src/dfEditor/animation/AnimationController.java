@@ -37,6 +37,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.imageio.ImageIO;
 import javax.swing.AbstractSpinnerModel;
@@ -425,7 +426,8 @@ public class AnimationController extends dfEditorPanel implements
         spriteListToggle = new javax.swing.JToggleButton();
         modifySpriteToggle = new javax.swing.JToggleButton();
         hitboxToggle = new javax.swing.JToggleButton();
-
+        xlocationTXT = new javax.swing.JTextField();
+        ylocationTXT = new javax.swing.JTextField();
 
         setName("Untitled"); // NOI18N
         setPreferredSize(new java.awt.Dimension(800, 600));
@@ -953,6 +955,24 @@ public class AnimationController extends dfEditorPanel implements
             }
         });
 
+        xlocationTXT.setText("X Loc");
+        xlocationTXT.setEnabled(false);
+        xlocationTXT.setName("xlocationTXT"); // NOI18N
+        xlocationTXT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                locationBoxActionPerformed(evt);
+            }
+        });
+
+        ylocationTXT.setText("X Loc");
+        ylocationTXT.setEnabled(false);
+        ylocationTXT.setName("ylocationTXT"); // NOI18N
+        ylocationTXT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                locationBoxActionPerformed(evt);
+            }
+        });
+        
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
@@ -962,13 +982,19 @@ public class AnimationController extends dfEditorPanel implements
                 .addComponent(flipHCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(flipVCheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(xlocationTXT, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(ylocationTXT, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(flipVCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(flipHCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(flipHCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(xlocationTXT, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ylocationTXT, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jToolBar1.add(jPanel7);
@@ -1718,6 +1744,31 @@ private void flipHCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN
     repaint();
 }//GEN-LAST:event_flipHCheckBoxActionPerformed
 
+private void locationBoxActionPerformed(java.awt.event.ActionEvent evt) {
+    ArrayList<GraphicObject> selectedGraphics = viewPanel.selectedGraphics();
+
+    if (selectedGraphics != null)
+        //cmdManager.execute(new FlipSpriteListCommand(selectedGraphics, true, viewPanel));
+        for(Iterator<GraphicObject> gobj = selectedGraphics.iterator(); gobj.hasNext();)
+        {
+            GraphicObject objItem = gobj.next();
+            Rectangle tempRect = objItem.getRect();
+            try
+            {
+                objItem.setRect((new Rectangle(Integer.parseInt(xlocationTXT.getText()),Integer.parseInt(ylocationTXT.getText()),tempRect.width, tempRect.height)));
+            } catch( NumberFormatException nfe)
+            {
+                JOptionPane.showMessageDialog(null, "Must be valid number");
+            }
+        }
+
+    AnimationCell cell = this.getWorkingCell();
+    if (cell != null)
+        cell.rebuild();
+
+    repaint();
+}
+
 private void flipVCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_flipVCheckBoxActionPerformed
     ArrayList<GraphicObject> selectedGraphics = viewPanel.selectedGraphics();
 
@@ -2072,7 +2123,9 @@ private void exportGifButtonActionPerformed(java.awt.event.ActionEvent evt) {//G
         angleSpinner.setEnabled(bEnabled);
         flipVCheckBox.setEnabled(bEnabled);
         flipHCheckBox.setEnabled(bEnabled);
-
+        xlocationTXT.setEnabled(bEnabled);
+        ylocationTXT.setEnabled(bEnabled);
+        
         boolean bSetZ = true;
         boolean bSetA = true;
 
@@ -2113,6 +2166,9 @@ private void exportGifButtonActionPerformed(java.awt.event.ActionEvent evt) {//G
             boolean vFlipped = graphic.isFlippedV();
             if (flipVCheckBox.isSelected() != vFlipped)
                 flipVCheckBox.setSelected(vFlipped);
+            
+            xlocationTXT.setText(Integer.toString(graphic.getRect().x));
+            ylocationTXT.setText(Integer.toString(graphic.getRect().y));
         }
         repaint();
     }
@@ -2427,6 +2483,8 @@ private void exportGifButtonActionPerformed(java.awt.event.ActionEvent evt) {//G
     private javax.swing.JSpinner zOrderSpinner;
     private javax.swing.JButton zoomInButton;
     private javax.swing.JButton zoomOutButton;
+    private javax.swing.JTextField xlocationTXT;
+    private javax.swing.JTextField ylocationTXT;
     // End of variables declaration//GEN-END:variables
 
 }
