@@ -21,6 +21,7 @@ import org.newdawn.slick.util.Log;
 
 import mb.fc.engine.CommRPG;
 import mb.fc.engine.state.MenuState;
+import mb.fc.game.ui.Button;
 import mb.fc.game.ui.ListUI;
 import mb.fc.game.ui.ListUI.ResourceSelectorListener;
 import mb.fc.game.ui.PaddedGameContainer;
@@ -49,9 +50,12 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 	private ResourceSelector textSelector;
 	private ListUI entranceSelector;
 	private PlannerFrame plannerFrame = new PlannerFrame(this);
-	private GifFrame quickAnimate = new GifFrame();
+	private GifFrame quickAnimate = new GifFrame(true);
 	private ParticleSystem ps;
 	private String currentMap;
+	private Button loadTownButton = new Button(0, 550, 150, 25, "Load Town");
+	private Button loadCinButton = new Button(0, 580, 150, 25, "Load Cin");
+	private Button loadBattleButton = new Button(0, 610, 150, 25, "Load Battle");
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
@@ -62,6 +66,9 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 		// mapSelector.setListener(this);
 		textSelector = new ResourceSelector("Select Text", 0, true, "mapdata", "", container);
 		textSelector.setListener(this);
+		loadTownButton.setEnabled(false);
+		loadBattleButton.setEnabled(false);
+		loadCinButton.setEnabled(false);
 		/*
 		ps = new ParticleSystem(new Image("sprite/lightning.png"));
 		JParticleEmitter emitter = GlobalPythonFactory.createParticleEmitter();
@@ -95,25 +102,9 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 		if (entranceSelector != null)
 			entranceSelector.render(g);
 
-		if (textSelector.getSelectedResource() != null)
-		{
-			if (entranceSelector != null && entranceSelector.getSelectedResource() != null)
-			{
-				g.setColor(Color.darkGray);
-				g.fillRect(0, 550, 150, 25);
-				g.fillRect(0, 610, 150, 25);
-
-				g.setColor(Color.white);
-				g.drawString("Load Town", 25, 555);
-				g.drawString("Load Battle",25, 615);
-			}
-
-			g.setColor(Color.darkGray);
-			g.fillRect(0, 580, 150, 25);
-
-			g.setColor(Color.white);
-			g.drawString("Load Cin", 25, 585);
-		}
+		loadTownButton.render(g);
+		loadBattleButton.render(g);
+		loadCinButton.render(g);
 
 		g.drawString(version, container.getWidth() / 2, container.getHeight() - 30);
 		g.drawString("F1 - Toggle Main/Dev Menu", container.getWidth() - 250, container.getHeight() - 150);
@@ -138,7 +129,7 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 		
 		if (container.getInput().isKeyPressed(Input.KEY_F1))
 		{
-			((LoadingState) game.getState(CommRPG.STATE_GAME_LOADING)).setLoadingInfo("/menu/MainMenu", null, false, true,
+			((LoadingState) game.getState(CommRPG.STATE_GAME_LOADING)).setLoadingInfo("/menu/MainMenu", false, true,
 					new FCResourceManager(),
 						(LoadableGameState) game.getState(CommRPG.STATE_GAME_MENU),
 							new FCLoadingRenderSystem(container));
@@ -169,7 +160,7 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 		{
 			CommRPG.TEST_MODE_ENABLED = true;
 			this.gameSetup(game, container);
-			start(LoadTypeEnum.CINEMATIC, "neweriumcastle", "neweriumcastle", null);
+			start(LoadTypeEnum.CINEMATIC, "neweriumcastle", null);
 		}
 
 		if (container.getInput().isKeyDown(Input.KEY_F7))
@@ -185,10 +176,7 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 			LoadTypeEnum loadType = LoadTypeEnum.TOWN;
 			if (persistentStateInfo.getClientProgress().isBattle())
 				loadType = LoadTypeEnum.BATTLE;
-			start(loadType,
-					persistentStateInfo.getClientProgress().getMap(),
-					persistentStateInfo.getClientProgress().getMapData(), 
-					null);
+			start(loadType, persistentStateInfo.getClientProgress().getMapData(), null);
 		}
 		
 		if (container.getInput().isKeyDown(Input.KEY_F9))
@@ -197,41 +185,38 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 			CommRPG.BATTLE_MODE_OPTIMIZE = true;
 			if (textSelector.getSelectedResource() != null && 
 					entranceSelector.getSelectedResource() != null)
-				start(LoadTypeEnum.BATTLE, currentMap, textSelector.getSelectedResource(), 
+				start(LoadTypeEnum.BATTLE, textSelector.getSelectedResource(), 
 						entranceSelector.getSelectedResource());
 		}
+		
+		int x = container.getInput().getMouseX();
+		int y = container.getInput().getMouseY();
 
+		loadTownButton.handleUserInput(x, y, false);
+		loadCinButton.handleUserInput(x, y, false);
+		loadBattleButton.handleUserInput(x, y, false);
+		
 		if (updateDelta > 0)
 			updateDelta = Math.max(0, updateDelta - delta);
 		else if (container.getInput().isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))
 		{
 			this.updateDelta = 200;
-
-			int x = container.getInput().getMouseX();
-			int y = container.getInput().getMouseY();
-
-			if (((y < 15 && x < 15) || (y > 550 && y < 635)) &&
-				textSelector.getSelectedResource() != null)
-			{
-				LoadTypeEnum action = LoadTypeEnum.values()[(y - 550) / 30];
-				if (y < 15)
-					action = LoadTypeEnum.TOWN;
-
-				String entrance = null;
-
-				if (entranceSelector != null)
-				{
-					entrance = entranceSelector.getSelectedResource();
-				}
-				CommRPG.TEST_MODE_ENABLED = false;
-				start(action, currentMap, textSelector.getSelectedResource(), entrance);
-			}
+			
+			if (loadTownButton.handleUserInput(x, y, true))
+				start(LoadTypeEnum.TOWN, textSelector.getSelectedResource(), entranceSelector.getSelectedResource());
+			if (loadCinButton.handleUserInput(x, y, true))
+				start(LoadTypeEnum.CINEMATIC, textSelector.getSelectedResource(), null);
+			if (loadBattleButton.handleUserInput(x, y, true)) 
+				start(LoadTypeEnum.BATTLE, textSelector.getSelectedResource(), entranceSelector.getSelectedResource());
 		}
 		
 		textSelector.update(container, delta);
 
-		if (entranceSelector != null)
+		if (entranceSelector != null) {
 			entranceSelector.update(container, delta);
+			loadTownButton.setEnabled(entranceSelector.getSelectedResource() != null);
+			loadBattleButton.setEnabled(entranceSelector.getSelectedResource() != null);
+		}
 
 		if (initialized && ps != null)
 		{
@@ -286,6 +271,7 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 					entrances.add(mo.getParam("exit"));
 
 			entranceSelector = new ListUI("Select Entrance", (((PaddedGameContainer) gc).getPaddedWidth() - 150) / 2, entrances);
+			loadCinButton.setEnabled(true);
 			return true;
 
 		} catch (Throwable t) {
@@ -293,6 +279,8 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 			JOptionPane.showMessageDialog(null, "The selected map " + currentMap + " contains errors and may not be loaded: " + t.getMessage());
 			entranceSelector = null;
 		}
+		
+		loadCinButton.setEnabled(false);
 		return false;
 	}
 }

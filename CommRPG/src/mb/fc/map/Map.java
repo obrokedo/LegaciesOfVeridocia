@@ -46,6 +46,7 @@ public class Map
 	 * A list of 2 dimensional int arrays, where each entry contains the tile indexs for each tile on that layer.
 	 * A value of 0 in any given layer means that no tile was selected at this location.
 	 */
+	private String name;
 	private ArrayList<MapLayer> mapLayer = new ArrayList<>();
 	private MapLayer moveableLayer;
 	protected int tileWidth, tileHeight;
@@ -85,7 +86,7 @@ public class Map
 		overriddenTerrain.clear();
 		roofsById.clear();
 		roofCount = -1;
-		backgroundImageIndex = 0;
+		backgroundImageIndex = -1;
 	}
 	
 	public void initializeObjects(boolean isCombat, StateInfo stateInfo)
@@ -330,6 +331,16 @@ public class Map
 			return 0;
 		}
 	}
+	
+	public String getTerrainTypeByTile(int tileX, int tileY) {
+		TerrainTypeIndicator tti = new TerrainTypeIndicator(tileX, tileY);
+		if (overriddenTerrain.containsKey(tti))
+		{
+			return overriddenTerrain.get(tti);
+		} else {
+			return null;
+		}
+	}
 
 	public boolean isInBattleRegion(int mapX, int mapY)
 	{
@@ -476,6 +487,10 @@ public class Map
 	{
 		tileRatio = DESIRED_TILE_WIDTH / origTileWidth;
 	}
+	
+	public boolean isCustomBackground() {
+		return -1 != backgroundImageIndex;
+	}
 
 	public int getBackgroundImageIndex() {
 		return backgroundImageIndex;
@@ -603,5 +618,13 @@ public class Map
 				layer.update(delta);
 			}
 		}
+	}
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }

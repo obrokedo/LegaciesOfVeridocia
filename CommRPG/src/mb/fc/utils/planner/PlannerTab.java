@@ -83,6 +83,7 @@ public class PlannerTab implements ActionListener, TreeSelectionListener
 			removeContainer(plannerTree.getSelectedIndex());
 		} else if (command.equalsIgnoreCase("save")) {
 			commitChanges();
+			plannerFrame.updateErrorList(PlannerReference.getBadReferences(plannerFrame.getDataInputTabs(), PlannerFrame.referenceListByReferenceType));
 		}
 	}
 
@@ -117,10 +118,8 @@ public class PlannerTab implements ActionListener, TreeSelectionListener
 		// Update the "list of lists" that contain the name of every item definied so that they
 		// may be refered to by REFER tags
 		pcd.getDataLines().add(new PlannerReference(newName));
-		System.out.println("DUP ELEMENT");
 		plannerTree.addItem(newName, listPC.size() - 1);
 		plannerTree.refreshItem(dupPC, listPC.size() - 1);
-		System.out.println("AFTER DUP ELEMENT");
 	}
 
 	public void removeContainer(int index)
@@ -132,6 +131,7 @@ public class PlannerTab implements ActionListener, TreeSelectionListener
 			return;
 		plannerTree.removeItem(index);
 		PlannerReference.removeReferences(refersTo, index);
+		plannerFrame.updateErrorList(PlannerReference.getBadReferences(plannerFrame.getDataInputTabs(), PlannerFrame.referenceListByReferenceType));
 		uiAspect.remove(currentPCScroll);
 		uiAspect.repaint();
 
@@ -158,6 +158,7 @@ public class PlannerTab implements ActionListener, TreeSelectionListener
 		if (currentPC != null)
 		{
 			currentPC.commitChanges();
+			plannerFrame.updateErrorList(PlannerReference.getBadReferences(plannerFrame.getDataInputTabs(), PlannerFrame.referenceListByReferenceType));
 			// Check to see if the description (name) has been renamed
 			if (!currentPC.getDescription().equalsIgnoreCase(plannerTree.getTreeLabel(selectedPC)))
 			{

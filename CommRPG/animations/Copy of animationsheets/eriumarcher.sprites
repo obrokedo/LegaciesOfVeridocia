@@ -1,0 +1,74 @@
+<img name="eriumarcher.png" w="2688" h="96">
+
+	<definitions>
+
+		<dir name="/">
+
+			<dir name="Unpromoted">
+
+				<spr name="Frame0" x="0" y="0" w="128" h="96"/>
+
+				<spr name="Frame1" x="128" y="0" w="128" h="96"/>
+
+				<spr name="Frame2" x="256" y="0" w="128" h="96"/>
+
+				<spr name="Frame3" x="384" y="0" w="128" h="96"/>
+
+				<spr name="Frame4" x="512" y="0" w="128" h="96"/>
+
+				<spr name="Frame5" x="640" y="0" w="128" h="96"/>
+
+				<spr name="Frame6" x="768" y="0" w="128" h="96"/>
+
+				<spr name="Frame7" x="896" y="0" w="128" h="96"/>
+
+				<spr name="Frame8" x="1024" y="0" w="128" h="96"/>
+
+				<spr name="Frame9" x="1152" y="0" w="128" h="96"/>
+
+				<spr name="Frame10" x="1280" y="0" w="128" h="96"/>
+
+				<spr name="Frame11" x="1408" y="0" w="128" h="96"/>
+
+				<spr name="Frame12" x="1536" y="0" w="128" h="96"/>
+
+				<spr name="Frame13" x="1664" y="0" w="128" h="96"/>
+
+				<spr name="Frame14" x="1792" y="0" w="128" h="96"/>
+
+				<spr name="Frame15" x="1920" y="0" w="128" h="96"/>
+
+				<spr name="Frame16" x="2048" y="0" w="128" h="96"/>
+
+				<spr name="Frame17" x="2176" y="0" w="128" h="96"/>
+
+				<spr name="Frame18" x="2304" y="0" w="128" h="96"/>
+
+				<spr name="Frame19" x="2432" y="0" w="128" h="96"/>
+
+				<spr name="Frame20" x="2560" y="0" w="128" h="96"/>
+
+				<spr name="Walk0" x="2688" y="0" w="24" h="24"/>
+
+				<spr name="Walk1" x="2712" y="0" w="24" h="24"/>
+
+				<spr name="Walk2" x="2736" y="0" w="24" h="24"/>
+
+				<spr name="Walk6" x="2832" y="0" w="24" h="24"/>
+
+				<spr name="Walk3" x="2760" y="0" w="24" h="24"/>
+
+				<spr name="Walk7" x="2856" y="0" w="24" h="24"/>
+
+				<spr name="Walk4" x="2784" y="0" w="24" h="24"/>
+
+				<spr name="Walk5" x="2808" y="0" w="24" h="24"/>
+
+			</dir>
+
+		</dir>
+
+	</definitions>
+
+</img>
+

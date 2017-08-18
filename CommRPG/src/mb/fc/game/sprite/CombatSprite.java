@@ -328,7 +328,7 @@ public class CombatSprite extends AnimatedSprite
 			super.setLocX(-1);
 			super.setLocY(-1);
 		}
-		
+	
 		// addBattleEffect(GlobalPythonFactory.createJBattleEffect("Burn", 1));
 	}
 

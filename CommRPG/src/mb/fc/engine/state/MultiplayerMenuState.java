@@ -292,7 +292,7 @@ public class MultiplayerMenuState extends MenuState implements PacketHandler, St
 			case START_GAME:
 				persistentStateInfo.setClient(this.client);
 				persistentStateInfo.setServer(server);
-				this.start(LoadTypeEnum.TOWN, "eriumcastle", "eriumcastle", "north");
+				this.start(LoadTypeEnum.TOWN, "eriumcastle", "north");
 				break;
 			case PLAYER_LIST:
 				this.players.clear();

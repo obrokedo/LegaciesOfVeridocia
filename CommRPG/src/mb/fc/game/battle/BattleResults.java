@@ -3,6 +3,8 @@ package mb.fc.game.battle;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import org.newdawn.slick.util.Log;
+
 import mb.fc.engine.CommRPG;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.battle.command.BattleCommand;
@@ -14,8 +16,6 @@ import mb.jython.GlobalPythonFactory;
 import mb.jython.JBattleEffect;
 import mb.jython.JBattleFunctions;
 import mb.jython.JSpell;
-
-import org.newdawn.slick.util.Log;
 
 public class BattleResults implements Serializable
 {
@@ -131,254 +131,43 @@ public class BattleResults implements Serializable
 		{
 			CombatSprite target = targets.get(targetIndex);
 
-			String text = null;
+			CommandResult commandResult = new CommandResult();
 
 			// If we are doing a simple attack command then we need to get the dodge chance and calculate damage dealt
 			if (battleCommand.getCommand() == BattleCommand.COMMAND_ATTACK)
 			{
-				int damage = 0;
-				int sumDamage = 0;
-
-				// Normal Attack
-				text = addAttack(attacker, target, br, stateInfo, jBattleFunctions, false);
-				damage = br.hpDamage.get(0);
-				sumDamage = damage;
-				br.remainingHP.add(target.getCurrentHP() + damage);
-
-				if (attacker.isHero())
-				{
-					if (damage == 0)
-						expGained += 1;
-				}
-
-				// Check to see if the target is dead, if so then there is nothing additional to do
-				if (br.remainingHP.get(0) > 0)
-				{
-					int distanceApart = Math.abs(attacker.getTileX() - target.getTileX()) + Math.abs(attacker.getTileY() - target.getTileY());
-					// Counter Attack
-					if (distanceApart == 1 && target.getAttackRange().isInDistance(1) &&
-							jBattleFunctions.getCounterPercent(attacker, target) >= CommRPG.RANDOM.nextInt(100))
-					{
-						br.text.add(text);
-						text = addAttack(target, attacker, br, stateInfo, jBattleFunctions, true);
-						damage = br.hpDamage.get(1);
-
-						// Add the attackers remaining HP
-						br.remainingHP.add(attacker.getCurrentHP() + damage);
-						if (br.remainingHP.get(br.remainingHP.size() - 1) <= 0)
-						{
-							br.death = true;
-							br.attackerDeath = true;
-						}
-
-						if (target.isHero())
-						{
-							if (damage != 0)
-								expGained += getExperienceByDamage(damage, target, attacker);
-							else
-								expGained += 1;
-						}
-						else if (br.attackerDeath)
-						{
-							expGained = 0;
-						}
-
-						br.countered = true;
-					}
-
-					// Check to make sure the attacker is still alive
-					if (br.remainingHP.size() == 1 || br.remainingHP.get(1) > 0)
-					{
-						// Double Attack
-						if (jBattleFunctions.getDoublePercent(attacker, target) >= CommRPG.RANDOM.nextInt(100))
-						{
-							br.text.add(text);
-							text = addAttack(attacker, target, br, stateInfo, jBattleFunctions, false);
-							damage = br.hpDamage.get(br.hpDamage.size() - 1);
-							sumDamage += damage;
-
-							if (damage == 0)
-								expGained += 1;
-							
-							// Add the targets remaining HP
-							br.remainingHP.add(br.remainingHP.get(0) + damage);
-							if (br.remainingHP.get(br.remainingHP.size() - 1) <= 0)
-								br.death = true;
-
-							br.doubleAttack = true;
-						}
-					}
-				}
-				
-				if (attacker.isHero() && sumDamage != 0)
-				{
-					expGained += getExperienceByDamage(sumDamage, attacker, target);
-				}
-				else if (br.attackerDeath)
-					expGained = 0;
+				handleAttackAction(attacker, stateInfo, jBattleFunctions, br, target, commandResult);
 			}
 			// Check to see if the battle command indicates a spell is being used
 			else if (spell != null)
 			{
-				int damage = 0;
-
-				if (spell.getDamage() != null)
-				{
-					damage = spell.getEffectiveDamage(attacker, target, spellLevel);
-					br.hpDamage.add(damage);
-					br.remainingHP.add(target.getCurrentHP() + damage);
-				}
-				else
-				{
-					br.hpDamage.add(0);
-					br.remainingHP.add(target.getCurrentHP());
-				}
-
-				if (spell.getMpDamage() != null)
-					br.mpDamage.add(spell.getMpDamage()[spellLevel]);
-				else
-					br.mpDamage.add(0);
-
-				ArrayList<JBattleEffect> appliedEffects = new ArrayList<>();
-				
-				// This spell will NOT kill the target so effects should still be applied
-				if (target.getCurrentHP() + damage > 0)
-				{
-					// Check to see if a battle effect should be applied via this spell
-					JBattleEffect[] effs = null;
-					if ((effs = spell.getEffects(spellLevel)) != null)
-					{
-						for (JBattleEffect eff : effs)
-						{
-							if (eff.isEffected(target))
-							{
-								Log.debug(target.getName() + " was affected by " + eff.getBattleEffectId());
-								appliedEffects.add(eff);
-							}
-						}
-					}
-				}
-
-				br.targetEffects.add(appliedEffects);
-
-				br.attackerHPDamage.add(0);
-				if (index == 0)
-					br.attackerMPDamage.add(-1 * spell.getCosts()[spellLevel]);
-				else
-					br.attackerMPDamage.add(0);
-
-				text = spell.getBattleText(target, damage, br.mpDamage.get(br.mpDamage.size() - 1),
-						br.attackerHPDamage.get(br.attackerHPDamage.size() - 1),
-						br.attackerMPDamage.get(br.attackerMPDamage.size() - 1));
-
-				// br.targetEffects.get(br.targetEffects.size() - 1)
-
-				// If a battle effect was applied then append that to the battle text
-				for (JBattleEffect eff : appliedEffects) {
-					String effectText = eff.effectStartedText(attacker, target);
-					if (effectText != null)
-					{
-						if (text.length() > 0)
-							text = text + "} " + effectText;
-						else
-							text = text + " " + effectText;
-					}
-
-				}
-				int exp = spell.getExpGained(spellLevel, attacker, target);
-
-				if (attacker.isHero())
-					expGained += exp;
-				br.critted.add(false);
-				br.dodged.add(false);
-				text = text + TextSpecialCharacters.CHAR_SOFT_STOP;
+				handleSpellAction(attacker, br, spell, spellLevel, index, target, commandResult);
 			}
 			else if (itemUse != null)
 			{
-				text = itemUse.getBattleText(target.getName());
-
-				int damage = 0;
-				if (itemUse.getDamage() != 0)
-				{
-					damage = itemUse.getDamage();
-					br.hpDamage.add(damage);
-					br.remainingHP.add(target.getCurrentHP() + damage);
-				}
-				else
-				{
-					br.hpDamage.add(0);
-					br.remainingHP.add(target.getCurrentHP());
-				}
-
-				if (itemUse.getMpDamage() != 0)
-					br.mpDamage.add(itemUse.getMpDamage());
-				else
-					br.mpDamage.add(0);
-
-				ArrayList<JBattleEffect> appliedEffects = new ArrayList<>();
-
-				JBattleEffect eff = null;
-				if ((eff = itemUse.getEffects()) != null && eff.isEffected(target))
-				{
-					appliedEffects.add(eff);
-					Log.debug(target.getName() + " was affected by " + eff.getBattleEffectId());
-				}
-
-				br.targetEffects.add(appliedEffects);
-
-				for (JBattleEffect effect : appliedEffects)
-				{
-					String effectText = eff.effectStartedText(attacker, target);
-					if (effectText != null)
-						text = text + " " + effectText;
-				}
-
-				text += TextSpecialCharacters.CHAR_SOFT_STOP;
-
-				br.attackerHPDamage.add(0);
-				br.attackerMPDamage.add(0);
-
-				int exp = itemUse.getExpGained();
-
-				if (attacker.isHero())
-					expGained += exp;
-
-				br.critted.add(false);
-				br.dodged.add(false);
+				handleItemAction(attacker, br, itemUse, target, commandResult);
 			}
-
+			
+			expGained += commandResult.expGained;
+			String text = commandResult.text;
+			
+			// Check to see if the target will die, if so peel off the special characters at the end
+			// and add the combatant death text
 			if (target.getCurrentHP() + br.hpDamage.get(index) <= 0 ||
 					(br.battleCommand.getCommand() == BattleCommand.COMMAND_ATTACK && br.death && !br.attackerDeath))
 			{
-				br.death = true;
-				int idx = text.lastIndexOf(TextSpecialCharacters.CHAR_SOFT_STOP);
-				if (idx != -1)
-					text = text.substring(0, idx);
-
-				idx = text.lastIndexOf(TextSpecialCharacters.CHAR_HARD_STOP);
-				if (idx != -1)
-					text = text.substring(0, idx);
-
-				text = text.replaceAll(TextSpecialCharacters.CHAR_SOFT_STOP, "");
-				text = text + " " +jBattleFunctions.getCombatantDeathText(attacker, target);
+				text = addCombatantDeathText(attacker, target, text, br, jBattleFunctions);
 			}
+			// Check to see if the target will die, if so peel off the special characters at the end
+			// and add the combatant death text
 			else if (br.attackerDeath)
 			{
-				int idx = text.lastIndexOf(TextSpecialCharacters.CHAR_SOFT_STOP);
-				if (idx != -1)
-					text = text.substring(0, idx);
-
-				idx = text.lastIndexOf(TextSpecialCharacters.CHAR_HARD_STOP);
-				if (idx != -1)
-					text = text.substring(0, idx);
-
-				text = text.replaceAll(TextSpecialCharacters.CHAR_SOFT_STOP, "");
-				text = text + " " + jBattleFunctions.getCombatantDeathText(target, attacker);
+				text = addCombatantDeathText(target, attacker, text, br, jBattleFunctions);
 			}
 			br.text.add(text);
 			index++;
 		}
-
+		
 		// The maximum exp you can ever get is 49
 		expGained = Math.min(49, expGained);
 
@@ -386,6 +175,13 @@ public class BattleResults implements Serializable
 		if (CommRPG.BATTLE_MODE_OPTIMIZE)
 			expGained = 0;
 		
+		indicateGainedExp(attacker, targets, expGained, br, stateInfo);
+
+		return br;
+	}
+
+	private static void indicateGainedExp(CombatSprite attacker, ArrayList<CombatSprite> targets, int expGained,
+			BattleResults br, StateInfo stateInfo) {
 		if (attacker.isHero())
 		{
 			if (!br.attackerDeath)
@@ -412,8 +208,249 @@ public class BattleResults implements Serializable
 				br.attackOverText += br.levelUpResult.text;
 			}
 		}
+	}
 
-		return br;
+	private static String addCombatantDeathText(CombatSprite killer, CombatSprite target,
+			String text, BattleResults br, JBattleFunctions jBattleFunctions) {
+		br.death = true;
+		int idx = text.lastIndexOf(TextSpecialCharacters.CHAR_SOFT_STOP);
+		if (idx != -1)
+			text = text.substring(0, idx);
+
+		idx = text.lastIndexOf(TextSpecialCharacters.CHAR_HARD_STOP);
+		if (idx != -1)
+			text = text.substring(0, idx);
+
+		text = text.replaceAll(TextSpecialCharacters.CHAR_SOFT_STOP, "");
+		text = text + " " +jBattleFunctions.getCombatantDeathText(killer, target);
+		return text;
+	}
+
+	private static void handleItemAction(CombatSprite attacker, BattleResults br, ItemUse itemUse, CombatSprite target,
+			CommandResult commandResult) {
+		String text;
+		int expGained = 0;
+		text = itemUse.getBattleText(target.getName());
+
+		int damage = 0;
+		if (itemUse.getDamage() != 0)
+		{
+			damage = itemUse.getDamage();
+			br.hpDamage.add(damage);
+			br.remainingHP.add(target.getCurrentHP() + damage);
+		}
+		else
+		{
+			br.hpDamage.add(0);
+			br.remainingHP.add(target.getCurrentHP());
+		}
+
+		if (itemUse.getMpDamage() != 0)
+			br.mpDamage.add(itemUse.getMpDamage());
+		else
+			br.mpDamage.add(0);
+
+		ArrayList<JBattleEffect> appliedEffects = new ArrayList<>();
+
+		JBattleEffect eff = null;
+		if ((eff = itemUse.getEffects()) != null && eff.isEffected(target))
+		{
+			appliedEffects.add(eff);
+			Log.debug(target.getName() + " was affected by " + eff.getBattleEffectId());
+		}
+
+		br.targetEffects.add(appliedEffects);
+
+		for (JBattleEffect effect : appliedEffects)
+		{
+			String effectText = effect.effectStartedText(attacker, target);
+			if (effectText != null)
+				text = text + " " + effectText;
+		}
+
+		text += TextSpecialCharacters.CHAR_SOFT_STOP;
+
+		br.attackerHPDamage.add(0);
+		br.attackerMPDamage.add(0);
+
+		int exp = itemUse.getExpGained();
+
+		if (attacker.isHero())
+			expGained += exp;
+
+		br.critted.add(false);
+		br.dodged.add(false);
+		commandResult.expGained = expGained;
+		commandResult.text = text;
+	}
+
+	private static void handleSpellAction(CombatSprite attacker, BattleResults br, JSpell spell, int spellLevel,
+			int index, CombatSprite target, CommandResult commandResult) {
+		int damage = 0;
+		String text;
+		int expGained = 0;
+
+		if (spell.getDamage() != null)
+		{
+			damage = spell.getEffectiveDamage(attacker, target, spellLevel);
+			br.hpDamage.add(damage);
+			br.remainingHP.add(target.getCurrentHP() + damage);
+		}
+		else
+		{
+			br.hpDamage.add(0);
+			br.remainingHP.add(target.getCurrentHP());
+		}
+
+		if (spell.getMpDamage() != null)
+			br.mpDamage.add(spell.getMpDamage()[spellLevel]);
+		else
+			br.mpDamage.add(0);
+
+		ArrayList<JBattleEffect> appliedEffects = new ArrayList<>();
+		
+		// This spell will NOT kill the target so effects should still be applied
+		if (target.getCurrentHP() + damage > 0)
+		{
+			// Check to see if a battle effect should be applied via this spell
+			JBattleEffect[] effs = null;
+			if ((effs = spell.getEffects(spellLevel)) != null)
+			{
+				for (JBattleEffect eff : effs)
+				{
+					if (eff.isEffected(target))
+					{
+						Log.debug(target.getName() + " was affected by " + eff.getBattleEffectId());
+						appliedEffects.add(eff);
+					}
+				}
+			}
+		}
+
+		br.targetEffects.add(appliedEffects);
+
+		br.attackerHPDamage.add(0);
+		if (index == 0)
+			br.attackerMPDamage.add(-1 * spell.getCosts()[spellLevel]);
+		else
+			br.attackerMPDamage.add(0);
+
+		text = spell.getBattleText(target, damage, br.mpDamage.get(br.mpDamage.size() - 1),
+				br.attackerHPDamage.get(br.attackerHPDamage.size() - 1),
+				br.attackerMPDamage.get(br.attackerMPDamage.size() - 1));
+
+		// br.targetEffects.get(br.targetEffects.size() - 1)
+
+		// If a battle effect was applied then append that to the battle text
+		for (JBattleEffect eff : appliedEffects) {
+			String effectText = eff.effectStartedText(attacker, target);
+			if (effectText != null)
+			{
+				if (text.length() > 0)
+					text = text + "} " + effectText;
+				else
+					text = text + " " + effectText;
+			}
+
+		}
+		int exp = spell.getExpGained(spellLevel, attacker, target);
+
+		if (attacker.isHero())
+			expGained += exp;
+		br.critted.add(false);
+		br.dodged.add(false);
+		text = text + TextSpecialCharacters.CHAR_SOFT_STOP;
+		commandResult.expGained = expGained;
+		commandResult.text = text;
+	}
+
+	private static void handleAttackAction(CombatSprite attacker, StateInfo stateInfo,
+			JBattleFunctions jBattleFunctions, BattleResults br, CombatSprite target, CommandResult commandResult) {
+		int damage = 0;
+		int sumDamage = 0;
+		String text;
+		int expGained = 0;
+
+		// Normal Attack
+		text = addAttack(attacker, target, br, stateInfo, jBattleFunctions, false);
+		damage = br.hpDamage.get(0);
+		sumDamage = damage;
+		br.remainingHP.add(target.getCurrentHP() + damage);
+
+		if (attacker.isHero())
+		{
+			if (damage == 0)
+				expGained += 1;
+		}
+
+		// Check to see if the target is dead, if so then there is nothing additional to do
+		if (br.remainingHP.get(0) > 0)
+		{
+			int distanceApart = Math.abs(attacker.getTileX() - target.getTileX()) + Math.abs(attacker.getTileY() - target.getTileY());
+			// Counter Attack
+			if (distanceApart == 1 && target.getAttackRange().isInDistance(1) &&
+					jBattleFunctions.getCounterPercent(attacker, target) >= CommRPG.RANDOM.nextInt(100))
+			{
+				br.text.add(text);
+				text = addAttack(target, attacker, br, stateInfo, jBattleFunctions, true);
+				damage = br.hpDamage.get(1);
+
+				// Add the attackers remaining HP
+				br.remainingHP.add(attacker.getCurrentHP() + damage);
+				if (br.remainingHP.get(br.remainingHP.size() - 1) <= 0)
+				{
+					br.death = true;
+					br.attackerDeath = true;
+				}
+
+				if (target.isHero())
+				{
+					if (damage != 0)
+						expGained += getExperienceByDamage(damage, target, attacker);
+					else
+						expGained += 1;
+				}
+				else if (br.attackerDeath)
+				{
+					expGained = 0;
+				}
+
+				br.countered = true;
+			}
+
+			// Check to make sure the attacker is still alive
+			if (br.remainingHP.size() == 1 || br.remainingHP.get(1) > 0)
+			{
+				// Double Attack
+				if (jBattleFunctions.getDoublePercent(attacker, target) >= CommRPG.RANDOM.nextInt(100))
+				{
+					br.text.add(text);
+					text = addAttack(attacker, target, br, stateInfo, jBattleFunctions, false);
+					damage = br.hpDamage.get(br.hpDamage.size() - 1);
+					sumDamage += damage;
+
+					if (damage == 0)
+						expGained += 1;
+					
+					// Add the targets remaining HP
+					br.remainingHP.add(br.remainingHP.get(0) + damage);
+					if (br.remainingHP.get(br.remainingHP.size() - 1) <= 0)
+						br.death = true;
+
+					br.doubleAttack = true;
+				}
+			}
+		}
+		
+		if (attacker.isHero() && sumDamage != 0)
+		{
+			expGained += getExperienceByDamage(sumDamage, attacker, target);
+		}
+		else if (br.attackerDeath)
+			expGained = 0;
+		
+		commandResult.expGained = expGained;
+		commandResult.text = text;
 	}
 
 	private static String addAttack(CombatSprite attacker, CombatSprite target, BattleResults br,
@@ -573,5 +610,10 @@ public class BattleResults implements Serializable
 	public void initialize(StateInfo stateInfo)
 	{
 		battleCommand.initializeSpell(stateInfo);
+	}
+	
+	protected static class CommandResult {
+		String text;
+		int expGained;
 	}
 }

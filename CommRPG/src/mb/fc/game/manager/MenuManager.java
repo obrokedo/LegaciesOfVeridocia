@@ -1,5 +1,7 @@
 package mb.fc.game.manager;
 
+import java.util.ArrayList;
+
 import mb.fc.engine.message.Message;
 import mb.fc.engine.message.MessageType;
 import mb.fc.engine.message.ShopMessage;
@@ -10,12 +12,15 @@ import mb.fc.game.menu.HeroStatMenu;
 import mb.fc.game.menu.HeroesStatMenu;
 import mb.fc.game.menu.Menu;
 import mb.fc.game.menu.Menu.MenuUpdate;
+import mb.fc.game.menu.MultiHeroJoinMenu;
 import mb.fc.game.menu.PriestMenu2;
 import mb.fc.game.menu.SpeechMenu;
 import mb.fc.game.menu.SystemMenu;
 import mb.fc.game.menu.shop.HeroesSellMenu;
 import mb.fc.game.menu.shop.ShopMenuTabled;
 import mb.fc.game.menu.shop.ShopOptionsMenu;
+import mb.fc.game.resource.HeroResource;
+import mb.fc.game.sprite.CombatSprite;
 
 public class MenuManager extends Manager
 {
@@ -39,6 +44,10 @@ public class MenuManager extends Manager
 
 		if (stateInfo.areMenusDisplayed() && System.currentTimeMillis() > stateInfo.getInputDelay())
 			handleMenuUpdate(stateInfo.getTopMenu().handleUserInput(stateInfo.getInput(), stateInfo));
+		else {
+			System.out.println("WAITING");
+			stateInfo.getInput().clear();
+		}
 	}
 
 	private void handleMenuUpdate(MenuUpdate menuUpdate)
@@ -111,6 +120,12 @@ public class MenuManager extends Manager
 				break;
 			case SHOW_PRIEST:
 				stateInfo.addMenu(new PriestMenu2(stateInfo, stateInfo.getFCGameContainer(), stateInfo.getAllHeroes()));
+				break;
+			case SHOW_PANEL_MULTI_JOIN_CHOOSE:
+				ArrayList<CombatSprite> heroesToChooseList = new ArrayList<>();
+				((SpriteContextMessage) message).getSpriteIds().forEach(id -> heroesToChooseList.add(HeroResource.getHero(id)));
+				heroesToChooseList.forEach(cs -> { cs.initializeSprite(stateInfo); cs.initializeStats(); });
+				stateInfo.addMenu(new MultiHeroJoinMenu(heroesToChooseList, stateInfo));
 				break;
 			case SHOW_DEBUG:
 				if (DEBUG_MENU == null)

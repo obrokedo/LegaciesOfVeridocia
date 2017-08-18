@@ -227,7 +227,7 @@ public class ShopMenuTabled extends Menu implements MenuListener
 	}
 
 	@Override
-	public boolean valueSelected(StateInfo stateInfo, Object value) {
+	public void valueSelected(StateInfo stateInfo, Object value) {
 		hasFocus = true;
 		EquippableItem equipped;
 		switch (currentStep)
@@ -338,7 +338,6 @@ public class ShopMenuTabled extends Menu implements MenuListener
 				}
 				break;
 		}
-		return false;
 	}
 
 	@Override

@@ -324,8 +324,8 @@ public class HeroesStatMenu extends Menu implements MenuListener
 	}
 
 	@Override
-	public boolean valueSelected(StateInfo stateInfo, Object value) {
-		return false;
+	public void valueSelected(StateInfo stateInfo, Object value) {
+
 	}
 
 	@Override
@@ -337,6 +337,4 @@ public class HeroesStatMenu extends Menu implements MenuListener
 	public boolean displayWhenNotTop() {
 		return false;
 	}
-
-
 }

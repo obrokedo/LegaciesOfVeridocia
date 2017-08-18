@@ -292,7 +292,7 @@ public class SpriteManager extends Manager
 			this.battleOptimizer.wonBattle();
 		else
 			this.battleOptimizer.lostBattle();
-		stateInfo.getPersistentStateInfo().loadBattle(stateInfo.getClientProgress().getMapData(), stateInfo.getClientProgress().getMap(), 
+		stateInfo.getPersistentStateInfo().loadBattle(stateInfo.getClientProgress().getMapData(), 
 				stateInfo.getPersistentStateInfo().getEntranceLocation(), 0);
 	}
 	

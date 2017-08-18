@@ -15,6 +15,7 @@ import mb.fc.game.text.Speech;
 import mb.fc.game.trigger.Conditional;
 import mb.fc.game.trigger.Trigger;
 import mb.fc.game.trigger.TriggerCondition;
+import mb.fc.game.trigger.TriggerCondition.EnemyInBattle;
 import mb.fc.game.trigger.TriggerCondition.HeroEntersLocation;
 import mb.fc.game.trigger.TriggerCondition.HeroInBattle;
 import mb.fc.game.trigger.TriggerCondition.LocationContainsUnits;
@@ -26,7 +27,7 @@ import mb.fc.utils.XMLParser.TagArea;
 
 public class TextParser
 {
-	public void parseText(String file, Hashtable<Integer, ArrayList<Speech>> speechesById,
+	public String parseText(String file, Hashtable<Integer, ArrayList<Speech>> speechesById,
 			Hashtable<Integer, Trigger> triggerEventById, Hashtable<Integer, Cinematic> cinematicById,
 			HashSet<TriggerCondition> conditions, FCResourceManager frm) throws IOException, SlickException
 	{
@@ -35,6 +36,8 @@ public class TextParser
 		HashSet<String> musicToLoad = new HashSet<String>();
 		HashSet<String> spriteToLoad = new HashSet<String>();
 
+		String mapName = null;
+		
 		ArrayList<TagArea> tagAreas = XMLParser.process(file);
 		for (TagArea tagArea : tagAreas)
 		{
@@ -142,7 +145,7 @@ public class TextParser
 							if (actionParams.containsKey("battbg"))
 								battleBackgroundIndex = Integer.parseInt(actionParams.get("battbg"));
 							te.addTriggerable(te.new TriggerStartBattle(actionParams.get("battletriggers"),
-									actionParams.get("battlemap"), actionParams.get("entrance"), battleBackgroundIndex));
+									actionParams.get("entrance"), battleBackgroundIndex));
 						}
 						else if (tagType.equalsIgnoreCase("setbattlecond"))
 						{
@@ -153,7 +156,7 @@ public class TextParser
 						}
 						else if (tagType.equalsIgnoreCase("loadmap"))
 						{
-							te.addTriggerable(te.new TriggerEnter(actionParams.get("map"), actionParams.get("mapdata"), actionParams.get("enter")));
+							te.addTriggerable(te.new TriggerEnter(actionParams.get("mapdata"), actionParams.get("enter")));
 						}
 						else if (tagType.equalsIgnoreCase("showshop"))
 						{
@@ -193,7 +196,7 @@ public class TextParser
 						}
 						else if (tagType.equalsIgnoreCase("loadcin"))
 						{
-							te.addTriggerable(te.new TriggerLoadCinematic(actionParams.get("map"), actionParams.get("mapdata"), Integer.parseInt(actionParams.get("cinid"))));
+							te.addTriggerable(te.new TriggerLoadCinematic(actionParams.get("mapdata"), Integer.parseInt(actionParams.get("cinid"))));
 						}
 						else if (tagType.equalsIgnoreCase("showroof"))
 						{
@@ -288,6 +291,10 @@ public class TextParser
 					{
 						condition.addCondition(new HeroInBattle(ta.getIntAttribute("id")));
 					}
+					else if (ta.getTagType().equalsIgnoreCase("enemyinbat"))
+					{
+						condition.addCondition(new EnemyInBattle(ta.getIntAttribute("id")));
+					}
 					else
 					{
 						Conditional conditional = handleCustomCondition(ta.getTagType(), ta.getParams());
@@ -298,7 +305,13 @@ public class TextParser
 					}
 				}
 				conditions.add(condition);
+			} else if (tagArea.getTagType().equalsIgnoreCase("map")) {
+				mapName = tagArea.getAttribute("file");
 			}
+		}
+		
+		if (mapName == null) {
+			throw new BadResourceException("The selected mapdata does not have a map associated with it. Please assign one via the planner");
 		}
 
 		/*
@@ -311,6 +324,8 @@ public class TextParser
 		for (String resource : soundToLoad)
 			frm.addSoundResource(resource);
 			*/
+		
+		return mapName;
 	}
 	
 	private static int[] parsePositiveMultiInt(String leaderTag, Hashtable<String, String> actionParams)
@@ -414,11 +429,11 @@ public class TextParser
 							(area.getAttribute("enemyportrait") == null ? -1 : Integer.parseInt(area.getAttribute("enemyportrait"))),
 							area.getAttribute("animportrait"));
 		else if (type.equalsIgnoreCase("loadmap"))
-			return new CinematicEvent(CinematicEventType.LOAD_MAP, area.getAttribute("mapdata"), area.getAttribute("map"), area.getAttribute("enter"));
+			return new CinematicEvent(CinematicEventType.LOAD_MAP, area.getAttribute("mapdata"), area.getAttribute("enter"));
 		else if (type.equalsIgnoreCase("loadbattle"))
-			return new CinematicEvent(CinematicEventType.LOAD_BATTLE, area.getAttribute("mapdata"), area.getAttribute("map"), area.getAttribute("entrance"), Integer.parseInt(area.getAttribute("battbg")));
+			return new CinematicEvent(CinematicEventType.LOAD_BATTLE, area.getAttribute("mapdata"), area.getAttribute("entrance"), Integer.parseInt(area.getAttribute("battbg")));
 		else if (type.equalsIgnoreCase("loadcin"))
-			return new CinematicEvent(CinematicEventType.LOAD_CIN, area.getAttribute("mapdata"), area.getAttribute("map"), Integer.parseInt(area.getAttribute("cinid")));
+			return new CinematicEvent(CinematicEventType.LOAD_CIN, area.getAttribute("mapdata"), Integer.parseInt(area.getAttribute("cinid")));
 		else if (type.equalsIgnoreCase("wait"))
 			return new CinematicEvent(CinematicEventType.WAIT, Integer.parseInt(area.getAttribute("time")));
 		else if (type.equalsIgnoreCase("spin"))

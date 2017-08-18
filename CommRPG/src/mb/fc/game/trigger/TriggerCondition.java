@@ -151,6 +151,20 @@ public class TriggerCondition {
 		public boolean conditionIsMet(String locationEntered, boolean immediate, StateInfo stateInfo) {
 			return stateInfo.getCombatantById(id) != null;
 		}
+	}
+	
+	public static class EnemyInBattle implements Conditional
+	{
+		private int unitId;
 		
+		public EnemyInBattle(int id) {
+			super();
+			this.unitId = id;
+		}
+
+		@Override
+		public boolean conditionIsMet(String locationEntered, boolean immediate, StateInfo stateInfo) {
+			return stateInfo.getEnemyCombatSpriteByUnitId(unitId) != null;
+		}
 	}
 }

@@ -35,26 +35,26 @@
   </anim>
   <anim name="UnStand" loops="0">
     <cell index="0" delay="300">
-      <spr name="/Unpromoted/Idle1" x="50" y="-29" z="0"/>
+      <spr name="/Unpromoted/Idle1" x="39" y="-29" z="0"/>
     </cell>
     <cell index="1" delay="300">
-      <spr name="/Unpromoted/Idle2" x="50" y="-29" z="0"/>
+      <spr name="/Unpromoted/Idle2" x="39" y="-29" z="0"/>
     </cell>
   </anim>
   <anim name="UnAttack" loops="0">
     <cell index="0" delay="200">
-      <spr name="/Unpromoted/Charge" x="45" y="-32" z="0"/>
+      <spr name="/Unpromoted/Charge" x="34" y="-32" z="0"/>
     </cell>
     <cell index="1" delay="50">
-      <spr name="/Unpromoted/Hit1" x="61" y="-28" z="0"/>
+      <spr name="/Unpromoted/Hit1" x="50" y="-28" z="0"/>
     </cell>
     <cell index="2" delay="350">
-      <spr name="/Unpromoted/Hit2" x="62" y="-28" z="0"/>
+      <spr name="/Unpromoted/Hit2" x="51" y="-28" z="0"/>
     </cell>
   </anim>
   <anim name="UnDodge" loops="0">
     <cell index="0" delay="300">
-      <spr name="/Unpromoted/Block" x="48" y="-25" z="0"/>
+      <spr name="/Unpromoted/Block" x="37" y="-25" z="0"/>
     </cell>
   </anim>
 </animations>

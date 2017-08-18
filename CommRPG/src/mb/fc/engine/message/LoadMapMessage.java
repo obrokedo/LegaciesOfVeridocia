@@ -9,32 +9,24 @@ package mb.fc.engine.message;
 public class LoadMapMessage extends Message
 {
 	private static final long serialVersionUID = 1L;
-
-	private String map;
 	private String mapData;
 	private String location;
 	private int cinematicID;
 	private int battleBG;
 
-	public LoadMapMessage(MessageType messageType, String map, String mapData, String location, int battleBG)
+	public LoadMapMessage(MessageType messageType, String mapData, String location, int battleBG)
 	{
 		super(messageType);
-		this.map = map;
 		this.mapData = mapData;
 		this.location = location;
 		this.battleBG = battleBG;
 	}
 
-	public LoadMapMessage(MessageType messageType, String map, String mapData, int cinematicID)
+	public LoadMapMessage(MessageType messageType, String mapData, int cinematicID)
 	{
 		super(messageType);
-		this.map = map;
 		this.mapData = mapData;
 		this.cinematicID = cinematicID;
-	}
-
-	public String getMap() {
-		return map;
 	}
 
 	public String getMapData() {

@@ -54,8 +54,45 @@ public class PlannerReference {
 		*/
 	}
 	
+	public static List<String> getBadReferences(List<PlannerTab> tabsWithReferences, ArrayList<ArrayList<PlannerReference>> referenceListByReferenceType) {
+		List<String> badReferences = new ArrayList<>();
+		
+		for (PlannerTab plannerTab : tabsWithReferences) {
+			for (PlannerContainer plannerContainer : plannerTab.getListPC()) {
+				getBadLineReferences(referenceListByReferenceType, badReferences, plannerContainer, plannerContainer.getDefLine());
+				for (PlannerLine pl : plannerContainer.getLines()) {
+					getBadLineReferences(referenceListByReferenceType, badReferences, plannerContainer, pl);
+				}
+			}
+		}
+		
+		return badReferences;
+	}
+		
+	private static void getBadLineReferences(ArrayList<ArrayList<PlannerReference>> referenceListByReferenceType,
+			List<String> badReferences, PlannerContainer plannerContainer, PlannerLine pl) {
+		for (int j = 0; j < pl.getPlDef().getPlannerValues().size() && j < pl.getValues().size(); j++) {
+			PlannerValueDef pvd = pl.getPlDef().getPlannerValues().get(j);
+			
+			if (pvd.getRefersTo() != PlannerValueDef.REFERS_NONE && !pvd.isOptional()) {
+				if (pvd.getValueType() == PlannerValueDef.TYPE_MULTI_INT) {
+					ArrayList<PlannerReference> refs = (ArrayList<PlannerReference>) pl.getValues().get(j);
+					for (PlannerReference ref : refs) {
+						if (ref.getName().equalsIgnoreCase("")) {
+							addBadPlannerReference(badReferences, plannerContainer, pl, j, ref);
+						}
+					}
+				} else {
+					PlannerReference ref = (PlannerReference) pl.getValues().get(j);
+					if (ref.getName().equalsIgnoreCase("")) {
+						addBadPlannerReference(badReferences, plannerContainer, pl, j, ref);
+					}
+				}
+			}
+		}
+	}
 	
-	public static void establishReferences(List<PlannerTab> tabsWithReferences, ArrayList<ArrayList<PlannerReference>> referenceListByReferenceType) {
+	public static List<String> establishReferences(List<PlannerTab> tabsWithReferences, ArrayList<ArrayList<PlannerReference>> referenceListByReferenceType) {
 		List<String> badReferences = new ArrayList<>();
 		
 		for (PlannerTab plannerTab : tabsWithReferences) {
@@ -67,7 +104,8 @@ public class PlannerReference {
 			}
 		}
 		
-		displayBadReferences(badReferences);
+		// displayBadReferences(badReferences);
+		return badReferences;
 	}
 
 	public static void displayBadReferences(List<String> badReferences) {
@@ -117,13 +155,11 @@ public class PlannerReference {
 						pl.getValues().set(j, new PlannerReference(""));
 					} else {
 						if (plannerContainer != null) {
-							badReferences.add(plannerContainer.getDefLine().getPlDef().getName() + " named: " + 
-								plannerContainer.getDefLine().getValues().get(0) + " with attribute " + 
-								pl.getPlDef().getName() + 
-								" has a bad reference to '" + (String) pl.getValues().get(j) + "' on it's " + pl.getPlDef().getPlannerValues().get(j).getDisplayTag() + " value");
+							addBadStringReference(badReferences, plannerContainer, pl, j);
 						} else {
 							badReferences.add("Attribute " + pl.getPlDef().getName() + 
-								" has a bad reference to '" + (String) pl.getValues().get(j) + "' on it's " + pl.getPlDef().getPlannerValues().get(j).getDisplayTag() + " value");
+								" has a bad reference to '" + (String) pl.getValues().get(j) + "' on it's " + 
+								pl.getPlDef().getPlannerValues().get(j).getDisplayTag() + " value");
 						}
 						//badReferences.add(pl.getValues().get(0) + " of type " + plannerContainer.getDefLine().getPlDef().getName() + 
 							//	" has a bad reference to " + (String) pl.getValues().get(j) + " of type " + pvd.getRefersTo());
@@ -139,10 +175,7 @@ public class PlannerReference {
 		if (index < 0 || index >= references.size()) {
 			if (!pvd.isOptional()) {
 				if (plannerContainer != null) {
-					badReferences.add(plannerContainer.getDefLine().getPlDef().getName() + " named: " + 
-						plannerContainer.getDefLine().getValues().get(0) + " with attribute " + 
-						pl.getPlDef().getName() + 
-						" has a bad reference to index " + index + " on it's " + pvd.getDisplayTag() + " value");
+					addBadIntReference(index, badReferences, plannerContainer, pl, pvd);
 				} else {
 					badReferences.add("Attribute " + pl.getPlDef().getName() + 
 						" has a bad reference to index " + index + " on it's " + pvd.getDisplayTag() + " value");
@@ -152,6 +185,32 @@ public class PlannerReference {
 		} else {
 			return references.get(index);
 		}
+	}
+	
+	private static void addBadPlannerReference(List<String> badReferences, PlannerContainer plannerContainer, PlannerLine pl,
+			int j, PlannerReference badRef) {
+		badReferences.add(plannerContainer.getDefLine().getPlDef().getName() + " named: " + 
+			plannerContainer.getDefLine().getValues().get(0) + " with attribute " + 
+			pl.getPlDef().getName() + 
+			" has a bad reference to '" + badRef.getName() + 
+			"' on it's " + pl.getPlDef().getPlannerValues().get(j).getDisplayTag() + " value");
+	}
+	
+	private static void addBadStringReference(List<String> badReferences, PlannerContainer plannerContainer, PlannerLine pl,
+			int j) {
+		badReferences.add(plannerContainer.getDefLine().getPlDef().getName() + " named: " + 
+			plannerContainer.getDefLine().getValues().get(0) + " with attribute " + 
+			pl.getPlDef().getName() + 
+			" has a bad reference to '" + (String) pl.getValues().get(j) + 
+			"' on it's " + pl.getPlDef().getPlannerValues().get(j).getDisplayTag() + " value");
+	}
+
+	private static void addBadIntReference(int index, List<String> badReferences, PlannerContainer plannerContainer,
+			PlannerLine pl, PlannerValueDef pvd) {
+		badReferences.add(plannerContainer.getDefLine().getPlDef().getName() + " named: " + 
+			plannerContainer.getDefLine().getValues().get(0) + " with attribute " + 
+			pl.getPlDef().getName() + 
+			" has a bad reference to index " + index + " on it's " + pvd.getDisplayTag() + " value");
 	}
 	
 	public String getName() {

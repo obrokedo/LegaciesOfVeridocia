@@ -84,12 +84,8 @@ public class LoadingState extends BasicGameState
 						allLines = FCResourceManager.readAllLines("/loader/Default");
 					}
 
-					// Regardless of whether we are loading other resources, add the map and text files
-					// that were specified to be loaded
-					if (!mapName.endsWith(".tmx"))
-						allLines.add(0, "map,map,/map/" + mapName + ".tmx");
-					else
-						allLines.add(0, "map,map,/map/" + mapName);
+					// Regardless of whether we are loading other resources, add the text file
+					// that was specified to be loaded
 					allLines.add(0, "text,/mapdata/" + textName);
 
 				}
@@ -158,7 +154,7 @@ public class LoadingState extends BasicGameState
 
 	}
 
-	public void setLoadingInfo(String textName, String mapName, boolean loadMap, boolean loadResources,
+	public void setLoadingInfo(String textName, boolean loadMap, boolean loadResources,
 			FCResourceManager resourceManager, LoadableGameState nextState,
 				FCLoadingRenderSystem loadingRenderer)
 	{

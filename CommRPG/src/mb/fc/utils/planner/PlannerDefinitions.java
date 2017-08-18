@@ -12,6 +12,7 @@ public class PlannerDefinitions {
 	private static String PATH_ANIMATIONS = "animations/animationsheets";
 	private static String PATH_SPRITE_IMAGE = "sprite";
 	private static String PATH_PALETTE = "palette";
+	private static String PATH_MAPDATA = "mapdata";
 
 	public static void setupDefintions(ArrayList<ArrayList<PlannerReference>> listOfLists,
 			Hashtable<String, PlannerContainerDef> containersByName)
@@ -137,6 +138,12 @@ public class PlannerDefinitions {
 		listOfLists.get(PlannerValueDef.REFERS_OPERATOR - 1).add(new PlannerReference("Greater Than"));
 		listOfLists.get(PlannerValueDef.REFERS_OPERATOR - 1).add(new PlannerReference("Less Than"));
 		listOfLists.get(PlannerValueDef.REFERS_OPERATOR - 1).add(new PlannerReference("Equals"));
+		
+		// Sprite image files
+		File mapDataFiles = new File(PATH_MAPDATA);
+		for (File f : mapDataFiles.listFiles())
+			if (f.isFile() && !f.isHidden())
+				listOfLists.get(PlannerValueDef.REFERS_MAPDATA - 1).add(new PlannerReference(f.getName()));
 	}
 
 	public static void setupCinematicDefinitions(ArrayList<ArrayList<PlannerReference>> listOfLists,
@@ -226,7 +233,7 @@ public class PlannerDefinitions {
 				PlannerValueDef.REFERS_HERO,
 				PlannerValueDef.TYPE_INT,
 				"associatedhero",
-				false,
+				true,
 				"Associated Hero",
 				"The hero that should be used to determine if the unpromoted or promoted version of animations should be used."));
 
@@ -1068,16 +1075,18 @@ public class PlannerDefinitions {
 		definingValues = new ArrayList<PlannerValueDef>();
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
 				PlannerValueDef.TYPE_LONG_STRING, "text", false, "Text",
-				"The text that should be displayed. Using the { character will cause a short pause, the } "
-						+ "character will do a soft stop, the ] chararacter will do a hard stop, the [ character "
-						+ "will do a line break and a | will drive the next cinematic action if this message is being shown in a cinematic."));
+				"The text that should be displayed. Using the &lt;pause&gt; tag will cause a short pause, the &lt;softstop&gt; "
+						+ "tag will do a soft stop (auto continue without user input after a time), the &lt;hardstop&gt; tag will "
+						+ "do a hard stop which requires the player hit a button to continue, the &lt;linebreak&gt; tag "
+						+ "will do a line break (as opposed to letting them happen naturally) and a &lt;nextcin&gt; tag "
+						+ "will drive the next cinematic action if this message is being shown in a cinematic."));
 		definingValues.add(new PlannerValueDef(
 				PlannerValueDef.REFERS_HERO, PlannerValueDef.TYPE_INT,
-				"heroportrait", false, "Hero Portrait",
+				"heroportrait", true, "Hero Portrait",
 				"The hero whose portrait should be shown for this text."));
 		definingValues.add(new PlannerValueDef(
 				PlannerValueDef.REFERS_ENEMY, PlannerValueDef.TYPE_INT,
-				"enemyportrait", false, "Enemy Portrait",
+				"enemyportrait", true, "Enemy Portrait",
 				"The enemy whose portrait should be shown for this text."));
 		definingValues.add(new PlannerValueDef(
 				PlannerValueDef.REFERS_ANIMATIONS, PlannerValueDef.TYPE_STRING,
@@ -1093,18 +1102,10 @@ public class PlannerDefinitions {
 
 		// Load map
 		definingValues = new ArrayList<PlannerValueDef>();
-		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_MAPDATA,
 				PlannerValueDef.TYPE_STRING, "mapdata", false,
-				"Trigger File",
-				"The name of the trigger file that should be loaded for this map"));
-		definingValues
-				.add(new PlannerValueDef(
-						PlannerValueDef.REFERS_NONE,
-						PlannerValueDef.TYPE_STRING,
-						"map",
-						false,
-						"Map",
-						"The name of the map file to be loaded, the associated text file should have the same name"));
+				"Map Data",
+				"The name of the file containing the mapdata that should be loaded for this map"));
 		definingValues
 				.add(new PlannerValueDef(
 						PlannerValueDef.REFERS_NONE,
@@ -1123,15 +1124,10 @@ public class PlannerDefinitions {
 
 		// Load Battle
 		definingValues = new ArrayList<PlannerValueDef>();
-		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_MAPDATA,
 				PlannerValueDef.TYPE_STRING, "mapdata", false,
-				"Battle Trigger File",
-				"The name of the battle trigger file that should be loaded for this battle"));
-		definingValues
-				.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
-						PlannerValueDef.TYPE_STRING, "map", false,
-						"Battle Map",
-						"The name of the battle map file that should be loaded for this battle"));
+				"Battle Map Data",
+				"The name of the battle mapddata that should be loaded for this battle"));
 		definingValues
 				.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
 						PlannerValueDef.TYPE_STRING, "entrance", false,
@@ -1147,13 +1143,10 @@ public class PlannerDefinitions {
 
 		// Load Cinematic
 		definingValues = new ArrayList<PlannerValueDef>();
-		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_MAPDATA,
 				PlannerValueDef.TYPE_STRING, "mapdata", false,
 				"Trigger File",
-				"The name of the trigger file that should be loaded for this cinematic"));
-		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
-				PlannerValueDef.TYPE_STRING, "map", false, "Map Name",
-				"The name of the map that should be loaded"));
+				"The name of the mapdata file that should be loaded for this cinematic"));
 		definingValues.add(new PlannerValueDef(
 				PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT,
 				"cinid", false, "Cinematic ID",
@@ -1513,9 +1506,11 @@ public class PlannerDefinitions {
 						"message",
 						false,
 						"Message Text",
-						"The text that should be displayed. Using the { character will cause a short pause, the } "
-						+ "character will do a soft stop, the ] chararacter will do a hard stop, the [ character "
-						+ "will do a line break and a | will drive the next cinematic action if this message is being shown in a cinematic."));
+						"The text that should be displayed. Using the &lt;pause&gt; tag will cause a short pause, the &lt;softstop&gt; "
+								+ "tag will do a soft stop (auto continue without user input after a time), the &lt;hardstop&gt; tag will "
+								+ "do a hard stop which requires the player hit a button to continue, the &lt;linebreak&gt; tag "
+								+ "will do a line break (as opposed to letting them happen naturally) and a &lt;nextcin&gt; tag "
+								+ "will drive the next cinematic action if this message is being shown in a cinematic."));
 		definingValues
 				.add(new PlannerValueDef(PlannerValueDef.REFERS_QUEST,
 						PlannerValueDef.TYPE_MULTI_INT, "require", true,
@@ -2081,15 +2076,10 @@ public class PlannerDefinitions {
 		// Start Battle
 		definingValues = new ArrayList<PlannerValueDef>();
 		definingValues
-				.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				.add(new PlannerValueDef(PlannerValueDef.REFERS_MAPDATA,
 						PlannerValueDef.TYPE_STRING, "battletriggers", false,
 						"Battle Trigger File",
-						"The name of the battle trigger file that should be loaded for this battle"));
-		definingValues
-				.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
-						PlannerValueDef.TYPE_STRING, "battlemap", false,
-						"Battle Map",
-						"The name of the battle map file that should be loaded for this battle"));
+						"The name of the mapdata file that should be loaded for this battle"));
 		definingValues
 				.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
 						PlannerValueDef.TYPE_STRING, "entrance", false,
@@ -2123,12 +2113,10 @@ public class PlannerDefinitions {
 
 		// Load map
 		definingValues = new ArrayList<PlannerValueDef>();
-		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_MAPDATA,
 				PlannerValueDef.TYPE_STRING, "mapdata", false,
 				"Trigger File",
-				"The name of the trigger file that should be loaded for this map"));
-		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "map", false,
-				"Map Name", "The name of the map that should be loaded"));
+				"The name of the mapdata file that should be loaded for this map"));
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "enter", false,
 				"Entrance location",
 				"The name of the map location that the hero will be placed at when the map loads"));
@@ -2137,13 +2125,10 @@ public class PlannerDefinitions {
 
 		// Show Cinematic
 		definingValues = new ArrayList<PlannerValueDef>();
-		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_MAPDATA,
 				PlannerValueDef.TYPE_STRING, "mapdata", false,
 				"Trigger File",
-				"The name of the trigger file that should be loaded for this map"));
-		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
-				PlannerValueDef.TYPE_STRING, "map", false, "Map Name",
-				"The name of the map that should be loaded"));
+				"The name of the mapdata file that should be loaded for this map"));
 		definingValues.add(new PlannerValueDef(
 				PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_INT,
 				"cinid", false, "Cinematic ID",
@@ -2436,6 +2421,18 @@ public class PlannerDefinitions {
 				+ "it should be used in conjunction with an on death or location based condition) with other conditions that ensures "
 				+ "that the given hero is in the current battle and is alive. This should only be used in battle.",
 				definingValues));
+		
+		// Enemy in battle
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_INT, "id", false,
+				"Enemy Unit Id",
+				"The unit id (as specified on the map) of the enemy that is checked for participation and being alived in the current battle."));
+		allowableLines.add(new PlannerLineDef("enemyinbat", "(Qualifier): Hero In Battle",
+				"Sets a condition that should be used as a Qualifier (that is, this can't actually drive triggers in itself,"
+				+ "it should be used in conjunction with an on death or location based condition) with other conditions that ensures "
+				+ "that the given enemy is in the current battle and is alive. This should only be used in battle.",
+				definingValues));
 
 		conditionContainer = new PlannerContainerDef(definingLine,
 				allowableContainers, allowableLines, listOfLists,
@@ -2561,24 +2558,6 @@ public class PlannerDefinitions {
 				"Use this ID to specifiy which enemy should be the target of triggers (Change AI)"));
 		allowableLines.add(new PlannerLineDef("enemy", "enemy",
 				"Creates an enemy at this location at the start of battle",
-				definingValues));
-
-		// trigger
-		definingValues = new ArrayList<PlannerValueDef>();
-		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_TRIGGER,
-				PlannerValueDef.TYPE_INT, "triggerid", false, "Trigger ID",
-				"The ID of the trigger to execute"));
-		allowableLines.add(new PlannerLineDef("trigger", "trigger",
-				"The specified trigger will be executed whenever the hero moves on to this location (OUT OF BATTLE ONLY)",
-				definingValues));
-
-		// battletrigger
-		definingValues = new ArrayList<PlannerValueDef>();
-		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_TRIGGER,
-				PlannerValueDef.TYPE_INT, "triggerid", false, "Trigger ID",
-				"The ID of the trigger to execute"));
-		allowableLines.add(new PlannerLineDef("battletrigger", "battletrigger",
-				"The specified trigger will be executed whenever a hero ends their turn on this location (BATTLE ONLY)",
 				definingValues));
 
 		// terrain

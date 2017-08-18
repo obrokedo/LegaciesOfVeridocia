@@ -7,7 +7,6 @@ public abstract class JConfigurationValues implements Serializable {
 
 	public abstract String[] getStartingHeroIds();
 	public abstract String getStartingMapData();
-	public abstract String getStartingMap();
 	public abstract String getStartingState();
 	public abstract String getStartingLocation();
 	public abstract int getMaxPartySize();
@@ -18,4 +17,5 @@ public abstract class JConfigurationValues implements Serializable {
 	public abstract int getTerrainEffectAmount(String terrainType);
 	public abstract boolean isAffectedByTerrain(String movementType);
 	public abstract int getMovementCosts(String movementType, String terrainType);
+	public abstract int getBattleBackgroundImageIndexByTerrainType(String terrainType);
 }

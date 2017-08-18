@@ -1,5 +1,6 @@
 package mb.fc.utils.planner;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,6 +12,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.logging.Logger;
@@ -19,10 +21,13 @@ import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
@@ -66,6 +71,8 @@ public class PlannerFrame extends JFrame implements ActionListener,
 	private JMenuItem changeAssociatedMapMenuItem;
 	private MenuState menuState;
 	private PlannerIO plannerIO = new PlannerIO();
+	private JList<String> errorList = new JList<>();
+	private JScrollPane errorScroll;
 	public static boolean SHOW_CIN = false;
 	public static boolean SHOW_CIN_LOCATION = true;
 
@@ -144,7 +151,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 				tabsWithReferences.add(plannerTabs.get(i));
 			}
 			
-			PlannerReference.establishReferences(tabsWithReferences, referenceListByReferenceType);
+			updateErrorList(PlannerReference.establishReferences(tabsWithReferences, referenceListByReferenceType));
 		} catch (IOException e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "An error occurred parsing the saved data, undo any changes made manually and try again:"
@@ -262,7 +269,12 @@ public class PlannerFrame extends JFrame implements ActionListener,
 		jtp.setEnabledAt(TAB_CIN_MAP, false);
 		jtp.setEnabledAt(TAB_EDIT_MAP, false);
 		jtp.setSelectedIndex(TAB_HERO);
-		this.setContentPane(jtp);
+		JPanel backPanel = new JPanel(new BorderLayout());
+		backPanel.add(jtp, BorderLayout.CENTER);
+		errorScroll = new JScrollPane(errorList);
+		errorScroll.setPreferredSize(new Dimension(errorScroll.getPreferredSize().width, 120));
+		backPanel.add(errorScroll, BorderLayout.PAGE_END);
+		this.setContentPane(backPanel);
 
 		this.setPreferredSize(new Dimension(900, 600));
 		this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -386,7 +398,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 			}
 		}
 		else if (actionCommand.equalsIgnoreCase("playcin")) {
-			this.menuState.start(LoadTypeEnum.CINEMATIC, plannerMap.getMapName().replaceAll(".tmx", ""), triggerFile.getName(), null);
+			this.menuState.start(LoadTypeEnum.CINEMATIC, triggerFile.getName(), null);
 		}
 		
 	}
@@ -422,6 +434,9 @@ public class PlannerFrame extends JFrame implements ActionListener,
 				else
 					referenceListByReferenceType.get(PlannerValueDef.REFERS_LOCATIONS - 1).add(new PlannerReference("Unamed Location"));
 			}
+			Collections.sort(referenceListByReferenceType.get(PlannerValueDef.REFERS_LOCATIONS - 1), new Comparator<PlannerReference>() {
+				@Override
+				public int compare(PlannerReference o1, PlannerReference o2) { return o1.getName().compareTo(o2.getName()); }});
 		} catch (IOException | SlickException e) {
 			JOptionPane.showMessageDialog(this, "An error occurred while loading the selected map: " + e.getMessage());
 			e.printStackTrace();
@@ -488,6 +503,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 			}
 			
 			PlannerReference.establishReferences(tabsWithReferences, referenceListByReferenceType);
+			updateErrorList(PlannerReference.getBadReferences(getDataInputTabs(), referenceListByReferenceType));
 		} catch (IOException e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "An error occurred while trying to open the file:"
@@ -589,5 +605,18 @@ public class PlannerFrame extends JFrame implements ActionListener,
 			referenceTabs.add(plannerTabs.get(i));
 		}
 		return referenceTabs;
+	}
+	
+	public void updateErrorList(List<String> errors) {
+		this.getContentPane().remove(errorScroll);
+		if (errors.size() > 0) {
+			String[] list = new String[errors.size()];
+			errorList.setListData(errors.toArray(list));
+			errorList.validate();
+			errorList.repaint();
+			this.getContentPane().add(errorScroll, BorderLayout.PAGE_END);
+		}
+		this.validate();
+		this.repaint();
 	}
 }

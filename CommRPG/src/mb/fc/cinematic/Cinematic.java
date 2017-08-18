@@ -582,16 +582,15 @@ public class Cinematic {
 				break;
 			case LOAD_MAP:
 				stateInfo.getPersistentStateInfo().loadMap((String) ce.getParam(0),
-						(String) ce.getParam(1), (String) ce.getParam(2));
+						(String) ce.getParam(1));
 				CinematicState.cinematicSpeed = 1;
 				break;
 			case LOAD_BATTLE:
-				stateInfo.getPersistentStateInfo().loadBattle((String) ce.getParam(0),
-						(String) ce.getParam(1), (String) ce.getParam(2), (int) ce.getParam(3));
+				stateInfo.getPersistentStateInfo().loadBattle((String) ce.getParam(0), (String) ce.getParam(1), (int) ce.getParam(2));
 				CinematicState.cinematicSpeed = 1;
 				break;
 			case LOAD_CIN:
-				stateInfo.getPersistentStateInfo().loadCinematic((String) ce.getParam(0), (String) ce.getParam(1), (int) ce.getParam(2));
+				stateInfo.getPersistentStateInfo().loadCinematic((String) ce.getParam(0), (int) ce.getParam(1));
 				CinematicState.cinematicSpeed = 1;
 				break;
 			case HALTING_ANIMATION:

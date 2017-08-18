@@ -79,6 +79,8 @@ public class SpeechMenu extends Menu
 		this.listener = listener;
 		width = CommRPG.GAME_SCREEN_SIZE.width - 30;
 		x = 15;
+		
+		text = TextSpecialCharacters.replaceControlTagsWithInternalValues(text);
 
 		int maxTextWidth = width - 10;
 		int spaceWidth = StringUtils.getStringWidth("_", SPEECH_FONT);
@@ -95,10 +97,10 @@ public class SpeechMenu extends Menu
 			if (wordWidth + currentLineWidth <= maxTextWidth)
 			{
 				boolean lineBreak = false;
-				if (splitText[i].contains(TextSpecialCharacters.CHAR_LINE_BREAK))
+				if (splitText[i].contains(TextSpecialCharacters.INTERNAL_LINE_BREAK))
 					lineBreak = true;
 
-				currentLine += " " + splitText[i].replace(TextSpecialCharacters.CHAR_LINE_BREAK, "");
+				currentLine += " " + splitText[i].replace(TextSpecialCharacters.INTERNAL_LINE_BREAK, "");
 				currentLineWidth += wordWidth + spaceWidth;
 
 				if (lineBreak)
@@ -205,14 +207,14 @@ public class SpeechMenu extends Menu
 					else
 					{
 						String nextLetter = panelText.get(textIndex).substring(textMovingIndex, textMovingIndex + 1);
-						if (nextLetter.equalsIgnoreCase(TextSpecialCharacters.CHAR_HARD_STOP))
+						if (nextLetter.equalsIgnoreCase(TextSpecialCharacters.INTERNAL_HARD_STOP))
 						{
 							textMoving = false;
 							if (portrait != null)
 								portrait.setTalking(false);
-							waitingOn = TextSpecialCharacters.CHAR_HARD_STOP;
+							waitingOn = TextSpecialCharacters.INTERNAL_HARD_STOP;
 						}
-						else if (nextLetter.equalsIgnoreCase(TextSpecialCharacters.CHAR_SOFT_STOP))
+						else if (nextLetter.equalsIgnoreCase(TextSpecialCharacters.INTERNAL_SOFT_STOP))
 						{
 							textMoving = false;
 							if (portrait != null)
@@ -228,20 +230,20 @@ public class SpeechMenu extends Menu
 							else
 							{
 								waitUntil = System.currentTimeMillis() + 2500;
-								waitingOn = TextSpecialCharacters.CHAR_SOFT_STOP;
+								waitingOn = TextSpecialCharacters.INTERNAL_SOFT_STOP;
 							}
 						}
-						else if (nextLetter.equalsIgnoreCase(TextSpecialCharacters.CHAR_PAUSE))
+						else if (nextLetter.equalsIgnoreCase(TextSpecialCharacters.INTERNAL_CHAR_PAUSE))
 						{
 							textMoving = false;
 							if (portrait != null)
 								portrait.setTalking(false);
 							waitUntil = System.currentTimeMillis() + 400;
-							waitingOn = TextSpecialCharacters.CHAR_PAUSE;
+							waitingOn = TextSpecialCharacters.INTERNAL_CHAR_PAUSE;
 						}
-						else if (nextLetter.equalsIgnoreCase(TextSpecialCharacters.CHAR_NEXT_CIN))
+						else if (nextLetter.equalsIgnoreCase(TextSpecialCharacters.INTERNAL_NEXT_CIN))
 						{
-							panelText.set(textIndex, panelText.get(textIndex).replaceFirst("\\" + TextSpecialCharacters.CHAR_NEXT_CIN, ""));
+							panelText.set(textIndex, panelText.get(textIndex).replaceFirst("\\" + TextSpecialCharacters.INTERNAL_NEXT_CIN, ""));
 							return MenuUpdate.MENU_NEXT_ACTION;
 						}
 

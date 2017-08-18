@@ -4,6 +4,7 @@ import mb.fc.engine.state.StateInfo;
 import mb.fc.game.input.FCInput;
 import mb.fc.game.input.KeyMapping;
 import mb.fc.game.listener.MenuListener;
+import mb.fc.game.menu.Menu.MenuUpdate;
 import mb.fc.game.ui.PaddedGameContainer;
 import mb.fc.game.ui.RectUI;
 import mb.fc.game.ui.SelectRectUI;
@@ -35,6 +36,7 @@ public class YesNoMenu extends SpeechMenu
 
 	@Override
 	public MenuUpdate handleUserInput(FCInput input, StateInfo stateInfo) {
+		System.out.println("IM A FUCK HEAD");
 		if (input.isKeyDown(KeyMapping.BUTTON_1) || input.isKeyDown(KeyMapping.BUTTON_3))
 		{
 			System.out.println("YES NO CLOSED " + yesSelected + " " + this.panelText.get(0));
@@ -57,12 +59,20 @@ public class YesNoMenu extends SpeechMenu
 		}
 		return MenuUpdate.MENU_NO_ACTION;
 	}
+	
+	
+
+	@Override
+	public MenuUpdate update(long delta, StateInfo stateInfo) {
+		super.update(delta, stateInfo);
+		return MenuUpdate.MENU_NO_ACTION;
+	}
 
 	@Override
 	public void render(PaddedGameContainer gc, Graphics graphics)
 	{
 		super.render(gc, graphics);
-
+		System.out.println("IM DRAWING");
 		if (initialized)
 		{
 			// Draw background
@@ -70,8 +80,8 @@ public class YesNoMenu extends SpeechMenu
 			noPanel.drawPanel(graphics);
 			// Draw temporary YES - NO
 			graphics.setColor(Color.white);
-			yesText.drawText(graphics);
-			noText.drawText(graphics);
+			// yesText.drawText(graphics);
+			// noText.drawText(graphics);
 
 			// Draw selection square
 			selectRect.draw(graphics, Color.red);

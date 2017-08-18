@@ -58,6 +58,7 @@ public abstract class Panel
 		PANEL_TARGET_HEALTH_BAR,
 		PANEL_MAP_ENTRY,
 		PANEL_SHOP_OPTIONS,
+		PANEL_MULTI_JOIN_CHOOSE
 	}
 
 	protected PanelType panelType;

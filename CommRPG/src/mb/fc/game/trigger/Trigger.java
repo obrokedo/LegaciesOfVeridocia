@@ -170,13 +170,11 @@ public class Trigger
 
 	public class TriggerEnter implements Triggerable
 	{
-		private String map;
 		private String mapData;
 		private String location;
 
-		public TriggerEnter(String map, String mapData, String location) {
+		public TriggerEnter(String mapData, String location) {
 			super();
-			this.map = map;
 			this.location = location;
 			this.mapData = mapData;
 		}
@@ -184,7 +182,7 @@ public class Trigger
 		@Override
 		public boolean perform(StateInfo stateInfo)
 		{
-			stateInfo.sendMessage(new LoadMapMessage(MessageType.LOAD_MAP, map, mapData, location, 0), true);
+			stateInfo.sendMessage(new LoadMapMessage(MessageType.LOAD_MAP, mapData, location, 0), true);
 			return false;
 		}
 	}
@@ -192,14 +190,12 @@ public class Trigger
 	public class TriggerStartBattle implements Triggerable
 	{
 		private String battle;
-		private String map;
 		private String entrance;
 		private int battleBG;
 
-		public TriggerStartBattle(String battle, String map, String entrance, int battleBG) {
+		public TriggerStartBattle(String battle, String entrance, int battleBG) {
 			super();
 			this.battle = battle;
-			this.map = map;
 			this.entrance = entrance;
 			this.battleBG = battleBG;
 		}
@@ -207,7 +203,7 @@ public class Trigger
 		@Override
 		public boolean perform(StateInfo stateInfo)
 		{
-			stateInfo.sendMessage(new LoadMapMessage(MessageType.START_BATTLE, map, battle, entrance, battleBG), true);
+			stateInfo.sendMessage(new LoadMapMessage(MessageType.START_BATTLE, battle, entrance, battleBG), true);
 			return false;
 		}
 	}
@@ -351,19 +347,17 @@ public class Trigger
 
 	public class TriggerLoadCinematic implements Triggerable
 	{
-		private String map;
 		private String mapData;
 		private int cinematicId;
-		public TriggerLoadCinematic(String map, String mapData, int id)
+		public TriggerLoadCinematic(String mapData, int id)
 		{
-			this.map = map;
 			this.mapData = mapData;
 			cinematicId = id;
 		}
 
 		@Override
 		public boolean perform(StateInfo stateInfo) {
-			stateInfo.sendMessage(new LoadMapMessage(MessageType.LOAD_CINEMATIC, map, mapData, cinematicId), true);
+			stateInfo.sendMessage(new LoadMapMessage(MessageType.LOAD_CINEMATIC, mapData, cinematicId), true);
 			return false;
 		}
 	}

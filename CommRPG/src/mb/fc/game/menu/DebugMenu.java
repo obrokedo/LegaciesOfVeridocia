@@ -43,18 +43,18 @@ public class DebugMenu extends Menu
 			String[] splitText = text.split(" ");
 			if (splitText[0].equalsIgnoreCase("loadmap"))
 			{
-				stateInfo.getPersistentStateInfo().loadMap(splitText[1], splitText[1], splitText[2]);
+				stateInfo.getPersistentStateInfo().loadMap(splitText[1], splitText[2]);
 			}
 			else if (splitText[0].equalsIgnoreCase("loadbattle"))
 			{
-				stateInfo.getPersistentStateInfo().loadBattle(splitText[1], splitText[2], splitText[3], (splitText.length > 3 ? Integer.parseInt(splitText[4]) : 0));
+				stateInfo.getPersistentStateInfo().loadBattle(splitText[1], splitText[2], (splitText.length > 2 ? Integer.parseInt(splitText[3]) : 0));
 			}
 			else if (splitText[0].equalsIgnoreCase("loadcin"))
 			{
 				if (splitText.length == 2)
-					stateInfo.getPersistentStateInfo().loadCinematic(splitText[1], splitText[1], 0);
+					stateInfo.getPersistentStateInfo().loadCinematic(splitText[1], 0);
 				else
-					stateInfo.getPersistentStateInfo().loadCinematic(splitText[1], splitText[1], Integer.parseInt(splitText[2]));
+					stateInfo.getPersistentStateInfo().loadCinematic(splitText[1], Integer.parseInt(splitText[2]));
 			}
 			else if (splitText[0].equalsIgnoreCase("printmusic"))
 			{

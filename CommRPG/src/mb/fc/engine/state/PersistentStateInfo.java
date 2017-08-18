@@ -55,41 +55,44 @@ public class PersistentStateInfo implements PacketHandler
 	/********************/
 	/* Map Management	*/
 	/********************/
-	public void loadMap(String mapData, String map, String entrance)
+	public void loadMap(String mapData, String entrance)
 	{
 		this.entranceLocation = entrance;
 
 		gc.getInput().removeAllKeyListeners();
 
-		getClientProgress().setMap(map, mapData, false);
+		getClientProgress().setMapData(mapData, false);
 
-		getGame().setLoadingInfo(mapData, map,
+		getGame().setLoadingInfo(mapData,
 				(LoadableGameState) getGame().getState(CommRPG.STATE_GAME_TOWN), getResourceManager());
 		getGame().enterState(CommRPG.STATE_GAME_LOADING, new FadeOutTransition(Color.black, 250), new EmptyTransition());
 	}
 
-	public void loadBattle(String mapData, String map, String entrance, int battleBGIndex)
+	public void loadBattle(String mapData, String entrance, int battleBGIndex)
 	{
 		this.entranceLocation = entrance;
 
 		gc.getInput().removeAllKeyListeners();
 
-		getClientProgress().setMap(map, mapData, true);
-
-		getGame().setLoadingInfo(mapData, map,
+		getClientProgress().setMapData(mapData, true);
+		
+		getGame().setLoadingInfo(mapData,
 				(LoadableGameState) getGame().getState(CommRPG.STATE_GAME_BATTLE), getResourceManager());
+		
+		
+		
 		getGame().enterState(CommRPG.STATE_GAME_LOADING, new FadeOutTransition(Color.black, 250), new EmptyTransition());
 	}
 
-	public void loadCinematic(String mapData, String map, int cinematicID)
+	public void loadCinematic(String mapData, int cinematicID)
 	{
 		gc.getInput().removeAllKeyListeners();
 
 		this.cinematicID = cinematicID;
 		
-		getClientProgress().setMap(map, mapData, false);
+		getClientProgress().setMapData(mapData, false);
 
-		getGame().setLoadingInfo(mapData, map,
+		getGame().setLoadingInfo(mapData,
 				(LoadableGameState) getGame().getState(CommRPG.STATE_GAME_CINEMATIC),
 					getResourceManager());
 		getGame().enterState(CommRPG.STATE_GAME_LOADING, new FadeOutTransition(Color.black, 250), new EmptyTransition());

@@ -368,7 +368,7 @@ public class ShopMenu extends Menu implements MenuListener
 	}
 
 	@Override
-	public boolean valueSelected(StateInfo stateInfo, Object value) {
+	public void valueSelected(StateInfo stateInfo, Object value) {
 		// Equip the item based on value
 		if (waitingYesNo == 1)
 		{
@@ -395,7 +395,6 @@ public class ShopMenu extends Menu implements MenuListener
 				oldItem = null;
 			}
 		}
-		return false;
 	}
 
 	@Override

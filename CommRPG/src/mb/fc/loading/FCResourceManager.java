@@ -126,11 +126,6 @@ public class FCResourceManager {
 					(int) (Integer.parseInt(split[3]) * scale), (int) (Integer.parseInt(split[4])  * scale),
 					(int) ((split.length >= 6 ? Integer.parseInt(split[5]) : 0)  * scale)));
 		}
-		else if (split[0].equalsIgnoreCase("map"))
-		{
-			Log.debug("Load map: " + split[2]);
-			MapParser.parseMap(split[2], map, new TilesetParser(), this);
-		}
 		else if (split[0].equalsIgnoreCase("anim"))
 		{
 			SpriteAnims sa = SpriteAnims.parseAnimations(split[2]);
@@ -157,7 +152,10 @@ public class FCResourceManager {
 		}
 		else if (split[0].equalsIgnoreCase("text"))
 		{
-			CommRPG.TEXT_PARSER.parseText(split[1], speechesById, triggerEventById, cinematicById, conditions, this);
+			String mapName = CommRPG.TEXT_PARSER.parseText(split[1], speechesById, triggerEventById, cinematicById, conditions, this);
+			Log.debug("Load map: " + mapName);
+			map.setName(mapName);
+			MapParser.parseMap("/map/" + mapName, map, new TilesetParser(), this);
 		}
 		else if (split[0].equalsIgnoreCase("herodefs"))
 		{

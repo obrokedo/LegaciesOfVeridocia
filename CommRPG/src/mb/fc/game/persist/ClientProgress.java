@@ -28,9 +28,8 @@ public class ClientProgress implements Serializable
 	public static final String PROGRESS_EXTENSION = ".progress";
 
 	private HashSet<Integer> questsCompleted;
-	private Hashtable<String, ArrayList<Integer>> retriggerablesPerMap;
-	private Hashtable<String, ArrayList<Integer>> nonretriggerablesPerMap;
-	private String map;
+	private Hashtable<String, ArrayList<Integer>> retriggerablesPerMapData;
+	private Hashtable<String, ArrayList<Integer>> nonretriggerablesPerMapData;
 	private String location;
 	private String name;
 	private String mapData;
@@ -45,8 +44,8 @@ public class ClientProgress implements Serializable
 	public ClientProgress(String name)
 	{
 		questsCompleted = new HashSet<Integer>();
-		retriggerablesPerMap = new Hashtable<String, ArrayList<Integer>>();
-		nonretriggerablesPerMap = new Hashtable<String, ArrayList<Integer>>();
+		retriggerablesPerMapData = new Hashtable<String, ArrayList<Integer>>();
+		nonretriggerablesPerMapData = new Hashtable<String, ArrayList<Integer>>();
 		this.name = name;
 		lastSaveTime = System.currentTimeMillis();
 	}
@@ -99,19 +98,14 @@ public class ClientProgress implements Serializable
 	    return null;
 	}
 
-	public String getMap() {
-		return map;
-	}
-
-	public void setMap(String map, String mapData, boolean isBattle) {
-		this.map = map;
+	public void setMapData(String mapData, boolean isBattle) {
 		this.mapData = mapData;
 		if (isBattle)
 		{
 			this.isBattle = isBattle;
 
-			if (nonretriggerablesPerMap.containsKey(BATTLE_PREFIX + map))
-				nonretriggerablesPerMap.get(BATTLE_PREFIX + map).clear();
+			if (nonretriggerablesPerMapData.containsKey(BATTLE_PREFIX + mapData))
+				nonretriggerablesPerMapData.get(BATTLE_PREFIX + mapData).clear();
 		}
 	}
 
@@ -127,39 +121,39 @@ public class ClientProgress implements Serializable
 
 	public ArrayList<Integer> getRetriggerablesByMap()
 	{
-		if (!retriggerablesPerMap.containsKey(map))
+		if (!retriggerablesPerMapData.containsKey(mapData))
 			return null;
-		return retriggerablesPerMap.get(map);
+		return retriggerablesPerMapData.get(mapData);
 	}
 
 	public void addRetriggerableByMap(int triggerId)
 	{
-		if (!retriggerablesPerMap.containsKey(map))
-			retriggerablesPerMap.put(map, new ArrayList<Integer>());
-		retriggerablesPerMap.get(map).add(triggerId);
+		if (!retriggerablesPerMapData.containsKey(mapData))
+			retriggerablesPerMapData.put(mapData, new ArrayList<Integer>());
+		retriggerablesPerMapData.get(mapData).add(triggerId);
 	}
 
 	public boolean isPreviouslyTriggered(int triggerId)
 	{
-		if (!retriggerablesPerMap.containsKey(map))
+		if (!retriggerablesPerMapData.containsKey(mapData))
 			return false;
-		return retriggerablesPerMap.get(map).contains(triggerId);
+		return retriggerablesPerMapData.get(mapData).contains(triggerId);
 	}
 
 	public void addNonretriggerableByMap(int triggerId)
 	{
-		Log.debug("Add non retrig " + triggerId + " " + (isBattle ? BATTLE_PREFIX + map : map));
-		if (!nonretriggerablesPerMap.containsKey((isBattle ? BATTLE_PREFIX + map : map)))
-			nonretriggerablesPerMap.put((isBattle ? BATTLE_PREFIX + map : map), new ArrayList<Integer>());
-		nonretriggerablesPerMap.get((isBattle ? BATTLE_PREFIX + map : map)).add(triggerId);
+		Log.debug("Add non retrig " + triggerId + " " + (isBattle ? BATTLE_PREFIX + mapData : mapData));
+		if (!nonretriggerablesPerMapData.containsKey((isBattle ? BATTLE_PREFIX + mapData : mapData)))
+			nonretriggerablesPerMapData.put((isBattle ? BATTLE_PREFIX + mapData : mapData), new ArrayList<Integer>());
+		nonretriggerablesPerMapData.get((isBattle ? BATTLE_PREFIX + mapData : mapData)).add(triggerId);
 	}
 
 	public boolean isNonretriggableTrigger(int triggerId)
 	{
-		if (!nonretriggerablesPerMap.containsKey((isBattle ? BATTLE_PREFIX + map : map)))
+		if (!nonretriggerablesPerMapData.containsKey((isBattle ? BATTLE_PREFIX + mapData : mapData)))
 			return false;
 
-		return nonretriggerablesPerMap.get((isBattle ? BATTLE_PREFIX + map : map)).contains(triggerId);
+		return nonretriggerablesPerMapData.get((isBattle ? BATTLE_PREFIX + mapData : mapData)).contains(triggerId);
 	}
 
 	public boolean isBattle() {

@@ -95,7 +95,7 @@ public class PriestMenu2 extends Menu implements CellRenderer<CombatSprite>, Men
 	}
 
 	@Override
-	public boolean valueSelected(StateInfo stateInfo, Object value)
+	public void valueSelected(StateInfo stateInfo, Object value)
 	{
 		if ((boolean) value)
 		{
@@ -103,7 +103,6 @@ public class PriestMenu2 extends Menu implements CellRenderer<CombatSprite>, Men
 			buttons.get(3).setEnabled(false);
 			stateInfo.getClientProfile().setGold(stateInfo.getClientProfile().getGold() - selectedHero.getLevel() * 10);
 		}
-		return false;
 	}
 
 	@Override

@@ -1,6 +1,0 @@
-<trigger id=0 description="Battle Initialize" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<setbattlecond allleaders=false templeader=3,/>
-	<playmusic music="battle1"/>
-</trigger>
-<trigger id=1 description="Battle Over" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-</trigger>

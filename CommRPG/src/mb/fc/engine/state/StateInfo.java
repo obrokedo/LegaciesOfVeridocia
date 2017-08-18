@@ -287,19 +287,19 @@ public class StateInfo
 					sendMessage(MessageType.PAUSE_MUSIC);
 
 					LoadMapMessage lmm = (LoadMapMessage) m;
-					psi.loadMap(lmm.getMapData(), lmm.getMap(), lmm.getLocation());
+					psi.loadMap(lmm.getMapData(), lmm.getLocation());
 					break MESSAGES;
 				case START_BATTLE:
 					sendMessage(MessageType.PAUSE_MUSIC);
 
 					LoadMapMessage lmb = (LoadMapMessage) m;
-					psi.loadBattle(lmb.getMapData(), lmb.getMap(),lmb.getLocation(), lmb.getBattleBG());
+					psi.loadBattle(lmb.getMapData(), lmb.getLocation(), lmb.getBattleBG());
 					break MESSAGES;
 				case LOAD_CINEMATIC:
 					sendMessage(MessageType.PAUSE_MUSIC);
 
 					LoadMapMessage lmc = (LoadMapMessage) m;
-					psi.loadCinematic(lmc.getMapData(), lmc.getMap(), lmc.getCinematicID());
+					psi.loadCinematic(lmc.getMapData(), lmc.getCinematicID());
 					break;
 				case SAVE:
 					getClientProfile().serializeToFile();
@@ -596,6 +596,15 @@ public class StateInfo
 		for (CombatSprite cs : combatSprites)
 			if (cs.getId() == id)
 				return cs;
+		return null;
+	}
+	
+	public CombatSprite getEnemyCombatSpriteByUnitId(int unitId) {
+		for (CombatSprite cs : combatSprites) {
+			if (!cs.isHero() && cs.getUniqueEnemyId() == unitId) {
+				return cs;
+			}
+		}
 		return null;
 	}
 	

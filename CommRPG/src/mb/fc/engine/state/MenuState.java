@@ -124,18 +124,18 @@ public class MenuState extends LoadableGameState
 		}
 	}
 
-	public void start(LoadTypeEnum loadType, String map, String mapData, String entrance)
+	public void start(LoadTypeEnum loadType, String mapData, String entrance)
 	{
 		switch (loadType)
 		{
 			case CINEMATIC:
-				persistentStateInfo.loadCinematic(mapData, map, 0);
+				persistentStateInfo.loadCinematic(mapData, 0);
 				break;
 			case TOWN:
-				persistentStateInfo.loadMap(mapData, map, entrance);
+				persistentStateInfo.loadMap(mapData, entrance);
 				break;
 			case BATTLE:
-				persistentStateInfo.loadBattle(mapData, map, entrance, 0);
+				persistentStateInfo.loadBattle(mapData, entrance, 0);
 			break;
 		}
 
@@ -152,7 +152,7 @@ public class MenuState extends LoadableGameState
 		{
 			if (container.getInput().isKeyPressed(Input.KEY_F1))
 			{
-				((LoadingState) game.getState(CommRPG.STATE_GAME_LOADING)).setLoadingInfo("/menu/MainMenu", null, false, true,
+				((LoadingState) game.getState(CommRPG.STATE_GAME_LOADING)).setLoadingInfo("/menu/MainMenu", false, true,
 						new FCResourceManager(),
 							(LoadableGameState) game.getState(CommRPG.STATE_GAME_MENU_DEVEL),
 								new FCLoadingRenderSystem(container));
@@ -171,7 +171,7 @@ public class MenuState extends LoadableGameState
 				JConfigurationValues jcv = GlobalPythonFactory.createConfigurationValues();
 				if (menuIndex == 0 && stateIndex == 0)
 					start(LoadTypeEnum.valueOf(jcv.getStartingState()), 
-							jcv.getStartingMap(), jcv.getStartingMapData(), jcv.getStartingLocation());
+							jcv.getStartingMapData(), jcv.getStartingLocation());
 				else if (menuIndex == 0 && stateIndex == 1)
 				{
 					stateIndex = 0;

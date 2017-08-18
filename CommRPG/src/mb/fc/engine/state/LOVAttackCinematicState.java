@@ -30,6 +30,7 @@ import mb.fc.game.combat.TransBGCombatAnimation;
 import mb.fc.game.combat.TransCombatAnimation;
 import mb.fc.game.combat.WaitCombatAnimation;
 import mb.fc.game.constants.TextSpecialCharacters;
+import mb.fc.game.exception.BadMapException;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.hudmenu.Panel.PanelType;
 import mb.fc.game.hudmenu.SpriteContextPanel;
@@ -206,8 +207,27 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 		}
 
 		SpriteSheet battleBGSS = frm.getSpriteSheet("battlebg");
-		Image bgIm = battleBGSS.getSprite(frm.getMap().getBackgroundImageIndex() % battleBGSS.getHorizontalCount(),
-				frm.getMap().getBackgroundImageIndex() / battleBGSS.getHorizontalCount());
+		
+		// Check to see if there is a custom background specified on the map
+		// if so, load the image
+		Image bgIm = null;
+		int battleBackgroundIndex = 0;
+		if (frm.getMap().isCustomBackground()) {
+			battleBackgroundIndex = frm.getMap().getBackgroundImageIndex();
+
+		} else {			
+			String terrainType = frm.getMap().getTerrainTypeByTile(attacker.getTileX(), attacker.getTileY());
+			if (terrainType == null) {
+				throw new BadMapException("Location " + attacker.getTileX() + " " + attacker.getTileY() + " has either no terrain type or a "
+						+ "bad terrain type assigned to it and\n so the battle background image can not be determined");
+			}
+			battleBackgroundIndex = GlobalPythonFactory.createConfigurationValues().
+					getBattleBackgroundImageIndexByTerrainType(terrainType);
+		}
+		
+		bgIm = battleBGSS.getSprite(battleBackgroundIndex % battleBGSS.getHorizontalCount(),
+				battleBackgroundIndex / battleBGSS.getHorizontalCount());
+		
 		backgroundScale = CommRPG.GAME_SCREEN_SIZE.width / (float) bgIm.getWidth();
 		backgroundImage = bgIm.getScaledCopy(backgroundScale);
 

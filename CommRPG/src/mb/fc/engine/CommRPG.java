@@ -82,7 +82,7 @@ public class CommRPG extends StateBasedGame   {
 
 	private static int fullScreenWidth, fullScreenHeight;
 
-	public static final String VERSION = "DEV 1.33 11-3-16";
+	public static final String VERSION = "DEV 1.35 July 29, 2017";
 
 	public static final String GAME_TITLE = "Legacies of Veridocia";
 
@@ -261,7 +261,7 @@ public class CommRPG extends StateBasedGame   {
 		/* Comment during multiplayer */
 		/******************************/
 
-		loadingState.setLoadingInfo("/menu/MainMenu", null, false, true,
+		loadingState.setLoadingInfo("/menu/MainMenu", false, true,
 				new FCResourceManager(),
 					(LoadableGameState) this.getState(STATE_GAME_MENU_DEVEL),
 						new FCLoadingRenderSystem(gameContainer));
@@ -278,20 +278,19 @@ public class CommRPG extends StateBasedGame   {
 	 * and to just load the specified text and map. It then transtions into the specifed next state.
 	 *
 	 * @param text The text file to load
-	 * @param map The map file to load
 	 * @param nextState The next state that should be entered once the loading is done
 	 * @param fcResourceManager Existing resource manager that contains all resources already loaded
 	 */
-	public void setLoadingInfo(String text, String map, LoadableGameState nextState,
+	public void setLoadingInfo(String text, LoadableGameState nextState,
 			FCResourceManager fcResourceManager)
 	{
 		if (fcResourceManager != null)
-			loadingState.setLoadingInfo(text, map, true, false,
+			loadingState.setLoadingInfo(text, true, false,
 				fcResourceManager,
 					nextState,
 						new FCLoadingRenderSystem(this.getContainer()));
 		else
-			setLoadingInfo(text, map, nextState);
+			setLoadingInfo(text, nextState);
 	}
 
 	/**
@@ -300,12 +299,11 @@ public class CommRPG extends StateBasedGame   {
 	 * once per execution as we don't need to load the files every time.
 	 *
 	 * @param text The text file to load
-	 * @param map The map file to load
 	 * @param nextState The state that should be entered once the loading is done
 	 */
-	public void setLoadingInfo(String text, String map, LoadableGameState nextState)
+	public void setLoadingInfo(String text, LoadableGameState nextState)
 	{
-		loadingState.setLoadingInfo(text, map, true, true,
+		loadingState.setLoadingInfo(text, true, true,
 				new FCResourceManager(),
 					nextState,
 						new FCLoadingRenderSystem(this.getContainer()));

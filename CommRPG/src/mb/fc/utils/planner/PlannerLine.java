@@ -66,10 +66,12 @@ public class PlannerLine
 	}
 
 	public void setupUI(ArrayList<PlannerLineDef> allowableValues, ActionListener aListener,
-			int index, ArrayList<ArrayList<PlannerReference>> referenceListByReferenceType, boolean displayButtons, boolean commitChanges, PlannerTab parentTab)
+			int index, ArrayList<ArrayList<PlannerReference>> referenceListByReferenceType, 
+			boolean displayButtons, boolean commitChanges, PlannerTab parentTab)
 	{
 		if (commitChanges)
 			this.commitChanges();
+		components.clear();
 		uiAspect.removeAll();
 		JPanel headDescPanel = new JPanel(new BorderLayout());
 		JPanel headerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -263,7 +265,8 @@ public class PlannerLine
 					else
 					{
 						Vector<String> items = new Vector<String>(getReferenceStringList(referenceListByReferenceType, pv));
-						if (pv.isOptional())
+						// if (pv.isOptional())
+						// We're going to leave the "" in so bad references don't default to something
 							items.add(0, "");
 						c = new JComboBox<String>(items);
 						if (values.size() > i)
@@ -438,15 +441,10 @@ public class PlannerLine
 						break;
 				}
 			}
-
-			components.clear();
 		}
 		
 		ArrayList<String> badReferences = new ArrayList<>();
 		PlannerReference.establishLineReference(PlannerFrame.referenceListByReferenceType, badReferences, null, this);
-		if (badReferences.size() > 0) { 
-			PlannerReference.displayBadReferences(badReferences);
-		}
 	}
 
 	public ArrayList<Component> getPlannerLineComponents() {

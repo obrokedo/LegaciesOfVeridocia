@@ -66,4 +66,8 @@ public class SpriteContextMessage extends Message
 		}
 		return cSprites;
 	}
+
+	public ArrayList<Integer> getSpriteIds() {
+		return sprites;
+	}
 }
