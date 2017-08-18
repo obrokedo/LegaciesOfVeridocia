@@ -1,32 +1,19 @@
 package dfEditor.io;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 
-import javax.swing.JOptionPane;
 import javax.swing.JTree;
 
-import mb.splinched.anim.Animations;
-import mb.splinched.anim.Hitbox;
-
-import org.newdawn.slick.geom.Point;
-import org.newdawn.slick.geom.Rectangle;
-
-import dfEditor.CustomNode;
-import dfEditor.GraphicObject;
-import dfEditor.SpriteGraphic;
 import dfEditor.animation.Animation;
-import dfEditor.animation.AnimationCell;
 
 public class SplinchedExporter {
 	public static void exportSplinchedAnim(File aSaveFile, String aImageName, JTree aTree,
 			ArrayList<Animation> aAnimList, BufferedImage hitboxImage)
 	{
 
-
+		/*
 		ArrayList<String> spriteName = new ArrayList<String>();
 		ArrayList<Rectangle> spriteRect = new ArrayList<Rectangle>();
 
@@ -72,10 +59,12 @@ public class SplinchedExporter {
 			return;
 		}
 		sa.serializeToFile(aSaveFile.getAbsolutePath());
+		*/
 	}
-
+/*
 	private static void defineSprites(ArrayList<String> spriteName, ArrayList<Rectangle> spriteRect, CustomNode node, String directory)
 	{
+		
 		if (node.isLeaf())
         {
 			if (((String) node.getUserObject()).equalsIgnoreCase("Weapon"))
@@ -95,6 +84,7 @@ public class SplinchedExporter {
             	defineSprites(spriteName, spriteRect, (CustomNode)node.getChildAt(i), (String) node.getUserObject());
             }
         }
+        
 	}
 
 	private static ArrayList<Hitbox> getHitboxes(BufferedImage image, int chunkWidth, int chunkHeight) throws Exception
@@ -188,7 +178,7 @@ public class SplinchedExporter {
         	hitboxes.add(hitbox);
         	frame++;
         }
-
         return hitboxes;
 	}
+	*/
 }

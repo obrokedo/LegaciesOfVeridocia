@@ -16,6 +16,5 @@
 	<classpathentry kind="lib" path="lib/swing-layout/swing-layout-1.0.4.jar"/>
 	<classpathentry kind="lib" path="lib/tinylaf/tinylaf.jar"/>
 	<classpathentry kind="lib" path="/GameLib/Jars/slick2/lib/slick.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/AnimationFormats"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
