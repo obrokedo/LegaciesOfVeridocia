@@ -344,20 +344,25 @@ public class AnimationStripPanel extends javax.swing.JPanel implements Animation
 
         currentLoop = animation.getLoops();
 
+        if (timer == null) //after sourlemons
+            timer = new Timer(1, this); //after sourlemons
+
+        timer.start(); //after sourlemons
+        
         currentSlotInAnimation = getSelectedSlotIndex();
         if (getSelectedSlotIndex() < 0)
             currentSlotInAnimation = 0;
 
         currentSlotInAnimationFramesLeft = slotList.get(currentSlotInAnimation).getCell().getDelay();
-        timeDecremented = currentSlotInAnimationFramesLeft;
+/*        timeDecremented = currentSlotInAnimationFramesLeft; //before sourlemons
 
-        if (timer == null)
-            timer = new Timer(timeDecremented * 2, this);
-        else
-        	timer.setDelay(timeDecremented * 2);
+        if (timer == null) //before sourlemons
+            timer = new Timer(timeDecremented * 2, this); //before sourlemons
+        else //before sourlemons
+        	timer.setDelay(timeDecremented * 2); //before sourlemons
 
-        timer.start();
-
+        timer.start(); //before sourlemons
+*/
         notifyTick();
 
         repaint();
@@ -417,15 +422,16 @@ public class AnimationStripPanel extends javax.swing.JPanel implements Animation
     @Override
 	public void actionPerformed(ActionEvent e)
     {
-        currentSlotInAnimationFramesLeft -= timeDecremented;
+    	currentSlotInAnimationFramesLeft --; //new sourLemons
+        //currentSlotInAnimationFramesLeft -= timeDecremented; //before sourlemons
         if (currentSlotInAnimationFramesLeft <= 0)
         {
             currentSlotInAnimation ++;
             currentSlotInAnimation %= slotList.size();
 
             currentSlotInAnimationFramesLeft = slotList.get(currentSlotInAnimation).getCell().getDelay();
-            timeDecremented = currentSlotInAnimationFramesLeft;
-            timer.setDelay(timeDecremented * 2);
+            //timeDecremented = currentSlotInAnimationFramesLeft; //before sourlemons
+            //timer.setDelay(timeDecremented * 2); //before sourlemons
 
             if (currentSlotInAnimation == 0)
             {
