@@ -44,10 +44,6 @@ public class MenuManager extends Manager
 
 		if (stateInfo.areMenusDisplayed() && System.currentTimeMillis() > stateInfo.getInputDelay())
 			handleMenuUpdate(stateInfo.getTopMenu().handleUserInput(stateInfo.getInput(), stateInfo));
-		else {
-			System.out.println("WAITING");
-			stateInfo.getInput().clear();
-		}
 	}
 
 	private void handleMenuUpdate(MenuUpdate menuUpdate)
