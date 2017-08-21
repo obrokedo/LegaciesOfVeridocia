@@ -34,6 +34,7 @@ import java.awt.dnd.DropTargetDragEvent;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import dfEditor.GraphicObject;
@@ -52,6 +53,7 @@ public class AnimationPanel extends GraphicPanel implements DropTargetListener
     private ArrayList<NodeDroppedListener> nodeDroppedListeners = new ArrayList<NodeDroppedListener>();
     private AnimationCell[] onionSkins = null;
     private boolean hitboxMode = false;
+    private BufferedImage backgroundImage = null;
 
     public AnimationPanel()
     {
@@ -85,8 +87,18 @@ public class AnimationPanel extends GraphicPanel implements DropTargetListener
         }
         ////////////////
         final Dimension originPointerSize = new Dimension(26, 3);
-
+        
         super.draw(g);
+                
+        if (backgroundImage != null) {
+        	int effectiveImageHeight = (int) (backgroundImage.getHeight() * _zoom);
+        	
+        	g.drawImage(backgroundImage, 
+        			getOrigin().x, getOrigin().y - effectiveImageHeight, 
+        				(int) (backgroundImage.getWidth() * _zoom), 
+        				effectiveImageHeight, this);
+        }
+        
         drawOriginLines(g);
         drawOriginOffscreenIndicator(g, originPointerSize);
         drawOnionSkins(g);
@@ -115,7 +127,7 @@ public class AnimationPanel extends GraphicPanel implements DropTargetListener
         g.drawRect(_origin.x + (int)(20 * _zoom), _origin.y - (int)(48 * _zoom), (int)(40 * _zoom), (int)(40 * _zoom));
         g.drawRect(_origin.x + (int)(196 * _zoom), _origin.y - (int)(48 * _zoom), (int)(40 * _zoom), (int)(40 * _zoom));
 
-        g.setColor(Color.BLUE);
+        g.setColor(Color.GREEN);
         g.drawLine(_origin.x + (int)(196 * _zoom), _origin.y, _origin.x + (int)(236 * _zoom), _origin.y);
         g.drawRect(_origin.x - (int)(25 * _zoom), _origin.y - (int)(60 * _zoom), (int)(50 * _zoom), (int)(50 * _zoom));
 
@@ -318,5 +330,10 @@ public class AnimationPanel extends GraphicPanel implements DropTargetListener
     public void hitboxToggle(boolean toggle)
     {
     	hitboxMode = toggle;
+    }
+    
+    public void setBackgroundImage(BufferedImage bim) {
+    	this.backgroundImage = bim;
+    	this.repaint();
     }
 }

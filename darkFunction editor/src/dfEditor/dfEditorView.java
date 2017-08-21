@@ -30,6 +30,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultTreeModel;
 
@@ -156,8 +157,9 @@ public class dfEditorView extends FrameView implements TaskChangeListener, org.j
         loadMenuItem = new javax.swing.JMenuItem();
         menuItemSave = new javax.swing.JMenuItem();
         menuItemSaveAs = new javax.swing.JMenuItem();
-        splinchedExport = new javax.swing.JMenuItem();
+        // splinchedExport = new javax.swing.JMenuItem();
         setWeapon = new javax.swing.JMenuItem();
+        setBackgroundImage = new JMenuItem();
         javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
         editMenu = new javax.swing.JMenu();
         undoMenuItem = new javax.swing.JMenuItem();
@@ -249,7 +251,19 @@ public class dfEditorView extends FrameView implements TaskChangeListener, org.j
             }
         });
         fileMenu.add(setWeapon);
+        
+        setBackgroundImage.setText("Set Background Image"); // NOI18N
+        setBackgroundImage.setEnabled(true);
+        setBackgroundImage.setName("Set Background Image"); // NOI18N
+        setBackgroundImage.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuSetBackgroundImageActionPerformed(evt);
+            }
+        });
+        fileMenu.add(setBackgroundImage);
 
+        /*
         splinchedExport.setText("Splinched Export"); // NOI18N
         splinchedExport.setEnabled(true);
         splinchedExport.setName("splunchedExport"); // NOI18N
@@ -260,6 +274,7 @@ public class dfEditorView extends FrameView implements TaskChangeListener, org.j
             }
         });
         fileMenu.add(splinchedExport);
+        */
 
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(dfEditor.dfEditorApp.class).getContext().getActionMap(dfEditorView.class, this);
         exitMenuItem.setAction(actionMap.get("quit")); // NOI18N
@@ -559,13 +574,20 @@ public class dfEditorView extends FrameView implements TaskChangeListener, org.j
 
     private void menuItemSetWeaponActionPerformed(java.awt.event.ActionEvent evt)
     {
-    	JFileChooser chooser = fileChooser;
+    	BufferedImage image = loadCustomImage("Load a custom weapon image");
+    	if (image != null) 
+    		// Set new weapon
+			dfEditorView.weaponImage = image;
+    }
+
+	private BufferedImage loadCustomImage(String fileSelectText) {
+		JFileChooser chooser = fileChooser;
 
         CustomFilter filter = new CustomFilter();
         filter.addExtension(CustomFilter.EXT_PNG);
         chooser.resetChoosableFileFilters();
         chooser.setFileFilter(filter);
-        chooser.setDialogTitle("Load a custom weapon image");
+        chooser.setDialogTitle(fileSelectText);
         JFrame mainFrame = dfEditorApp.getApplication().getMainFrame();
         int returnVal = chooser.showOpenDialog(mainFrame);
 
@@ -575,13 +597,27 @@ public class dfEditorView extends FrameView implements TaskChangeListener, org.j
             try {
 				BufferedImage image = ImageIO.read(selectedFile);
 
-				// Set new weapon
-				dfEditorView.weaponImage = image;
+				return image;
 
 			} catch (IOException e) {
 				JOptionPane.showMessageDialog(null, "Unable to load image: " + selectedFile.getName());
 				e.printStackTrace();
 			}
+        }
+        
+        return null;
+	}
+    
+    private void menuSetBackgroundImageActionPerformed(java.awt.event.ActionEvent evt) {
+    	dfEditorTask currentTab = (dfEditorTask)tabbedPane.getSelectedComponent();
+
+        if (currentTab != null)
+        {
+        	BufferedImage image = loadCustomImage("Load a background image");
+        	if (image != null) 
+        		((AnimationController) currentTab).setBackgroundImage(image);
+        } else {
+        	JOptionPane.showMessageDialog(null, "Please open an animation before selecting a background image");
         }
     }
 
@@ -642,7 +678,8 @@ public class dfEditorView extends FrameView implements TaskChangeListener, org.j
     private javax.swing.JMenuItem menuItemSave;
     private javax.swing.JMenuItem menuItemSaveAs;
     private javax.swing.JMenuItem setWeapon;
-    private javax.swing.JMenuItem splinchedExport;
+    private javax.swing.JMenuItem setBackgroundImage;
+    // private javax.swing.JMenuItem splinchedExport;
     private javax.swing.JMenuItem newAnimationItem;
     private javax.swing.JMenuItem newSpritesheetItem;
     private javax.swing.JMenuItem redoMenuItem;

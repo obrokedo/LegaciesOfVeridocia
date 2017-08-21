@@ -2332,6 +2332,11 @@ private void exportGifButtonActionPerformed(java.awt.event.ActionEvent evt) {//G
             }
         }
     }
+    
+    public void setBackgroundImage(BufferedImage bim) {
+    	this.viewPanel.setBackgroundImage(bim);
+    }
+    
     ///////////////////////////////////////////////////////////////////////////
 
     // internal frame listener callbacks
