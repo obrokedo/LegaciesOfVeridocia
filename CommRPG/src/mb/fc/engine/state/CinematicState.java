@@ -73,7 +73,7 @@ public class CinematicState extends LoadableGameState
 	public void initAfterLoad() {
 		stateInfo.initState();
 		for (CombatSprite cs : stateInfo.getAllHeroes())
-			cs.initializeSprite(stateInfo);
+			cs.initializeSprite(stateInfo.getResourceManager());
 	}
 
 	@Override

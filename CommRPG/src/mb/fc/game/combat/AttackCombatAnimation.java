@@ -39,13 +39,19 @@ public class AttackCombatAnimation extends CombatAnimation
 			this.animationWrapper.setAnimation("Crit", false);
 		else if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_SPELL)
 		{
-			this.animationWrapper.setAnimation("Spell", false);
+			if (animationWrapper.hasAnimation("Spell"))
+				this.animationWrapper.setAnimation("Spell", false);
+			else { 
+				animationWrapper.setAnimation("Attack", false);
+			}
 			castingSpell = true;
 		}
 		else if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_ITEM)
 		{
 			if ( animationWrapper.hasAnimation("Item"))
 				this.animationWrapper.setAnimation("Item", false);
+			else 
+				animationWrapper.setAnimation("Attack", false);
 			if (battleResults.battleCommand.getSpell() != null)
 				castingSpell = true;
 		}

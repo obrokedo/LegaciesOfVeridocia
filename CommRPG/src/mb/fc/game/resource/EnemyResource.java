@@ -1,8 +1,9 @@
 package mb.fc.game.resource;
 
 import java.util.Hashtable;
+import java.util.List;
+import java.util.stream.Collectors;
 
-import mb.fc.engine.state.StateInfo;
 import mb.fc.game.definition.EnemyDefinition;
 import mb.fc.game.sprite.CombatSprite;
 
@@ -17,13 +18,22 @@ public class EnemyResource
 		EnemyResource.enemyDefinitionsById = enemyDefinitionsById;
 	}
 
-	public static CombatSprite getEnemy(int enemyId, StateInfo stateInfo)
+	public static CombatSprite getEnemy(int enemyId)
 	{
-		return enemyDefinitionsById.get(enemyId).getEnemy(stateInfo, ID--);
+		return enemyDefinitionsById.get(enemyId).getEnemy(ID--);
 	}
 
 	public static String getAnimation(int enemyId)
 	{
 		return enemyDefinitionsById.get(enemyId).getAnimation();
+	}
+	
+	public static CombatSprite getEnemy(String enemyName) {
+		return enemyDefinitionsById.values().stream().filter(
+				ed -> ed.getName().equalsIgnoreCase(enemyName)).findFirst().get().getEnemy(-1);
+	}
+	
+	public static List<String> getEnemyNames() {
+		return enemyDefinitionsById.values().stream().map(EnemyDefinition::getName).collect(Collectors.toList());
 	}
 }

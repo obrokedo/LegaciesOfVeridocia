@@ -96,11 +96,11 @@ public class Map
 		{
 			if (mo.getKey().equalsIgnoreCase("sprite"))
 			{
-				stateInfo.addSprite(mo.getSprite(stateInfo));
+				stateInfo.addSprite(mo.getSprite(stateInfo.getResourceManager()));
 			}
 			else if (mo.getKey().equalsIgnoreCase("door"))
 			{
-				Door door = (Door) mo.getDoor(stateInfo, doorId++);
+				Door door = (Door) mo.getDoor(stateInfo.getResourceManager(), doorId++);
 				stateInfo.addSprite(door);
 				// stateInfo.addMapTrigger(new TriggerLocation(stateInfo, mo, door));
 				
@@ -114,7 +114,7 @@ public class Map
 			}
 			else if (mo.getKey().equalsIgnoreCase("searcharea"))
 			{
-				stateInfo.addSprite(mo.getSearchArea(stateInfo));
+				stateInfo.addSprite(mo.getSearchArea(stateInfo.getResourceManager()));
 			}
 			/*
 			else if (mo.getKey().equalsIgnoreCase("roof"))

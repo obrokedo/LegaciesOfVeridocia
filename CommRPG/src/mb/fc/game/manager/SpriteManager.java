@@ -60,7 +60,7 @@ public class SpriteManager extends Manager
 			// view items, spells and pictures
 			for (CombatSprite cs : stateInfo.getAllHeroes())
 			{
-				cs.initializeSprite(stateInfo);
+				cs.initializeSprite(stateInfo.getResourceManager());
 				cs.initializeStats();
 			}
 
@@ -72,7 +72,7 @@ public class SpriteManager extends Manager
 			{
 				if (mo.getKey().equalsIgnoreCase("npc"))
 				{
-					stateInfo.addSprite(mo.getNPC(stateInfo));
+					stateInfo.addSprite(mo.getNPC(stateInfo.getResourceManager()));
 				}
 				else if (mo.getKey().equalsIgnoreCase("start"))
 				{
@@ -112,7 +112,7 @@ public class SpriteManager extends Manager
 			// Initialize all of the heroes, this just sets images and initializes effects.
 			// Stats are initialized above for all heroes
 			for (CombatSprite cs : stateInfo.getAllHeroes())
-				cs.initializeSprite(stateInfo);
+				cs.initializeSprite(stateInfo.getResourceManager());
 			
 			
 			// Regardless of whether or not this is a loaded mid-way battle
@@ -149,7 +149,7 @@ public class SpriteManager extends Manager
 					
 					if (mo.getKey().equalsIgnoreCase("enemy"))
 					{
-						CombatSprite cs = mo.getEnemy(stateInfo);
+						CombatSprite cs = mo.getEnemy(stateInfo.getResourceManager());
 						
 						if (CommRPG.BATTLE_MODE_OPTIMIZE)
 							battleOptimizer.modifyStats(cs);
@@ -180,14 +180,14 @@ public class SpriteManager extends Manager
 				// Initialize all of the heroes, this just sets images and initializes effects.
 				// Stats are initialized above for all heroes
 				for (CombatSprite cs : stateInfo.getAllHeroes())
-					cs.initializeSprite(stateInfo);
+					cs.initializeSprite(stateInfo.getResourceManager());
 				
 				int nextEnemyId = 0;
 				for (CombatSprite cs : stateInfo.getCombatSprites())
 				{
 					if (!cs.isHero())
 					{
-						cs.initializeSprite(stateInfo);
+						cs.initializeSprite(stateInfo.getResourceManager());
 						// The target location of AI may be incorrect, fix that here
 						if (cs.getAi() != null)
 							cs.getAi().reinitialize(stateInfo);
@@ -219,7 +219,7 @@ public class SpriteManager extends Manager
 			while (spriteItr.hasNext())
 			{
 				Sprite s = spriteItr.next();
-				s.update();
+				s.update(stateInfo);
 				if (s.getSpriteType() == Sprite.TYPE_COMBAT)
 				{
 					CombatSprite cs = (CombatSprite) s;

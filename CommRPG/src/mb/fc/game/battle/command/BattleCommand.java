@@ -5,6 +5,7 @@ import java.io.Serializable;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.battle.spell.KnownSpell;
 import mb.fc.game.item.Item;
+import mb.fc.loading.FCResourceManager;
 import mb.jython.JSpell;
 
 public class BattleCommand implements Serializable
@@ -53,10 +54,10 @@ public class BattleCommand implements Serializable
 		this.jSpell = jSpell;
 	}
 
-	public void initializeSpell(StateInfo stateInfo) {
+	public void initializeSpell(FCResourceManager fcrm) {
 		if (spell != null)
 		{
-			spell.initializeFromLoad(stateInfo);
+			spell.initializeFromLoad(fcrm);
 			jSpell = spell.getSpell();
 		}
 	}

@@ -9,6 +9,7 @@ import mb.fc.game.item.EquippableItem;
 import mb.fc.game.item.Item;
 import mb.fc.game.item.ItemUse;
 import mb.fc.game.item.SpellItemUse;
+import mb.fc.loading.FCResourceManager;
 import mb.fc.utils.StringUtils;
 import mb.fc.utils.XMLParser.TagArea;
 
@@ -140,9 +141,9 @@ public class ItemDefinition
 		}
 	}
 
-	public Item getItem(StateInfo stateInfo)
+	public Item getItem(FCResourceManager fcrm)
 	{
-		initializeItem(item, stateInfo);
+		initializeItem(item, fcrm);
 		return item;
 	}
 
@@ -151,9 +152,9 @@ public class ItemDefinition
 		return item;
 	}
 
-	public void initializeItem(Item i, StateInfo stateInfo)
+	public void initializeItem(Item i, FCResourceManager fcrm)
 	{
-		i.setImage(stateInfo.getResourceManager().getSpriteSheet("items").getSprite(imageX, imageY));
+		i.setImage(fcrm.getSpriteSheet("items").getSprite(imageX, imageY));
 	}
 
 	public int getId() {

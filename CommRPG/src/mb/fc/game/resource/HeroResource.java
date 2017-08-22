@@ -1,7 +1,10 @@
 package mb.fc.game.resource;
 
 import java.util.Hashtable;
+import java.util.List;
+import java.util.stream.Collectors;
 
+import mb.fc.game.definition.EnemyDefinition;
 import mb.fc.game.definition.HeroDefinition;
 import mb.fc.game.exception.BadResourceException;
 import mb.fc.game.sprite.CombatSprite;
@@ -34,5 +37,9 @@ public class HeroResource
 	public static String getAnimation(int heroId)
 	{
 		return heroDefinitionsById.get(heroId).getAnimation();
+	}
+	
+	public static List<String> getHeroNames() {
+		return heroDefinitionsById.values().stream().map(HeroDefinition::getName).collect(Collectors.toList());
 	}
 }

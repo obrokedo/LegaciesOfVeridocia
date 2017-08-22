@@ -30,10 +30,10 @@ public class NPCSprite extends AnimatedSprite
 		this.id = id;
 	}
 
-	public void setInitialPosition(int xLoc, int yLoc, int maxWander)
+	public void setInitialPosition(int xLoc, int yLoc,
+			int tileWidth, int tileHeight, int maxWander)
 	{
-		this.setLocX(xLoc);
-		this.setLocY(yLoc);
+		this.setLocation(xLoc, yLoc, tileWidth, tileHeight);
 		this.initialTileX = this.getTileX();
 		this.initialTileY = this.getTileY();
 		this.maxWander = maxWander;
@@ -84,14 +84,14 @@ public class NPCSprite extends AnimatedSprite
 	boolean moving = false;
 
 	@Override
-	public void update() {
-		super.update();
+	public void update(StateInfo stateInfo) {
+		super.update(stateInfo);
 
 		if (maxWander > 0)
-			wanderMove();
+			wanderMove(stateInfo);
 	}
 
-	private void wanderMove()
+	private void wanderMove(StateInfo stateInfo)
 	{
 		if (!moving)
 		{

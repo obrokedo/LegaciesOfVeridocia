@@ -735,7 +735,7 @@ public class Cinematic {
 				break;
 			case ADD_HERO:
 				CombatSprite addHeroSprite = HeroResource.getHero((int) ce.getParam(0));
-				addHeroSprite.initializeSprite(stateInfo);
+				addHeroSprite.initializeSprite(stateInfo.getResourceManager());
 				stateInfo.getPersistentStateInfo().getClientProfile().addHero(addHeroSprite);
 				break;
 			default:
@@ -768,7 +768,7 @@ public class Cinematic {
 		}
 
 		for (StaticSprite ss : staticSprites)
-			ss.render(camera, graphics, cont);
+			ss.render(camera, graphics, cont, stateInfo.getTileHeight());
 	}
 
 	/**

@@ -144,12 +144,6 @@ public class FCResourceManager {
 			nImage.setFilter(Image.FILTER_NEAREST);
 			images.put(split[1], nImage);
 		}
-		else if (split[0].equalsIgnoreCase("fsa"))
-		{
-			SpriteAnims sa = SpriteAnims.parseAnimations(split[2]);
-			sa.initialize(images.get(sa.getSpriteSheet()));// 1.88f);
-			spriteAnimations.put(split[1], sa);
-		}
 		else if (split[0].equalsIgnoreCase("text"))
 		{
 			String mapName = CommRPG.TEXT_PARSER.parseText(split[1], speechesById, triggerEventById, cinematicById, conditions, this);
@@ -287,6 +281,24 @@ public class FCResourceManager {
 					images.put(file.getName().replace(".png", ""), new Image(file.getPath(), transparent));
 				}
 			}
+			
+			for (File file : dir.listFiles())
+			{
+				if (file.getName().endsWith(".anim")) {
+					Log.debug(file.getName());
+					SpriteAnims sa = SpriteAnims.parseAnimations(file.getPath());
+					if (!images.containsKey(sa.getSpriteSheet()))
+					{
+						throw new BadResourceException("Error while attempting to load animation file: " + file.getName() + ".\n The"
+								+ " animation file has refers to an image '" + sa.getSpriteSheet() + "' which does not exist.\n"
+										+ "Either change the name of the desired image in the 'sprite' folder to the correct name\n"
+										+ "or update the animation file to refer to the correct image. Keep in mind that image names\n"
+										+ "ARE case sensitive");
+					}
+					sa.initialize(images.get(sa.getSpriteSheet()));
+					spriteAnimations.put(file.getName().replace(".anim", ""), sa);
+				}
+			}
 		}
 		else if (split[0].equalsIgnoreCase("spritedir"))
 		{
@@ -311,28 +323,6 @@ public class FCResourceManager {
 					Image nIm = new Image(file.getPath(), transparent);
 					nIm.setFilter(Image.FILTER_NEAREST);
 					images.put(file.getName().replace(".png", ""), nIm);
-				}
-			}
-		}
-		else if (split[0].equalsIgnoreCase("animfsadir"))
-		{
-			File dir = new File(split[1]);
-			for (File file : dir.listFiles())
-			{
-				if (file.getName().endsWith(".anim"))
-				{
-					Log.debug(file.getName());
-					SpriteAnims sa = SpriteAnims.parseAnimations(file.getPath());
-					if (!images.containsKey(sa.getSpriteSheet()))
-					{
-						throw new BadResourceException("Error while attempting to load animation file: " + file.getName() + ".\n The"
-								+ " animation file has refers to an image '" + sa.getSpriteSheet() + "' which does not exist\n."
-										+ "Either change the name of the desired image in the 'sprite' folder to the correct name\n"
-										+ "or update the animation file to refer to the correct image. Keep in mind that image names\n"
-										+ "ARE case sensitive");
-					}
-					sa.initialize(images.get(sa.getSpriteSheet()));// 1.88f);
-					spriteAnimations.put(file.getName().replace(".anim", ""), sa);
 				}
 			}
 		}
@@ -480,5 +470,13 @@ public class FCResourceManager {
         }
 		br.close();
 		return allLines;
+	}
+	
+	public void reloadAnimations() {
+		try {
+			this.addResource("animsheetdir,animations/animationsheets", null, 0, 0);
+		} catch (IOException | SlickException e) {
+			JOptionPane.showMessageDialog(null, "An error occurred reloading animations: " + e.getMessage());
+		}
 	}
 }

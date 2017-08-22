@@ -78,7 +78,7 @@ public class MovingSprite
 		{
 			moveRemainder = moveIndex - moveSpeed;
 			moveIndex = moveSpeed;
-			animatedSprite.setLocation(endX, endY);
+			animatedSprite.setLocation(endX, endY, stateInfo.getTileWidth(), stateInfo.getTileHeight());
 
 			if (animatedSprite == stateInfo.getCurrentSprite())
 				stateInfo.getCamera().centerOnSprite(animatedSprite, stateInfo.getCurrentMap());
@@ -99,19 +99,19 @@ public class MovingSprite
 		switch (direction)
 		{
 			case UP:
-				animatedSprite.setLocY(endY + amountMoved);
+				animatedSprite.setLocY(endY + amountMoved, stateInfo.getTileHeight());
 						// 2 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]));
 				break;
 			case DOWN:
-				animatedSprite.setLocY(endY - amountMoved);
+				animatedSprite.setLocY(endY - amountMoved, stateInfo.getTileHeight());
 						// 2 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]));
 				break;
 			case LEFT:
-				animatedSprite.setLocX(endX + amountMoved);
+				animatedSprite.setLocX(endX + amountMoved, stateInfo.getTileWidth());
 						// 2 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]));
 				break;
 			case RIGHT:
-				animatedSprite.setLocX(endX - amountMoved);
+				animatedSprite.setLocX(endX - amountMoved, stateInfo.getTileWidth());
 						// 2 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]));
 				break;
 		}

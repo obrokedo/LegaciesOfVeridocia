@@ -2,16 +2,17 @@ package mb.fc.game.battle;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.newdawn.slick.util.Log;
 
 import mb.fc.engine.CommRPG;
-import mb.fc.engine.state.StateInfo;
 import mb.fc.game.battle.command.BattleCommand;
 import mb.fc.game.constants.TextSpecialCharacters;
 import mb.fc.game.item.Item;
 import mb.fc.game.item.ItemUse;
 import mb.fc.game.sprite.CombatSprite;
+import mb.fc.loading.FCResourceManager;
 import mb.jython.GlobalPythonFactory;
 import mb.jython.JBattleEffect;
 import mb.jython.JBattleFunctions;
@@ -28,7 +29,7 @@ public class BattleResults implements Serializable
 	public ArrayList<Integer> mpDamage;
 	public ArrayList<Integer> remainingHP;
 	public ArrayList<String> text;
-	public ArrayList<CombatSprite> targets;
+	public List<CombatSprite> targets;
 	public ArrayList<ArrayList<JBattleEffect>> targetEffects;
 	public BattleCommand battleCommand;
 	public ArrayList<Integer> attackerHPDamage;
@@ -43,7 +44,7 @@ public class BattleResults implements Serializable
 	// TODO Effects
 
 	public static BattleResults determineBattleResults(CombatSprite attacker,
-			ArrayList<CombatSprite> targets, BattleCommand battleCommand, StateInfo stateInfo)
+			List<CombatSprite> targets, BattleCommand battleCommand, FCResourceManager fcrm)
 	{
         JBattleFunctions jBattleFunctions = GlobalPythonFactory.createJBattleFunctions();
 
@@ -136,7 +137,7 @@ public class BattleResults implements Serializable
 			// If we are doing a simple attack command then we need to get the dodge chance and calculate damage dealt
 			if (battleCommand.getCommand() == BattleCommand.COMMAND_ATTACK)
 			{
-				handleAttackAction(attacker, stateInfo, jBattleFunctions, br, target, commandResult);
+				handleAttackAction(attacker, fcrm, jBattleFunctions, br, target, commandResult);
 			}
 			// Check to see if the battle command indicates a spell is being used
 			else if (spell != null)
@@ -175,13 +176,13 @@ public class BattleResults implements Serializable
 		if (CommRPG.BATTLE_MODE_OPTIMIZE)
 			expGained = 0;
 		
-		indicateGainedExp(attacker, targets, expGained, br, stateInfo);
+		indicateGainedExp(attacker, targets, expGained, br, fcrm);
 
 		return br;
 	}
 
-	private static void indicateGainedExp(CombatSprite attacker, ArrayList<CombatSprite> targets, int expGained,
-			BattleResults br, StateInfo stateInfo) {
+	private static void indicateGainedExp(CombatSprite attacker, List<CombatSprite> targets, int expGained,
+			BattleResults br, FCResourceManager fcrm) {
 		if (attacker.isHero())
 		{
 			if (!br.attackerDeath)
@@ -192,7 +193,7 @@ public class BattleResults implements Serializable
 				if (attacker.getExp() >= 100)
 				{
 					br.attackOverText += " " + TextSpecialCharacters.CHAR_NEXT_CIN + TextSpecialCharacters.CHAR_LINE_BREAK + " ";
-					br.levelUpResult = attacker.getHeroProgression().getLevelUpResults(attacker, stateInfo);
+					br.levelUpResult = attacker.getHeroProgression().getLevelUpResults(attacker, fcrm);
 					br.attackOverText += br.levelUpResult.text;
 				}
 			}
@@ -204,7 +205,7 @@ public class BattleResults implements Serializable
 			if (targets.get(0).getExp() >= 100)
 			{
 				br.attackOverText += " " + TextSpecialCharacters.CHAR_NEXT_CIN + TextSpecialCharacters.CHAR_LINE_BREAK + " ";
-				br.levelUpResult = targets.get(0).getHeroProgression().getLevelUpResults(targets.get(0), stateInfo);
+				br.levelUpResult = targets.get(0).getHeroProgression().getLevelUpResults(targets.get(0), fcrm);
 				br.attackOverText += br.levelUpResult.text;
 			}
 		}
@@ -364,7 +365,7 @@ public class BattleResults implements Serializable
 		commandResult.text = text;
 	}
 
-	private static void handleAttackAction(CombatSprite attacker, StateInfo stateInfo,
+	private static void handleAttackAction(CombatSprite attacker, FCResourceManager fcrm,
 			JBattleFunctions jBattleFunctions, BattleResults br, CombatSprite target, CommandResult commandResult) {
 		int damage = 0;
 		int sumDamage = 0;
@@ -372,7 +373,7 @@ public class BattleResults implements Serializable
 		int expGained = 0;
 
 		// Normal Attack
-		text = addAttack(attacker, target, br, stateInfo, jBattleFunctions, false);
+		text = addAttack(attacker, target, br, fcrm, jBattleFunctions, false);
 		damage = br.hpDamage.get(0);
 		sumDamage = damage;
 		br.remainingHP.add(target.getCurrentHP() + damage);
@@ -392,7 +393,7 @@ public class BattleResults implements Serializable
 					jBattleFunctions.getCounterPercent(attacker, target) >= CommRPG.RANDOM.nextInt(100))
 			{
 				br.text.add(text);
-				text = addAttack(target, attacker, br, stateInfo, jBattleFunctions, true);
+				text = addAttack(target, attacker, br, fcrm, jBattleFunctions, true);
 				damage = br.hpDamage.get(1);
 
 				// Add the attackers remaining HP
@@ -425,7 +426,7 @@ public class BattleResults implements Serializable
 				if (jBattleFunctions.getDoublePercent(attacker, target) >= CommRPG.RANDOM.nextInt(100))
 				{
 					br.text.add(text);
-					text = addAttack(attacker, target, br, stateInfo, jBattleFunctions, false);
+					text = addAttack(attacker, target, br, fcrm, jBattleFunctions, false);
 					damage = br.hpDamage.get(br.hpDamage.size() - 1);
 					sumDamage += damage;
 
@@ -454,7 +455,7 @@ public class BattleResults implements Serializable
 	}
 
 	private static String addAttack(CombatSprite attacker, CombatSprite target, BattleResults br,
-			StateInfo stateInfo, JBattleFunctions jBattleFunctions, boolean counter)
+			FCResourceManager fcrm, JBattleFunctions jBattleFunctions, boolean counter)
 	{
 		String text;
 
@@ -481,7 +482,7 @@ public class BattleResults implements Serializable
 		else
 		{
 			br.dodged.add(false);
-			float landEffect = (100 + stateInfo.getResourceManager().getMap().getLandEffectByTile(target.getMovementType(),
+			float landEffect = (100 + fcrm.getMap().getLandEffectByTile(target.getMovementType(),
 					target.getTileX(), target.getTileY())) / 100.0f;
 
 			boolean critted = false;
@@ -607,9 +608,9 @@ public class BattleResults implements Serializable
 		*/
 	}
 
-	public void initialize(StateInfo stateInfo)
+	public void initialize(FCResourceManager fcrm)
 	{
-		battleCommand.initializeSpell(stateInfo);
+		battleCommand.initializeSpell(fcrm);
 	}
 	
 	protected static class CommandResult {

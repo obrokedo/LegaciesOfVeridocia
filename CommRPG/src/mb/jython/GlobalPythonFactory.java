@@ -51,6 +51,9 @@ public class GlobalPythonFactory
 	 */
 	public static void intialize()
 	{
+		if (initialized)
+			configurationValues.clearPythonModules();
+		
 		initialized = true;
 
 		/************************************************************************/
@@ -73,7 +76,6 @@ public class GlobalPythonFactory
 		if (!LoadingState.inJar)
 		{
 			JythonObjectFactory.sys.path.append(new PyString(JythonObjectFactory.sys.getPath("scripts")));
-
 
 			File scriptsFolder = new File(JythonObjectFactory.sys.getPath("scripts"));
 			for (File file : scriptsFolder.listFiles())

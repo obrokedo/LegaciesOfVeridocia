@@ -7,8 +7,7 @@ from org.newdawn.slick import Color
 from java.lang import String
 from BattleEffect import BattleEffect
 
-class Aura(JSpell):    
-    someVal = 3    
+class Aura(JSpell):
 
     # This is where you set up all of the parameters for each of the spells    
     def init(self, id):
@@ -68,17 +67,32 @@ class Aura(JSpell):
         if bleeding:
             baseDamage = 0
         else :
+            baseDamage = self.getDamage()[spellLevel]
             # Keep in mind that healing spells will have a positive base damage value. 
             baseDamage = Math.min(target.getMaxHP() - target.getCurrentHP(), # Maximum value is the amount of hp the target is missing 
                                   baseDamage + (baseDamage * attacker.getCurrentWaterAffin() / 100.0)) # Add the casters affinity (increasing healing)
+        
+        return int(baseDamage)
     
     def getBattleText(self, target, damage, mpDamage, attackerHPDamage, attackerMPDamage):
-         return "A healing aura washes over " + target.getName() + ". " + target.getName() + " is healed by " + `damage` + "!"
+        return "A healing aura washes over " + target.getName() + ". " + target.getName() + " is healed by " + `damage` + "!"
         
     def getExpGained(self, level, attacker, target):
-            return int(12 * Math.max(0, (target.getMaxHP() - target.getCurrentHP()) * 1.0 / self.getDamage()[level]))
+        return int(12 * Math.max(0, (target.getMaxHP() - target.getCurrentHP()) * 1.0 / self.getDamage()[level]))
             
     # This is at 30% opacity    
     def getSpellOverlayColor(self, level):
         return Color(0, 0, 0);
+    
+    def getSpellAnimationFile(self, level):
+        return "Heal"
+    
+    def getSpellRainAnimationFile(self, level):
+        return None
+    
+    def getSpellRainAnimationName(self, level):
+        return None
+
+    def getSpellRainFrequency(self, level):
+        return 0
         

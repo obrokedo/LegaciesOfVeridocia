@@ -22,6 +22,7 @@ import mb.fc.engine.state.LOVAttackCinematicState;
 import mb.fc.engine.state.MenuState;
 import mb.fc.engine.state.TownState;
 import mb.fc.engine.state.devel.DevelAnimationViewState;
+import mb.fc.engine.state.devel.DevelBattleAnimViewState;
 import mb.fc.engine.state.devel.DevelMenuState;
 import mb.fc.game.ui.PaddedGameContainer;
 import mb.fc.loading.FCLoadingRenderSystem;
@@ -66,6 +67,8 @@ public class CommRPG extends StateBasedGame   {
 	 * State in which the game is actually being played
 	 */
 	public static final int STATE_GAME_TOWN = 10;
+	
+	public static final int STATE_GAME_BATTLE_ANIM_VIEW = 11;
 
 	public static final Dimension GAME_SCREEN_SIZE = new Dimension(320, 240);
 	public static int GAME_SCREEN_SCALE = 3;
@@ -82,7 +85,7 @@ public class CommRPG extends StateBasedGame   {
 
 	private static int fullScreenWidth, fullScreenHeight;
 
-	public static final String VERSION = "DEV 1.35 July 29, 2017";
+	public static final String VERSION = "DEV 1.36 Sept 21, 2017";
 
 	public static final String GAME_TITLE = "Legacies of Veridocia";
 
@@ -221,6 +224,7 @@ public class CommRPG extends StateBasedGame   {
 		this.addState(new DevelMenuState());
 		this.addState(new DevelAnimationViewState());
 		this.addState(loadingState);
+		this.addState(new DevelBattleAnimViewState());
 		addState(new BattleState());
 		addState(new TownState());
 		addState(new CinematicState());

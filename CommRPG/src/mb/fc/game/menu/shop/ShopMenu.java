@@ -73,7 +73,7 @@ public class ShopMenu extends Menu implements MenuListener
 		differences = new ArrayList<String>();
 
 		for (Integer i : itemIds)
-			items.add(ItemResource.getItem(i, stateInfo));
+			items.add(ItemResource.getItem(i, stateInfo.getResourceManager()));
 
 		selectedHero = heroes.get(0);
 		this.sellPercent = sellPercent;

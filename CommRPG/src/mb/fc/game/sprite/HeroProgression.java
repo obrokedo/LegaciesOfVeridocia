@@ -55,7 +55,7 @@ public class HeroProgression implements Serializable
 	}
 
 	//TODO This needs to make sure it uses all values from the LevelProgression script
-	public LevelUpResult getLevelUpResults(CombatSprite cs, StateInfo stateInfo)
+	public LevelUpResult getLevelUpResults(CombatSprite cs, FCResourceManager fcrm)
 	{
 		Progression p = (cs.isPromoted() ? promotedProgression : unpromotedProgression);
 		String text = cs.getName() + " has reached level " + (cs.getLevel() + 1) + "!}[";
@@ -87,7 +87,7 @@ public class HeroProgression implements Serializable
 			{
 				if (spellLevels[i][j] == (cs.getLevel() + 1))
 				{
-					JSpell spell = SpellResource.getSpell(spellIds.get(i), stateInfo);
+					JSpell spell = SpellResource.getSpell(spellIds.get(i), fcrm);
 					text += " " + cs.getName() + " learned " + spell.getName() + " " + (j + 1) + "}[";
 				}
 			}

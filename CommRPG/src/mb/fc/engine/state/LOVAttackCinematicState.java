@@ -87,6 +87,7 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 	private int SPELL_OVERLAY_MAX_ALPHA = 80;
 	private Color spellOverlayColor = null;
 	private AnimatedParticleSystem rainParticleSystem;
+	private int exitState;
 
 	// The amount that the background has been scaled to fit the screen,
 	// other animations should be scaled up accordingly
@@ -96,10 +97,17 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 	private Music introMusic;
 	public static final int SPELL_FLASH_DURATION = 480;
 	public static Image FLOOR_IMAGE;
+	
+	public void setBattleInfo(CombatSprite attacker, FCResourceManager frm,
+			BattleResults battleResults, PaddedGameContainer gc, int exitState) {
+		setBattleInfo(attacker, frm, battleResults, gc);
+		this.exitState = exitState;
+	}
 
 	public void setBattleInfo(CombatSprite attacker, FCResourceManager frm,
 			BattleResults battleResults, PaddedGameContainer gc)
 	{
+		this.exitState = CommRPG.STATE_GAME_BATTLE;
 		this.gc = gc;
 		this.battleResults = battleResults;
 		this.attacker = attacker;
@@ -767,7 +775,7 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 
 				// Restart this animation
 				setBattleInfo(attacker, frm,
-						battleResults, gc);
+						battleResults, gc, exitState);
 		}
 
 		// Check to see if there is a text menu that is currently displayed
@@ -948,7 +956,7 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 			if (introMusic != null)
 				introMusic.stop();
 			gc.getInput().removeAllKeyListeners();
-			game.enterState(CommRPG.STATE_GAME_BATTLE, new FadeOutTransition(Color.black, 250), new EmptyTransition());
+			game.enterState(exitState, new FadeOutTransition(Color.black, 250), new EmptyTransition());
 		}
 	}
 

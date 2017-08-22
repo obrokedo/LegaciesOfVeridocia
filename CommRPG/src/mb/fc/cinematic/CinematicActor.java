@@ -873,8 +873,8 @@ public class CinematicActor implements Comparable<CinematicActor>
 	{
 		if (sprite != null)
 		{
-			sprite.setLocX(locX);
-			sprite.setLocY(locY);
+			sprite.setLocX(locX, stateInfo.getTileWidth());
+			sprite.setLocY(locY, stateInfo.getTileHeight());
 			stateInfo.removeCombatSprite((CombatSprite) sprite);
 		}
 	}
@@ -883,8 +883,8 @@ public class CinematicActor implements Comparable<CinematicActor>
 	{
 		if (sprite != null)
 		{
-			sprite.setLocX(locX);
-			sprite.setLocY(locY + stateInfo.getResourceManager().getMap().getTileRenderHeight());
+			sprite.setLocX(locX, stateInfo.getTileWidth());
+			sprite.setLocY(locY + stateInfo.getResourceManager().getMap().getTileRenderHeight(), stateInfo.getTileHeight());
 			sprite.setFacing(facing);
 			sprite.setVisible(true);
 		}

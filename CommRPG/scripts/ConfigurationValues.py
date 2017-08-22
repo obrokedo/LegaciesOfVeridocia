@@ -1,5 +1,6 @@
 from java.lang import String
 from mb.jython import JConfigurationValues
+import sys
 
 from org.python.modules import jarray
 
@@ -247,3 +248,6 @@ class ConfigurationValues(JConfigurationValues):
     # while standing on the specified terrainType
     def getBattleBackgroundImageIndexByTerrainType(self, terrainType):
         return 0
+    
+    def clearPythonModules(self):
+        sys.modules.clear()

@@ -50,7 +50,7 @@ public class AttackSpriteAction extends TurnAction
 			}
 		}
 		stateInfo.sendMessage(new BattleResultsMessage(BattleResults.determineBattleResults(turnManager.getCurrentSprite(),
-			targArray, battleCommand, stateInfo)), true);
+			targArray, battleCommand, stateInfo.getResourceManager())), true);
 		turnManager.setDisplayAttackable(false);
 		return true;
 	}

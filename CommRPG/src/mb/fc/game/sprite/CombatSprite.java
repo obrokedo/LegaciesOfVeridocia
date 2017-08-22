@@ -255,9 +255,9 @@ public class CombatSprite extends AnimatedSprite
 
 	//TODO Need to have a way to init a sprite without resetting stats
 	@Override
-	public void initializeSprite(StateInfo stateInfo)
+	public void initializeSprite(FCResourceManager fcrm)
 	{
-		super.initializeSprite(stateInfo);
+		super.initializeSprite(fcrm);
 
 		drawShadow = GlobalPythonFactory.createConfigurationValues().isAffectedByTerrain(this.movementType);
 
@@ -266,23 +266,23 @@ public class CombatSprite extends AnimatedSprite
 		if (spells != null && spells.size() > 0)
 		{
 			for (KnownSpell sd : spells)
-				sd.initializeFromLoad(stateInfo);
+				sd.initializeFromLoad(fcrm);
 		}
 
 		// TODO Does this work?!? We are persisting a jython object
 		for (JBattleEffect effect : battleEffects)
-			effect.initializeAnimation(stateInfo.getResourceManager());
+			effect.initializeAnimation(fcrm);
 
 		//TODO Remove (all?) battle effects if this isn't an init mid battle
 
 		for (Item item : items)
 		{
-			ItemResource.initializeItem(item, stateInfo);
+			ItemResource.initializeItem(item, fcrm);
 		}
 
 		if (this.getEquippedWeapon() != null && this.getEquippedWeapon().getWeaponImage() != null)
 		{
-			currentWeaponImage = stateInfo.getResourceManager().getImage(this.getEquippedWeapon().getWeaponImage());
+			currentWeaponImage = fcrm.getImage(this.getEquippedWeapon().getWeaponImage());
 		}
 
 		fadeColor = new Color(255, 255, 255, 255);
@@ -325,17 +325,17 @@ public class CombatSprite extends AnimatedSprite
 		
 		if (isHero)
 		{
-			super.setLocX(-1);
-			super.setLocY(-1);
+			super.setLocX(-1, 0);
+			super.setLocY(-1, 0);
 		}
 	
 		// addBattleEffect(GlobalPythonFactory.createJBattleEffect("Burn", 1));
 	}
 
 	@Override
-	public void update()
+	public void update(StateInfo stateInfo)
 	{
-		super.update();
+		super.update(stateInfo);
 
 		if (currentHP <= 0)
 		{
@@ -353,13 +353,15 @@ public class CombatSprite extends AnimatedSprite
 	}
 
 	@Override
-	public void render(Camera camera, Graphics graphics, PaddedGameContainer cont)
+	public void render(Camera camera, Graphics graphics, PaddedGameContainer cont, int tileHeight)
 	{
 		graphics.setColor(Color.white);
+		/*
 		if (this.isHero && stateInfo.getPersistentStateInfo().getClientId() != this.clientId) {
 			graphics.drawString("x", this.getLocX() - camera.getLocationX(),
 					this.getLocY() - camera.getLocationY() - stateInfo.getResourceManager().getMap().getTileEffectiveHeight() / 2);
 		}
+		*/
 		for (AnimSprite as : currentAnim.frames.get(imageIndex).sprites)
 		{
 			Image im = spriteAnims.getImageAtIndex(as.imageIndex);
@@ -372,11 +374,11 @@ public class CombatSprite extends AnimatedSprite
 
 			if (drawShadow)
 			{
-				AnimatedSprite.drawShadow(im, this.getLocX(), this.getLocY(), camera, true);
+				AnimatedSprite.drawShadow(im, this.getLocX(), this.getLocY(), camera, true, tileHeight);
 			}
 
 			graphics.drawImage(im, this.getLocX() - camera.getLocationX(),
-					this.getLocY() - camera.getLocationY() - stateInfo.getResourceManager().getMap().getTileEffectiveHeight() / 2, fadeColor);
+					this.getLocY() - camera.getLocationY() - tileHeight / 2, fadeColor);
 		}
 	}
 

@@ -19,6 +19,7 @@ import mb.fc.game.sprite.NPCSprite;
 import mb.fc.game.sprite.Sprite;
 import mb.fc.game.sprite.StaticSprite;
 import mb.fc.game.text.Speech;
+import mb.fc.loading.FCResourceManager;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Polygon;
@@ -145,7 +146,7 @@ public class MapObject
 			{
 				if (shape.contains(x + startX + 1, y + startY + 1))
 				{
-					((CombatSprite) sprite).setLocation((x + startX), (y + startY));
+					((CombatSprite) sprite).setLocation((x + startX), (y + startY), stateInfo.getTileWidth(), stateInfo.getTileHeight());
 					((CombatSprite) sprite).setFacing(Direction.DOWN);
 				}
 				else
@@ -163,25 +164,25 @@ public class MapObject
 		}
 	}
 
-	public NPCSprite getNPC(StateInfo stateInfo)
+	public NPCSprite getNPC(FCResourceManager fcrm)
 	{
 		int imageId = Integer.parseInt(params.get("imageid"));
 		int wander = 0;
 		if (params.containsKey("wander"))
 			wander = Integer.parseInt(params.get("wander"));
-		ArrayList<Speech> speeches = stateInfo.getResourceManager().getSpeechesById(Integer.parseInt(params.get("textid")));
+		ArrayList<Speech> speeches = fcrm.getSpeechesById(Integer.parseInt(params.get("textid")));
 		NPCSprite npc = NPCResource.getNPC(imageId, speeches);
 		if (params.get("npcid") != null)
 			npc.setUniqueNPCId(Integer.parseInt(params.get("npcid")));
-		npc.initializeSprite(stateInfo);
-		npc.setInitialPosition(x, y, wander);
+		npc.initializeSprite(fcrm);
+		npc.setInitialPosition(x, y, fcrm.getMap().getTileEffectiveWidth(), fcrm.getMap().getTileEffectiveHeight(), wander);
 		return npc;
 	}
 
-	public CombatSprite getEnemy(StateInfo stateInfo)
+	public CombatSprite getEnemy(FCResourceManager fcrm)
 	{
 		int enemyId = Integer.parseInt(params.get("enemyid"));
-		CombatSprite enemy = EnemyResource.getEnemy(enemyId, stateInfo);
+		CombatSprite enemy = EnemyResource.getEnemy(enemyId);
 		if (params.containsKey("ai"))
 		{
 			String type = params.get("ai");
@@ -210,17 +211,17 @@ public class MapObject
 				enemy.setUniqueEnemyId(id);
 		}
 
-		enemy.initializeSprite(stateInfo);
-		enemy.setLocX(x);
-		enemy.setLocY(y);
+		enemy.initializeSprite(fcrm);
+		enemy.setLocX(x, fcrm.getMap().getTileEffectiveWidth());
+		enemy.setLocY(y, fcrm.getMap().getTileEffectiveHeight());
 
 		return enemy;
 	}
 
-	public Sprite getSprite(StateInfo stateInfo)
+	public Sprite getSprite(FCResourceManager fcrm)
 	{
 		String name = params.get("name");
-		Image image = stateInfo.getResourceManager().getImage(params.get("image"));
+		Image image = fcrm.getImage(params.get("image"));
 
 		int[] trigger = null;
 		if (params.containsKey("searchtrigger"))
@@ -232,13 +233,13 @@ public class MapObject
 		}
 
 		Sprite s = new StaticSprite(x, y, name, image, trigger);
-		s.initializeSprite(stateInfo);
-		s.setLocX(x);
-		s.setLocY(y);
+		s.initializeSprite(fcrm);
+		s.setLocX(x, fcrm.getMap().getTileEffectiveWidth());
+		s.setLocY(y, fcrm.getMap().getTileEffectiveHeight());
 		return s;
 	}
 
-	public Sprite getSearchArea(StateInfo stateInfo)
+	public Sprite getSearchArea(FCResourceManager fcrm)
 	{
 		int[] trigger = null;
 		if (params.containsKey("searchtrigger"))
@@ -250,20 +251,20 @@ public class MapObject
 		}
 
 		Sprite s = new StaticSprite(x, y, trigger);
-		s.initializeSprite(stateInfo);
-		s.setLocX(x);
-		s.setLocY(y);
+		s.initializeSprite(fcrm);
+		s.setLocX(x, fcrm.getMap().getTileEffectiveWidth());
+		s.setLocY(y, fcrm.getMap().getTileEffectiveHeight());
 		return s;
 	}
 
-	public Sprite getDoor(StateInfo stateInfo, int doorId)
+	public Sprite getDoor(FCResourceManager fcrm, int doorId)
 	{
-		Image image = stateInfo.getResourceManager().getImage(params.get("image"));
+		Image image = fcrm.getImage(params.get("image"));
 
 		Sprite s = new Door(doorId, x, y, image);
-		s.initializeSprite(stateInfo);
-		s.setLocX(x);
-		s.setLocY(y);
+		s.initializeSprite(fcrm);
+		s.setLocX(x, fcrm.getMap().getTileEffectiveWidth());
+		s.setLocY(y, fcrm.getMap().getTileEffectiveHeight());
 		return s;
 	}
 	

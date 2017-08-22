@@ -65,7 +65,7 @@ public class ShopMenuTabled extends Menu implements MenuListener
 		this.gold = stateInfo.getClientProfile().getGold();
 
 		for (int i = 0; i < items.length; i++)
-			items[i] = ItemResource.getItem(shopMessage.getItemIds()[i], stateInfo);
+			items[i] = ItemResource.getItem(shopMessage.getItemIds()[i], stateInfo.getResourceManager());
 
 		selectedItem = items[0];
 		itemName = selectedItem.getName().split(" ");

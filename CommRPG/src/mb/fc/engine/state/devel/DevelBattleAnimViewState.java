@@ -1,0 +1,267 @@
+package mb.fc.engine.state.devel;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+
+import javax.swing.JOptionPane;
+
+import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.EmptyTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
+
+import mb.fc.engine.CommRPG;
+import mb.fc.engine.state.LOVAttackCinematicState;
+import mb.fc.game.battle.BattleResults;
+import mb.fc.game.battle.command.BattleCommand;
+import mb.fc.game.battle.spell.KnownSpell;
+import mb.fc.game.resource.EnemyResource;
+import mb.fc.game.resource.HeroResource;
+import mb.fc.game.sprite.CombatSprite;
+import mb.fc.game.ui.Button;
+import mb.fc.game.ui.ListUI;
+import mb.fc.game.ui.ListUI.ResourceSelectorListener;
+import mb.fc.game.ui.PaddedGameContainer;
+import mb.fc.loading.FCResourceManager;
+import mb.fc.loading.LoadableGameState;
+import mb.jython.GlobalPythonFactory;
+import mb.jython.JSpell;
+
+public class DevelBattleAnimViewState extends LoadableGameState implements ResourceSelectorListener {
+	private WizardStep wizardIndex;
+	private ListUI currentList;
+	private CombatSprite attacker;
+	private CombatSprite target;
+	private boolean attackerHero, targetHero;
+	private FCResourceManager fcrm;
+	private StateBasedGame game;
+	private Button backButton = new Button(400, 15, 165, 25, "Previous Step");
+	private Button reloadButton = new Button(400, 50, 165, 25, "Reload Animations");
+	private Button reloadScriptsButton = new Button(400, 85, 165, 25, "Reload Scripts");
+	private int nextInput = 0;
+	
+	public DevelBattleAnimViewState() {
+		wizardIndex = null;
+	}
+	
+	@Override
+	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
+		
+	}
+
+	private void setupStep() {
+		try {
+			currentList = null;
+			ArrayList<String> options = new ArrayList<>();
+			String selectText = null;
+			switch(wizardIndex) {
+				case PICK_ATTACKER_TYPE:
+					selectText = "Is the attacker a hero or enemy?";
+					options.add("Hero"); options.add("Enemy");
+					break;
+				case PICK_TARGET_TYPE:
+					selectText = "Is the target a hero or enemy?";
+					options.add("Hero"); options.add("Enemy");
+					break;
+				case PICK_ATTACKER:
+					selectText = getCombatantOptions(options, "attacking", attackerHero);
+					break;
+				case PICK_TARGET:
+					selectText = getCombatantOptions(options, "the target", targetHero);
+					break;
+				case PICK_ATTACK_ACTION:
+					selectText = "Choose the attackers action";
+					options.add("Normal Attack"); // options.add("Miss Attack"); options.add("Double Attack"); options.add("Critical Attack");
+					String[] spells = GlobalPythonFactory.createJSpell().getSpellList();
+					for (String spell : spells) {
+						JSpell initSpell = GlobalPythonFactory.createJSpell().init(spell);
+						for (int i = 0; i < initSpell.getMaxLevel(); i++) {
+							options.add(spell + " " + (i + 1));
+						}
+					}
+					break;
+					
+			}
+			if (options.size() > 0) {
+				currentList = new ListUI(selectText, 14, options);
+				currentList.setListener(this);
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "An error occurred preparing step " + wizardIndex + ": " + e.getMessage());
+		}
+	}
+
+	private String getCombatantOptions(ArrayList<String> options, String replaceText, boolean hero) throws IOException {
+		String selectText;
+		if (hero) {
+			selectText = "Select the hero that is " + replaceText;
+			options.addAll(HeroResource.getHeroNames());
+		} else {
+			selectText = "Select the enemy that is " + replaceText;
+			options.addAll(EnemyResource.getEnemyNames());
+		}
+		return selectText;
+	}
+	
+	enum WizardStep {
+		PICK_ATTACKER_TYPE,
+		PICK_ATTACKER,
+		PICK_TARGET_TYPE,
+		PICK_TARGET,
+		PICK_ATTACK_ACTION,
+		PICK_DEFENDER_ACTION,
+		GO
+	}
+
+	@Override
+	public boolean resourceSelected(String selectedItem, ListUI parentSelector) {
+		switch (wizardIndex) {
+			case PICK_ATTACKER_TYPE:
+				attackerHero = selectedItem.equalsIgnoreCase("Hero");
+				nextStep();
+				break;
+			case PICK_TARGET_TYPE:
+				targetHero = selectedItem.equalsIgnoreCase("Hero");
+				nextStep();
+				break;
+			case PICK_ATTACKER:
+				if (attackerHero)
+					attacker = HeroResource.getHero(selectedItem);
+				else 
+					attacker = EnemyResource.getEnemy(selectedItem);
+				attacker.initializeSprite(fcrm);
+				attacker.setLocation(0, 0, 1, 1);
+				nextStep();
+				break;
+			case PICK_TARGET:
+				if (targetHero)
+					target = HeroResource.getHero(selectedItem);
+				else 
+					target = EnemyResource.getEnemy(selectedItem);
+				target.initializeSprite(fcrm);
+				target.setLocation(0, 1, 1, 1);
+				nextStep();
+				break;
+			case PICK_ATTACK_ACTION:
+				handlePickAttackAction(selectedItem);
+				break;
+			default:
+				break;
+		}
+		return false;
+	}
+	
+	private void handlePickAttackAction(String selectedItem) {
+		BattleCommand battleCommand = null;
+		if (selectedItem.equalsIgnoreCase("Normal Attack")) {
+			battleCommand = new BattleCommand(BattleCommand.COMMAND_ATTACK);
+		} else {
+			String[] splitSpell = selectedItem.split(" ");
+			JSpell spell = GlobalPythonFactory.createJSpell().init(splitSpell[0]);
+			KnownSpell ks = new KnownSpell(spell.getId(), (byte) 4, spell);
+			battleCommand = new BattleCommand(BattleCommand.COMMAND_SPELL, ks.getSpell(), ks, Integer.parseInt(splitSpell[1]));
+		}
+		
+		BattleResults br = BattleResults.determineBattleResults(attacker, Collections.singletonList(target), battleCommand, fcrm);
+		
+		attacker.initializeStats();
+		target.initializeStats();
+		LOVAttackCinematicState acs = (LOVAttackCinematicState) game.getState(CommRPG.STATE_GAME_BATTLE_ANIM);
+		acs.setBattleInfo(attacker, fcrm, br, (PaddedGameContainer) game.getContainer(), CommRPG.STATE_GAME_BATTLE_ANIM_VIEW);
+		game.enterState(CommRPG.STATE_GAME_BATTLE_ANIM, new FadeOutTransition(Color.black, 250), new EmptyTransition());
+	}
+	
+	private void nextStep() {
+		this.wizardIndex = WizardStep.values()[wizardIndex.ordinal() + 1];
+		this.setupStep();
+	}
+	
+	private void backStep() {
+		GlobalPythonFactory.intialize();
+		
+		if (wizardIndex.ordinal() != 0) {
+			this.wizardIndex = WizardStep.values()[wizardIndex.ordinal() - 1];
+			this.setupStep();
+		}
+	}
+
+	@Override
+	public int getID() {
+		return CommRPG.STATE_GAME_BATTLE_ANIM_VIEW;
+	}
+
+	@Override
+	public void init(GameContainer container, StateBasedGame game) throws SlickException {
+		this.game = game;
+	}
+
+	@Override
+	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
+		if (currentList != null) {
+			currentList.render(g);
+		}
+		backButton.render(g);
+		reloadButton.render(g);
+		reloadScriptsButton.render(g);
+		g.drawString("Press escape to return to the main menu", 300, container.getHeight() - 50);
+	}
+
+	@Override
+	public void stateLoaded(FCResourceManager resourceManager) {
+		if (wizardIndex == null) {
+			wizardIndex = WizardStep.PICK_ATTACKER_TYPE;
+			setupStep();
+		}
+		fcrm = resourceManager;
+	}
+
+	@Override
+	public void initAfterLoad() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void doUpdate(PaddedGameContainer container, StateBasedGame game, int delta) throws SlickException {
+		if (currentList != null)
+			currentList.update(container, delta);
+		if (container.getInput().isKeyDown(Input.KEY_BACK)) {
+			backStep();
+		}
+		
+		int x = container.getInput().getMouseX();
+		int y = container.getInput().getMouseY();
+		boolean click = container.getInput().isMouseButtonDown(Input.MOUSE_LEFT_BUTTON);
+		if (nextInput > 0) {
+			nextInput -= delta;
+			click = false;
+		}
+		if (backButton.handleUserInput(x, y, click)) {
+			backStep();
+			nextInput = 200;
+		}
+		if (reloadButton.handleUserInput(x, y, click)) {
+			fcrm.reloadAnimations();
+			nextInput = 200;
+		}
+		
+		if (reloadScriptsButton.handleUserInput(x, y, click)) {
+			GlobalPythonFactory.intialize();
+			nextInput = 200;
+		}
+		
+		if (container.getInput().isKeyDown(Input.KEY_ESCAPE))
+			game.enterState(CommRPG.STATE_GAME_MENU_DEVEL);
+	}
+
+	@Override
+	public void doRender(PaddedGameContainer container, StateBasedGame game, Graphics g) {
+		// TODO Auto-generated method stub
+		
+	}
+}

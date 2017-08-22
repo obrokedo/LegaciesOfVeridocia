@@ -31,7 +31,7 @@ public class StaticSprite extends Sprite
 	}
 
 	@Override
-	public void render(Camera camera, Graphics graphics, PaddedGameContainer cont) {
+	public void render(Camera camera, Graphics graphics, PaddedGameContainer cont, int tileHeight) {
 		if (image == null)
 			return;
 		graphics.drawImage(image, Math.round(this.getLocX() - camera.getLocationX()),

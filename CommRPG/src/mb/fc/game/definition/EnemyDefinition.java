@@ -118,14 +118,8 @@ public class EnemyDefinition
 		return hd;
 	}
 
-	public CombatSprite getEnemy(StateInfo stateInfo, int myId)
+	public CombatSprite getEnemy(int myId)
 	{
-		if (paletteName != null &&
-				!stateInfo.getResourceManager().containsSpriteAnimation(animations)) {
-			//TODO Load palette stuff
-			// stateInfo.getResourceManager().addResource(resource, null , 0, 0);
-		}
-
 		// Set up known spells
 		ArrayList<KnownSpell> knownSpells = new ArrayList<KnownSpell>();
 		for (int i = 0; i < spellsPerLevel.size(); i++)
@@ -170,5 +164,8 @@ public class EnemyDefinition
 	{
 		ENEMY_COUNT = nextId;
 	}
-	
+
+	public String getName() {
+		return name;
+	}
 }

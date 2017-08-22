@@ -107,7 +107,7 @@ public class StateInfo
 		this.initialized = false;
 		setWaiting();
 		
-		psi.getClientProfile().initialize(this);
+		psi.getClientProfile().initialize(getResourceManager());
 
 		initializeSystems();
 

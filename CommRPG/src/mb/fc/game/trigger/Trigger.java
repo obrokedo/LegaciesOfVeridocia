@@ -583,7 +583,7 @@ public class Trigger
 			{
 				if (hero.getItemsSize() != 4)
 				{
-					hero.addItem(ItemResource.getItem(itemId, stateInfo));
+					hero.addItem(ItemResource.getItem(itemId, stateInfo.getResourceManager()));
 					break;
 				}
 			}

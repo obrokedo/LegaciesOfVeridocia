@@ -788,7 +788,7 @@ public class TurnManager extends Manager implements KeyboardListener
 				break;
 			case BATTLE_RESULTS:
 				battleResults = ((BattleResultsMessage) message).getBattleResults();
-				battleResults.initialize(stateInfo);
+				battleResults.initialize(stateInfo.getResourceManager());
 				ArrayList<CombatSprite> transposedTargets = new ArrayList<>();
 				for (CombatSprite oldTargets : battleResults.targets)
 				{

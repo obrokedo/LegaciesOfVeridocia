@@ -10,6 +10,7 @@ import mb.fc.game.constants.Direction;
 import mb.fc.game.exception.BadResourceException;
 import mb.fc.game.move.MovingSprite;
 import mb.fc.game.ui.PaddedGameContainer;
+import mb.fc.loading.FCResourceManager;
 import mb.fc.utils.AnimSprite;
 import mb.fc.utils.Animation;
 import mb.fc.utils.SpriteAnims;
@@ -42,19 +43,19 @@ public class AnimatedSprite extends Sprite
 	}
 
 	@Override
-	public void render(Camera camera, Graphics graphics, PaddedGameContainer cont) {
+	public void render(Camera camera, Graphics graphics, PaddedGameContainer cont, int tileHeight) {
 		for (AnimSprite as : currentAnim.frames.get(imageIndex).sprites)
 		{
-			AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), this.getLocX(), this.getLocY(), camera, true);
+			AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), this.getLocX(), this.getLocY(), camera, true, tileHeight);
 
 			graphics.drawImage(spriteAnims.getImageAtIndex(as.imageIndex), this.getLocX() - camera.getLocationX(),
-					this.getLocY() - camera.getLocationY() - stateInfo.getResourceManager().getMap().getTileEffectiveHeight() / 2);
+					this.getLocY() - camera.getLocationY() - tileHeight / 2);
 		}
 	}
 
-	public static void drawShadow(Image originalIm, float locX, float locY, Camera camera, boolean tileOffset)
+	public static void drawShadow(Image originalIm, float locX, float locY, Camera camera, boolean tileOffset, int tileHeight)
 	{
-		drawShadow(originalIm, locX, locY, camera, tileOffset, stateInfo);
+		drawShadow(originalIm, locX, locY, camera, tileOffset, tileHeight);
 	}
 
 	public static void drawShadow(Image originalIm, float locX, float locY, Camera camera, boolean tileOffset, StateInfo stateInfo)
@@ -67,11 +68,11 @@ public class AnimatedSprite extends Sprite
 	}
 
 	@Override
-	public void initializeSprite(StateInfo stateInfo) {
-		super.initializeSprite(stateInfo);
+	public void initializeSprite(FCResourceManager fcrm) {
+		super.initializeSprite(fcrm);
 
 		imageIndex = 0;
-		spriteAnims = stateInfo.getResourceManager().getSpriteAnimation(imageName);
+		spriteAnims = fcrm.getSpriteAnimation(imageName);
 		if (spriteAnims == null)
 			throw new BadResourceException("Unable to initialize sprite " + this.name +".\n"
 					+ "Associated animation file " + imageName + ".anim could not be found.\n"
@@ -84,7 +85,7 @@ public class AnimatedSprite extends Sprite
 	}
 
 	@Override
-	public void update()
+	public void update(StateInfo stateInfo)
 	{
 		animationDelay++;
 		if (animationDelay >= animationUpdate)
@@ -100,25 +101,25 @@ public class AnimatedSprite extends Sprite
 	}
 
 	@Override
-	public void setLocX(float locX) {
+	public void setLocX(float locX, int tileWidth) {
 		// Moving right
 		if (locX > this.getLocX())
 			setFacing(Direction.RIGHT);
 		// Moving left
 		else if (locX < this.getLocX())
 			setFacing(Direction.LEFT);
-		super.setLocX(locX);
+		super.setLocX(locX, tileWidth);
 	}
 
 	@Override
-	public void setLocY(float locY) {
+	public void setLocY(float locY, int tileHeight) {
 		// Moving down
 		if (locY > this.getLocY())
 			setFacing(Direction.DOWN);
 		// Moving up
 		else if (locY < this.getLocY())
 			setFacing(Direction.UP);
-		super.setLocY(locY);
+		super.setLocY(locY, tileHeight);
 	}
 
 	public void setFacing(Direction dir)
@@ -147,10 +148,10 @@ public class AnimatedSprite extends Sprite
 	 * @param locX
 	 * @param locY
 	 */
-	public void setLocation(float locX, float locY)
+	public void setLocation(float locX, float locY, int tileWidth, int tileHeight)
 	{
-		super.setLocX(locX);
-		super.setLocY(locY);
+		super.setLocX(locX, tileWidth);
+		super.setLocY(locY, tileHeight);
 	}
 
 	public Direction getFacing() {

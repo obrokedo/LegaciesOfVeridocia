@@ -5,6 +5,7 @@ import java.io.Serializable;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.Camera;
 import mb.fc.game.ui.PaddedGameContainer;
+import mb.fc.loading.FCResourceManager;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Rectangle;
@@ -23,27 +24,22 @@ public class Sprite implements Serializable
 	protected boolean visible = true;
 	protected int id;
 
-	protected static StateInfo stateInfo;
+	// protected static StateInfo stateInfo;
 
 	public Sprite(int locX, int locY, int id)
 	{
 		spriteBounds = new Rectangle(locX, locY, 24, 24);
 	}
 
-	public void initializeSprite(StateInfo stateInfo)
-	{
-		// TODO I'm not sure that I really like this, but it's probably better then doing
-		// division each time you need the sprites tile location or passing the state info
-		// in each time you use the setter
-		Sprite.stateInfo = stateInfo;
-	}
+	public void initializeSprite(FCResourceManager fcrm)
+	{ }
 
-	public void update()
+	public void update(StateInfo stateInfo)
 	{
 
 	}
 
-	public void render(Camera camera, Graphics graphics, PaddedGameContainer cont)
+	public void render(Camera camera, Graphics graphics, PaddedGameContainer cont, int tileHeight)
 	{
 
 	}
@@ -65,9 +61,9 @@ public class Sprite implements Serializable
 		return spriteBounds.getX();
 	}
 
-	public void setLocX(float locX) {
+	public void setLocX(float locX, int tileWidth) {
 		spriteBounds.setX(locX);
-		tileX = (int) (locX / stateInfo.getTileWidth());
+		tileX = (int) (locX / tileWidth);
 	}
 
 	public float getLocY() {
@@ -84,9 +80,9 @@ public class Sprite implements Serializable
 		return spriteBounds.getY();
 	}
 
-	public void setLocY(float locY) {
+	public void setLocY(float locY, int tileHeight) {
 		spriteBounds.setY(locY);
-		tileY = (int) (locY / stateInfo.getTileHeight());
+		tileY = (int) (locY / tileHeight);
 	}
 
 	public int getTileX() {
@@ -96,17 +92,7 @@ public class Sprite implements Serializable
 	public int getTileY() {
 		return tileY;
 	}
-
-	public void setTileX(int tileX) {
-		this.tileX = tileX;
-		spriteBounds.setX(tileX * stateInfo.getTileWidth());
-	}
-
-	public void setTileY(int tileY) {
-		this.tileY = tileY;
-		spriteBounds.setY(tileY * stateInfo.getTileHeight());
-	}
-
+	
 	public Rectangle getSpriteBounds() {
 		return spriteBounds;
 	}

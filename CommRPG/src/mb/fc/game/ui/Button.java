@@ -100,7 +100,6 @@ public class Button
 	}
 	
 	public void setWidth(int width) {
-		System.out.println("STTING WIDTH " + width + " " + text);
 		this.rect.setWidth(width);
 	}
 	

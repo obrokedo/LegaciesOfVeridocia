@@ -30,9 +30,4 @@ public class SpellResource
 	{
 		return spells.get(spellId);
 	}
-
-	public static JSpell getSpell(String spellId, StateInfo stateInfo)
-	{
-		return getSpell(spellId, stateInfo.getResourceManager());
-	}
 }

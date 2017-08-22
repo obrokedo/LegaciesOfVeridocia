@@ -19,12 +19,12 @@ import java.util.HashSet;
 
 import org.newdawn.slick.util.Log;
 
-import mb.fc.engine.state.StateInfo;
 import mb.fc.game.battle.LevelUpResult;
 import mb.fc.game.dev.DevParams;
 import mb.fc.game.exception.BadResourceException;
 import mb.fc.game.resource.HeroResource;
 import mb.fc.game.sprite.CombatSprite;
+import mb.fc.loading.FCResourceManager;
 import mb.jython.GlobalPythonFactory;
 import mb.jython.JConfigurationValues;
 
@@ -147,7 +147,7 @@ public class ClientProfile implements Serializable
 	    return null;
 	}
 	
-	public void initialize(StateInfo stateInfo)
+	public void initialize(FCResourceManager fcrm)
 	{
 		// Add starting heroes if they haven't been added yet
 		if (getHeroes().size() == 0)
@@ -157,11 +157,11 @@ public class ClientProfile implements Serializable
 			for (String heroName : GlobalPythonFactory.createConfigurationValues().getStartingHeroIds())
 				addHero(HeroResource.getHero(heroName));
 			
-			applyDevParams(stateInfo);
+			applyDevParams(fcrm);
 		}
 	}
 	
-	private void applyDevParams(StateInfo stateInfo)
+	private void applyDevParams(FCResourceManager fcrm)
 	{
 		if (devParams == null)
 			return;
@@ -194,9 +194,9 @@ public class ClientProfile implements Serializable
 			{
 				while (cs.getLevel() < devParams.getLevel())
 				{
-					LevelUpResult lur = cs.getHeroProgression().getLevelUpResults(cs, stateInfo);
+					LevelUpResult lur = cs.getHeroProgression().getLevelUpResults(cs, fcrm);
 					cs.setExp(100);
-					cs.getHeroProgression().levelUp(cs, lur, stateInfo.getResourceManager());
+					cs.getHeroProgression().levelUp(cs, lur, fcrm);
 				}
 			}
 		}

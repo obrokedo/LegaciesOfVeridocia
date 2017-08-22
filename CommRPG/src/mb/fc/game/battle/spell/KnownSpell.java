@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.resource.SpellResource;
+import mb.fc.loading.FCResourceManager;
 import mb.jython.JSpell;
 
 public class KnownSpell implements Serializable
@@ -73,8 +74,8 @@ public class KnownSpell implements Serializable
 		return spell;
 	}
 
-	public void initializeFromLoad(StateInfo stateInfo)
+	public void initializeFromLoad(FCResourceManager fcrm)
 	{
-		this.spell = SpellResource.getSpell(spellId, stateInfo);
+		this.spell = SpellResource.getSpell(spellId, fcrm);
 	}
 }

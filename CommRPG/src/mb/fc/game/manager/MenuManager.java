@@ -120,7 +120,7 @@ public class MenuManager extends Manager
 			case SHOW_PANEL_MULTI_JOIN_CHOOSE:
 				ArrayList<CombatSprite> heroesToChooseList = new ArrayList<>();
 				((SpriteContextMessage) message).getSpriteIds().forEach(id -> heroesToChooseList.add(HeroResource.getHero(id)));
-				heroesToChooseList.forEach(cs -> { cs.initializeSprite(stateInfo); cs.initializeStats(); });
+				heroesToChooseList.forEach(cs -> { cs.initializeSprite(stateInfo.getResourceManager()); cs.initializeStats(); });
 				stateInfo.addMenu(new MultiHeroJoinMenu(heroesToChooseList, stateInfo));
 				break;
 			case SHOW_DEBUG:

@@ -2,9 +2,9 @@ package mb.fc.game.resource;
 
 import java.util.Hashtable;
 
-import mb.fc.engine.state.StateInfo;
 import mb.fc.game.definition.ItemDefinition;
 import mb.fc.game.item.Item;
+import mb.fc.loading.FCResourceManager;
 
 public class ItemResource
 {
@@ -15,9 +15,9 @@ public class ItemResource
 		ItemResource.itemDefinitionsById = itemDefinitionsById;
 	}
 
-	public static Item getItem(int itemId, StateInfo stateInfo)
+	public static Item getItem(int itemId, FCResourceManager fcrm)
 	{
-		return itemDefinitionsById.get(itemId).getItem(stateInfo);
+		return itemDefinitionsById.get(itemId).getItem(fcrm);
 	}
 
 	public static Item getUninitializedItem(int itemId)
@@ -25,18 +25,18 @@ public class ItemResource
 		return itemDefinitionsById.get(itemId).getUnintializedItem();
 	}
 
-	public static void initializeItem(Item item, StateInfo stateInfo)
+	public static void initializeItem(Item item, FCResourceManager fcrm)
 	{
-		itemDefinitionsById.get(item.getItemId()).initializeItem(item, stateInfo);
+		itemDefinitionsById.get(item.getItemId()).initializeItem(item, fcrm);
 		// Check to see if the name is null then, if so then this item has be unserialized and
 		// needs it's transient fields back into it
 		if (item.getName() == null) {
-			item.copyItem(getItem(item.getItemId(), stateInfo));
+			item.copyItem(getItem(item.getItemId(), fcrm));
 		}
 
 		// If there is a spell use defined, initialize it so the
 		// spell object can be loaded
 		if (item.getSpellUse() != null)
-			item.getSpellUse().initialize(stateInfo);
+			item.getSpellUse().initialize(fcrm);
 	}
 }

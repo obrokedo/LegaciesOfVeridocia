@@ -1,7 +1,7 @@
 package mb.fc.game.item;
 
-import mb.fc.engine.state.StateInfo;
 import mb.fc.game.resource.SpellResource;
+import mb.fc.loading.FCResourceManager;
 import mb.jython.JSpell;
 
 public class SpellItemUse {
@@ -33,7 +33,7 @@ public class SpellItemUse {
 		return singleUse;
 	}
 
-	public void initialize(StateInfo stateInfo) {
-		spell = SpellResource.getSpell(spellId, stateInfo);
+	public void initialize(FCResourceManager fcrm) {
+		spell = SpellResource.getSpell(spellId, fcrm);
 	}
 }
