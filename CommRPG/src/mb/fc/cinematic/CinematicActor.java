@@ -162,7 +162,7 @@ public class CinematicActor implements Comparable<CinematicActor>
 				switch (specialEffectType)
 				{
 					case SE_NONE:
-						AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), this.getLocX(),  this.getLocY(), camera, false, stateInfo);
+						AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), this.getLocX(),  this.getLocY(), camera, false, stateInfo.getTileHeight());
 						graphics.drawImage(im, Math.round(locX - camera.getLocationX()),
 								Math.round(locY - camera.getLocationY()));
 						break;
@@ -171,7 +171,7 @@ public class CinematicActor implements Comparable<CinematicActor>
 						Image scaled = im.getScaledCopy(specialEffectCounter);
 
 						AnimatedSprite.drawShadow(scaled, (this.getLocX() - camera.getLocationX()  + (im.getWidth() - scaled.getWidth()) / 2),
-								 (this.getLocY() - camera.getLocationY() + im.getHeight() - scaled.getHeight()), camera, false, stateInfo);
+								 (this.getLocY() - camera.getLocationY() + im.getHeight() - scaled.getHeight()), camera, false, stateInfo.getTileHeight());
 
 						scaled.draw(this.getLocX() - camera.getLocationX()  + (im.getWidth() - scaled.getWidth()) / 2,
 								this.getLocY() - camera.getLocationY() + im.getHeight() - scaled.getHeight());
@@ -179,13 +179,13 @@ public class CinematicActor implements Comparable<CinematicActor>
 					case SE_QUIVER:
 
 						AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), (int) (this.getLocX() + (specialEffectCounter % 2 == 0 ? 0 : (-2 + specialEffectCounter))),
-								(int) this.getLocY(), camera, false, stateInfo);
+								(int) this.getLocY(), camera, false, stateInfo.getTileHeight());
 
 						graphics.drawImage(im, locX - camera.getLocationX()  + (specialEffectCounter % 2 == 0 ? 0 : (-2 + specialEffectCounter)),
 								locY - camera.getLocationY());
 						break;
 					case SE_FLASH:
-						AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), (int) this.getLocX(), (int) this.getLocY(), camera, false, stateInfo);
+						AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), (int) this.getLocX(), (int) this.getLocY(), camera, false, stateInfo.getTileHeight());
 
 						Image whiteIm = im;
 
@@ -222,7 +222,7 @@ public class CinematicActor implements Comparable<CinematicActor>
 						// Only draw the nod if we are on SE counter 1
 						if (specialEffectCounter == 1)
 						{
-							AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), (int) this.getLocX(), (int) this.getLocY(), camera, false, stateInfo);
+							AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), (int) this.getLocX(), (int) this.getLocY(), camera, false, stateInfo.getTileHeight());
 
 							// This is the lower portion of the sprite
 							im.getSubImage(0, 10, im.getWidth(), 14).draw(this.getLocX() - camera.getLocationX() ,
@@ -233,14 +233,14 @@ public class CinematicActor implements Comparable<CinematicActor>
 						}
 						else
 						{
-							AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), (int) this.getLocX(), (int) this.getLocY(), camera, false, stateInfo);
+							AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), (int) this.getLocX(), (int) this.getLocY(), camera, false, stateInfo.getTileHeight());
 
 							graphics.drawImage(im, locX - camera.getLocationX() ,
 									locY - camera.getLocationY());
 						}
 						break;
 					case SE_HEAD_SHAKE:
-						AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), (int) this.getLocX(), (int) this.getLocY(), camera, false, stateInfo);
+						AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), (int) this.getLocX(), (int) this.getLocY(), camera, false, stateInfo.getTileHeight());
 
 						im.getSubImage(0, 10,
 								im.getWidth(), 14).draw(this.getLocX() - camera.getLocationX() ,
@@ -279,7 +279,7 @@ public class CinematicActor implements Comparable<CinematicActor>
 						}
 
 						AnimatedSprite.drawShadow(im, (int) (this.getLocX() + (trembleVal) / 2),
-								(int) this.getLocY() + trembleVal, camera, false, stateInfo);
+								(int) this.getLocY() + trembleVal, camera, false, stateInfo.getTileHeight());
 
 						graphics.drawImage(im, locX - camera.getLocationX()  + (trembleVal) / 2,
 								locY - camera.getLocationY() + trembleVal);
