@@ -1,11 +1,12 @@
+<map file="neweriumcastle.tmx"/>
 <trigger id=0 description="MapStart" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<playmusic music="castlenight"/>
 </trigger>
 <trigger id=1 description="End Battle" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="eriumcastle" map="eriumcastle" enter="north"/>
+	<loadmap mapdata="eriumcastle" enter="north"/>
 </trigger>
 <trigger id=2 description="Start Battle" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<startbattle battletriggers="battle1" battlemap="eriumcastle" entrance="battle1" battbg=0/>
+	<startbattle battletriggers="battle1" entrance="battle1" battbg=0/>
 </trigger>
 <cinematic id=0 description="scene1-1" camerax=600 cameray=0>
 	<addactor x=0 y=0 name="Cam" anim="Noah" startanim="Down" visible=false init=true associatedhero=0/>
@@ -132,7 +133,7 @@
 	<move name="Huun" x=624 y=432 speed="3" movehor=false movediag=false/>
 	<haltingmove name="Huun" x=672 y=432 speed="3" movehor=false movediag=false/>
 	<facing name="Huun" dir=3/>
-	<speech text="But I...<hardstop>" heroportrait=2 enemyportrait=-1 animportrait="null"/>
+	<speech text="But I...<hardstop>" heroportrait=2 enemyportrait=-1 animportrait=""/>
 	<quiver name="Sharna"/>
 	<wait time=750/>
 	<stopse name="Sharna"/>
@@ -156,14 +157,14 @@
 	<tremble name="Huun"/>
 	<wait time=750/>
 	<stopse name="Huun"/>
-	<speech text="What did I do now<pause>.<pause>.<pause>.<pause>?<pause><hardstop>" heroportrait=2 enemyportrait=-1 animportrait="null"/>
+	<speech text="What did I do now<pause>.<pause>.<pause>.<pause>?<pause><hardstop>" heroportrait=2 enemyportrait=-1 animportrait=""/>
 	<haltingmove name="Huun" x=744 y=600 speed="5" movehor=true movediag=false/>
 	<haltingmove name="Huun" x=720 y=600 speed="5" movehor=false movediag=false/>
 	<facing name="Huun" dir=1/>
 	<facing name="Sharna" dir=1/>
 	<haltingmove name="Cam" x=744 y=600 speed="1" movehor=false movediag=true/>
 	<wait time=1000/>
-	<speech text="I heard it over by the trees.<hardstop>" heroportrait=1 enemyportrait=-1 animportrait="null"/>
+	<speech text="I heard it over by the trees.<hardstop>" heroportrait=1 enemyportrait=-1 animportrait=""/>
 	<speech text="Right. I'm going to assess the situation.<hardstop> <linebreak>Keep watch over by those bushes, and be ready to assist. <linebreak>Stay out of sight.<hardstop>" heroportrait=0 enemyportrait=-1 animportrait=""/>
 	<facing name="Sharna" dir=2/>
 	<facing name="Huun" dir=3/>
@@ -190,17 +191,17 @@
 	<move name="Noah" x=720 y=744 speed="2.4" movehor=true movediag=false/>
 	<wait time=600/>
 	<facing name="Noah" dir=2/>
-	<speech text="... time... the seals... begin...<hardstop>" heroportrait=-1 enemyportrait=-1 animportrait="null"/>
+	<speech text="... time... the seals... begin...<hardstop>" heroportrait=-1 enemyportrait=-1 animportrait=""/>
 	<nod name="Mistal"/>
 	<wait time=1250/>
-	<speech text="... our Majesty... problem... compliant...<hardstop>" heroportrait=-1 enemyportrait=-1 animportrait="null"/>
+	<speech text="... our Majesty... problem... compliant...<hardstop>" heroportrait=-1 enemyportrait=-1 animportrait=""/>
 	<speech text="(His Majesty? What are they plotting?<pause><linebreak> If I could just get close enough to hear...)<hardstop>" heroportrait=0 enemyportrait=-1 animportrait=""/>
 	<haltingmove name="Noah" x=708 y=756 speed=".5" movehor=true movediag=true/>
 	<wait time=750/>
 	<haltingmove name="Noah" x=696 y=768 speed=".5" movehor=false movediag=true/>
 	<wait time=750/>
 	<haltingmove name="Noah" x=684 y=780 speed=".5" movehor=false movediag=true/>
-	<speech text="... Crap!<hardstop>" heroportrait=0 enemyportrait=-1 animportrait="null"/>
+	<speech text="... Crap!<hardstop>" heroportrait=0 enemyportrait=-1 animportrait=""/>
 	<facing name="Mistal" dir=0/>
 	<wait time=500/>
 	<playsound sound="fall" volume=75/>
@@ -252,7 +253,7 @@
 	<forcedmove name="Sharna" x=696 y=600 speed=9 facing=1 movehor=false movediag=false/>
 	<wait time=125/>
 	<rendernormal name="Noah"/>
-	<speech text="Noah!!<hardstop>" heroportrait=1 enemyportrait=-1 animportrait="null"/>
+	<speech text="Noah!!<hardstop>" heroportrait=1 enemyportrait=-1 animportrait=""/>
 	<speech text="Ugh...<pause> I'm OK.<hardstop>" heroportrait=0 enemyportrait=-1 animportrait=""/>
 	<stopse name="Noah"/>
 	<facing name="Noah" dir=1/>
@@ -337,7 +338,7 @@
 	<wait time=125/>
 	<removeactor name="Mistal"/>
 	<wait time=500/>
-	<loadbattle mapdata="battle1" map="neweriumcastle" entrance="battle1" battbg=1/>
+	<loadbattle mapdata="battle1" entrance="battle1" battbg=1/>
 </cinematic>
 <cinematic id=1 description="Battle1 Aftermath" camerax=600 cameray=960>
 	<playmusic music="battle1" volume=30/>
@@ -365,7 +366,7 @@
 	<wait time=250/>
 	<nod name="Sharna"/>
 	<wait time=2000/>
-	<speech text="What's going on? What were those things?!<hardstop>" heroportrait=1 enemyportrait=-1 animportrait="null"/>
+	<speech text="What's going on? What were those things?!<hardstop>" heroportrait=1 enemyportrait=-1 animportrait=""/>
 	<flashscreen time=250/>
 	<playsound sound="casting" volume=75/>
 	<wait time=125/>
@@ -375,7 +376,7 @@
 	<facing name="Huun" dir=3/>
 	<facing name="Sharna" dir=3/>
 	<speech text="It would seem I underestimated you.<hardstop>" heroportrait=-1 enemyportrait=-1 animportrait="Mistal"/>
-	<speech text="The commotion came from the courtyard!<hardstop>" heroportrait=-1 enemyportrait=-1 animportrait="null"/>
+	<speech text="The commotion came from the courtyard!<hardstop>" heroportrait=-1 enemyportrait=-1 animportrait=""/>
 	<facing name="Mistal" dir=0/>
 	<speech text="But you won't interfere any further.<hardstop>" heroportrait=-1 enemyportrait=-1 animportrait="Mistal"/>
 	<flashscreen time=250/>
@@ -388,7 +389,7 @@
 	<addactor x=864 y=864 name="Fog1" anim="Fog" startanim="UnDown" visible=true init=false associatedhero=-1/>
 	<addactor x=888 y=840 name="Fog2" anim="Fog" startanim="UnDown" visible=true init=false associatedhero=-1/>
 	<wait time=250/>
-	<speech text="Ugggghh.<pause>.<pause>.<pause><hardstop>" heroportrait=0 enemyportrait=-1 animportrait="null"/>
+	<speech text="Ugggghh.<pause>.<pause>.<pause><hardstop>" heroportrait=0 enemyportrait=-1 animportrait=""/>
 	<playsound sound="hit3" volume=75/>
 	<fallonface name="Noah" dir=1/>
 	<layonsideright name="Huun" dir=3/>
@@ -402,5 +403,5 @@
 	<move name="Mistal" x=936 y=672 speed="3" movehor=true movediag=false/>
 	<speech text="Oh, thank goodness you arrived! I have uncovered traitors to the crown!<pause> Secure them in the cells!<hardstop>" heroportrait=-1 enemyportrait=-1 animportrait="Mistal"/>
 	<fadeout time=3000 halting=true/>
-	<loadcin mapdata="eriumjail" map="eriumjail" cinid=0/>
+	<loadcin mapdata="eriumjail" cinid=0/>
 </cinematic>

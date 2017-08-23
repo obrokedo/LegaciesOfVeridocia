@@ -147,7 +147,6 @@ public class PlannerFrame extends JFrame implements ActionListener,
 			plannerIO.parseContainer(PlannerIO.PATH_QUESTS, plannerTabs.get(TAB_QUEST), "quest", containersByName);
 			List<PlannerTab> tabsWithReferences = new ArrayList<>();
 			for (int i = TAB_HERO; i <= TAB_QUEST; i++) {
-				System.out.println("---------------------------------------" + i);
 				tabsWithReferences.add(plannerTabs.get(i));
 			}
 			
@@ -426,7 +425,6 @@ public class PlannerFrame extends JFrame implements ActionListener,
 
 		try {
 			MapParser.parseMap(new File("map/" + fileName).getAbsolutePath(), plannerMap, new PlannerTilesetParser(), null);
-			referenceListByReferenceType.get(PlannerValueDef.REFERS_LOCATIONS - 1).clear();
 			for (MapObject mo : plannerMap.getMapObjects())
 			{
 				if (mo.getName() != null)
@@ -453,7 +451,11 @@ public class PlannerFrame extends JFrame implements ActionListener,
 		return true;
 	}
 
-	private void openFile(File triggerFile) {
+	public void openFile(File triggerFile) {
+		openFile(triggerFile, true);
+	}
+	
+	public void openFile(File triggerFile, boolean reportNoMap) {
 		try {
 			ArrayList<TagArea> tagAreas = XMLParser.process(Files.readAllLines(
 					Paths.get(triggerFile.getAbsolutePath()), StandardCharsets.UTF_8));
@@ -464,10 +466,15 @@ public class PlannerFrame extends JFrame implements ActionListener,
 					break;
 				}
 			
+			referenceListByReferenceType.get(PlannerValueDef.REFERS_LOCATIONS - 1).clear();
+			plannerMap = null;
+			
 			if (mapFile == null) {
-				JOptionPane.showMessageDialog(this, "No map file has been associated with this map data, please choose a map now");
-				if (!promptAndLoadPlannerMap())
-					return;
+				if (reportNoMap) {
+					JOptionPane.showMessageDialog(this, "No map file has been associated with this map data, please choose a map now");
+					if (!promptAndLoadPlannerMap())
+						return;
+				}
 			} else {
 				if (!loadPlannerMap(mapFile))
 					return;
@@ -498,12 +505,11 @@ public class PlannerFrame extends JFrame implements ActionListener,
 			
 			ArrayList<PlannerTab> tabsWithReferences = new ArrayList<>();
 			for (int i = TAB_TRIGGER; i <= TAB_TEXT; i++) {
-				System.out.println("---------------------------------------" + i);
 				tabsWithReferences.add(plannerTabs.get(i));
 			}
 			
 			PlannerReference.establishReferences(tabsWithReferences, referenceListByReferenceType);
-			updateErrorList(PlannerReference.getBadReferences(getDataInputTabs(), referenceListByReferenceType));
+			updateErrorList(PlannerReference.getBadReferences(getDataInputTabs()));
 		} catch (IOException e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "An error occurred while trying to open the file:"
@@ -619,4 +625,10 @@ public class PlannerFrame extends JFrame implements ActionListener,
 		this.validate();
 		this.repaint();
 	}
+
+	public boolean hasPlannerMap() {
+		return plannerMap != null;
+	}
+	
+	
 }

@@ -110,7 +110,6 @@ public class FCResourceManager {
 		}
 		else if (split[0].equalsIgnoreCase("ss"))
 		{
-			System.out.println("LOAD SPRITE SHEET " + split[1]);
 			float scale = 1;
 			if (split.length == 7)
 			{

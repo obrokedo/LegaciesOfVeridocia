@@ -9,18 +9,9 @@ public class NPCResource
 {
 	public static int NPC_ID_COUNTER = -1;
 
-	public static NPCSprite getNPC(int imageId, ArrayList<Speech> speeches)
+	public static NPCSprite getNPC(String animation, ArrayList<Speech> speeches)
 	{
-		switch (imageId)
-		{
-			case 0:
-				return new NPCSprite("eriumguard", speeches, NPC_ID_COUNTER--);
-			case 1:
-				return new NPCSprite("darkmerchant", speeches, NPC_ID_COUNTER--);
-			case 2:
-				return new NPCSprite("youngwomen", speeches, NPC_ID_COUNTER--);
-		}
-		return null;
+		return new NPCSprite(animation, speeches, NPC_ID_COUNTER--);
 	}
 
 	public static void resetNPCIds()

@@ -63,12 +63,14 @@ public class AttackCombatAnimation extends CombatAnimation
 
 	@Override
 	public boolean update(int delta) {
+		/*
 		if (castingSpell)
 		{
 			int maxTime = getAnimationLength() - 600;
 			if (this.totalTimePassed > maxTime)
 				this.setDrawSpell(true);
 		}
+		*/
 		return super.update(delta);
 	}
 }

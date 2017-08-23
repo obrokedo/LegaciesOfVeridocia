@@ -105,7 +105,6 @@ public class PlannerContainer implements ActionListener
 								new HashSet<String>(), new HashSet<String>(), new HashSet<String>());
 						ces.addAll(0, initEvents);
 
-						System.out.println("PlannerContainer: generationGraph");
 						plannerGraph.generateGraph(ces, new CinematicTimeline(), Integer.parseInt(tas.get(0).getAttribute("camerax")), Integer.parseInt(tas.get(0).getAttribute("cameray")));
 					// this.add(ptbv);
 					}
@@ -162,7 +161,6 @@ public class PlannerContainer implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent a) {
 		String action = a.getActionCommand();
-		System.out.println("ACTION PERFORMED " + action + " " + (this == parentTab.getCurrentPC()));
 		if (action.equalsIgnoreCase("addline"))
 		{
 			int index = defLine.getSelectedItem();
@@ -190,7 +188,6 @@ public class PlannerContainer implements ActionListener
 		else if (action.startsWith("moveup"))
 		{
 			int index = Integer.parseInt(action.split(" ")[1]) - 1;
-			System.out.println("MY INDEX " + index);
 			if (index != 0)
 			{
 				PlannerLine pl = lines.remove(index);
@@ -218,7 +215,6 @@ public class PlannerContainer implements ActionListener
 		{
 			int index = Integer.parseInt(action.split(" ")[1]) - 1;
 			PlannerLine pl = lines.get(index);
-			System.out.println("DUPLICATE");
 			lines.add(index + 1, new PlannerLine(pl));
 			parentTab.refreshItem(this);
 			// setupUI();

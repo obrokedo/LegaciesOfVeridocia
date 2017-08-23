@@ -83,7 +83,6 @@ public class PlannerTree implements TreeModelListener
 				}
 				else if (rootNode.getIndex(selectedNode) == -1)
 				{
-					System.out.println("Attribute");
 					contextMenu = new JPopupMenu();
 					contextMenu.add(newMenuItem("Remove Planner Attribute"));
 					contextMenu.add(newMenuItem("Duplicate Planner Attribute"));
@@ -94,7 +93,6 @@ public class PlannerTree implements TreeModelListener
 				}
 				else
 				{
-					System.out.println("Item");
 					contextMenu = new JPopupMenu();
 					contextMenu.add(newMenuItem("Add Planner Item"));
 					contextMenu.add(newMenuItem("Remove Planner Item"));
@@ -106,7 +104,6 @@ public class PlannerTree implements TreeModelListener
 
 
 				contextMenu.show(attributeTree, me.getX(), me.getY());
-				System.out.println();
 			}
 		}
 
@@ -187,7 +184,6 @@ public class PlannerTree implements TreeModelListener
 
 	public void updateTreeValues(String rootName, ArrayList<PlannerContainer> listPC)
 	{
-		System.out.println("Update tree values. Root name: " + rootName) ;
 		attributeTreeModel.removeTreeModelListener(this);
 		containerDef = parentTab.containersByName.get(parentTab.containers[0]);
 
@@ -292,7 +288,6 @@ public class PlannerTree implements TreeModelListener
 
 	public void addItem(String name, int itemIndex)
 	{
-		System.out.println("ADD ITEM " + name + " " + itemIndex);
 		DefaultMutableTreeNode dmtn = new DefaultMutableTreeNode(name);
 		attributeTreeModel.insertNodeInto(dmtn,
 				rootNode, itemIndex);
@@ -301,7 +296,6 @@ public class PlannerTree implements TreeModelListener
 
 	public void removeItem(int itemIndex)
 	{
-		System.out.println("REMOVE ITEM " + itemIndex);
 		attributeTreeModel.removeNodeFromParent((MutableTreeNode) attributeTreeModel.getChild(rootNode, itemIndex));
 	}
 

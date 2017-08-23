@@ -204,7 +204,6 @@ public class DevelAnimationViewState extends BasicGameState implements ResourceS
 			if (rainFile != null)
 			{
 				rainParticleSystem = new ParticleSystem(frm.getImage(rainFile));
-				System.out.println(spell.getSpellRainFrequency(1));
 				rainParticleSystem.addEmitter(new RainEmitter(180, spell.getSpellRainFrequency(1), true));
 			}
 			else

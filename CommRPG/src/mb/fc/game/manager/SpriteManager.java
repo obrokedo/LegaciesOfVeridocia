@@ -373,7 +373,6 @@ public class SpriteManager extends Manager
 				
 				for (Integer i : bcm.getLeaderIds())
 				{
-					System.out.println(heroLeaders + " " + stateInfo.getHeroesInState());
 					this.heroLeaders.add(stateInfo.getHeroById(i));
 				}
 				break;

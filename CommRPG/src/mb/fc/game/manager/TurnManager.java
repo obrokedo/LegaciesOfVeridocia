@@ -457,7 +457,6 @@ public class TurnManager extends Manager implements KeyboardListener
 			if (move.locX == currentSprite.getLocX() && move.locY == currentSprite.getLocY())
 			{
 				turnActions.remove(0);
-				System.out.println("I'm setting check events here in the 'enemy' case");
 				if (!resetSpriteLoc)
 					ms.setCheckEvents(true);
 				if (turnActions.size() == 0)
@@ -492,7 +491,6 @@ public class TurnManager extends Manager implements KeyboardListener
 			if (!resetSpriteLoc || (spriteStartPoint.x == currentSprite.getTileX() &&
 				spriteStartPoint.y == currentSprite.getTileY()))
 			{
-				System.out.println("Arrived at location");
 				ms.setCheckEvents(true);
 				// ms.handleKeyboardInput(stateInfo.getInput(), stateInfo);
 				if (resetSpriteLoc)
@@ -537,8 +535,6 @@ public class TurnManager extends Manager implements KeyboardListener
 		as = null;
 		this.battleResults = null;
 
-		if (sprite == null)
-			System.out.println();
 		spriteStartPoint = new Point(sprite.getTileX(),
 			sprite.getTileY());
 
@@ -674,13 +670,11 @@ public class TurnManager extends Manager implements KeyboardListener
 				stateInfo.addKeyboardListener(as);
 
 			displayAttackable = true;
-			System.out.println("DISPLAY ATTACKABLE -> " + stateInfo.getCurrentSprite().getName() + " " + stateInfo.getCurrentSprite().isHero());
 		}
 	}
 
 	private void setToCursorMode()
 	{
-		System.out.println("SET TO CURSOR MODE");
 		if (!ownsSprite)
 			return;
 
@@ -752,17 +746,14 @@ public class TurnManager extends Manager implements KeyboardListener
 				initializeCombatantTurn(((SpriteContextMessage) message).getSprite(stateInfo.getSprites()));
 				break;
 			case RESET_SPRITELOC:
-				System.out.println("Reset sprite loc");
 				if (spriteStartPoint.x == currentSprite.getTileX() &&
 						spriteStartPoint.y == currentSprite.getTileY())
 				{
 					// If we are already reset then switch to cursor mode
 					setToCursorMode();
-					System.out.println("Reset sprite loc to cursor mode");
 				}
 				else
 				{
-					System.out.println("Reset sprite loc to start");
 					ms.setCheckEvents(false);
 					ms.addMoveActionsToLocation(spriteStartPoint.x, spriteStartPoint.y, currentSprite, turnActions);
 					this.resetSpriteLoc = true;

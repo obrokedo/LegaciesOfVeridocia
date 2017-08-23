@@ -188,7 +188,6 @@ public class PersistentStateInfo implements PacketHandler
 
 	public void sendMessage(Message message)
 	{
-		System.out.println("PSI: " + message.getMessageType() + " " + message.isInternal() + " " + isOnline());
 		if (!message.isInternal() && isOnline())
 			client.sendMessage(message);
 		else

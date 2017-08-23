@@ -1,4 +1,4 @@
-<map file="eriumjail2.tmx"/>
+<map file="eriumjail.tmx"/>
 <trigger id=0 description="Battle Initialize" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<setbattlecond allleaders=false templeader=3, tempenemyleader=-1,/>
 	<playmusic music="battle1"/>
@@ -13,7 +13,7 @@
 	<changeai aitype=1 id=5 heroid=0 targetid=0 x=0 y=0/>
 	<changeai aitype=3 id=6 heroid=0 targetid=7 x=0 y=0/>
 </trigger>
-<trigger id=4 description="Test Exit" require=-1, exclude=-1, nonretrig=true retrigonenter=false triggeronce=false triggerimmediately=false>
+<trigger id=4 description="Test Craig Exit" require=-1, exclude=-1, nonretrig=true retrigonenter=false triggeronce=false triggerimmediately=false>
 	<showcin cinid=0/>
 	<killenemies unitid=3/>
 </trigger>
@@ -45,10 +45,10 @@
 	<removeactor name="Olivia"/>
 </cinematic>
 <condition id=0 description="EnterBottomMid" triggerid=2>
-	<enterloc location="" immediate=false/>
+	<enterloc location="SouthTriggerAI1" immediate=false/>
 </condition>
 <condition id=1 description="EnterBottomRight" triggerid=3>
-	<enterloc location="" immediate=false/>
+	<enterloc location="SouthTriggerAI2" immediate=false/>
 </condition>
 <condition id=2 description="Craig+Olivia First" triggerid=4>
 	<enemydeath unitid=7/>
@@ -56,5 +56,5 @@
 </condition>
 <condition id=3 description="NoahFirst" triggerid=5>
 	<heroinbat id=3/>
-	<enterloc location="" immediate=false/>
+	<enterloc location="TopBattleExit" immediate=false/>
 </condition>

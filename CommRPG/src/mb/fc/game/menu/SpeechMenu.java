@@ -132,7 +132,7 @@ public class SpeechMenu extends Menu
 		else
 			this.portrait = null;
 
-		timer = new Timer(16);
+		timer = new Timer(18);
 	}
 
 	@Override

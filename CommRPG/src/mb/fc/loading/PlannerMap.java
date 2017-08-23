@@ -150,8 +150,6 @@ public class PlannerMap extends Map {
 
 		for (MapObject mo : this.mapObjects)
 		{
-			if (mo.getKey().equalsIgnoreCase("battleregion"))
-				System.out.println();
 			TagArea childTA = getNewChild(mo);
 
 			for (int i = 0; i < newRootTA.getChildren().size(); i++)

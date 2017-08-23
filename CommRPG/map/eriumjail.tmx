@@ -1,303 +1,299 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="66" height="34" tilewidth="12" tileheight="12" nextobjectid="52">
- <properties>
-  <property name="background" value="1"/>
-  <property name="shadow" value="13"/>
- </properties>
- <tileset firstgid="1" name="Tiles" tilewidth="12" tileheight="12" tilecount="1296">
-  <image source="../image/overworld(day)-Master.png" trans="495d47" width="432" height="432"/>
- </tileset>
- <tileset firstgid="1297" name="Castle Night" tilewidth="12" tileheight="12" tilecount="900">
-  <image source="../image/castletown(night)-Master.png" trans="495d47" width="300" height="440"/>
- </tileset>
- <tileset firstgid="2197" name="Castle Night 2" tilewidth="12" tileheight="12" tilecount="495">
-  <image source="../image/castletown(night)-Slave1.png" trans="495d47" width="180" height="400"/>
- </tileset>
- <layer name="BG" width="66" height="34">
-  <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+1YyU4DMQztJVyGz2D5PL6OO1uPo0oUkNj6ERToFUfTSB43iydpHEvDwfJMxk0i+/nZbneyWJyCdDPX5yBn/1pFLHz6ygxSy57qZzOWx71ek/eY5PxmndgrtZZjHzrTiobY+/QFyGVFe6pr594T+PrFDO/3oB+UyNKM7ykZ4w84+1OJbEguSPKyNj/g+9XGwLUZpFPoB3y/WvG/gb1vzficH9C/SmS3x4O7XyqmHG5bevZ5hbU3wz+nlebigYPljWefL1jbIj+k+omadrH+A+dtKcdT7g3xA5dHWtgdg+Mp92LNPae1XSp/uH5I5R83T1vZ1eIHp7nntLabGz+4Z2onhQf6jc43Uvzgnlvxg6tTtob16H4rc1jLXJ3rUTxX5rAG0u+0Prr5jt7J568UHjg94C4DD1o0N8+ONV+07htTeJXyt4bYx/Aq5W8NsY/hVcrfdva8y8Afd84rxWvKzvkuZUfrIPWFnT3fM3BR2r9MxYOvdvXou68uheqgr37Z2fM74nf8PyZez51vQvvRuOXmrXQOl/YvIV3K49KcXjrvcvlhqh+l+VyaH7TigdvPluJBOz9I9TdT/de6/6vV32jnh9qazsNzFttn/AHSJkR7ECMAAA==
-  </data>
- </layer>
- <layer name="MG" width="66" height="34">
-  <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+2YO0/DMBDHLSFQsjJAeS2lG0iwg2DmMdGFh4QES/nQMFKQYIQZziKnWsed49pJEyf+Sac09cX2/X2O7SiVSCQS7tzk/G/Jh7v/WfZvXz+7CfVtCW1z/mvgu+7ov2hCtFgEV4JuU+j3EZTtgE2K6x7Ycf7fb7Uo3zZ8qV/beSjRYUKM04Hzu4xMBwmdx+cQyxmxC2buu/jFzi3Ec1fEdG2JzSyz+fWZAeiy0WJtnjOlXrKme9EcGP8H2Kegw2BFqQMYw0MyjpjzuE6Y68O888HF33eOmfMZGcL9Ltgo/3uvYfw2HXScnA5mOa4TTw2sk5I+PrrZ5oXW6wTqPGXq1W3R9XKJ0R+5L9lvItwY2v63IbVBMfPCB6pDbPumqqD7Ta2Dz7jFDDcvQvLB9exR5lf1GcZlvtB9ZOj+sa1aVMkXaPrd431KDNC1rA4wD/qeD68Q+zSbXX3owpmtq/kQ8k7fz2cmfT+kz0nrFp4T0EZCzrj2V3+TG8+Zd1Wtb1U/F1Kf/ib36HgmiImuzcOm8Tl/1Zk/b9CXd6M/Q4d3QyKRSCTq4xf7pLoWECMAAA==
-  </data>
- </layer>
- <layer name="MG Shadow" width="66" height="34">
-  <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAA/Bgz5kUWECMAAA==
-  </data>
- </layer>
- <layer name="FG" width="66" height="34">
-  <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+1Z3S4EMRSeC8MM7pZLwtVGMm5JXIkHINyxZOMJNryAV8HiCUSCxWuQcGmfwW/iNNMmzdFOz8y23bJ7ki9Np9+c1qdzzmm3HkfROWDHES4c+7exvgXAKmAN0OY45u0J6gvMAGbRs6J3sP824mLg+XTPqvBVc4r1ibbFcc3bG9Tv8HYJsIye6d5h2AY0pH4HcTvSmPzuVxJF34l6Daq534D7nvye3zQn1sGVnYLvswr+J9Iomkzp/DHgJiX4wnzpcAu+7xz679V0OmSg6QpgnbcMiwqdM2mcYVfDC9187Yd6nMfjEG0r9aeDa/+92L4HHT4gdn8muf+D2F6dYZt36FiHFLQeT/X1gy6Pu+DhekJV3/j6LloGuOTh+oP1uxw6HebgfzhfEPczQx7R6dAvXg3WOAWY1qw1tDjZb54rHZpptfX44pm+C9sWqg6Y14sOe8T4QMmbD4B7y7xGAN8FngfnrCMO01ka83AOlMfxGOV8h3V4hprnJXGng5yzLqX1XcX6s7SKJ+dAPI7zI+V853o/vIKm3STsuppZaHHSp21Icc2VDmIfDPeDeh6T2T6fU/3JOlDyWlWI/CXuD3Um7jFtGdUf3g+63FWUl6g8lr9M94fiHlOXt9g5IeZnhZGC8wL2V1YHVe4qyksUnuBS8pfte0yqP1V8aP7B+0VhIi6XNV9xMnSzUU9uOtw/j7CWJ2k9NR4XRgmxoYwN90NuQx1yE38/y7OUc+x/hahvTPe+gwBWZ5jufQcBIf/+6tt+AKnc6KsQIwAA
-  </data>
- </layer>
- <layer name="Flash1" width="66" height="34">
-  <properties>
-   <property name="flash" value="duration=500 offset=0"/>
-  </properties>
-  <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3Qyw2DQBBEwV1hSAVwKgbyv/GJhM5iJW+V9O7TUwoAAAAAAAD040xXutPT9pSmhlrKJ41pqq2vaWfO9iWt6dvxH37ZvqU9HR3/AfgfL7SkP0UQIwAA
-  </data>
- </layer>
- <layer name="FG Shadow" width="66" height="34">
-  <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3VQQqEQAxEUTcKnlXP7TUUrJ0gpO2YrsV/MLvYxj/DOE340zHr46pqPzrU3ueryv3o4I8Owv+D0KFWtIP7XK+3+2xr7twenIvul835ez5nOrTO9XJ/Pjq0zfVyf2/SQZw6RPfIOud5jUuHkeggdBA6iPt+Vdw63Lss9ed96ZD1fsu+ruc8t9/DKHQQOggdhA5CBwBRF0VrpgUQIwAA
-  </data>
- </layer>
- <layer name="Roof" width="66" height="34">
-  <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAA/Bgz5kUWECMAAA==
-  </data>
- </layer>
- <layer name="Walk" width="66" height="34" visible="0" opacity="0.6">
-  <properties>
-   <property name="walk" value=""/>
-  </properties>
-  <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+2TQQ6AMAgEe/H/r/ELvssYb6YWSkoLOpNwcosy0lIAANrsm09Z+/ees7znwIPoQbsv2lz0wsNcD5H9zLwXWT147VsW8HCj3eO3c1J+VQ4PMTxE94UHnYfefYs2nzWHhzqjPEiMyo2ex3ruax6098LL76yS/OHhXx6k78VDG22+N9f7X6z98NB+nnV/tfOMuher58nmwdvbs7/X/8KDb99shYe6B4CLEwO71k8QIwAA
-  </data>
- </layer>
- <objectgroup name="Terrain">
-  <object id="1" name="Rug" x="480" y="264">
-   <properties>
-    <property name="terrain" value="type=GRASS"/>
-   </properties>
-   <polyline points="0,0 0,96 24,96 24,72 96,72 96,48 24,48 24,0 0,0"/>
-  </object>
-  <object id="2" name="Floor" x="192" y="360">
-   <properties>
-    <property name="terrain" value="type=ROAD"/>
-   </properties>
-   <polyline points="0,0 0,24 -168,24 -168,0 -144,0 -144,-48 -96,-48 -96,-72 -72,-72 -72,-48 0,-48 0,-24 -24,-24 -24,0 0,0"/>
-  </object>
-  <object id="3" name="Floor" x="192" y="384">
-   <properties>
-    <property name="terrain" value="type=ROAD"/>
-   </properties>
-   <polyline points="0,0 0,-72 24,-72 24,-96 48,-96 48,-72 144,-72 144,-96 120,-96 120,-144 168,-144 168,-168 120,-168 120,-240 216,-240 216,-168 192,-168 192,-144 216,-144 216,-72 288,-72 288,-48 264,-48 264,-24 288,-24 288,0 0,0"/>
-  </object>
-  <object id="4" name="Floor" x="672" y="240">
-   <properties>
-    <property name="terrain" value="type=ROAD"/>
-   </properties>
-   <polyline points="0,0 0,-72 72,-72 72,-48 96,-48 96,0 96,48 72,48 72,0 0,0"/>
-  </object>
-  <object id="5" name="Floor" x="672" y="240">
-   <properties>
-    <property name="terrain" value="type=ROAD"/>
-   </properties>
-   <polyline points="0,0 48,0 48,24 72,24 72,96 96,96 96,144 -24,144 -24,72 0,72 0,0"/>
-  </object>
-  <object id="6" name="Floor" x="648" y="384">
-   <properties>
-    <property name="terrain" value="type=ROAD"/>
-   </properties>
-   <polyline points="0,0 -168,0 -168,-24 -48,-24 -48,-48 -24,-48 -24,-72 0,-72 0,0"/>
-  </object>
-  <object id="7" name="Floor" x="48" y="72">
-   <properties>
-    <property name="terrain" value="type=ROAD"/>
-   </properties>
-   <polyline points="0,0 0,48 -24,48 -24,-24 240,-24 240,0 264,0 264,24 240,24 240,48 192,48 192,0 120,0 120,48 72,48 72,0 0,0"/>
-  </object>
-  <object id="8" name="Rug" x="312" y="48">
-   <properties>
-    <property name="terrain" value="type=GRASS"/>
-   </properties>
-   <polyline points="0,0 0,72 456,72 456,0 312,0 312,24 288,24 288,0 168,0 168,24 144,24 144,0 0,0"/>
-  </object>
-  <object id="9" name="Floor" x="96" y="288">
-   <properties>
-    <property name="terrain" value="type=ROAD"/>
-   </properties>
-   <polyline points="0,0 -72,0 -72,-48 -48,-48 -48,-72 -72,-72 -72,-144 -48,-144 -48,-96 -24,-96 0,-96 0,-48 120,-48 120,-168 168,-168 168,-144 192,-144 192,-120 168,-120 168,-96 192,-96 192,-72 168,-72 168,-48 144,-48 144,0 0,0"/>
-  </object>
-  <object id="10" name="Rug" x="192" y="240">
-   <properties>
-    <property name="terrain" value="type=GRASS"/>
-   </properties>
-   <polyline points="0,0 0,-96 -48,-96 -48,0 -96,0 -96,-120 24,-120 24,0"/>
-  </object>
-  <object id="11" x="504" y="264">
-   <properties>
-    <property name="terrain" value="type=GRASS"/>
-   </properties>
-   <polyline points="0,0 96,0 96,96 48,96 48,72 72,72 72,24 0,24 0,0"/>
-  </object>
-  <object id="12" type="TERRAIN" x="24" y="120">
-   <properties>
-    <property name="terrain" value="type=ROAD"/>
-   </properties>
-   <polyline points="0,0 72,0 72,72 48,72 48,24 0,24 0,0"/>
-  </object>
-  <object id="13" type="TERRAIN" x="408" y="240">
-   <properties>
-    <property name="terrain" value="type=ROAD"/>
-   </properties>
-   <polyline points="0,0 72,0 72,-24 24,-24 24,-96 120,-96 120,-24 96,-24 96,0 168,0 168,-24 144,-24 144,-96 240,-96 240,-24 192,-24 192,0 264,0 264,48 240,48 240,72 192,72 192,24 72,24 72,72 48,72 48,48 0,48 0,0"/>
-  </object>
- </objectgroup>
- <objectgroup name="Trigger Regions">
-  <object id="50" x="312" y="252" width="120" height="144">
-   <properties>
-    <property name="battletrigger" value="triggerid=4"/>
-   </properties>
-  </object>
-  <object id="51" x="432" y="252" width="96" height="144">
-   <properties>
-    <property name="battletrigger" value="triggerid=3"/>
-   </properties>
-  </object>
- </objectgroup>
- <objectgroup name="Meta">
-  <object id="14" name="StartLocation" x="720" y="288" width="48" height="24">
-   <properties>
-    <property name="start" value="exit=stairs"/>
-   </properties>
-  </object>
-  <object id="15" name="Door Sprite" x="360" y="204" width="24" height="24">
-   <properties>
-    <property name="door" value="image=jaildoor(night)"/>
-   </properties>
-  </object>
-  <object id="16" name="Door Sprite" x="480" y="204" width="24" height="24">
-   <properties>
-    <property name="door" value="image=jaildoor(night)"/>
-   </properties>
-  </object>
-  <object id="17" name="Door Sprite" x="576" y="204" width="24" height="24">
-   <properties>
-    <property name="door" value="image=jaildoor(night)"/>
-   </properties>
-  </object>
-  <object id="18" name="Door Sprite" x="216" y="288" width="24" height="24">
-   <properties>
-    <property name="door" value="image=jaildoor(night)"/>
-   </properties>
-  </object>
-  <object id="19" name="Door Sprite" x="96" y="288" width="24" height="24">
-   <properties>
-    <property name="door" value="image=jaildoor(night)"/>
-   </properties>
-  </object>
-  <object id="20" name="NPC" x="648" y="312" width="24" height="24">
-   <properties>
-    <property name="npc" value="imageid=0 textid=0 wander=1"/>
-   </properties>
-  </object>
- </objectgroup>
- <objectgroup name="Battle">
-  <object id="21" name="Battle Start" type="START" x="120" y="240" width="72" height="24">
-   <properties>
-    <property name="start" value="exit=battlestart"/>
-   </properties>
-  </object>
-  <object id="22" name="Battle Start 2" type="START" x="192" y="312" width="48" height="24">
-   <properties>
-    <property name="start" value="exit=battlestart"/>
-   </properties>
-  </object>
-  <object id="23" name="Soldier" type="NPC" x="240" y="72" width="24" height="24">
-   <properties>
-    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=1 unit=1"/>
-   </properties>
-  </object>
-  <object id="24" name="Soldier" type="NPC" x="144" y="120" width="24" height="24">
-   <properties>
-    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=1 unit=1"/>
-   </properties>
-  </object>
-  <object id="25" name="Erium Soldier" type="NPC" x="360" y="336" width="24" height="24">
-   <properties>
-    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=1 unit=3"/>
-   </properties>
-  </object>
-  <object id="26" name="Erium Mage" type="NPC" x="480" y="336" width="24" height="24">
-   <properties>
-    <property name="enemy" value="ai=wizard aiapproach=wait enemyid=3 unit=4"/>
-   </properties>
-  </object>
-  <object id="27" name="Soldier" type="NPC" x="720" y="96" width="24" height="24">
-   <properties>
-    <property name="enemy" value="ai=fighter aiapproach=wait enemyid=1 unit=2"/>
-   </properties>
-  </object>
-  <object id="28" name="Soldier" type="NPC" x="720" y="48" width="24" height="24">
-   <properties>
-    <property name="enemy" value="ai=fighter aiapproach=wait enemyid=1 unit=2"/>
-   </properties>
-  </object>
-  <object id="29" name="Erium Archer" type="NPC" x="480" y="264" width="24" height="24">
-   <properties>
-    <property name="enemy" value="ai=fighter aiapproach=wait enemyid=2 unit=4"/>
-   </properties>
-  </object>
-  <object id="30" name="Erium Captain" type="NPC" x="216" y="336" width="24" height="24">
-   <properties>
-    <property name="enemy" value="ai=fighter aiapproach=wait enemyid=4 unit=7"/>
-   </properties>
-  </object>
-  <object id="32" name="Erium Soldier" type="NPC" x="360" y="288" width="24" height="24">
-   <properties>
-    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=1 unit=3"/>
-   </properties>
-  </object>
-  <object id="33" name="Erium Soldier" type="NPC" x="360" y="264" width="24" height="24">
-   <properties>
-    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=1 unit=3"/>
-   </properties>
-  </object>
-  <object id="34" name="Erium Soldier" type="NPC" x="480" y="312" width="24" height="24">
-   <properties>
-    <property name="enemy" value="ai=fighter aiapproach=wait enemyid=1 unit=4"/>
-   </properties>
-  </object>
-  <object id="35" name="Erium Soldier" type="NPC" x="480" y="288" width="24" height="24">
-   <properties>
-    <property name="enemy" value="ai=fighter aiapproach=wait enemyid=1 unit=4"/>
-   </properties>
-  </object>
-  <object id="36" name="Erium Soldier" type="NPC" x="360" y="312" width="24" height="24">
-   <properties>
-    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=1 unit=3"/>
-   </properties>
-  </object>
-  <object id="37" name="Erium Soldier" type="NPC" x="576" y="264" width="24" height="24">
-   <properties>
-    <property name="enemy" value="ai=fighter aiapproach=wait enemyid=1 unit=5"/>
-   </properties>
-  </object>
-  <object id="38" name="Erium Soldier" type="NPC" x="576" y="312" width="24" height="24">
-   <properties>
-    <property name="enemy" value="ai=fighter aiapproach=wait enemyid=2 unit=5"/>
-   </properties>
-  </object>
-  <object id="39" name="Erium Soldier" type="NPC" x="576" y="336" width="24" height="24">
-   <properties>
-    <property name="enemy" value="ai=fighter aiapproach=wait enemyid=3 unit=5"/>
-   </properties>
-  </object>
-  <object id="40" name="Erium Soldier" type="NPC" x="576" y="288" width="24" height="24">
-   <properties>
-    <property name="enemy" value="ai=wizard aiapproach=wait enemyid=3 unit=5"/>
-   </properties>
-  </object>
-  <object id="43" name="Erium Soldier" type="NPC" x="624" y="288" width="24" height="24">
-   <properties>
-    <property name="enemy" value="ai=fighter aiapproach=wait enemyid=1 unit=6"/>
-   </properties>
-  </object>
-  <object id="44" name="Erium Soldier" type="NPC" x="624" y="312" width="24" height="24">
-   <properties>
-    <property name="enemy" value="ai=fighter aiapproach=wait enemyid=1 unit=6"/>
-   </properties>
-  </object>
- </objectgroup>
- <layer name="Grid Pattern" width="66" height="34" visible="0" opacity="0.1">
-  <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+XROQ3AQBDAwOPPIg+VPLCyLMZSChdTe1tr7dMxndP2U1/TPT3T+2PrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxV/SfvTARAjAAA=
-  </data>
- </layer>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="66" height="34" tilewidth="12" tileheight="12" nextobjectid="53">
+<properties>
+<property name="background" value="1"/>
+<property name="shadow" value="13"/>
+</properties>
+<tileset firstgid="1" name="Tiles" tilewidth="12" tileheight="12" tilecount="1296">
+<image source="../image/overworld(day)-Master.png" trans="495d47" width="432" height="432"/>
+</tileset>
+<tileset firstgid="1297" name="Castle Night" tilewidth="12" tileheight="12" tilecount="900">
+<image source="../image/castletown(night)-Master.png" trans="495d47" width="300" height="440"/>
+</tileset>
+<tileset firstgid="2197" name="Castle Night 2" tilewidth="12" tileheight="12" tilecount="495">
+<image source="../image/castletown(night)-Slave1.png" trans="495d47" width="180" height="400"/>
+</tileset>
+<layer name="BG" width="66" height="34">
+<data encoding="base64" compression="gzip">
+H4sIAAAAAAAAA+1YyU4DMQztJVyGz2D5PL6OO1uPo0oUkNj6ERToFUfTSB43iydpHEvDwfJMxk0i+/nZbneyWJyCdDPX5yBn/1pFLHz6ygxSy57qZzOWx71ek/eY5PxmndgrtZZjHzrTiobY+/QFyGVFe6pr594T+PrFDO/3oB+UyNKM7ykZ4w84+1OJbEguSPKyNj/g+9XGwLUZpFPoB3y/WvG/gb1vzficH9C/SmS3x4O7XyqmHG5bevZ5hbU3wz+nlebigYPljWefL1jbIj+k+omadrH+A+dtKcdT7g3xA5dHWtgdg+Mp92LNPae1XSp/uH5I5R83T1vZ1eIHp7nntLabGz+4Z2onhQf6jc43Uvzgnlvxg6tTtob16H4rc1jLXJ3rUTxX5rAG0u+0Prr5jt7J568UHjg94C4DD1o0N8+ONV+07htTeJXyt4bYx/Aq5W8NsY/hVcrfdva8y8Afd84rxWvKzvkuZUfrIPWFnT3fM3BR2r9MxYOvdvXou68uheqgr37Z2fM74nf8PyZez51vQvvRuOXmrXQOl/YvIV3K49KcXjrvcvlhqh+l+VyaH7TigdvPluJBOz9I9TdT/de6/6vV32jnh9qazsNzFttn/AHSJkR7ECMAAA==
+</data>
+</layer>
+<layer name="MG" width="66" height="34">
+<data encoding="base64" compression="gzip">
+H4sIAAAAAAAAA+2YO0/DMBDHLSFQsjJAeS2lG0iwg2DmMdGFh4QES/nQMFKQYIQZziKnWsed49pJEyf+Sac09cX2/X2O7SiVSCQS7tzk/G/Jh7v/WfZvXz+7CfVtCW1z/mvgu+7ov2hCtFgEV4JuU+j3EZTtgE2K6x7Ycf7fb7Uo3zZ8qV/beSjRYUKM04Hzu4xMBwmdx+cQyxmxC2buu/jFzi3Ec1fEdG2JzSyz+fWZAeiy0WJtnjOlXrKme9EcGP8H2Kegw2BFqQMYw0MyjpjzuE6Y68O888HF33eOmfMZGcL9Ltgo/3uvYfw2HXScnA5mOa4TTw2sk5I+PrrZ5oXW6wTqPGXq1W3R9XKJ0R+5L9lvItwY2v63IbVBMfPCB6pDbPumqqD7Ta2Dz7jFDDcvQvLB9exR5lf1GcZlvtB9ZOj+sa1aVMkXaPrd431KDNC1rA4wD/qeD68Q+zSbXX3owpmtq/kQ8k7fz2cmfT+kz0nrFp4T0EZCzrj2V3+TG8+Zd1Wtb1U/F1Kf/ib36HgmiImuzcOm8Tl/1Zk/b9CXd6M/Q4d3QyKRSCTq4xf7pLoWECMAAA==
+</data>
+</layer>
+<layer name="MG Shadow" width="66" height="34">
+<data encoding="base64" compression="gzip">
+H4sIAAAAAAAAA+3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAA/Bgz5kUWECMAAA==
+</data>
+</layer>
+<layer name="FG" width="66" height="34">
+<data encoding="base64" compression="gzip">
+H4sIAAAAAAAAA+1Z3S4EMRSeC8MM7pZLwtVGMm5JXIkHINyxZOMJNryAV8HiCUSCxWuQcGmfwW/iNNMmzdFOz8y23bJ7ki9Np9+c1qdzzmm3HkfROWDHES4c+7exvgXAKmAN0OY45u0J6gvMAGbRs6J3sP824mLg+XTPqvBVc4r1ibbFcc3bG9Tv8HYJsIye6d5h2AY0pH4HcTvSmPzuVxJF34l6Daq534D7nvye3zQn1sGVnYLvswr+J9Iomkzp/DHgJiX4wnzpcAu+7xz679V0OmSg6QpgnbcMiwqdM2mcYVfDC9187Yd6nMfjEG0r9aeDa/+92L4HHT4gdn8muf+D2F6dYZt36FiHFLQeT/X1gy6Pu+DhekJV3/j6LloGuOTh+oP1uxw6HebgfzhfEPczQx7R6dAvXg3WOAWY1qw1tDjZb54rHZpptfX44pm+C9sWqg6Y14sOe8T4QMmbD4B7y7xGAN8FngfnrCMO01ka83AOlMfxGOV8h3V4hprnJXGng5yzLqX1XcX6s7SKJ+dAPI7zI+V853o/vIKm3STsuppZaHHSp21Icc2VDmIfDPeDeh6T2T6fU/3JOlDyWlWI/CXuD3Um7jFtGdUf3g+63FWUl6g8lr9M94fiHlOXt9g5IeZnhZGC8wL2V1YHVe4qyksUnuBS8pfte0yqP1V8aP7B+0VhIi6XNV9xMnSzUU9uOtw/j7CWJ2k9NR4XRgmxoYwN90NuQx1yE38/y7OUc+x/hahvTPe+gwBWZ5jufQcBIf/+6tt+AKnc6KsQIwAA
+</data>
+</layer>
+<layer name="FG Shadow" width="66" height="34">
+<data encoding="base64" compression="gzip">
+H4sIAAAAAAAAA+3VQQqEQAxEUTcKnlXP7TUUrJ0gpO2YrsV/MLvYxj/DOE340zHr46pqPzrU3ueryv3o4I8Owv+D0KFWtIP7XK+3+2xr7twenIvul835ez5nOrTO9XJ/Pjq0zfVyf2/SQZw6RPfIOud5jUuHkeggdBA6iPt+Vdw63Lss9ed96ZD1fsu+ruc8t9/DKHQQOggdhA5CBwBRF0VrpgUQIwAA
+</data>
+</layer>
+<layer name="Roof" width="66" height="34">
+<data encoding="base64" compression="gzip">
+H4sIAAAAAAAAA+3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAA/Bgz5kUWECMAAA==
+</data>
+</layer>
+<layer name="Walk" width="66" height="34" visible="0" opacity="0.6">
+<properties>
+<property name="walk" value=""/>
+</properties>
+<data encoding="base64" compression="gzip">
+H4sIAAAAAAAAA+2TQQ6AMAgEe/H/r/ELvssYb6YWSkoLOpNwcosy0lIAANrsm09Z+/ees7znwIPoQbsv2lz0wsNcD5H9zLwXWT147VsW8HCj3eO3c1J+VQ4PMTxE94UHnYfefYs2nzWHhzqjPEiMyo2ex3ruax6098LL76yS/OHhXx6k78VDG22+N9f7X6z98NB+nnV/tfOMuher58nmwdvbs7/X/8KDb99shYe6B4CLEwO71k8QIwAA
+</data>
+</layer>
+<objectgroup name="Terrain" visible="0">
+<object id="1" name="Rug" x="480" y="264">
+<properties>
+<property name="terrain" value="type=GRASS"/>
+</properties>
+<polyline points="0,0 0,96 24,96 24,72 96,72 96,48 24,48 24,0 0,0"/>
+</object>
+<object id="2" name="Floor" x="192" y="360">
+<properties>
+<property name="terrain" value="type=ROAD"/>
+</properties>
+<polyline points="0,0 0,24 -168,24 -168,0 -144,0 -144,-48 -96,-48 -96,-72 -72,-72 -72,-48 0,-48 0,-24 -24,-24 -24,0 0,0"/>
+</object>
+<object id="3" name="Floor" x="192" y="384">
+<properties>
+<property name="terrain" value="type=ROAD"/>
+</properties>
+<polyline points="0,0 0,-72 24,-72 24,-96 48,-96 48,-72 144,-72 144,-96 120,-96 120,-144 168,-144 168,-168 120,-168 120,-240 216,-240 216,-168 192,-168 192,-144 216,-144 216,-72 288,-72 288,-48 264,-48 264,-24 288,-24 288,0 0,0"/>
+</object>
+<object id="4" name="Floor" x="672" y="240">
+<properties>
+<property name="terrain" value="type=ROAD"/>
+</properties>
+<polyline points="0,0 0,-72 72,-72 72,-48 96,-48 96,0 96,48 72,48 72,0 0,0"/>
+</object>
+<object id="5" name="Floor" x="672" y="240">
+<properties>
+<property name="terrain" value="type=ROAD"/>
+</properties>
+<polyline points="0,0 48,0 48,24 72,24 72,96 96,96 96,144 -24,144 -24,72 0,72 0,0"/>
+</object>
+<object id="6" name="Floor" x="648" y="384">
+<properties>
+<property name="terrain" value="type=ROAD"/>
+</properties>
+<polyline points="0,0 -168,0 -168,-24 -48,-24 -48,-48 -24,-48 -24,-72 0,-72 0,0"/>
+</object>
+<object id="7" name="Floor" x="48" y="72">
+<properties>
+<property name="terrain" value="type=ROAD"/>
+</properties>
+<polyline points="0,0 0,48 -24,48 -24,-24 240,-24 240,0 264,0 264,24 240,24 240,48 192,48 192,0 120,0 120,48 72,48 72,0 0,0"/>
+</object>
+<object id="8" name="Rug" x="312" y="48">
+<properties>
+<property name="terrain" value="type=GRASS"/>
+</properties>
+<polyline points="0,0 0,72 456,72 456,0 312,0 312,24 288,24 288,0 168,0 168,24 144,24 144,0 0,0"/>
+</object>
+<object id="9" name="Floor" x="96" y="288">
+<properties>
+<property name="terrain" value="type=ROAD"/>
+</properties>
+<polyline points="0,0 -72,0 -72,-48 -48,-48 -48,-72 -72,-72 -72,-144 -48,-144 -48,-96 -24,-96 0,-96 0,-48 120,-48 120,-168 168,-168 168,-144 192,-144 192,-120 168,-120 168,-96 192,-96 192,-72 168,-72 168,-48 144,-48 144,0 0,0"/>
+</object>
+<object id="10" name="Rug" x="192" y="240">
+<properties>
+<property name="terrain" value="type=GRASS"/>
+</properties>
+<polyline points="0,0 0,-96 -48,-96 -48,0 -96,0 -96,-120 24,-120 24,0"/>
+</object>
+<object id="11" x="504" y="264">
+<properties>
+<property name="terrain" value="type=GRASS"/>
+</properties>
+<polyline points="0,0 96,0 96,96 48,96 48,72 72,72 72,24 0,24 0,0"/>
+</object>
+<object id="12" type="TERRAIN" x="24" y="120">
+<properties>
+<property name="terrain" value="type=ROAD"/>
+</properties>
+<polyline points="0,0 72,0 72,72 48,72 48,24 0,24 0,0"/>
+</object>
+<object id="13" type="TERRAIN" x="408" y="240">
+<properties>
+<property name="terrain" value="type=ROAD"/>
+</properties>
+<polyline points="0,0 72,0 72,-24 24,-24 24,-96 120,-96 120,-24 96,-24 96,0 168,0 168,-24 144,-24 144,-96 240,-96 240,-24 192,-24 192,0 264,0 264,48 240,48 240,72 192,72 192,24 72,24 72,72 48,72 48,48 0,48 0,0"/>
+</object>
+</objectgroup>
+<objectgroup name="Trigger Regions" visible="0">
+<object id="50" name="SouthTriggerAI1" x="312" y="252" width="120" height="144">
+<properties>
+<property name="null" value=""/>
+</properties>
+</object>
+<object id="51" name="SouthTriggerAI2" x="432" y="252" width="96" height="144">
+<properties>
+<property name="null" value=""/>
+</properties>
+</object>
+<object id="52" name="TopBattleExit" x="744" y="72" width="24" height="24">
+<properties>
+<property name="null" value=""/>
+</properties>
+</object>
+</objectgroup>
+<objectgroup name="Meta">
+<object id="14" name="StartLocation" x="192" y="312" width="48" height="24">
+<properties>
+<property name="start" value="exit=stairs"/>
+</properties>
+</object>
+<object id="15" name="Door Sprite" x="360" y="204" width="24" height="24">
+<properties>
+<property name="door" value="image=jaildoor(night)"/>
+</properties>
+</object>
+<object id="16" name="Door Sprite" x="480" y="204" width="24" height="24">
+<properties>
+<property name="door" value="image=jaildoor(night)"/>
+</properties>
+</object>
+<object id="17" name="Door Sprite" x="576" y="204" width="24" height="24">
+<properties>
+<property name="door" value="image=jaildoor(night)"/>
+</properties>
+</object>
+<object id="18" name="Door Sprite" x="216" y="288" width="24" height="24">
+<properties>
+<property name="door" value="image=jaildoor(night)"/>
+</properties>
+</object>
+<object id="19" name="Door Sprite" x="96" y="288" width="24" height="24">
+<properties>
+<property name="door" value="image=jaildoor(night)"/>
+</properties>
+</object>
+<object id="20" name="NPC" x="648" y="312" width="24" height="24">
+<properties>
+<property name="npc" value="animation=eriumguard textid=0 wander=1"/>
+</properties>
+</object>
+</objectgroup>
+<objectgroup name="Battle">
+<object id="21" name="Battle Start" type="START" x="120" y="240" width="72" height="24">
+<properties>
+<property name="start" value="exit=battlestart"/>
+</properties>
+</object>
+<object id="22" name="Battle Start 2" type="START" x="192" y="312" width="48" height="24">
+<properties>
+<property name="start" value="exit=battlestart"/>
+</properties>
+</object>
+<object id="23" name="Soldier" type="NPC" x="240" y="72" width="24" height="24">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=slow enemyid=1 unit=1"/>
+</properties>
+</object>
+<object id="24" name="Soldier" type="NPC" x="144" y="120" width="24" height="24">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=slow enemyid=1 unit=1"/>
+</properties>
+</object>
+<object id="25" name="Erium Soldier" type="NPC" x="360" y="336" width="24" height="24">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=slow enemyid=1 unit=3"/>
+</properties>
+</object>
+<object id="26" name="Erium Mage" type="NPC" x="480" y="336" width="24" height="24">
+<properties>
+<property name="enemy" value="ai=wizard aiapproach=wait enemyid=3 unit=4"/>
+</properties>
+</object>
+<object id="27" name="Soldier" type="NPC" x="720" y="96" width="24" height="24">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=wait enemyid=1 unit=2"/>
+</properties>
+</object>
+<object id="28" name="Soldier" type="NPC" x="720" y="48" width="24" height="24">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=wait enemyid=1 unit=2"/>
+</properties>
+</object>
+<object id="29" name="Erium Archer" type="NPC" x="480" y="264" width="24" height="24">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=wait enemyid=2 unit=4"/>
+</properties>
+</object>
+<object id="30" name="Erium Captain" type="NPC" x="720" y="288" width="24" height="24">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=wait enemyid=4 unit=7"/>
+</properties>
+</object>
+<object id="32" name="Erium Soldier" type="NPC" x="360" y="288" width="24" height="24">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=slow enemyid=1 unit=3"/>
+</properties>
+</object>
+<object id="33" name="Erium Soldier" type="NPC" x="360" y="264" width="24" height="24">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=slow enemyid=1 unit=3"/>
+</properties>
+</object>
+<object id="34" name="Erium Soldier" type="NPC" x="480" y="312" width="24" height="24">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=wait enemyid=1 unit=4"/>
+</properties>
+</object>
+<object id="35" name="Erium Soldier" type="NPC" x="480" y="288" width="24" height="24">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=wait enemyid=1 unit=4"/>
+</properties>
+</object>
+<object id="36" name="Erium Soldier" type="NPC" x="360" y="312" width="24" height="24">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=slow enemyid=1 unit=3"/>
+</properties>
+</object>
+<object id="37" name="Erium Soldier" type="NPC" x="576" y="264" width="24" height="24">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=wait enemyid=1 unit=5"/>
+</properties>
+</object>
+<object id="38" name="Erium Soldier" type="NPC" x="576" y="312" width="24" height="24">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=wait enemyid=2 unit=5"/>
+</properties>
+</object>
+<object id="39" name="Erium Soldier" type="NPC" x="576" y="336" width="24" height="24">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=wait enemyid=3 unit=5"/>
+</properties>
+</object>
+<object id="40" name="Erium Soldier" type="NPC" x="576" y="288" width="24" height="24">
+<properties>
+<property name="enemy" value="ai=wizard aiapproach=wait enemyid=3 unit=5"/>
+</properties>
+</object>
+<object id="43" name="Erium Soldier" type="NPC" x="624" y="288" width="24" height="24">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=wait enemyid=1 unit=6"/>
+</properties>
+</object>
+<object id="44" name="Erium Soldier" type="NPC" x="624" y="312" width="24" height="24">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=wait enemyid=1 unit=6"/>
+</properties>
+</object>
+</objectgroup>
+<layer name="Grid Pattern" width="66" height="34" visible="0" opacity="0.1">
+<data encoding="base64" compression="gzip">
+H4sIAAAAAAAAA+XROQ3AQBDAwOPPIg+VPLCyLMZSChdTe1tr7dMxndP2U1/TPT3T+2PrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxV/SfvTARAjAAA=
+</data>
+</layer>
 </map>

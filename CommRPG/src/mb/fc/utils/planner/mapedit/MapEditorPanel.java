@@ -165,7 +165,7 @@ public class MapEditorPanel implements ActionListener {
 					int index = 0;
 					if (mo.getParam(val.getTag()) != null)
 						index = Integer.parseInt(mo.getParam(val.getTag()));
-					if (index < 0)
+					if (index < 0 || index >= listOfLists.get(val.getRefersTo() - 1).size())
 						valueSet = "NO VALUE SELECTED";
 					else
 						valueSet = listOfLists.get(val.getRefersTo() - 1).get(index).getName();
@@ -336,14 +336,18 @@ public class MapEditorPanel implements ActionListener {
 			for (int i = 0; i < pld.getPlannerValues().size(); i++)
 			{
 				PlannerValueDef pvd = pld.getPlannerValues().get(i);
-				if (pvd.getValueType() == PlannerValueDef.TYPE_STRING)
-					mo.getParams().put(pvd.getTag(), (String) pl.getValues().get(i));
+				if (pvd.getValueType() == PlannerValueDef.TYPE_STRING) {
+					if (pvd.getRefersTo() != PlannerValueDef.REFERS_NONE)
+						mo.getParams().put(pvd.getTag(), ((PlannerReference) pl.getValues().get(i)).getName());
+					else 
+						mo.getParams().put(pvd.getTag(), (String) pl.getValues().get(i));
+				}
 				else if (pvd.getValueType() == PlannerValueDef.TYPE_BOOLEAN)
 					mo.getParams().put(pvd.getTag(), ((boolean) pl.getValues().get(i)) + "");
 				else
 				{
 					if (pvd.getRefersTo() != PlannerValueDef.REFERS_NONE)
-						mo.getParams().put(pvd.getTag(), ((int) pl.getValues().get(i)) - 1 + "");
+						mo.getParams().put(pvd.getTag(),  listOfLists.get(pvd.getRefersTo() - 1).indexOf(pl.getValues().get(i)) + "");
 					else
 						mo.getParams().put(pvd.getTag(), ((int) pl.getValues().get(i)) + "");
 				}

@@ -69,6 +69,43 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 		loadTownButton.setEnabled(false);
 		loadBattleButton.setEnabled(false);
 		loadCinButton.setEnabled(false);
+		
+		// Checks to see if any mapdata has errors
+		/*
+		for (File f : new File("mapdata").listFiles()) {
+			if (f.isFile()) {
+				System.out.println("Checking file: " + f.getName());
+				plannerFrame.openFile(f, false);
+				if (!plannerFrame.hasPlannerMap())
+					System.out.println("Has no planner map assigned");
+				PlannerReference.getBadReferences(plannerFrame.getDataInputTabs()).forEach(s -> System.out.println(s));
+			}
+		}*/
+		/*
+		for (String spell : GlobalPythonFactory.createJSpell().getSpellList()) {
+			JSpell jspell = GlobalPythonFactory.createJSpell().init(spell);
+			System.out.println(spell);
+			System.out.println(jspell.getId());
+			System.out.println(jspell.getMaxLevel());
+			System.out.println(jspell.getName());
+			for (int i = 0; i < jspell.getMaxLevel(); i++) {
+				System.out.println(jspell.getSpellAnimationFile(i));
+				System.out.println(jspell.getSpellRainAnimationFile(i));
+				System.out.println(jspell.getSpellRainAnimationName(i));
+				System.out.println(jspell.getSpellRainFrequency(i));
+				System.out.println(jspell.getSpellOverlayColor(i));
+				System.out.println(jspell.getArea()[i]);
+				System.out.println(jspell.getCosts()[i]);
+				System.out.println(jspell.getDamage()[i]);
+				System.out.println(jspell.getMpDamage()[i]);
+				System.out.println(jspell.getRange()[i]);
+			}
+			System.out.println(jspell.getSpellIconId());
+			System.out.println(jspell.isLoops());
+			System.out.println(jspell.isTargetsEnemy());
+		}
+		*/
+		
 		/*
 		ps = new ParticleSystem(new Image("sprite/lightning.png"));
 		JParticleEmitter emitter = GlobalPythonFactory.createParticleEmitter();

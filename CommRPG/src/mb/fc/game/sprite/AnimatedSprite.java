@@ -55,15 +55,10 @@ public class AnimatedSprite extends Sprite
 
 	public static void drawShadow(Image originalIm, float locX, float locY, Camera camera, boolean tileOffset, int tileHeight)
 	{
-		drawShadow(originalIm, locX, locY, camera, tileOffset, tileHeight);
-	}
-
-	public static void drawShadow(Image originalIm, float locX, float locY, Camera camera, boolean tileOffset, StateInfo stateInfo)
-	{
 		Image i = (originalIm).getScaledCopy(originalIm.getWidth(), (int) (originalIm.getHeight() * .65));
-		i.drawSheared((float) (locX - camera.getLocationX() - SHADOW_OFFSET * (1.0 * originalIm.getHeight() / stateInfo.getTileHeight())),
-				locY - camera.getLocationY() - (tileOffset ? stateInfo.getResourceManager().getMap().getTileEffectiveHeight() / 2 : 0) + originalIm.getHeight() - i.getHeight(),
-				(int) (SHADOW_OFFSET * (1.0 * originalIm.getHeight() / stateInfo.getTileHeight())),
+		i.drawSheared((float) (locX - camera.getLocationX() - SHADOW_OFFSET * (1.0 * originalIm.getHeight() / tileHeight)),
+				locY - camera.getLocationY() - (tileOffset ? tileHeight / 2 : 0) + originalIm.getHeight() - i.getHeight(),
+				(int) (SHADOW_OFFSET * (1.0 * originalIm.getHeight() / tileHeight)),
 				0, SHADOW_COLOR);
 	}
 
@@ -150,8 +145,8 @@ public class AnimatedSprite extends Sprite
 	 */
 	public void setLocation(float locX, float locY, int tileWidth, int tileHeight)
 	{
-		super.setLocX(locX, tileWidth);
-		super.setLocY(locY, tileHeight);
+		setLocX(locX, tileWidth);
+		setLocY(locY, tileHeight);
 	}
 
 	public Direction getFacing() {

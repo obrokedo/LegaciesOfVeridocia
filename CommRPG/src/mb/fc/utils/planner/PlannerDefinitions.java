@@ -2541,6 +2541,19 @@ public class PlannerDefinitions {
 				definingValues));
 
 		// npc
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_TEXT,
+				PlannerValueDef.TYPE_INT, "textid", false, "Text Id",
+				"The id of the text that should be displayed when this npc is talked to'"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_ANIMATIONS,
+				PlannerValueDef.TYPE_STRING, "animation", false, "Animation",
+				"The animation that should be used to display this NPC. The portrait for the speech will be selected during text creation'"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_INT, "wander", false, "Wander Distance",
+				"The amount of tiles this NPC can wander from his start position. A value of 0 means he will stand still'"));
+		allowableLines.add(new PlannerLineDef("npc", "npc",
+				"Marks this locations as the starting place for an npc. Depending on the 'wander' the npc may not remain here.",
+				definingValues));
 
 		// enemy
 		definingValues = new ArrayList<PlannerValueDef>();

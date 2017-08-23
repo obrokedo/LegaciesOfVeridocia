@@ -112,4 +112,12 @@ public class CombatAnimation
 	{
 		return false;
 	}
+
+	@Override
+	public String toString() {
+		return "CombatAnimation [animationWrapper=" + animationWrapper + ", totalTimePassed=" + totalTimePassed
+				+ ", minimumTimePassed=" + minimumTimePassed + ", drawSpell=" + drawSpell + ", xOffset=" + xOffset
+				+ ", yOffset=" + yOffset + ", renderColor=" + renderColor + ", blocks=" + blocks + ", parentSprite="
+				+ parentSprite + ", displayPlatform=" + displayPlatform + "]";
+	}
 }

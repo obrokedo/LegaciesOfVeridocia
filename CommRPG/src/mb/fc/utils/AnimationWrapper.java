@@ -293,4 +293,9 @@ public class AnimationWrapper
 	public void setWeapon(Image weapon) {
 		this.weapon = weapon;
 	}
+
+	public void copyAnimationLocation(AnimationWrapper wrapper) {
+		this.animationDelta = wrapper.animationDelta;
+		this.animationIndex = wrapper.animationIndex;
+	}
 }

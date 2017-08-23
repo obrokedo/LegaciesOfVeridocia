@@ -54,14 +54,14 @@ public class PlannerReference {
 		*/
 	}
 	
-	public static List<String> getBadReferences(List<PlannerTab> tabsWithReferences, ArrayList<ArrayList<PlannerReference>> referenceListByReferenceType) {
+	public static List<String> getBadReferences(List<PlannerTab> tabsWithReferences) {
 		List<String> badReferences = new ArrayList<>();
 		
 		for (PlannerTab plannerTab : tabsWithReferences) {
 			for (PlannerContainer plannerContainer : plannerTab.getListPC()) {
-				getBadLineReferences(referenceListByReferenceType, badReferences, plannerContainer, plannerContainer.getDefLine());
+				getBadLineReferences(badReferences, plannerContainer, plannerContainer.getDefLine());
 				for (PlannerLine pl : plannerContainer.getLines()) {
-					getBadLineReferences(referenceListByReferenceType, badReferences, plannerContainer, pl);
+					getBadLineReferences(badReferences, plannerContainer, pl);
 				}
 			}
 		}
@@ -69,7 +69,7 @@ public class PlannerReference {
 		return badReferences;
 	}
 		
-	private static void getBadLineReferences(ArrayList<ArrayList<PlannerReference>> referenceListByReferenceType,
+	private static void getBadLineReferences(
 			List<String> badReferences, PlannerContainer plannerContainer, PlannerLine pl) {
 		for (int j = 0; j < pl.getPlDef().getPlannerValues().size() && j < pl.getValues().size(); j++) {
 			PlannerValueDef pvd = pl.getPlDef().getPlannerValues().get(j);

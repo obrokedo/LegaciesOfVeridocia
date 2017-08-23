@@ -15,4 +15,8 @@ public class StandCombatAnimation extends CombatAnimation
 		super(new HeroAnimationWrapper(parentSprite, "Stand", true), parentSprite, false);
 		this.minimumTimePassed = mimimumTimePassed;
 	}
+	
+	public void continueStandAnimation(CombatAnimation previousAnimation) {
+		this.animationWrapper.copyAnimationLocation(previousAnimation.animationWrapper);
+	}
 }

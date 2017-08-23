@@ -166,12 +166,12 @@ public class MapObject
 
 	public NPCSprite getNPC(FCResourceManager fcrm)
 	{
-		int imageId = Integer.parseInt(params.get("imageid"));
+		String animation = params.get("animation");
 		int wander = 0;
 		if (params.containsKey("wander"))
 			wander = Integer.parseInt(params.get("wander"));
 		ArrayList<Speech> speeches = fcrm.getSpeechesById(Integer.parseInt(params.get("textid")));
-		NPCSprite npc = NPCResource.getNPC(imageId, speeches);
+		NPCSprite npc = NPCResource.getNPC(animation, speeches);
 		if (params.get("npcid") != null)
 			npc.setUniqueNPCId(Integer.parseInt(params.get("npcid")));
 		npc.initializeSprite(fcrm);

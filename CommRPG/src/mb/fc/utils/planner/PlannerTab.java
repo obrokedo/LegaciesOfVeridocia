@@ -73,7 +73,6 @@ public class PlannerTab implements ActionListener, TreeSelectionListener
 	public void actionPerformed(ActionEvent al)
 	{
 		String command = al.getActionCommand();
-		System.out.println("CONTAINER ACTION PERFORMED " + command);
 		if (command.equalsIgnoreCase("add"))
 		{
 			addNewContainer();
@@ -83,7 +82,7 @@ public class PlannerTab implements ActionListener, TreeSelectionListener
 			removeContainer(plannerTree.getSelectedIndex());
 		} else if (command.equalsIgnoreCase("save")) {
 			commitChanges();
-			plannerFrame.updateErrorList(PlannerReference.getBadReferences(plannerFrame.getDataInputTabs(), PlannerFrame.referenceListByReferenceType));
+			plannerFrame.updateErrorList(PlannerReference.getBadReferences(plannerFrame.getDataInputTabs()));
 		}
 	}
 
@@ -99,9 +98,7 @@ public class PlannerTab implements ActionListener, TreeSelectionListener
 		PlannerContainerDef pcd = containersByName.get(type);
 		pcd.getDataLines().add(new PlannerReference(newName));
 		newPC.getDefLine().getValues().add(newName);
-		System.out.println("ADD ELEMENT");
 		plannerTree.addItem(newName, listPC.size() - 1);
-		System.out.println("AFTER ADD ELEMENT");
 	}
 
 	public void duplicateContainer(int index)
@@ -131,7 +128,7 @@ public class PlannerTab implements ActionListener, TreeSelectionListener
 			return;
 		plannerTree.removeItem(index);
 		PlannerReference.removeReferences(refersTo, index);
-		plannerFrame.updateErrorList(PlannerReference.getBadReferences(plannerFrame.getDataInputTabs(), PlannerFrame.referenceListByReferenceType));
+		plannerFrame.updateErrorList(PlannerReference.getBadReferences(plannerFrame.getDataInputTabs()));
 		uiAspect.remove(currentPCScroll);
 		uiAspect.repaint();
 
@@ -148,7 +145,6 @@ public class PlannerTab implements ActionListener, TreeSelectionListener
 
 	public void setNewValues()
 	{
-		System.out.println("SET NEW VALUES");
 
 		if (currentPCScroll != null)
 		{
@@ -158,11 +154,10 @@ public class PlannerTab implements ActionListener, TreeSelectionListener
 		if (currentPC != null)
 		{
 			currentPC.commitChanges();
-			plannerFrame.updateErrorList(PlannerReference.getBadReferences(plannerFrame.getDataInputTabs(), PlannerFrame.referenceListByReferenceType));
+			plannerFrame.updateErrorList(PlannerReference.getBadReferences(plannerFrame.getDataInputTabs()));
 			// Check to see if the description (name) has been renamed
 			if (!currentPC.getDescription().equalsIgnoreCase(plannerTree.getTreeLabel(selectedPC)))
 			{
-				System.out.println("OH MY I'M RENAMED");
 				renamingItem = true;
 				plannerTree.updateTreeLabel(selectedPC, currentPC.getDescription());
 				renamingItem = false;
@@ -175,7 +170,6 @@ public class PlannerTab implements ActionListener, TreeSelectionListener
 		{
 			currentPC = listPC.get(plannerTree.getSelectedIndex());
 			selectedPC = plannerTree.getSelectedIndex();
-			System.out.println("NEW VALUES " + selectedPC);
 			if (plannerTree.getSelectedAttributeIndex() != -1)
 				currentPC.setupUI(plannerTree.getSelectedAttributeIndex());
 			else
@@ -220,7 +214,6 @@ public class PlannerTab implements ActionListener, TreeSelectionListener
 	{
 		this.currentPC = null;
 		this.listPC.clear();
-		System.out.println("CLEAR VALUES");
 		// plannerTree.updateTreeValues(name, listPC);
 		/*
 		if (currentPCScroll != null)
@@ -247,12 +240,10 @@ public class PlannerTab implements ActionListener, TreeSelectionListener
 		*/
 		uiAspect.revalidate();
 		uiAspect.repaint();
-		System.out.println("CLEARED CURRENT PC " + currentPC);
 	}
 
 	public boolean setSelectedListItem(int index)
 	{
-		System.out.println("SET SELECTED LIST ITEM " + index);
 		if (index < listPC.size())
 		{
 			this.plannerTree.setSelectedIndex(index);

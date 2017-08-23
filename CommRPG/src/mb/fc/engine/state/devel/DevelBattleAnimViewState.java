@@ -3,6 +3,7 @@ package mb.fc.engine.state.devel;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
@@ -45,6 +46,8 @@ public class DevelBattleAnimViewState extends LoadableGameState implements Resou
 	private Button reloadScriptsButton = new Button(400, 85, 165, 25, "Reload Scripts");
 	private int nextInput = 0;
 	
+	private String attackAction;
+	
 	public DevelBattleAnimViewState() {
 		wizardIndex = null;
 	}
@@ -76,7 +79,7 @@ public class DevelBattleAnimViewState extends LoadableGameState implements Resou
 					break;
 				case PICK_ATTACK_ACTION:
 					selectText = "Choose the attackers action";
-					options.add("Normal Attack"); // options.add("Miss Attack"); options.add("Double Attack"); options.add("Critical Attack");
+					options.add("Normal Attack"); options.add("Critical Attack"); options.add("Ranged Attack"); // options.add("Miss Attack"); options.add("Double Attack"); 
 					String[] spells = GlobalPythonFactory.createJSpell().getSpellList();
 					for (String spell : spells) {
 						JSpell initSpell = GlobalPythonFactory.createJSpell().init(spell);
@@ -84,6 +87,10 @@ public class DevelBattleAnimViewState extends LoadableGameState implements Resou
 							options.add(spell + " " + (i + 1));
 						}
 					}
+					break;
+				case PICK_DEFENDER_ACTION:
+					selectText = "Choose the targets action";
+					options.add("Take Damage"); options.add("Block");
 					break;
 					
 			}
@@ -134,8 +141,7 @@ public class DevelBattleAnimViewState extends LoadableGameState implements Resou
 					attacker = HeroResource.getHero(selectedItem);
 				else 
 					attacker = EnemyResource.getEnemy(selectedItem);
-				attacker.initializeSprite(fcrm);
-				attacker.setLocation(0, 0, 1, 1);
+				
 				nextStep();
 				break;
 			case PICK_TARGET:
@@ -143,12 +149,15 @@ public class DevelBattleAnimViewState extends LoadableGameState implements Resou
 					target = HeroResource.getHero(selectedItem);
 				else 
 					target = EnemyResource.getEnemy(selectedItem);
-				target.initializeSprite(fcrm);
-				target.setLocation(0, 1, 1, 1);
+				
 				nextStep();
 				break;
 			case PICK_ATTACK_ACTION:
-				handlePickAttackAction(selectedItem);
+				attackAction = selectedItem;
+				nextStep();
+				break;
+			case PICK_DEFENDER_ACTION:
+				handlePickTargetAction(selectedItem);
 				break;
 			default:
 				break;
@@ -156,21 +165,54 @@ public class DevelBattleAnimViewState extends LoadableGameState implements Resou
 		return false;
 	}
 	
-	private void handlePickAttackAction(String selectedItem) {
+	private void handlePickTargetAction(String selectedItem) {
 		BattleCommand battleCommand = null;
-		if (selectedItem.equalsIgnoreCase("Normal Attack")) {
+		if (attackAction.equalsIgnoreCase("Normal Attack") || attackAction.equalsIgnoreCase("Critical Attack") || attackAction.equalsIgnoreCase("Ranged Attack")) {
 			battleCommand = new BattleCommand(BattleCommand.COMMAND_ATTACK);
 		} else {
-			String[] splitSpell = selectedItem.split(" ");
+			String[] splitSpell = attackAction.split(" ");
 			JSpell spell = GlobalPythonFactory.createJSpell().init(splitSpell[0]);
 			KnownSpell ks = new KnownSpell(spell.getId(), (byte) 4, spell);
 			battleCommand = new BattleCommand(BattleCommand.COMMAND_SPELL, ks.getSpell(), ks, Integer.parseInt(splitSpell[1]));
 		}
 		
-		BattleResults br = BattleResults.determineBattleResults(attacker, Collections.singletonList(target), battleCommand, fcrm);
+		attacker.initializeSprite(fcrm);
+		target.initializeSprite(fcrm);
+		
+		target.setCurrentHP(1);
 		
 		attacker.initializeStats();
 		target.initializeStats();
+		// target.setCurrentHP(1);
+		/*
+		List<CombatSprite> targets = new ArrayList<>();
+		
+		CombatSprite cs = HeroResource.getHero(1);
+		cs.initializeSprite(fcrm);
+		cs.initializeStats();
+		cs.setLocation(0, 1, 1, 1);
+		*/
+		// targets.add(target); targets.add(cs);
+		// targets.add(target); targets.add(target);
+		
+		BattleResults br = BattleResults.determineBattleResults(attacker, Collections.singletonList(target) , battleCommand, fcrm);
+		
+		if (attackAction.equalsIgnoreCase("Critical Attack")) {
+			br.critted.set(0, true);
+		}
+		
+		if (selectedItem.equalsIgnoreCase("Block")) {
+			br.dodged.set(0, true);
+		}
+		
+		attacker.setLocation(0, 0, 1, 1);
+		if (attackAction.equalsIgnoreCase("Ranged Attack")) {
+			br.critted.set(0, true);
+			target.setLocation(0, 2, 1, 1);
+		} else {
+			target.setLocation(0, 1, 1, 1);
+		}
+		
 		LOVAttackCinematicState acs = (LOVAttackCinematicState) game.getState(CommRPG.STATE_GAME_BATTLE_ANIM);
 		acs.setBattleInfo(attacker, fcrm, br, (PaddedGameContainer) game.getContainer(), CommRPG.STATE_GAME_BATTLE_ANIM_VIEW);
 		game.enterState(CommRPG.STATE_GAME_BATTLE_ANIM, new FadeOutTransition(Color.black, 250), new EmptyTransition());
@@ -217,6 +259,7 @@ public class DevelBattleAnimViewState extends LoadableGameState implements Resou
 			wizardIndex = WizardStep.PICK_ATTACKER_TYPE;
 			setupStep();
 		}
+		CommRPG.TEST_MODE_ENABLED = false;
 		fcrm = resourceManager;
 	}
 

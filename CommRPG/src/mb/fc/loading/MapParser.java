@@ -322,7 +322,6 @@ public class MapParser
 			
 			for (TagArea childTagArea : tagArea.getChildren())
 			{
-				System.out.println(childTagArea.getTagType());
 				if (childTagArea.getTagType().equalsIgnoreCase("properties"))
 				{
 					for (TagArea propertyTagArea : childTagArea.getChildren())
@@ -334,7 +333,6 @@ public class MapParser
 				else if (childTagArea.getTagType().equalsIgnoreCase("data"))
 				{
 					String cdata = childTagArea.getValue();
-					System.out.println(cdata);
 					char[] enc = cdata.toCharArray();
 					byte[] dec = decodeBase64(enc);
 					GZIPInputStream is = new GZIPInputStream(

@@ -21,6 +21,9 @@
 <trigger id=7 description="Door5 Open" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=true triggerimmediately=true>
 	<removesprite name="door5"/>
 </trigger>
+<text id=0 description="Guard Talk">
+	<string message="Hello Friend<hardstop>" require=-1, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait=""/>
+</text>
 <cinematic id=0 description="Cinematic Jailbreak" camerax=0 cameray=0>
 	<addhero heroid=3 init=true/>
 	<addhero heroid=4 init=true/>
