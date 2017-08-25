@@ -26,7 +26,7 @@ public class YesNoMenu extends SpeechMenu
 
 	public YesNoMenu(String text, int triggerId,
 			Portrait portrait, StateInfo stateInfo, MenuListener listener) {
-		super(text, stateInfo.getFCGameContainer(),triggerId, portrait, stateInfo, listener);
+		super(text, stateInfo.getFCGameContainer(),triggerId, portrait, listener);
 		yesPanel = new RectUI(120, 146, 32, 32);
 		noPanel = new RectUI(170, 146, 32, 32);
 		yesText = new TextUI("Yes", 125, 148);
@@ -73,7 +73,7 @@ public class YesNoMenu extends SpeechMenu
 	{
 		super.render(gc, graphics);
 		System.out.println("IM DRAWING");
-		if (initialized)
+		if (menuIsMovedIn)
 		{
 			// Draw background
 			yesPanel.drawPanel(graphics);

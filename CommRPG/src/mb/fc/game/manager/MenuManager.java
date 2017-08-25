@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import mb.fc.engine.message.Message;
 import mb.fc.engine.message.MessageType;
 import mb.fc.engine.message.ShopMessage;
+import mb.fc.engine.message.SpeechBundleMessage;
 import mb.fc.engine.message.SpeechMessage;
 import mb.fc.engine.message.SpriteContextMessage;
+import mb.fc.engine.state.StateInfo;
 import mb.fc.game.menu.DebugMenu;
 import mb.fc.game.menu.HeroStatMenu;
 import mb.fc.game.menu.HeroesStatMenu;
@@ -21,6 +23,7 @@ import mb.fc.game.menu.shop.ShopMenuTabled;
 import mb.fc.game.menu.shop.ShopOptionsMenu;
 import mb.fc.game.resource.HeroResource;
 import mb.fc.game.sprite.CombatSprite;
+import mb.fc.game.text.Speech;
 
 public class MenuManager extends Manager
 {
@@ -88,9 +91,16 @@ public class MenuManager extends Manager
 		switch (message.getMessageType())
 		{
 			case SPEECH:
-				SpeechMessage spm = (SpeechMessage) message;
-				stateInfo.addMenu(new SpeechMenu(spm.getText(),
-						stateInfo.getFCGameContainer(), spm.getTriggerId(), spm.getPortrait(), stateInfo));
+				if (message instanceof SpeechMessage) {
+					SpeechMessage spm = (SpeechMessage) message;
+					stateInfo.addMenu(new SpeechMenu(spm.getText(), spm.getTriggerId(), spm.getPortrait(), stateInfo));
+				} else if (message instanceof SpeechBundleMessage) {
+					
+					SpeechBundleMessage sbm = (SpeechBundleMessage) message;
+					Speech speech = stateInfo.getResourceManager().getSpeechesById(sbm.getSpeechId()).get(sbm.getSpeechIndex());
+					speech.initialize();
+					stateInfo.addMenu(new SpeechMenu(speech, stateInfo));
+				}
 				break;
 			case SHOW_SYSTEM_MENU:
 				stateInfo.addSingleInstanceMenu(new SystemMenu(stateInfo.getFCGameContainer()));

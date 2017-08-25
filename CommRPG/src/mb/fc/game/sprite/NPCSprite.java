@@ -13,7 +13,7 @@ public class NPCSprite extends AnimatedSprite
 {
 	private static final long serialVersionUID = 1L;
 
-	private ArrayList<Speech> speeches;
+	private int speechId;
 	private int uniqueNPCId;
 	private int moveCounter = 0;
 	private int initialTileX = -1;
@@ -21,10 +21,10 @@ public class NPCSprite extends AnimatedSprite
 	private int maxWander = 0;
 
 	public NPCSprite(String imageName,
-			ArrayList<Speech> speeches, int id)
+			int speechId, int id)
 	{
 		super(0, 0, imageName, Integer.MAX_VALUE);
-		this.speeches = speeches;
+		this.speechId = speechId;
 		this.spriteType = Sprite.TYPE_NPC;
 		this.uniqueNPCId = 0;
 		this.id = id;
@@ -41,43 +41,15 @@ public class NPCSprite extends AnimatedSprite
 
 	public void triggerButton1Event(StateInfo stateInfo)
 	{
-		if (speeches != null)
-		{
-			SPEECHLOOP: for (Speech s : speeches)
-			{
-				// Check to see if this message meets all required quests
-				if (s.getRequires() != null && s.getRequires().length > 0)
-				{
-					for (int i : s.getRequires())
-					{
-						if (i != -1 && !stateInfo.isQuestComplete(i))
-							continue SPEECHLOOP;
-					}
-				}
-
-				// Check to see if the excludes quests have been completed, if so
-				// then we can't use this message
-				if (s.getExcludes() != null && s.getExcludes().length > 0)
-				{
-					for (int i : s.getExcludes())
-					{
-						if (i != -1 && stateInfo.isQuestComplete(i))
-							continue SPEECHLOOP;
-					}
-				}
-
-				if (stateInfo.getCurrentSprite().getLocX() > this.getLocX())
-					this.setFacing(Direction.RIGHT);
-				else if (stateInfo.getCurrentSprite().getLocX() < this.getLocX())
-					this.setFacing(Direction.LEFT);
-				else if (stateInfo.getCurrentSprite().getLocY() > this.getLocY())
-					this.setFacing(Direction.DOWN);
-				else if (stateInfo.getCurrentSprite().getLocY() < this.getLocY())
-					this.setFacing(Direction.UP);
-
-				stateInfo.sendMessage(new SpeechMessage(s.getMessage(), s.getTriggerId(), s.getPortrait(stateInfo)));
-				break;
-			}
+		if (Speech.showFirstSpeechMeetsReqs(speechId, stateInfo)) {
+			if (stateInfo.getCurrentSprite().getLocX() > this.getLocX())
+				this.setFacing(Direction.RIGHT);
+			else if (stateInfo.getCurrentSprite().getLocX() < this.getLocX())
+				this.setFacing(Direction.LEFT);
+			else if (stateInfo.getCurrentSprite().getLocY() > this.getLocY())
+				this.setFacing(Direction.DOWN);
+			else if (stateInfo.getCurrentSprite().getLocY() < this.getLocY())
+				this.setFacing(Direction.UP);
 		}
 	}
 

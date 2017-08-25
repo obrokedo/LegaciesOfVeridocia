@@ -141,8 +141,12 @@ public class TownMoveManager extends Manager
 			{
 				if (s.getTileX() == tx && s.getTileY() == ty && !(s instanceof Door))
 				{
-					Log.info("Blocked by sprite " + s.getTileX() + " " + s.getTileY() + " " + s.getAbsLocX() + " " + s.getAbsLocY());
-
+					return true;
+				}
+			}
+			
+			for (MovingSprite ms : movers) {
+				if (ms.getEndX() / stateInfo.getTileWidth() == tx && ms.getEndY() / stateInfo.getTileHeight() == ty) {
 					return true;
 				}
 			}

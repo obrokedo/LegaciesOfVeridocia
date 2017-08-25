@@ -85,7 +85,7 @@ public class CommRPG extends StateBasedGame   {
 
 	private static int fullScreenWidth, fullScreenHeight;
 
-	public static final String VERSION = "DEV 1.36 Sept 21, 2017";
+	public static final String VERSION = "DEV 1.361 Sept 25, 2017";
 
 	public static final String GAME_TITLE = "Legacies of Veridocia";
 

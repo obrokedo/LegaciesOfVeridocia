@@ -1499,18 +1499,7 @@ public class PlannerDefinitions {
 
 		// Text
 		definingValues = new ArrayList<PlannerValueDef>();
-		definingValues
-				.add(new PlannerValueDef(
-						PlannerValueDef.REFERS_NONE,
-						PlannerValueDef.TYPE_LONG_STRING,
-						"message",
-						false,
-						"Message Text",
-						"The text that should be displayed. Using the &lt;pause&gt; tag will cause a short pause, the &lt;softstop&gt; "
-								+ "tag will do a soft stop (auto continue without user input after a time), the &lt;hardstop&gt; tag will "
-								+ "do a hard stop which requires the player hit a button to continue, the &lt;linebreak&gt; tag "
-								+ "will do a line break (as opposed to letting them happen naturally) and a &lt;nextcin&gt; tag "
-								+ "will drive the next cinematic action if this message is being shown in a cinematic."));
+		
 		definingValues
 				.add(new PlannerValueDef(PlannerValueDef.REFERS_QUEST,
 						PlannerValueDef.TYPE_MULTI_INT, "require", true,
@@ -1538,7 +1527,80 @@ public class PlannerDefinitions {
 				PlannerValueDef.REFERS_ANIMATIONS, PlannerValueDef.TYPE_STRING,
 				"animportrait", true, "Portrait From Animation",
 				"The animation that contains the portrait should be shown for this text."));
+		
+		definingValues
+		.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_LONG_STRING,
+				"message",
+				false,
+				"Message Text",
+				"The text that should be displayed. Using the &lt;pause&gt; tag will cause a short pause, the &lt;softstop&gt; "
+						+ "tag will do a soft stop (auto continue without user input after a time), the &lt;hardstop&gt; tag will "
+						+ "do a hard stop which requires the player hit a button to continue, the &lt;linebreak&gt; tag "
+						+ "will do a line break (as opposed to letting them happen naturally) and a &lt;nextcin&gt; tag "
+						+ "will drive the next cinematic action if this message is being shown in a cinematic."));
 		allowableLines.add(new PlannerLineDef("string", "Message Text",
+				"A message that should be displayed", definingValues));
+		
+		// Conversation
+		definingValues = new ArrayList<PlannerValueDef>();
+		
+		definingValues
+				.add(new PlannerValueDef(PlannerValueDef.REFERS_QUEST,
+						PlannerValueDef.TYPE_MULTI_INT, "require", true,
+						"Required Quest",
+						"The ID of the quest that must be complete for this to be shown"));
+		definingValues
+				.add(new PlannerValueDef(PlannerValueDef.REFERS_QUEST,
+						PlannerValueDef.TYPE_MULTI_INT, "exclude", true,
+						"Exclude Quest",
+						"The ID of the quest that CAN NOT be complete for this to be shown"));
+		definingValues
+				.add(new PlannerValueDef(PlannerValueDef.REFERS_TRIGGER,
+						PlannerValueDef.TYPE_INT, "trigger", true,
+						"Trigger ID",
+						"The ID of the trigger that should be run after this message is complete."));
+		definingValues.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_HERO, PlannerValueDef.TYPE_INT,
+				"heroportrait1", true, "Hero Portrait",
+				"First Speaker: The hero whose portrait should be shown for this text."));
+		definingValues.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_ENEMY, PlannerValueDef.TYPE_INT,
+				"enemyportrait1", true, "Enemy Portrait",
+				"First Speaker: The enemy whose portrait should be shown for this text."));
+		definingValues.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_ANIMATIONS, PlannerValueDef.TYPE_STRING,
+				"animportrait1", true, "Portrait From Animation",
+				"First Speaker: The animation that contains the portrait should be shown for this text."));
+		definingValues.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_HERO, PlannerValueDef.TYPE_INT,
+				"heroportrait2", true, "Hero Portrait",
+				"Second Speaker: The hero whose portrait should be shown for this text."));
+		definingValues.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_ENEMY, PlannerValueDef.TYPE_INT,
+				"enemyportrait2", true, "Enemy Portrait",
+				"Second Speaker: The enemy whose portrait should be shown for this text."));
+		definingValues.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_ANIMATIONS, PlannerValueDef.TYPE_STRING,
+				"animportrait2", true, "Portrait From Animation",
+				"Second Speaker: The animation that contains the portrait should be shown for this text."));
+		
+		definingValues
+		.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_MULTI_LONG_STRING,
+				"message",
+				false,
+				"Alternating Dialog",
+				"Displays a conversation between two characters. Text in odd numbered boxes will be said by the first speaker "
+				+ "and the text in even numbered boxes will be said by the second speaker. Using the &lt;pause&gt; "
+				+ "tag will cause a short pause, the &lt;softstop&gt; "
+						+ "tag will do a soft stop (auto continue without user input after a time), the &lt;hardstop&gt; tag will "
+						+ "do a hard stop which requires the player hit a button to continue, the &lt;linebreak&gt; tag "
+						+ "will do a line break (as opposed to letting them happen naturally) and a &lt;nextcin&gt; tag "
+						+ "will drive the next cinematic action if this message is being shown in a cinematic."));
+		allowableLines.add(new PlannerLineDef("conversation", "Conversation",
 				"A message that should be displayed", definingValues));
 
 		textContainer = new PlannerContainerDef(definingLine,

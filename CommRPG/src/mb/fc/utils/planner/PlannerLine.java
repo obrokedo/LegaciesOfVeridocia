@@ -292,6 +292,12 @@ public class PlannerLine
 
 					c = ta;
 					break;
+				case PlannerValueDef.TYPE_MULTI_LONG_STRING:
+					if (values.size() > i && values.get(i) != null)
+						c = new MultiStringPanel(((String) values.get(i)).split("<split>"));
+					else
+						c = new MultiStringPanel(new String[0]);
+					break;
 
 			}
 
@@ -431,13 +437,23 @@ public class PlannerLine
 							if (j + 1 != mip.getComponentCount())
 								multi = multi + ",";
 						}
-						System.out.println("Multi: " + multi);
 
 						if (i >= values.size())
 							values.add(multi);
 						else
 							values.set(i, multi);
 
+						break;
+					case PlannerValueDef.TYPE_MULTI_LONG_STRING:
+						multi = "";
+						for (String text : ((MultiStringPanel) components.get(i)).getTextStrings()) {
+							multi = multi + "<split>" + text;
+						}
+						multi = multi.replaceFirst("<split>", "");
+						if (i >= values.size())
+							values.add(multi);
+						else
+							values.set(i, multi);
 						break;
 				}
 			}

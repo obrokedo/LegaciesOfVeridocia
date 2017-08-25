@@ -2,6 +2,9 @@ package mb.fc.game.menu;
 
 import java.util.ArrayList;
 
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.util.Log;
+
 import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.MessageType;
@@ -13,11 +16,9 @@ import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.input.FCInput;
 import mb.fc.game.input.KeyMapping;
 import mb.fc.game.listener.MenuListener;
+import mb.fc.game.text.Speech;
 import mb.fc.game.ui.PaddedGameContainer;
 import mb.fc.utils.StringUtils;
-
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.util.Log;
 
 public class SpeechMenu extends Menu
 {
@@ -30,7 +31,7 @@ public class SpeechMenu extends Menu
 	private int textIndex = 0;
 	private int triggerId = -1;
 	private Portrait portrait;
-	protected boolean initialized = false;
+	protected boolean menuIsMovedIn = false;
 	private boolean isAttackCinematic = false;
 
 	private boolean textMoving = true;
@@ -38,6 +39,7 @@ public class SpeechMenu extends Menu
 	private long waitUntil = -1;
 	private String waitingOn = null;
 	private Timer timer;
+	private Speech speech = null;
 
 
 	/**
@@ -50,35 +52,72 @@ public class SpeechMenu extends Menu
 	{
 		this(text, gc, NO_TRIGGER, null, null);
 		y = 0;
-		initialized = true;
+		menuIsMovedIn = true;
 		this.isAttackCinematic = true;
 	}
 
 	/**
 	 * Constructor to create a SpeechMenu with no portrait or triggers, this should
-	 * NOT be used in Attack Cinematics
+	 * NOT be used in Attack Cinematics because the attack cinematic has no notion
+	 * of the StateInfo
 	 *
 	 * @param text the text that should be displayed in the speech menu
 	 * @param stateInfo the stateinfo that resources should be retrieved from
 	 */
 	public SpeechMenu(String text, StateInfo stateInfo)
 	{
-		this(text, stateInfo.getFCGameContainer(), NO_TRIGGER, null, stateInfo);
+		this(text, stateInfo.getFCGameContainer(), NO_TRIGGER, null, null);
 	}
-
-	public SpeechMenu(String text, PaddedGameContainer gc, int triggerId,
+	
+	/**
+	 * Constructor to create a SpeechMenu from user speech bundle. Trigger and
+	 * portrait will be retrieved from the speech bundle 
+	 * 
+	 * @param speech The speech bundle to display
+	 * @param stateInfo the stateinfo that resources should be retrieved from
+	 */
+	public SpeechMenu(Speech speech, StateInfo stateInfo) {
+		this(speech.getMessage(), stateInfo.getFCGameContainer(), NO_TRIGGER, speech.getPortrait(stateInfo), null);
+		this.speech = speech;
+	}
+	
+	/**
+	 * Constructor to create a SpeechMenu with a given string, trigger, portrait 
+	 * with no menu listener 
+	 * 
+	 * @param text
+	 * @param triggerId
+	 * @param portrait
+	 * @param stateInfo
+	 */
+	public SpeechMenu(String text, int triggerId,
 			Portrait portrait, StateInfo stateInfo)
 	{
-		this(text, gc, triggerId, portrait, stateInfo, null);
+		this(text, stateInfo.getFCGameContainer(), triggerId, portrait, null);
 	}
 
 	public SpeechMenu(String text, PaddedGameContainer gc, int triggerId,
-			Portrait portrait, StateInfo stateInfo, MenuListener listener)
+			Portrait portrait, MenuListener listener)
 	{
 		super(PanelType.PANEL_SPEECH);
 		this.listener = listener;
 		width = CommRPG.GAME_SCREEN_SIZE.width - 30;
 		x = 15;
+		this.triggerId = triggerId;
+		timer = new Timer(18);
+		
+		
+		initialize(text, portrait);
+	}
+
+	private void initialize(String text, Portrait portrait) {
+		textIndex = 0;
+		menuIsMovedIn = false;
+
+		textMoving = true;
+		textMovingIndex = 0;
+		waitUntil = -1;
+		waitingOn = null;
 		
 		text = TextSpecialCharacters.replaceControlTagsWithInternalValues(text);
 
@@ -122,7 +161,6 @@ public class SpeechMenu extends Menu
 		if (currentLineWidth > 0)
 			panelText.add(currentLine.trim());
 
-		this.triggerId = triggerId;
 
 		if (portrait != null)
 		{
@@ -131,8 +169,6 @@ public class SpeechMenu extends Menu
 		}
 		else
 			this.portrait = null;
-
-		timer = new Timer(18);
 	}
 
 	@Override
@@ -144,7 +180,7 @@ public class SpeechMenu extends Menu
 
 		Panel.drawPanelBox(x, CommRPG.GAME_SCREEN_SIZE.height - (posY + 1) * 20 + y, width, (posY + 1) * (20 + (posY == 1 ? 1 : 0)) - 5, graphics);
 
-		if (!initialized)
+		if (!menuIsMovedIn)
 			return;
 
 		graphics.setFont(SPEECH_FONT);
@@ -173,11 +209,11 @@ public class SpeechMenu extends Menu
 
 		while (timer.perform())
 		{
-			if (!initialized)
+			if (!menuIsMovedIn)
 			{
 				if (y <= 0)
 				{
-					initialized = true;
+					menuIsMovedIn = true;
 				}
 				else
 					y = Math.max(y - 8, 0);
@@ -197,10 +233,14 @@ public class SpeechMenu extends Menu
 						}
 						else
 						{
-							Log.debug("Speech Menu: Send Trigger " + triggerId);
-							if (triggerId != NO_TRIGGER)
-								stateInfo.getResourceManager().getTriggerEventById(triggerId).perform(stateInfo);
-							return MenuUpdate.MENU_CLOSE;
+							if (speech == null || !speech.hasMoreSpeech()) {
+								Log.debug("Speech Menu: Send Trigger " + triggerId);
+								if (triggerId != NO_TRIGGER)
+									stateInfo.getResourceManager().getTriggerEventById(triggerId).perform(stateInfo);
+								return MenuUpdate.MENU_CLOSE;
+							} else {
+								this.initialize(speech.getMessage(), speech.getPortrait(stateInfo));
+							}
 						}
 						// textMoving = false;
 					}
@@ -251,9 +291,7 @@ public class SpeechMenu extends Menu
 							textMovingIndex += 1;
 						else
 							panelText.set(textIndex, panelText.get(textIndex).replaceFirst("\\" + waitingOn, ""));
-						// This is a bit of a kludge, when we are in the attack cinematic we want the text to scroll but we don't
-						// want the "talking" sound effect. Really this should probably be a different boolean rather then just
-						// checking to see if the state info is not null
+						// Only display the speech blip when we are not in battle
 						if (textMovingIndex % 6 == 0 && !isAttackCinematic)
 							stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, "speechblip", .15f, false));
 					}
@@ -275,7 +313,7 @@ public class SpeechMenu extends Menu
 	@Override
 	public MenuUpdate handleUserInput(FCInput input, StateInfo stateInfo)
 	{
-		if (!initialized)
+		if (!menuIsMovedIn)
 			return MenuUpdate.MENU_NO_ACTION;
 
 		if (input.isKeyDown(KeyMapping.BUTTON_3) || CommRPG.TEST_MODE_ENABLED)

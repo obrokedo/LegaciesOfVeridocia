@@ -44,6 +44,7 @@ public class PlannerValueDef
 	public static final int TYPE_MULTI_INT = 3;
 	public static final int TYPE_LONG_STRING = 4;
 	public static final int TYPE_UNBOUNDED_INT = 5;
+	public static final int TYPE_MULTI_LONG_STRING = 6;
 
 	// Refers to
 	private int refersTo;
@@ -68,6 +69,11 @@ public class PlannerValueDef
 		this.optional = optional;
 		this.displayTag = displayTag;
 		this.displayDescription = displayDescription;
+		
+		if (refersTo != REFERS_NONE && (valueType == TYPE_LONG_STRING || valueType == TYPE_MULTI_LONG_STRING || valueType == TYPE_BOOLEAN))
+		{
+			throw new RuntimeException("Can not create a PlannerValueDef with value type: " + valueType + " that is a reference");
+		}
 	}
 
 	public PlannerValueDef copy()

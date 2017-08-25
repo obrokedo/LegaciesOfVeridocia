@@ -52,7 +52,7 @@ public class CinematicManager extends Manager
 		{
 			case SHOW_CINEMATIC:
 				IntMessage im = (IntMessage) message;
-				cinematic = stateInfo.getResourceManager().getCinematicById(im.getValue());
+				cinematic = stateInfo.getResourceManager().getCinematicById(im.getValue()).duplicateCinematic();
 				cinematic.initialize(stateInfo, initializeCamera);
 				break;
 			case CIN_NEXT_ACTION:

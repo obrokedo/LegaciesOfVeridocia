@@ -170,8 +170,7 @@ public class MapObject
 		int wander = 0;
 		if (params.containsKey("wander"))
 			wander = Integer.parseInt(params.get("wander"));
-		ArrayList<Speech> speeches = fcrm.getSpeechesById(Integer.parseInt(params.get("textid")));
-		NPCSprite npc = NPCResource.getNPC(animation, speeches);
+		NPCSprite npc = NPCResource.getNPC(animation, Integer.parseInt(params.get("textid")));
 		if (params.get("npcid") != null)
 			npc.setUniqueNPCId(Integer.parseInt(params.get("npcid")));
 		npc.initializeSprite(fcrm);

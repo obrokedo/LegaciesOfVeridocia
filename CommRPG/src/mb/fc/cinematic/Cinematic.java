@@ -218,6 +218,11 @@ public class Cinematic {
 		this.cameraStartX = cameraX;
 		this.cameraStartY = cameraY;
 	}
+	
+	public Cinematic duplicateCinematic() {
+		return new Cinematic(new ArrayList<CinematicEvent>(initializeEvents), 
+				new ArrayList<CinematicEvent>(cinematicEvents), cameraStartX, cameraStartY);
+	}
 
 	/**
 	 * Initializes the Cinematic and runs any CinematicEvents that are
@@ -837,4 +842,6 @@ public class Cinematic {
 			ca.resetSprite(stateInfo);
 		stateInfo.sendMessage(MessageType.CIN_END);
 	}
+	
+	
 }

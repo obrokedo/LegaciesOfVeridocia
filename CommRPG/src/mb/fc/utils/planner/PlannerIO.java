@@ -81,7 +81,8 @@ public class PlannerIO {
 			if (pvd.getValueType() == PlannerValueDef.TYPE_BOOLEAN)
 				stringBuffer += pl.getValues().get(i);
 			else if (pvd.getValueType() == PlannerValueDef.TYPE_STRING ||
-					pvd.getValueType() == PlannerValueDef.TYPE_LONG_STRING)
+					pvd.getValueType() == PlannerValueDef.TYPE_LONG_STRING ||
+					pvd.getValueType() == PlannerValueDef.TYPE_MULTI_LONG_STRING)
 				if (pvd.getRefersTo() == PlannerValueDef.REFERS_NONE)
 					stringBuffer += "\"" + pl.getValues().get(i) + "\"";
 				else
@@ -175,7 +176,8 @@ public class PlannerIO {
 		LOGGER.finest("PARENT: " + pld.getTag());
 		for (PlannerValueDef pvd : pld.getPlannerValues()) {
 			// Handle string values
-			if (pvd.getValueType() == PlannerValueDef.TYPE_STRING || pvd.getValueType() == PlannerValueDef.TYPE_LONG_STRING)
+			if (pvd.getValueType() == PlannerValueDef.TYPE_STRING || pvd.getValueType() == PlannerValueDef.TYPE_LONG_STRING ||
+					pvd.getValueType() == PlannerValueDef.TYPE_MULTI_LONG_STRING)
 				plannerLine.getValues().add(ta.getAttribute(pvd.getTag()));
 					
 			// Handle integer values

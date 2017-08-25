@@ -103,7 +103,7 @@ public class Map
 				Door door = (Door) mo.getDoor(stateInfo.getResourceManager(), doorId++);
 				stateInfo.addSprite(door);
 				// stateInfo.addMapTrigger(new TriggerLocation(stateInfo, mo, door));
-				
+				System.out.println(door.getId() + " DOOR");
 				Trigger event = new Trigger(-100, false, false, true, true, null, null);
 				event.addTriggerable(event.new TriggerRemoveSprite(door.getName()));
 				stateInfo.getResourceManager().addTriggerEvent(door.getId(), event);

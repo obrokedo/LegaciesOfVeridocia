@@ -374,33 +374,7 @@ public class Trigger
 		@Override
 		public boolean perform(StateInfo stateInfo)
 		{
-			SPEECHLOOP: for (Speech s : stateInfo.getResourceManager().getSpeechesById(textId))
-			{
-				// Check to see if this mesage meets all required quests
-				if (s.getRequires() != null && s.getRequires().length > 0)
-				{
-					for (int i : s.getRequires())
-					{
-						if (i != -1 && !stateInfo.isQuestComplete(i))
-							continue SPEECHLOOP;
-					}
-				}
-
-				// Check to see if the excludes quests have been completed, if so
-				// then we can't use this message
-				if (s.getExcludes() != null && s.getExcludes().length > 0)
-				{
-					for (int i : s.getExcludes())
-					{
-						if (i != -1 && stateInfo.isQuestComplete(i))
-							continue SPEECHLOOP;
-					}
-				}
-
-				stateInfo.sendMessage(new SpeechMessage(s.getMessage(), s.getTriggerId(), s.getPortrait(stateInfo)), true);
-				break;
-			}
-
+			Speech.showFirstSpeechMeetsReqs(textId, stateInfo);
 			return false;
 		}
 	}

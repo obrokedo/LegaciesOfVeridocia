@@ -11,6 +11,7 @@ import mb.fc.cinematic.Cinematic;
 import mb.fc.cinematic.event.CinematicEvent;
 import mb.fc.cinematic.event.CinematicEvent.CinematicEventType;
 import mb.fc.game.exception.BadResourceException;
+import mb.fc.game.text.Conversation;
 import mb.fc.game.text.Speech;
 import mb.fc.game.trigger.Conditional;
 import mb.fc.game.trigger.Trigger;
@@ -48,6 +49,7 @@ public class TextParser
 
 				for (TagArea childTagArea : tagArea.getChildren())
 				{
+					
 					int triggerId = -1;
 					String message = childTagArea.getAttribute("message");
 					String requires = childTagArea.getAttribute("require");
@@ -77,15 +79,33 @@ public class TextParser
 
 					if (trigger != null)
 						triggerId = Integer.parseInt(trigger);
+					
+					if (childTagArea.getTagType().equalsIgnoreCase("string")) {
+						String customAnim = childTagArea.getAttribute("animportrait");
+						if (StringUtils.isEmpty(customAnim))
+							customAnim = null;
 
-					String customAnim = childTagArea.getAttribute("animportrait");
-					if (StringUtils.isEmpty(customAnim))
-						customAnim = null;
+						speeches.add(new Speech(message, requireIds, excludeIds, triggerId,
+								Integer.parseInt(childTagArea.getAttribute("heroportrait")),
+								Integer.parseInt(childTagArea.getAttribute("enemyportrait")),
+								customAnim));
+					} else if (childTagArea.getTagType().equalsIgnoreCase("conversation")) {
+						String customAnim1 = childTagArea.getAttribute("animportrait1");
+						if (StringUtils.isEmpty(customAnim1))
+							customAnim1 = null;
+						String customAnim2 = childTagArea.getAttribute("animportrait2");
+						if (StringUtils.isEmpty(customAnim2))
+							customAnim2 = null;
+						speeches.add(new Conversation(message.split("<split>"), requireIds, excludeIds, triggerId, 
+								Integer.parseInt(childTagArea.getAttribute("heroportrait1")),
+								Integer.parseInt(childTagArea.getAttribute("enemyportrait1")),
+								customAnim1,
+								Integer.parseInt(childTagArea.getAttribute("heroportrait2")),
+								Integer.parseInt(childTagArea.getAttribute("enemyportrait2")),
+								customAnim2));
+					}
 
-					speeches.add(new Speech(message, requireIds, excludeIds, triggerId,
-							Integer.parseInt(childTagArea.getAttribute("heroportrait")),
-							Integer.parseInt(childTagArea.getAttribute("enemyportrait")),
-							customAnim));
+					
 				}
 				speechesById.put(id, speeches);
 			}
