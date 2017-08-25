@@ -77,7 +77,7 @@ public class SpeechMenu extends Menu
 	 * @param stateInfo the stateinfo that resources should be retrieved from
 	 */
 	public SpeechMenu(Speech speech, StateInfo stateInfo) {
-		this(speech.getMessage(), stateInfo.getFCGameContainer(), NO_TRIGGER, speech.getPortrait(stateInfo), null);
+		this(speech.getMessage(), stateInfo.getFCGameContainer(), speech.getTriggerId(), speech.getPortrait(stateInfo), null);
 		this.speech = speech;
 	}
 	
