@@ -125,10 +125,10 @@ public class AnimationPanel extends GraphicPanel implements DropTargetListener
         g.drawRect(_origin.x, _origin.y - (int)(96 * _zoom), (int)(_zoom * 256), (int)(_zoom * 96));
 
         g.drawRect(_origin.x + (int)(52 * _zoom), _origin.y - (int)(46 * _zoom), (int)(40 * _zoom), (int)(40 * _zoom));
-        g.drawRect(_origin.x + (int)(172 * _zoom), _origin.y - (int)(32 * _zoom), (int)(40 * _zoom), (int)(40 * _zoom));
+        g.drawRect(_origin.x + (int)(164 * _zoom), _origin.y - (int)(32 * _zoom), (int)(40 * _zoom), (int)(40 * _zoom));
 
         g.setColor(Color.GREEN);
-        g.drawLine(_origin.x + (int)(172 * _zoom), _origin.y, _origin.x + (int)(212 * _zoom), _origin.y);
+        g.drawLine(_origin.x + (int)(164 * _zoom), _origin.y, _origin.x + (int)(204 * _zoom), _origin.y);
         g.drawRect(_origin.x - (int)(25 * _zoom), _origin.y - (int)(60 * _zoom), (int)(50 * _zoom), (int)(50 * _zoom));
 
         g.setColor(Color.BLUE);
