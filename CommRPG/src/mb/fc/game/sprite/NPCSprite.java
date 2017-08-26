@@ -1,9 +1,6 @@
 package mb.fc.game.sprite;
 
-import java.util.ArrayList;
-
 import mb.fc.engine.CommRPG;
-import mb.fc.engine.message.SpeechMessage;
 import mb.fc.engine.message.SpriteMoveMessage;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.constants.Direction;
@@ -31,9 +28,11 @@ public class NPCSprite extends AnimatedSprite
 	}
 
 	public void setInitialPosition(int xLoc, int yLoc,
-			int tileWidth, int tileHeight, int maxWander)
+			int tileWidth, int tileHeight, int maxWander, Direction direction)
 	{
 		this.setLocation(xLoc, yLoc, tileWidth, tileHeight);
+		if (direction != null)
+			this.setFacing(direction);
 		this.initialTileX = this.getTileX();
 		this.initialTileY = this.getTileY();
 		this.maxWander = maxWander;

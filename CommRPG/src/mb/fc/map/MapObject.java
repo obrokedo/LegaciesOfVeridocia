@@ -173,8 +173,13 @@ public class MapObject
 		NPCSprite npc = NPCResource.getNPC(animation, Integer.parseInt(params.get("textid")));
 		if (params.get("npcid") != null)
 			npc.setUniqueNPCId(Integer.parseInt(params.get("npcid")));
+		Direction facing = Direction.DOWN;
+		if (params.containsKey("facing")) {
+			facing = Direction.values()[Integer.parseInt(params.get("facing"))];
+		}
 		npc.initializeSprite(fcrm);
-		npc.setInitialPosition(x, y, fcrm.getMap().getTileEffectiveWidth(), fcrm.getMap().getTileEffectiveHeight(), wander);
+		npc.setInitialPosition(x, y, fcrm.getMap().getTileEffectiveWidth(), 
+				fcrm.getMap().getTileEffectiveHeight(), wander, facing);
 		return npc;
 	}
 

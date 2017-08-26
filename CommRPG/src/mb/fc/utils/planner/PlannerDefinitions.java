@@ -2613,6 +2613,9 @@ public class PlannerDefinitions {
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
 				PlannerValueDef.TYPE_INT, "wander", false, "Wander Distance",
 				"The amount of tiles this NPC can wander from his start position. A value of 0 means he will stand still'"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_DIRECTION,
+				PlannerValueDef.TYPE_INT, "facing", false, "Initial Facing",
+				"The direction that this npc will initially face, if wander is greater then 0 then this is likely to change'"));
 		allowableLines.add(new PlannerLineDef("npc", "npc",
 				"Marks this locations as the starting place for an npc. Depending on the 'wander' the npc may not remain here.",
 				definingValues));
