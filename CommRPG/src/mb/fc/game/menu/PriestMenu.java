@@ -29,6 +29,8 @@ public class PriestMenu extends QuadMenu implements MenuListener
 	{
 		super(PanelType.PANEL_PRIEST, stateInfo);
 		
+		menuConfig = GlobalPythonFactory.createMenuConfig();
+		
 		this.enabled = new boolean[4];
 		this.icons = new Image[8];
 		this.text = new String[4];
@@ -46,12 +48,12 @@ public class PriestMenu extends QuadMenu implements MenuListener
 
 	@Override
 	public void initialize() {
-		menuConfig = GlobalPythonFactory.createMenuConfig();
+		
 	}
 
 	@Override
 	protected MenuUpdate onBack() {
-		stateInfo.sendMessage(new SpeechMessage("May the power of light be ever at your back.<hardstop>", Trigger.TRIGGER_NONE, Optional.empty()));
+		stateInfo.sendMessage(new SpeechMessage(menuConfig.getPriestMenuClosedText(), Trigger.TRIGGER_NONE, Optional.empty()));
 		return MenuUpdate.MENU_CLOSE;
 	}
 

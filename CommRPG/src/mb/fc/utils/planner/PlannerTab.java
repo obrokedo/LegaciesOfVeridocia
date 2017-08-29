@@ -141,6 +141,7 @@ public class PlannerTab implements ActionListener, TreeSelectionListener
 	{
 		for (PlannerContainer pcs : listPC)
 			pcs.commitChanges();
+		setNewValues();
 	}
 
 	public void setNewValues()

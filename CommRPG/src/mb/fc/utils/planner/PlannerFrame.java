@@ -33,6 +33,7 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.newdawn.slick.SlickException;
 
@@ -379,7 +380,10 @@ public class PlannerFrame extends JFrame implements ActionListener,
 		else if (actionCommand.equalsIgnoreCase("exportmap"))
 		{
 			JFileChooser fc = createFileChooser();
+			fc.setSelectedFile(new File(triggerFile.getParentFile().getParentFile() + "/map/" + plannerMap.getMapName()));
+			fc.setFileFilter(new FileNameExtensionFilter("Tiled Map File", "tmx"));
 			int returnVal = fc.showSaveDialog(this);
+			
 			File newMapFile = null;
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				newMapFile = fc.getSelectedFile();

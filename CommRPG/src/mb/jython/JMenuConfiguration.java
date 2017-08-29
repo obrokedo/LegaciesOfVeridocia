@@ -18,4 +18,6 @@ public interface JMenuConfiguration {
 	public String getPriestSelectSomeoneToResurrectText(String targetName, int cost);
 	public String getPriestNotEnoughGoldToResurrectText();
 	public String getPriestTargetHasBeenResurrectedText(String targetName);
+	
+	public String getPriestMenuClosedText();
 }
