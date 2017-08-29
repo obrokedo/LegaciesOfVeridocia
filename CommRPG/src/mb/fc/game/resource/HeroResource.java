@@ -4,7 +4,6 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import mb.fc.game.definition.EnemyDefinition;
 import mb.fc.game.definition.HeroDefinition;
 import mb.fc.game.exception.BadResourceException;
 import mb.fc.game.sprite.CombatSprite;

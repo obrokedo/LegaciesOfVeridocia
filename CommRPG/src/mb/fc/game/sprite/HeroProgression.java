@@ -2,14 +2,15 @@ package mb.fc.game.sprite;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.newdawn.slick.util.Log;
 
 import mb.fc.engine.CommRPG;
-import mb.fc.engine.state.StateInfo;
 import mb.fc.game.battle.LevelUpResult;
 import mb.fc.game.battle.spell.KnownSpell;
 import mb.fc.game.exception.BadResourceException;
+import mb.fc.game.item.EquippableItem;
 import mb.fc.game.resource.SpellResource;
 import mb.fc.loading.FCResourceManager;
 import mb.jython.GlobalPythonFactory;
@@ -26,38 +27,51 @@ public class HeroProgression implements Serializable
 	public static final int STAT_STRONG = 3;
 	public static final int STAT_VERY_STRONG = 4;
 
-
-	private int spellLevels[][];
-	private ArrayList<String> spellIds;
 	private Progression unpromotedProgression;
 	private Progression promotedProgression;
+	private List<Progression> specialProgressions;
 	private int heroID;
 
-	public HeroProgression(ArrayList<String> spellIds, int[][] spellLevels,
-			Progression unpromotedProgression, Progression promotedProgression,
+	public HeroProgression(Progression unpromotedProgression, Progression promotedProgression, List<Progression> specialProgressions,
 			int heroID) {
 		super();
-		this.spellIds = spellIds;
-		this.spellLevels = spellLevels;
 		this.unpromotedProgression = unpromotedProgression;
 		this.promotedProgression = promotedProgression;
+		this.specialProgressions = specialProgressions;
 		this.heroID = heroID;
 	}
 
-	public void promote(CombatSprite cs)
+	public void promote(CombatSprite cs, Progression progression)
 	{
-		cs.setPromoted(true);
-		cs.setMaxMove(promotedProgression.getMove());
-		cs.setMovementType(promotedProgression.getMovementType());
+		if (progression == promotedProgression)
+			cs.setPromoted(true, 0);
+		else 
+			cs.setPromoted(true, specialProgressions.indexOf(progression) + 1);
 		
-		//TODO Handle spells
-		//TODO Special promotion (and new spells for promotion)
+		// Remove equipped items because we are going to be setting new stats
+		// explicitly and don't want to lose the bonuses from the equipped items
+		EquippableItem weapon = cs.getEquippedWeapon();
+		EquippableItem ring = cs.getEquippedRing();
+		
+		cs.unequipItem(weapon);
+		cs.unequipItem(ring);
+		
+		// Explicitly set values for the promoted class
+		cs.setMaxMove(cs.getCurrentProgression().getMove());
+		cs.setMovementType(cs.getCurrentProgression().getMovementType());
+		cs.setNonRandomStats();
+		
+		// Re-equip items
+		if (weapon != null && cs.isEquippable(weapon))
+			cs.equipItem(weapon);
+		if (ring != null && cs.isEquippable(ring))
+			cs.equipItem(ring);
 	}
 
 	//TODO This needs to make sure it uses all values from the LevelProgression script
 	public LevelUpResult getLevelUpResults(CombatSprite cs, FCResourceManager fcrm)
 	{
-		Progression p = (cs.isPromoted() ? promotedProgression : unpromotedProgression);
+		Progression p = cs.getCurrentProgression();
 		String text = cs.getName() + " has reached level " + (cs.getLevel() + 1) + "!}[";
 		LevelUpResult level = new LevelUpResult();
 
@@ -81,11 +95,13 @@ public class HeroProgression implements Serializable
 		if (level.speedGain > 0)
 			text += " Speed increased by " + level.speedGain + ".}[";
 
-		for (int i = 0; i < spellLevels.length; i++)
+		ArrayList<int[]> spellLevels = p.getSpellLevelLearned();
+		ArrayList<String> spellIds = p.getSpellIds();
+		for (int i = 0; i < spellLevels.size(); i++)
 		{
-			for (int j = 0; j < spellLevels[i].length; j++)
+			for (int j = 0; j < spellLevels.get(i).length; j++)
 			{
-				if (spellLevels[i][j] == (cs.getLevel() + 1))
+				if (spellLevels.get(i)[j] == (cs.getLevel() + 1))
 				{
 					JSpell spell = SpellResource.getSpell(spellIds.get(i), fcrm);
 					text += " " + cs.getName() + " learned " + spell.getName() + " " + (j + 1) + "}[";
@@ -121,11 +137,13 @@ public class HeroProgression implements Serializable
 		// Level up non-displayed stats
 		cs.levelUp();
 		
-		for (int i = 0; i < spellLevels.length; i++)
+		ArrayList<int[]> spellLevels = cs.getCurrentProgression().getSpellLevelLearned();
+		ArrayList<String> spellIds = cs.getCurrentProgression().getSpellIds();
+		for (int i = 0; i < spellLevels.size(); i++)
 		{
-			for (int j = 0; j < spellLevels[i].length; j++)
+			for (int j = 0; j < spellLevels.get(i).length; j++)
 			{
-				if (spellLevels[i][j] == cs.getLevel())
+				if (spellLevels.get(i)[j] == cs.getLevel())
 				{
 					JSpell spell = SpellResource.getSpell(spellIds.get(i), frm);
 
@@ -253,18 +271,16 @@ public class HeroProgression implements Serializable
 		return amountToGainNowInt;
 	}
 
-
-
-	public int[][] getSpellLevels() {
-		return spellLevels;
-	}
-
 	public Progression getUnpromotedProgression() {
 		return unpromotedProgression;
 	}
 
 	public Progression getPromotedProgression() {
 		return promotedProgression;
+	}
+
+	public List<Progression> getSpecialProgressions() {
+		return specialProgressions;
 	}
 
 	public int getHeroID() {

@@ -18,6 +18,7 @@ import mb.fc.game.menu.SpeechMenu;
 import mb.fc.game.menu.YesNoMenu;
 import mb.fc.game.resource.ItemResource;
 import mb.fc.game.sprite.CombatSprite;
+import mb.fc.game.trigger.Trigger;
 import mb.fc.game.ui.PaddedGameContainer;
 import mb.fc.game.ui.RectUI;
 import mb.fc.game.ui.TextUI;
@@ -214,7 +215,7 @@ public class ShopMenuTabled extends Menu implements MenuListener
 	private void showBuyPanel(StateInfo stateInfo)
 	{
 		speechMenu = new SpeechMenu("What would you like to buy?]", stateInfo.getFCGameContainer(),
-				SpeechMenu.NO_TRIGGER, null, null);
+				Trigger.TRIGGER_NONE, null, null);
 		currentStep = ShopStepEnum.SELECT_ITEM;
 	}
 
@@ -240,7 +241,7 @@ public class ShopMenuTabled extends Menu implements MenuListener
 					currentStep = ShopStepEnum.WHO_WILL_USE;
 					speechMenu = null;
 					stateInfo.addMenu(new SpeechMenu("Who will use this?]", stateInfo.getFCGameContainer(),
-							SpeechMenu.NO_TRIGGER, null, this));
+							Trigger.TRIGGER_NONE, null, this));
 					//
 				}
 				break;
@@ -253,7 +254,7 @@ public class ShopMenuTabled extends Menu implements MenuListener
 				{
 					currentStep = ShopStepEnum.SALE_COMPLETED;
 					stateInfo.addMenu(new SpeechMenu("I'm sorry we can't strike a deal...]", stateInfo.getFCGameContainer(),
-							SpeechMenu.NO_TRIGGER, null, this));
+							Trigger.TRIGGER_NONE, null, this));
 				}
 				else
 				{
@@ -276,7 +277,7 @@ public class ShopMenuTabled extends Menu implements MenuListener
 							goldAmountText.setText(gold + "");
 							currentStep = ShopStepEnum.SALE_COMPLETED;
 							stateInfo.addMenu(new SpeechMenu("A pleasure doing business with ya'!]", stateInfo.getFCGameContainer(),
-									SpeechMenu.NO_TRIGGER, null, this));
+									Trigger.TRIGGER_NONE, null, this));
 						}
 					}
 					// No room for items
@@ -284,7 +285,7 @@ public class ShopMenuTabled extends Menu implements MenuListener
 					{
 						currentStep = ShopStepEnum.WHO_WILL_USE;
 						stateInfo.addMenu(new SpeechMenu(selectedHero.getName() + " can't carry anything else... Who should use this?]", stateInfo.getFCGameContainer(),
-								SpeechMenu.NO_TRIGGER, null, this));
+								Trigger.TRIGGER_NONE, null, this));
 					}
 				}
 				break;
@@ -300,7 +301,7 @@ public class ShopMenuTabled extends Menu implements MenuListener
 				goldAmountText.setText(gold + "");
 				currentStep = ShopStepEnum.SALE_COMPLETED;
 				stateInfo.addMenu(new SpeechMenu("A pleasure doing business with ya'!]", stateInfo.getFCGameContainer(),
-						SpeechMenu.NO_TRIGGER, null, this));
+						Trigger.TRIGGER_NONE, null, this));
 				break;
 			case EQUIP_NOW:
 				// Equip the item now
@@ -317,7 +318,7 @@ public class ShopMenuTabled extends Menu implements MenuListener
 						selectedHero.equipItem((EquippableItem) selectedItem);
 						currentStep = ShopStepEnum.SALE_COMPLETED;
 						stateInfo.addMenu(new SpeechMenu("A pleasure doing business with ya'!]", stateInfo.getFCGameContainer(),
-								SpeechMenu.NO_TRIGGER, null, this));
+								Trigger.TRIGGER_NONE, null, this));
 					}
 					else
 					{
@@ -334,7 +335,7 @@ public class ShopMenuTabled extends Menu implements MenuListener
 					goldAmountText.setText(gold + "");
 					currentStep = ShopStepEnum.SALE_COMPLETED;
 					stateInfo.addMenu(new SpeechMenu("A pleasure doing business with ya'!]", stateInfo.getFCGameContainer(),
-							SpeechMenu.NO_TRIGGER, null, this));
+							Trigger.TRIGGER_NONE, null, this));
 				}
 				break;
 		}

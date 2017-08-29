@@ -18,9 +18,10 @@ public class NPCSprite extends AnimatedSprite
 	private int maxWander = 0;
 
 	public NPCSprite(String imageName,
-			int speechId, int id)
+			int speechId, int id, String name)
 	{
 		super(0, 0, imageName, Integer.MAX_VALUE);
+		this.name = name;
 		this.speechId = speechId;
 		this.spriteType = Sprite.TYPE_NPC;
 		this.uniqueNPCId = 0;

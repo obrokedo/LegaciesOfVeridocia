@@ -137,6 +137,10 @@ public class AnimatedSprite extends Sprite
 		facing = dir;
 	}
 
+	public void setSpriteAnims(SpriteAnims spriteAnims) {
+		this.spriteAnims = spriteAnims;
+	}
+
 	/**
 	 * Sets the location of the sprite
 	 *

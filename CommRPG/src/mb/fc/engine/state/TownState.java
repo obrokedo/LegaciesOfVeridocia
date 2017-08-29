@@ -1,7 +1,5 @@
 package mb.fc.engine.state;
 
-import java.util.ArrayList;
-
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -10,14 +8,12 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.MessageType;
-import mb.fc.engine.message.SpriteContextMessage;
 import mb.fc.game.manager.CinematicManager;
 import mb.fc.game.manager.MenuManager;
 import mb.fc.game.manager.PanelManager;
 import mb.fc.game.manager.SoundManager;
 import mb.fc.game.manager.SpriteManager;
 import mb.fc.game.manager.TownMoveManager;
-import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.ui.PaddedGameContainer;
 import mb.fc.loading.FCResourceManager;
 import mb.fc.loading.LoadableGameState;
@@ -187,11 +183,16 @@ public class TownState extends LoadableGameState
 				{
 					// 	stateInfo.sendMessage(new Message(MessageType.SHOW_HEROES));
 					// stateInfo.sendMessage(new ShopMessage(.8, 1.2, new int[] {1, 1, 2, 2, 0, 0, 1, 1, 2, 2, 0, 0}));
+					
+					/*
 					ArrayList<CombatSprite> multiJoinSprites = new ArrayList<>();
 					multiJoinSprites.add(stateInfo.getHeroById(0));
 					multiJoinSprites.add(stateInfo.getHeroById(1));
 					stateInfo.sendMessage(new SpriteContextMessage(
 							MessageType.SHOW_PANEL_MULTI_JOIN_CHOOSE, multiJoinSprites));
+							*/
+					
+					stateInfo.sendMessage(MessageType.SHOW_PRIEST);
 				}
 			}
 

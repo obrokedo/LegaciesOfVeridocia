@@ -8,14 +8,13 @@ import mb.fc.engine.message.ShopMessage;
 import mb.fc.engine.message.SpeechBundleMessage;
 import mb.fc.engine.message.SpeechMessage;
 import mb.fc.engine.message.SpriteContextMessage;
-import mb.fc.engine.state.StateInfo;
 import mb.fc.game.menu.DebugMenu;
 import mb.fc.game.menu.HeroStatMenu;
 import mb.fc.game.menu.HeroesStatMenu;
 import mb.fc.game.menu.Menu;
 import mb.fc.game.menu.Menu.MenuUpdate;
 import mb.fc.game.menu.MultiHeroJoinMenu;
-import mb.fc.game.menu.PriestMenu2;
+import mb.fc.game.menu.PriestMenu;
 import mb.fc.game.menu.SpeechMenu;
 import mb.fc.game.menu.SystemMenu;
 import mb.fc.game.menu.shop.HeroesSellMenu;
@@ -42,29 +41,31 @@ public class MenuManager extends Manager
 
 	public void update(long delta)
 	{
-		if (stateInfo.areMenusDisplayed())
-			handleMenuUpdate(stateInfo.getTopMenu().update(delta, stateInfo));
+		
+		if (stateInfo.areMenusDisplayed()) {
+			Menu topMenu = stateInfo.getTopMenu();
+			handleMenuUpdate(topMenu.update(delta, stateInfo), topMenu);
 
-		if (stateInfo.areMenusDisplayed() && System.currentTimeMillis() > stateInfo.getInputDelay())
-			handleMenuUpdate(stateInfo.getTopMenu().handleUserInput(stateInfo.getInput(), stateInfo));
+			if (System.currentTimeMillis() > stateInfo.getInputDelay())
+				handleMenuUpdate(topMenu.handleUserInput(stateInfo.getInput(), stateInfo), topMenu);
+		}
 	}
 
-	private void handleMenuUpdate(MenuUpdate menuUpdate)
+	private void handleMenuUpdate(MenuUpdate menuUpdate, Menu updatedMenu)
 	{
 		switch (menuUpdate)
 		{
 			case MENU_CLOSE:
-				Menu menu = stateInfo.getTopMenu();
-				if (menu instanceof SpeechMenu)
+				if (updatedMenu instanceof SpeechMenu)
 				{
 					stateInfo.setWaiting();
 					stateInfo.sendMessage(MessageType.WAIT);
 				}
-				stateInfo.removeTopMenu();
-				if (menu.getMenuListener() != null)
+				stateInfo.removeMenu(updatedMenu);
+				if (updatedMenu.getMenuListener() != null)
 				{
-					menu.getMenuListener().valueSelected(stateInfo, menu.getExitValue());
-					menu.getMenuListener().menuClosed();
+					updatedMenu.getMenuListener().valueSelected(stateInfo, updatedMenu.getExitValue());
+					updatedMenu.getMenuListener().menuClosed();
 				}
 
 				// stateInfo.addMenu(new ShopMenuTabled(stateInfo, .8, 1.2, new int[] {1, 1, 2, 2, 0, 0, 1, 1, 2, 2, 0, 0}));
@@ -125,7 +126,7 @@ public class MenuManager extends Manager
 						stateInfo.getAllHeroes()), stateInfo));
 				break;
 			case SHOW_PRIEST:
-				stateInfo.addMenu(new PriestMenu2(stateInfo, stateInfo.getFCGameContainer(), stateInfo.getAllHeroes()));
+				stateInfo.addMenu(new PriestMenu(stateInfo));
 				break;
 			case SHOW_PANEL_MULTI_JOIN_CHOOSE:
 				ArrayList<CombatSprite> heroesToChooseList = new ArrayList<>();

@@ -1852,6 +1852,19 @@ public class PlannerDefinitions {
 				false,
 				"Special Promotion Progression",
 				"If checked, this progression will be used for the SPECIAL promotion path (as opposed to default). Selecting this supercedes the 'promoted' checkbox"));
+		
+		// Special promotion required item
+		definingValues
+		.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_ITEM,
+				PlannerValueDef.TYPE_INT,
+				"specialpromoteitem",
+				true,
+				"Special Promotion Required Item",
+				"If special promotion is checked, this is the item that must be possesed by the group to allow the this special promotion to occur. If this item "
+				+ "is not owned then this progression path will be unavailable. If special promotion is checked and this value is not specified then this"
+				+ " promotion path will be impossible to take."));
+		
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
 				PlannerValueDef.TYPE_INT, "move", false, "Starting Move",
 				"The heroes base move while in this progression"));
@@ -2305,6 +2318,60 @@ public class PlannerDefinitions {
 		allowableLines.add(new PlannerLineDef("showroof", "Show Roof",
 				"Shows the roof with designated ID.", definingValues));
 
+		// Add NPC
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_TEXT,
+				PlannerValueDef.TYPE_INT, "textid", false, "Text Id",
+				"The id of the text that should be displayed when this npc is talked to'"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, 
+				"name", true, "Name", "The unique name of this npc that should be used to identify it for use in triggers"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_ANIMATIONS,
+				PlannerValueDef.TYPE_STRING, "animation", false, "Animation",
+				"The animation that should be used to display this NPC. The portrait for the speech will be selected during text creation'"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_INT, "wander", false, "Wander Distance",
+				"The amount of tiles this NPC can wander from his start position. A value of 0 means he will stand still'"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_DIRECTION,
+				PlannerValueDef.TYPE_INT, "facing", false, "Initial Facing",
+				"The direction that this npc will initially face, if wander is greater then 0 then this is likely to change'"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_LOCATIONS,
+				PlannerValueDef.TYPE_STRING, "location", false, "Start Location",
+				"The name of the map location to place this npc on"));
+		allowableLines.add(new PlannerLineDef("addnpc", "Add NPC",
+				"Adds an npc to the map at the specified location",
+				definingValues));
+		
+		// Change NPC animation
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_STRING, "name", false, "Npc Name",
+				"The name of the npc to be changed"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_ANIMATIONS,
+				PlannerValueDef.TYPE_STRING, "animation", false,
+				"New Animations", "The new animations for this npc"));
+		allowableLines.add(new PlannerLineDef("changenpc",
+				"Change NPC Anim",
+				"Changes an existing npcs animations to the specified animations.",
+				definingValues));
+		
+		// Add Sprite
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_SPRITE_IMAGE,
+				PlannerValueDef.TYPE_STRING, "image", false, "Image Name",
+				"The name of the image that should be displayed for this sprite"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_STRING, "name", false, "Name",
+				"The unique name of this sprite that should be used to identify it for use in triggers"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_TRIGGER,
+				PlannerValueDef.TYPE_INT, "searchtrigger", true, "Search Trigger",
+				"The trigger (not battle trigger) that should be executed when this sprite is 'investigated'"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_LOCATIONS,
+				PlannerValueDef.TYPE_STRING, "location", false, "Start Location",
+				"The name of the map location to place this sprite on"));
+		allowableLines.add(new PlannerLineDef("addsprite", "Add Sprite",
+				"Adds a sprite to the map at the specified location",
+				definingValues));
+		
 		// Remove Sprite
 		definingValues = new ArrayList<PlannerValueDef>();
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
@@ -2319,7 +2386,7 @@ public class PlannerDefinitions {
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
 				PlannerValueDef.TYPE_STRING, "name", false, "Sprite Name",
 				"The name of the sprite to be changed"));
-		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_SPRITE_IMAGE,
 				PlannerValueDef.TYPE_STRING, "image", false,
 				"New Sprite Image", "The new image for this sprite"));
 		allowableLines.add(new PlannerLineDef("changesprite",
@@ -2360,6 +2427,19 @@ public class PlannerDefinitions {
 						"Kill Enemies",
 						"'Kill all enemies with the specified unitid. This should only be usedin battle.",
 						definingValues));
+		
+		// Run Triggers
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_TRIGGER,
+				PlannerValueDef.TYPE_MULTI_INT, "triggers", true,
+				"Triggers To Run",
+				"The ID of the triggers to run"));
+		allowableLines.add(new PlannerLineDef(
+				"runtriggers",
+				"Run Triggers",
+				"Runs the specified triggers. This is primarily used to break up triggers with parts "
+				+ "you don't want to run multiple times into smaller parts that can be run multiple times.",
+				definingValues));
 		
 		// Exit Game
 		definingValues = new ArrayList<PlannerValueDef>();
@@ -2607,6 +2687,8 @@ public class PlannerDefinitions {
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_TEXT,
 				PlannerValueDef.TYPE_INT, "textid", false, "Text Id",
 				"The id of the text that should be displayed when this npc is talked to'"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, 
+				"name", true, "Name", "The unique name of this npc that should be used to identify it for use in triggers"));
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_ANIMATIONS,
 				PlannerValueDef.TYPE_STRING, "animation", false, "Animation",
 				"The animation that should be used to display this NPC. The portrait for the speech will be selected during text creation'"));
@@ -2662,7 +2744,7 @@ public class PlannerDefinitions {
 				PlannerValueDef.TYPE_STRING, "name", false, "Name",
 				"The unique name of this sprite that should be used to identify it for use in triggers"));
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_TRIGGER,
-				PlannerValueDef.TYPE_INT, "searchtrigger", false, "Search Trigger",
+				PlannerValueDef.TYPE_INT, "searchtrigger", true, "Search Trigger",
 				"The trigger (not battle trigger) that should be executed when this sprite is 'investigated'"));
 		allowableLines.add(new PlannerLineDef("sprite", "sprite",
 				"Places a static sprite at this location", definingValues));

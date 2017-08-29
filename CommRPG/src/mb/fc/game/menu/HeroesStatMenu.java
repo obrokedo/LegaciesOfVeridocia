@@ -2,6 +2,9 @@ package mb.fc.game.menu;
 
 import java.util.ArrayList;
 
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
+
 import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.MessageType;
 import mb.fc.engine.message.SpriteContextMessage;
@@ -12,9 +15,7 @@ import mb.fc.game.input.KeyMapping;
 import mb.fc.game.listener.MenuListener;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.ui.PaddedGameContainer;
-
-import org.newdawn.slick.Color;
-import org.newdawn.slick.Graphics;
+import mb.fc.utils.StringUtils;
 
 public class HeroesStatMenu extends Menu implements MenuListener
 {
@@ -23,7 +24,8 @@ public class HeroesStatMenu extends Menu implements MenuListener
 	protected static final int VIEW_DIFFS = 2;
 	protected static final Color COLOR_NONE = new Color(204, 0, 70);
 
-	protected int xOffset = 0, yOffsetTop = -40, yOffsetBot = 10;
+	// Why the fuck is the yoffsettop negative?!!??!?!?!?
+	protected int xOffset = 0, yOffsetTop = -14, yOffsetBot = 10;
 	protected int selectedIndex = 0;
 	protected ArrayList<CombatSprite> heroes;
 	protected String[][] items;
@@ -55,78 +57,7 @@ public class HeroesStatMenu extends Menu implements MenuListener
 
 	@Override
 	public void render(PaddedGameContainer gc, Graphics graphics) {
-		// Draw hero stat box
-		Panel.drawPanelBox(xOffset + 82,
-				yOffsetTop + 20,
-			218,
-			115, graphics);
-		graphics.setColor(Color.white);
-
-		/****************************/
-		/* Draw the portrait window	*/
-		/****************************/
-		if (selectedHero != null)
-		{
-			int x = (CommRPG.GAME_SCREEN_SIZE.width - 280) / 2;
-			int y = (CommRPG.GAME_SCREEN_SIZE.height - 226) / 2 -1;
-			selectedHeroPortrait.render(x, y, graphics);
-		}
-
-		graphics.setColor(Color.white);
-		graphics.drawString(selectedHero.getName() + " " + selectedHero.getCurrentProgression().getClassName() +
-				" L" + selectedHero.getLevel(),
-				xOffset + 88,
-				yOffsetTop + 15);
-
-		graphics.drawString("SPELLS", xOffset + 90,
-				yOffsetTop + 32);
-
-		graphics.drawString("ITEMS", xOffset + 200,
-				yOffsetTop + 32);
-
-		// Draw Hero Spells
-		if (selectedHero.getSpellsDescriptors() != null && selectedHero.getSpellsDescriptors().size() > 0)
-			for (int i = 0; i < selectedHero.getSpellsDescriptors().size(); i++)
-			{
-				graphics.drawString(selectedHero.getSpellsDescriptors().get(i).getSpell().getName(),
-						xOffset + 100,
-					yOffsetTop + (42 + i * 20));
-				graphics.drawString("Level 1", xOffset + 115,
-						yOffsetTop + (52 + i * 20));
-			}
-		else
-		{
-			graphics.setColor(COLOR_NONE);
-			graphics.drawString("NONE", xOffset + 100,
-				yOffsetTop + 42);
-			graphics.setColor(Color.white);
-		}
-
-		// Draw hero items
-		if (items != null && selectedHero.getItemsSize() > 0)
-			for (int i = 0; i < selectedHero.getItemsSize(); i++)
-			{
-				if (selectedHero.getEquipped().get(i))
-				{
-					graphics.setColor(Color.yellow);
-					graphics.drawString("EQ", xOffset + 190,
-							yOffsetTop + (42 + i * 20));
-					graphics.setColor(Color.white);
-				}
-
-				graphics.drawString(items[i][0], xOffset + 210,
-					yOffsetTop + (42 + i * 20));
-				if (items[i].length > 1)
-					graphics.drawString(items[i][1], xOffset + 225,
-							yOffsetTop + (52 + i * 20));
-			}
-		else
-		{
-			graphics.setColor(COLOR_NONE);
-			graphics.drawString("NONE", xOffset + 210,
-				yOffsetTop + 42);
-			graphics.setColor(Color.white);
-		}
+		drawHeroSpecifics(graphics);
 
 		// TODO PORTRAITS
 		/*
@@ -153,59 +84,59 @@ public class HeroesStatMenu extends Menu implements MenuListener
 		graphics.drawRect(xOffset + 25,
 				yOffsetBot + (134 + 15 * Math.min(selectedIndex, 11)),
 				269, 15);
-		graphics.drawString("NAME", xOffset + 27,
-				yOffsetBot + 113);
+		StringUtils.drawString("NAME", xOffset + 27,
+				yOffsetBot + 113, graphics);
 
 		if (view == VIEW_LEVEL)
 		{
-			graphics.drawString("LEVEL", xOffset + 127,
-					yOffsetBot + 113);
-			graphics.drawString("EXP", xOffset + 227,
-					yOffsetBot + 113);
+			StringUtils.drawString("LEVEL", xOffset + 127,
+					yOffsetBot + 113, graphics);
+			StringUtils.drawString("EXP", xOffset + 227,
+					yOffsetBot + 113, graphics);
 		}
 		else if (view == VIEW_STATS)
 		{
-			graphics.drawString("HP", xOffset + 92,
-					yOffsetBot + 113);
-			graphics.drawString("MP", xOffset + 127,
-					yOffsetBot + 113);
-			graphics.drawString("ATK", xOffset + 162,
-					yOffsetBot + 113);
-			graphics.drawString("DEF", xOffset + 197,
-					yOffsetBot + 113);
-			graphics.drawString("SPD", xOffset + 232,
-					yOffsetBot + 113);
-			graphics.drawString("MOV", xOffset + 267,
-					yOffsetBot + 113);
+			StringUtils.drawString("HP", xOffset + 92,
+					yOffsetBot + 113, graphics);
+			StringUtils.drawString("MP", xOffset + 127,
+					yOffsetBot + 113, graphics);
+			StringUtils.drawString("ATK", xOffset + 162,
+					yOffsetBot + 113, graphics);
+			StringUtils.drawString("DEF", xOffset + 197,
+					yOffsetBot + 113, graphics);
+			StringUtils.drawString("SPD", xOffset + 232,
+					yOffsetBot + 113, graphics);
+			StringUtils.drawString("MOV", xOffset + 267,
+					yOffsetBot + 113, graphics);
 		}
 
 		for (int i = (selectedIndex < 12 ? 0 : selectedIndex - 11); i < Math.min(heroes.size(),  (selectedIndex < 12 ? 12 : selectedIndex + 1)); i++)
 		{
-			graphics.drawString(heroes.get(i).getName(),
+			StringUtils.drawString(heroes.get(i).getName(),
 					xOffset + 27,
-					yOffsetBot + (128 + 15 * (i - (selectedIndex < 12 ? 0 : selectedIndex - 11))));
+					yOffsetBot + (128 + 15 * (i - (selectedIndex < 12 ? 0 : selectedIndex - 11))), graphics);
 
 			if (view == VIEW_LEVEL)
 			{
-				graphics.drawString(heroes.get(i).getLevel() + "", xOffset + 127,
-						yOffsetBot + (128 + 15 * (i - (selectedIndex < 12 ? 0 : selectedIndex - 11))));
-				graphics.drawString(heroes.get(i).getExp() + "", xOffset + 227,
-						yOffsetBot + (128 + 15 * (i - (selectedIndex < 12 ? 0 : selectedIndex - 11))));
+				StringUtils.drawString(heroes.get(i).getLevel() + "", xOffset + 127,
+						yOffsetBot + (128 + 15 * (i - (selectedIndex < 12 ? 0 : selectedIndex - 11))), graphics);
+				StringUtils.drawString(heroes.get(i).getExp() + "", xOffset + 227,
+						yOffsetBot + (128 + 15 * (i - (selectedIndex < 12 ? 0 : selectedIndex - 11))), graphics);
 			}
 			else if (view == VIEW_STATS)
 			{
-				graphics.drawString(heroes.get(i).getCurrentHP() + "", xOffset + 92,
-						yOffsetBot + (128 + 15 * (i - (selectedIndex < 12 ? 0 : selectedIndex - 11))));
-				graphics.drawString(heroes.get(i).getCurrentMP() + "", xOffset + 127,
-						yOffsetBot + (128 + 15 * (i - (selectedIndex < 12 ? 0 : selectedIndex - 11))));
-				graphics.drawString(heroes.get(i).getCurrentAttack() + "", xOffset + 162,
-						yOffsetBot + (128 + 15 * (i - (selectedIndex < 12 ? 0 : selectedIndex - 11))));
-				graphics.drawString(heroes.get(i).getCurrentDefense() + "", xOffset + 197,
-						yOffsetBot + (128 + 15 * (i - (selectedIndex < 12 ? 0 : selectedIndex - 11))));
-				graphics.drawString(heroes.get(i).getCurrentSpeed() + "", xOffset + 232,
-						yOffsetBot + (128 + 15 * (i - (selectedIndex < 12 ? 0 : selectedIndex - 11))));
-				graphics.drawString(heroes.get(i).getCurrentMove() + "", xOffset + 267,
-						yOffsetBot + (128 + 15 * (i - (selectedIndex < 12 ? 0 : selectedIndex - 11))));
+				StringUtils.drawString(heroes.get(i).getCurrentHP() + "", xOffset + 92,
+						yOffsetBot + (128 + 15 * (i - (selectedIndex < 12 ? 0 : selectedIndex - 11))), graphics);
+				StringUtils.drawString(heroes.get(i).getCurrentMP() + "", xOffset + 127,
+						yOffsetBot + (128 + 15 * (i - (selectedIndex < 12 ? 0 : selectedIndex - 11))), graphics);
+				StringUtils.drawString(heroes.get(i).getCurrentAttack() + "", xOffset + 162,
+						yOffsetBot + (128 + 15 * (i - (selectedIndex < 12 ? 0 : selectedIndex - 11))), graphics);
+				StringUtils.drawString(heroes.get(i).getCurrentDefense() + "", xOffset + 197,
+						yOffsetBot + (128 + 15 * (i - (selectedIndex < 12 ? 0 : selectedIndex - 11))), graphics);
+				StringUtils.drawString(heroes.get(i).getCurrentSpeed() + "", xOffset + 232,
+						yOffsetBot + (128 + 15 * (i - (selectedIndex < 12 ? 0 : selectedIndex - 11))), graphics);
+				StringUtils.drawString(heroes.get(i).getCurrentMove() + "", xOffset + 267,
+						yOffsetBot + (128 + 15 * (i - (selectedIndex < 12 ? 0 : selectedIndex - 11))), graphics);
 			}
 			else
 			{
@@ -214,6 +145,81 @@ public class HeroesStatMenu extends Menu implements MenuListener
 		}
 
 		postRender(graphics);
+	}
+
+	private void drawHeroSpecifics(Graphics graphics) {
+		// Draw hero stat box
+		Panel.drawPanelBox(xOffset + 82,
+				yOffsetTop + 20,
+			218,
+			115, graphics);
+		graphics.setColor(Color.white);
+
+		/****************************/
+		/* Draw the portrait window	*/
+		/****************************/
+		if (selectedHero != null)
+		{
+			int x = (CommRPG.GAME_SCREEN_SIZE.width - 280) / 2;
+			int y = (CommRPG.GAME_SCREEN_SIZE.height - 226) / 2 -1;
+			selectedHeroPortrait.render(x, y, graphics);
+		}
+
+		graphics.setColor(Color.white);
+		StringUtils.drawString(selectedHero.getName() + " " + selectedHero.getCurrentProgression().getClassName() +
+				" L" + selectedHero.getLevel(),
+				xOffset + 88,
+				yOffsetTop + 15, graphics);
+
+		StringUtils.drawString("SPELLS", xOffset + 90,
+				yOffsetTop + 32, graphics);
+
+		StringUtils.drawString("ITEMS", xOffset + 200,
+				yOffsetTop + 32, graphics);
+
+		// Draw Hero Spells
+		if (selectedHero.getSpellsDescriptors() != null && selectedHero.getSpellsDescriptors().size() > 0)
+			for (int i = 0; i < selectedHero.getSpellsDescriptors().size(); i++)
+			{
+				StringUtils.drawString(selectedHero.getSpellsDescriptors().get(i).getSpell().getName(),
+						xOffset + 100,
+					yOffsetTop + (42 + i * 20), graphics);
+				StringUtils.drawString("Level 1", xOffset + 115,
+						yOffsetTop + (52 + i * 20), graphics);
+			}
+		else
+		{
+			graphics.setColor(COLOR_NONE);
+			StringUtils.drawString("NONE", xOffset + 100,
+				yOffsetTop + 42, graphics);
+			graphics.setColor(Color.white);
+		}
+
+		// Draw hero items
+		if (items != null && selectedHero.getItemsSize() > 0)
+			for (int i = 0; i < selectedHero.getItemsSize(); i++)
+			{
+				if (selectedHero.getEquipped().get(i))
+				{
+					graphics.setColor(Color.yellow);
+					StringUtils.drawString("EQ", xOffset + 190,
+							yOffsetTop + (42 + i * 20), graphics);
+					graphics.setColor(Color.white);
+				}
+
+				StringUtils.drawString(items[i][0], xOffset + 210,
+					yOffsetTop + (42 + i * 20), graphics);
+				if (items[i].length > 1)
+					StringUtils.drawString(items[i][1], xOffset + 225,
+							yOffsetTop + (52 + i * 20), graphics);
+			}
+		else
+		{
+			graphics.setColor(COLOR_NONE);
+			StringUtils.drawString("NONE", xOffset + 210,
+				yOffsetTop + 42, graphics);
+			graphics.setColor(Color.white);
+		}
 	}
 
 	protected void postRender(Graphics g)

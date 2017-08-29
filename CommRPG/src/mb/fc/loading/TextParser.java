@@ -111,159 +111,7 @@ public class TextParser
 			}
 			else if (tagArea.getTagType().equalsIgnoreCase("trigger"))
 			{
-				int id = Integer.parseInt(tagArea.getAttribute("id"));
-				boolean nonRetrig = false;
-				boolean retrigOnEnter = false;
-				boolean triggerOnce = false;
-				boolean triggerImmediately = false;
-				int[] requireIds = null;
-				int[] excludeIds = null;
-				if (tagArea.getAttribute("nonretrig") != null)
-					nonRetrig = Boolean.parseBoolean(tagArea.getAttribute("nonretrig"));
-				if (tagArea.getAttribute("retrigonenter") != null)
-					retrigOnEnter = Boolean.parseBoolean(tagArea.getAttribute("retrigonenter"));
-				if (tagArea.getAttribute("triggeronce") != null)
-					triggerOnce = Boolean.parseBoolean(tagArea.getAttribute("triggeronce"));
-				if (tagArea.getAttribute("triggerimmediately") != null)
-					triggerImmediately = Boolean.parseBoolean(tagArea.getAttribute("triggerimmediately"));
-
-				String requires = tagArea.getAttribute("require");
-				String excludes = tagArea.getAttribute("exclude");
-
-				if (requires != null)
-				{
-					String[] splitReq = requires.split(",");
-					requireIds = new int[splitReq.length];
-					for (int i = 0; i < splitReq.length; i++)
-						requireIds[i] = Integer.parseInt(splitReq[i]);
-				}
-
-				if (excludes != null)
-				{
-					String[] splitEx = excludes.split(",");
-					excludeIds = new int[splitEx.length];
-					for (int i = 0; i < splitEx.length; i++)
-						excludeIds[i] = Integer.parseInt(splitEx[i]);
-				}
-
-				Trigger te = new Trigger(id, retrigOnEnter, nonRetrig, triggerOnce, triggerImmediately, requireIds, excludeIds);
-				if (tagArea.getChildren().size() > 0)
-				{
-					for (int k = 0; k < tagArea.getChildren().size(); k++)
-					{
-						Hashtable<String, String> actionParams = tagArea.getChildren().get(k).getParams();
-
-						String tagType = tagArea.getChildren().get(k).getTagType();
-						if (tagType.equalsIgnoreCase("completequest"))
-						{
-							te.addTriggerable(te.new TriggerCompleteQuest(Integer.parseInt(actionParams.get("questid"))));
-						}
-						else if (tagType.equalsIgnoreCase("startbattle"))
-						{
-							int battleBackgroundIndex = 0;
-
-							if (actionParams.containsKey("battbg"))
-								battleBackgroundIndex = Integer.parseInt(actionParams.get("battbg"));
-							te.addTriggerable(te.new TriggerStartBattle(actionParams.get("battletriggers"),
-									actionParams.get("entrance"), battleBackgroundIndex));
-						}
-						else if (tagType.equalsIgnoreCase("setbattlecond"))
-						{
-							te.addTriggerable(te.new TriggerBattleCond(
-									parsePositiveMultiInt("templeader", actionParams),
-									parsePositiveMultiInt("tempenemyleader", actionParams), 
-									Boolean.parseBoolean(actionParams.get("allleaders"))));
-						}
-						else if (tagType.equalsIgnoreCase("loadmap"))
-						{
-							te.addTriggerable(te.new TriggerEnter(actionParams.get("mapdata"), actionParams.get("enter")));
-						}
-						else if (tagType.equalsIgnoreCase("showshop"))
-						{
-							te.addTriggerable(te.new TriggerShowShop(actionParams.get("shop")));
-						}
-						else if (tagType.equalsIgnoreCase("showpriest"))
-						{
-							te.addTriggerable(te.new TriggerShowPriest());
-						}
-						else if (tagType.equalsIgnoreCase("addhero"))
-						{
-							te.addTriggerable(te.new TriggerAddHero(Integer.parseInt(actionParams.get("heroid"))));
-						}
-						else if (tagType.equalsIgnoreCase("playmusic"))
-						{
-							te.addTriggerable(te.new TriggerPlayMusic(actionParams.get("music")));
-							musicToLoad.add(actionParams.get("music"));
-						}
-						else if (tagType.equalsIgnoreCase("playsound"))
-						{
-							te.addTriggerable(te.new TriggerPlaySound(actionParams.get("sound"), Integer.parseInt(actionParams.get("volume"))));
-							soundToLoad.add(actionParams.get("sound"));
-						}
-						else if (tagType.equalsIgnoreCase("changeai"))
-						{
-							te.addTriggerable(te.new TriggerChangeAI(actionParams.get("aitype"),
-									actionParams.get("id"), actionParams.get("targetid"), actionParams.get("heroid"),
-									actionParams.get("x"), actionParams.get("y")));
-						}
-						else if (tagType.equalsIgnoreCase("showtext"))
-						{
-							te.addTriggerable(te.new TriggerShowText(Integer.parseInt(actionParams.get("textid"))));
-						}
-						else if (tagType.equalsIgnoreCase("showcin"))
-						{
-							te.addTriggerable(te.new TriggerShowCinematic(Integer.parseInt(actionParams.get("cinid"))));
-						}
-						else if (tagType.equalsIgnoreCase("loadcin"))
-						{
-							te.addTriggerable(te.new TriggerLoadCinematic(actionParams.get("mapdata"), Integer.parseInt(actionParams.get("cinid"))));
-						}
-						else if (tagType.equalsIgnoreCase("showroof"))
-						{
-							te.addTriggerable(te.new TriggerToggleRoof(Integer.parseInt(actionParams.get("roofid")), true));
-						}
-						else if (tagType.equalsIgnoreCase("hideroof"))
-						{
-							te.addTriggerable(te.new TriggerToggleRoof(Integer.parseInt(actionParams.get("roofid")), false));
-						}
-						else if (tagType.equalsIgnoreCase("removesprite"))
-						{
-							te.addTriggerable(te.new TriggerRemoveSprite(actionParams.get("name")));
-						}
-						else if (tagType.equalsIgnoreCase("changesprite"))
-						{
-							te.addTriggerable(te.new TriggerChangeSprite(actionParams.get("name"), actionParams.get("image")));
-							spriteToLoad.add(actionParams.get("image"));
-						}
-						else if (tagType.equalsIgnoreCase("additem"))
-						{
-							te.addTriggerable(te.new TriggerAddItem(Integer.parseInt(actionParams.get("itemid"))));
-						}
-						else if (tagType.equalsIgnoreCase("exit"))
-						{
-							te.addTriggerable(te.new TriggerExit());
-						}
-						else if (tagType.equalsIgnoreCase("reviveheroes"))
-						{
-							te.addTriggerable(te.new TriggerReviveHeroes());
-						}
-						else if (tagType.equalsIgnoreCase("killenemies"))
-						{
-							te.addTriggerable(te.new TriggerKillEnemies(Integer.parseInt(actionParams.get("unitid"))));
-						}
-						else
-						{
-							Triggerable trigger = handleCustomTrigger(tagType, actionParams);
-							if (trigger == null)
-								throw new BadResourceException("Unable to parse trigger with key " + tagType);
-							else
-								te.addTriggerable(trigger);
-						}
-
-					}
-				}
-
-				triggerEventById.put(id, te);
+				parseTrigger(triggerEventById, soundToLoad, musicToLoad, spriteToLoad, tagArea);
 			}
 			else if (tagArea.getTagType().equalsIgnoreCase("cinematic"))
 			{
@@ -346,6 +194,191 @@ public class TextParser
 			*/
 		
 		return mapName;
+	}
+
+	private void parseTrigger(Hashtable<Integer, Trigger> triggerEventById, HashSet<String> soundToLoad,
+			HashSet<String> musicToLoad, HashSet<String> spriteToLoad, TagArea tagArea) {
+		int id = Integer.parseInt(tagArea.getAttribute("id"));
+		boolean nonRetrig = false;
+		boolean retrigOnEnter = false;
+		boolean triggerOnce = false;
+		boolean triggerImmediately = false;
+		int[] requireIds = null;
+		int[] excludeIds = null;
+		if (tagArea.getAttribute("nonretrig") != null)
+			nonRetrig = Boolean.parseBoolean(tagArea.getAttribute("nonretrig"));
+		if (tagArea.getAttribute("retrigonenter") != null)
+			retrigOnEnter = Boolean.parseBoolean(tagArea.getAttribute("retrigonenter"));
+		if (tagArea.getAttribute("triggeronce") != null)
+			triggerOnce = Boolean.parseBoolean(tagArea.getAttribute("triggeronce"));
+		if (tagArea.getAttribute("triggerimmediately") != null)
+			triggerImmediately = Boolean.parseBoolean(tagArea.getAttribute("triggerimmediately"));
+
+		String requires = tagArea.getAttribute("require");
+		String excludes = tagArea.getAttribute("exclude");
+
+		if (requires != null)
+		{
+			String[] splitReq = requires.split(",");
+			requireIds = new int[splitReq.length];
+			for (int i = 0; i < splitReq.length; i++)
+				requireIds[i] = Integer.parseInt(splitReq[i]);
+		}
+
+		if (excludes != null)
+		{
+			String[] splitEx = excludes.split(",");
+			excludeIds = new int[splitEx.length];
+			for (int i = 0; i < splitEx.length; i++)
+				excludeIds[i] = Integer.parseInt(splitEx[i]);
+		}
+
+		Trigger te = new Trigger(id, retrigOnEnter, nonRetrig, triggerOnce, triggerImmediately, requireIds, excludeIds);
+		if (tagArea.getChildren().size() > 0)
+		{
+			for (int k = 0; k < tagArea.getChildren().size(); k++)
+			{
+				Hashtable<String, String> actionParams = tagArea.getChildren().get(k).getParams();
+
+				String tagType = tagArea.getChildren().get(k).getTagType();
+				if (tagType.equalsIgnoreCase("completequest"))
+				{
+					te.addTriggerable(te.new TriggerCompleteQuest(Integer.parseInt(actionParams.get("questid"))));
+				}
+				else if (tagType.equalsIgnoreCase("startbattle"))
+				{
+					int battleBackgroundIndex = 0;
+
+					if (actionParams.containsKey("battbg"))
+						battleBackgroundIndex = Integer.parseInt(actionParams.get("battbg"));
+					te.addTriggerable(te.new TriggerStartBattle(actionParams.get("battletriggers"),
+							actionParams.get("entrance"), battleBackgroundIndex));
+				}
+				else if (tagType.equalsIgnoreCase("setbattlecond"))
+				{
+					te.addTriggerable(te.new TriggerBattleCond(
+							parsePositiveMultiInt("templeader", actionParams),
+							parsePositiveMultiInt("tempenemyleader", actionParams), 
+							Boolean.parseBoolean(actionParams.get("allleaders"))));
+				}
+				else if (tagType.equalsIgnoreCase("loadmap"))
+				{
+					te.addTriggerable(te.new TriggerEnter(actionParams.get("mapdata"), actionParams.get("enter")));
+				}
+				else if (tagType.equalsIgnoreCase("showshop"))
+				{
+					te.addTriggerable(te.new TriggerShowShop(actionParams.get("shop")));
+				}
+				else if (tagType.equalsIgnoreCase("showpriest"))
+				{
+					te.addTriggerable(te.new TriggerShowPriest());
+				}
+				else if (tagType.equalsIgnoreCase("addhero"))
+				{
+					te.addTriggerable(te.new TriggerAddHero(Integer.parseInt(actionParams.get("heroid"))));
+				}
+				else if (tagType.equalsIgnoreCase("playmusic"))
+				{
+					te.addTriggerable(te.new TriggerPlayMusic(actionParams.get("music")));
+					musicToLoad.add(actionParams.get("music"));
+				}
+				else if (tagType.equalsIgnoreCase("playsound"))
+				{
+					te.addTriggerable(te.new TriggerPlaySound(actionParams.get("sound"), Integer.parseInt(actionParams.get("volume"))));
+					soundToLoad.add(actionParams.get("sound"));
+				}
+				else if (tagType.equalsIgnoreCase("changeai"))
+				{
+					te.addTriggerable(te.new TriggerChangeAI(actionParams.get("aitype"),
+							actionParams.get("id"), actionParams.get("targetid"), actionParams.get("heroid"),
+							actionParams.get("x"), actionParams.get("y")));
+				}
+				else if (tagType.equalsIgnoreCase("showtext"))
+				{
+					te.addTriggerable(te.new TriggerShowText(Integer.parseInt(actionParams.get("textid"))));
+				}
+				else if (tagType.equalsIgnoreCase("showcin"))
+				{
+					te.addTriggerable(te.new TriggerShowCinematic(Integer.parseInt(actionParams.get("cinid"))));
+				}
+				else if (tagType.equalsIgnoreCase("loadcin"))
+				{
+					te.addTriggerable(te.new TriggerLoadCinematic(actionParams.get("mapdata"), Integer.parseInt(actionParams.get("cinid"))));
+				}
+				else if (tagType.equalsIgnoreCase("showroof"))
+				{
+					te.addTriggerable(te.new TriggerToggleRoof(Integer.parseInt(actionParams.get("roofid")), true));
+				}
+				else if (tagType.equalsIgnoreCase("hideroof"))
+				{
+					te.addTriggerable(te.new TriggerToggleRoof(Integer.parseInt(actionParams.get("roofid")), false));
+				}
+				else if (tagType.equalsIgnoreCase("addnpc")) {
+					Integer facing = null;
+					Integer wander = null;
+					Integer uniqueId = null;
+					if (actionParams.containsKey("facing"))
+						facing = Integer.parseInt(actionParams.get("facing"));
+					if (actionParams.containsKey("wander"))
+						wander = Integer.parseInt(actionParams.get("wander"));
+					if (actionParams.containsKey("uniqueid"))
+						uniqueId = Integer.parseInt(actionParams.get("uniqueid"));
+					
+					te.addTriggerable(te.new TriggerAddNpc(Integer.parseInt(actionParams.get("textid")), actionParams.get("name"), 
+							actionParams.get("animation"), facing, wander, uniqueId, actionParams.get("location")));
+				}
+				else if (tagType.equalsIgnoreCase("changenpc")) {
+					te.addTriggerable(te.new TriggerChangeNPCAnimation(actionParams.get("animation"), actionParams.get("name")));
+				} else if (tagType.equalsIgnoreCase("addsprite")) {
+					int[] searchTriggers = null;
+					if (actionParams.containsKey("searchtrigger")) {
+						int trig = Integer.parseInt(actionParams.get("searchtrigger"));
+						if (trig >= 0) {
+							searchTriggers = new int[] {trig};
+						}
+					}
+					te.addTriggerable(te.new TriggerAddSprite(actionParams.get("name"), actionParams.get("image"), searchTriggers, actionParams.get("location")));
+				}
+				else if (tagType.equalsIgnoreCase("removesprite"))
+				{
+					te.addTriggerable(te.new TriggerRemoveSprite(actionParams.get("name")));
+				}
+				else if (tagType.equalsIgnoreCase("changesprite"))
+				{
+					te.addTriggerable(te.new TriggerChangeSprite(actionParams.get("name"), actionParams.get("image")));
+					spriteToLoad.add(actionParams.get("image"));
+				}
+				else if (tagType.equalsIgnoreCase("additem"))
+				{
+					te.addTriggerable(te.new TriggerAddItem(Integer.parseInt(actionParams.get("itemid"))));
+				} else if (tagType.equalsIgnoreCase("runtriggers")) {
+					te.addTriggerable(te.new TriggerRunTriggers(parsePositiveMultiInt("triggers", actionParams)));
+				}
+				else if (tagType.equalsIgnoreCase("exit"))
+				{
+					te.addTriggerable(te.new TriggerExit());
+				}
+				else if (tagType.equalsIgnoreCase("reviveheroes"))
+				{
+					te.addTriggerable(te.new TriggerReviveHeroes());
+				}
+				else if (tagType.equalsIgnoreCase("killenemies"))
+				{
+					te.addTriggerable(te.new TriggerKillEnemies(Integer.parseInt(actionParams.get("unitid"))));
+				}
+				else
+				{
+					Triggerable trigger = handleCustomTrigger(tagType, actionParams);
+					if (trigger == null)
+						throw new BadResourceException("Unable to parse trigger with key " + tagType);
+					else
+						te.addTriggerable(trigger);
+				}
+
+			}
+		}
+
+		triggerEventById.put(id, te);
 	}
 	
 	private static int[] parsePositiveMultiInt(String leaderTag, Hashtable<String, String> actionParams)

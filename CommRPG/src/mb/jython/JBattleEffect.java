@@ -118,6 +118,10 @@ public abstract class JBattleEffect implements Serializable
 	public boolean preventsTurn(){
 		return false;
 	}
+	
+	public boolean doesEffectPersistAfterBattle() {
+		return false;
+	}
 
 	public void initializeAnimation(FCResourceManager frm)
 	{
@@ -167,4 +171,6 @@ public abstract class JBattleEffect implements Serializable
 	public int getEffectLevel() {
 		return effectLevel;
 	}
+	
+	
 }

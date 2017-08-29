@@ -1,5 +1,6 @@
 package mb.fc.game.manager;
 
+import java.awt.Point;
 import java.util.HashSet;
 import java.util.Iterator;
 
@@ -65,7 +66,7 @@ public class SpriteManager extends Manager
 			}
 
 			boolean foundStart = false;
-			MapObject defaultEntrance = null;
+			String entranceLocation = stateInfo.getEntranceLocation();
 
 			// Get any npcs from the map
 			for (MapObject mo : stateInfo.getResourceManager().getMap().getMapObjects())
@@ -74,24 +75,30 @@ public class SpriteManager extends Manager
 				{
 					stateInfo.addSprite(mo.getNPC(stateInfo.getResourceManager()));
 				}
-				else if (mo.getKey().equalsIgnoreCase("start"))
+				// Depending on where we are initializing this map from the entrance location could be null.
+				// If we are loading a map for the first time or via transition from another map then this
+				// value will be set. If we are loading from save then we will just use the absolute sprite
+				// absolute sprite location
+				else if (entranceLocation != null && mo.getKey().equalsIgnoreCase("start")
+						&& mo.getParam("exit").equalsIgnoreCase(entranceLocation))
 				{
-					if (mo.getParam("exit").equalsIgnoreCase(stateInfo.getEntranceLocation()))
-					{
-						mo.getStartLocation(stateInfo);
-						foundStart = true;
-					}
-					else
-						defaultEntrance = mo;
+					mo.placeSpritesAtStartLocation(stateInfo);
+					foundStart = true;
 				}
 			}
-
-			if (!foundStart)
+			
+			if (entranceLocation == null) {
+				Point savedPoint = stateInfo.getClientProgress().getInTownLocation();
+				if (savedPoint == null)
+					throw new BadMapException("The selected map does not contain a start location or a start point. Your save file may be bad");
+				
+				// Use integer division to place the hero at the nearest tile
+				stateInfo.getCurrentSprite().setLocation((savedPoint.x / stateInfo.getTileWidth()) * stateInfo.getTileWidth(), 
+						(savedPoint.y / stateInfo.getTileHeight()) * stateInfo.getTileHeight(), stateInfo.getTileWidth(), stateInfo.getTileHeight());
+			}
+			else if (!foundStart)
 			{
-				if (defaultEntrance != null)
-					defaultEntrance.getStartLocation(stateInfo);
-				else
-					throw new BadMapException("The selected map does not contain a start location");
+				throw new BadMapException("The selected map does not contain a start location with the name " + entranceLocation);
 			}
 
 			stateInfo.getCamera().centerOnSprite(stateInfo.getCurrentSprite(), stateInfo.getCurrentMap());
@@ -144,7 +151,7 @@ public class SpriteManager extends Manager
 					// TODO This should automatically start the "BATTLE START"
 					if (mo.getKey().equalsIgnoreCase("start") && mo.getParam("exit").equalsIgnoreCase(stateInfo.getEntranceLocation()))
 					{
-						mo.getStartLocation(stateInfo);
+						mo.placeSpritesAtStartLocation(stateInfo);
 					}
 					
 					if (mo.getKey().equalsIgnoreCase("enemy"))

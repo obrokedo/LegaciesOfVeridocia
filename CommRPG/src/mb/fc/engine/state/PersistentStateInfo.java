@@ -1,5 +1,10 @@
 package mb.fc.engine.state;
 
+import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.state.transition.EmptyTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
+
 import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.Message;
 import mb.fc.game.Camera;
@@ -13,12 +18,6 @@ import mb.fc.network.TCPClient;
 import mb.fc.network.TCPServer;
 import mb.tcp.network.Client;
 import mb.tcp.network.PacketHandler;
-
-import org.newdawn.slick.Color;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.state.transition.EmptyTransition;
-import org.newdawn.slick.state.transition.FadeOutTransition;
 
 /**
  * Contains information that should be shared across all game states
@@ -34,7 +33,7 @@ public class PersistentStateInfo implements PacketHandler
 	private ClientProfile clientProfile;
 	private ClientProgress clientProgress;
 	private FCResourceManager resourceManager;
-	private String entranceLocation = "priest";
+	private String entranceLocation = null;
 	private int cinematicID = 0;
 	private int clientId;
 	private TCPServer server = null;
@@ -49,7 +48,6 @@ public class PersistentStateInfo implements PacketHandler
 		this.gc = (PaddedGameContainer) gc;
 		this.clientProfile = clientProfile;
 		this.clientProgress = clientProgress;
-		this.entranceLocation = getClientProgress().getLocation();
 	}
 
 	/********************/
@@ -67,6 +65,11 @@ public class PersistentStateInfo implements PacketHandler
 				(LoadableGameState) getGame().getState(CommRPG.STATE_GAME_TOWN), getResourceManager());
 		getGame().enterState(CommRPG.STATE_GAME_LOADING, new FadeOutTransition(Color.black, 250), new EmptyTransition());
 	}
+	
+	public void loadMapFromSave()
+	{
+		loadMap(clientProgress.getMapData(), null);
+	}
 
 	public void loadBattle(String mapData, String entrance, int battleBGIndex)
 	{
@@ -78,8 +81,6 @@ public class PersistentStateInfo implements PacketHandler
 		
 		getGame().setLoadingInfo(mapData,
 				(LoadableGameState) getGame().getState(CommRPG.STATE_GAME_BATTLE), getResourceManager());
-		
-		
 		
 		getGame().enterState(CommRPG.STATE_GAME_LOADING, new FadeOutTransition(Color.black, 250), new EmptyTransition());
 	}

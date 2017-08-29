@@ -1,5 +1,7 @@
 package mb.fc.engine.message;
 
+import java.util.Optional;
+
 import mb.fc.game.menu.Portrait;
 
 /**
@@ -17,11 +19,12 @@ public class SpeechMessage extends Message
 	private int triggerId = -1;
 	private Portrait portrait = null;
 
-	public SpeechMessage(String text, int triggerId, Portrait portrait) {
+	public SpeechMessage(String text, int triggerId, Optional<Portrait> portrait) {
 		super(MessageType.SPEECH);
 		this.text = text;
 		this.triggerId = triggerId;
-		this.portrait = portrait;
+		if (portrait.isPresent())
+			this.portrait = portrait.get();
 	}
 
 	public String getText() {
@@ -40,6 +43,4 @@ public class SpeechMessage extends Message
 	public boolean isImmediate() {
 		return true;
 	}
-	
-	
 }

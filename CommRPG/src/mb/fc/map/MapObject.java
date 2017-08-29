@@ -5,6 +5,11 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
 
+import org.newdawn.slick.Image;
+import org.newdawn.slick.geom.Polygon;
+import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.Shape;
+
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.ai.AI;
 import mb.fc.game.ai.ClericAI;
@@ -18,13 +23,7 @@ import mb.fc.game.sprite.Door;
 import mb.fc.game.sprite.NPCSprite;
 import mb.fc.game.sprite.Sprite;
 import mb.fc.game.sprite.StaticSprite;
-import mb.fc.game.text.Speech;
 import mb.fc.loading.FCResourceManager;
-
-import org.newdawn.slick.Image;
-import org.newdawn.slick.geom.Polygon;
-import org.newdawn.slick.geom.Rectangle;
-import org.newdawn.slick.geom.Shape;
 
 public class MapObject
 {
@@ -127,7 +126,7 @@ public class MapObject
 		return params;
 	}
 
-	public void getStartLocation(StateInfo stateInfo)
+	public void placeSpritesAtStartLocation(StateInfo stateInfo)
 	{
 		int startX = 0;
 		int startY = 0;
@@ -167,19 +166,37 @@ public class MapObject
 	public NPCSprite getNPC(FCResourceManager fcrm)
 	{
 		String animation = params.get("animation");
-		int wander = 0;
+		Integer wander = null;
 		if (params.containsKey("wander"))
 			wander = Integer.parseInt(params.get("wander"));
-		NPCSprite npc = NPCResource.getNPC(animation, Integer.parseInt(params.get("textid")));
+		
+		Integer uniqueId = null;
 		if (params.get("npcid") != null)
-			npc.setUniqueNPCId(Integer.parseInt(params.get("npcid")));
-		Direction facing = Direction.DOWN;
+			uniqueId = Integer.parseInt(params.get("npcid"));
+		Integer facing = null;
 		if (params.containsKey("facing")) {
-			facing = Direction.values()[Integer.parseInt(params.get("facing"))];
+			facing = Integer.parseInt(params.get("facing"));
 		}
+		
+		return getNPC(Integer.parseInt(params.get("textid")), params.get("name"), animation, facing, wander, uniqueId, fcrm);
+	}
+	
+	public NPCSprite getNPC(int textId, String name, String animation, Integer facing, Integer wander, Integer npcId, FCResourceManager fcrm) {
+		NPCSprite npc = NPCResource.getNPC(animation, textId, name);
 		npc.initializeSprite(fcrm);
+		
+		int wanderVal = 0;
+		Direction facingVal = Direction.DOWN;
+		if (wander != null)
+			wanderVal = wander;
+		if (facing != null)
+			facingVal = Direction.values()[facing];
+		
 		npc.setInitialPosition(x, y, fcrm.getMap().getTileEffectiveWidth(), 
-				fcrm.getMap().getTileEffectiveHeight(), wander, facing);
+				fcrm.getMap().getTileEffectiveHeight(), wanderVal, facingVal);
+		
+		if (npcId != null)
+			npc.setUniqueNPCId(npcId);
 		return npc;
 	}
 
@@ -225,7 +242,7 @@ public class MapObject
 	public Sprite getSprite(FCResourceManager fcrm)
 	{
 		String name = params.get("name");
-		Image image = fcrm.getImage(params.get("image"));
+		String image = params.get("image");
 
 		int[] trigger = null;
 		if (params.containsKey("searchtrigger"))
@@ -236,6 +253,13 @@ public class MapObject
 				trigger[i] = Integer.parseInt(split[i]);
 		}
 
+		return getSprite(name, image, trigger, fcrm);
+	}
+	
+	public Sprite getSprite(String name, String imageName, int[] trigger, FCResourceManager fcrm)
+	{
+		Image image = fcrm.getImage(imageName);
+		
 		Sprite s = new StaticSprite(x, y, name, image, trigger);
 		s.initializeSprite(fcrm);
 		s.setLocX(x, fcrm.getMap().getTileEffectiveWidth());

@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Hashtable;
+import java.util.Optional;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -26,13 +27,13 @@ import mb.fc.game.exception.BadResourceException;
 import mb.fc.game.hudmenu.Panel.PanelType;
 import mb.fc.game.input.FCInput;
 import mb.fc.game.menu.Portrait;
-import mb.fc.game.menu.SpeechMenu;
 import mb.fc.game.resource.HeroResource;
 import mb.fc.game.sprite.AnimatedSprite;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.sprite.NPCSprite;
 import mb.fc.game.sprite.Sprite;
 import mb.fc.game.sprite.StaticSprite;
+import mb.fc.game.trigger.Trigger;
 import mb.fc.game.ui.PaddedGameContainer;
 import mb.fc.map.Map;
 import mb.fc.utils.StringUtils;
@@ -582,7 +583,7 @@ public class Cinematic {
 
 				
 				Portrait port = Portrait.getPortrait(heroPortrait, enemyPortrait, specificAnim, stateInfo);
-				stateInfo.sendMessage(new SpeechMessage((String) ce.getParam(0), SpeechMenu.NO_TRIGGER, port));
+				stateInfo.sendMessage(new SpeechMessage((String) ce.getParam(0), Trigger.TRIGGER_NONE, Optional.of(port)));
 				break;
 			case LOAD_MAP:
 				stateInfo.getPersistentStateInfo().loadMap((String) ce.getParam(0),

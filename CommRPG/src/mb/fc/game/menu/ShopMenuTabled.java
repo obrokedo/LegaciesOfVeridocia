@@ -195,7 +195,7 @@ public class ShopMenuTabled { /* extends Menu implements YesNoListener
 	private void showBuyPanel(StateInfo stateInfo)
 	{
 		speechMenu = new SpeechMenu("What would you like to buy?]", stateInfo.getGc(),
-				SpeechMenu.NO_TRIGGER, null, stateInfo);
+				Trigger.TRIGGER_NONE, null, stateInfo);
 	}
 
 	private void showCostPanel(StateInfo stateInfo)

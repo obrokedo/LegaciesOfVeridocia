@@ -1,17 +1,17 @@
 package mb.fc.game.menu;
 
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
+
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.input.FCInput;
 import mb.fc.game.input.KeyMapping;
 import mb.fc.game.listener.MenuListener;
-import mb.fc.game.menu.Menu.MenuUpdate;
+import mb.fc.game.trigger.Trigger;
 import mb.fc.game.ui.PaddedGameContainer;
 import mb.fc.game.ui.RectUI;
 import mb.fc.game.ui.SelectRectUI;
 import mb.fc.game.ui.TextUI;
-
-import org.newdawn.slick.Color;
-import org.newdawn.slick.Graphics;
 
 public class YesNoMenu extends SpeechMenu
 {
@@ -21,7 +21,7 @@ public class YesNoMenu extends SpeechMenu
 	private boolean yesSelected = true;
 
 	public YesNoMenu(String text, StateInfo stateInfo, MenuListener listener) {
-		this(text, NO_TRIGGER, null, stateInfo, listener);
+		this(text, Trigger.TRIGGER_NONE, null, stateInfo, listener);
 	}
 
 	public YesNoMenu(String text, int triggerId,
@@ -36,10 +36,8 @@ public class YesNoMenu extends SpeechMenu
 
 	@Override
 	public MenuUpdate handleUserInput(FCInput input, StateInfo stateInfo) {
-		System.out.println("IM A FUCK HEAD");
 		if (input.isKeyDown(KeyMapping.BUTTON_1) || input.isKeyDown(KeyMapping.BUTTON_3))
 		{
-			System.out.println("YES NO CLOSED " + yesSelected + " " + this.panelText.get(0));
 			return MenuUpdate.MENU_CLOSE;
 		}
 		else if (input.isKeyDown(KeyMapping.BUTTON_LEFT))
@@ -72,7 +70,6 @@ public class YesNoMenu extends SpeechMenu
 	public void render(PaddedGameContainer gc, Graphics graphics)
 	{
 		super.render(gc, graphics);
-		System.out.println("IM DRAWING");
 		if (menuIsMovedIn)
 		{
 			// Draw background

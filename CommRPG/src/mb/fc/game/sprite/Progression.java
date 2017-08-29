@@ -1,6 +1,7 @@
 package mb.fc.game.sprite;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import mb.fc.game.constants.AttributeStrength;
 
@@ -27,7 +28,11 @@ public class Progression implements Serializable
 								windAffin, lightAffin;
 	private String bodyProgression, mindProgression;
 	private String movementType;
+	private int specialPromotionItemId;
 	private String className;
+	
+	private ArrayList<String> spellIds;
+	private ArrayList<int[]> spellLevelLearned;
 
 	public Progression(int[] usuableWeapons, int[] usuableArmor, int move, String movementType,
 			Object[] attackGains, Object[] defenseGains, Object[] speedGains, Object[] hpGains,
@@ -35,7 +40,8 @@ public class Progression implements Serializable
 			int coldAffin, int darkAffin, int waterAffin, int earthAffin,
 			int windAffin, int lightAffin, AttributeStrength counterStrength, AttributeStrength evadeStrength,
 			AttributeStrength doubleStrength, AttributeStrength critStrength, AttributeStrength bodyStrength,
-			AttributeStrength mindStrength, String bodyProgression, String mindProgression, String className) {
+			AttributeStrength mindStrength, String bodyProgression, String mindProgression, ArrayList<String> spellIds,
+			 ArrayList<int[]> spellLevelLearned, int specialPromotionItemId, String className) {
 		super();
 		this.usuableWeapons = usuableWeapons;
 		this.usuableArmor = usuableArmor;
@@ -63,6 +69,9 @@ public class Progression implements Serializable
 		this.lightAffin = lightAffin;
 		this.bodyProgression = bodyProgression;
 		this.mindProgression = mindProgression;
+		this.spellIds = spellIds;
+		this.spellLevelLearned = spellLevelLearned;
+		this.specialPromotionItemId = specialPromotionItemId;
 	}
 
 	public int[] getUsuableWeapons() {
@@ -157,5 +166,17 @@ public class Progression implements Serializable
 	}
 	public String getMindProgression() {
 		return mindProgression;
+	}
+
+	public ArrayList<String> getSpellIds() {
+		return spellIds;
+	}
+
+	public ArrayList<int[]> getSpellLevelLearned() {
+		return spellLevelLearned;
+	}
+
+	public int getSpecialPromotionItemId() {
+		return specialPromotionItemId;
 	}
 }

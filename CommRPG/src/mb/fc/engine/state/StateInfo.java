@@ -1,5 +1,6 @@
  package mb.fc.engine.state;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -302,6 +303,7 @@ public class StateInfo
 					psi.loadCinematic(lmc.getMapData(), lmc.getCinematicID());
 					break;
 				case SAVE:
+					getClientProgress().setInTownLocation(new Point((int) currentSprite.getLocX(), (int) currentSprite.getLocY()));
 					getClientProfile().serializeToFile();
 					getClientProgress().serializeToFile();
 					break;
@@ -369,6 +371,10 @@ public class StateInfo
 	public void removeTopMenu()
 	{
 		menus.remove(menus.size() - 1).panelRemoved(this);
+	}
+	
+	public void removeMenu(Menu menu) {
+		menus.remove(menu);
 	}
 
 	public boolean arePanelsDisplayed()

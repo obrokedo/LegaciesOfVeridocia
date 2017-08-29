@@ -159,6 +159,7 @@ public class FCResourceManager {
 			{
 				HeroDefinition hd = HeroDefinition.parseHeroDefinition(ta);
 				heroDefinitionsById.put(hd.getId(), hd);
+				System.out.println("Added hero " + hd.getName() + " with id " + hd.getId());
 			}
 
 			HeroResource.initialize(heroDefinitionsById);

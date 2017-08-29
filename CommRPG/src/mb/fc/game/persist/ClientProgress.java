@@ -1,5 +1,6 @@
 package mb.fc.game.persist;
 
+import java.awt.Point;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
@@ -30,7 +31,7 @@ public class ClientProgress implements Serializable
 	private HashSet<Integer> questsCompleted;
 	private Hashtable<String, ArrayList<Integer>> retriggerablesPerMapData;
 	private Hashtable<String, ArrayList<Integer>> nonretriggerablesPerMapData;
-	private String location;
+	private Point inTownLocation;
 	private String name;
 	private String mapData;
 	private long timePlayed;
@@ -107,10 +108,6 @@ public class ClientProgress implements Serializable
 			if (nonretriggerablesPerMapData.containsKey(BATTLE_PREFIX + mapData))
 				nonretriggerablesPerMapData.get(BATTLE_PREFIX + mapData).clear();
 		}
-	}
-
-	public String getLocation() {
-		return location;
 	}
 
 	public String getTimePlayed() {
@@ -210,5 +207,13 @@ public class ClientProgress implements Serializable
 
 	public void setMapData(String mapData) {
 		this.mapData = mapData;
+	}
+	
+	public Point getInTownLocation() {
+		return inTownLocation;
+	}
+
+	public void setInTownLocation(Point inTownLocation) {
+		this.inTownLocation = inTownLocation;
 	}
 }

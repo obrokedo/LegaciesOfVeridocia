@@ -57,7 +57,7 @@ public class SpeechMenu extends Menu
 	}
 
 	/**
-	 * Constructor to create a SpeechMenu with no portrait or triggers, this should
+	 * Constructor to create a SpeechMenu with no portrait, triggers or listener this should
 	 * NOT be used in Attack Cinematics because the attack cinematic has no notion
 	 * of the StateInfo
 	 *
@@ -67,6 +67,21 @@ public class SpeechMenu extends Menu
 	public SpeechMenu(String text, StateInfo stateInfo)
 	{
 		this(text, stateInfo.getFCGameContainer(), NO_TRIGGER, null, null);
+	}
+	
+	/**
+	 * Constructor to create a SpeechMenu with no triggers, but with a portrait and a specified listener. This should
+	 * NOT be used in Attack Cinematics because the attack cinematic has no notion
+	 * of the StateInfo
+	 *
+	 * @param text the text that should be displayed in the speech menu
+	 * @param portrait
+	 * @param listener
+	 * @param stateInfo the stateinfo that resources should be retrieved from
+	 */
+	public SpeechMenu(String text, Portrait portrait, MenuListener listener, StateInfo stateInfo)
+	{
+		this(text, stateInfo.getFCGameContainer(), NO_TRIGGER, portrait, listener);
 	}
 	
 	/**

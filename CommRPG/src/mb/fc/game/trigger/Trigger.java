@@ -4,27 +4,30 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.newdawn.slick.util.Log;
+
 import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.BattleCondMessage;
 import mb.fc.engine.message.IntMessage;
 import mb.fc.engine.message.LoadMapMessage;
 import mb.fc.engine.message.MessageType;
 import mb.fc.engine.message.ShopMessage;
-import mb.fc.engine.message.SpeechMessage;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.ai.AI;
 import mb.fc.game.resource.HeroResource;
 import mb.fc.game.resource.ItemResource;
 import mb.fc.game.sprite.CombatSprite;
+import mb.fc.game.sprite.NPCSprite;
 import mb.fc.game.sprite.Sprite;
 import mb.fc.game.sprite.StaticSprite;
 import mb.fc.game.text.Speech;
-
-import org.newdawn.slick.util.Log;
+import mb.fc.map.MapObject;
 
 public class Trigger
 {
+	public static final int TRIGGER_NONE = -1;
 	public static final int TRIGGER_ID_EXIT = -2;
+	public static final int TRIGGER_SAVE = 3;
 
 	private ArrayList<Triggerable> triggerables = new ArrayList<Triggerable>();
 
@@ -67,10 +70,12 @@ public class Trigger
 			return;
 		}
 
+		/* WHY IS THIS HERE?!??!?!?!
 		if (!stateInfo.isInitialized() && this.id != 0) {
 			Log.debug("Trigger will not be performed because the state has been changed");
 			return;
 		}
+		*/
 
 		// Check to see if this trigger meets all required quests
 		if (requires != null)
@@ -484,6 +489,111 @@ public class Trigger
 		@Override
 		public boolean perform(StateInfo stateInfo) {
 			stateInfo.getResourceManager().getMap().getRoofById(roofId).setVisible(show);
+			return false;
+		}
+	}
+	
+	public class TriggerRunTriggers implements Triggerable {
+		private int[] triggers;
+
+		public TriggerRunTriggers(int[] triggers) {
+			super();
+			this.triggers = triggers;
+		}
+
+		@Override
+		public boolean perform(StateInfo stateInfo) {
+			for (int trig : triggers) {
+				stateInfo.getResourceManager().getTriggerEventById(trig).perform(stateInfo);
+			}
+			return false;
+		}
+	}
+	
+	public class TriggerAddSprite implements Triggerable
+	{
+		private String spriteName;
+		private String image;
+		private int[] searchTriggers;
+		private String locationName;
+
+		public TriggerAddSprite(String spriteName, String image, int[] searchTriggers, String locationName) {
+			super();
+			this.spriteName = spriteName;
+			this.image = image;
+			this.searchTriggers = searchTriggers;
+			this.locationName = locationName;
+		}
+
+		@Override
+		public boolean perform(StateInfo stateInfo) {
+			for (MapObject mo : stateInfo.getCurrentMap().getMapObjects()) {
+				if (locationName.equalsIgnoreCase(mo.getName())) {
+					stateInfo.addSprite(mo.getSprite(spriteName, image, searchTriggers, stateInfo.getResourceManager()));
+					break;
+				}
+			}
+			return false;
+		}
+	}
+	
+	public class TriggerChangeNPCAnimation implements Triggerable {
+		private String animation;
+		private String npcName;
+		
+		public TriggerChangeNPCAnimation(String animation, String npcName) {
+			super();
+			this.animation = animation;
+			this.npcName = npcName;
+		}
+
+		@Override
+		public boolean perform(StateInfo stateInfo) {
+			for (Sprite sprite : stateInfo.getSprites()) {
+				if (sprite.getSpriteType() == Sprite.TYPE_NPC &&
+						npcName.equalsIgnoreCase(sprite.getName())) {
+					NPCSprite npc = (NPCSprite) sprite;
+					npc.setSpriteAnims(stateInfo.getResourceManager().getSpriteAnimation(animation));
+					npc.setFacing(npc.getFacing());
+					break;
+				}
+			}
+				
+			return false;
+		}
+		
+	}
+	
+	public class TriggerAddNpc implements Triggerable
+	{
+		private int textId;
+		private String name;
+		private String animation;
+		private Integer facing;
+		private Integer wander;
+		private Integer npcId;
+		private String locationName;
+
+		public TriggerAddNpc(int textId, String name, String animation, Integer facing, Integer wander, Integer npcId,
+				String locationName) {
+			super();
+			this.textId = textId;
+			this.name = name;
+			this.animation = animation;
+			this.facing = facing;
+			this.wander = wander;
+			this.npcId = npcId;
+			this.locationName = locationName;
+		}
+
+		@Override
+		public boolean perform(StateInfo stateInfo) {
+			for (MapObject mo : stateInfo.getCurrentMap().getMapObjects()) {
+				if (locationName.equalsIgnoreCase(mo.getName())) {
+					stateInfo.addSprite(mo.getNPC(textId, name, animation, facing, wander, npcId, stateInfo.getResourceManager()));
+					break;
+				}
+			}
 			return false;
 		}
 	}

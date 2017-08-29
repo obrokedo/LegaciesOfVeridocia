@@ -18,5 +18,6 @@ public abstract class JConfigurationValues implements Serializable {
 	public abstract boolean isAffectedByTerrain(String movementType);
 	public abstract int getMovementCosts(String movementType, String terrainType);
 	public abstract int getBattleBackgroundImageIndexByTerrainType(String terrainType);
+	public abstract int getHeroPromotionLevel();
 	public abstract void clearPythonModules();
 }

@@ -85,6 +85,9 @@ public class CombatSprite extends AnimatedSprite
 	private int[] usuableWeapons;
 	private int[] usuableArmor;
 	private HeroProgression heroProgression;
+	// -1 when not promoted, 0 when promoted by generic, > 0 when special promotion where
+	// promotionPath - 1 = index of the special promotion
+	private int promotionPath = -1;
 	private String movementType;
 	private int kills;
 	private int defeat;
@@ -113,7 +116,8 @@ public class CombatSprite extends AnimatedSprite
 				int enemyId, ArrayList<KnownSpell> spells, int id,
 				String attackEffectId, int attackEffectChance, int attackEffectLevel)
 	{
-		this(isLeader, name, imageName, null, level, 0, false, spells, id);
+		this(isLeader, name, imageName, null, level, 0, false, id);
+		this.spells = spells;
 		this.uniqueEnemyId = enemyId;
 		this.isHero = false;
 		this.attackEffectChance = attackEffectChance;
@@ -159,11 +163,14 @@ public class CombatSprite extends AnimatedSprite
 	 */
 	public CombatSprite(boolean isLeader,
 			String name, String imageName, HeroProgression heroProgression,
-			int level, int exp, boolean promoted, ArrayList<KnownSpell> spells, int id)
+			int level, int exp, boolean promoted, int id)
 	{
 		super(0, 0, imageName, id);
 
 		this.isPromoted = promoted;
+		// If a CombatSprite is created as promoted then it must not be on a special promotion path
+		if (isPromoted)
+			this.promotionPath = 0;
 		this.level = level;
 		this.exp = 0;
 
@@ -175,7 +182,7 @@ public class CombatSprite extends AnimatedSprite
 		// Handle attribute strengths for heroes
 		if (heroProgression != null)
 		{
-			// Stats in the progresion are set up as [0] = stat progression, [1] = stat start, [2] = stat end
+			// Stats in the progression are set up as [0] = stat progression, [1] = stat start, [2] = stat end
 			currentHP = maxHP = (int) this.getCurrentProgression().getHp()[1];
 			maxMP = (int) this.getCurrentProgression().getMp()[1];
 			maxSpeed = (int) this.getCurrentProgression().getSpeed()[1];
@@ -184,23 +191,7 @@ public class CombatSprite extends AnimatedSprite
 			maxAttack = (int) this.getCurrentProgression().getAttack()[1];
 			maxDefense = (int) this.getCurrentProgression().getDefense()[1];
 
-			// Load non standard stats
-			JLevelProgression levelProgPython = GlobalPythonFactory.createLevelProgression();
-			this.maxCounter = levelProgPython.getBaseBattleStat(this.getCurrentProgression().getCounterStrength(), this);
-			this.maxEvade = levelProgPython.getBaseBattleStat(this.getCurrentProgression().getEvadeStrength(), this);
-			this.maxDouble = levelProgPython.getBaseBattleStat(this.getCurrentProgression().getDoubleStrength(), this);
-			this.maxCrit = levelProgPython.getBaseBattleStat(this.getCurrentProgression().getCritStrength(), this);
-			this.maxBody = levelProgPython.getBaseBodyMindStat(this.getCurrentProgression().getBodyStrength(), this);
-			this.maxMind = levelProgPython.getBaseBodyMindStat(this.getCurrentProgression().getMindStrength(), this);
-			// TODO PROMOTED PROGRESSION OF BATTLE ATTRIBUTES
-			this.maxFireAffin = this.getCurrentProgression().getFireAffin();
-			this.maxElecAffin = this.getCurrentProgression().getElecAffin();
-			this.maxColdAffin = this.getCurrentProgression().getColdAffin();
-			this.maxDarkAffin = this.getCurrentProgression().getDarkAffin();
-			this.maxWaterAffin = this.getCurrentProgression().getWaterAffin();
-			this.maxEarthAffin = this.getCurrentProgression().getEarthAffin();
-			this.maxWindAffin = this.getCurrentProgression().getWindAffin();
-			this.maxLightAffin = this.getCurrentProgression().getLightAffin();
+			setNonRandomStats();			
 		}
 
 		this.isHero = true;
@@ -223,7 +214,6 @@ public class CombatSprite extends AnimatedSprite
 				this.usuableArmor = heroProgression.getPromotedProgression().getUsuableArmor();
 			}
 		}
-		this.spells = spells;
 
 		this.battleEffects = new ArrayList<>();
 		
@@ -242,15 +232,54 @@ public class CombatSprite extends AnimatedSprite
 				this.setMaxSpeed(99);
 			}
 		}
+	}
 
-		/*
-		if (this.name.equalsIgnoreCase("Sharna"))
-			this.ai = new ClericAI(1);
-		else if (this.name.equalsIgnoreCase("Olivia"))
-			this.ai = new WizardAI(1);
-		else
-			this.ai = new WarriorAI(1);
-	`	*/
+
+	public void setNonRandomStats() {
+		// Load non standard stats
+		JLevelProgression levelProgPython = GlobalPythonFactory.createLevelProgression();
+		this.maxCounter = levelProgPython.getBaseBattleStat(this.getCurrentProgression().getCounterStrength(), this);
+		this.maxEvade = levelProgPython.getBaseBattleStat(this.getCurrentProgression().getEvadeStrength(), this);
+		this.maxDouble = levelProgPython.getBaseBattleStat(this.getCurrentProgression().getDoubleStrength(), this);
+		this.maxCrit = levelProgPython.getBaseBattleStat(this.getCurrentProgression().getCritStrength(), this);
+		this.maxBody = levelProgPython.getBaseBodyMindStat(this.getCurrentProgression().getBodyStrength(), this);
+		this.maxMind = levelProgPython.getBaseBodyMindStat(this.getCurrentProgression().getMindStrength(), this);
+		// TODO PROMOTED PROGRESSION OF BATTLE ATTRIBUTES
+		this.maxFireAffin = this.getCurrentProgression().getFireAffin();
+		this.maxElecAffin = this.getCurrentProgression().getElecAffin();
+		this.maxColdAffin = this.getCurrentProgression().getColdAffin();
+		this.maxDarkAffin = this.getCurrentProgression().getDarkAffin();
+		this.maxWaterAffin = this.getCurrentProgression().getWaterAffin();
+		this.maxEarthAffin = this.getCurrentProgression().getEarthAffin();
+		this.maxWindAffin = this.getCurrentProgression().getWindAffin();
+		this.maxLightAffin = this.getCurrentProgression().getLightAffin();
+		
+		setSpellsKnownByProgression();
+	}
+
+
+	private void setSpellsKnownByProgression() {
+		// Set up spells that are currently known
+		ArrayList<int[]> spellProgression = this.getCurrentProgression().getSpellLevelLearned();
+		ArrayList<KnownSpell> knownSpells = new ArrayList<KnownSpell>();
+		for (int i = 0; i < spellProgression.size(); i++)
+		{
+			// Check what spells are already known
+			boolean known = false;
+			int maxLevel = 0;
+			for (int j = 0; j < spellProgression.get(i).length; j++)
+			{
+				if (spellProgression.get(i)[j] <= level)
+				{
+					maxLevel = j + 1;
+					known = true;
+				}
+			}
+
+			if (known)
+				knownSpells.add(new KnownSpell(this.getCurrentProgression().getSpellIds().get(i), (byte) maxLevel));
+		}
+		this.spells = knownSpells;
 	}
 
 	//TODO Need to have a way to init a sprite without resetting stats
@@ -842,8 +871,9 @@ public class CombatSprite extends AnimatedSprite
 		return isPromoted;
 	}
 
-	public void setPromoted(boolean isPromoted) {
+	public void setPromoted(boolean isPromoted, int promotionPath) {
 		this.isPromoted = isPromoted;
+		this.promotionPath = promotionPath;
 	}
 
 	public HeroProgression getHeroProgression() {
@@ -851,8 +881,13 @@ public class CombatSprite extends AnimatedSprite
 	}
 
 	public Progression getCurrentProgression() {
-		if (isPromoted)
-			return heroProgression.getPromotedProgression();
+		if (isPromoted) {
+			if (promotionPath == 0) {
+				return heroProgression.getPromotedProgression();
+			} else {
+				return heroProgression.getSpecialProgressions().get(promotionPath - 1);
+			}
+		}
 		else
 			return heroProgression.getUnpromotedProgression();
 	}

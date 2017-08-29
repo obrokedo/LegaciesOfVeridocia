@@ -6,9 +6,9 @@ public class NPCResource
 {
 	public static int NPC_ID_COUNTER = -1;
 
-	public static NPCSprite getNPC(String animation, int textId)
+	public static NPCSprite getNPC(String animation, int textId, String name)
 	{
-		return new NPCSprite(animation, textId, NPC_ID_COUNTER--);
+		return new NPCSprite(animation, textId, NPC_ID_COUNTER--, name);
 	}
 
 	public static void resetNPCIds()

@@ -37,6 +37,7 @@ public class GlobalPythonFactory
 	private static JLevelProgression levelProgression = null;
 	private static JConfigurationValues configurationValues = null;
 	private static JParticleEmitter particleEmitter = null;
+	private static JMenuConfiguration menuConfiguration = null;
 
 	/**
 	 * A boolean flag indicating whether this factory has been initialized.
@@ -95,7 +96,8 @@ public class GlobalPythonFactory
         battleEffect = (JBattleEffect) (new JythonObjectFactory(JBattleEffect.class, "BattleEffect", "BattleEffect")).createObject();
         levelProgression = (JLevelProgression) (new JythonObjectFactory(JLevelProgression.class, "LevelProgression", "LevelProgression")).createObject();
         configurationValues = (JConfigurationValues) (new JythonObjectFactory(JConfigurationValues.class, "ConfigurationValues", "ConfigurationValues")).createObject();
-    }
+        menuConfiguration = (JMenuConfiguration) (new JythonObjectFactory(JMenuConfiguration.class, "MenuConfiguration", "MenuConfiguration")).createObject();
+	}
 
 	/**
 	 * Gets a script-backed JCinematicActor. This
@@ -177,6 +179,12 @@ public class GlobalPythonFactory
 	{
 		checkFactoryInitialized();
 		return configurationValues;
+	}
+	
+	public static JMenuConfiguration createMenuConfig()
+	{
+		checkFactoryInitialized();
+		return menuConfiguration;
 	}
 
 	/**

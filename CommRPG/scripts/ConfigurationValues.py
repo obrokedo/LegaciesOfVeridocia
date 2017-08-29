@@ -249,5 +249,10 @@ class ConfigurationValues(JConfigurationValues):
     def getBattleBackgroundImageIndexByTerrainType(self, terrainType):
         return 0
     
+    # Return an integer that indicates the level that heroes can begin being
+    # promoted at
+    def getHeroPromotionLevel(self):
+        return 10
+    
     def clearPythonModules(self):
         sys.modules.clear()
