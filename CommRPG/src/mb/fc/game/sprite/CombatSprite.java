@@ -1,6 +1,7 @@
 package mb.fc.game.sprite;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -350,7 +351,15 @@ public class CombatSprite extends AnimatedSprite
 		this.baseEvade = maxEvade;
 		this.baseDouble = maxDouble;
 		this.baseCrit = maxCrit;
-		this.battleEffects.clear();
+		
+		// Clear out non-persistent battle effects
+		Iterator<JBattleEffect> beItr = this.battleEffects.iterator();
+		
+		while (beItr.hasNext()) {
+			JBattleEffect be = beItr.next();
+			if (!be.doesEffectPersistAfterBattle())
+				beItr.remove();
+		}
 		
 		if (isHero)
 		{

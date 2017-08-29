@@ -78,6 +78,7 @@ public class FCResourceManager {
 		speechesById.clear();
 		triggerEventById.clear();
 		cinematicById.clear();
+		conditions.clear();
 	}
 
 	/*
