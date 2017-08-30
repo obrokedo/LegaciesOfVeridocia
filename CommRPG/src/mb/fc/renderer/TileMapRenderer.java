@@ -93,39 +93,34 @@ public class TileMapRenderer extends Manager
 		{
 			for (int mapY = camY, frameY = 0; mapY < lastTileY; mapY++, frameY++)
 			{
-				renderLayer(map.getMapLayer(3), mapX, mapY, frameX, frameY, xOffset, yOffset);
-				
-				for (MapLayer ml : map.getFlashingLayersByPosition(4))
-					renderLayer(ml, mapX, mapY, frameX, frameY, xOffset, yOffset);
-				
-				renderLayer(map.getMapLayer(4), mapX, mapY, frameX, frameY, xOffset, yOffset);
-				
-				for (MapLayer ml : map.getFlashingLayersByPosition(5))
-					renderLayer(ml, mapX, mapY, frameX, frameY, xOffset, yOffset);
-
-				// g.drawString(mapX +"\n" + mapY, frameX * map.getTileWidth() - xOffset, frameY * map.getTileHeight() - yOffset);
+				for (int mapLayer = 3; mapLayer < map.getMapLayerAmount(); mapLayer++) {
+					renderLayer(map.getMapLayer(mapLayer), mapX, mapY, frameX, frameY, xOffset, yOffset);
+					for (MapLayer ml : map.getFlashingLayersByPosition(mapLayer + 1))
+						renderLayer(ml, mapX, mapY, frameX, frameY, xOffset, yOffset);
+				}
 			}
 		}
 
-		for (Roof roof : map.getRoofIterator())
-		{
-			if (!roof.isVisible())
-				continue;
-
-			for (int mapX = (int) roof.getRectangle().getX(); mapX < roof.getRectangle().getWidth() + roof.getRectangle().getX(); mapX++)
+		if (map.getRoofLayer() != null) {
+			for (Roof roof : map.getRoofIterator())
 			{
-				for (int mapY = (int) roof.getRectangle().getY(); mapY < roof.getRectangle().getHeight() + roof.getRectangle().getY(); mapY++)
+				if (!roof.isVisible())
+					continue;
+	
+				for (int mapX = (int) roof.getRectangle().getX(); mapX < roof.getRectangle().getWidth() + roof.getRectangle().getX(); mapX++)
 				{
-					if (map.getMapLayer(5).getTiles()[mapY][mapX] != 0)
+					for (int mapY = (int) roof.getRectangle().getY(); mapY < roof.getRectangle().getHeight() + roof.getRectangle().getY(); mapY++)
 					{
-						map.renderSprite(map.getMapLayer(5).getTiles()[mapY][mapX],
-							mapX * map.getTileRenderWidth() - camera.getLocationX(),
-								mapY * map.getTileRenderHeight() - camera.getLocationY());
+						if (map.getRoofLayer().getTiles()[mapY][mapX] != 0)
+						{
+							map.renderSprite(map.getRoofLayer().getTiles()[mapY][mapX],
+								mapX * map.getTileRenderWidth() - camera.getLocationX(),
+									mapY * map.getTileRenderHeight() - camera.getLocationY());
+						}
 					}
 				}
 			}
-
-		}
+		}	
 
 		map.endUse();
 	}

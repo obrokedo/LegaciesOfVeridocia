@@ -49,6 +49,7 @@ public class Map
 	private String name;
 	private ArrayList<MapLayer> mapLayer = new ArrayList<>();
 	private MapLayer moveableLayer;
+	private MapLayer roofLayer;
 	protected int tileWidth, tileHeight;
 	protected ArrayList<TileSet> tileSets = new ArrayList<TileSet>();
 	protected ArrayList<MapObject> mapObjects = new ArrayList<MapObject>();
@@ -462,11 +463,11 @@ public class Map
 
 	public void checkRoofs(int mapX, int mapY)
 	{
-		mapX = mapX / this.getTileRenderWidth();
-		mapY = mapY / this.getTileRenderHeight();
+		float mapXF = mapX / this.getTileRenderWidth() + .1f;
+		float mapYF = mapY / this.getTileRenderHeight() + .1f;
 		for (Roof r : getRoofIterator())
 		{
-			if (r.getRectangle().contains(mapX, mapY))
+			if (r.getRectangle().contains(mapXF, mapYF))
 				r.setVisible(false);
 			else
 				r.setVisible(true);
@@ -518,6 +519,10 @@ public class Map
 
 	public void setMoveableLayer(MapLayer moveableLayer) {
 		this.moveableLayer = moveableLayer;
+	}
+	
+	public void setRoofLayer(MapLayer roofLayer) {
+		this.roofLayer = roofLayer;
 	}
 
 	public void endUse()
@@ -620,11 +625,19 @@ public class Map
 		}
 	}
 	
+	public MapLayer getRoofLayer() {
+		return roofLayer;
+	}
+
 	public String getName() {
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public int getMapLayerAmount() {
+		return mapLayer.size();
 	}
 }

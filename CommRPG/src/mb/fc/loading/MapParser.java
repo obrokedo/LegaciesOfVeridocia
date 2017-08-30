@@ -104,6 +104,11 @@ public class MapParser
 							childArea.getParams().get("name").startsWith("Walk") ||
 							layer.containsParam("walk"))
 						map.setMoveableLayer(layer);
+					else if (childArea.getParams().get("name").startsWith("Roof") ||
+							childArea.getParams().get("name").startsWith("roof") ||
+							layer.containsParam("roof")) {
+						map.setRoofLayer(layer);
+					}
 					else if (layer.containsParam("flash"))
 					{
 						String value = layer.getParam("flash");
@@ -132,6 +137,10 @@ public class MapParser
 						}
 						
 						map.addFlashingLayer(layer);
+					} else if (childArea.getParams().get("name").startsWith("grid") ||
+							childArea.getParams().get("name").startsWith("Grid") ||
+							layer.containsParam("grid")) {
+						continue;
 					}
 					else
 					{

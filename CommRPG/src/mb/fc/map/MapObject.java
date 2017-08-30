@@ -298,11 +298,11 @@ public class MapObject
 	
 	public boolean contains(int mapX, int mapY)
 	{
-		return shape.contains(mapX + 1, mapY + 1);
+		return shape.contains(mapX + .1f, mapY + .1f);
 	}
 	
 	public boolean contains(CombatSprite cs)
 	{
-		return shape.contains(cs.getLocX() + 1, cs.getLocY() + 1);
+		return shape.contains(cs.getLocX() + .1f, cs.getLocY() + .1f);
 	}
 }
