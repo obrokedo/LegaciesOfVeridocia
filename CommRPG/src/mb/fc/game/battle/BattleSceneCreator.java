@@ -97,7 +97,6 @@ public class BattleSceneCreator {
 			{
 				int i = 0;
 
-				//TODO SELF IS A TARGET
 				addCombatAnimation(!attacker.isHero(), null);
 
 				int selfIndex = battleResults.targets.indexOf(attacker);
@@ -112,6 +111,7 @@ public class BattleSceneCreator {
 					battleResults.targetEffects.add(0, battleResults.targetEffects.remove(selfIndex));
 
 					AttackCombatAnimation aca = new AttackCombatAnimation(attacker, battleResults, true, battleResults.critted.get(0));
+					aca.setDrawSpell(isSpell);
 					addCombatAnimationWithNoSpeechNoReaction(attacker.isHero(), aca);
 					if (battleResults.targets.size() > 1)
 						addDamageAndTransitionOut(attacker, aca, isSpell, battleResults.targets.size() == 1, battleResults, 0);
@@ -430,7 +430,10 @@ public class BattleSceneCreator {
 			textToDisplay.add(null);
 		}
 
-		addCombatAnimation(transitioner.isHero(), new WaitCombatAnimation(ca, 100));
+		CombatAnimation waitAnim = new WaitCombatAnimation(ca, 100);
+		waitAnim.setDrawSpell(showSpell);
+		addCombatAnimation(transitioner.isHero(), waitAnim);
+		
 		addCombatAnimation(!transitioner.isHero(), null);
 		textToDisplay.add(battleResults.text.get(index));
 	}

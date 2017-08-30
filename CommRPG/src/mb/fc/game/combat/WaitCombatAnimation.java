@@ -34,11 +34,6 @@ public class WaitCombatAnimation extends CombatAnimation
 	}
 
 	@Override
-	public boolean isDrawSpell() {
-		return false;
-	}
-
-	@Override
 	public void initialize() {
 		childAnimation.renderColor = null;
 		childAnimation.xOffset = 0;

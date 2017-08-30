@@ -22,7 +22,7 @@ public class DodgeCombatAnimation extends CombatAnimation
 			String animName = "Shield";
 			if (!parentSprite.isHero())
 				animName = "EnemyShield";
-				spellBlockAnimation = new AnimationWrapper(fcrm.getSpriteAnimation(animName), "Dodge");
+			spellBlockAnimation = new AnimationWrapper(fcrm.getSpriteAnimation(animName), "Dodge");
 			int blockAnimationLength = minimumTimePassed;
 			int spellAnimationLength = spellBlockAnimation.getAnimationLength();
 			this.minimumTimePassed = Math.max(blockAnimationLength,spellAnimationLength);
