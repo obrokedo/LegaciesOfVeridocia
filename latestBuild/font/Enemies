@@ -1,0 +1,13 @@
+<enemy id=0 name="Darkling Ooze" hp=9 mp=0 attack=9 defense=4 speed=5 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength=0 mindStrength=0 counterStrength=0 evadeStrength=0 doubleStrength=0 critStrength=0 level=-1 move=4 movementtype="NORMAL" animations="Darkling Ooze" palette="" leader=false>
+</enemy>
+<enemy id=1 name="Erium Soldier" hp=11 mp=0 attack=10 defense=5 speed=4 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength=0 mindStrength=0 counterStrength=0 evadeStrength=0 doubleStrength=0 critStrength=0 level=1 move=5 movementtype="NORMAL" animations="eriumguard" palette="null" leader=false>
+	<item itemid=0 equipped=true/>
+</enemy>
+<enemy id=2 name="Erium Archer" hp=10 mp=0 attack=11 defense=4 speed=7 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength=0 mindStrength=0 counterStrength=0 evadeStrength=0 doubleStrength=0 critStrength=0 level=1 move=5 movementtype="NORMAL" animations="eriumarcher" palette="null" leader=false>
+	<item itemid=3 equipped=true/>
+</enemy>
+<enemy id=3 name="Erium Mage" hp=8 mp=4 attack=8 defense=4 speed=6 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength=0 mindStrength=0 counterStrength=0 evadeStrength=0 doubleStrength=0 critStrength=0 level=1 move=5 movementtype="NORMAL" animations="eriummage" palette="null" leader=false>
+	<spell spellid="BLAZE" level=1/>
+</enemy>
+<enemy id=4 name="Erium Captain" hp=15 mp=0 attack=13 defense=6 speed=7 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength=0 mindStrength=0 counterStrength=0 evadeStrength=0 doubleStrength=0 critStrength=0 level=2 move=6 movementtype="NORMAL" animations="guardcaptain" palette="" leader=false>
+</enemy>

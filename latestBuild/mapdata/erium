@@ -1,0 +1,179 @@
+<map file="Erium.tmx"/>
+<trigger id=0 description="MapStart" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<playmusic music="castlenight"/>
+</trigger>
+<trigger id=1 description="OpenItemShop" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<showtext textid=10/>
+</trigger>
+<trigger id=2 description="WeaponShopInitialTalkQuest" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<completequest questid=2/>
+</trigger>
+<trigger id=3 description="OpenPriestess" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<showpriest/>
+	<showtext textid=11/>
+</trigger>
+<trigger id=4 description="NorthWestExit1" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="eriumcastle" enter="SouthWestEntrance1"/>
+</trigger>
+<trigger id=5 description="NorthWestExit2" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="eriumcastle" enter="SouthWestEntrance2"/>
+</trigger>
+<trigger id=6 description="NorthWestExit3" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="eriumcastle" enter="SouthWestEntrance3"/>
+</trigger>
+<trigger id=7 description="NorthWestExit4" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="eriumcastle" enter="SouthWestEntrance4"/>
+</trigger>
+<trigger id=8 description="NorthWestExit5" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="eriumcastle" enter="SouthWestEntrance5"/>
+</trigger>
+<trigger id=9 description="NorthEastExit1" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="eriumcastle" enter="SouthEastEntrance1"/>
+</trigger>
+<trigger id=10 description="NorthEastExit2" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="eriumcastle" enter="SouthEastEntrance2"/>
+</trigger>
+<trigger id=11 description="NorthEastExit3" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="eriumcastle" enter="SouthEastEntrance3"/>
+</trigger>
+<trigger id=12 description="NorthEastExit4" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="eriumcastle" enter="SouthEastEntrance4"/>
+</trigger>
+<trigger id=13 description="NorthEastExit5" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="eriumcastle" enter="SouthEastEntrance5"/>
+</trigger>
+<trigger id=14 description="NorthEastExit6" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="eriumcastle" enter="SouthEastEntrance6"/>
+</trigger>
+<trigger id=15 description="NorthEastExit7" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="eriumcastle" enter="SouthEastEntrance7"/>
+</trigger>
+<trigger id=16 description="BartenderScolds" require=-1, exclude=-1, nonretrig=false retrigonenter=true triggeronce=true triggerimmediately=false>
+	<showtext textid=12/>
+</trigger>
+<trigger id=17 description="SearchNoItem" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<showtext textid=13/>
+</trigger>
+<trigger id=18 description="SearchSign" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<showtext textid=14/>
+</trigger>
+<trigger id=19 description="SearchStatue" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<showtext textid=15/>
+</trigger>
+<text id=0 description="citizen1">
+	<conversation require=-1, exclude=-1, trigger=-1 heroportrait1=-1 enemyportrait1=-1 animportrait1="" heroportrait2=-1 enemyportrait2=-1 animportrait2="" message="Good evening, Noah.<pause>  That blizzard the other night was really bizarre, wasn't it?<hardstop><split>I've never seen anything like that.<pause>  It came and went in almost no time at all.<hardstop><split>And you wouldn't even know it by the weather today!<hardstop>"/>
+</text>
+<text id=1 description="child1">
+	<conversation require=-1, exclude=-1, trigger=-1 heroportrait1=-1 enemyportrait1=-1 animportrait1="" heroportrait2=-1 enemyportrait2=-1 animportrait2="" message="Do you want to catch bugs with me?<hardstop><split>Not today kiddo, I need to get to the castle and -<hardstop><split>Time for bed!<hardstop><split>Maybe next time! Bye!<hardstop>"/>
+</text>
+<text id=2 description="citizen2">
+	<string require=-1, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="" message="Erium has maintained peace for a long time, so we don't have to enlist unless we want to.<pause> Me, I'd rather go fishing!<hardstop>"/>
+</text>
+<text id=3 description="citizen3">
+	<string require=-1, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="" message="Their are some really cute girls that work in the castle. I'm jealous that you get to see them whenever you want.<hardstop>"/>
+</text>
+<text id=4 description="citizen4">
+	<conversation require=-1, exclude=-1, trigger=-1 heroportrait1=-1 enemyportrait1=-1 animportrait1="" heroportrait2=-1 enemyportrait2=-1 animportrait2="" message="Have you ever wondered what is on the other side of the mountains?<hardstop><split>The kingdom of signus is to the east, but the passage is to treacherous for safe use.<hardstop><split>Oh that's right. It's a shame, I'd like to visit there some day.<hardstop>"/>
+</text>
+<text id=5 description="citizen5">
+	<string require=-1, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="" message="I do enjoy that we can all leave our doors open for anyone to drop in but I must get ready for bed. Please see your way out.<hardstop>"/>
+</text>
+<text id=6 description="Item Shop">
+	<string require=-1, exclude=-1, trigger=1 heroportrait=-1 enemyportrait=-1 animportrait="" message="We have the finest remedies in the city. How can I help you?<hardstop>"/>
+</text>
+<text id=7 description="Weapon Shop">
+	<string require=2, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="" message="See you tomorrow.<hardstop>"/>
+	<conversation require=-1, exclude=2, trigger=2 heroportrait1=-1 enemyportrait1=-1 animportrait1="" heroportrait2=-1 enemyportrait2=-1 animportrait2="" message="Sorry, I'm out of stock right now.<hardstop><split>Out of stock? You're never out of stock!<hardstop><split>Grand Mage Mistal cleaned me out. I guess she's going to start a new training plan?<hardstop><split>She's not exactly in charge of training. Maybe it was a special request from king Erium.<hardstop><split>I'm not sure. I'm expecting a new shipment any day now though. The trade caravan should be here this week.<hardstop><split>I'm not sure. I'm expecting a new shipment any day now though. The trade caravan should be here this week.<hardstop><split>I'll check another day then. Thank you.<hardstop>"/>
+</text>
+<text id=8 description="Priestess">
+	<string require=-1, exclude=-1, trigger=3 heroportrait=-1 enemyportrait=-1 animportrait="" message="How can I help you?<hardstop>"/>
+</text>
+<text id=9 description="Bartender">
+	<string require=-1, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="" message="Sorry, I'm about to close up for the night.<hardstop>"/>
+</text>
+<text id=10 description="ItemShopExit">
+	<string require=-1, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="" message="Come back again!<hardstop>"/>
+</text>
+<text id=11 description="PriestessExit">
+	<string require=-1, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="" message="May the lord watch over you.<hardstop>"/>
+</text>
+<text id=12 description="BartenderScolds">
+	<string require=-1, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="" message="Who said you were allowed up there!<hardstop>"/>
+</text>
+<text id=13 description="SearchNoItem">
+	<string require=-1, exclude=-1, trigger=-1 heroportrait=0 enemyportrait=-1 animportrait="" message="There doesnt seem to be anything here<hardstop>"/>
+</text>
+<text id=14 description="SearchSign">
+	<string require=-1, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="" message="Welcome to Erium<hardstop>"/>
+</text>
+<text id=15 description="SearchStatue">
+	<string require=-1, exclude=-1, trigger=-1 heroportrait=0 enemyportrait=-1 animportrait="" message="I wonder who this is supposed to be a statue of?<hardstop>"/>
+</text>
+<cinematic id=0 description="NoahGettingReady" camerax=0 cameray=0>
+	<addactor x=144 y=156 name="cam" anim="Noah" startanim="Down" visible=false init=true associatedhero=0/>
+	<addactor x=144 y=156 name="Noah" anim="Noah" startanim="Down" visible=true init=true associatedhero=0/>
+	<camerafollow name="Noah"/>
+	<fadein time=4000 halting=false init=true/>
+	<haltingmove name="Noah" x=144 y=132 speed="1" movehor=false movediag=false/>
+	<haltingmove name="Noah" x=120 y=132 speed="1" movehor=true movediag=false/>
+	<facing name="Noah" dir=0/>
+	<playsound sound="impact" volume=100/>
+	<wait time=1000/>
+	<haltingmove name="Noah" x=192 y=132 speed="1" movehor=true movediag=false/>
+	<facing name="Noah" dir=0/>
+	<playsound sound="impact" volume=100/>
+	<wait time=1000/>
+	<speech text="Sword,<pause> knife<pause>.<pause>.<pause>.<pause> What else am I forgetting?<hardstop>" heroportrait=0 enemyportrait=-1 animportrait=""/>
+	<shakehead name="Noah" time=1000/>
+	<wait time=1000/>
+	<speech text="A snack!<hardstop>" heroportrait=0 enemyportrait=-1 animportrait=""/>
+	<haltingmove name="Noah" x=168 y=132 speed="1" movehor=true movediag=false/>
+	<haltingmove name="Noah" x=168 y=156 speed="1" movehor=true movediag=false/>
+	<facing name="Noah" dir=3/>
+	<playsound sound="impact" volume=100/>
+	<wait time=1000/>
+	<haltingmovepath name="Noah" x=144 y=132 speed="1"/>
+	<facing name="Noah" dir=1/>
+	<speech text="All set.<hardstop>" heroportrait=0 enemyportrait=-1 animportrait=""/>
+	<haltingmove name="Noah" x=144 y=180 speed="1" movehor=false movediag=false/>
+	<loadmap mapdata="erium" enter="NoahHouse"/>
+</cinematic>
+<condition id=0 description="NorthWestExit1" triggerid=4>
+	<enterloc location="NorthWestExit1" immediate=false/>
+</condition>
+<condition id=1 description="NorthWestExit2" triggerid=5>
+	<enterloc location="NorthWestExit2" immediate=false/>
+</condition>
+<condition id=2 description="NorthWestExit3" triggerid=6>
+	<enterloc location="NorthWestExit3" immediate=false/>
+</condition>
+<condition id=3 description="NorthWestExit4" triggerid=7>
+	<enterloc location="NorthWestExit4" immediate=false/>
+</condition>
+<condition id=4 description="NorthWestExit5" triggerid=8>
+	<enterloc location="NorthWestExit5" immediate=false/>
+</condition>
+<condition id=5 description="NorthEastExit1" triggerid=9>
+	<enterloc location="NorthEastExit1" immediate=false/>
+</condition>
+<condition id=6 description="NorthEastExit2" triggerid=10>
+	<enterloc location="NorthEastExit2" immediate=false/>
+</condition>
+<condition id=7 description="NorthEastExit3" triggerid=11>
+	<enterloc location="NorthEastExit3" immediate=false/>
+</condition>
+<condition id=8 description="NorthEastExit4" triggerid=12>
+	<enterloc location="NorthEastExit4" immediate=false/>
+</condition>
+<condition id=9 description="NorthEastExit5" triggerid=13>
+	<enterloc location="NorthEastExit5" immediate=false/>
+</condition>
+<condition id=10 description="NorthEastExit6" triggerid=14>
+	<enterloc location="NorthEastExit6" immediate=false/>
+</condition>
+<condition id=11 description="NorthEastExit7" triggerid=15>
+	<enterloc location="NorthEastExit7" immediate=false/>
+</condition>
+<condition id=12 description="BartenderScolds" triggerid=16>
+	<enterloc location="BartenderScold" immediate=false/>
+</condition>

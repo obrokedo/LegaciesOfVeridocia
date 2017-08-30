@@ -1,0 +1,150 @@
+<item id=0 name="Erium Blade" description="Worn but sturdy blade carried by Erium soldiers" cost=40 imageindexx=0 imageindexy=1>
+	<equippable attack=3 defense=0 speed=0 type=0 style=5 range=1 weaponimage="Guard's Blade" incmindam=7 inccrit=0 inccounter=0 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=-1 effchc=0 csteff=false dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
+</item>
+<item id=1 name="Erium Cane" description="Wooden staff wielded by all Erium curates." cost=40 imageindexx=0 imageindexy=0>
+	<equippable attack=3 defense=1 speed=0 type=0 style=3 range=1 weaponimage="Staff" incmindam=0 inccrit=0 inccounter=0 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=-1 effchc=0 csteff=false dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
+</item>
+<item id=2 name="Medical Herb" description="Heals for 10 hp" cost=10 imageindexx=17 imageindexy=2>
+	<use targetsenemy=false damage=10 mpdamage=0 range=1 area=1 text="is healed for 10" singleuse=true damageitem=false/>
+</item>
+<item id=3 name="Erium Arrow" description="Cheap but effective ammunition for Erium archers." cost=40 imageindexx=0 imageindexy=3>
+	<equippable attack=3 defense=0 speed=0 type=0 style=4 range=4 weaponimage="Sniper's Arrow" incmindam=0 inccrit=3 inccounter=0 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=-1 effchc=0 csteff=false dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
+</item>
+<item id=4 name="Short Blade" description="" cost=80 imageindexx=0 imageindexy=0>
+	<equippable attack=7 defense=0 speed=0 type=0 style=5 range=1 weaponimage="" incmindam=10 inccrit=0 inccounter=0 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=-1 effchc=0 csteff=false dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
+</item>
+<item id=5 name="Spellshot" description="" cost=50 imageindexx=0 imageindexy=0>
+	<equippable attack=4 defense=0 speed=0 type=0 style=6 range=2 weaponimage="" incmindam=0 inccrit=0 inccounter=0 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="Addled" efflvl=1 effchc=20 csteff=false dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
+</item>
+<item id=6 name="Short Sword" description="" cost=60 imageindexx=0 imageindexy=0>
+	<equippable attack=5 defense=0 speed=0 type=0 style=2 range=1 weaponimage="" incmindam=0 inccrit=0 inccounter=3 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=-1 effchc=0 csteff=false dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
+</item>
+<item id=7 name="Wooden Arrow" description="" cost=60 imageindexx=0 imageindexy=0>
+	<equippable attack=5 defense=0 speed=0 type=0 style=4 range=4 weaponimage="" incmindam=0 inccrit=3 inccounter=0 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=-1 effchc=0 csteff=false dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
+</item>
+<item id=8 name="Short Axe" description="" cost=60 imageindexx=0 imageindexy=0>
+	<equippable attack=5 defense=0 speed=0 type=0 style=1 range=1 weaponimage="" incmindam=0 inccrit=0 inccounter=0 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="Bleed" efflvl=1 effchc=25 csteff=true dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
+</item>
+<item id=9 name="Sharp Claw" description="" cost=70 imageindexx=0 imageindexy=0>
+	<equippable attack=6 defense=0 speed=0 type=0 style=7 range=1 weaponimage="" incmindam=0 inccrit=5 inccounter=0 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=0 effchc=0 csteff=false dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
+</item>
+<item id=10 name="Crooked Staff" description="" cost=60 imageindexx=0 imageindexy=0>
+	<equippable attack=5 defense=1 speed=0 type=0 style=3 range=1 weaponimage="" incmindam=0 inccrit=0 inccounter=0 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=0 effchc=0 csteff=false dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
+</item>
+<item id=11 name="Lesser Wand" description="" cost=40 imageindexx=0 imageindexy=0>
+	<equippable attack=3 defense=0 speed=0 type=0 style=8 range=1 weaponimage="" incmindam=0 inccrit=0 inccounter=0 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=0 effchc=0 csteff=false dmgaff="NORMAL" fireAffin=2 elecAffin=2 coldAffin=2 darkAffin=2 waterAffin=2 earthAffin=2 windAffin=2 lightAffin=2 ohko=0 ohkooc=0/>
+</item>
+<item id=12 name="Long Sword" description="" cost=90 imageindexx=0 imageindexy=0>
+	<equippable attack=8 defense=0 speed=0 type=0 style=2 range=1 weaponimage="" incmindam=0 inccrit=0 inccounter=4 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=0 effchc=0 csteff=false dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
+</item>
+<item id=13 name="Iron Arrow" description="" cost=90 imageindexx=0 imageindexy=0>
+	<equippable attack=8 defense=0 speed=0 type=0 style=4 range=4 weaponimage="" incmindam=0 inccrit=4 inccounter=0 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=0 effchc=0 csteff=false dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
+</item>
+<item id=14 name="Padded Glove" description="" cost=80 imageindexx=0 imageindexy=0>
+	<equippable attack=7 defense=0 speed=0 type=0 style=9 range=1 weaponimage="" incmindam=0 inccrit=0 inccounter=6 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=0 effchc=0 csteff=false dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
+</item>
+<item id=15 name="Oaken Staff" description="" cost=80 imageindexx=0 imageindexy=0>
+	<equippable attack=7 defense=2 speed=0 type=0 style=3 range=1 weaponimage="" incmindam=0 inccrit=0 inccounter=0 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=0 effchc=0 csteff=false dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
+</item>
+<item id=16 name="Wind Wand" description="" cost=60 imageindexx=0 imageindexy=0>
+	<equippable attack=5 defense=0 speed=0 type=0 style=8 range=1 weaponimage="" incmindam=0 inccrit=0 inccounter=0 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=0 effchc=0 csteff=false dmgaff="WIND" fireAffin=4 elecAffin=4 coldAffin=-4 darkAffin=4 waterAffin=4 earthAffin=4 windAffin=8 lightAffin=4 ohko=0 ohkooc=0/>
+	<usespell spellid="GUST" level=1 singleuse=false damageitem=false/>
+</item>
+<item id=17 name="Iron Blade" description="" cost=140 imageindexx=0 imageindexy=0>
+	<equippable attack=13 defense=0 speed=0 type=0 style=5 range=1 weaponimage="" incmindam=13 inccrit=0 inccounter=0 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=0 effchc=0 csteff=false dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
+</item>
+<item id=18 name="Hotshot" description="" cost=110 imageindexx=0 imageindexy=0>
+	<equippable attack=10 defense=0 speed=0 type=0 style=6 range=2 weaponimage="" incmindam=0 inccrit=0 inccounter=0 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="Burn" efflvl=1 effchc=20 csteff=false dmgaff="FIRE" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
+</item>
+<item id=19 name="Steel Sword" description="" cost=120 imageindexx=0 imageindexy=0>
+	<equippable attack=11 defense=0 speed=0 type=0 style=2 range=1 weaponimage="" incmindam=0 inccrit=0 inccounter=5 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=0 effchc=0 csteff=false dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
+</item>
+<item id=20 name="Steel Arrow" description="" cost=120 imageindexx=0 imageindexy=0>
+	<equippable attack=11 defense=0 speed=0 type=0 style=4 range=4 weaponimage="" incmindam=0 inccrit=5 inccounter=0 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=0 effchc=0 csteff=false dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
+</item>
+<item id=21 name="Iron Mace" description="" cost=130 imageindexx=0 imageindexy=0>
+	<equippable attack=12 defense=0 speed=0 type=0 style=13 range=1 weaponimage="" incmindam=0 inccrit=0 inccounter=0 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="Shock" efflvl=1 effchc=28 csteff=true dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
+</item>
+<item id=22 name="Foil" description="" cost=100 imageindexx=0 imageindexy=0>
+	<equippable attack=9 defense=0 speed=0 type=0 style=10 range=1 weaponimage="" incmindam=0 inccrit=6 inccounter=0 incdouble=6 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=0 effchc=0 csteff=false dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
+</item>
+<item id=23 name="Hand Axe" description="" cost=120 imageindexx=0 imageindexy=0>
+	<equippable attack=11 defense=0 speed=0 type=0 style=1 range=1 weaponimage="" incmindam=0 inccrit=0 inccounter=0 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="Bleed" efflvl=1 effchc=28 csteff=true dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
+</item>
+<item id=24 name="Bronze Lance" description="" cost=130 imageindexx=0 imageindexy=0>
+	<equippable attack=12 defense=1 speed=0 type=0 style=11 range=1 weaponimage="" incmindam=7 inccrit=0 inccounter=0 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=0 effchc=0 csteff=false dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
+</item>
+<item id=25 name="Short Spear" description="" cost=110 imageindexx=0 imageindexy=0>
+	<equippable attack=10 defense=0 speed=0 type=0 style=0 range=2 weaponimage="" incmindam=0 inccrit=0 inccounter=0 incdouble=0 incevade=5 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=0 effchc=0 csteff=false dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
+</item>
+<item id=26 name="Serrated Claw" description="" cost=120 imageindexx=0 imageindexy=0>
+	<equippable attack=11 defense=0 speed=0 type=0 style=7 range=1 weaponimage="" incmindam=0 inccrit=7 inccounter=0 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=0 effchc=0 csteff=false dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
+</item>
+<item id=27 name="Power Staff" description="" cost=110 imageindexx=0 imageindexy=0>
+	<equippable attack=10 defense=2 speed=0 type=0 style=3 range=1 weaponimage="" incmindam=0 inccrit=4 inccounter=0 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=0 effchc=0 csteff=false dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
+	<usespell spellid="POWER" level=1 singleuse=false damageitem=false/>
+</item>
+<item id=28 name="Frost Wand" description="" cost=80 imageindexx=0 imageindexy=0>
+	<equippable attack=7 defense=0 speed=0 type=0 style=8 range=1 weaponimage="" incmindam=0 inccrit=0 inccounter=0 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=0 effchc=0 csteff=false dmgaff="COLD" fireAffin=6 elecAffin=6 coldAffin=10 darkAffin=6 waterAffin=6 earthAffin=6 windAffin=-4 lightAffin=6 ohko=0 ohkooc=0/>
+	<usespell spellid="FREEZE" level=1 singleuse=false damageitem=false/>
+</item>
+<item id=29 name="Steel Blade" description="" cost=48 imageindexx=0 imageindexy=0>
+	<equippable attack=18 defense=0 speed=0 type=0 style=5 range=1 weaponimage="" incmindam=15 inccrit=0 inccounter=0 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=0 effchc=0 csteff=false dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
+</item>
+<item id=30 name="Broadsword" description="" cost=170 imageindexx=0 imageindexy=0>
+	<equippable attack=16 defense=0 speed=0 type=0 style=2 range=1 weaponimage="" incmindam=0 inccrit=0 inccounter=6 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=0 effchc=0 csteff=false dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
+</item>
+<item id=31 name="Barbed Arrow" description="" cost=160 imageindexx=0 imageindexy=0>
+	<equippable attack=15 defense=0 speed=0 type=0 style=4 range=4 weaponimage="" incmindam=0 inccrit=6 inccounter=0 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="Bleed" efflvl=1 effchc=35 csteff=false dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
+</item>
+<item id=32 name="Steel Rapier" description="" cost=150 imageindexx=0 imageindexy=0>
+	<equippable attack=14 defense=0 speed=0 type=0 style=10 range=1 weaponimage="" incmindam=0 inccrit=7 inccounter=0 incdouble=7 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=0 effchc=0 csteff=false dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
+</item>
+<item id=33 name="Steel Wing" description="" cost=150 imageindexx=0 imageindexy=0>
+	<equippable attack=14 defense=4 speed=0 type=0 style=12 range=1 weaponimage="" incmindam=0 inccrit=0 inccounter=0 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=0 effchc=0 csteff=false dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
+</item>
+<item id=34 name="Studded Glove" description="" cost=150 imageindexx=0 imageindexy=0>
+	<equippable attack=14 defense=0 speed=0 type=0 style=9 range=1 weaponimage="" incmindam=0 inccrit=0 inccounter=8 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=0 effchc=0 csteff=false dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
+</item>
+<item id=35 name="Iron Staff" description="" cost=140 imageindexx=0 imageindexy=0>
+	<equippable attack=13 defense=4 speed=0 type=0 style=3 range=1 weaponimage="" incmindam=0 inccrit=4 inccounter=0 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=0 effchc=0 csteff=false dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
+</item>
+<item id=36 name="Water Wand" description="" cost=110 imageindexx=0 imageindexy=0>
+	<equippable attack=10 defense=0 speed=0 type=0 style=8 range=1 weaponimage="" incmindam=0 inccrit=0 inccounter=0 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=0 effchc=0 csteff=false dmgaff="COLD" fireAffin=-5 elecAffin=8 coldAffin=8 darkAffin=8 waterAffin=12 earthAffin=8 windAffin=8 lightAffin=8 ohko=0 ohkooc=0/>
+	<usespell spellid="TORRENT" level=1 singleuse=false damageitem=false/>
+</item>
+<item id=37 name="Chillshot" description="" cost=1000 imageindexx=0 imageindexy=0>
+	<equippable attack=19 defense=0 speed=0 type=0 style=6 range=2 weaponimage="" incmindam=0 inccrit=0 inccounter=0 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="Frozen" efflvl=1 effchc=35 csteff=false dmgaff="COLD" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
+</item>
+<item id=38 name="Bastard Sword" description="" cost=1000 imageindexx=0 imageindexy=0>
+	<equippable attack=19 defense=0 speed=0 type=0 style=2 range=1 weaponimage="" incmindam=0 inccrit=0 inccounter=10 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=0 effchc=0 csteff=false dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
+</item>
+<item id=39 name="Elven Arrow" description="" cost=1050 imageindexx=0 imageindexy=0>
+	<equippable attack=20 defense=0 speed=0 type=0 style=4 range=5 weaponimage="" incmindam=0 inccrit=10 inccounter=0 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="Bleed" efflvl=1 effchc=35 csteff=false dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
+</item>
+<item id=40 name="Spiked Mace" description="" cost=1050 imageindexx=0 imageindexy=0>
+	<equippable attack=20 defense=0 speed=0 type=0 style=13 range=1 weaponimage="" incmindam=0 inccrit=0 inccounter=0 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="Shock" efflvl=1 effchc=40 csteff=true dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
+</item>
+<item id=41 name="Barbed Rapier" description="" cost=850 imageindexx=0 imageindexy=0>
+	<equippable attack=16 defense=0 speed=0 type=0 style=10 range=1 weaponimage="" incmindam=0 inccrit=9 inccounter=6 incdouble=9 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=0 effchc=0 csteff=false dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
+</item>
+<item id=42 name="Battle Axe" description="" cost=950 imageindexx=0 imageindexy=0>
+	<equippable attack=18 defense=0 speed=0 type=0 style=1 range=1 weaponimage="Goodaxe" incmindam=0 inccrit=0 inccounter=0 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="Bleed" efflvl=1 effchc=38 csteff=true dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
+</item>
+<item id=43 name="Steel Lance" description="" cost=1000 imageindexx=0 imageindexy=0>
+	<equippable attack=19 defense=3 speed=0 type=0 style=11 range=1 weaponimage="" incmindam=13 inccrit=0 inccounter=0 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=0 effchc=0 csteff=false dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
+</item>
+<item id=44 name="Battle Spear" description="" cost=850 imageindexx=0 imageindexy=0>
+	<equippable attack=16 defense=0 speed=0 type=0 style=0 range=2 weaponimage="" incmindam=0 inccrit=0 inccounter=0 incdouble=0 incevade=8 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=0 effchc=0 csteff=false dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
+</item>
+<item id=45 name="Poison Claw" description="" cost=900 imageindexx=0 imageindexy=0>
+	<equippable attack=17 defense=0 speed=0 type=0 style=7 range=1 weaponimage="" incmindam=0 inccrit=12 inccounter=0 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="Poison" efflvl=1 effchc=35 csteff=false dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
+</item>
+<item id=46 name="Guardian Staff" description="" cost=900 imageindexx=0 imageindexy=0>
+	<equippable attack=17 defense=8 speed=0 type=0 style=3 range=1 weaponimage="" incmindam=0 inccrit=4 inccounter=0 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=0 effchc=0 csteff=false dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
+	<usespell spellid="GUARD" level=1 singleuse=false damageitem=false/>
+</item>
+<item id=47 name="Flaming Wand" description="" cost=700 imageindexx=0 imageindexy=0>
+	<equippable attack=13 defense=0 speed=0 type=0 style=8 range=1 weaponimage="FlamingWand" incmindam=0 inccrit=0 inccounter=0 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=0 effchc=0 csteff=false dmgaff="FIRE" fireAffin=14 elecAffin=10 coldAffin=10 darkAffin=10 waterAffin=-6 earthAffin=10 windAffin=10 lightAffin=10 ohko=0 ohkooc=0/>
+	<usespell spellid="BLAZE" level=1 singleuse=false damageitem=true/>
+</item>

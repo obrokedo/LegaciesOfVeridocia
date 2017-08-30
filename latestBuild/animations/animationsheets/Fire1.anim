@@ -1,0 +1,65 @@
+<animations spriteSheet="Fire1.sprites" ver="1.2">
+<anim name="hit" loops="0">
+<cell index="0" delay="50">
+<spr name="/Unpromoted/Frame0" x="0" y="0" z="0"/>
+</cell>
+<cell index="1" delay="30">
+<spr name="/Unpromoted/Frame1" x="0" y="0" z="0"/>
+</cell>
+<cell index="2" delay="30">
+<spr name="/Unpromoted/Frame2" x="0" y="0" z="0"/>
+</cell>
+<cell index="3" delay="30">
+<spr name="/Unpromoted/Frame3" x="0" y="0" z="0"/>
+</cell>
+<cell index="4" delay="30">
+<spr name="/Unpromoted/Frame4" x="0" y="0" z="0"/>
+</cell>
+<cell index="5" delay="30">
+<spr name="/Unpromoted/Frame5" x="0" y="0" z="0"/>
+</cell>
+<cell index="6" delay="30">
+<spr name="/Unpromoted/Frame6" x="0" y="0" z="0"/>
+</cell>
+<cell index="7" delay="30">
+<spr name="/Unpromoted/Frame7" x="0" y="0" z="0"/>
+</cell>
+<cell index="8" delay="30">
+<spr name="/Unpromoted/Frame8" x="0" y="0" z="0"/>
+</cell>
+<cell index="9" delay="30">
+<spr name="/Unpromoted/Frame9" x="0" y="0" z="0"/>
+</cell>
+<cell index="10" delay="30">
+<spr name="/Unpromoted/Frame10" x="0" y="0" z="0"/>
+</cell>
+</anim>
+<anim name="UnWinddown" loops="0">
+<cell index="0" delay="30">
+<spr name="/Unpromoted/Frame14" x="0" y="0" z="0"/>
+</cell>
+<cell index="1" delay="30">
+<spr name="/Unpromoted/Frame15" x="0" y="0" z="0"/>
+</cell>
+<cell index="2" delay="30">
+<spr name="/Unpromoted/Frame16" x="0" y="0" z="0"/>
+</cell>
+<cell index="3" delay="30">
+<spr name="/Unpromoted/Frame17" x="0" y="0" z="0"/>
+</cell>
+<cell index="4" delay="30">
+<spr name="/Unpromoted/Frame18" x="0" y="0" z="0"/>
+</cell>
+</anim>
+<anim name="1" loops="0">
+<cell index="0" delay="30">
+<spr name="/Unpromoted/Frame11" x="0" y="-30" z="0"/>
+</cell>
+<cell index="1" delay="30">
+<spr name="/Unpromoted/Frame12" x="0" y="-30" z="0"/>
+</cell>
+<cell index="2" delay="30">
+<spr name="/Unpromoted/Frame13" x="0" y="-30" z="0"/>
+</cell>
+</anim>
+</animations>

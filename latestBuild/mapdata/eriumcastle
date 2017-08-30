@@ -1,0 +1,184 @@
+<map file="EriumCastle.tmx"/>
+<trigger id=0 description="MapStart" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<playmusic music="castlenight"/>
+</trigger>
+<trigger id=1 description="ContinueStory" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadcin mapdata="eriumcastlenight" cinid=0/>
+</trigger>
+<trigger id=2 description="SouthWestExit1" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="erium" enter="NorthWestEntrance1"/>
+</trigger>
+<trigger id=3 description="SouthWestExit2" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="erium" enter="NorthWestEntrance2"/>
+</trigger>
+<trigger id=4 description="SouthWestExit3" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="erium" enter="NorthWestEntrance3"/>
+</trigger>
+<trigger id=5 description="SouthWestExit4" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="erium" enter="NorthWestEntrance4"/>
+</trigger>
+<trigger id=6 description="SouthWestExit5" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="erium" enter="NorthWestEntrance5"/>
+</trigger>
+<trigger id=7 description="SouthEastExit1" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="erium" enter="NorthEastEntrance1"/>
+</trigger>
+<trigger id=8 description="SouthEastExit2" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="erium" enter="NorthEastEntrance2"/>
+</trigger>
+<trigger id=9 description="SouthEastExit3" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="erium" enter="NorthEastEntrance3"/>
+</trigger>
+<trigger id=10 description="SouthEastExit4" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="erium" enter="NorthEastEntrance4"/>
+</trigger>
+<trigger id=11 description="SouthEastExit5" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="erium" enter="NorthEastEntrance5"/>
+</trigger>
+<trigger id=12 description="SouthEastExit6" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="erium" enter="NorthEastEntrance6"/>
+</trigger>
+<trigger id=13 description="SouthEastExit7" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="erium" enter="NorthEastEntrance7"/>
+</trigger>
+<trigger id=14 description="NorthWestStairsExit" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="eriumcastleupper" enter="NorthWestHallStairsEntrance"/>
+</trigger>
+<trigger id=15 description="NorthEastStairsExit" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="eriumcastleupper" enter="NorthEastHallStairsEntrance"/>
+</trigger>
+<trigger id=16 description="SouthWestStairsExit" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="eriumcastleupper" enter="SouthWestHallStairsEntrance"/>
+</trigger>
+<trigger id=17 description="SouthEastStairsExit" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="eriumcastleupper" enter="SouthEastHallStairsEntrance"/>
+</trigger>
+<trigger id=18 description="KingChamberStairsExit" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="eriumcastleupper" enter="KingChamberEntrance"/>
+</trigger>
+<trigger id=19 description="SouthJailStairsExit" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="eriumjail" enter="SouthStairsEntrance"/>
+</trigger>
+<trigger id=20 description="NorthJailStairsExit" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="eriumjail" enter="NorthStairsEntrance"/>
+</trigger>
+<text id=0 description="Entrance Guard">
+	<string require=-1, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="" message="Your shift is about to start; you had better get going!<hardstop>"/>
+</text>
+<text id=1 description="Soldier 1 cobblestone">
+	<string require=-1, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="" message="It's a beautiful night tonight, don't you think?<hardstop>"/>
+</text>
+<text id=2 description="Soldier 2 cobblestone">
+	<string require=-1, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="" message="Hey, look who decided to show up early for once! Maybe Sharna is finally rubbing off on you.<hardstop>"/>
+</text>
+<text id=3 description="Citizen 1 Garden">
+	<string require=-1, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="" message="This garden is beautiful during the day, but it is especially enchanting during the sunrise. I thought sunset would be nice too but the castle walls shorten the experience.<hardstop>"/>
+</text>
+<text id=4 description="Soldier 1 weapon room">
+	<string require=-1, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="" message="I envy you. I'm stuck in here cleaning these weapons while you get to patrol the castle.<hardstop>"/>
+</text>
+<text id=5 description="Soldier 2 weapon room">
+	<string require=-1, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="" message="Cleaning this equipment is thankless work but when it's all done, I feel like it is worth it. I just remember that the maintenance I perform contributes to the combat readiness of our soldiers.<hardstop>"/>
+</text>
+<text id=6 description="Citizen 1 library">
+	<string require=-1, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="" message="Typical boorish soldier, talking in the library. Maybe if you'd put down your sword and pick up a book, we'd all be better off.<hardstop>"/>
+</text>
+<text id=7 description="Citizen 2 library">
+	<string require=-1, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="" message="No treasure is as valuable as an exceptional book.<hardstop>"/>
+</text>
+<text id=8 description="Citizen 3 library">
+	<string require=-1, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="" message="There are many magical objects in this world that we do not fully understand but I plan to solve all of them!<hardstop>"/>
+</text>
+<text id=9 description="Citizen 4 library">
+	<string require=-1, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="" message="She's a bit of a fanatic about magic but doesn't have a single magical bone in her body. Still, I admire her determination.<hardstop>"/>
+</text>
+<text id=10 description="Mage 1 library">
+	<string require=-1, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="" message="Grand Mage Mistal has had us researching some interesting magic recently.<hardstop>"/>
+</text>
+<text id=11 description="Mage 2 library">
+	<string require=-1, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="" message="Do not be fooled by my commonplace appearance. (trigger cinimatic to turn npc into dog and run off)<hardstop>"/>
+</text>
+<text id=12 description="Citizen 1 (Bartender) pub">
+	<string require=-1, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="" message="Oi, Noah. Why don'tcha come in for a drink after your shift?<hardstop>"/>
+</text>
+<text id=13 description="Soldier 1 pub">
+	<string require=-1, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="" message="Nothin' like a good drink after a long day of work.<hardstop>"/>
+</text>
+<text id=14 description="Soldier 2 pub">
+	<string require=-1, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="" message="You shouldn't be drinking on the job, soldier. Get to work!<hardstop>"/>
+</text>
+<text id=15 description="Citizen 2 pub">
+	<string require=-1, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="" message="Better be careful with the booze around all these guards. Wouldn't want to spend the night in jail.<hardstop>"/>
+</text>
+<text id=16 description="Servant 1 quarters">
+	<string require=-1, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="" message="What a messy lot this group is! you'd think they could pick up after themselves!<hardstop>"/>
+</text>
+<text id=17 description="Sleeping Soldiers">
+	<string require=-1, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="" message="Zzzz...zzz...<hardstop>"/>
+</text>
+<text id=18 description="Cook 1 Kitchen">
+	<string require=-1, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="" message="I always wished I knew a bit of magic to make cooking easier, but thease old hands will just have to do!<hardstop>"/>
+</text>
+<text id=19 description="Cook 2 Kitchen">
+	<string require=-1, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="" message="Despite working in the kitchen, I stay thin by delivering the food upstairs!<hardstop>"/>
+</text>
+<text id=20 description="Soldier near courtyard">
+	<string require=-1, exclude=-1, trigger=1 heroportrait=-1 enemyportrait=-1 animportrait="" message="You're a bit early, Noah. Are you reporting for duty?<hardStop>"/>
+</text>
+<condition id=0 description="SouthWestExit1" triggerid=2>
+	<enterloc location="SouthWestExit1" immediate=false/>
+</condition>
+<condition id=1 description="SouthWestExit2" triggerid=3>
+	<enterloc location="SouthWestExit2" immediate=false/>
+</condition>
+<condition id=2 description="SouthWestExit3" triggerid=4>
+	<enterloc location="SouthWestExit3" immediate=false/>
+</condition>
+<condition id=3 description="SouthWestExit4" triggerid=5>
+	<enterloc location="SouthWestExit4" immediate=false/>
+</condition>
+<condition id=4 description="SouthWestExit5" triggerid=6>
+	<enterloc location="SouthWestExit5" immediate=false/>
+</condition>
+<condition id=5 description="SouthEastExit1" triggerid=7>
+	<enterloc location="SouthEastExit1" immediate=false/>
+</condition>
+<condition id=6 description="SouthEastExit2" triggerid=8>
+	<enterloc location="SouthEastExit2" immediate=false/>
+</condition>
+<condition id=7 description="SouthEastExit3" triggerid=9>
+	<enterloc location="SouthEastExit3" immediate=false/>
+</condition>
+<condition id=8 description="SouthEastExit4" triggerid=10>
+	<enterloc location="SouthEastExit4" immediate=false/>
+</condition>
+<condition id=9 description="SouthEastExit5" triggerid=11>
+	<enterloc location="SouthEastExit5" immediate=false/>
+</condition>
+<condition id=10 description="SouthEastExit6" triggerid=12>
+	<enterloc location="SouthEastExit6" immediate=false/>
+</condition>
+<condition id=11 description="SouthEastExit7" triggerid=13>
+	<enterloc location="SouthEastExit7" immediate=false/>
+</condition>
+<condition id=12 description="NorthWestStairsExit" triggerid=14>
+	<enterloc location="NorthWestHallStairsExit" immediate=false/>
+</condition>
+<condition id=13 description="NorthEastStairsExit" triggerid=15>
+	<enterloc location="NorthEastHallStairsExit" immediate=false/>
+</condition>
+<condition id=14 description="SouthWestStairsExit" triggerid=16>
+	<enterloc location="SouthWestHallStairsExit" immediate=false/>
+</condition>
+<condition id=15 description="SouthEastStairsExit" triggerid=17>
+	<enterloc location="SouthEastHallStairsExit" immediate=false/>
+</condition>
+<condition id=16 description="KingChamberStairsExit" triggerid=18>
+	<enterloc location="KingChamberStairsExit" immediate=false/>
+</condition>
+<condition id=17 description="SouthJailStairsExit" triggerid=19>
+	<enterloc location="SouthJailStairsExit" immediate=false/>
+</condition>
+<condition id=18 description="NorthJailStairsExit" triggerid=20>
+	<enterloc location="NorthJailStairsExit" immediate=false/>
+</condition>
