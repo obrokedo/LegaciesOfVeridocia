@@ -19,7 +19,15 @@ public class YesNoMenu extends SpeechMenu
 	private TextUI yesText, noText;
 	private SelectRectUI selectRect;
 	private boolean yesSelected = true;
+	private Integer yesTrigger = null;
+	private Integer noTrigger = null;
 
+	public YesNoMenu(String text, int yesTrigger, int noTrigger, StateInfo stateInfo) {
+		this(text, Trigger.TRIGGER_NONE, null, stateInfo, null);
+		this.yesTrigger = yesTrigger;
+		this.noTrigger = noTrigger;
+	}
+	
 	public YesNoMenu(String text, StateInfo stateInfo, MenuListener listener) {
 		this(text, Trigger.TRIGGER_NONE, null, stateInfo, listener);
 	}
@@ -38,6 +46,13 @@ public class YesNoMenu extends SpeechMenu
 	public MenuUpdate handleUserInput(FCInput input, StateInfo stateInfo) {
 		if (input.isKeyDown(KeyMapping.BUTTON_1) || input.isKeyDown(KeyMapping.BUTTON_3))
 		{
+			// Handle unlistened to selections
+			if (this.getMenuListener() == null && yesTrigger != null && noTrigger != null) {
+				if (yesSelected) 
+					stateInfo.getResourceManager().getTriggerEventById(yesTrigger).perform(stateInfo);
+				else
+					stateInfo.getResourceManager().getTriggerEventById(noTrigger).perform(stateInfo);
+			}
 			return MenuUpdate.MENU_CLOSE;
 		}
 		else if (input.isKeyDown(KeyMapping.BUTTON_LEFT))

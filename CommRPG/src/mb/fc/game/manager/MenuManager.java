@@ -18,12 +18,14 @@ import mb.fc.game.menu.MultiHeroJoinMenu;
 import mb.fc.game.menu.PriestMenu;
 import mb.fc.game.menu.SpeechMenu;
 import mb.fc.game.menu.SystemMenu;
-import mb.fc.game.menu.shop.ShopChooseItemMenu;
+import mb.fc.game.menu.YesNoMenu;
 import mb.fc.game.menu.shop.ShopBuyMenu;
+import mb.fc.game.menu.shop.ShopChooseItemMenu;
 import mb.fc.game.menu.shop.ShopOptionsMenu;
 import mb.fc.game.resource.HeroResource;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.text.Speech;
+import mb.fc.game.text.YesNoSpeech;
 
 public class MenuManager extends Manager
 {
@@ -99,7 +101,12 @@ public class MenuManager extends Manager
 					SpeechBundleMessage sbm = (SpeechBundleMessage) message;
 					Speech speech = stateInfo.getResourceManager().getSpeechesById(sbm.getSpeechId()).get(sbm.getSpeechIndex());
 					speech.initialize();
-					stateInfo.addMenu(new SpeechMenu(speech, stateInfo));
+					if (!(speech instanceof YesNoSpeech))
+						stateInfo.addMenu(new SpeechMenu(speech, stateInfo));
+					else {
+						YesNoSpeech yns = (YesNoSpeech) speech;
+						stateInfo.addMenu(new YesNoMenu(speech.getMessage(), yns.getYesTrigger(), yns.getNoTrigger(), stateInfo));
+					}
 				}
 				break;
 			case SHOW_SYSTEM_MENU:

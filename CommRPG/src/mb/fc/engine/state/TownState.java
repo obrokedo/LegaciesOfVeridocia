@@ -183,7 +183,7 @@ public class TownState extends LoadableGameState
 				else if (container.getInput().isKeyDown(Input.KEY_Z))
 				{
 					// 	stateInfo.sendMessage(new Message(MessageType.SHOW_HEROES));
-					stateInfo.sendMessage(new ShopMessage(1.2, .8, new int[] {1, 1, 2, 2, 0, 0, 1, 1, 2, 2, 0, 0}, "Noah"));
+					// stateInfo.sendMessage(new ShopMessage(1.2, .8, new int[] {1, 1, 2, 2, 0, 0, 1, 1, 2, 2, 0, 0}, "Noah"));
 					
 					/*
 					ArrayList<CombatSprite> multiJoinSprites = new ArrayList<>();

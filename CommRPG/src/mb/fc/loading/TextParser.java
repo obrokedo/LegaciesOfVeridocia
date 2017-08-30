@@ -13,6 +13,7 @@ import mb.fc.cinematic.event.CinematicEvent.CinematicEventType;
 import mb.fc.game.exception.BadResourceException;
 import mb.fc.game.text.Conversation;
 import mb.fc.game.text.Speech;
+import mb.fc.game.text.YesNoSpeech;
 import mb.fc.game.trigger.Conditional;
 import mb.fc.game.trigger.Trigger;
 import mb.fc.game.trigger.TriggerCondition;
@@ -55,6 +56,13 @@ public class TextParser
 					String requires = childTagArea.getAttribute("require");
 					String excludes = childTagArea.getAttribute("exclude");
 					String trigger = childTagArea.getAttribute("trigger");
+					
+					String triggerNo = null;
+					if (childTagArea.getTagType().equalsIgnoreCase("yesno")) {
+						trigger = childTagArea.getAttribute("triggeryes");
+						triggerNo = childTagArea.getAttribute("triggerno");
+					}
+					
 					int[] requireIds = null;
 
 					if (requires != null)
@@ -86,6 +94,15 @@ public class TextParser
 							customAnim = null;
 
 						speeches.add(new Speech(message, requireIds, excludeIds, triggerId,
+								Integer.parseInt(childTagArea.getAttribute("heroportrait")),
+								Integer.parseInt(childTagArea.getAttribute("enemyportrait")),
+								customAnim));
+					} else if (childTagArea.getTagType().equalsIgnoreCase("yesno")) {
+						String customAnim = childTagArea.getAttribute("animportrait");
+						if (StringUtils.isEmpty(customAnim))
+							customAnim = null;
+
+						speeches.add(new YesNoSpeech(message, requireIds, excludeIds, triggerId, Integer.parseInt(triggerNo),
 								Integer.parseInt(childTagArea.getAttribute("heroportrait")),
 								Integer.parseInt(childTagArea.getAttribute("enemyportrait")),
 								customAnim));

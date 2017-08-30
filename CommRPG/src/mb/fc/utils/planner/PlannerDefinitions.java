@@ -1547,6 +1547,57 @@ public class PlannerDefinitions {
 		allowableLines.add(new PlannerLineDef("string", "Message Text",
 				"A message that should be displayed", definingValues));
 		
+		// Text
+		definingValues = new ArrayList<PlannerValueDef>();
+		
+		definingValues
+				.add(new PlannerValueDef(PlannerValueDef.REFERS_QUEST,
+						PlannerValueDef.TYPE_MULTI_INT, "require", true,
+						"Required Quest",
+						"The ID of the quest that must be complete for this to be shown"));
+		definingValues
+				.add(new PlannerValueDef(PlannerValueDef.REFERS_QUEST,
+						PlannerValueDef.TYPE_MULTI_INT, "exclude", true,
+						"Exclude Quest",
+						"The ID of the quest that CAN NOT be complete for this to be shown"));
+		definingValues
+				.add(new PlannerValueDef(PlannerValueDef.REFERS_TRIGGER,
+						PlannerValueDef.TYPE_INT, "triggeryes", true,
+						"Yes Trigger ID",
+						"The ID of the trigger that should be run if a 'yes' is selected."));
+		definingValues
+		.add(new PlannerValueDef(PlannerValueDef.REFERS_TRIGGER,
+				PlannerValueDef.TYPE_INT, "triggerno", true,
+				"No Trigger ID",
+				"The ID of the trigger that should be run if a 'no' is selected."));
+		definingValues.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_HERO, PlannerValueDef.TYPE_INT,
+				"heroportrait", true, "Hero Portrait",
+				"The hero whose portrait should be shown for this text."));
+		definingValues.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_ENEMY, PlannerValueDef.TYPE_INT,
+				"enemyportrait", true, "Enemy Portrait",
+				"The enemy whose portrait should be shown for this text."));
+		definingValues.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_ANIMATIONS, PlannerValueDef.TYPE_STRING,
+				"animportrait", true, "Portrait From Animation",
+				"The animation that contains the portrait should be shown for this text."));
+		
+		definingValues
+		.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_LONG_STRING,
+				"message",
+				false,
+				"Message Text",
+				"The text that should be displayed. Using the &lt;pause&gt; tag will cause a short pause, the &lt;softstop&gt; "
+						+ "tag will do a soft stop (auto continue without user input after a time), the &lt;hardstop&gt; tag will "
+						+ "do a hard stop which requires the player hit a button to continue, the &lt;linebreak&gt; tag "
+						+ "will do a line break (as opposed to letting them happen naturally) and a &lt;nextcin&gt; tag "
+						+ "will drive the next cinematic action if this message is being shown in a cinematic."));
+		allowableLines.add(new PlannerLineDef("yesno", "Yes or No Text",
+				"A question that should be displayed", definingValues));
+		
 		// Conversation
 		definingValues = new ArrayList<PlannerValueDef>();
 		
