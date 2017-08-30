@@ -4,6 +4,8 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.Graphics;
 
+import mb.fc.utils.StringUtils;
+
 public class TextUI
 {
 	private String text;
@@ -23,20 +25,20 @@ public class TextUI
 
 	public void drawText(Graphics g)
 	{
-		g.drawString(text, x, y);
+		StringUtils.drawString(text, x, y, g);
 	}
 
 	public void drawText(Graphics g, Color color)
 	{
 		g.setColor(Color.white);
-		g.drawString(text, x, y);
+		StringUtils.drawString(text, x, y, g);
 	}
 
 	public void drawText(Graphics g, Color color, Font font)
 	{
 		g.setFont(font);
 		g.setColor(Color.white);
-		g.drawString(text, x, y);
+		StringUtils.drawString(text, x, y, g);
 	}
 
 	public void setText(String text) {

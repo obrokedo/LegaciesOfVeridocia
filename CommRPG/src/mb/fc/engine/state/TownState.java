@@ -8,6 +8,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.MessageType;
+import mb.fc.engine.message.ShopMessage;
 import mb.fc.game.manager.CinematicManager;
 import mb.fc.game.manager.MenuManager;
 import mb.fc.game.manager.PanelManager;
@@ -182,7 +183,7 @@ public class TownState extends LoadableGameState
 				else if (container.getInput().isKeyDown(Input.KEY_Z))
 				{
 					// 	stateInfo.sendMessage(new Message(MessageType.SHOW_HEROES));
-					// stateInfo.sendMessage(new ShopMessage(.8, 1.2, new int[] {1, 1, 2, 2, 0, 0, 1, 1, 2, 2, 0, 0}));
+					stateInfo.sendMessage(new ShopMessage(1.2, .8, new int[] {1, 1, 2, 2, 0, 0, 1, 1, 2, 2, 0, 0}, "Noah"));
 					
 					/*
 					ArrayList<CombatSprite> multiJoinSprites = new ArrayList<>();
@@ -192,7 +193,7 @@ public class TownState extends LoadableGameState
 							MessageType.SHOW_PANEL_MULTI_JOIN_CHOOSE, multiJoinSprites));
 							*/
 					
-					stateInfo.sendMessage(MessageType.SHOW_PRIEST);
+					// stateInfo.sendMessage(MessageType.SHOW_PRIEST);
 				}
 			}
 

@@ -267,11 +267,12 @@ public class TextParser
 				}
 				else if (tagType.equalsIgnoreCase("showshop"))
 				{
-					te.addTriggerable(te.new TriggerShowShop(actionParams.get("shop")));
+					te.addTriggerable(te.new TriggerShowShop(actionParams.get("buypercent"), actionParams.get("sellpercent"),
+							parsePositiveMultiInt("itemssold", actionParams), actionParams.get("portrait")));
 				}
 				else if (tagType.equalsIgnoreCase("showpriest"))
 				{
-					te.addTriggerable(te.new TriggerShowPriest());
+					te.addTriggerable(te.new TriggerShowPriest(actionParams.get("portrait")));
 				}
 				else if (tagType.equalsIgnoreCase("addhero"))
 				{
@@ -381,9 +382,9 @@ public class TextParser
 		triggerEventById.put(id, te);
 	}
 	
-	private static int[] parsePositiveMultiInt(String leaderTag, Hashtable<String, String> actionParams)
+	private static int[] parsePositiveMultiInt(String tag, Hashtable<String, String> actionParams)
 	{
-		String leaders = actionParams.get(leaderTag);
+		String leaders = actionParams.get(tag);
 		int[] leaderIds = new int[0];
 
 		if (leaders != null)

@@ -18,7 +18,7 @@ public class ItemMenu extends QuadMenu
 	private Image emptySpot;
 
 	public ItemMenu(StateInfo stateInfo) {
-		super(PanelType.PANEL_ITEM, false, stateInfo);
+		super(PanelType.PANEL_ITEM, null, false, stateInfo);
 		emptySpot = stateInfo.getResourceManager().getSpriteSheet("items").getSprite(17, 1);
 
 		this.enabled = new boolean[4];

@@ -583,7 +583,7 @@ public class Cinematic {
 
 				
 				Portrait port = Portrait.getPortrait(heroPortrait, enemyPortrait, specificAnim, stateInfo);
-				stateInfo.sendMessage(new SpeechMessage((String) ce.getParam(0), Trigger.TRIGGER_NONE, Optional.of(port)));
+				stateInfo.sendMessage(new SpeechMessage((String) ce.getParam(0), Trigger.TRIGGER_NONE, port));
 				break;
 			case LOAD_MAP:
 				stateInfo.getPersistentStateInfo().loadMap((String) ce.getParam(0),

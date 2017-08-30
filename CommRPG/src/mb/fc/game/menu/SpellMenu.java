@@ -21,7 +21,7 @@ public class SpellMenu extends QuadMenu
 	private boolean choseSpell = false;
 
 	public SpellMenu(StateInfo stateInfo) {
-		super(PanelType.PANEL_SPELL, false, stateInfo);
+		super(PanelType.PANEL_SPELL, null, false, stateInfo);
 		emptySpot = stateInfo.getResourceManager().getSpriteSheet("spellicons").getSubImage(15, 0);
 
 		this.enabled = new boolean[4];

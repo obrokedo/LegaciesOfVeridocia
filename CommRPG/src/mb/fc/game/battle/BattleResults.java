@@ -40,6 +40,8 @@ public class BattleResults implements Serializable
 	public LevelUpResult levelUpResult = null;
 	public boolean itemDamaged = false;
 	public Item itemUsed = null;
+	
+	// TODO Retrieve dropped enemy items
 
 	// TODO Effects
 

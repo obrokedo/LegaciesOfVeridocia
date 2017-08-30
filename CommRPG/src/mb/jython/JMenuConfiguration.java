@@ -20,4 +20,26 @@ public interface JMenuConfiguration {
 	public String getPriestTargetHasBeenResurrectedText(String targetName);
 	
 	public String getPriestMenuClosedText();
+	
+	
+	public String getShopMenuClosedText();
+	public String getShopNoDealsText();
+	public String getShopPromptSellDealText(String itemName, String cost);
+	public String getShopPromptSellNormalText(String itemName, String cost);
+	public String getShopPromptRepairBrokenText(String itemName, String cost);
+	public String getShopPromptRepairDamagedText(String itemName, String cost);
+	public String getShopItemRepairedText();
+	public String getShopItemNotDamagedText(String itemName);
+	public String getShopTransactionCancelledText();
+	public String getShopRepairCancelledText();
+	public String getShopTransactionSuccessfulText();
+	public String getShopNotEnoughGoldText();
+	public String getShopLookAtDealsText();
+	public String getShopLookAtNormalText();
+	public String getShopPromptPurchaseCostText(String itemName, String cost);
+	public String getShopPromptWhoGetsItemText();
+	public String getShopPromptEquipItNowText();
+	public String getShopCantCarryMoreText(String personName);
+	public String getShopNoMoreDealsText();
+	public String getShopPromptSellOldText(String itemName, String cost);
 }

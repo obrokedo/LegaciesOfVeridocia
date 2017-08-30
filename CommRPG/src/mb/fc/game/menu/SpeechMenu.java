@@ -338,7 +338,7 @@ public class SpeechMenu extends Menu
 				waitingOn = null;
 				waitUntil = -1;
 				textMoving = true;
-				if (portrait != null)
+				if (portrait != null && textIndex + 1 < panelText.size())
 					portrait.setTalking(true);
 			}
 		}

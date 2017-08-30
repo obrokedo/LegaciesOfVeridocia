@@ -22,6 +22,7 @@ import mb.fc.game.hudmenu.Panel.PanelType;
 import mb.fc.game.hudmenu.SpriteContextPanel;
 import mb.fc.game.item.EquippableItem;
 import mb.fc.game.item.Item;
+import mb.fc.game.item.Item.ItemDurability;
 import mb.fc.game.resource.ItemResource;
 import mb.fc.game.ui.PaddedGameContainer;
 import mb.fc.loading.FCResourceManager;

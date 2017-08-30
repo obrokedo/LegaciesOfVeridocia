@@ -12,12 +12,13 @@ import mb.fc.engine.state.StateInfo;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.input.FCInput;
 import mb.fc.game.input.KeyMapping;
+import mb.fc.game.item.Item.ItemDurability;
 import mb.fc.game.listener.MenuListener;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.ui.PaddedGameContainer;
 import mb.fc.utils.StringUtils;
 
-public class HeroesStatMenu extends Menu implements MenuListener
+public class HeroesStatMenu extends Menu
 {
 	protected static final int VIEW_LEVEL = 0;
 	protected static final int VIEW_STATS = 1;
@@ -25,7 +26,7 @@ public class HeroesStatMenu extends Menu implements MenuListener
 	protected static final Color COLOR_NONE = new Color(204, 0, 70);
 
 	// Why the fuck is the yoffsettop negative?!!??!?!?!?
-	protected int xOffset = 0, yOffsetTop = -14, yOffsetBot = 10;
+	protected int yOffsetTop = -14, yOffsetBot = 10;
 	protected int selectedIndex = 0;
 	protected ArrayList<CombatSprite> heroes;
 	protected String[][] items;
@@ -51,7 +52,8 @@ public class HeroesStatMenu extends Menu implements MenuListener
 
 	@Override
 	public MenuUpdate update(long delta, StateInfo stateInfo) {
-		this.selectedHeroPortrait.update(delta);
+		if (selectedHeroPortrait != null)
+			this.selectedHeroPortrait.update(delta);
 		return MenuUpdate.MENU_NO_ACTION;
 	}
 
@@ -59,83 +61,68 @@ public class HeroesStatMenu extends Menu implements MenuListener
 	public void render(PaddedGameContainer gc, Graphics graphics) {
 		drawHeroSpecifics(graphics);
 
-		// TODO PORTRAITS
-		/*
-		if (selectedHero.getPortraitImage() != null)
-		{
-			Panel.drawPanelBox(xOffset + 20,
-					yOffsetTop + 20,
-					CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 62,
-					CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 78, graphics, Color.black);
-			graphics.drawImage(selectedHero.getPortraitImage(),
-					xOffset + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 27,
-					yOffsetTop + CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()] * 27);
-
-		}
-		*/
-
-		Panel.drawPanelBox(xOffset + 20,
+		Panel.drawPanelBox(20,
 				yOffsetBot + 118,
 				CommRPG.GAME_SCREEN_SIZE.width - 40,
 			108, graphics);
 
 
 		graphics.setColor(Color.white);
-		graphics.drawRect(xOffset + 25,
+		graphics.drawRect(25,
 				yOffsetBot + (134 + 15 * Math.min(selectedIndex, 11)),
 				269, 15);
-		StringUtils.drawString("NAME", xOffset + 27,
+		StringUtils.drawString("NAME", 27,
 				yOffsetBot + 113, graphics);
 
 		if (view == VIEW_LEVEL)
 		{
-			StringUtils.drawString("LEVEL", xOffset + 127,
+			StringUtils.drawString("LEVEL", 127,
 					yOffsetBot + 113, graphics);
-			StringUtils.drawString("EXP", xOffset + 227,
+			StringUtils.drawString("EXP", 227,
 					yOffsetBot + 113, graphics);
 		}
 		else if (view == VIEW_STATS)
 		{
-			StringUtils.drawString("HP", xOffset + 92,
+			StringUtils.drawString("HP", 92,
 					yOffsetBot + 113, graphics);
-			StringUtils.drawString("MP", xOffset + 127,
+			StringUtils.drawString("MP", 127,
 					yOffsetBot + 113, graphics);
-			StringUtils.drawString("ATK", xOffset + 162,
+			StringUtils.drawString("ATK", 162,
 					yOffsetBot + 113, graphics);
-			StringUtils.drawString("DEF", xOffset + 197,
+			StringUtils.drawString("DEF", 197,
 					yOffsetBot + 113, graphics);
-			StringUtils.drawString("SPD", xOffset + 232,
+			StringUtils.drawString("SPD", 232,
 					yOffsetBot + 113, graphics);
-			StringUtils.drawString("MOV", xOffset + 267,
+			StringUtils.drawString("MOV", 267,
 					yOffsetBot + 113, graphics);
 		}
 
 		for (int i = (selectedIndex < 12 ? 0 : selectedIndex - 11); i < Math.min(heroes.size(),  (selectedIndex < 12 ? 12 : selectedIndex + 1)); i++)
 		{
 			StringUtils.drawString(heroes.get(i).getName(),
-					xOffset + 27,
+					27,
 					yOffsetBot + (128 + 15 * (i - (selectedIndex < 12 ? 0 : selectedIndex - 11))), graphics);
 
 			if (view == VIEW_LEVEL)
 			{
-				StringUtils.drawString(heroes.get(i).getLevel() + "", xOffset + 127,
+				StringUtils.drawString(heroes.get(i).getLevel() + "", 127,
 						yOffsetBot + (128 + 15 * (i - (selectedIndex < 12 ? 0 : selectedIndex - 11))), graphics);
-				StringUtils.drawString(heroes.get(i).getExp() + "", xOffset + 227,
+				StringUtils.drawString(heroes.get(i).getExp() + "", 227,
 						yOffsetBot + (128 + 15 * (i - (selectedIndex < 12 ? 0 : selectedIndex - 11))), graphics);
 			}
 			else if (view == VIEW_STATS)
 			{
-				StringUtils.drawString(heroes.get(i).getCurrentHP() + "", xOffset + 92,
+				StringUtils.drawString(heroes.get(i).getCurrentHP() + "", 92,
 						yOffsetBot + (128 + 15 * (i - (selectedIndex < 12 ? 0 : selectedIndex - 11))), graphics);
-				StringUtils.drawString(heroes.get(i).getCurrentMP() + "", xOffset + 127,
+				StringUtils.drawString(heroes.get(i).getCurrentMP() + "", 127,
 						yOffsetBot + (128 + 15 * (i - (selectedIndex < 12 ? 0 : selectedIndex - 11))), graphics);
-				StringUtils.drawString(heroes.get(i).getCurrentAttack() + "", xOffset + 162,
+				StringUtils.drawString(heroes.get(i).getCurrentAttack() + "", 162,
 						yOffsetBot + (128 + 15 * (i - (selectedIndex < 12 ? 0 : selectedIndex - 11))), graphics);
-				StringUtils.drawString(heroes.get(i).getCurrentDefense() + "", xOffset + 197,
+				StringUtils.drawString(heroes.get(i).getCurrentDefense() + "", 197,
 						yOffsetBot + (128 + 15 * (i - (selectedIndex < 12 ? 0 : selectedIndex - 11))), graphics);
-				StringUtils.drawString(heroes.get(i).getCurrentSpeed() + "", xOffset + 232,
+				StringUtils.drawString(heroes.get(i).getCurrentSpeed() + "", 232,
 						yOffsetBot + (128 + 15 * (i - (selectedIndex < 12 ? 0 : selectedIndex - 11))), graphics);
-				StringUtils.drawString(heroes.get(i).getCurrentMove() + "", xOffset + 267,
+				StringUtils.drawString(heroes.get(i).getCurrentMove() + "", 267,
 						yOffsetBot + (128 + 15 * (i - (selectedIndex < 12 ? 0 : selectedIndex - 11))), graphics);
 			}
 			else
@@ -149,7 +136,7 @@ public class HeroesStatMenu extends Menu implements MenuListener
 
 	private void drawHeroSpecifics(Graphics graphics) {
 		// Draw hero stat box
-		Panel.drawPanelBox(xOffset + 82,
+		Panel.drawPanelBox(82,
 				yOffsetTop + 20,
 			218,
 			115, graphics);
@@ -162,19 +149,20 @@ public class HeroesStatMenu extends Menu implements MenuListener
 		{
 			int x = (CommRPG.GAME_SCREEN_SIZE.width - 280) / 2;
 			int y = (CommRPG.GAME_SCREEN_SIZE.height - 226) / 2 -1;
-			selectedHeroPortrait.render(x, y, graphics);
+			if (selectedHeroPortrait != null)
+				selectedHeroPortrait.render(x, y, graphics);
 		}
 
 		graphics.setColor(Color.white);
 		StringUtils.drawString(selectedHero.getName() + " " + selectedHero.getCurrentProgression().getClassName() +
 				" L" + selectedHero.getLevel(),
-				xOffset + 88,
+				88,
 				yOffsetTop + 15, graphics);
 
-		StringUtils.drawString("SPELLS", xOffset + 90,
+		StringUtils.drawString("SPELLS", 90,
 				yOffsetTop + 32, graphics);
 
-		StringUtils.drawString("ITEMS", xOffset + 200,
+		StringUtils.drawString("ITEMS", 200,
 				yOffsetTop + 32, graphics);
 
 		// Draw Hero Spells
@@ -182,15 +170,15 @@ public class HeroesStatMenu extends Menu implements MenuListener
 			for (int i = 0; i < selectedHero.getSpellsDescriptors().size(); i++)
 			{
 				StringUtils.drawString(selectedHero.getSpellsDescriptors().get(i).getSpell().getName(),
-						xOffset + 100,
+						100,
 					yOffsetTop + (42 + i * 20), graphics);
-				StringUtils.drawString("Level 1", xOffset + 115,
+				StringUtils.drawString("Level 1", 115,
 						yOffsetTop + (52 + i * 20), graphics);
 			}
 		else
 		{
 			graphics.setColor(COLOR_NONE);
-			StringUtils.drawString("NONE", xOffset + 100,
+			StringUtils.drawString("NONE", 100,
 				yOffsetTop + 42, graphics);
 			graphics.setColor(Color.white);
 		}
@@ -202,21 +190,28 @@ public class HeroesStatMenu extends Menu implements MenuListener
 				if (selectedHero.getEquipped().get(i))
 				{
 					graphics.setColor(Color.yellow);
-					StringUtils.drawString("EQ", xOffset + 190,
+					StringUtils.drawString("EQ", 190,
 							yOffsetTop + (42 + i * 20), graphics);
+					graphics.setColor(Color.red);
+					if (selectedHero.getItem(i).getDurability() == ItemDurability.DAMAGED)
+						StringUtils.drawString("DM", 190,
+							yOffsetTop + (52 + i * 20), graphics);
+					else if (selectedHero.getItem(i).getDurability() == ItemDurability.BROKEN)
+						StringUtils.drawString("BR", 190,
+								yOffsetTop + (52 + i * 20), graphics);
 					graphics.setColor(Color.white);
 				}
 
-				StringUtils.drawString(items[i][0], xOffset + 210,
+				StringUtils.drawString(items[i][0], 210,
 					yOffsetTop + (42 + i * 20), graphics);
 				if (items[i].length > 1)
-					StringUtils.drawString(items[i][1], xOffset + 225,
+					StringUtils.drawString(items[i][1], 225,
 							yOffsetTop + (52 + i * 20), graphics);
 			}
 		else
 		{
 			graphics.setColor(COLOR_NONE);
-			StringUtils.drawString("NONE", xOffset + 210,
+			StringUtils.drawString("NONE", 210,
 				yOffsetTop + 42, graphics);
 			graphics.setColor(Color.white);
 		}
@@ -327,16 +322,6 @@ public class HeroesStatMenu extends Menu implements MenuListener
 	@Override
 	public Object getExitValue() {
 		return null;
-	}
-
-	@Override
-	public void valueSelected(StateInfo stateInfo, Object value) {
-
-	}
-
-	@Override
-	public void menuClosed() {
-
 	}
 
 	@Override

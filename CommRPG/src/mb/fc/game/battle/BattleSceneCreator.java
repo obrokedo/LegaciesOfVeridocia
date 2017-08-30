@@ -306,7 +306,7 @@ public class BattleSceneCreator {
 
 		if (battleResults.dodged.get(index))
 		{
-			DodgeCombatAnimation targetDodge = new DodgeCombatAnimation(target);
+			DodgeCombatAnimation targetDodge = new DodgeCombatAnimation(target, frm);
 			int startDodge = Math.max(0, aca.getAnimationLength() - targetDodge.getAnimationLength());
 
 			if (startDodge == 0)

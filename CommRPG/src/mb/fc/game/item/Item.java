@@ -18,10 +18,11 @@ public class Item implements Serializable
 	private transient SpellItemUse spellUse;
 	private int itemId;
 	private ItemDurability durability = ItemDurability.PERFECT;
+	private boolean isDeal = false;
 	private boolean useDamagesItem = false;
 
 	public Item(String name, int cost, String description, ItemUse itemUse, SpellItemUse spellUse,
-			boolean isEquippable, boolean useDamagesItem, int itemId) {
+			boolean isEquippable, boolean useDamagesItem, boolean isDeal, int itemId) {
 		super();
 		this.name = name;
 		this.cost = cost;
@@ -33,6 +34,7 @@ public class Item implements Serializable
 		this.itemUse = itemUse;
 		this.itemId = itemId;
 		this.durability = ItemDurability.PERFECT;
+		this.isDeal = isDeal;
 	}
 
 	public String getName() {
@@ -92,6 +94,10 @@ public class Item implements Serializable
 		this.durability = durability;
 	}
 
+	public boolean isDeal() {
+		return isDeal;
+	}
+
 	public void damageItem() {
 		switch (durability) {
 			case PERFECT:
@@ -130,7 +136,7 @@ public class Item implements Serializable
 		}
 	}
 
-	private enum ItemDurability {
+	public enum ItemDurability {
 		PERFECT,
 		DAMAGED,
 		BROKEN

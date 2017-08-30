@@ -428,7 +428,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 		plannerMap = new PlannerMap(fileName);
 
 		try {
-			MapParser.parseMap(new File("map/" + fileName).getAbsolutePath(), plannerMap, new PlannerTilesetParser(), null);
+			MapParser.parseMap(new File(triggerFile.getParentFile().getParentFile() + "/map/" + fileName).getAbsolutePath(), plannerMap, new PlannerTilesetParser(), null);
 			for (MapObject mo : plannerMap.getMapObjects())
 			{
 				if (mo.getName() != null)

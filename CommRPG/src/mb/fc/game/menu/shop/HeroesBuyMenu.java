@@ -11,6 +11,7 @@ import mb.fc.game.item.Item.EquippableDifference;
 import mb.fc.game.listener.MenuListener;
 import mb.fc.game.menu.HeroesStatMenu;
 import mb.fc.game.sprite.CombatSprite;
+import mb.fc.utils.StringUtils;
 
 public class HeroesBuyMenu extends HeroesStatMenu
 {
@@ -60,8 +61,8 @@ public class HeroesBuyMenu extends HeroesStatMenu
 	{
 		if (view == VIEW_DIFFS)
 		{
-			graphics.drawString(differences.get(index), xOffset + 92,
-					yOffsetBot + (128 + 15 * (index - (selectedIndex < 12 ? 0 : selectedIndex - 11))));
+			StringUtils.drawString(differences.get(index), 92,
+					yOffsetBot + (128 + 15 * (index - (selectedIndex < 12 ? 0 : selectedIndex - 11))), graphics);
 		}
 	}
 

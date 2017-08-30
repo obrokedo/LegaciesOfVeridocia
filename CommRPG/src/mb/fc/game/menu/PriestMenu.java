@@ -2,7 +2,6 @@ package mb.fc.game.menu;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Optional;
 
 import org.newdawn.slick.Image;
 
@@ -25,9 +24,9 @@ public class PriestMenu extends QuadMenu implements MenuListener
 	private ArrayList<CombatSprite> revivableHeroes = new ArrayList<>();
 	private JMenuConfiguration menuConfig;
 	
-	public PriestMenu(StateInfo stateInfo)
+	public PriestMenu(String portaitAnim, StateInfo stateInfo)
 	{
-		super(PanelType.PANEL_PRIEST, stateInfo);
+		super(PanelType.PANEL_PRIEST, Portrait.getPortrait(-1, -1, portaitAnim, stateInfo), true, stateInfo);
 		
 		menuConfig = GlobalPythonFactory.createMenuConfig();
 		
@@ -53,7 +52,7 @@ public class PriestMenu extends QuadMenu implements MenuListener
 
 	@Override
 	protected MenuUpdate onBack() {
-		stateInfo.sendMessage(new SpeechMessage(menuConfig.getPriestMenuClosedText(), Trigger.TRIGGER_NONE, Optional.empty()));
+		stateInfo.sendMessage(new SpeechMessage(menuConfig.getPriestMenuClosedText(), Trigger.TRIGGER_NONE, portrait));
 		return MenuUpdate.MENU_CLOSE;
 	}
 
@@ -108,8 +107,7 @@ public class PriestMenu extends QuadMenu implements MenuListener
 			}
 		}
 		if (!found) 
-			stateInfo.sendMessage(new SpeechMessage(
-					menuConfig.getPriestNoOneToPromoteText(), Trigger.TRIGGER_NONE, Optional.empty()));
+			stateInfo.sendMessage(new SpeechMessage(menuConfig.getPriestNoOneToPromoteText(), Trigger.TRIGGER_NONE, portrait));
 		else
 			promptNextCombatSprite();
 		
@@ -125,8 +123,7 @@ public class PriestMenu extends QuadMenu implements MenuListener
 		}
 		
 		if (!found)
-			stateInfo.sendMessage(new SpeechMessage(
-					menuConfig.getPriestNoOneToResurrectText(), Trigger.TRIGGER_NONE, Optional.empty()));
+			stateInfo.sendMessage(new SpeechMessage(menuConfig.getPriestNoOneToResurrectText(), Trigger.TRIGGER_NONE, portrait));
 		else
 			promptNextCombatSprite();
 	}
@@ -149,13 +146,13 @@ public class PriestMenu extends QuadMenu implements MenuListener
 		}
 		
 		if (!found)
-			stateInfo.sendMessage(new SpeechMessage(menuConfig.getPriestNoOneToCureText(), Trigger.TRIGGER_NONE, Optional.empty()));
+			stateInfo.sendMessage(new SpeechMessage(menuConfig.getPriestNoOneToCureText(), Trigger.TRIGGER_NONE, portrait));
 		else
 			promptNextCombatSprite();
 	}
 
 	private void saveGame() {
-		stateInfo.sendMessage(new SpeechMessage("Your progress will be saved.<hardstop>", Trigger.TRIGGER_NONE, Optional.empty()));
+		stateInfo.sendMessage(new SpeechMessage("Your progress will be saved.<hardstop>", Trigger.TRIGGER_NONE, portrait));
 		stateInfo.sendMessage(MessageType.SAVE);
 	}
 	
@@ -213,7 +210,7 @@ public class PriestMenu extends QuadMenu implements MenuListener
 					itemName = ItemResource.getUninitializedItem(ph.progressionToPromoteTo.getSpecialPromotionItemId()).getName();
 				stateInfo.sendMessage(new SpeechMessage(
 						menuConfig.getPriestTargetHasBeenPromotedText(ph.spriteToPromote.getName(), ph.progressionToPromoteTo.getClassName(), 
-								itemName), Trigger.TRIGGER_NONE, Optional.empty()));
+								itemName), Trigger.TRIGGER_NONE, portrait));
 				// This is lazy, but it we promote someone just completely re-establish the promotables
 				establishPromotables();
 			}
@@ -240,15 +237,13 @@ public class PriestMenu extends QuadMenu implements MenuListener
 			String notEnoughGoldString, String hasBeenRestoredString, StateInfo stateInfo, Object value) {
 		if ((boolean) value) {
 			if (stateInfo.getClientProfile().getGold() >= cost) {
-				stateInfo.sendMessage(new SpeechMessage(notEnoughGoldString, 
-						Trigger.TRIGGER_NONE, Optional.empty()));
+				stateInfo.sendMessage(new SpeechMessage(notEnoughGoldString, Trigger.TRIGGER_NONE, portrait));
 			// If we have the gold then update the parties gold amount and "restore" the character
 			} else {
 				stateInfo.getClientProfile().setGold(stateInfo.getClientProfile().getGold() - cost);
 				cs.setCurrentHP(cs.getMaxHP());
 				cs.getBattleEffects().stream().forEach(be -> cs.removeBattleEffect(be));
-				stateInfo.sendMessage(new SpeechMessage(
-						hasBeenRestoredString, Trigger.TRIGGER_NONE, Optional.empty()));
+				stateInfo.sendMessage(new SpeechMessage(hasBeenRestoredString, Trigger.TRIGGER_NONE, portrait));
 			}
 		}
 	}

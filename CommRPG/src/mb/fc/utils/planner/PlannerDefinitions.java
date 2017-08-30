@@ -1202,6 +1202,10 @@ public class PlannerDefinitions {
 				PlannerValueDef.TYPE_INT, "cost", false, "Cost",
 				"The amount this item costs to purchase"));
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_BOOLEAN, "isdeal", false, "Is Deal",
+				"Indicates whether this item is a 'deal', if so it can always be purchased from a shop when sold"
+				+ " or if an enemy drops it in battle"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
 				PlannerValueDef.TYPE_INT, "imageindexx", false, "X Index",
 				"The x index of the items image"));
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
@@ -2213,6 +2217,9 @@ public class PlannerDefinitions {
 
 		// Show priest
 		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_ANIMATIONS,
+				PlannerValueDef.TYPE_STRING, "portrait", false, "Portrait Animation File",
+				"The animation file containing the priest portrait"));
 		allowableLines.add(new PlannerLineDef("showpriest", "Show Priest",
 				"Displays the priests menu", definingValues));
 
@@ -2283,8 +2290,17 @@ public class PlannerDefinitions {
 		// Show Shop
 		definingValues = new ArrayList<PlannerValueDef>();
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
-				PlannerValueDef.TYPE_STRING, "shop", false, "Shop Attributes",
-				"UNUSUABLE CURRENTLY"));
+				PlannerValueDef.TYPE_STRING, "buypercent", false, "Buy Percent",
+				"The percent of the item price that items will cost when purchased from this shop. Should be in the form #.# (0.8, 1.2)"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_STRING, "sellpercent", false, "Buy Percent",
+				"The percent of the item price that items will be sold for when sold to this shop. Should be in the form #.# (0.8, 1.2)"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_ITEM,
+				PlannerValueDef.TYPE_MULTI_INT, "itemssold", false, "Items For Sale",
+				"The items that are sold in this shop"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_ANIMATIONS,
+				PlannerValueDef.TYPE_STRING, "portrait", false, "Portrait Animation File",
+				"The animation file containing the shopkeepers portrait"));
 		allowableLines
 				.add(new PlannerLineDef("showshop", "Show Shop",
 						"Shows the shop menu with the specified items",

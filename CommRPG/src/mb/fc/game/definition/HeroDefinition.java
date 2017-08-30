@@ -306,6 +306,8 @@ public class HeroDefinition
 		List<Progression> specialProgressions = new ArrayList<>();
 		
 		for (int i = 0; i < this.promotedProgression.length; i++) {
+			if (className[i] == null)
+				continue;
 			if (this.specialPromoted[i]) {
 				specialProgressions.add(getProgression(i));
 			} else if (this.promotedProgression[i]) {

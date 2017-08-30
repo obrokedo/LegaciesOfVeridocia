@@ -8,6 +8,7 @@ import mb.fc.engine.message.ShopMessage;
 import mb.fc.engine.message.SpeechBundleMessage;
 import mb.fc.engine.message.SpeechMessage;
 import mb.fc.engine.message.SpriteContextMessage;
+import mb.fc.engine.message.StringMessage;
 import mb.fc.game.menu.DebugMenu;
 import mb.fc.game.menu.HeroStatMenu;
 import mb.fc.game.menu.HeroesStatMenu;
@@ -17,8 +18,8 @@ import mb.fc.game.menu.MultiHeroJoinMenu;
 import mb.fc.game.menu.PriestMenu;
 import mb.fc.game.menu.SpeechMenu;
 import mb.fc.game.menu.SystemMenu;
-import mb.fc.game.menu.shop.HeroesSellMenu;
-import mb.fc.game.menu.shop.ShopMenuTabled;
+import mb.fc.game.menu.shop.ShopChooseItemMenu;
+import mb.fc.game.menu.shop.ShopBuyMenu;
 import mb.fc.game.menu.shop.ShopOptionsMenu;
 import mb.fc.game.resource.HeroResource;
 import mb.fc.game.sprite.CombatSprite;
@@ -68,8 +69,6 @@ public class MenuManager extends Manager
 					updatedMenu.getMenuListener().menuClosed();
 				}
 
-				// stateInfo.addMenu(new ShopMenuTabled(stateInfo, .8, 1.2, new int[] {1, 1, 2, 2, 0, 0, 1, 1, 2, 2, 0, 0}));
-				// stateInfo.addSingleInstanceMenu(new HeroesStatMenu(stateInfo, true, 1));
 				stateInfo.setInputDelay(System.currentTimeMillis() + 200);
 				break;
 			case MENU_ACTION_SHORT:
@@ -111,12 +110,15 @@ public class MenuManager extends Manager
 				// stateInfo.addSingleInstanceMenu(new ShopMenuTabled(stateInfo, sm.getSellPercent(), sm.getBuyPercent(), sm.getItemIds()));
 				stateInfo.addSingleInstanceMenu(new ShopOptionsMenu(sm, stateInfo));
 				break;
+			case SHOW_SHOP_DEALS:
 			case SHOW_SHOP_BUY:
 				sm = (ShopMessage) message;
-				stateInfo.addSingleInstanceMenu(new ShopMenuTabled(stateInfo, sm));
+				stateInfo.addSingleInstanceMenu(new ShopBuyMenu(stateInfo, sm));
 				break;
+			case SHOW_SHOP_REPAIR:
 			case SHOW_SHOP_SELL:
-				stateInfo.addSingleInstanceMenu(new HeroesSellMenu(stateInfo, null));
+				sm = (ShopMessage) message;
+				stateInfo.addSingleInstanceMenu(new ShopChooseItemMenu(stateInfo, null, sm));
 				break;
 			case SHOW_HEROES:
 				stateInfo.addSingleInstanceMenu(new HeroesStatMenu(stateInfo));
@@ -126,7 +128,8 @@ public class MenuManager extends Manager
 						stateInfo.getAllHeroes()), stateInfo));
 				break;
 			case SHOW_PRIEST:
-				stateInfo.addMenu(new PriestMenu(stateInfo));
+				StringMessage stringMessage = (StringMessage) message;
+				stateInfo.addMenu(new PriestMenu(stringMessage.getString(), stateInfo));
 				break;
 			case SHOW_PANEL_MULTI_JOIN_CHOOSE:
 				ArrayList<CombatSprite> heroesToChooseList = new ArrayList<>();

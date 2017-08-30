@@ -2,7 +2,6 @@ package mb.fc.game.definition;
 
 import org.newdawn.slick.util.Log;
 
-import mb.fc.engine.state.StateInfo;
 import mb.fc.game.exception.BadResourceException;
 import mb.fc.game.exception.MissingCodeException;
 import mb.fc.game.item.EquippableItem;
@@ -114,10 +113,10 @@ public class ItemDefinition
 			ItemDefinition id = new ItemDefinition();
 
 			id.id = Integer.parseInt(tagArea.getAttribute("id"));
-			
+			boolean isDeal = Boolean.parseBoolean(tagArea.getAttribute("isdeal"));
 			if (equippable)
 				id.item = new EquippableItem(tagArea.getAttribute("name"), Integer.parseInt(tagArea.getAttribute("cost")), tagArea.getAttribute("description"), 
-						itemUse, spellUse, useDamagesItem, id.id, 
+						itemUse, spellUse, useDamagesItem, isDeal, id.id, 
 						attack, defense, speed, type, style, 
 						increasedMinDam, increasedCrit, increasedCounter, 
 						increasedDouble, increasedEvade, minHPRegen, maxHPRegen, 
@@ -127,7 +126,7 @@ public class ItemDefinition
 						isCustomEffect, weaponImage, effectName, damageAffinity);
 			else
 				id.item = new Item(tagArea.getAttribute("name"), Integer.parseInt(tagArea.getAttribute("cost")), tagArea.getAttribute("description"),
-							itemUse, spellUse, false, useDamagesItem, id.id);
+							itemUse, spellUse, false, useDamagesItem, isDeal, id.id);
 
 			id.imageX = Integer.parseInt(tagArea.getAttribute("imageindexx"));
 			id.imageY = Integer.parseInt(tagArea.getAttribute("imageindexy"));

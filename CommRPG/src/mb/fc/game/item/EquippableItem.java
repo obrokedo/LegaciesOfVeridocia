@@ -58,13 +58,13 @@ public class EquippableItem extends Item
 	 */
 	
 	public EquippableItem(String name, int cost, String description, ItemUse itemUse, SpellItemUse spellUse,
-			boolean useDamagesItem, int itemId, int attack, int defense, int speed, int itemType,
+			boolean useDamagesItem, boolean isDeal, int itemId, int attack, int defense, int speed, int itemType,
 			int itemStyle, int increasedMinDam, int increasedCrit, int increasedCounter, int increasedDouble,
 			int increasedEvade, int minHPRegen, int maxHPRegen, int minMPRegen, int maxMPRegen, int effectLevel,
 			int effectChance, int fireAffinity, int elecAffinity, int coldAffin, int darkAffin, int waterAffin,
 			int earthAffin, int windAffin, int lightAffin, int ohko, int ohkoOnCrit, int range,
 			boolean isCustomEffect, String weaponImage, String effectName, String damageAffinity) {
-		super(name, cost, description, itemUse, spellUse, true, useDamagesItem, itemId);
+		super(name, cost, description, itemUse, spellUse, true, useDamagesItem, isDeal, itemId);
 		this.attack = attack;
 		this.defense = defense;
 		this.speed = speed;

@@ -1,8 +1,7 @@
 package mb.fc.engine.message;
 
-import java.util.Optional;
-
 import mb.fc.game.menu.Portrait;
+import mb.fc.game.trigger.Trigger;
 
 /**
  * A message that indicates that a speech menu should be displayed with the given
@@ -19,12 +18,15 @@ public class SpeechMessage extends Message
 	private int triggerId = -1;
 	private Portrait portrait = null;
 
-	public SpeechMessage(String text, int triggerId, Optional<Portrait> portrait) {
+	public SpeechMessage(String text, int triggerId, Portrait portrait) {
 		super(MessageType.SPEECH);
 		this.text = text;
 		this.triggerId = triggerId;
-		if (portrait.isPresent())
-			this.portrait = portrait.get();
+		this.portrait = portrait;
+	}
+	
+	public SpeechMessage(String text) {
+		this(text, Trigger.TRIGGER_NONE, null);
 	}
 
 	public String getText() {

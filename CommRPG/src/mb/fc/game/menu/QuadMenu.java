@@ -37,9 +37,14 @@ public abstract class QuadMenu extends Menu
 	protected int flashCount = -5;
 	protected Color flashColor = new Color(100, 100, 100);
 	protected Timer timer;
+	protected Portrait portrait;
 
 	protected QuadMenu(PanelType menuType, StateInfo stateInfo) {
-		this(menuType, true, stateInfo);
+		this(menuType, null, true, stateInfo);
+	}
+	
+	protected QuadMenu(PanelType menuType, Portrait portrait, StateInfo stateInfo) {
+		this(menuType, portrait, true, stateInfo);
 	}
 
 	/**
@@ -51,8 +56,11 @@ public abstract class QuadMenu extends Menu
 	 * 					by set to false, for "wide" items this should be true
 	 * @param stateInfo the relavant stateinfo that this menu will resuide in
 	 */
-	protected QuadMenu(PanelType menuType, boolean largeFlor, StateInfo stateInfo) {
+	protected QuadMenu(PanelType menuType, Portrait portrait, boolean largeFlor, StateInfo stateInfo) {
 		super(menuType);
+		this.portrait = portrait;
+		if (portrait != null)
+			this.portrait.setTalking(false);
 		this.largeFlor = largeFlor;
 		if (largeFlor)
 			this.flourish = stateInfo.getResourceManager().getImage("largeflor");
@@ -194,6 +202,9 @@ public abstract class QuadMenu extends Menu
 		graphics.drawImage(flourish.getFlippedCopy(false, true), x - flourish.getWidth(), y + iconHeight + flourish.getHeight());
 		graphics.drawImage(flourish.getFlippedCopy(true, true), x + iconWidth, y + iconHeight + flourish.getHeight());
 
+		if (portrait != null) {
+			portrait.render(15, 12, graphics);
+		}
 	}
 
 	@Override
@@ -223,6 +234,11 @@ public abstract class QuadMenu extends Menu
 					blink = !blink;
 				blinkDelta = 0;
 			}
+		}
+		
+		if (portrait != null) {
+			this.portrait.setTalking(false);
+			portrait.update(delta);
 		}
 
 		return MenuUpdate.MENU_NO_ACTION;

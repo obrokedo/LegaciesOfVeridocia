@@ -1,21 +1,27 @@
 package mb.fc.game.menu.shop;
 
+import org.newdawn.slick.Image;
+
 import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.MessageType;
 import mb.fc.engine.message.ShopMessage;
+import mb.fc.engine.message.SpeechMessage;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.menu.QuadMenu;
-
-import org.newdawn.slick.Image;
+import mb.fc.game.trigger.Trigger;
+import mb.jython.GlobalPythonFactory;
+import mb.jython.JMenuConfiguration;
 
 public class ShopOptionsMenu extends QuadMenu
 {
 	private ShopMessage shopMessage;
+	protected JMenuConfiguration menuConfig;
 
 	public ShopOptionsMenu(ShopMessage shopMessage, StateInfo stateInfo) {
-		super(PanelType.PANEL_SHOP_OPTIONS, true, stateInfo);
+		super(PanelType.PANEL_SHOP_OPTIONS, shopMessage.getPortrait(stateInfo), true, stateInfo);
+		this.menuConfig = GlobalPythonFactory.createMenuConfig();
 		this.shopMessage = shopMessage;
-
+		
 		icons = new Image[8];
 
 		for (int i = 0; i < icons.length; i++)
@@ -33,6 +39,7 @@ public class ShopOptionsMenu extends QuadMenu
 
 	@Override
 	protected MenuUpdate onBack() {
+		stateInfo.sendMessage(new SpeechMessage(menuConfig.getShopMenuClosedText(), Trigger.TRIGGER_NONE, portrait));
 		return MenuUpdate.MENU_CLOSE;
 	}
 
@@ -44,17 +51,37 @@ public class ShopOptionsMenu extends QuadMenu
 			case UP:
 				shopMessage.setMenuTypeShopBuy();
 				stateInfo.sendMessage(shopMessage);
-				return MenuUpdate.MENU_CLOSE;
+				break;
 			case LEFT:
-				// stateInfo.sendMessage(MessageType.SHOW_SPELLMENU);
-				return MenuUpdate.MENU_CLOSE;
+				if (stateInfo.getClientProgress().getDealItems().size() > 0) {
+					shopMessage.setMenuTypeShopDeals();
+					stateInfo.sendMessage(shopMessage);
+				} else {
+					stateInfo.sendMessage(new SpeechMessage(menuConfig.getShopNoDealsText(), Trigger.TRIGGER_NONE, portrait));
+				}
+				break;
 			case RIGHT:
-				return MenuUpdate.MENU_CLOSE;
+				shopMessage.setMenuTypeShopRepair();
+				stateInfo.sendMessage(shopMessage);
+				break;
 			case DOWN:
-				stateInfo.sendMessage(MessageType.SHOW_SHOP_SELL);
-				return MenuUpdate.MENU_CLOSE;
+				shopMessage.setMenuTypeShopSell();
+				stateInfo.sendMessage(shopMessage);
+				break;
 		}
-		return MenuUpdate.MENU_NO_ACTION;
+		return MenuUpdate.MENU_ACTION_LONG;
+	}
+	
+	
+
+	@Override
+	public MenuUpdate update(int delta) {
+		// TODO Auto-generated method stub
+		return super.update(delta);
 	}
 
+	@Override
+	public boolean displayWhenNotTop() {
+		return false;
+	}
 }

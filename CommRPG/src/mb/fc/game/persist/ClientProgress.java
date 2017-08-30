@@ -31,6 +31,7 @@ public class ClientProgress implements Serializable
 	private HashSet<Integer> questsCompleted;
 	private Hashtable<String, ArrayList<Integer>> retriggerablesPerMapData;
 	private Hashtable<String, ArrayList<Integer>> nonretriggerablesPerMapData;
+	private ArrayList<Integer> dealItems;
 	private Point inTownLocation;
 	private String name;
 	private String mapData;
@@ -47,6 +48,7 @@ public class ClientProgress implements Serializable
 		questsCompleted = new HashSet<Integer>();
 		retriggerablesPerMapData = new Hashtable<String, ArrayList<Integer>>();
 		nonretriggerablesPerMapData = new Hashtable<String, ArrayList<Integer>>();
+		dealItems = new ArrayList<>();
 		this.name = name;
 		lastSaveTime = System.currentTimeMillis();
 	}
@@ -215,5 +217,13 @@ public class ClientProgress implements Serializable
 
 	public void setInTownLocation(Point inTownLocation) {
 		this.inTownLocation = inTownLocation;
+	}
+
+	public ArrayList<Integer> getDealItems() {
+		return dealItems;
+	}
+
+	public void setDealItems(ArrayList<Integer> dealItems) {
+		this.dealItems = dealItems;
 	}
 }

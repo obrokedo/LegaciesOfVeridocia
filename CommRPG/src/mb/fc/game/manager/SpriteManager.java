@@ -12,6 +12,7 @@ import mb.fc.engine.message.SpeechMessage;
 import mb.fc.game.definition.EnemyDefinition;
 import mb.fc.game.dev.BattleOptimizer;
 import mb.fc.game.exception.BadMapException;
+import mb.fc.game.item.Item;
 import mb.fc.game.resource.NPCResource;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.sprite.NPCSprite;
@@ -184,6 +185,11 @@ public class SpriteManager extends Manager
 			// Since the enemies already exist in the combat sprite list
 			// we don't need to add them, but they do need to be "initialized"s
 			} else {
+				// Initialize all of the heroes, this just sets images and initializes effects.
+				// Stats are initialized above for all heroes
+				for (CombatSprite cs : stateInfo.getAllHeroes())
+					cs.initializeSprite(stateInfo.getResourceManager());
+				
 				int nextEnemyId = 0;
 				for (CombatSprite cs : stateInfo.getCombatSprites())
 				{
@@ -227,6 +233,16 @@ public class SpriteManager extends Manager
 					CombatSprite cs = (CombatSprite) s;
 					if (cs.getCurrentHP() < -255)
 					{
+						// Add dropped items to deals
+						if (!cs.isHero()) {
+							for (int itemInd = 0; itemInd < cs.getItemsSize(); itemInd++) {
+								Item item = cs.getItem(itemInd);
+								if (item.isDeal()) {
+									stateInfo.getClientProgress().getDealItems().add(item.getItemId());
+								}
+							}
+						}
+						
 						spriteItr.remove();
 						stateInfo.removeCombatSprite(cs);
 						s.destroy(stateInfo);

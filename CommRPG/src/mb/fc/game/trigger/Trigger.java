@@ -12,6 +12,7 @@ import mb.fc.engine.message.IntMessage;
 import mb.fc.engine.message.LoadMapMessage;
 import mb.fc.engine.message.MessageType;
 import mb.fc.engine.message.ShopMessage;
+import mb.fc.engine.message.StringMessage;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.ai.AI;
 import mb.fc.game.resource.HeroResource;
@@ -238,32 +239,37 @@ public class Trigger
 		private double buyPercent;
 		private double sellPercent;
 		private int[] itemIds;
+		private String anims;
 
-		public TriggerShowShop(String params)
+		public TriggerShowShop(String buyPercent, String sellPercent, int[] itemIds, String anim)
 		{
-			String[] split = params.split(",");
-			sellPercent = Double.parseDouble(split[0]);
-			buyPercent = Double.parseDouble(split[1]);
-			itemIds = new int[split.length - 2];
-
-			for (int i = 2; i < split.length; i++)
-			{
-				itemIds[i - 2] = Integer.parseInt(split[i]);
-			}
+			this.sellPercent = Double.parseDouble(sellPercent);
+			this.buyPercent = Double.parseDouble(buyPercent);
+			this.itemIds = itemIds;
+			this.anims = anim;
 		}
 
 		@Override
 		public boolean perform(StateInfo stateInfo) {
-			stateInfo.sendMessage(new ShopMessage(buyPercent, sellPercent, itemIds));
+			stateInfo.sendMessage(new ShopMessage(buyPercent, sellPercent, itemIds, anims));
 			return false;
 		}
 	}
 
 	public class TriggerShowPriest implements Triggerable
 	{
+		private String anim;
+		
+		
+		
+		public TriggerShowPriest(String anim) {
+			super();
+			this.anim = anim;
+		}
+
 		@Override
 		public boolean perform(StateInfo stateInfo) {
-			stateInfo.sendMessage(MessageType.SHOW_PRIEST);
+			stateInfo.sendMessage(new StringMessage(MessageType.SHOW_PRIEST, anim));
 			return false;
 		}
 	}

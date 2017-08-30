@@ -144,12 +144,16 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 		loadCinButton.render(g);
 
 		g.drawString(version, container.getWidth() / 2, container.getHeight() - 30);
-		g.drawString("F1 - Toggle Main/Dev Menu", container.getWidth() - 250, container.getHeight() - 180);
-		g.drawString("F2 - Open Planner", container.getWidth() - 250, container.getHeight() - 150);
-		g.drawString("F3 - Open Quick Animator", container.getWidth() - 250, container.getHeight() - 120);
-		g.drawString("F4 - Open Animation Viewer", container.getWidth() - 250, container.getHeight() - 90);
-		g.drawString("F5 - Run Test", container.getWidth() - 250, container.getHeight() - 60);
-		g.drawString("F6 - Open Battle Viewer", container.getWidth() - 250, container.getHeight() - 30);
+		
+		int amount = 7;
+		g.drawString("F1 - Toggle Main/Dev Menu", container.getWidth() - 250, container.getHeight() - amount-- * 30);
+		g.drawString("F2 - Open Planner", container.getWidth() - 250, container.getHeight() - amount-- * 30);
+		g.drawString("F3 - Open Quick Animator", container.getWidth() - 250, container.getHeight() - amount-- * 30);
+		g.drawString("F4 - Open Animation Viewer", container.getWidth() - 250, container.getHeight() - amount-- * 30);
+		g.drawString("F5 - Run Test", container.getWidth() - 250, container.getHeight() - amount-- * 30);
+		g.drawString("F6 - Open Battle Viewer", container.getWidth() - 250, container.getHeight() - amount-- * 30);
+		g.drawString("F8 - Load Saved Game", container.getWidth() - 250, container.getHeight() - amount-- * 30);
+		
 
 		if (initialized && ps != null)
 		{

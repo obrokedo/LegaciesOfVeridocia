@@ -7,6 +7,7 @@ import mb.fc.engine.state.StateInfo;
 import mb.fc.game.constants.Direction;
 import mb.fc.game.item.EquippableItem;
 import mb.fc.game.item.Item;
+import mb.fc.game.item.Item.ItemDurability;
 
 import org.newdawn.slick.Image;
 
@@ -41,7 +42,7 @@ public class ItemOptionMenu extends QuadMenu
 
 		selected = Direction.LEFT;
 
-		if (item.isEquippable())
+		if (item.isEquippable() && item.getDurability() != ItemDurability.BROKEN)
 		{
 			selected = Direction.RIGHT;
 			enabled[2] = true;
@@ -49,7 +50,7 @@ public class ItemOptionMenu extends QuadMenu
 		else
 			enabled[2] = false;
 
-		if (item.isUsuable())
+		if (item.isUsuable() && item.getDurability() != ItemDurability.BROKEN)
 		{
 			selected = Direction.UP;
 			enabled[0] = true;
@@ -83,6 +84,8 @@ public class ItemOptionMenu extends QuadMenu
 				return MenuUpdate.MENU_CLOSE;
 			case DOWN:
 				stateInfo.getCurrentSprite().removeItem(item);
+				if (item.isDeal())
+					stateInfo.getClientProgress().getDealItems().add(item.getItemId());
 				if (stateInfo.getCurrentSprite().getItemsSize() > 0)
 					stateInfo.sendMessage(MessageType.SHOW_ITEM_MENU);
 				else

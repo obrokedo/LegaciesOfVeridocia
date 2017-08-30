@@ -77,8 +77,8 @@ public class YesNoMenu extends SpeechMenu
 			noPanel.drawPanel(graphics);
 			// Draw temporary YES - NO
 			graphics.setColor(Color.white);
-			// yesText.drawText(graphics);
-			// noText.drawText(graphics);
+			yesText.drawText(graphics);
+			noText.drawText(graphics);
 
 			// Draw selection square
 			selectRect.draw(graphics, Color.red);

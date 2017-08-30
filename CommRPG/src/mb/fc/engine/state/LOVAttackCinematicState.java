@@ -28,6 +28,8 @@ import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.hudmenu.Panel.PanelType;
 import mb.fc.game.hudmenu.SpriteContextPanel;
 import mb.fc.game.input.FCInput;
+import mb.fc.game.item.EquippableItem;
+import mb.fc.game.item.Item.ItemDurability;
 import mb.fc.game.menu.Menu.MenuUpdate;
 import mb.fc.game.menu.SpeechMenu;
 import mb.fc.game.sprite.CombatSprite;
@@ -569,15 +571,28 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 						damagedSprite.getBattleResultIndex());
 			}
 		}
+		// EXIT
 		else
 		{
-			// EXIT
+			// Check to see if an item was broken, if so unequip it
+			if (battleResults.itemDamaged) {
+				unequipIfBroken(attacker.getEquippedWeapon());
+				unequipIfBroken(attacker.getEquippedRing());
+				unequipIfBroken(attacker.getEquippedArmor());
+			}
+			
 			if (music != null)
 				music.stop();
 			if (introMusic != null)
 				introMusic.stop();
 			gc.getInput().removeAllKeyListeners();
 			game.enterState(exitState, new FadeOutTransition(Color.black, 250), new EmptyTransition());
+		}
+	}
+	
+	private void unequipIfBroken(EquippableItem item) {
+		if (item != null && item.getDurability() == ItemDurability.BROKEN) {
+			attacker.unequipItem(item);
 		}
 	}
 
