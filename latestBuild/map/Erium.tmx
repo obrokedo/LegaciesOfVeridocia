@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="2017.07.25" orientation="orthogonal" renderorder="right-down" width="160" height="90" tilewidth="12" tileheight="12" nextobjectid="119">
+<map version="1.0" tiledversion="2017.07.25" orientation="orthogonal" renderorder="right-down" width="160" height="90" tilewidth="12" tileheight="12" nextobjectid="129">
  <tileset firstgid="1" name="overworld(day)-Master" tilewidth="12" tileheight="12" tilecount="1296" columns="36">
   <image source="../image/overworld(day)-Master.png" trans="495d47" width="432" height="432"/>
  </tileset>
@@ -66,11 +66,31 @@
     <property name="start" value="exit=NoahHouse"/>
    </properties>
   </object>
-  <object id="28" name="NorthWestExit1" x="240" y="0" width="24" height="24"/>
-  <object id="29" name="NorthWestExit2" x="264" y="0" width="24" height="24"/>
-  <object id="30" name="NorthWestExit3" x="288" y="0" width="24" height="24"/>
-  <object id="31" name="NorthWestExit4" x="312" y="0" width="24" height="24"/>
-  <object id="32" name="NorthWestExit5" x="336" y="0" width="24" height="24"/>
+  <object id="28" name="NorthWestExit1" x="240" y="0" width="24" height="24">
+   <properties>
+    <property name="null" value=""/>
+   </properties>
+  </object>
+  <object id="29" name="NorthWestExit2" x="264" y="0" width="24" height="24">
+   <properties>
+    <property name="null" value=""/>
+   </properties>
+  </object>
+  <object id="30" name="NorthWestExit3" x="288" y="0" width="24" height="24">
+   <properties>
+    <property name="null" value=""/>
+   </properties>
+  </object>
+  <object id="31" name="NorthWestExit4" x="312" y="0" width="24" height="24">
+   <properties>
+    <property name="null" value=""/>
+   </properties>
+  </object>
+  <object id="32" name="NorthWestExit5" x="336" y="0" width="24" height="24">
+   <properties>
+    <property name="null" value=""/>
+   </properties>
+  </object>
   <object id="35" name="NorthWestEntrance2" x="264" y="24" width="24" height="24">
    <properties>
     <property name="start" value="exit=NorthWestEntrance2"/>
@@ -96,43 +116,71 @@
     <property name="start" value="exit=NorthEastEntrance1"/>
    </properties>
   </object>
-  <object id="44" name="NorthEastExit1" x="1104" y="0" width="24" height="24"/>
+  <object id="44" name="NorthEastExit1" x="1104" y="0" width="24" height="24">
+   <properties>
+    <property name="null" value=""/>
+   </properties>
+  </object>
   <object id="45" name="NorthWestEntrance2" x="1128" y="24" width="24" height="24">
    <properties>
     <property name="start" value="exit=NorthEastEntrance2"/>
    </properties>
   </object>
-  <object id="46" name="NorthEastExit2" x="1128" y="0" width="24" height="24"/>
+  <object id="46" name="NorthEastExit2" x="1128" y="0" width="24" height="24">
+   <properties>
+    <property name="null" value=""/>
+   </properties>
+  </object>
   <object id="47" name="NorthWestEntrance3" x="1152" y="24" width="24" height="24">
    <properties>
     <property name="start" value="exit=NorthEastEntrance3"/>
    </properties>
   </object>
-  <object id="48" name="NorthEastExit3" x="1152" y="0" width="24" height="24"/>
+  <object id="48" name="NorthEastExit3" x="1152" y="0" width="24" height="24">
+   <properties>
+    <property name="null" value=""/>
+   </properties>
+  </object>
   <object id="49" name="NorthWestEntrance4" x="1176" y="24" width="24" height="24">
    <properties>
     <property name="start" value="exit=NorthEastEntrance4"/>
    </properties>
   </object>
-  <object id="50" name="NorthEastExit4" x="1176" y="0" width="24" height="24"/>
+  <object id="50" name="NorthEastExit4" x="1176" y="0" width="24" height="24">
+   <properties>
+    <property name="null" value=""/>
+   </properties>
+  </object>
   <object id="51" name="NorthWestEntrance5" x="1200" y="24" width="24" height="24">
    <properties>
     <property name="start" value="exit=NorthEastEntrance5"/>
    </properties>
   </object>
-  <object id="52" name="NorthEastExit5" x="1200" y="0" width="24" height="24"/>
+  <object id="52" name="NorthEastExit5" x="1200" y="0" width="24" height="24">
+   <properties>
+    <property name="null" value=""/>
+   </properties>
+  </object>
   <object id="53" name="NorthWestEntrance6" x="1224" y="24" width="24" height="24">
    <properties>
     <property name="start" value="exit=NorthEastEntrance6"/>
    </properties>
   </object>
-  <object id="54" name="NorthEastExit6" x="1224" y="0" width="24" height="24"/>
+  <object id="54" name="NorthEastExit6" x="1224" y="0" width="24" height="24">
+   <properties>
+    <property name="null" value=""/>
+   </properties>
+  </object>
   <object id="55" name="NorthWestEntrance7" x="1248" y="24" width="24" height="24">
    <properties>
     <property name="start" value="exit=NorthEastEntrance7"/>
    </properties>
   </object>
-  <object id="56" name="NorthEastExit7" x="1248" y="0" width="24" height="24"/>
+  <object id="56" name="NorthEastExit7" x="1248" y="0" width="24" height="24">
+   <properties>
+    <property name="null" value=""/>
+   </properties>
+  </object>
   <object id="64" name="SearchNoItem" x="96" y="240" width="24" height="24">
    <properties>
     <property name="SEARCHAREA" value="searchtrigger=17"/>
@@ -151,6 +199,36 @@
   <object id="93" name="SearchNoItem" x="624" y="144" width="24" height="24">
    <properties>
     <property name="SEARCHAREA" value="searchtrigger=17"/>
+   </properties>
+  </object>
+  <object id="123" name="Book1" x="576" y="312" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=20"/>
+   </properties>
+  </object>
+  <object id="124" name="Book2" x="264" y="696" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="125" name="Book3" x="1056" y="240" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=22"/>
+   </properties>
+  </object>
+  <object id="126" name="Book1" x="600" y="312" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=20"/>
+   </properties>
+  </object>
+  <object id="127" name="Book1" x="624" y="312" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=20"/>
+   </properties>
+  </object>
+  <object id="128" name="Book2" x="288" y="696" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=21"/>
    </properties>
   </object>
  </objectgroup>
@@ -227,7 +305,7 @@
   </object>
   <object id="19" name="Citizen2" x="1368" y="600" width="24" height="24">
    <properties>
-    <property name="npc" value="animation=Man1 textid=2 wander=0 facing=3"/>
+    <property name="npc" value="facing=3 animation=Man1 textid=2 wander=0"/>
    </properties>
   </object>
   <object id="20" name="Citizen3" x="1392" y="408" width="24" height="24">
@@ -240,17 +318,7 @@
     <property name="npc" value="animation=Lady1 textid=4 wander=2"/>
    </properties>
   </object>
-  <object id="22" name="Item Shop" x="648" y="96" width="24" height="24">
-   <properties>
-    <property name="npc" value="animation=Shopkeeper1 textid=6 wander=0"/>
-   </properties>
-  </object>
-  <object id="23" name="Weapon Shop" x="144" y="672" width="24" height="24">
-   <properties>
-    <property name="npc" value="animation=Shopkeeper1 textid=7 wander=0"/>
-   </properties>
-  </object>
-  <object id="24" name="Priestess" x="672" y="612" width="24" height="24">
+  <object id="24" name="Priestess" x="672" y="600" width="24" height="24">
    <properties>
     <property name="npc" value="animation=Priestess1 textid=8 wander=0"/>
    </properties>
@@ -267,10 +335,14 @@
   </object>
   <object id="57" name="Weapon Shop" x="144" y="696" width="24" height="24">
    <properties>
-    <property name="npc" value="animation=Shopkeeper1 textid=7 wander=0"/>
+    <property name="npc" value="animation=blank textid=7 wander=0"/>
    </properties>
   </object>
-  <object id="58" name="BartenderScold" x="1728" y="360" width="24" height="24"/>
+  <object id="58" name="BartenderScold" x="1728" y="360" width="24" height="24">
+   <properties>
+    <property name="null" value=""/>
+   </properties>
+  </object>
   <object id="94" name="SearchNoItem" x="456" y="504" width="24" height="24">
    <properties>
     <property name="SEARCHAREA" value="searchtrigger=17"/>
@@ -394,6 +466,26 @@
   <object id="118" name="SignPost" x="408" y="936" width="24" height="24">
    <properties>
     <property name="SEARCHAREA" value="searchtrigger=18"/>
+   </properties>
+  </object>
+  <object id="119" name="Item Shop" x="648" y="120" width="24" height="24">
+   <properties>
+    <property name="npc" value="animation=blank textid=6 wander=0"/>
+   </properties>
+  </object>
+  <object id="120" name="Priestess" x="672" y="624" width="24" height="24">
+   <properties>
+    <property name="npc" value="animation=blank textid=8 wander=0"/>
+   </properties>
+  </object>
+  <object id="121" name="Item Shop" x="648" y="96" width="24" height="24">
+   <properties>
+    <property name="npc" value="animation=Shopkeeper1 textid=14 wander=0"/>
+   </properties>
+  </object>
+  <object id="122" name="Weapon Shop" x="144" y="672" width="24" height="24">
+   <properties>
+    <property name="npc" value="animation=Shopkeeper1 textid=14 wander=0"/>
    </properties>
   </object>
  </objectgroup>

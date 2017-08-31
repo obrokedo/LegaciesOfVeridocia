@@ -3,14 +3,13 @@
 	<playmusic music="castlenight"/>
 </trigger>
 <trigger id=1 description="OpenItemShop" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<showtext textid=10/>
+	<showshop buypercent="1.2" sellpercent="0.8" itemssold=2, portrait="Shopkeeper1"/>
 </trigger>
 <trigger id=2 description="WeaponShopInitialTalkQuest" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<completequest questid=2/>
 </trigger>
 <trigger id=3 description="OpenPriestess" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<showpriest/>
-	<showtext textid=11/>
+	<showpriest portrait="Priestess1"/>
 </trigger>
 <trigger id=4 description="NorthWestExit1" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<loadmap mapdata="eriumcastle" enter="SouthWestEntrance1"/>
@@ -49,16 +48,25 @@
 	<loadmap mapdata="eriumcastle" enter="SouthEastEntrance7"/>
 </trigger>
 <trigger id=16 description="BartenderScolds" require=-1, exclude=-1, nonretrig=false retrigonenter=true triggeronce=true triggerimmediately=false>
-	<showtext textid=12/>
+	<showtext textid=10/>
 </trigger>
 <trigger id=17 description="SearchNoItem" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<showtext textid=13/>
+	<showtext textid=11/>
 </trigger>
 <trigger id=18 description="SearchSign" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<showtext textid=14/>
+	<showtext textid=12/>
 </trigger>
 <trigger id=19 description="SearchStatue" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<showtext textid=13/>
+</trigger>
+<trigger id=20 description="Book1" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<showtext textid=15/>
+</trigger>
+<trigger id=21 description="Book2" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<showtext textid=16/>
+</trigger>
+<trigger id=22 description="Book3" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<showtext textid=17/>
 </trigger>
 <text id=0 description="citizen1">
 	<conversation require=-1, exclude=-1, trigger=-1 heroportrait1=-1 enemyportrait1=-1 animportrait1="" heroportrait2=-1 enemyportrait2=-1 animportrait2="" message="Good evening, Noah.<pause>  That blizzard the other night was really bizarre, wasn't it?<hardstop><split>I've never seen anything like that.<pause>  It came and went in almost no time at all.<hardstop><split>And you wouldn't even know it by the weather today!<hardstop>"/>
@@ -79,35 +87,41 @@
 	<string require=-1, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="" message="I do enjoy that we can all leave our doors open for anyone to drop in but I must get ready for bed. Please see your way out.<hardstop>"/>
 </text>
 <text id=6 description="Item Shop">
-	<string require=-1, exclude=-1, trigger=1 heroportrait=-1 enemyportrait=-1 animportrait="" message="We have the finest remedies in the city. How can I help you?<hardstop>"/>
+	<string require=-1, exclude=-1, trigger=1 heroportrait=-1 enemyportrait=-1 animportrait="Shopkeeper1" message="We have the finest remedies in the city. How can I help you?<hardstop>"/>
 </text>
 <text id=7 description="Weapon Shop">
-	<string require=2, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="" message="See you tomorrow.<hardstop>"/>
-	<conversation require=-1, exclude=2, trigger=2 heroportrait1=-1 enemyportrait1=-1 animportrait1="" heroportrait2=-1 enemyportrait2=-1 animportrait2="" message="Sorry, I'm out of stock right now.<hardstop><split>Out of stock? You're never out of stock!<hardstop><split>Grand Mage Mistal cleaned me out. I guess she's going to start a new training plan?<hardstop><split>She's not exactly in charge of training. Maybe it was a special request from king Erium.<hardstop><split>I'm not sure. I'm expecting a new shipment any day now though. The trade caravan should be here this week.<hardstop><split>I'm not sure. I'm expecting a new shipment any day now though. The trade caravan should be here this week.<hardstop><split>I'll check another day then. Thank you.<hardstop>"/>
+	<string require=2, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="Shopkeeper1" message="See you tomorrow.<hardstop>"/>
+	<conversation require=-1, exclude=2, trigger=2 heroportrait1=-1 enemyportrait1=-1 animportrait1="" heroportrait2=-1 enemyportrait2=-1 animportrait2="" message="Sorry, I'm out of stock right now.<hardstop><split>Out of stock? You're never out of stock!<hardstop><split>Grand Mage Mistal cleaned me out. I guess she's going to start a new training plan?<hardstop><split>She's not exactly in charge of training. Maybe it was a special request from king Erium.<hardstop><split>I'm not sure. I'm expecting a new shipment any day now though. The trade caravan should be here this week.<hardstop><split>I'll check another day then. Thank you.<hardstop>"/>
 </text>
 <text id=8 description="Priestess">
-	<string require=-1, exclude=-1, trigger=3 heroportrait=-1 enemyportrait=-1 animportrait="" message="How can I help you?<hardstop>"/>
+	<string require=-1, exclude=-1, trigger=3 heroportrait=-1 enemyportrait=-1 animportrait="Priestess1" message="How can I help you?<hardstop>"/>
 </text>
 <text id=9 description="Bartender">
 	<string require=-1, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="" message="Sorry, I'm about to close up for the night.<hardstop>"/>
 </text>
-<text id=10 description="ItemShopExit">
-	<string require=-1, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="" message="Come back again!<hardstop>"/>
-</text>
-<text id=11 description="PriestessExit">
-	<string require=-1, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="" message="May the lord watch over you.<hardstop>"/>
-</text>
-<text id=12 description="BartenderScolds">
+<text id=10 description="BartenderScolds">
 	<string require=-1, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="" message="Who said you were allowed up there!<hardstop>"/>
 </text>
-<text id=13 description="SearchNoItem">
+<text id=11 description="SearchNoItem">
 	<string require=-1, exclude=-1, trigger=-1 heroportrait=0 enemyportrait=-1 animportrait="" message="There doesnt seem to be anything here<hardstop>"/>
 </text>
-<text id=14 description="SearchSign">
+<text id=12 description="SearchSign">
 	<string require=-1, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="" message="Welcome to Erium<hardstop>"/>
 </text>
-<text id=15 description="SearchStatue">
+<text id=13 description="SearchStatue">
 	<string require=-1, exclude=-1, trigger=-1 heroportrait=0 enemyportrait=-1 animportrait="" message="I wonder who this is supposed to be a statue of?<hardstop>"/>
+</text>
+<text id=14 description="BehindCounter">
+	<string require=-1, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="Shopkeeper1" message="Who said you were allowed back here!<hardstop>"/>
+</text>
+<text id=15 description="Book1">
+	<string require=-1, exclude=-1, trigger=-1 heroportrait=0 enemyportrait=-1 animportrait="" message="There's a book here.<pause> The title reads, Tough,<pause> Thorough,<pause> Thought<hardstop>"/>
+</text>
+<text id=16 description="Book2">
+	<string require=-1, exclude=-1, trigger=-1 heroportrait=0 enemyportrait=-1 animportrait="" message="There's a book here.<pause> The title reads, Genesis: Ancient Technology<hardstop>"/>
+</text>
+<text id=17 description="Book3">
+	<string require=-1, exclude=-1, trigger=-1 heroportrait=0 enemyportrait=-1 animportrait="" message="There's a book here.<pause> The title reads Is This The Real Life?<hardstop>"/>
 </text>
 <cinematic id=0 description="NoahGettingReady" camerax=0 cameray=0>
 	<addactor x=144 y=156 name="cam" anim="Noah" startanim="Down" visible=false init=true associatedhero=0/>

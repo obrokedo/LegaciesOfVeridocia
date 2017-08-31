@@ -3,7 +3,9 @@
 <img name="blank.png" w="7" h="8">
   <definitions>
     <dir name="/">
-     <spr name="0" x="1" y="2" w="6" h="6"/>
+        <dir name="Unpromoted">
+            <spr name="0" x="1" y="2" w="6" h="6"/>
+        </dir>
     </dir>
   </definitions>
 </img>
