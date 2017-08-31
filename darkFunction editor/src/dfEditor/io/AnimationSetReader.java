@@ -124,12 +124,19 @@ public class AnimationSetReader
                         GraphicObject spriteArea = null;
 
                         boolean isWeapon = false;
+                        boolean isSwoosh = false;
 
                         spriteArea = (GraphicObject)treeNode.getCustomObject();
 
+                        
+                        
                         if (spriteArea == null)
                         {
-                        	isWeapon = true;
+                        	String userOb = (String) treeNode.getUserObject();
+                        	if ("Weapon".equalsIgnoreCase(userOb)) 
+                        		isWeapon = true;
+                        	else if ("Swoosh".equalsIgnoreCase(userOb))
+                        		isSwoosh = true;
                         }
 
 
@@ -153,7 +160,7 @@ public class AnimationSetReader
                         Rectangle r = null;
                         SpriteGraphic graphic = null;
 
-                        if (!isWeapon)
+                        if (!isWeapon && !isSwoosh)
                         {
                         	try {
 	                        r = spriteArea.getRect();
@@ -170,9 +177,12 @@ public class AnimationSetReader
 
 	                        graphic = new SpriteGraphic(aImage, new Point(x, y), r);
                         }
-                        else
+                        else if (isWeapon)
                         {
                         	graphic = new SpriteGraphic(AnimationController.getWeaponBufferedImage(), new Point(x - 56, y - 12), new Rectangle(112, 24));
+                        }
+                        else if (isSwoosh) {
+                        	graphic = new SpriteGraphic(AnimationController.getSwooshBufferedImage(), new Point(x - 12, y - 12), new Rectangle(24, 24));
                         }
 
                         float angle = 0;

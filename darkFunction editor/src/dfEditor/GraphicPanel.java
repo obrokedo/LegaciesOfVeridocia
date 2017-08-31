@@ -142,6 +142,7 @@ public class GraphicPanel extends javax.swing.JDesktopPane implements MouseMotio
                     _keyDeltaY = 1;
                     break;                    
             }
+            boolean somethingSelected = false;
             for (int i=0; i<_drawStack.size(); ++i)
             {
                 GraphicObject graphic = _drawStack.get(i);
@@ -150,12 +151,21 @@ public class GraphicPanel extends javax.swing.JDesktopPane implements MouseMotio
                     Rectangle r = graphic.getRect(); 
                     r.x += _keyDeltaX;
                     r.y += _keyDeltaY;
+                    somethingSelected = true;
                 }
-            }     
+            }
+            
+            if (!somethingSelected) {
+            	arrowPressedWithNothingSelected(_keyDeltaX, _keyDeltaY);
+            }
             if (_keyDeltaX != 0 || _keyDeltaY != 0)
                 repaint();
         }
     }
+
+	protected void arrowPressedWithNothingSelected(int keyDeltaX, int keyDeltaY) {
+	
+	}
     
     public void keyTyped(KeyEvent e)
     {

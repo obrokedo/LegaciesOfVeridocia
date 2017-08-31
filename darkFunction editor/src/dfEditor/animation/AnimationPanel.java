@@ -54,6 +54,7 @@ public class AnimationPanel extends GraphicPanel implements DropTargetListener
     private AnimationCell[] onionSkins = null;
     private boolean hitboxMode = false;
     private BufferedImage backgroundImage = null;
+    private Animation currentAnimation;
 
     public AnimationPanel()
     {
@@ -336,4 +337,22 @@ public class AnimationPanel extends GraphicPanel implements DropTargetListener
     	this.backgroundImage = bim;
     	this.repaint();
     }
+
+	@Override
+	protected void arrowPressedWithNothingSelected(int keyDeltaX, int keyDeltaY) {
+		for (int animIndex = 0; animIndex < currentAnimation.numCells(); animIndex++) {
+			AnimationCell cell = currentAnimation.getCellAtIndex(animIndex);
+			
+			for (GraphicObject graphic : cell.getGraphicList())
+			{
+			    Rectangle r = graphic.getRect(); 
+			    r.x += keyDeltaX;
+			    r.y += keyDeltaY;
+			}
+		}
+	}
+
+	public void setCurrentAnimation(Animation currentAnimation) {
+		this.currentAnimation = currentAnimation;
+	}
 }

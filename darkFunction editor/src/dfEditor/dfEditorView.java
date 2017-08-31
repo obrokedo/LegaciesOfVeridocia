@@ -51,6 +51,7 @@ public class dfEditorView extends FrameView implements TaskChangeListener, org.j
 {
     private JFileChooser fileChooser;
     public static BufferedImage weaponImage = null;
+    public static BufferedImage swooshImage = null;
 
     public dfEditorView(dfEditorApp app) {
         super(app);
@@ -159,6 +160,7 @@ public class dfEditorView extends FrameView implements TaskChangeListener, org.j
         menuItemSaveAs = new javax.swing.JMenuItem();
         // splinchedExport = new javax.swing.JMenuItem();
         setWeapon = new javax.swing.JMenuItem();
+        setSwoosh = new javax.swing.JMenuItem();
         setBackgroundImage = new JMenuItem();
         javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
         editMenu = new javax.swing.JMenu();
@@ -251,6 +253,17 @@ public class dfEditorView extends FrameView implements TaskChangeListener, org.j
             }
         });
         fileMenu.add(setWeapon);
+        
+        setSwoosh.setText("Set Swoosh Image"); // NOI18N
+        setSwoosh.setEnabled(true);
+        setSwoosh.setName("Set Swoosh Image"); // NOI18N
+        setSwoosh.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemSetSwooshActionPerformed(evt);
+            }
+        });
+        fileMenu.add(setSwoosh);
         
         setBackgroundImage.setText("Set Background Image"); // NOI18N
         setBackgroundImage.setEnabled(true);
@@ -579,6 +592,14 @@ public class dfEditorView extends FrameView implements TaskChangeListener, org.j
     		// Set new weapon
 			dfEditorView.weaponImage = image;
     }
+    
+    private void menuItemSetSwooshActionPerformed(java.awt.event.ActionEvent evt)
+    {
+    	BufferedImage image = loadCustomImage("Load a custom swoosh image");
+    	if (image != null) 
+    		// Set new weapon
+			dfEditorView.swooshImage = image;
+    }
 
 	private BufferedImage loadCustomImage(String fileSelectText) {
 		JFileChooser chooser = fileChooser;
@@ -678,6 +699,7 @@ public class dfEditorView extends FrameView implements TaskChangeListener, org.j
     private javax.swing.JMenuItem menuItemSave;
     private javax.swing.JMenuItem menuItemSaveAs;
     private javax.swing.JMenuItem setWeapon;
+    private javax.swing.JMenuItem setSwoosh;
     private javax.swing.JMenuItem setBackgroundImage;
     // private javax.swing.JMenuItem splinchedExport;
     private javax.swing.JMenuItem newAnimationItem;

@@ -138,6 +138,7 @@ public class AnimationController extends dfEditorPanel implements
         spriteListControlPanel.addInternalFrameListener(this);
 
         setWorkingCell(null);
+        viewPanel.setCurrentAnimation(null);
 
         if (aNew)
         {
@@ -204,7 +205,9 @@ public class AnimationController extends dfEditorPanel implements
         {
         	CustomNode root = (CustomNode) model.getRoot();
         	CustomNode weapon = new CustomNode("Weapon", false);
+        	CustomNode swoosh = new CustomNode("Swoosh", false);
         	root.add(weapon);
+        	root.add(swoosh);
             spriteTree.setModel(model);
             addAnimationButton.setEnabled(true);
         }
@@ -856,7 +859,165 @@ public class AnimationController extends dfEditorPanel implements
             }
         });
 
-        controlPanel.setClosable(true);
+        setupModifySpritePanel(resourceMap);
+
+        controlPanel.getContentPane().add(jToolBar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 30));
+
+        spriteListControlPanel.setClosable(true);
+        spriteListControlPanel.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
+        spriteListControlPanel.setTitle(resourceMap.getString("spriteListControlPanel.title")); // NOI18N
+        spriteListControlPanel.setFocusCycleRoot(false);
+        spriteListControlPanel.setFocusable(false);
+        spriteListControlPanel.setFont(resourceMap.getFont("spriteListControlPanel.font")); // NOI18N
+        spriteListControlPanel.setName("spriteListControlPanel"); // NOI18N
+        spriteListControlPanel.setRequestFocusEnabled(false);
+        spriteListControlPanel.setVerifyInputWhenFocusTarget(false);
+        spriteListControlPanel.setVisible(true);
+        spriteListControlPanel.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jScrollPane3.setName("jScrollPane3"); // NOI18N
+
+        spriteList.setName("spriteList"); // NOI18N
+        jScrollPane3.setViewportView(spriteList);
+        spriteList.setModel(new DefaultListModel());
+
+        spriteListControlPanel.getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 110, 110));
+
+        javax.swing.GroupLayout viewPanelLayout = new javax.swing.GroupLayout(viewPanel);
+        viewPanel.setLayout(viewPanelLayout);
+        viewPanelLayout.setHorizontalGroup(
+            viewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(viewPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(viewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(viewPanelLayout.createSequentialGroup()
+                        .addComponent(controlPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                        .addComponent(zoomInButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(zoomOutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(viewPanelLayout.createSequentialGroup()
+                        .addComponent(spriteListControlPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(438, Short.MAX_VALUE))))
+        );
+        viewPanelLayout.setVerticalGroup(
+            viewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(viewPanelLayout.createSequentialGroup()
+                .addGroup(viewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(viewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(zoomOutButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(zoomInButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(viewPanelLayout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(controlPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 126, Short.MAX_VALUE)
+                .addComponent(spriteListControlPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        //JComponent c = (BasicInternalFrameTitlePane)((BasicInternalFrameUI) controlPanel.getUI()).getNorthPane();
+        //c.setPreferredSize(new Dimension(c.getWidth(), 15));
+        controlPanel.putClientProperty("JInternalFrame.isPalette", Boolean.TRUE);
+        //JComponent c = (BasicInternalFrameTitlePane)((BasicInternalFrameUI) controlPanel.getUI()).getNorthPane();
+        //c.setPreferredSize(new Dimension(c.getWidth(), 15));
+        spriteListControlPanel.putClientProperty("JInternalFrame.isPalette", Boolean.TRUE);
+
+        onionSkinsCheckBox.setSelected(true);
+        onionSkinsCheckBox.setText(resourceMap.getString("onionSkinsCheckBox.text")); // NOI18N
+        onionSkinsCheckBox.setEnabled(false);
+        onionSkinsCheckBox.setName("onionSkinsCheckBox"); // NOI18N
+        onionSkinsCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+                onionSkinsCheckBoxActionPerformed(evt);
+            }
+        });
+
+        spriteListToggle.setSelected(true);
+        spriteListToggle.setText(resourceMap.getString("spriteListToggle.text")); // NOI18N
+        spriteListToggle.setFocusable(false);
+        spriteListToggle.setName("spriteListToggle"); // NOI18N
+        spriteListToggle.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+                spriteListToggleActionPerformed(evt);
+            }
+        });
+
+        modifySpriteToggle.setSelected(true);
+        modifySpriteToggle.setText(resourceMap.getString("modifySpriteToggle.text")); // NOI18N
+        modifySpriteToggle.setFocusable(false);
+        modifySpriteToggle.setName("modifySpriteToggle"); // NOI18N
+        modifySpriteToggle.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modifySpriteToggleActionPerformed(evt);
+            }
+        });
+
+        hitboxToggle.setSelected(false);
+        hitboxToggle.setText(resourceMap.getString("toggleHitbox.text")); // NOI18N
+        hitboxToggle.setFocusable(false);
+        hitboxToggle.setName("toggleHitbox"); // NOI18N
+        hitboxToggle.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+                hitboxToggleActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(viewPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                		.addComponent(hitboxToggle)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(modifySpriteToggle)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(spriteListToggle, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(onionSkinsCheckBox)))
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(onionSkinsCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(spriteListToggle, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(modifySpriteToggle, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(hitboxToggle, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(viewPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 407, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, 0, 173, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        jPanel1.getAccessibleContext().setAccessibleName(resourceMap.getString("jPanel1.AccessibleContext.accessibleName")); // NOI18N
+    }// </editor-fold>//GEN-END:initComponents
+
+	private void setupModifySpritePanel(org.jdesktop.application.ResourceMap resourceMap) {
+		controlPanel.setClosable(true);
         controlPanel.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         controlPanel.setTitle(resourceMap.getString("controlPanel.title")); // NOI18N
         controlPanel.setFocusCycleRoot(false);
@@ -1071,161 +1232,7 @@ public class AnimationController extends dfEditorPanel implements
         );
 
         jToolBar1.add(jPanel5);
-
-        controlPanel.getContentPane().add(jToolBar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 30));
-
-        spriteListControlPanel.setClosable(true);
-        spriteListControlPanel.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
-        spriteListControlPanel.setTitle(resourceMap.getString("spriteListControlPanel.title")); // NOI18N
-        spriteListControlPanel.setFocusCycleRoot(false);
-        spriteListControlPanel.setFocusable(false);
-        spriteListControlPanel.setFont(resourceMap.getFont("spriteListControlPanel.font")); // NOI18N
-        spriteListControlPanel.setName("spriteListControlPanel"); // NOI18N
-        spriteListControlPanel.setRequestFocusEnabled(false);
-        spriteListControlPanel.setVerifyInputWhenFocusTarget(false);
-        spriteListControlPanel.setVisible(true);
-        spriteListControlPanel.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jScrollPane3.setName("jScrollPane3"); // NOI18N
-
-        spriteList.setName("spriteList"); // NOI18N
-        jScrollPane3.setViewportView(spriteList);
-        spriteList.setModel(new DefaultListModel());
-
-        spriteListControlPanel.getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 110, 110));
-
-        javax.swing.GroupLayout viewPanelLayout = new javax.swing.GroupLayout(viewPanel);
-        viewPanel.setLayout(viewPanelLayout);
-        viewPanelLayout.setHorizontalGroup(
-            viewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(viewPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(viewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(viewPanelLayout.createSequentialGroup()
-                        .addComponent(controlPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
-                        .addComponent(zoomInButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(zoomOutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(viewPanelLayout.createSequentialGroup()
-                        .addComponent(spriteListControlPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(438, Short.MAX_VALUE))))
-        );
-        viewPanelLayout.setVerticalGroup(
-            viewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(viewPanelLayout.createSequentialGroup()
-                .addGroup(viewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(viewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(zoomOutButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(zoomInButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(viewPanelLayout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(controlPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 126, Short.MAX_VALUE)
-                .addComponent(spriteListControlPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        //JComponent c = (BasicInternalFrameTitlePane)((BasicInternalFrameUI) controlPanel.getUI()).getNorthPane();
-        //c.setPreferredSize(new Dimension(c.getWidth(), 15));
-        controlPanel.putClientProperty("JInternalFrame.isPalette", Boolean.TRUE);
-        //JComponent c = (BasicInternalFrameTitlePane)((BasicInternalFrameUI) controlPanel.getUI()).getNorthPane();
-        //c.setPreferredSize(new Dimension(c.getWidth(), 15));
-        spriteListControlPanel.putClientProperty("JInternalFrame.isPalette", Boolean.TRUE);
-
-        onionSkinsCheckBox.setSelected(true);
-        onionSkinsCheckBox.setText(resourceMap.getString("onionSkinsCheckBox.text")); // NOI18N
-        onionSkinsCheckBox.setEnabled(false);
-        onionSkinsCheckBox.setName("onionSkinsCheckBox"); // NOI18N
-        onionSkinsCheckBox.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-                onionSkinsCheckBoxActionPerformed(evt);
-            }
-        });
-
-        spriteListToggle.setSelected(true);
-        spriteListToggle.setText(resourceMap.getString("spriteListToggle.text")); // NOI18N
-        spriteListToggle.setFocusable(false);
-        spriteListToggle.setName("spriteListToggle"); // NOI18N
-        spriteListToggle.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-                spriteListToggleActionPerformed(evt);
-            }
-        });
-
-        modifySpriteToggle.setSelected(true);
-        modifySpriteToggle.setText(resourceMap.getString("modifySpriteToggle.text")); // NOI18N
-        modifySpriteToggle.setFocusable(false);
-        modifySpriteToggle.setName("modifySpriteToggle"); // NOI18N
-        modifySpriteToggle.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-                modifySpriteToggleActionPerformed(evt);
-            }
-        });
-
-        hitboxToggle.setSelected(false);
-        hitboxToggle.setText(resourceMap.getString("toggleHitbox.text")); // NOI18N
-        hitboxToggle.setFocusable(false);
-        hitboxToggle.setName("toggleHitbox"); // NOI18N
-        hitboxToggle.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-                hitboxToggleActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(viewPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                		.addComponent(hitboxToggle)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(modifySpriteToggle)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(spriteListToggle, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(onionSkinsCheckBox)))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(onionSkinsCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(spriteListToggle, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(modifySpriteToggle, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(hitboxToggle, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(viewPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 407, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, 0, 173, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-
-        jPanel1.getAccessibleContext().setAccessibleName(resourceMap.getString("jPanel1.AccessibleContext.accessibleName")); // NOI18N
-    }// </editor-fold>//GEN-END:initComponents
+	}
 
     private void zoomInButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zoomInButtonActionPerformed
         viewPanel.setZoom(viewPanel.getZoom() + 0.5f);
@@ -1420,6 +1427,16 @@ public class AnimationController extends dfEditorPanel implements
     	SpriteGraphic graphic = new SpriteGraphic(bim, new Point(0, 0), new Rectangle(112, 24));
     	return graphic;
     }
+    
+    public static SpriteGraphic getSwooshSpriteGraphic()
+    {
+    	BufferedImage bim = null;
+		bim = getSwooshBufferedImage();
+
+
+    	SpriteGraphic graphic = new SpriteGraphic(bim, new Point(0, 0), new Rectangle(24, 24));
+    	return graphic;
+    }
 
     public static BufferedImage getWeaponBufferedImage()
     {
@@ -1438,6 +1455,24 @@ public class AnimationController extends dfEditorPanel implements
     	g.dispose();
     	return bim;
     }
+    
+    public static BufferedImage getSwooshBufferedImage()
+    {
+    	if (dfEditorView.swooshImage != null)
+    	{
+    		return dfEditorView.swooshImage;
+    	}
+
+    	BufferedImage bim = new BufferedImage(24, 24, BufferedImage.TYPE_INT_ARGB);
+    	Graphics g = bim.createGraphics();
+    	g.setColor(Color.BLUE);
+    	g.fillRect(8, 1, 5, 22);
+    	g.setColor(Color.RED);
+    	g.fillRect(12, 1, 5, 22);
+    	g.drawRect(0, 0, 23, 23);
+    	g.dispose();
+    	return bim;
+    }
 
     public SpriteGraphic getSpriteGraphic(CustomNode node)
     {
@@ -1445,6 +1480,10 @@ public class AnimationController extends dfEditorPanel implements
     	if (((String) node.getUserObject()).equalsIgnoreCase("Weapon"))
         {
         	graphic = getWeaponSpriteGraphic();
+        }
+    	else if (((String) node.getUserObject()).equalsIgnoreCase("Swoosh"))
+        {
+        	graphic = getSwooshSpriteGraphic();
         }
         else
         {
@@ -2275,6 +2314,7 @@ private void exportGifButtonActionPerformed(java.awt.event.ActionEvent evt) {//G
                     Animation selectedAnimation = (Animation)model.get(selectedIndices[0]);
                     selectedAnimation.setCurrentCellIndex(0);
                     setWorkingCell(selectedAnimation.getCurrentCell());
+                    viewPanel.setCurrentAnimation(selectedAnimation);
                     animationStripPanel.setAnimation(selectedAnimation);
                     addCellButton.setEnabled(true);
                     playButton.setEnabled(selectedAnimation.numCells() > 1);
@@ -2285,6 +2325,7 @@ private void exportGifButtonActionPerformed(java.awt.event.ActionEvent evt) {//G
                 {
                     spriteTree.setSelectionPath(null);
                     setWorkingCell(null);
+                    viewPanel.setCurrentAnimation(null);
                     animationStripPanel.setAnimation(null);
                     addToFrameButton.setEnabled(false);
                     removeCellButton.setEnabled(false);
