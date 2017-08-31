@@ -35,7 +35,7 @@ public class PriestMenu extends QuadMenu implements MenuListener
 		this.text = new String[4];
 		
 		for (int i = 0; i < icons.length; i++)
-			icons[i] = stateInfo.getResourceManager().getSpriteSheet("actionicons").getSubImage(16 + (i % 4), i / 4);
+			icons[i] = stateInfo.getResourceManager().getSpriteSheet("actionicons").getSubImage(15 + (i % 4), i / 4);
 
 		text = new String[] {"Save Game", "Promote", "Cure", "Resurrect"};
 		enabled = new boolean[4];
