@@ -67,7 +67,7 @@ public class CombatAnimation
 		int y = yDrawPos + yOffset;
 
 		if (displayPlatform)
-			g.drawImage(LOVAttackCinematicState.FLOOR_IMAGE, x + 220, y - 15);
+			g.drawImage(LOVAttackCinematicState.FLOOR_IMAGE, x + 195, y - 15);
 
 		if (renderColor != null || parentSprite.getCurrentHP() > 0)
 			animationWrapper.drawAnimation(x, y, renderColor, scale, g);

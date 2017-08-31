@@ -12,6 +12,7 @@ import mb.fc.engine.message.IntMessage;
 import mb.fc.engine.message.LoadMapMessage;
 import mb.fc.engine.message.MessageType;
 import mb.fc.engine.message.ShopMessage;
+import mb.fc.engine.message.ShowCinMessage;
 import mb.fc.engine.message.StringMessage;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.ai.AI;
@@ -343,15 +344,17 @@ public class Trigger
 	public class TriggerShowCinematic implements Triggerable
 	{
 		private int cinematicId;
+		private int exitTriggerId;
 
-		public TriggerShowCinematic(int id)
+		public TriggerShowCinematic(int id, int exitTriggerId)
 		{
 			cinematicId = id;
+			this.exitTriggerId = exitTriggerId;
 		}
 
 		@Override
 		public boolean perform(StateInfo stateInfo) {
-			stateInfo.sendMessage(new IntMessage(MessageType.SHOW_CINEMATIC, cinematicId), true);
+			stateInfo.sendMessage(new ShowCinMessage(cinematicId, exitTriggerId), true);
 			return false;
 		}
 	}

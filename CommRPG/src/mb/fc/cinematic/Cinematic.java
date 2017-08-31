@@ -543,12 +543,11 @@ public class Cinematic {
 						}
 					}
 				}
-				else if (((int) ce.getParam(3)) != 0)
+				else if (StringUtils.isNotEmpty((String) ce.getParam(3)))
 				{
 					for (Sprite s : stateInfo.getSprites()) {
 						if (s.getSpriteType() == Sprite.TYPE_NPC
-								&& ((NPCSprite) s).getUniqueNPCId() == (int) ce
-										.getParam(3)) {
+								&& ((NPCSprite) s).getName().equalsIgnoreCase((String) ce.getParam(3))) {
 							ca = new CinematicActor(
 									(AnimatedSprite) s, stateInfo);
 							break;

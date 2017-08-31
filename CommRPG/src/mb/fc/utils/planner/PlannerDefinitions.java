@@ -257,8 +257,8 @@ public class PlannerDefinitions {
 				PlannerValueDef.TYPE_INT, "enemyid", true, "Enemy ID",
 				"The ID of the Enemy that should become a cinematic actor. This should only be used in 'battle'"));
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
-				PlannerValueDef.TYPE_INT, "npcid", true, "NPC ID",
-				"The ID of the NPC that should become a cinematic actor"));
+				PlannerValueDef.TYPE_STRING, "npcid", true, "NPC ID",
+				"The Name of the NPC that should become a cinematic actor"));
 		allowableLines.add(new PlannerLineDef("assactor", "Establish Sprite as Actor",
 						"Establishes a Sprite (NPC, Enemy, Hero) as an actor. Only one of the options should be specified above", definingValues));
 
@@ -2335,6 +2335,10 @@ public class PlannerDefinitions {
 				PlannerValueDef.REFERS_CINEMATIC, PlannerValueDef.TYPE_INT,
 				"cinid", false, "Cinematic ID",
 				"The ID of the cinematic that should be shown"));
+		definingValues.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_TRIGGER, PlannerValueDef.TYPE_INT,
+				"exittrigid", true, "Exit Trigger ID",
+				"The ID of the trigger that should be run once this cinematic completes"));
 		allowableLines.add(new PlannerLineDef("showcin", "Show Map Event",
 				"Shows the specified cinematic on the current map", definingValues));
 

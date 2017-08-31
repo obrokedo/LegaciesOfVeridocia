@@ -1,15 +1,17 @@
 package mb.fc.game.manager;
 
-import mb.fc.cinematic.Cinematic;
-import mb.fc.engine.message.IntMessage;
-import mb.fc.engine.message.Message;
-
 import org.newdawn.slick.Graphics;
+
+import mb.fc.cinematic.Cinematic;
+import mb.fc.engine.message.Message;
+import mb.fc.engine.message.ShowCinMessage;
+import mb.fc.game.trigger.Trigger;
 
 public class CinematicManager extends Manager
 {
 	private Cinematic cinematic;
 	private boolean initializeCamera = true;
+	private int exitTrigId = Trigger.TRIGGER_NONE;
 
 	public CinematicManager(boolean initializeCamera) {
 		super();
@@ -28,6 +30,10 @@ public class CinematicManager extends Manager
 		{
 			cinematic.endCinematic(stateInfo);
 			cinematic = null;
+			if (exitTrigId != Trigger.TRIGGER_NONE) {
+				stateInfo.getResourceManager().getTriggerEventById(exitTrigId).perform(stateInfo);
+				exitTrigId = Trigger.TRIGGER_NONE;
+			}
 			// stateInfo.getCamera().centerOnSprite(stateInfo.getCurrentSprite(), stateInfo.getCurrentMap());
 		}
 
@@ -51,8 +57,9 @@ public class CinematicManager extends Manager
 		switch (message.getMessageType())
 		{
 			case SHOW_CINEMATIC:
-				IntMessage im = (IntMessage) message;
-				cinematic = stateInfo.getResourceManager().getCinematicById(im.getValue()).duplicateCinematic();
+				ShowCinMessage im = (ShowCinMessage) message;
+				this.exitTrigId = im.getExitTrigId();
+				cinematic = stateInfo.getResourceManager().getCinematicById(im.getCinId()).duplicateCinematic();
 				cinematic.initialize(stateInfo, initializeCamera);
 				break;
 			case CIN_NEXT_ACTION:

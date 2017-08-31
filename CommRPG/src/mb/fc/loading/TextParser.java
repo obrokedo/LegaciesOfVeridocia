@@ -317,7 +317,7 @@ public class TextParser
 				}
 				else if (tagType.equalsIgnoreCase("showcin"))
 				{
-					te.addTriggerable(te.new TriggerShowCinematic(Integer.parseInt(actionParams.get("cinid"))));
+					te.addTriggerable(te.new TriggerShowCinematic(Integer.parseInt(actionParams.get("cinid")), Integer.parseInt(actionParams.get("exittrigid"))));
 				}
 				else if (tagType.equalsIgnoreCase("loadcin"))
 				{
@@ -460,7 +460,7 @@ public class TextParser
 			return new CinematicEvent(CinematicEventType.REMOVE_STATIC_SPRITE, area.getAttribute("spriteid"));
 		else if (type.equalsIgnoreCase("assactor"))
 			return new CinematicEvent(CinematicEventType.ASSOCIATE_AS_ACTOR, area.getAttribute("name"),
-					Integer.parseInt(area.getAttribute("hero")), Integer.parseInt(area.getAttribute("enemyid")), Integer.parseInt(area.getAttribute("npcid")));
+					Integer.parseInt(area.getAttribute("hero")), Integer.parseInt(area.getAttribute("enemyid")), area.getAttribute("npcid"));
 		else if (type.equalsIgnoreCase("camerafollow"))
 			return new CinematicEvent(CinematicEventType.CAMERA_FOLLOW, area.getAttribute("name"));
 		else if (type.equalsIgnoreCase("haltingmove"))
