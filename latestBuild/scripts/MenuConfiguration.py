@@ -51,7 +51,8 @@ class MenuConfiguration(JMenuConfiguration):
         return "I'm sorry, you do not have enough gold...<hardstop>"
     def getPriestTargetHasBeenCuredText(self, name):
         return name + "'s ailments have been cured!<hardstop>"
-    
+    def getPriestSaveText(self):
+        return "Your progress will be saved.<hardstop>"
     def getPriestMenuClosedText(self):
         return "May the power of light be ever at your back.<hardstop>"
     
