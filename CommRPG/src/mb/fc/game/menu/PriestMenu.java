@@ -152,7 +152,7 @@ public class PriestMenu extends QuadMenu implements MenuListener
 	}
 
 	private void saveGame() {
-		stateInfo.sendMessage(new SpeechMessage("Your progress will be saved.<hardstop>", Trigger.TRIGGER_NONE, portrait));
+		stateInfo.sendMessage(new SpeechMessage(menuConfig.getPriestSaveText(), Trigger.TRIGGER_NONE, portrait));
 		stateInfo.sendMessage(MessageType.SAVE);
 	}
 	
@@ -163,7 +163,7 @@ public class PriestMenu extends QuadMenu implements MenuListener
 			if (ph.spriteHoldingItem != null)
 				itemUsed = ItemResource.getUninitializedItem(ph.progressionToPromoteTo.getSpecialPromotionItemId()).getName();
 			stateInfo.addMenu(new YesNoMenu(menuConfig.getPriestSelectSomeoneToPromoteText(
-					ph.spriteToPromote.getName(), ph.progressionToPromoteTo.getClassName(), itemUsed), Trigger.TRIGGER_NONE, null, stateInfo, this));
+					ph.spriteToPromote.getName(), ph.progressionToPromoteTo.getClassName(), itemUsed), Trigger.TRIGGER_NONE, portrait, stateInfo, this));
 		} else if (curableHeroes.size() > 0) {
 			CombatSprite cs = curableHeroes.get(0);
 			String[] effectNames = new String[cs.getBattleEffects().size()];
@@ -173,11 +173,11 @@ public class PriestMenu extends QuadMenu implements MenuListener
 				effectLevels[i] = cs.getBattleEffects().get(i).getEffectLevel();
 			}
 			stateInfo.addMenu(new YesNoMenu(menuConfig.getPriestSelectSomeoneToCureText(cs.getName(), effectNames,
-					menuConfig.getPriestCureCost(effectNames, effectLevels)), Trigger.TRIGGER_NONE, null, stateInfo, this));
+					menuConfig.getPriestCureCost(effectNames, effectLevels)), Trigger.TRIGGER_NONE, portrait, stateInfo, this));
 		} else if (revivableHeroes.size() > 0) {
 			CombatSprite cs = revivableHeroes.get(0);
 			stateInfo.addMenu(new YesNoMenu(menuConfig.getPriestSelectSomeoneToResurrectText(cs.getName(), 
-					menuConfig.getPriestResurrectCost(cs.getLevel(), cs.isPromoted())), Trigger.TRIGGER_NONE, null, stateInfo, this));
+					menuConfig.getPriestResurrectCost(cs.getLevel(), cs.isPromoted())), Trigger.TRIGGER_NONE, portrait, stateInfo, this));
 		}
 	}
 

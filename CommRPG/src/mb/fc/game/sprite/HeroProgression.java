@@ -53,8 +53,11 @@ public class HeroProgression implements Serializable
 		EquippableItem weapon = cs.getEquippedWeapon();
 		EquippableItem ring = cs.getEquippedRing();
 		
-		cs.unequipItem(weapon);
-		cs.unequipItem(ring);
+		if (weapon != null)
+			cs.unequipItem(weapon);
+		
+		if (ring != null)
+			cs.unequipItem(ring);
 		
 		// Explicitly set values for the promoted class
 		cs.setMaxMove(cs.getCurrentProgression().getMove());

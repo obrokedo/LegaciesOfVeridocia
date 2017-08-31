@@ -19,6 +19,8 @@ public interface JMenuConfiguration {
 	public String getPriestNotEnoughGoldToResurrectText();
 	public String getPriestTargetHasBeenResurrectedText(String targetName);
 	
+	public String getPriestSaveText();
+	
 	public String getPriestMenuClosedText();
 	
 	

@@ -199,6 +199,7 @@ public class MapEditorPanel implements ActionListener {
 		moCombo.setMaximumSize(new Dimension(moCombo.getPreferredSize().width, 30));
 		if (mo.getKey() != null && mo.getKey().length() > 0)
 			moCombo.setSelectedItem(mo.getKey());
+		
 		sidePanel.add(moCombo);
 		JButton editButton = new JButton("Edit Values");
 		editButton.addActionListener(this);

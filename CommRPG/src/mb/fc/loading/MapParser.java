@@ -244,6 +244,8 @@ public class MapParser
 				}
 			}
 		}
+		
+		map.intializeRoofs();
 
 		/*
 		for (String resource : spriteToLoad)

@@ -8,7 +8,6 @@ import java.util.List;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
-import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.util.pathfinding.AStarPathFinder;
 import org.newdawn.slick.util.pathfinding.Path;
@@ -151,12 +150,6 @@ public class Map
 			}
 			else if (mo.getKey().equalsIgnoreCase("roof"))
 			{
-				int roofWidth = mo.getWidth() / getTileRenderWidth();
-				int roofHeight = mo.getHeight() / getTileRenderHeight();
-	
-				int startX = mo.getX() / getTileRenderWidth();
-				int startY = mo.getY() / getTileRenderHeight();
-	
 				int roofId = 0;
 	
 				if (mo.getParam("roofid") != null)
@@ -166,7 +159,7 @@ public class Map
 				else
 					roofId = roofCount--;
 	
-				roofsById.put(roofId, new Roof(new Rectangle(startX, startY, roofWidth, roofHeight)));
+				roofsById.put(roofId, new Roof(mo.getShape()));
 	
 			}
 		}
@@ -179,6 +172,10 @@ public class Map
 	public void addLayer(MapLayer layer)
 	{
 		mapLayer.add(layer);
+	}
+	
+	public void intializeRoofs() {
+		roofsById.values().stream().forEach(roof -> roof.determineRoofShape(roofLayer, tileWidth, tileHeight));
 	}
 
 	public int getMapWidth() {
@@ -463,11 +460,9 @@ public class Map
 
 	public void checkRoofs(int mapX, int mapY)
 	{
-		float mapXF = mapX / this.getTileRenderWidth() + .1f;
-		float mapYF = mapY / this.getTileRenderHeight() + .1f;
 		for (Roof r : getRoofIterator())
 		{
-			if (r.getRectangle().contains(mapXF, mapYF))
+			if (r.getLocationShape().contains(mapX + .1f, mapY + .1f))
 				r.setVisible(false);
 			else
 				r.setVisible(true);

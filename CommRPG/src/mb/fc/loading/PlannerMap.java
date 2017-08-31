@@ -219,4 +219,9 @@ public class PlannerMap extends Map {
 	public String getMapName() {
 		return mapName;
 	}
+
+	@Override
+	public void intializeRoofs() {}
+	
+	
 }

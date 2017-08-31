@@ -2801,6 +2801,21 @@ public class PlannerDefinitions {
 		allowableLines.add(new PlannerLineDef("battleregion", "battleregion",
 				"Defines the area that any hero/enemy and the battle cursor can be moved to in a battle on this map",
 				definingValues));
+		
+		// door
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_SPRITE_IMAGE,
+				PlannerValueDef.TYPE_STRING, "image", false, "Door Image",
+				"The image that should be used for this door"));
+		allowableLines.add(new PlannerLineDef("door", "door",
+				"Defines this area as a door, when the hero walks in to it it will disappear",
+				definingValues));
+		
+		// roof
+		definingValues = new ArrayList<PlannerValueDef>();
+		allowableLines.add(new PlannerLineDef("roof", "roof",
+				"Defines this area as a roof location, any tiles on the 'Roof' layer on the map will be displayed when the character is not in this location",
+				definingValues));
 
 		// sprite
 		definingValues = new ArrayList<PlannerValueDef>();

@@ -99,6 +99,10 @@ public class MapEditorRenderPanel extends JPanel implements MouseListener
 						}
 					}
 				}
+				
+				if (m.getClickCount() == 2 & selected != null) {
+					parentPanel.editMapObject();
+				}
 			}
 
 			if (selected != null)
