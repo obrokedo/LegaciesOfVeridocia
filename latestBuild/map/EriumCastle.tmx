@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="2017.07.25" orientation="orthogonal" renderorder="right-down" width="128" height="128" tilewidth="12" tileheight="12" nextobjectid="96">
+<map version="1.0" tiledversion="2017.07.25" orientation="orthogonal" renderorder="right-down" width="128" height="128" tilewidth="12" tileheight="12" nextobjectid="126">
  <tileset firstgid="1" name="overworld(day)-Master" tilewidth="12" tileheight="12" tilecount="1296" columns="36">
   <image source="../image/overworld(day)-Master.png" trans="495d47" width="432" height="432"/>
  </tileset>
@@ -49,7 +49,7 @@
    H4sIAAAAAAAAC+2cQW7UMBhGs5lKsIfuywE5EhL0EEgoh6gEnIADwB4q0oUlYxLHcZLfv/O9J30aeSYLz/dkz6RJZxj+5fdtGP6QS+b5NqyC/+sG/9rBv3bwrx38awf/2sG/dvCvHfxrB//awb928K8d/GsH/9rBv3bwrx38awf/2sG/dvCvHfxrB//awb928K8d/GsH/9rBv3bwrx38awf/2sG/dq7s/+3dOWn9vvBf9r4+TvkU5UMyrk2PfSj6/zLlfZTPybg2PfaBf/wr+v855deM//j5reMe+1D1/2r6vvb67n//8fNbxz32oer/YXL2bsZ//PzWcY99qPo/4/P/TeV5o8cer+z/65RvUZ6ScW3i88rcOWX82uPNZ49X9n8W8b6S21Pi10b8u3tf+Mc//vG/lfh7Re47Rfzad/y7e1/WeOwR/3Z47BH/dnjsEf92eOwR/3Z47BH/dnjsEf92eOwR/3Z47BH/dnjsEf92eOwR/3Z47BH/dnjsEf92eOwR/3Z47BH/dnjsEf92eOwR/3Z47BH/dnjsEf92eOwR/3Z47BH/dnjsEf92eOwR/3Z47BH/dnjssaSn2v93bf27Sz+cpbXrWv/p7yi1isf103tK/Kf/R98q+Pfhf89v59SM8e/L/57fzqkZ49+X/z2/nVMzxr8v/3z+Xyf41w7+tYN/7Xj8O+kS+Md/676uFvxrB//a6cl/6XXI1p2uxdP8e/Jfeh3S8z7x7Gz+PfkvPQ9N94nWzuO53M/8Xbvlee4V/IfrheEx3Sda7gfpen/MzBv/eZb8h+uF4TE9zno/yK33MTNv/OdZ8h+uF4bHcFyL/WBuvcfrO/afzhv/eUo//8Nxa/vBGet+br3H63u8rc/f8n7Ll/n2wlb/a/vBkessrPu59R6v7xL/lvdbvsy3F7b6X9sPjlxn95Hf3Hov8W95vW0U8p/uB0eus/C9fm294/98lvyn4yN7HpPHJd8lfeN/H7X+l+47TjN3HP79UOt/6b7jNHPH5fzvnT/+91Hqf+m+4zRzx+G/H87+/D9qfvg/B/xr+w8c7R/6Av8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANATfwHs0Ud1AAABAA==
   </data>
  </layer>
- <layer name="Walkable" width="128" height="128" visible="0" opacity="0.81">
+ <layer name="Walkable" width="128" height="128" opacity="0.81">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAC+2XWY4dMQhFe/+7SPaSrCv58Y8lxHQZTHGlFlKVzeD2KXi/fn5+fv//+7X2k/bP/7+/az9rq+/f2uV/7fK/dvlfu/yvXf7XLv9rl/+1/fiXqotftH0lzyj+periF21fydPLPyVuvZYTzi8Xp4p/dH7a89FKyz8lbr2WE84vF6eKf3R+2vPRysp/dX/y5mUVmn9rPGo/6ty6cobKyyo0/9Z41H7UuX2Ff1Qczt/9vss5Unl8hX9UHM7f/b7LOVJ5vM6/VNY4Wn9Uft3ObQr/UlnjaP1R+XU7tyr+OVn3V/NF5VedTzf+OVn3V/NF5Vedj5Z/qarvc7f+2i0fShz/UlXf5279tVs+lKT8V9/f13jrmo+2/x9V39/XeOuaj7X/V9/XV3nrls/y/+18lv9v57P8fzsfLf/3fdHKuz/LL6pea9wqcfzf90Ur7/4sv6h6rXGrJO3/R9Ln0u+I9Xl0H4yKJ83HK3T/P5I+l35HrM+j+2BUPGk+Xk2Z/ylVz89dfy9I91PrunDA8VA9P3f9vSDdT63rxn+3PLLrtGoK/93yyK7TKjT/R9Ln3nu+/NfE4fqv9Ln3ni//NXGk/GfzUBV/Gv+cfyn/2TxUxZ/GP+dfyx/1/DUuulhUnbei+Keev8ZFF4uq81Y3/u99VBwu/jQrrZM7F+48q/m/91FxuPjTrLRO7ly489Ty34ULLh+rUH60cbh43vPQ7uvad29J10mF8qONw8Xznod2X3f+s+bnqvyzvp9UPt35z5qfq/LP+n5S+XS7t965+JbUH/Xeq+pz5Orrdm+9c/EtqT/qvVfV58jVN4V/a//z+n9lfqHiTOHf2v+8/l+ZX6g41r6aJe291u6Prv81/lF9DyXtvdbuj67/Nf67Sctp9dwSPb94Je3/XaTltHpuiZ5fvJo6/3Prpe8pWeeG1/r/0Wv8cOul7ylZ54ZX+/8U/jlx66r6//Ivy+OWlWvufXb/r+Zfq6j5Fc0/mt+p/V+rqPkVzT+a3+3/b/X/6Hq5eK/wP7X/R9fLxVv+sRxx66R+svu/Na+v8c/lw62T+snu/9a8svjXCuWH8+vlTepHGh/V/7Mk5V8rlB/Or5c3qR9pfFT/z9Jr/T+b/6y5JZt/Kn73/p/Nf9bcks0/Fb96LkXzo12Hrjcq/6jvaPVciuZHuw5db1T+Ud/RrP5P+dU+R/EWVa81H3QeXv6z7qH2OYq3qHqt+aDzWP7f5p8S915b3/KPrdeaD5WX9r22vqw+hO5bWTxbudfmH5U35zerD6H7VhbPVu61+Uflzfk9quZnCv/e/LPzOqrmZwr/3vyz8zqSzpWUpP3Q63cq/9R+7XtuHfVcOldSkvZDr9+p/FP7te+5ddTz6n5vnYutivpecXG8vxdQ53irut9b52Kror5XXBzv7wXUOd6q5l07F2vz5uqNOg9pHei4U/hHzc1cvVHnIa0DHXc6/1Ms9X+gJJ1XpvM/xVL/B0rSeUXqHzX/Lv9Y/rO+L6j5d/nH8p/1fenKW7d8Xq/zjnPUlbdu+bxe5x3nqCtvUfnc6tqfq/p/NQ/R+dzq2p+3/8tUnecrddxxjrrzz6k6z1fquOMcafm/1Y2v1/LJyvuOc6Tl/1Y3vl7LJyvvO87R6/xX5+eNl53nNP6r8/PGy85zOv9ZfKH8SqVdL/Uzjf8svlB+pdKul/qZzj/HTdS+7vZoOv8cN1H7utuj7Dl0bQ97lD2Hru1hj5b/b9qj5f+b9ui+D1ZV3+e1GP6tqr7Pa238H1Xfx7U1/B9V38e1y//a5X/t8r92+V+7/K9d/tfm8B8l6338ilD8dlW3+9hN1fyi+0lUn6rul93qQflB95OoPlXdL7vVg/LT7V7vd2D53+/A8n+rmtdu54Ty0+U+U/7Qfqstqh6Un398hfWbAAABAA==
   </data>
@@ -210,7 +210,7 @@
   </object>
   <object id="17" name="Citizen 2 pub" x="1248" y="528" width="24" height="24">
    <properties>
-    <property name="npc" value="animation=Man1 textid=15 wander=0"/>
+    <property name="npc" value="animation=Man1 textid=15 wander=0 facing=3"/>
    </properties>
   </object>
   <object id="19" name="Soldier 1 pub" x="1392" y="480" width="24" height="24">
@@ -220,7 +220,7 @@
   </object>
   <object id="20" name="Soldier 2 pub" x="1368" y="552" width="24" height="24">
    <properties>
-    <property name="npc" value="animation=Guard1 textid=14 wander=0"/>
+    <property name="npc" value="animation=Guard1 textid=14 wander=0 facing=0"/>
    </properties>
   </object>
   <object id="21" name="Soldier 7" x="744" y="528" width="24" height="24">
@@ -366,6 +366,156 @@
   <object id="51" name="Citizen 1 Bartender Pub" x="1272" y="408" width="24" height="24">
    <properties>
     <property name="npc" value="animation=Man1 textid=12 wander=0"/>
+   </properties>
+  </object>
+  <object id="96" name="SearchNoItem" x="72" y="216" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="97" name="SearchNoItem" x="72" y="240" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="98" name="SearchNoItem" x="120" y="264" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="99" name="SearchNoItem" x="144" y="264" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="100" name="SearchNoItem" x="288" y="384" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="101" name="SearchNoItem" x="432" y="408" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="102" name="SearchNoItem" x="432" y="480" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="103" name="SearchNoItem" x="72" y="480" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="104" name="SearchNoItem" x="72" y="504" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="105" name="SearchNoItem" x="1032" y="240" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="106" name="SearchNoItem" x="1056" y="216" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="107" name="SearchNoItem" x="1056" y="192" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="108" name="SearchNoItem" x="1080" y="168" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="109" name="SearchNoItem" x="1104" y="168" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="110" name="SearchNoItem" x="1128" y="168" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="111" name="SearchNoItem" x="1152" y="168" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="112" name="SearchNoItem" x="1176" y="144" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="113" name="SearchNoItem" x="1200" y="144" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="114" name="SearchNoItem" x="1224" y="144" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="115" name="SearchNoItem" x="1272" y="168" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="116" name="SearchNoItem" x="1296" y="168" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="117" name="SearchNoItem" x="1392" y="144" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="118" name="SearchNoItem" x="1416" y="144" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="119" name="SearchNoItem" x="1440" y="144" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="120" name="SearchNoItem" x="1416" y="264" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="121" name="SearchNoItem" x="1440" y="264" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="122" name="SearchNoItem" x="1440" y="552" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="123" name="SearchNoItem" x="1440" y="480" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="124" name="SearchNoItem" x="1440" y="528" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="125" name="SearchNoItem" x="1440" y="504" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=21"/>
    </properties>
   </object>
  </objectgroup>

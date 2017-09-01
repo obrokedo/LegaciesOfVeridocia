@@ -62,6 +62,12 @@
 <trigger id=20 description="NorthJailStairsExit" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<loadmap mapdata="eriumjail" enter="NorthStairsEntrance"/>
 </trigger>
+<trigger id=21 description="SearchNoItem" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<showtext textid=21/>
+</trigger>
+<trigger id=22 description="KeepRoaming" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<showtext textid=22/>
+</trigger>
 <text id=0 description="Entrance Guard">
 	<string require=-1, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="" message="Your shift is about to start; you had better get going!<hardstop>"/>
 </text>
@@ -123,7 +129,13 @@
 	<string require=-1, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="" message="Despite working in the kitchen, I stay thin by delivering the food upstairs!<hardstop>"/>
 </text>
 <text id=20 description="Soldier near courtyard">
-	<string require=-1, exclude=-1, trigger=1 heroportrait=-1 enemyportrait=-1 animportrait="" message="You're a bit early, Noah. Are you reporting for duty?<hardStop>"/>
+	<yesno require=-1, exclude=-1, triggeryes=1 triggerno=22 heroportrait=-1 enemyportrait=-1 animportrait="" message="You're a bit early, Noah. Are you reporting for duty?"/>
+</text>
+<text id=21 description="SearchNoItem">
+	<string require=-1, exclude=-1, trigger=-1 heroportrait=0 enemyportrait=-1 animportrait="" message="There doesnt seem to be anything here<hardstop>"/>
+</text>
+<text id=22 description="KeepRoaming">
+	<string require=-1, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="" message="Don't be late!<hardstop>"/>
 </text>
 <condition id=0 description="SouthWestExit1" triggerid=2>
 	<enterloc location="SouthWestExit1" immediate=false/>

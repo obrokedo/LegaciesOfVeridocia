@@ -156,13 +156,13 @@
 	<assactor name="Noah" hero=0 enemyid=0 npcid="0"/>
 	<assactor name="Bartender" hero=-1 enemyid=0 npcid="Bartender1"/>
 	<camerafollow name="Noah"/>
-	<quiver name="Bartender"/>
-	<grow name="Bartender" time=1000/>
-	<wait time=1000/>
-	<shrink name="Bartender" time=1000/>
-	<wait time=1000/>
+	<haltingmove name="Bartender" x=1800 y=384 speed="2" movehor=false movediag=false/>
+	<tremble name="Bartender"/>
+	<wait time=100/>
+	<stopse name="Bartender"/>
 	<speech text="Hey!<pause> Who said you could go up there!<hardstop>" heroportrait=-1 enemyportrait=-1 animportrait=""/>
-	<haltingmove name="Noah" x=1752 y=384 speed="10" movehor=false movediag=false/>
+	<haltingmove name="Noah" x=1752 y=384 speed="2" movehor=false movediag=false/>
+	<facing name="Noah" dir=1/>
 </cinematic>
 <condition id=0 description="NorthWestExit1" triggerid=4>
 	<enterloc location="NorthWestExit1" immediate=false/>
