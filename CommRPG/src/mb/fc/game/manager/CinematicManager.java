@@ -3,6 +3,7 @@ package mb.fc.game.manager;
 import org.newdawn.slick.Graphics;
 
 import mb.fc.cinematic.Cinematic;
+import mb.fc.engine.message.IntMessage;
 import mb.fc.engine.message.Message;
 import mb.fc.engine.message.ShowCinMessage;
 import mb.fc.game.trigger.Trigger;
@@ -57,9 +58,17 @@ public class CinematicManager extends Manager
 		switch (message.getMessageType())
 		{
 			case SHOW_CINEMATIC:
-				ShowCinMessage im = (ShowCinMessage) message;
-				this.exitTrigId = im.getExitTrigId();
-				cinematic = stateInfo.getResourceManager().getCinematicById(im.getCinId()).duplicateCinematic();
+				int cinId = -1;
+				if (message instanceof ShowCinMessage) {
+					ShowCinMessage m = ((ShowCinMessage) message);
+					cinId = m.getCinId();
+					this.exitTrigId = m.getExitTrigId();
+				} else if (message instanceof IntMessage) {
+					cinId = ((IntMessage) message).getValue();
+					this.exitTrigId = Trigger.TRIGGER_NONE;
+				}
+				
+				cinematic = stateInfo.getResourceManager().getCinematicById(cinId).duplicateCinematic();
 				cinematic.initialize(stateInfo, initializeCamera);
 				break;
 			case CIN_NEXT_ACTION:

@@ -547,6 +547,7 @@ public class Cinematic {
 				{
 					for (Sprite s : stateInfo.getSprites()) {
 						if (s.getSpriteType() == Sprite.TYPE_NPC
+								&& ((NPCSprite) s).getName() != null
 								&& ((NPCSprite) s).getName().equalsIgnoreCase((String) ce.getParam(3))) {
 							ca = new CinematicActor(
 									(AnimatedSprite) s, stateInfo);
