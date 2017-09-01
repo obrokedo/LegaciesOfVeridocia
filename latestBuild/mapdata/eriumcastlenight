@@ -2,12 +2,6 @@
 <trigger id=0 description="MapStart" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<playmusic music="castlenight"/>
 </trigger>
-<trigger id=1 description="End Battle" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="EriumCastleNight" enter="north"/>
-</trigger>
-<trigger id=2 description="Start Battle" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<startbattle battletriggers="battle1" entrance="battle1" battbg=0/>
-</trigger>
 <cinematic id=0 description="scene1-1" camerax=600 cameray=0>
 	<addactor x=0 y=0 name="Cam" anim="Noah" startanim="Down" visible=false init=true associatedhero=0/>
 	<addactor x=816 y=1056 name="Noah" anim="Noah" startanim="Left" visible=true init=true associatedhero=0/>

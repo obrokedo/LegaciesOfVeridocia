@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="2017.07.25" orientation="orthogonal" renderorder="right-down" width="128" height="128" tilewidth="12" tileheight="12" nextobjectid="126">
+<map version="1.0" tiledversion="2017.07.25" orientation="orthogonal" renderorder="right-down" width="128" height="128" tilewidth="12" tileheight="12" nextobjectid="142">
  <tileset firstgid="1" name="overworld(day)-Master" tilewidth="12" tileheight="12" tilecount="1296" columns="36">
   <image source="../image/overworld(day)-Master.png" trans="495d47" width="432" height="432"/>
  </tileset>
@@ -303,9 +303,9 @@
     <property name="npc" value="animation=Mage1 textid=10 wander=2"/>
    </properties>
   </object>
-  <object id="37" name="Mage 2 Library" x="336" y="864" width="24" height="24">
+  <object id="37" name="Mage 2 Library" x="288" y="840" width="24" height="24">
    <properties>
-    <property name="npc" value="animation=Mage1 textid=11 wander=2"/>
+    <property name="npc" value="name=Mage2 animation=Mage1 textid=11 wander=0 facing=0"/>
    </properties>
   </object>
   <object id="38" name="Library Door 1" x="216" y="972" width="24" height="24">
@@ -517,6 +517,62 @@
    <properties>
     <property name="SEARCHAREA" value="searchtrigger=21"/>
    </properties>
+  </object>
+  <object id="126" name="Book1" x="288" y="144" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=24"/>
+   </properties>
+  </object>
+  <object id="127" name="Book2" x="336" y="144" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=25"/>
+   </properties>
+  </object>
+  <object id="128" name="Book3" x="120" y="456" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=26"/>
+   </properties>
+  </object>
+  <object id="129" name="Book4" x="384" y="528" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=27"/>
+   </properties>
+  </object>
+  <object id="130" name="Book5" x="168" y="672" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=28"/>
+   </properties>
+  </object>
+  <object id="131" name="Book6" x="288" y="672" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=29"/>
+   </properties>
+  </object>
+  <object id="132" name="Book7" x="384" y="744" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=30"/>
+   </properties>
+  </object>
+  <object id="133" name="Book8" x="144" y="744" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=31"/>
+   </properties>
+  </object>
+  <object id="134" name="Book9" x="96" y="816" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=32"/>
+   </properties>
+  </object>
+  <object id="135" name="Book10" x="312" y="816" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=33"/>
+   </properties>
+  </object>
+  <object id="141" x="72" y="816">
+   <properties>
+    <property name="roof" value=""/>
+   </properties>
+   <polyline points="0,-672 1392,-672 1392,408 1104,408 1104,336 984,336 984,360 936,360 936,384 888,384 888,408 864,408 864,432 624,432 624,408 600,396 600,384 552,384 552,360 504,360 504,336 408,336 408,168 0,168 0,-672"/>
   </object>
  </objectgroup>
  <objectgroup name="Battle"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="2017.07.25" orientation="orthogonal" renderorder="right-down" width="120" height="110" tilewidth="12" tileheight="12" nextobjectid="45">
+<map version="1.0" tiledversion="2017.07.25" orientation="orthogonal" renderorder="right-down" width="120" height="110" tilewidth="12" tileheight="12" nextobjectid="53">
  <tileset firstgid="1" name="overworld(day)-Master" tilewidth="12" tileheight="12" tilecount="1296" columns="36">
   <image source="../image/overworld(day)-Master.png" trans="495d47" width="432" height="432"/>
  </tileset>
@@ -89,6 +89,41 @@
   <object id="35" name="NorthWestHallStairsEntrance" x="456" y="384" width="24" height="24">
    <properties>
     <property name="start" value="exit=NorthWestHallStairsEntrance"/>
+   </properties>
+  </object>
+  <object id="45" name="Book1" x="984" y="96" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=8"/>
+   </properties>
+  </object>
+  <object id="47" name="Book2" x="1032" y="96" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=9"/>
+   </properties>
+  </object>
+  <object id="48" name="Book3" x="312" y="648" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=10"/>
+   </properties>
+  </object>
+  <object id="49" name="Book4" x="72" y="648" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=11"/>
+   </properties>
+  </object>
+  <object id="50" name="Book5" x="1128" y="1008" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=12"/>
+   </properties>
+  </object>
+  <object id="51" name="Book6" x="288" y="336" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=13"/>
+   </properties>
+  </object>
+  <object id="52" name="Book7" x="336" y="336" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=14"/>
    </properties>
   </object>
  </objectgroup>

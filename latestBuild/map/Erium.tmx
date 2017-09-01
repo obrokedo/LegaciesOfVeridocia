@@ -201,11 +201,6 @@
     <property name="SEARCHAREA" value="searchtrigger=17"/>
    </properties>
   </object>
-  <object id="123" name="Book1" x="576" y="312" width="24" height="24">
-   <properties>
-    <property name="SEARCHAREA" value="searchtrigger=20"/>
-   </properties>
-  </object>
   <object id="124" name="Book2" x="264" y="696" width="24" height="24">
    <properties>
     <property name="SEARCHAREA" value="searchtrigger=21"/>
@@ -219,16 +214,6 @@
   <object id="126" name="Book1" x="600" y="312" width="24" height="24">
    <properties>
     <property name="SEARCHAREA" value="searchtrigger=20"/>
-   </properties>
-  </object>
-  <object id="127" name="Book1" x="624" y="312" width="24" height="24">
-   <properties>
-    <property name="SEARCHAREA" value="searchtrigger=20"/>
-   </properties>
-  </object>
-  <object id="128" name="Book2" x="288" y="696" width="24" height="24">
-   <properties>
-    <property name="SEARCHAREA" value="searchtrigger=21"/>
    </properties>
   </object>
  </objectgroup>

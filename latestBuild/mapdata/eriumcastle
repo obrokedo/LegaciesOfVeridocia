@@ -68,6 +68,39 @@
 <trigger id=22 description="KeepRoaming" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<showtext textid=22/>
 </trigger>
+<trigger id=23 description="Mage2RunsOff" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<showcin cinid=0 exittrigid=-1/>
+</trigger>
+<trigger id=24 description="Book1" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<showtext textid=23/>
+</trigger>
+<trigger id=25 description="Book2" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<showtext textid=24/>
+</trigger>
+<trigger id=26 description="Book3" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<showtext textid=25/>
+</trigger>
+<trigger id=27 description="Book4" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<showtext textid=26/>
+</trigger>
+<trigger id=28 description="Book5" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<showtext textid=27/>
+</trigger>
+<trigger id=29 description="Book6" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<showtext textid=28/>
+</trigger>
+<trigger id=30 description="Book7" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<showtext textid=29/>
+</trigger>
+<trigger id=31 description="Book8" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<showtext textid=30/>
+</trigger>
+<trigger id=32 description="Book9" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<showtext textid=31/>
+</trigger>
+<trigger id=33 description="Book10" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<showtext textid=32/>
+</trigger>
 <text id=0 description="Entrance Guard">
 	<string require=-1, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="" message="Your shift is about to start; you had better get going!<hardstop>"/>
 </text>
@@ -102,7 +135,7 @@
 	<string require=-1, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="" message="Grand Mage Mistal has had us researching some interesting magic recently.<hardstop>"/>
 </text>
 <text id=11 description="Mage 2 library">
-	<string require=-1, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="" message="Do not be fooled by my commonplace appearance. (trigger cinimatic to turn npc into dog and run off)<hardstop>"/>
+	<string require=-1, exclude=-1, trigger=23 heroportrait=-1 enemyportrait=-1 animportrait="" message="Do not be fooled by my commonplace appearance.<hardstop>"/>
 </text>
 <text id=12 description="Citizen 1 (Bartender) pub">
 	<string require=-1, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="" message="Oi, Noah. Why don'tcha come in for a drink after your shift?<hardstop>"/>
@@ -137,6 +170,47 @@
 <text id=22 description="KeepRoaming">
 	<string require=-1, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="" message="Don't be late!<hardstop>"/>
 </text>
+<text id=23 description="Book1">
+	<string require=-1, exclude=-1, trigger=-1 heroportrait=0 enemyportrait=-1 animportrait="" message="There's a book here.<pause> The title reads, Preparing Meals for an Army.<hardstop>"/>
+</text>
+<text id=24 description="Book2">
+	<string require=-1, exclude=-1, trigger=-1 heroportrait=0 enemyportrait=-1 animportrait="" message="There's a book here.<pause> The title reads, Courtesy and Etiquette.<hardstop>"/>
+</text>
+<text id=25 description="Book3">
+	<string require=-1, exclude=-1, trigger=-1 heroportrait=0 enemyportrait=-1 animportrait="" message="There's a book here.<pause> The title reads, The Quartermaster's Manifest.<hardstop>"/>
+</text>
+<text id=26 description="Book4">
+	<string require=-1, exclude=-1, trigger=-1 heroportrait=0 enemyportrait=-1 animportrait="" message="There's a book here.<pause> The title reads, Mixed Unit Strategy for irregular Forces.<hardstop>"/>
+</text>
+<text id=27 description="Book5">
+	<string require=-1, exclude=-1, trigger=-1 heroportrait=0 enemyportrait=-1 animportrait="" message="There's a book here.<pause> The title reads, The Adventures of a Princess.<hardstop>"/>
+</text>
+<text id=28 description="Book6">
+	<string require=-1, exclude=-1, trigger=-1 heroportrait=0 enemyportrait=-1 animportrait="" message="There's a book here.<pause> The title reads, Sage Advise.<hardstop>"/>
+</text>
+<text id=29 description="Book7">
+	<string require=-1, exclude=-1, trigger=-1 heroportrait=0 enemyportrait=-1 animportrait="" message="There's a book here.<pause> The title reads, The Sword and the Seals.<hardstop>"/>
+</text>
+<text id=30 description="Book8">
+	<string require=-1, exclude=-1, trigger=-1 heroportrait=0 enemyportrait=-1 animportrait="" message="There's a book here.<pause> The title reads, Dreaming of Camelot: Tragedy and Heartbreak.<hardstop>"/>
+</text>
+<text id=31 description="Book9">
+	<string require=-1, exclude=-1, trigger=-1 heroportrait=0 enemyportrait=-1 animportrait="" message="There's a book here.<pause> The title reads, Shrines of the Land.<hardstop>"/>
+</text>
+<text id=32 description="Book10">
+	<string require=-1, exclude=-1, trigger=-1 heroportrait=0 enemyportrait=-1 animportrait="" message="There's a book here.<pause> The title reads, Harnessing the Flame, Vol. 1: A Beginner's Guide to Fire Magic.<hardstop>"/>
+</text>
+<cinematic id=0 description="Mage2RunsOff" camerax=0 cameray=0>
+	<assactor name="Mage2" hero=-1 enemyid=0 npcid="Mage2"/>
+	<flash name="Mage2" time=250 speed=50/>
+	<playsound sound="casting" volume=50/>
+	<wait time=250/>
+	<stopse name="Mage2"/>
+	<visible name="Mage2" isvis=false/>
+	<addactor x=288 y=828 name="Dog" anim="MistalCloakedHooded" startanim="UnDown" visible=true init=false associatedhero=-1/>
+	<haltingmovepath name="Dog" x=216 y=864 speed="3"/>
+	<haltingmovepath name="Dog" x=216 y=1152 speed="3"/>
+</cinematic>
 <condition id=0 description="SouthWestExit1" triggerid=2>
 	<enterloc location="SouthWestExit1" immediate=false/>
 </condition>
