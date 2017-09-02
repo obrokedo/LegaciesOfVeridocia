@@ -35,102 +35,102 @@
   </anim>
   <anim name="UnStand" loops="0">
     <cell index="0" delay="330">
-      <spr name="/Unpromoted/Frame0" x="158" y="-40" z="0"/>
-      <spr name="/Weapon" x="208" y="-29" z="0" angle="270.0"/>
+      <spr name="/Unpromoted/Frame0" x="151" y="-40" z="0"/>
+      <spr name="/Weapon" x="201" y="-29" z="0" angle="270.0"/>
     </cell>
     <cell index="1" delay="80">
-      <spr name="/Unpromoted/Frame1" x="158" y="-40" z="0"/>
-      <spr name="/Weapon" x="208" y="-29" z="0" angle="270.0"/>
+      <spr name="/Unpromoted/Frame1" x="151" y="-40" z="0"/>
+      <spr name="/Weapon" x="201" y="-29" z="0" angle="270.0"/>
     </cell>
     <cell index="2" delay="80">
-      <spr name="/Unpromoted/Frame2" x="158" y="-40" z="0"/>
-      <spr name="/Weapon" x="208" y="-28" z="0" angle="270.0"/>
+      <spr name="/Unpromoted/Frame2" x="151" y="-40" z="0"/>
+      <spr name="/Weapon" x="201" y="-28" z="0" angle="270.0"/>
     </cell>
     <cell index="3" delay="330">
-      <spr name="/Unpromoted/Frame3" x="158" y="-40" z="0"/>
-      <spr name="/Weapon" x="209" y="-28" z="0" angle="270.0"/>
+      <spr name="/Unpromoted/Frame3" x="151" y="-40" z="0"/>
+      <spr name="/Weapon" x="202" y="-28" z="0" angle="270.0"/>
     </cell>
     <cell index="4" delay="80">
-      <spr name="/Unpromoted/Frame4" x="158" y="-40" z="0"/>
-      <spr name="/Weapon" x="209" y="-28" z="0" angle="270.0"/>
+      <spr name="/Unpromoted/Frame4" x="151" y="-40" z="0"/>
+      <spr name="/Weapon" x="202" y="-28" z="0" angle="270.0"/>
     </cell>
     <cell index="5" delay="80">
-      <spr name="/Unpromoted/Frame5" x="158" y="-40" z="0"/>
-      <spr name="/Weapon" x="209" y="-29" z="0" angle="270.0"/>
+      <spr name="/Unpromoted/Frame5" x="151" y="-40" z="0"/>
+      <spr name="/Weapon" x="202" y="-29" z="0" angle="270.0"/>
     </cell>
     <cell index="6" delay="330">
-      <spr name="/Unpromoted/Frame6" x="158" y="-40" z="0"/>
-      <spr name="/Weapon" x="209" y="-29" z="0" angle="270.0"/>
+      <spr name="/Unpromoted/Frame6" x="151" y="-40" z="0"/>
+      <spr name="/Weapon" x="202" y="-29" z="0" angle="270.0"/>
     </cell>
   </anim>
   <anim name="UnWinddown" loops="0">
     <cell index="0" delay="30">
-      <spr name="/Unpromoted/Frame15" x="158" y="-40" z="0"/>
-      <spr name="/Weapon" x="177" y="-28" z="0" angle="252.0"/>
+      <spr name="/Unpromoted/Frame15" x="151" y="-40" z="0"/>
+      <spr name="/Weapon" x="170" y="-28" z="0" angle="252.0"/>
     </cell>
     <cell index="1" delay="30">
-      <spr name="/Unpromoted/Frame16" x="158" y="-40" z="0"/>
-      <spr name="/Weapon" x="185" y="-34" z="0" angle="262.0"/>
+      <spr name="/Unpromoted/Frame16" x="151" y="-40" z="0"/>
+      <spr name="/Weapon" x="178" y="-34" z="0" angle="262.0"/>
     </cell>
     <cell index="2" delay="30">
-      <spr name="/Unpromoted/Frame17" x="158" y="-40" z="0"/>
-      <spr name="/Weapon" x="201" y="-37" z="0" angle="278.0"/>
+      <spr name="/Unpromoted/Frame17" x="151" y="-40" z="0"/>
+      <spr name="/Weapon" x="194" y="-37" z="0" angle="278.0"/>
     </cell>
     <cell index="3" delay="110">
-      <spr name="/Unpromoted/Frame18" x="158" y="-40" z="0"/>
-      <spr name="/Weapon" x="207" y="-28" z="0" angle="270.0"/>
+      <spr name="/Unpromoted/Frame18" x="151" y="-40" z="0"/>
+      <spr name="/Weapon" x="200" y="-28" z="0" angle="270.0"/>
     </cell>
     <cell index="4" delay="330">
-      <spr name="/Unpromoted/Frame19" x="158" y="-40" z="0"/>
-      <spr name="/Weapon" x="207" y="-29" z="0" angle="270.0"/>
+      <spr name="/Unpromoted/Frame19" x="151" y="-40" z="0"/>
+      <spr name="/Weapon" x="200" y="-29" z="0" angle="270.0"/>
     </cell>
   </anim>
   <anim name="UnAttack" loops="0">
     <cell index="0" delay="30">
-      <spr name="/Unpromoted/Frame7" x="158" y="-40" z="0"/>
-      <spr name="/Weapon" x="190" y="-45" z="0" angle="360.0"/>
+      <spr name="/Unpromoted/Frame7" x="151" y="-40" z="0"/>
+      <spr name="/Weapon" x="183" y="-45" z="0" angle="360.0"/>
     </cell>
     <cell index="1" delay="30">
-      <spr name="/Unpromoted/Frame8" x="158" y="-40" z="0"/>
-      <spr name="/Weapon" x="187" y="-46" z="0" angle="360.0"/>
+      <spr name="/Unpromoted/Frame8" x="151" y="-40" z="0"/>
+      <spr name="/Weapon" x="180" y="-46" z="0" angle="360.0"/>
     </cell>
     <cell index="2" delay="100">
-      <spr name="/Unpromoted/Frame9" x="158" y="-40" z="0"/>
-      <spr name="/Weapon" x="185" y="-47" z="0" angle="360.0"/>
+      <spr name="/Unpromoted/Frame9" x="151" y="-40" z="0"/>
+      <spr name="/Weapon" x="178" y="-47" z="0" angle="360.0"/>
     </cell>
     <cell index="3" delay="50">
-      <spr name="/Unpromoted/Frame10" x="158" y="-40" z="0"/>
-      <spr name="/Weapon" x="144" y="-19" z="0" angle="209.0"/>
+      <spr name="/Unpromoted/Frame10" x="151" y="-40" z="0"/>
+      <spr name="/Weapon" x="137" y="-19" z="0" angle="209.0"/>
     </cell>
     <cell index="4" delay="30">
-      <spr name="/Unpromoted/Frame11" x="158" y="-40" z="0"/>
-      <spr name="/Weapon" x="144" y="-19" z="0" angle="209.0"/>
+      <spr name="/Unpromoted/Frame11" x="151" y="-40" z="0"/>
+      <spr name="/Weapon" x="137" y="-19" z="0" angle="209.0"/>
     </cell>
     <cell index="5" delay="30">
-      <spr name="/Unpromoted/Frame12" x="158" y="-40" z="0"/>
-      <spr name="/Weapon" x="144" y="-17" z="0" angle="205.0"/>
+      <spr name="/Unpromoted/Frame12" x="151" y="-40" z="0"/>
+      <spr name="/Weapon" x="137" y="-17" z="0" angle="205.0"/>
     </cell>
     <cell index="6" delay="60">
-      <spr name="/Unpromoted/Frame13" x="158" y="-40" z="0"/>
-      <spr name="/Weapon" x="144" y="-17" z="0" angle="205.0"/>
+      <spr name="/Unpromoted/Frame13" x="151" y="-40" z="0"/>
+      <spr name="/Weapon" x="137" y="-17" z="0" angle="205.0"/>
     </cell>
     <cell index="7" delay="1000">
-      <spr name="/Unpromoted/Frame14" x="158" y="-40" z="0"/>
-      <spr name="/Weapon" x="144" y="-18" z="0" angle="205.0"/>
+      <spr name="/Unpromoted/Frame14" x="151" y="-40" z="0"/>
+      <spr name="/Weapon" x="137" y="-18" z="0" angle="205.0"/>
     </cell>
   </anim>
   <anim name="UnDodge" loops="0">
     <cell index="0" delay="30">
-      <spr name="/Unpromoted/Frame20" x="158" y="-40" z="0"/>
-      <spr name="/Weapon" x="207" y="-27" z="0" angle="295.0"/>
+      <spr name="/Unpromoted/Frame20" x="151" y="-40" z="0"/>
+      <spr name="/Weapon" x="200" y="-27" z="0" angle="295.0"/>
     </cell>
     <cell index="1" delay="1000">
-      <spr name="/Unpromoted/Frame21" x="158" y="-40" z="0"/>
-      <spr name="/Weapon" x="204" y="-27" z="0" angle="295.0"/>
+      <spr name="/Unpromoted/Frame21" x="151" y="-40" z="0"/>
+      <spr name="/Weapon" x="197" y="-27" z="0" angle="295.0"/>
     </cell>
     <cell index="2" delay="30">
-      <spr name="/Unpromoted/Frame22" x="158" y="-40" z="0"/>
-      <spr name="/Weapon" x="207" y="-27" z="0" angle="295.0"/>
+      <spr name="/Unpromoted/Frame22" x="151" y="-40" z="0"/>
+      <spr name="/Weapon" x="200" y="-27" z="0" angle="295.0"/>
     </cell>
   </anim>
   <anim name="UnPortIdle" loops="0">
@@ -207,102 +207,102 @@
   </anim>
   <anim name="ProStand" loops="0">
     <cell index="0" delay="330">
-      <spr name="/Unpromoted/Frame0" x="158" y="-40" z="0"/>
-      <spr name="/Weapon" x="208" y="-29" z="0" angle="270.0"/>
+      <spr name="/Unpromoted/Frame0" x="151" y="-40" z="0"/>
+      <spr name="/Weapon" x="201" y="-29" z="0" angle="270.0"/>
     </cell>
     <cell index="1" delay="80">
-      <spr name="/Unpromoted/Frame1" x="158" y="-40" z="0"/>
-      <spr name="/Weapon" x="208" y="-29" z="0" angle="270.0"/>
+      <spr name="/Unpromoted/Frame1" x="151" y="-40" z="0"/>
+      <spr name="/Weapon" x="201" y="-29" z="0" angle="270.0"/>
     </cell>
     <cell index="2" delay="80">
-      <spr name="/Unpromoted/Frame2" x="158" y="-40" z="0"/>
-      <spr name="/Weapon" x="208" y="-28" z="0" angle="270.0"/>
+      <spr name="/Unpromoted/Frame2" x="151" y="-40" z="0"/>
+      <spr name="/Weapon" x="201" y="-28" z="0" angle="270.0"/>
     </cell>
     <cell index="3" delay="330">
-      <spr name="/Unpromoted/Frame3" x="158" y="-40" z="0"/>
-      <spr name="/Weapon" x="209" y="-28" z="0" angle="270.0"/>
+      <spr name="/Unpromoted/Frame3" x="151" y="-40" z="0"/>
+      <spr name="/Weapon" x="202" y="-28" z="0" angle="270.0"/>
     </cell>
     <cell index="4" delay="80">
-      <spr name="/Unpromoted/Frame4" x="158" y="-40" z="0"/>
-      <spr name="/Weapon" x="209" y="-28" z="0" angle="270.0"/>
+      <spr name="/Unpromoted/Frame4" x="151" y="-40" z="0"/>
+      <spr name="/Weapon" x="202" y="-28" z="0" angle="270.0"/>
     </cell>
     <cell index="5" delay="80">
-      <spr name="/Unpromoted/Frame5" x="158" y="-40" z="0"/>
-      <spr name="/Weapon" x="209" y="-29" z="0" angle="270.0"/>
+      <spr name="/Unpromoted/Frame5" x="151" y="-40" z="0"/>
+      <spr name="/Weapon" x="202" y="-29" z="0" angle="270.0"/>
     </cell>
     <cell index="6" delay="330">
-      <spr name="/Unpromoted/Frame6" x="158" y="-40" z="0"/>
-      <spr name="/Weapon" x="208" y="-29" z="0" angle="270.0"/>
+      <spr name="/Unpromoted/Frame6" x="151" y="-40" z="0"/>
+      <spr name="/Weapon" x="201" y="-29" z="0" angle="270.0"/>
     </cell>
   </anim>
   <anim name="ProWinddown" loops="0">
     <cell index="0" delay="30">
-      <spr name="/Unpromoted/Frame15" x="158" y="-40" z="0"/>
-      <spr name="/Weapon" x="177" y="-28" z="0" angle="252.0"/>
+      <spr name="/Unpromoted/Frame15" x="153" y="-40" z="0"/>
+      <spr name="/Weapon" x="172" y="-28" z="0" angle="252.0"/>
     </cell>
     <cell index="1" delay="30">
-      <spr name="/Unpromoted/Frame16" x="158" y="-40" z="0"/>
-      <spr name="/Weapon" x="185" y="-34" z="0" angle="262.0"/>
+      <spr name="/Unpromoted/Frame16" x="153" y="-40" z="0"/>
+      <spr name="/Weapon" x="180" y="-34" z="0" angle="262.0"/>
     </cell>
     <cell index="2" delay="30">
-      <spr name="/Unpromoted/Frame17" x="158" y="-40" z="0"/>
-      <spr name="/Weapon" x="201" y="-37" z="0" angle="278.0"/>
+      <spr name="/Unpromoted/Frame17" x="153" y="-40" z="0"/>
+      <spr name="/Weapon" x="196" y="-37" z="0" angle="278.0"/>
     </cell>
     <cell index="3" delay="110">
-      <spr name="/Unpromoted/Frame18" x="158" y="-40" z="0"/>
-      <spr name="/Weapon" x="207" y="-28" z="0" angle="270.0"/>
+      <spr name="/Unpromoted/Frame18" x="153" y="-40" z="0"/>
+      <spr name="/Weapon" x="202" y="-28" z="0" angle="270.0"/>
     </cell>
     <cell index="4" delay="330">
-      <spr name="/Unpromoted/Frame19" x="158" y="-40" z="0"/>
-      <spr name="/Weapon" x="207" y="-29" z="0" angle="270.0"/>
+      <spr name="/Unpromoted/Frame19" x="153" y="-40" z="0"/>
+      <spr name="/Weapon" x="202" y="-29" z="0" angle="270.0"/>
     </cell>
   </anim>
   <anim name="ProAttack" loops="0">
     <cell index="0" delay="30">
-      <spr name="/Unpromoted/Frame7" x="158" y="-40" z="0"/>
-      <spr name="/Weapon" x="190" y="-45" z="0" angle="360.0"/>
+      <spr name="/Unpromoted/Frame7" x="151" y="-40" z="0"/>
+      <spr name="/Weapon" x="183" y="-45" z="0" angle="360.0"/>
     </cell>
     <cell index="1" delay="30">
-      <spr name="/Unpromoted/Frame8" x="158" y="-40" z="0"/>
-      <spr name="/Weapon" x="187" y="-46" z="0" angle="360.0"/>
+      <spr name="/Unpromoted/Frame8" x="151" y="-40" z="0"/>
+      <spr name="/Weapon" x="180" y="-46" z="0" angle="360.0"/>
     </cell>
     <cell index="2" delay="100">
-      <spr name="/Unpromoted/Frame9" x="158" y="-40" z="0"/>
-      <spr name="/Weapon" x="185" y="-47" z="0" angle="360.0"/>
+      <spr name="/Unpromoted/Frame9" x="151" y="-40" z="0"/>
+      <spr name="/Weapon" x="178" y="-47" z="0" angle="360.0"/>
     </cell>
     <cell index="3" delay="50">
-      <spr name="/Unpromoted/Frame10" x="158" y="-40" z="0"/>
-      <spr name="/Weapon" x="144" y="-19" z="0" angle="209.0"/>
+      <spr name="/Unpromoted/Frame10" x="151" y="-40" z="0"/>
+      <spr name="/Weapon" x="137" y="-19" z="0" angle="209.0"/>
     </cell>
     <cell index="4" delay="30">
-      <spr name="/Unpromoted/Frame11" x="158" y="-40" z="0"/>
-      <spr name="/Weapon" x="144" y="-19" z="0" angle="209.0"/>
+      <spr name="/Unpromoted/Frame11" x="151" y="-40" z="0"/>
+      <spr name="/Weapon" x="137" y="-19" z="0" angle="209.0"/>
     </cell>
     <cell index="5" delay="30">
-      <spr name="/Unpromoted/Frame12" x="158" y="-40" z="0"/>
-      <spr name="/Weapon" x="144" y="-17" z="0" angle="205.0"/>
+      <spr name="/Unpromoted/Frame12" x="151" y="-40" z="0"/>
+      <spr name="/Weapon" x="137" y="-17" z="0" angle="205.0"/>
     </cell>
     <cell index="6" delay="60">
-      <spr name="/Unpromoted/Frame13" x="158" y="-40" z="0"/>
-      <spr name="/Weapon" x="144" y="-17" z="0" angle="205.0"/>
+      <spr name="/Unpromoted/Frame13" x="151" y="-40" z="0"/>
+      <spr name="/Weapon" x="137" y="-17" z="0" angle="205.0"/>
     </cell>
     <cell index="7" delay="1000">
-      <spr name="/Unpromoted/Frame14" x="158" y="-40" z="0"/>
-      <spr name="/Weapon" x="144" y="-18" z="0" angle="205.0"/>
+      <spr name="/Unpromoted/Frame14" x="151" y="-40" z="0"/>
+      <spr name="/Weapon" x="137" y="-18" z="0" angle="205.0"/>
     </cell>
   </anim>
   <anim name="ProDodge" loops="0">
     <cell index="0" delay="30">
-      <spr name="/Unpromoted/Frame20" x="158" y="-40" z="0"/>
-      <spr name="/Weapon" x="207" y="-27" z="0" angle="295.0"/>
+      <spr name="/Unpromoted/Frame20" x="151" y="-40" z="0"/>
+      <spr name="/Weapon" x="200" y="-27" z="0" angle="295.0"/>
     </cell>
     <cell index="1" delay="1000">
-      <spr name="/Unpromoted/Frame21" x="158" y="-40" z="0"/>
-      <spr name="/Weapon" x="204" y="-27" z="0" angle="295.0"/>
+      <spr name="/Unpromoted/Frame21" x="151" y="-40" z="0"/>
+      <spr name="/Weapon" x="197" y="-27" z="0" angle="295.0"/>
     </cell>
     <cell index="2" delay="30">
-      <spr name="/Unpromoted/Frame22" x="158" y="-40" z="0"/>
-      <spr name="/Weapon" x="207" y="-27" z="0" angle="295.0"/>
+      <spr name="/Unpromoted/Frame22" x="151" y="-40" z="0"/>
+      <spr name="/Weapon" x="200" y="-27" z="0" angle="295.0"/>
     </cell>
   </anim>
   <anim name="ProPortIdle" loops="0">
