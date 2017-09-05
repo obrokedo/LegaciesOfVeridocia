@@ -48,10 +48,14 @@ public class YesNoMenu extends SpeechMenu
 		{
 			// Handle unlistened to selections
 			if (this.getMenuListener() == null && yesTrigger != null && noTrigger != null) {
-				if (yesSelected) 
-					stateInfo.getResourceManager().getTriggerEventById(yesTrigger).perform(stateInfo);
-				else
-					stateInfo.getResourceManager().getTriggerEventById(noTrigger).perform(stateInfo);
+				if (yesSelected) {
+					if (yesTrigger != Trigger.TRIGGER_NONE)
+						stateInfo.getResourceManager().getTriggerEventById(yesTrigger).perform(stateInfo);
+				}
+				else {
+					if (noTrigger != Trigger.TRIGGER_NONE)
+						stateInfo.getResourceManager().getTriggerEventById(noTrigger).perform(stateInfo);
+				}
 			}
 			return MenuUpdate.MENU_CLOSE;
 		}

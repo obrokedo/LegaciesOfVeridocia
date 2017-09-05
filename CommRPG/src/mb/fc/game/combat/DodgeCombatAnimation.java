@@ -2,6 +2,7 @@ package mb.fc.game.combat;
 
 import org.newdawn.slick.Graphics;
 
+import mb.fc.game.exception.BadResourceException;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.ui.PaddedGameContainer;
 import mb.fc.loading.FCResourceManager;
@@ -63,9 +64,11 @@ public class DodgeCombatAnimation extends CombatAnimation
 	}
 
 	private static String getDodgeAnimationName(CombatSprite cs) {
-		if (cs.getSpellsDescriptors().size() > 0)
+		if (cs.hasAnimation("Dodge"))
+			return "Dodge";
+		else if (cs.getSpellsDescriptors().size() > 0)
 			return "Spell";
 		else
-			return "Dodge";
+			throw new BadResourceException("CombatSprite " + cs.getName() + " has no 'Dodge' animation defined");
 	}
 }
