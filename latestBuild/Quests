@@ -1,8 +1,8 @@
-<quest id=0 description="Talk to mom">
+<quest id=0 description="EriumWeaponShopInitialTalk">
 </quest>
-<quest id=1 description="Talk to shop">
+<quest id=1 description="EriumCastleUpperSharnaTalk">
 </quest>
-<quest id=2 description="EriumWeaponShopInitialTalk">
+<quest id=2 description="Battle2">
 </quest>
-<quest id=3 description="EriumCastleUpperSharnaTalk">
+<quest id=3 description="EriumCastleMage2Hide">
 </quest>

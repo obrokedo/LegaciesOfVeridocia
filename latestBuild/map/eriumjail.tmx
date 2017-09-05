@@ -129,8 +129,8 @@
   </object>
  </objectgroup>
  <objectgroup name="Trigger Regions">
-  <object id="50" x="312" y="252" width="120" height="144"/>
-  <object id="51" x="432" y="252" width="96" height="144"/>
+  <object id="50" name="FirstWave" x="312" y="252" width="120" height="144"/>
+  <object id="51" name="SecondWave" x="432" y="252" width="96" height="144"/>
   <object id="53" x="240" y="312" width="24" height="24">
    <properties>
     <property name="battletrigger" value="triggerid=4"/>
