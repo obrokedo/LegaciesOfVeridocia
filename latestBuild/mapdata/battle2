@@ -22,9 +22,9 @@
 	<killenemies unitid=6/>
 	<showcin cinid=0 exittrigid=-1/>
 </trigger>
-<trigger id=5 description="Noah Exit" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<showcin cinid=1 exittrigid=-1/>
+<trigger id=5 description="Noah Exit" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=true triggerimmediately=false>
 	<completequest questid=3/>
+	<showcin cinid=1 exittrigid=-1/>
 </trigger>
 <trigger id=6 description="NoahFirst" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<loadcin mapdata="eriumcastlenight" cinid=3/>
@@ -53,11 +53,18 @@
 	<removeactor name="Olivia"/>
 </cinematic>
 <cinematic id=1 description="Noah Exit" camerax=0 cameray=0>
+	<speech text="test<hardstop>" heroportrait=-1 enemyportrait=-1 animportrait=""/>
 	<assactor name="Noah" hero=0 enemyid=0 npcid=""/>
+	<assactor name="Sharna" hero=1 enemyid=0 npcid=""/>
+	<assactor name="Huun" hero=2 enemyid=0 npcid=""/>
+	<camerafollow name="Noah"/>
 	<haltingmovepath name="Noah" x=672 y=72 speed="2.4"/>
 	<speech text="I can't belive we made it!<hardstop>" heroportrait=0 enemyportrait=-1 animportrait=""/>
 	<speech text="Don't die on us!<hardstop>" heroportrait=0 enemyportrait=-1 animportrait=""/>
 	<haltingmovepath name="Noah" x=744 y=72 speed="2.4"/>
+	<removeactor name="Noah"/>
+	<removeactor name="Sharna"/>
+	<removeactor name="Huun"/>
 </cinematic>
 <condition id=0 description="EnterBottomMid" triggerid=2>
 	<enterloc location="SecondWave" immediate=false/>
