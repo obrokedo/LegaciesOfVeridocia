@@ -3,9 +3,9 @@
 	<setbattlecond allleaders=false templeader=3, tempenemyleader=-1,/>
 	<playmusic music="battle1"/>
 </trigger>
-<trigger id=1 description="Battle Over" require=3, exclude=3, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+<trigger id=1 description="Battle Over" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<completequest questid=2/>
-	<runtriggers triggers=-1,/>
+	<runtriggers triggers=6,/>
 	<runtriggers triggers=7,/>
 </trigger>
 <trigger id=2 description="Trigger Second Wave" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
@@ -15,22 +15,29 @@
 	<changeai aitype=1 id=5 heroid=0 targetid=0 x=0 y=0/>
 	<changeai aitype=3 id=6 heroid=0 targetid=7 x=0 y=0/>
 </trigger>
-<trigger id=4 description="Craig Olivia Exit" require=-1, exclude=-1, nonretrig=true retrigonenter=false triggeronce=false triggerimmediately=false>
+<trigger id=4 description="Capitan Killed" require=-1, exclude=-1, nonretrig=true retrigonenter=false triggeronce=false triggerimmediately=false>
 	<killenemies unitid=3/>
 	<killenemies unitid=4/>
 	<killenemies unitid=5/>
 	<killenemies unitid=6/>
-	<showcin cinid=0 exittrigid=-1/>
+	<runtriggers triggers=8,/>
 </trigger>
-<trigger id=5 description="Noah Exit" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=true triggerimmediately=false>
+<trigger id=5 description="Noah Exit" require=-1, exclude=4, nonretrig=true retrigonenter=false triggeronce=false triggerimmediately=false>
 	<completequest questid=3/>
 	<showcin cinid=1 exittrigid=-1/>
 </trigger>
-<trigger id=6 description="NoahFirst" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+<trigger id=6 description="Noah First" require=3, exclude=4, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<loadcin mapdata="eriumcastlenight" cinid=3/>
 </trigger>
-<trigger id=7 description="Craig First" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+<trigger id=7 description="Craig First" require=4, exclude=3, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<loadcin mapdata="eriumcastlenight" cinid=2/>
+</trigger>
+<trigger id=8 description="Craig And Olivia scene" require=-1, exclude=3, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<completequest questid=4/>
+	<showcin cinid=0 exittrigid=-1/>
+</trigger>
+<trigger id=9 description="Game Over" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<exit/>
 </trigger>
 <cinematic id=0 description="Craig Olivia Exit" camerax=0 cameray=0>
 	<assactor name="Craig" hero=3 enemyid=0 npcid="0"/>
@@ -52,18 +59,22 @@
 	<haltingmove name="Olivia" x=744 y=288 speed="2.4" movehor=false movediag=false/>
 	<removeactor name="Olivia"/>
 </cinematic>
-<cinematic id=1 description="Noah Exit" camerax=0 cameray=0>
-	<speech text="test<hardstop>" heroportrait=-1 enemyportrait=-1 animportrait=""/>
+<cinematic id=1 description="Noah Exit" camerax=504 cameray=0>
 	<assactor name="Noah" hero=0 enemyid=0 npcid=""/>
 	<assactor name="Sharna" hero=1 enemyid=0 npcid=""/>
 	<assactor name="Huun" hero=2 enemyid=0 npcid=""/>
-	<camerafollow name="Noah"/>
+	<move name="Huun" x=696 y=48 speed="3" movehor=false movediag=false/>
+	<move name="Sharna" x=720 y=96 speed="3" movehor=false movediag=false/>
 	<haltingmovepath name="Noah" x=672 y=72 speed="2.4"/>
+	<facing name="Noah" dir=1/>
+	<wait time=1500/>
 	<speech text="I can't belive we made it!<hardstop>" heroportrait=0 enemyportrait=-1 animportrait=""/>
 	<speech text="Don't die on us!<hardstop>" heroportrait=0 enemyportrait=-1 animportrait=""/>
 	<haltingmovepath name="Noah" x=744 y=72 speed="2.4"/>
 	<removeactor name="Noah"/>
+	<haltingmovepath name="Sharna" x=744 y=72 speed="2"/>
 	<removeactor name="Sharna"/>
+	<haltingmovepath name="Huun" x=744 y=72 speed="2"/>
 	<removeactor name="Huun"/>
 </cinematic>
 <condition id=0 description="EnterBottomMid" triggerid=2>
@@ -72,11 +83,15 @@
 <condition id=1 description="EnterBottomRight" triggerid=3>
 	<enterloc location="ThirdWave" immediate=false/>
 </condition>
-<condition id=2 description="Craig+Olivia First" triggerid=4>
+<condition id=2 description="Capitan Killed" triggerid=4>
 	<enemydeath unitid=7/>
-	<heroinbat id=0/>
 </condition>
-<condition id=3 description="NoahFirst" triggerid=5>
-	<heroinbat id=3/>
+<condition id=3 description="Top Half Killed" triggerid=5>
 	<loccontains location="Noah Half" enemy=true operator="Equals" amount=0/>
+</condition>
+<condition id=4 description="Noah Died" triggerid=9>
+	<herodeath unitid=0/>
+</condition>
+<condition id=5 description="Craig Died" triggerid=9>
+	<herodeath unitid=3/>
 </condition>
