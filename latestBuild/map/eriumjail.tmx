@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="2017.07.25" orientation="orthogonal" renderorder="right-down" width="66" height="34" tilewidth="12" tileheight="12" nextobjectid="58">
+<map version="1.0" tiledversion="2017.07.25" orientation="orthogonal" renderorder="right-down" width="66" height="34" tilewidth="12" tileheight="12" nextobjectid="59">
  <properties>
   <property name="background" value="1"/>
   <property name="shadow" value="-13"/>
@@ -129,12 +129,15 @@
   </object>
  </objectgroup>
  <objectgroup name="Trigger Regions">
-  <object id="50" name="FirstWave" x="312" y="252" width="120" height="144"/>
-  <object id="51" name="SecondWave" x="432" y="252" width="96" height="144"/>
-  <object id="53" x="240" y="312" width="24" height="24">
+  <object id="50" name="SecondWave" x="312" y="252" width="120" height="144"/>
+  <object id="51" name="ThirdWave" x="432" y="252" width="96" height="144"/>
+  <object id="53" name="FirstWave" x="240" y="312" width="24" height="24">
    <properties>
     <property name="battletrigger" value="triggerid=4"/>
    </properties>
+  </object>
+  <object id="58" name="Noah Half" x="765" y="34">
+   <polyline points="3,14 3,86 -477,86 -477,254 -741,254 -741,14 3,14"/>
   </object>
  </objectgroup>
  <objectgroup name="Meta">

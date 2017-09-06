@@ -69,7 +69,7 @@
 	<showtext textid=22/>
 </trigger>
 <trigger id=23 description="Mage2RunsOff" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<showcin cinid=0 exittrigid=35/>
+	<showcin cinid=0 exittrigid=-1/>
 </trigger>
 <trigger id=24 description="Book1" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<showtext textid=23/>
@@ -101,11 +101,7 @@
 <trigger id=33 description="Book10" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<showtext textid=32/>
 </trigger>
-<trigger id=34 description="MapStart" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<playmusic music="castlenight"/>
-	<removesprite name="Mage 2 Library"/>
-</trigger>
-<trigger id=35 description="AfterMage2RunsOff" require=-1, exclude=-1, nonretrig=true retrigonenter=true triggeronce=false triggerimmediately=false>
+<trigger id=34 description="AfterMage2RunsOff" require=-1, exclude=-1, nonretrig=true retrigonenter=true triggeronce=false triggerimmediately=false>
 	<removesprite name="Mage2"/>
 </trigger>
 <text id=0 description="Entrance Guard">
