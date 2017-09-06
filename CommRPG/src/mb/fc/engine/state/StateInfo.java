@@ -223,7 +223,6 @@ public class StateInfo
 	/************************/
 	public void sendMessage(Message message)
 	{
-		System.out.println("SEND MESSAGE: " + message.getMessageType() + " " + psi.getClientId());
 		if (message.isImmediate()) {
 			sendMessageImpl(message);
 			// Send the message to our peers, these messages will not be received locally
@@ -235,7 +234,6 @@ public class StateInfo
 
 	public void sendMessage(Message message, boolean ifHost)
 	{
-		System.out.println("SEND MESSAGE IF HOST: " + message.getMessageType() + " " + psi.getClientId() + " " + psi.isHost());
 		if (psi.isHost())
 			psi.sendMessage(message);
 
@@ -271,7 +269,6 @@ public class StateInfo
 
 	public void recieveMessage(Message message)
 	{
-		System.out.println("RECIEVE MESSAGE: " + message.getMessageType() + " " + psi.getClientId() + " " + psi.isHost());
 		newMessages.add(message);
 	}
 

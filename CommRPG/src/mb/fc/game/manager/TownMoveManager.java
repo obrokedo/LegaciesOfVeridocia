@@ -205,6 +205,10 @@ public class TownMoveManager extends Manager
 				else
 					sprite.doneMoving();
 				break;
+			case INTIIALIZE:
+				stateInfo.getCurrentMap().checkRoofs(
+						(int) stateInfo.getCurrentSprite().getLocX(), (int) stateInfo.getCurrentSprite().getLocY());
+				break;
 			default:
 				break;
 		}
