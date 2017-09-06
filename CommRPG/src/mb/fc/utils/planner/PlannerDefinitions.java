@@ -150,6 +150,29 @@ public class PlannerDefinitions {
 			Hashtable<String, PlannerContainerDef> containersByName) {
 		PlannerContainerDef cinematicContainer;
 
+		ArrayList<String> actorControl = new ArrayList<>();
+		ArrayList<String> actorSpecialEffect = new ArrayList<>();
+		ArrayList<String> actorMove = new ArrayList<>();
+		ArrayList<String> cameraEffect = new ArrayList<>();
+		ArrayList<String> sceneControl = new ArrayList<>();
+		ArrayList<String> sceneMembership = new ArrayList<>();
+		ArrayList<String> soundControl = new ArrayList<>();
+		ArrayList<String> textControl = new ArrayList<>();
+		ArrayList<String> mapControl = new ArrayList<>();
+		ArrayList<String> progressControl = new ArrayList<>();
+		
+		Hashtable<String, ArrayList<String>> menuLayout = new Hashtable<>();
+		menuLayout.put("Scene Membership", sceneMembership);
+		menuLayout.put("Scene Control", sceneControl);
+		menuLayout.put("Actor Control", actorControl);
+		menuLayout.put("Actor Move", actorMove);
+		menuLayout.put("Actor Special Effect", actorSpecialEffect);
+		menuLayout.put("Speech", textControl);
+		menuLayout.put("Camera", cameraEffect);
+		menuLayout.put("Sound", soundControl);
+		menuLayout.put("Progress", progressControl);
+		menuLayout.put("Map", mapControl);
+		
 		// Setup defining line
 		ArrayList<PlannerValueDef> definingValues = new ArrayList<PlannerValueDef>();
 		definingValues
@@ -167,9 +190,6 @@ public class PlannerDefinitions {
 				"The initial Y location of the camera (in pixels)"));
 		PlannerLineDef definingLine = new PlannerLineDef("cinematic",
 				"Cinematic", "", definingValues);
-
-		// Setup allowable containers
-		ArrayList<PlannerContainerDef> allowableContainers = new ArrayList<PlannerContainerDef>();
 
 		// Setup available types
 		ArrayList<PlannerLineDef> allowableLines = new ArrayList<PlannerLineDef>();
@@ -191,6 +211,7 @@ public class PlannerDefinitions {
 						"Wait",
 						"Halts new actions from being processed for the specified time. This is a halting action",
 						definingValues));
+		sceneControl.add("Wait");
 
 		// Add actor
 		definingValues = new ArrayList<PlannerValueDef>();
@@ -243,6 +264,8 @@ public class PlannerDefinitions {
 						"Add Actor",
 						"Adds an actor to the cinematic, this actor can be accessed in the future by its' name",
 						definingValues));
+		
+		sceneMembership.add("Add Actor");
 
 		// Associate Actor With Sprite
 		definingValues = new ArrayList<PlannerValueDef>();
@@ -262,6 +285,8 @@ public class PlannerDefinitions {
 		allowableLines.add(new PlannerLineDef("assactor", "Establish Sprite as Actor",
 						"Establishes a Sprite (NPC, Enemy, Hero) as an actor. Only one of the options should be specified above", definingValues));
 
+		sceneMembership.add("Establish Sprite as Actor");
+		
 		// Remove Actor
 		definingValues = new ArrayList<PlannerValueDef>();
 		definingValues
@@ -276,6 +301,7 @@ public class PlannerDefinitions {
 						"Remove Actor",
 						"Removes the specified actor from the cinematic. This actor will no longer be able to be the target of actions.",
 						definingValues));
+		sceneMembership.add("Remove Actor");
 
 		// Add Static Sprite
 		definingValues = new ArrayList<PlannerValueDef>();
@@ -311,6 +337,7 @@ public class PlannerDefinitions {
 						"Add Static Sprite",
 						"Adds a static sprite at the given location",
 						definingValues));
+		sceneMembership.add("Add Static Sprite");
 
 		// Remove Static Sprite
 		definingValues = new ArrayList<PlannerValueDef>();
@@ -329,6 +356,7 @@ public class PlannerDefinitions {
 						"Remove Static Sprite",
 						"Removes the static sprite with the given identifier",
 						definingValues));
+		sceneMembership.add("Remove Static Sprite");
 
 		// Halting Move
 		definingValues = new ArrayList<PlannerValueDef>();
@@ -376,6 +404,8 @@ public class PlannerDefinitions {
 						"Orders the specified actor to move to the specified coordinate. This action is 'halting' which means no further actions will be issued until this action is complete",
 						definingValues));
 		
+		actorMove.add("Halting Move");
+		
 		// Halting Move with Pathfinding
 		definingValues = new ArrayList<PlannerValueDef>();
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
@@ -404,6 +434,7 @@ public class PlannerDefinitions {
 						+ "where the original location is not known. This action is 'halting' which means no further actions will be issued "
 						+ "until this action is complete",
 						definingValues));
+		actorMove.add("Halting Move with Pathfinding");
 
 		// Move
 		definingValues = new ArrayList<PlannerValueDef>();
@@ -450,6 +481,7 @@ public class PlannerDefinitions {
 						"Move",
 						"Orders the specified actor to move to the specified coordinate.",
 						definingValues));
+		actorMove.add("Move");
 
 		// Forced Facing Move
 		definingValues = new ArrayList<PlannerValueDef>();
@@ -500,6 +532,7 @@ public class PlannerDefinitions {
 						"Move Forced Facing",
 						"Orders the specified actor to move to the specified coordinate. This actor will keep facing the same direction for the duration of the move",
 						definingValues));
+		actorMove.add("Move Forced Facing");
 
 		// Loop Move
 		definingValues = new ArrayList<PlannerValueDef>();
@@ -527,6 +560,7 @@ public class PlannerDefinitions {
 						"Move Actor in Loop",
 						"Causes the specified actor to move to the specified location, once the actor gets to that location they will teleport back to where they started when this action was first called. This action will continue until a STOP LOOP MOVE action is called on this actor or another move command is issued for this actor",
 						definingValues));
+		actorMove.add("Move Actor in Loop");
 
 		// Stop Loop Move
 		definingValues = new ArrayList<PlannerValueDef>();
@@ -540,6 +574,7 @@ public class PlannerDefinitions {
 						"Stop Actor Looping Move",
 						"Causes the specified actor to stop looping their move, they will still walk to their target location but will not teleport",
 						definingValues));
+		actorMove.add("Stop Actor Looping Move");
 
 		// Halting Anim
 		definingValues = new ArrayList<PlannerValueDef>();
@@ -565,6 +600,7 @@ public class PlannerDefinitions {
 						"Halting Animation",
 						"Causes the specified actor to perform the specified animation, This action is 'halting' which means no further actions will be issued until this action is complete.",
 						definingValues));
+		actorControl.add("Halting Animation");
 
 		// Anim
 		definingValues = new ArrayList<PlannerValueDef>();
@@ -595,6 +631,7 @@ public class PlannerDefinitions {
 						"Animation",
 						"Causes the specified actor to perform the specified animation.",
 						definingValues));
+		actorControl.add("Animation");
 
 		// Stop Anim
 		definingValues = new ArrayList<PlannerValueDef>();
@@ -605,6 +642,7 @@ public class PlannerDefinitions {
 		allowableLines.add(new PlannerLineDef("stopanim", "Stop Animation",
 				"Causes the specified actor to stop its' current animation.",
 				definingValues));
+		actorControl.add("Stop Animation");
 
 		// Spin
 		definingValues = new ArrayList<PlannerValueDef>();
@@ -634,6 +672,7 @@ public class PlannerDefinitions {
 						"Spin Actor",
 						"Causes the specified actor to begin spinning, this will cause other animations to stop for the duration of the spin. This can be used in conjunction with the grow and shrink special effect",
 						definingValues));
+		actorControl.add("Spin Actor");
 
 		// Stop Spin
 		definingValues = new ArrayList<PlannerValueDef>();
@@ -647,6 +686,7 @@ public class PlannerDefinitions {
 						"Stop Actor Spinning",
 						"Stops the specified actor from spinning. If the actor is not spinning then no action will be taken",
 						definingValues));
+		actorControl.add("Stop Actor Spinning");
 
 		// Facing
 		definingValues = new ArrayList<PlannerValueDef>();
@@ -661,6 +701,7 @@ public class PlannerDefinitions {
 		allowableLines.add(new PlannerLineDef("facing", "Set Actor Facing",
 				"Causes the specified actor to face the specified direction",
 				definingValues));
+		actorControl.add("Set Actor Facing");
 
 		// Shrink
 		definingValues = new ArrayList<PlannerValueDef>();
@@ -679,6 +720,7 @@ public class PlannerDefinitions {
 						"Shrink Actor",
 						"Causes the specified actor to shrink over time, once the time is up the actor will immediately return to normal size, so if the intention is to remove the actor then it should be removed immediately before the end of this action. This is a 'special effect'. Only one special effect can be active on a given actor at any time. This will stop any current animations.",
 						definingValues));
+		actorSpecialEffect.add("Shrink Actor");
 
 		// Grow
 		definingValues = new ArrayList<PlannerValueDef>();
@@ -697,6 +739,7 @@ public class PlannerDefinitions {
 						"Grow Actor",
 						"Causes the specified actor to grow over time from 1% height to 100% height, once the time is up the actor will immediately return to normal size. This is a 'special effect'. Only one special effect can be active on a given actor at any time. This will stop any current animations",
 						definingValues));
+		actorSpecialEffect.add("Grow Actor");
 
 		// Quiver
 		definingValues = new ArrayList<PlannerValueDef>();
@@ -712,6 +755,7 @@ public class PlannerDefinitions {
 						"Start Actor Trembling",
 						"Causes the specified actor to begin trembling. This effect will continue until a STOP SPECIAL EFFECT is issued for the actor. This is a 'special effect'. Only one special effect can be active on a given actor at any time. This will stop any current animations.",
 						definingValues));
+		actorSpecialEffect.add("Start Actor Trembling");
 
 		// Agitate
 		definingValues = new ArrayList<PlannerValueDef>();
@@ -727,6 +771,7 @@ public class PlannerDefinitions {
 						"Start Actor Agitate",
 						"Causes the specified actor to be 'Agitated'. This effect will continue until a STOP SPECIAL EFFECT is issued for the actor. This is a 'special effect'. Only one special effect can be active on a given actor at any time. This will stop any current animations.",
 						definingValues));
+		actorSpecialEffect.add("Start Actor Agitate");
 
 		// Fall on Face
 		definingValues = new ArrayList<PlannerValueDef>();
@@ -747,6 +792,7 @@ public class PlannerDefinitions {
 						"Actor Fall on Face",
 						"Causes the specified actor to fall on their face. This effect will continue until a STOP SPECIAL EFFECT is issued for the actor. This is a 'special effect'. Only one special effect can be active on a given actor at any time. This will stop any current animations.",
 						definingValues));
+		actorSpecialEffect.add("Actor Fall on Face");
 
 		// Lay on Side
 		definingValues = new ArrayList<PlannerValueDef>();
@@ -767,6 +813,7 @@ public class PlannerDefinitions {
 						"Actor Lay on Side Right",
 						"Causes the specified actor to lay on their side. This effect will continue until a STOP SPECIAL EFFECT is issued for the actor. This is a 'special effect'. Only one special effect can be active on a given actor at any time. This will stop any current animations.",
 						definingValues));
+		actorSpecialEffect.add("Actor Lay on Side Right");
 
 		// Lay on side left
 		allowableLines
@@ -775,6 +822,7 @@ public class PlannerDefinitions {
 				"Actor Lay on Side Left",
 				"Causes the specified actor to lay on their side. This effect will continue until a STOP SPECIAL EFFECT is issued for the actor. This is a 'special effect'. Only one special effect can be active on a given actor at any time. This will stop any current animations.",
 				definingValues));
+		actorSpecialEffect.add("Actor Lay on Side Left");
 
 		// Lay on Back
 		definingValues = new ArrayList<PlannerValueDef>();
@@ -795,6 +843,7 @@ public class PlannerDefinitions {
 						"Actor Lay on Back",
 						"Causes the specified actor to lay on their back. This effect will continue until a STOP SPECIAL EFFECT is issued for the actor. This is a 'special effect'. Only one special effect can be active on a given actor at any time. This will stop any current animations.",
 						definingValues));
+		actorSpecialEffect.add("Actor Lay on Back");
 
 		// Flash
 		definingValues = new ArrayList<PlannerValueDef>();
@@ -816,6 +865,8 @@ public class PlannerDefinitions {
 						"Actor Flash",
 						"Causes the specified actor to flash white. If the duration is marked as indefinite then this effect will continue until a STOP SPECIAL EFFECT is issued for the actor. This is a 'special effect'. Only one special effect can be active on a given actor at any time. This will stop any current animations.",
 						definingValues));
+		
+		actorSpecialEffect.add("Actor Flash");
 
 		// Nod
 		definingValues = new ArrayList<PlannerValueDef>();
@@ -829,6 +880,8 @@ public class PlannerDefinitions {
 						"Actor Nod",
 						"Causes the specified actor to nod. This effect lasts 1500ms. This is a 'special effect'. Only one special effect can be active on a given actor at any time. This will stop any current animations.",
 						definingValues));
+		
+		actorSpecialEffect.add("Actor Nod");
 
 		// Shake head
 		definingValues = new ArrayList<PlannerValueDef>();
@@ -848,6 +901,8 @@ public class PlannerDefinitions {
 						"Actor Shake Head",
 						"Causes the specified actor to nod. This is a 'special effect'. Only one special effect can be active on a given actor at any time. This will stop any current animations.",
 						definingValues));
+		
+		actorSpecialEffect.add("Actor Shake Head");
 
 		// Stop Special Effect
 		definingValues = new ArrayList<PlannerValueDef>();
@@ -863,6 +918,7 @@ public class PlannerDefinitions {
 						"Stop Actor Special Effect",
 						"Causes the specified actor to stop peforming any special effects that are currently active. This should be used to stop special effects of indefinite duration.",
 						definingValues));
+		actorSpecialEffect.add("Stop Actor Special Effect");
 
 		// Visible
 		definingValues = new ArrayList<PlannerValueDef>();
@@ -878,8 +934,9 @@ public class PlannerDefinitions {
 						"Is Visible",
 						"If true, the actor should become visible, otherwise they should become invisible"));
 
-		allowableLines.add(new PlannerLineDef("visible", "Set Actor Visiblity",
+		allowableLines.add(new PlannerLineDef("visible", "Set Actor Visibility",
 				"Sets the specified actors visiblity", definingValues));
+		actorControl.add("Set Actor Visibility");
 
 		// Move char to forefront
 		definingValues = new ArrayList<PlannerValueDef>();
@@ -889,7 +946,8 @@ public class PlannerDefinitions {
 
 		allowableLines.add(new PlannerLineDef("rendertop", "Render on Top",
 				"Causes the selected actor to be rendered on top of all of the terrain layers. This will continue until a 'Render on Normal' command is called for the actor.", definingValues));
-
+		actorControl.add("Render on Top");
+		
 		// Remove char from forefront
 		definingValues = new ArrayList<PlannerValueDef>();
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
@@ -898,7 +956,8 @@ public class PlannerDefinitions {
 
 		allowableLines.add(new PlannerLineDef("rendernormal", "Render on Normal",
 				"Causes the selected actor to be rendered in normal layer postion. This should be used to end the 'Render on Top' action.", definingValues));
-
+		actorControl.add("Render on Normal");
+		
 
 		// Play Music
 		definingValues = new ArrayList<PlannerValueDef>();
@@ -920,17 +979,20 @@ public class PlannerDefinitions {
 						"Play Music",
 						"Loops music at the specified volume. Only one song can be playing at a time, starting music while one is already playing will end the other one.",
 						definingValues));
-
+		soundControl.add("Play Music");
+		
 		// Pause Music
 		definingValues = new ArrayList<PlannerValueDef>();
 		allowableLines.add(new PlannerLineDef("pausemusic", "Pause Music",
 				"Pauses the currently playing music", definingValues));
+		soundControl.add("Pause Music");
 
 		// Resume Music
 		definingValues = new ArrayList<PlannerValueDef>();
 		allowableLines.add(new PlannerLineDef("resumemusic", "Resume Music",
 				"Resumes any paused music", definingValues));
-
+		soundControl.add("Resume Music");
+		
 		// Fade Music
 		definingValues = new ArrayList<PlannerValueDef>();
 		definingValues
@@ -944,6 +1006,7 @@ public class PlannerDefinitions {
 						"Fade Out Music",
 						"Fades out any playing music to no volume over the specified period of time. The music stops playing after the fade",
 						definingValues));
+		soundControl.add("Fade Out Music");
 
 		// Play Sound
 		definingValues = new ArrayList<PlannerValueDef>();
@@ -961,7 +1024,8 @@ public class PlannerDefinitions {
 
 		allowableLines.add(new PlannerLineDef("playsound", "Play Sound",
 				"Plays sound at the specified volume.", definingValues));
-
+		soundControl.add("Play Sound");
+		
 		// Fade From Black
 		definingValues = new ArrayList<PlannerValueDef>();
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
@@ -976,6 +1040,7 @@ public class PlannerDefinitions {
 
 		allowableLines.add(new PlannerLineDef("fadein", "Fade in from black",
 				"Fades the screen in from black.", definingValues));
+		sceneControl.add("Fade in from black");
 
 		// Fade To Black
 		definingValues = new ArrayList<PlannerValueDef>();
@@ -988,6 +1053,7 @@ public class PlannerDefinitions {
 
 		allowableLines.add(new PlannerLineDef("fadeout", "Fade to black",
 				"Fades the screen in to black.", definingValues));
+		sceneControl.add("Fade to black");
 
 		// Flash Screen
 		definingValues = new ArrayList<PlannerValueDef>();
@@ -997,6 +1063,7 @@ public class PlannerDefinitions {
 
 		allowableLines.add(new PlannerLineDef("flashscreen", "Flash Screen",
 				"Flashes the screen white.", definingValues));
+		sceneControl.add("Flash Screen");
 
 		// Camera follow
 		definingValues = new ArrayList<PlannerValueDef>();
@@ -1015,6 +1082,7 @@ public class PlannerDefinitions {
 						"Set Camera follows actor",
 						"Causes the camera to always be centered on the current actor. You can cancel this function by calling another camera location command",
 						definingValues));
+		cameraEffect.add("Set Camera follows actor");
 
 		// Camera Move
 		definingValues = new ArrayList<PlannerValueDef>();
@@ -1035,6 +1103,7 @@ public class PlannerDefinitions {
 						"Camera Pan",
 						"Pans the camera to the specified location over time. If the time is 0 then the camera immediate will move to the location",
 						definingValues));
+		cameraEffect.add("Camera Pan");
 		
 		// Camera Move To Actor
 		definingValues = new ArrayList<PlannerValueDef>();
@@ -1052,6 +1121,7 @@ public class PlannerDefinitions {
 						"Camera Move To Actor",
 						"Pans the camera to the specified actor over time. If the time is 0 then the camera immediate will move to the location. This is the prefered way to move the camera to an actor that has been associated with a sprite in town or battle",
 						definingValues));
+		cameraEffect.add("Camera Move to Actor");
 
 		// Camera Shake
 		definingValues = new ArrayList<PlannerValueDef>();
@@ -1070,6 +1140,7 @@ public class PlannerDefinitions {
 						"Shake Camera",
 						"Shakes the camera to simulate an earthquake effect. After the camera is done shaking it will return to it's original location",
 						definingValues));
+		cameraEffect.add("Shake Camera");
 
 		// Text Box
 		definingValues = new ArrayList<PlannerValueDef>();
@@ -1099,6 +1170,7 @@ public class PlannerDefinitions {
 						"Show Speech Box",
 						"Displays the specified text in a text box. This action is 'halting', which means subsequent actions will not be performed until the text box is dismissed via user input.",
 						definingValues));
+		textControl.add("Show Speech Box");
 
 		// Load map
 		definingValues = new ArrayList<PlannerValueDef>();
@@ -1121,6 +1193,7 @@ public class PlannerDefinitions {
 						"Load Map",
 						"Loads the specified map and places the hero at the specified entrance.",
 						definingValues));
+		mapControl.add("Load Map");
 
 		// Load Battle
 		definingValues = new ArrayList<PlannerValueDef>();
@@ -1140,6 +1213,7 @@ public class PlannerDefinitions {
 		allowableLines.add(new PlannerLineDef("loadbattle", "Start Battle",
 				"Starts the battle with the given triggers and map",
 				definingValues));
+		mapControl.add("Start Battle");
 
 		// Load Cinematic
 		definingValues = new ArrayList<PlannerValueDef>();
@@ -1153,12 +1227,14 @@ public class PlannerDefinitions {
 				"The ID of the cinematic that should be shown"));
 		allowableLines.add(new PlannerLineDef("loadcin", "Load Cinematic",
 				"Loads the specified map and text file with the same name and then runs the specified cinematic.", definingValues));
+		mapControl.add("Load Cinematic");
 
 		// Exit Game
 		definingValues = new ArrayList<PlannerValueDef>();
 		allowableLines.add(new PlannerLineDef("exit", "Exit Game",
 				"Causes the game to exit",
 				definingValues));
+		mapControl.add("Exit Game");
 
 		// Add hero
 		definingValues = new ArrayList<PlannerValueDef>();
@@ -1167,6 +1243,8 @@ public class PlannerDefinitions {
 				"The ID of the hero that should be added to the force"));
 		allowableLines.add(new PlannerLineDef("addhero", "Add Hero",
 				"Adds a new hero to the force", definingValues));
+		progressControl.add("Add Hero");
+		/*
 		definingValues
 		.add(new PlannerValueDef(
 				PlannerValueDef.REFERS_NONE,
@@ -1175,12 +1253,11 @@ public class PlannerDefinitions {
 				false,
 				"Initialize before Cinematic",
 				"Indicates that this action should be taken before the scene is rendered. Blocking actions should NEVER be initialized before the scene"));
-
-
+				*/
 
 		cinematicContainer = new PlannerContainerDef(definingLine,
-				allowableContainers, allowableLines, listOfLists,
-				PlannerValueDef.REFERS_CINEMATIC - 1);
+				allowableLines, listOfLists,
+				PlannerValueDef.REFERS_CINEMATIC - 1, menuLayout);
 		containersByName.put("cinematic", cinematicContainer);
 	}
 
@@ -1213,9 +1290,6 @@ public class PlannerDefinitions {
 				"The y index of the items image"));
 		PlannerLineDef definingLine = new PlannerLineDef("item", "Item", "",
 				definingValues);
-
-		// Setup allowable containers
-		ArrayList<PlannerContainerDef> allowableContainers = new ArrayList<PlannerContainerDef>();
 
 		// Setup available types
 		ArrayList<PlannerLineDef> allowableLines = new ArrayList<PlannerLineDef>();
@@ -1446,7 +1520,7 @@ public class PlannerDefinitions {
 				definingValues));
 
 		itemContainer = new PlannerContainerDef(definingLine,
-				allowableContainers, allowableLines, listOfLists,
+				allowableLines, listOfLists,
 				PlannerValueDef.REFERS_ITEM - 1);
 		containersByName.put("item", itemContainer);
 	}
@@ -1467,14 +1541,11 @@ public class PlannerDefinitions {
 		PlannerLineDef definingLine = new PlannerLineDef("quest", "Quest", "",
 				definingValues);
 
-		// Setup allowable containers
-		ArrayList<PlannerContainerDef> allowableContainers = new ArrayList<PlannerContainerDef>();
-
 		// Setup available types
 		ArrayList<PlannerLineDef> allowableLines = new ArrayList<PlannerLineDef>();
 
 		textContainer = new PlannerContainerDef(definingLine,
-				allowableContainers, allowableLines, listOfLists,
+				allowableLines, listOfLists,
 				PlannerValueDef.REFERS_QUEST - 1);
 		containersByName.put("quest", textContainer);
 	}
@@ -1494,9 +1565,6 @@ public class PlannerDefinitions {
 		// "Unique id that can be used to identify a given trigger"));
 		PlannerLineDef definingLine = new PlannerLineDef("text", "Text", "",
 				definingValues);
-
-		// Setup allowable containers
-		ArrayList<PlannerContainerDef> allowableContainers = new ArrayList<PlannerContainerDef>();
 
 		// Setup available types
 		ArrayList<PlannerLineDef> allowableLines = new ArrayList<PlannerLineDef>();
@@ -1659,7 +1727,7 @@ public class PlannerDefinitions {
 				"A message that should be displayed", definingValues));
 
 		textContainer = new PlannerContainerDef(definingLine,
-				allowableContainers, allowableLines, listOfLists,
+				allowableLines, listOfLists,
 				PlannerValueDef.REFERS_TEXT - 1);
 		containersByName.put("text", textContainer);
 	}
@@ -1803,9 +1871,6 @@ public class PlannerDefinitions {
 		PlannerLineDef definingLine = new PlannerLineDef("enemy", "Enemy", "",
 				definingValues);
 
-		// Setup allowable containers
-		ArrayList<PlannerContainerDef> allowableContainers = new ArrayList<PlannerContainerDef>();
-
 		// Setup available types
 		ArrayList<PlannerLineDef> allowableLines = new ArrayList<PlannerLineDef>();
 
@@ -1847,7 +1912,7 @@ public class PlannerDefinitions {
 				"An effect that may occur on the enemy attack", definingValues));
 
 		enemyContainer = new PlannerContainerDef(definingLine,
-				allowableContainers, allowableLines, listOfLists,
+				allowableLines, listOfLists,
 				PlannerValueDef.REFERS_ENEMY - 1);
 		containersByName.put("enemy", enemyContainer);
 	}
@@ -1882,9 +1947,6 @@ public class PlannerDefinitions {
 		// "Unique id that can be used to identify a given trigger"));
 		PlannerLineDef definingLine = new PlannerLineDef("hero", "Hero", "",
 				definingValues);
-
-		// Setup allowable containers
-		ArrayList<PlannerContainerDef> allowableContainers = new ArrayList<PlannerContainerDef>();
 
 		// Setup available types
 		ArrayList<PlannerLineDef> allowableLines = new ArrayList<PlannerLineDef>();
@@ -2138,7 +2200,7 @@ public class PlannerDefinitions {
 				"An item that this hero should start with", definingValues));
 
 		heroContainer = new PlannerContainerDef(definingLine,
-				allowableContainers, allowableLines, listOfLists,
+				allowableLines, listOfLists,
 				PlannerValueDef.REFERS_HERO - 1);
 		containersByName.put("hero", heroContainer);
 	}
@@ -2187,9 +2249,6 @@ public class PlannerDefinitions {
 				+ "no effect during battle"));
 		PlannerLineDef definingLine = new PlannerLineDef("trigger", "Trigger",
 				"", definingValues);
-
-		// Setup allowable containers
-		ArrayList<PlannerContainerDef> allowableContainers = new ArrayList<PlannerContainerDef>();
 
 		// Setup available types
 		ArrayList<PlannerLineDef> allowableLines = new ArrayList<PlannerLineDef>();
@@ -2525,7 +2584,7 @@ public class PlannerDefinitions {
 		// TODO ADD HERO
 
 		triggerContainer = new PlannerContainerDef(definingLine,
-				allowableContainers, allowableLines, listOfLists,
+				allowableLines, listOfLists,
 				PlannerValueDef.REFERS_TRIGGER - 1);
 		containersByName.put("trigger", triggerContainer);
 	}
@@ -2546,9 +2605,6 @@ public class PlannerDefinitions {
 
 		PlannerLineDef definingLine = new PlannerLineDef("condition", "Condition",
 				"", definingValues);
-
-		// Setup allowable containers
-		ArrayList<PlannerContainerDef> allowableContainers = new ArrayList<PlannerContainerDef>();
 
 		// Setup available types
 		ArrayList<PlannerLineDef> allowableLines = new ArrayList<PlannerLineDef>();
@@ -2648,7 +2704,7 @@ public class PlannerDefinitions {
 				definingValues));
 
 		conditionContainer = new PlannerContainerDef(definingLine,
-				allowableContainers, allowableLines, listOfLists,
+				allowableLines, listOfLists,
 				PlannerValueDef.REFERS_CONDITIONS - 1);
 		containersByName.put("condition", conditionContainer);
 	}
@@ -2661,9 +2717,6 @@ public class PlannerDefinitions {
 		ArrayList<PlannerValueDef> definingValues = new ArrayList<PlannerValueDef>();
 		PlannerLineDef definingLine = new PlannerLineDef("start", "Item", "",
 				definingValues);
-
-		// Setup allowable containers
-		ArrayList<PlannerContainerDef> allowableContainers = new ArrayList<PlannerContainerDef>();
 
 		// Setup available types
 		ArrayList<PlannerLineDef> allowableLines = new ArrayList<PlannerLineDef>();
@@ -2724,7 +2777,7 @@ public class PlannerDefinitions {
 				definingValues));
 
 		itemContainer = new PlannerContainerDef(definingLine,
-				allowableContainers, allowableLines, listOfLists,
+				allowableLines, listOfLists,
 				PlannerValueDef.REFERS_MAP - 1);
 		containersByName.put("map", itemContainer);
 	}
@@ -2737,9 +2790,6 @@ public class PlannerDefinitions {
 		ArrayList<PlannerValueDef> definingValues = new ArrayList<PlannerValueDef>();
 		PlannerLineDef definingLine = new PlannerLineDef("mapedit", "MapEdit", "",
 				definingValues);
-
-		// Setup allowable containers
-		ArrayList<PlannerContainerDef> allowableContainers = new ArrayList<PlannerContainerDef>();
 
 		// Setup available types
 		ArrayList<PlannerLineDef> allowableLines = new ArrayList<PlannerLineDef>();
@@ -2844,7 +2894,7 @@ public class PlannerDefinitions {
 				"Places a searchable area at this location, it has no visible aspect", definingValues));
 
 		plannerContainer = new PlannerContainerDef(definingLine,
-				allowableContainers, allowableLines, listOfLists,
+				allowableLines, listOfLists,
 				PlannerValueDef.REFERS_ITEM - 1);
 		containersByName.put("mapedit", plannerContainer);
 	}

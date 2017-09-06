@@ -813,4 +813,8 @@ public class CinematicCreatorPanel implements ActionListener, ChangeListener, It
 	public JPanel getUiAspect() {
 		return uiAspect;
 	}
+	
+	public int getSelectedCinematicId() {
+		return cinematicIds.getSelectedIndex();
+	}
 }

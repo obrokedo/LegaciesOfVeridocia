@@ -6,9 +6,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Vector;
 
 import javax.swing.DropMode;
+import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
@@ -87,8 +89,7 @@ public class PlannerTree implements TreeModelListener
 					contextMenu.add(newMenuItem("Remove Planner Attribute"));
 					contextMenu.add(newMenuItem("Duplicate Planner Attribute"));
 					contextMenu.add(new JSeparator());
-					for (PlannerLineDef pld : containerDef.getAllowableLines())
-						contextMenu.add(newMenuItem(pld.getName()));
+					addAllowableLines();
 
 				}
 				else
@@ -98,8 +99,7 @@ public class PlannerTree implements TreeModelListener
 					contextMenu.add(newMenuItem("Remove Planner Item"));
 					contextMenu.add(newMenuItem("Duplicate Planner Item"));
 					contextMenu.add(new JSeparator());
-					for (PlannerLineDef pld : containerDef.getAllowableLines())
-						contextMenu.add(newMenuItem(pld.getName()));
+					addAllowableLines();
 				}
 
 
@@ -107,6 +107,23 @@ public class PlannerTree implements TreeModelListener
 			}
 		}
 
+		private void addAllowableLines() {
+			if (containerDef.getGroupingsForAllowableLine() == null) {
+				for (PlannerLineDef pld : containerDef.getAllowableLines())
+					contextMenu.add(newMenuItem(pld.getName()));
+			} else {
+				Vector<String> keys = new Vector<String>(containerDef.getGroupingsForAllowableLine().keySet());
+				Collections.sort(keys);
+				for (String key : keys) {
+					JMenu subMenu = new JMenu(key);
+					for (String val : containerDef.getGroupingsForAllowableLine().get(key)) {
+						subMenu.add(newMenuItem(val));
+					}
+					contextMenu.add(subMenu);
+				}
+			}
+		}
+		
 		private JMenuItem newMenuItem(String item)
 		{
 			JMenuItem jmi = new JMenuItem(item);

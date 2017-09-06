@@ -123,6 +123,16 @@ public class MenuState extends LoadableGameState
 			g.drawString(CommRPG.GAME_TITLE, (container.getWidth() - font.getWidth(CommRPG.GAME_TITLE)) / 2, container.getHeight() * .005f - 15);
 		}
 	}
+	
+	public void startCinematic( String mapData, int cinematicId)
+	{
+		persistentStateInfo.loadCinematic(mapData, cinematicId);
+		
+		if (gc.isFullscreen())
+			gc.setMouseGrabbed(true);
+
+		game.enterState(CommRPG.STATE_GAME_LOADING);
+	}
 
 	public void start(LoadTypeEnum loadType, String mapData, String entrance)
 	{

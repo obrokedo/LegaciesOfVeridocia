@@ -1,6 +1,7 @@
 package mb.fc.utils.planner;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 public class PlannerContainerDef
 {
@@ -8,16 +9,24 @@ public class PlannerContainerDef
 	private ArrayList<PlannerLineDef> allowableLines;
 	private ArrayList<ArrayList<PlannerReference>> listOfLists;
 	private int writeToIndex;
+	private Hashtable<String, ArrayList<String>> groupingsForAllowableLine;
 
 	public PlannerContainerDef(PlannerLineDef definingLine,
-			ArrayList<PlannerContainerDef> allowableContainers,
 			ArrayList<PlannerLineDef> allowableLines, ArrayList<ArrayList<PlannerReference>> listOfLists,
 			int writeToIndex)
+	{
+		this(definingLine, allowableLines, listOfLists, writeToIndex, null);
+	}
+
+	public PlannerContainerDef(PlannerLineDef definingLine,
+			ArrayList<PlannerLineDef> allowableLines, ArrayList<ArrayList<PlannerReference>> listOfLists,
+			int writeToIndex, Hashtable<String, ArrayList<String>> groupingsForAllowableLine)
 	{
 		this.definingLine = definingLine;
 		this.allowableLines = allowableLines;
 		this.listOfLists = listOfLists;
 		this.writeToIndex = writeToIndex;
+		this.groupingsForAllowableLine = groupingsForAllowableLine;
 	}
 
 	public PlannerLineDef getDefiningLine() {
@@ -42,5 +51,9 @@ public class PlannerContainerDef
 
 	public ArrayList<ArrayList<PlannerReference>> getListOfLists() {
 		return listOfLists;
+	}
+
+	public Hashtable<String, ArrayList<String>> getGroupingsForAllowableLine() {
+		return groupingsForAllowableLine;
 	}
 }

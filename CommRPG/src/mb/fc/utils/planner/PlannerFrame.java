@@ -401,7 +401,11 @@ public class PlannerFrame extends JFrame implements ActionListener,
 			}
 		}
 		else if (actionCommand.equalsIgnoreCase("playcin")) {
-			this.menuState.start(LoadTypeEnum.CINEMATIC, triggerFile.getName(), null);
+			if (cinematicMapPanel.getSelectedCinematicId() != -1) {
+				this.menuState.startCinematic(triggerFile.getName(), cinematicMapPanel.getSelectedCinematicId());
+			} else {
+				JOptionPane.showMessageDialog(this, "No cinematic has been selected yet");
+			}
 		}
 		
 	}
