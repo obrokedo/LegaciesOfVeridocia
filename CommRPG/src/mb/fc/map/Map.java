@@ -531,10 +531,12 @@ public class Map
 	private class MapPathFinder implements TileBasedMap
 	{
 		private StateInfo stateInfo;
+		private boolean checkSprites = true;
 		
-		public MapPathFinder(StateInfo stateInfo) {
+		public MapPathFinder(boolean checkSprites, StateInfo stateInfo) {
 			super();
 			this.stateInfo = stateInfo;
+			this.checkSprites = checkSprites;
 		}
 
 		@Override
@@ -556,12 +558,14 @@ public class Map
 
 		@Override
 		public boolean blocked(PathFindingContext context, int tx, int ty) {
-			for (Sprite s : stateInfo.getSprites())
-			{
-				if (tx == s.getTileX() && 
-						ty == s.getTileY())
+			if (checkSprites) {
+				for (Sprite s : stateInfo.getSprites())
 				{
-					return true;
+					if (tx == s.getTileX() && 
+							ty == s.getTileY())
+					{
+						return true;
+					}
 				}
 			}
 			
@@ -578,16 +582,18 @@ public class Map
 		}
 	}
 	
-	public Path findTilePathWithPixels(int sx, int sy, int tx, int ty, StateInfo stateInfo)
+	public Path findTilePathWithPixels(int sx, int sy, int tx, int ty, StateInfo stateInfo, boolean checkSprites)
 	{
-		AStarPathFinder asf = new AStarPathFinder(new MapPathFinder(stateInfo), 1000, false);
+		AStarPathFinder asf = new AStarPathFinder(new MapPathFinder(checkSprites, stateInfo), 1000, false);
 		return asf.findPath(null, sx / getTileEffectiveWidth(), sy / getTileEffectiveHeight(), 
 				tx / getTileEffectiveWidth(), ty / getTileEffectiveHeight());
 	}
 	
-	public Path findPixelPathWithPixels(int sx, int sy, int tx, int ty, StateInfo stateInfo)
+	public Path findPixelPathWithPixels(int sx, int sy, int tx, int ty, StateInfo stateInfo, boolean checkSprites)
 	{
-		Path tilePath = findTilePathWithPixels(sx, sy, tx, ty, stateInfo);
+		Path tilePath = findTilePathWithPixels(sx, sy, tx, ty, stateInfo, checkSprites);
+		if (tilePath == null)
+			return null;
 		Path pixelPath = new Path();
 		for (int i = 0; i < tilePath.getLength(); i++)
 		{

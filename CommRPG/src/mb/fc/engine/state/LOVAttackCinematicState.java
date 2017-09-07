@@ -233,7 +233,7 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 		combatAnimationYOffset = bgYPos + backgroundImage.getHeight();
 		
 		BattleSceneCreator bsc = BattleSceneCreator.initializeBattleScene(attacker, frm, battleResults, gc, 
-				targetsAllies, battleBackgroundIndex, battleBackgroundIndex, bgIm);
+				targetsAllies, bgXPos, bgYPos, backgroundImage);
 		heroCombatAnimations = bsc.getHeroCombatAnimations();
 		enemyCombatAnimations = bsc.getEnemyCombatAnimations();
 		textToDisplay = bsc.getTextToDisplay();
@@ -263,7 +263,7 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 			g.setColor(spellFlash);
 			g.fillRect(0, 0, CommRPG.GAME_SCREEN_SIZE.width, CommRPG.GAME_SCREEN_SIZE.height);
 		}
-
+		
 		g.drawImage(backgroundImage, bgXPos, bgYPos);
 		if (heroCombatAnim != null)
 			heroCombatAnim.render(gc, g, combatAnimationYOffset, backgroundScale);
@@ -271,7 +271,11 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 			enemyCombatAnim.render(gc, g, combatAnimationYOffset, backgroundScale);
 		if (drawingSpell && spellFlash == null)
 		{
-			spellAnimation.drawAnimation((int) ( (spellTargetsHeroes ? 276 : 70)),
+			if (spellTargetsHeroes)
+				spellAnimation.drawAnimation(230,
+					combatAnimationYOffset - 10, g);
+			else
+				spellAnimation.drawAnimation(95,
 					combatAnimationYOffset - 30, g);
 		}
 		if (textMenu != null)

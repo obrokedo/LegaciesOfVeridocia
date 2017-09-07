@@ -114,6 +114,8 @@ public class TriggerCondition {
 						if (cs.isHero() && !enemy && mo.contains(cs))
 						{
 							count++;
+						} else if (!cs.isHero() && enemy && mo.contains(cs)) {
+							count++;
 						}
 					}
 					

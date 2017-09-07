@@ -443,7 +443,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 			Collections.sort(referenceListByReferenceType.get(PlannerValueDef.REFERS_LOCATIONS - 1), new Comparator<PlannerReference>() {
 				@Override
 				public int compare(PlannerReference o1, PlannerReference o2) { return o1.getName().compareTo(o2.getName()); }});
-		} catch (IOException | SlickException e) {
+		} catch (Throwable e) {
 			JOptionPane.showMessageDialog(this, "An error occurred while loading the selected map: " + e.getMessage());
 			e.printStackTrace();
 			return false;

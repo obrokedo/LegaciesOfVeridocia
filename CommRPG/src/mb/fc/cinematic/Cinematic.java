@@ -4,7 +4,6 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Hashtable;
-import java.util.Optional;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -235,6 +234,7 @@ public class Cinematic {
 	 */
 	public void initialize(StateInfo stateInfo, boolean inCinematicState) {
 		this.inCinematicState = inCinematicState;
+		stateInfo.getCurrentMap().setRoofLayer(null);
 		if (inCinematicState)
 			stateInfo.getCamera().setLocation(cameraStartX, cameraStartY, stateInfo);
 
@@ -391,11 +391,18 @@ public class Cinematic {
 			case HALTING_MOVE_PATHFIND:
 				ca = getCinematicActorByName((String) ce.getParam(3), ce.getType());
 				
-				Point p = stateInfo.getCamera().getCenterOfCamera(stateInfo.getCurrentMap());
 				Path path = stateInfo.getCurrentMap().findPixelPathWithPixels
 						((int) ca.getLocX(), (int) ca.getLocY() + 
 								(!this.inCinematicState ? stateInfo.getCurrentMap().getTileEffectiveHeight() / 2 : 0), 
-								(int) ce.getParam(0), (int) ce.getParam(1), stateInfo);
+								(int) ce.getParam(0), (int) ce.getParam(1), stateInfo, true);
+				
+				if (path == null) {
+					path = stateInfo.getCurrentMap().findPixelPathWithPixels
+							((int) ca.getLocX(), (int) ca.getLocY() + 
+									(!this.inCinematicState ? stateInfo.getCurrentMap().getTileEffectiveHeight() / 2 : 0), 
+									(int) ce.getParam(0), (int) ce.getParam(1), stateInfo, false);
+				}
+				
 				ca.moveAlongPath(path, (float) ce.getParam(2), true, stateInfo);
 				haltedMovers++;
 				break;
