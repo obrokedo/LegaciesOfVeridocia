@@ -130,6 +130,7 @@
 	<string require=-1, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="" message="This is the end Of Demo 2. Thanks for playing!<hardstop>"/>
 </text>
 <cinematic id=0 description="NoahGettingReady" camerax=0 cameray=0>
+	<playmusic music="castlenight" volume=100/>
 	<addactor x=144 y=156 name="cam" anim="Noah" startanim="Down" visible=false init=true associatedhero=0/>
 	<addactor x=144 y=156 name="Noah" anim="Noah" startanim="Down" visible=true init=true associatedhero=0/>
 	<camerafollow name="Noah"/>
