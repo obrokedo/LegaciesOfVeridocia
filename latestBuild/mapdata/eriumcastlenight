@@ -499,5 +499,5 @@
 	<forcedmove name="Olivia" x=1080 y=240 speed=1 facing=2 movehor=false movediag=false/>
 	<forcedmove name="Craig" x=1080 y=240 speed=1 facing=2 movehor=false movediag=false/>
 	<fadeout time=1000 halting=true/>
-	<loadmap mapdata="erium" enter="NorthWestEntrance4"/>
+	<loadmap mapdata="erium" enter="AfterPrisionEntrance"/>
 </cinematic>

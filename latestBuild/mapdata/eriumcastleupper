@@ -3,7 +3,7 @@
 	<playmusic music="castlenight"/>
 </trigger>
 <trigger id=1 description="Sharna cutscene" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<completequest questid=3/>
+	<completequest questid=1/>
 	<showcin cinid=0 exittrigid=-1/>
 </trigger>
 <trigger id=2 description="NorthWestStairsExit1" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
@@ -64,8 +64,8 @@
 	<string require=-1, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="" message="I'm going to start studying to become a Warlord but I can't decide which weapon I should train with. I've heard that taking this career path requires a lot of discipline, if you want to be any good with your weapon of choice. Diversifying will only weaken your ablilities.<hardstop>"/>
 </text>
 <text id=6 description="Sharna">
-	<string require=-1, exclude=3, trigger=1 heroportrait=1 enemyportrait=-1 animportrait="" message="Hello, Noah. <pause>Glad to see you're here this early. I just got here, too! <hardstop>I hope Huun makes it on time tonight. It makes us all look sloppy when one of us is late.<hardstop>"/>
-	<string require=3, exclude=-1, trigger=-1 heroportrait=1 enemyportrait=-1 animportrait="" message="Dont be late for patrol!<hardstop>"/>
+	<string require=-1, exclude=1, trigger=1 heroportrait=1 enemyportrait=-1 animportrait="" message="Hello, Noah. <pause>Glad to see you're here this early. I just got here, too! <hardstop>I hope Huun makes it on time tonight. It makes us all look sloppy when one of us is late.<hardstop>"/>
+	<string require=1, exclude=-1, trigger=-1 heroportrait=1 enemyportrait=-1 animportrait="" message="Dont be late for patrol!<hardstop>"/>
 </text>
 <text id=7 description="SearchNoItem">
 	<string require=-1, exclude=-1, trigger=-1 heroportrait=0 enemyportrait=-1 animportrait="" message="There doesnt seem to be anything here<hardstop>"/>

@@ -6,46 +6,46 @@
 	<showshop buypercent="1.2" sellpercent="0.8" itemssold=2, portrait="Shopkeeper1"/>
 </trigger>
 <trigger id=2 description="WeaponShopInitialTalkQuest" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<completequest questid=2/>
+	<completequest questid=0/>
 </trigger>
 <trigger id=3 description="OpenPriestess" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<showpriest portrait="Priestess1"/>
 </trigger>
 <trigger id=4 description="NorthWestExit1" require=-1, exclude=2, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="" enter="SouthWestEntrance1"/>
+	<loadmap mapdata="eriumcastle" enter="SouthWestEntrance1"/>
 </trigger>
 <trigger id=5 description="NorthWestExit2" require=-1, exclude=2, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="" enter="SouthWestEntrance2"/>
+	<loadmap mapdata="eriumcastle" enter="SouthWestEntrance2"/>
 </trigger>
 <trigger id=6 description="NorthWestExit3" require=-1, exclude=2, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="" enter="SouthWestEntrance3"/>
+	<loadmap mapdata="eriumcastle" enter="SouthWestEntrance3"/>
 </trigger>
 <trigger id=7 description="NorthWestExit4" require=-1, exclude=2, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="" enter="SouthWestEntrance4"/>
+	<loadmap mapdata="eriumcastle" enter="SouthWestEntrance4"/>
 </trigger>
 <trigger id=8 description="NorthWestExit5" require=-1, exclude=2, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="" enter="SouthWestEntrance5"/>
+	<loadmap mapdata="eriumcastle" enter="SouthWestEntrance5"/>
 </trigger>
 <trigger id=9 description="NorthEastExit1" require=-1, exclude=2, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="" enter="SouthEastEntrance1"/>
+	<loadmap mapdata="eriumcastle" enter="SouthEastEntrance1"/>
 </trigger>
 <trigger id=10 description="NorthEastExit2" require=-1, exclude=2, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="" enter="SouthEastEntrance2"/>
+	<loadmap mapdata="eriumcastle" enter="SouthEastEntrance2"/>
 </trigger>
 <trigger id=11 description="NorthEastExit3" require=-1, exclude=2, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="" enter="SouthEastEntrance3"/>
+	<loadmap mapdata="eriumcastle" enter="SouthEastEntrance3"/>
 </trigger>
 <trigger id=12 description="NorthEastExit4" require=-1, exclude=2, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="" enter="SouthEastEntrance4"/>
+	<loadmap mapdata="eriumcastle" enter="SouthEastEntrance4"/>
 </trigger>
 <trigger id=13 description="NorthEastExit5" require=-1, exclude=2, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="" enter="SouthEastEntrance5"/>
+	<loadmap mapdata="eriumcastle" enter="SouthEastEntrance5"/>
 </trigger>
 <trigger id=14 description="NorthEastExit6" require=-1, exclude=2, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="" enter="SouthEastEntrance6"/>
+	<loadmap mapdata="eriumcastle" enter="SouthEastEntrance6"/>
 </trigger>
 <trigger id=15 description="NorthEastExit7" require=-1, exclude=2, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="" enter="SouthEastEntrance7"/>
+	<loadmap mapdata="eriumcastle" enter="SouthEastEntrance7"/>
 </trigger>
 <trigger id=16 description="BartenderScolds" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<showcin cinid=1 exittrigid=-1/>
@@ -71,6 +71,21 @@
 <trigger id=23 description="SouthWestExit" require=2, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<showtext textid=18/>
 </trigger>
+<trigger id=24 description="GuardWarning1" require=2, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<showcin cinid=2 exittrigid=-1/>
+</trigger>
+<trigger id=25 description="GuardWarning2" require=2, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<showcin cinid=3 exittrigid=-1/>
+</trigger>
+<trigger id=26 description="GuardWarning3" require=2, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<showcin cinid=4 exittrigid=-1/>
+</trigger>
+<trigger id=27 description="GuardWarning4" require=2, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<showcin cinid=5 exittrigid=-1/>
+</trigger>
+<trigger id=28 description="OpenWeaponShop" require=2, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<showshop buypercent="1.2" sellpercent="0.8" itemssold=0,1,3, portrait="Shopkeeper1"/>
+</trigger>
 <text id=0 description="citizen1">
 	<conversation require=-1, exclude=-1, trigger=-1 heroportrait1=-1 enemyportrait1=-1 animportrait1="" heroportrait2=0 enemyportrait2=-1 animportrait2="" message="Good evening, Noah.<pause>  That blizzard the other night was really bizarre, wasn't it?<hardstop><split>I've never seen anything like that.<pause>  It came and went in almost no time at all.<hardstop><split>And you wouldn't even know it by the weather today!<hardstop>"/>
 </text>
@@ -93,8 +108,9 @@
 	<string require=-1, exclude=-1, trigger=1 heroportrait=-1 enemyportrait=-1 animportrait="Shopkeeper1" message="We have the finest remedies in the city. How can I help you?<hardstop>"/>
 </text>
 <text id=7 description="Weapon Shop">
-	<string require=2, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="Shopkeeper1" message="See you tomorrow.<hardstop>"/>
-	<conversation require=-1, exclude=2, trigger=2 heroportrait1=-1 enemyportrait1=-1 animportrait1="Shopkeeper1" heroportrait2=0 enemyportrait2=-1 animportrait2="" message="Sorry, I'm out of stock right now.<hardstop><split>Out of stock? You're never out of stock!<hardstop><split>Grand Mage Mistal cleaned me out. I guess she's going to start a new training plan?<hardstop><split>She's not exactly in charge of training. Maybe it was a special request from king Erium.<hardstop><split>I'm not sure. I'm expecting a new shipment any day now though. The trade caravan should be here this week.<hardstop><split>I'll check another day then. Thank you.<hardstop>"/>
+	<string require=0, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="Shopkeeper1" message="See you tomorrow.<hardstop>"/>
+	<conversation require=-1, exclude=0, trigger=2 heroportrait1=-1 enemyportrait1=-1 animportrait1="Shopkeeper1" heroportrait2=0 enemyportrait2=-1 animportrait2="" message="Sorry, I'm out of stock right now.<hardstop><split>Out of stock? You're never out of stock!<hardstop><split>Grand Mage Mistal cleaned me out. I guess she's going to start a new training plan?<hardstop><split>She's not exactly in charge of training. Maybe it was a special request from king Erium.<hardstop><split>I'm not sure. I'm expecting a new shipment any day now though. The trade caravan should be here this week.<hardstop><split>I'll check another day then. Thank you.<hardstop>"/>
+	<string require=2, exclude=-1, trigger=28 heroportrait=-1 enemyportrait=-1 animportrait="" message="Looking for some sharp new weapon?<hardstop>"/>
 </text>
 <text id=8 description="Priestess">
 	<string require=-1, exclude=-1, trigger=3 heroportrait=-1 enemyportrait=-1 animportrait="Priestess1" message="How can I help you?<hardstop>"/>
@@ -171,6 +187,26 @@
 	<haltingmove name="Noah" x=1752 y=384 speed="2" movehor=false movediag=false/>
 	<facing name="Noah" dir=1/>
 </cinematic>
+<cinematic id=2 description="GuardWarning1" camerax=0 cameray=0>
+	<assactor name="Noah" hero=0 enemyid=0 npcid=""/>
+	<camerafollow name="Noah"/>
+	<haltingmove name="Noah" x=1536 y=72 speed="2.4" movehor=true movediag=false/>
+</cinematic>
+<cinematic id=3 description="GuardWarning2" camerax=0 cameray=0>
+	<assactor name="Noah" hero=0 enemyid=0 npcid=""/>
+	<haltingmove name="Noah" x=1272 y=240 speed="2.4" movehor=true movediag=false/>
+	<camerafollow name="Noah"/>
+</cinematic>
+<cinematic id=4 description="GuardWarning3" camerax=0 cameray=0>
+	<assactor name="Noah" hero=0 enemyid=0 npcid=""/>
+	<haltingmove name="Noah" x=456 y=216 speed="2.4" movehor=true movediag=false/>
+	<camerafollow name="Noah"/>
+</cinematic>
+<cinematic id=5 description="GuardWarning4" camerax=0 cameray=0>
+	<assactor name="Noah" hero=0 enemyid=0 npcid=""/>
+	<haltingmove name="Noah" x=360 y=672 speed="2.4" movehor=true movediag=false/>
+	<camerafollow name="Noah"/>
+</cinematic>
 <condition id=0 description="NorthWestExit1" triggerid=4>
 	<enterloc location="NorthWestExit1" immediate=false/>
 </condition>
@@ -212,4 +248,16 @@
 </condition>
 <condition id=13 description="SouthWestExit" triggerid=23>
 	<enterloc location="SouthWestExit" immediate=false/>
+</condition>
+<condition id=14 description="GuardWarning1" triggerid=24>
+	<enterloc location="Guard Warning 1" immediate=false/>
+</condition>
+<condition id=15 description="GuardWarning2" triggerid=25>
+	<enterloc location="Guard Warning 2" immediate=false/>
+</condition>
+<condition id=16 description="GuardWarning3" triggerid=26>
+	<enterloc location="Guard Warning 3" immediate=false/>
+</condition>
+<condition id=17 description="GuardWarning4" triggerid=27>
+	<enterloc location="Guard Warning 4" immediate=false/>
 </condition>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="2017.07.25" orientation="orthogonal" renderorder="right-down" width="160" height="90" tilewidth="12" tileheight="12" nextobjectid="147">
+<map version="1.0" tiledversion="2017.07.25" orientation="orthogonal" renderorder="right-down" width="160" height="90" tilewidth="12" tileheight="12" nextobjectid="153">
  <tileset firstgid="1" name="overworld(day)-Master" tilewidth="12" tileheight="12" tilecount="1296" columns="36">
   <image source="../image/overworld(day)-Master.png" trans="495d47" width="432" height="432"/>
  </tileset>
@@ -219,6 +219,11 @@
   <object id="146" name="SouthWestExit" x="360" y="1056" width="96" height="24">
    <properties>
     <property name="null" value=""/>
+   </properties>
+  </object>
+  <object id="152" name="AfterPrisionEntrance" x="1560" y="96" width="24" height="24">
+   <properties>
+    <property name="start" value="exit=AfterPrisionEntrance"/>
    </properties>
   </object>
  </objectgroup>
@@ -537,6 +542,15 @@
     <property name="roof" value=""/>
    </properties>
   </object>
+  <object id="147" name="SearchNoItem" x="1872" y="1008" width="24" height="24">
+   <properties>
+    <property name="SEARCHAREA" value="searchtrigger=17"/>
+   </properties>
+  </object>
+  <object id="148" name="Guard Warning 2" x="1176" y="240" width="96" height="24"/>
+  <object id="149" name="Guard Warning 4" x="288" y="504" width="96" height="168"/>
+  <object id="150" name="Guard Warning 3" x="432" y="192" width="24" height="96"/>
+  <object id="151" name="Guard Warning 1" x="1512" y="48" width="24" height="48"/>
  </objectgroup>
  <objectgroup name="Battle"/>
  <layer name="Grid Pattern" width="160" height="90" visible="0" opacity="0.19">
