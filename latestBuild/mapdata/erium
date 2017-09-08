@@ -12,40 +12,40 @@
 	<showpriest portrait="Priestess1"/>
 </trigger>
 <trigger id=4 description="NorthWestExit1" require=-1, exclude=2, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="eriumcastle" enter="SouthWestEntrance1"/>
+	<loadmap mapdata="" enter="SouthWestEntrance1"/>
 </trigger>
 <trigger id=5 description="NorthWestExit2" require=-1, exclude=2, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="eriumcastle" enter="SouthWestEntrance2"/>
+	<loadmap mapdata="" enter="SouthWestEntrance2"/>
 </trigger>
 <trigger id=6 description="NorthWestExit3" require=-1, exclude=2, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="eriumcastle" enter="SouthWestEntrance3"/>
+	<loadmap mapdata="" enter="SouthWestEntrance3"/>
 </trigger>
 <trigger id=7 description="NorthWestExit4" require=-1, exclude=2, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="eriumcastle" enter="SouthWestEntrance4"/>
+	<loadmap mapdata="" enter="SouthWestEntrance4"/>
 </trigger>
 <trigger id=8 description="NorthWestExit5" require=-1, exclude=2, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="eriumcastle" enter="SouthWestEntrance5"/>
+	<loadmap mapdata="" enter="SouthWestEntrance5"/>
 </trigger>
 <trigger id=9 description="NorthEastExit1" require=-1, exclude=2, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="eriumcastle" enter="SouthEastEntrance1"/>
+	<loadmap mapdata="" enter="SouthEastEntrance1"/>
 </trigger>
 <trigger id=10 description="NorthEastExit2" require=-1, exclude=2, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="eriumcastle" enter="SouthEastEntrance2"/>
+	<loadmap mapdata="" enter="SouthEastEntrance2"/>
 </trigger>
 <trigger id=11 description="NorthEastExit3" require=-1, exclude=2, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="eriumcastle" enter="SouthEastEntrance3"/>
+	<loadmap mapdata="" enter="SouthEastEntrance3"/>
 </trigger>
 <trigger id=12 description="NorthEastExit4" require=-1, exclude=2, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="eriumcastle" enter="SouthEastEntrance4"/>
+	<loadmap mapdata="" enter="SouthEastEntrance4"/>
 </trigger>
 <trigger id=13 description="NorthEastExit5" require=-1, exclude=2, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="eriumcastle" enter="SouthEastEntrance5"/>
+	<loadmap mapdata="" enter="SouthEastEntrance5"/>
 </trigger>
 <trigger id=14 description="NorthEastExit6" require=-1, exclude=2, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="eriumcastle" enter="SouthEastEntrance6"/>
+	<loadmap mapdata="" enter="SouthEastEntrance6"/>
 </trigger>
 <trigger id=15 description="NorthEastExit7" require=-1, exclude=2, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="eriumcastle" enter="SouthEastEntrance7"/>
+	<loadmap mapdata="" enter="SouthEastEntrance7"/>
 </trigger>
 <trigger id=16 description="BartenderScolds" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<showcin cinid=1 exittrigid=-1/>
@@ -81,7 +81,7 @@
 	<string require=-1, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="" message="Erium has maintained peace for a long time, so we don't have to enlist unless we want to.<pause> Me, I'd rather go fishing!<hardstop>"/>
 </text>
 <text id=3 description="citizen3">
-	<string require=-1, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="" message="Their are some really cute girls that work in the castle. I'm jealous that you get to see them whenever you want.<hardstop>"/>
+	<string require=-1, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="" message="There are some really cute girls that work in the castle. I'm jealous that you get to see them whenever you want.<hardstop>"/>
 </text>
 <text id=4 description="citizen4">
 	<conversation require=-1, exclude=-1, trigger=-1 heroportrait1=-1 enemyportrait1=-1 animportrait1="" heroportrait2=0 enemyportrait2=-1 animportrait2="" message="Have you ever wondered what is on the other side of the mountains?<hardstop><split>The kingdom of signus is to the east, but the passage is to treacherous for safe use.<hardstop><split>Oh that's right. It's a shame, I'd like to visit there some day.<hardstop>"/>
