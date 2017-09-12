@@ -21,11 +21,19 @@ public class YesNoMenu extends SpeechMenu
 	private boolean yesSelected = true;
 	private Integer yesTrigger = null;
 	private Integer noTrigger = null;
+	private boolean consumeInput = true;
 
 	public YesNoMenu(String text, int yesTrigger, int noTrigger, StateInfo stateInfo) {
-		this(text, Trigger.TRIGGER_NONE, null, stateInfo, null);
+		this(replaceLastHardstop(text), Trigger.TRIGGER_NONE, null, stateInfo, null);
 		this.yesTrigger = yesTrigger;
 		this.noTrigger = noTrigger;
+	}
+	
+	private static String replaceLastHardstop(String text) {
+		if (text.endsWith("<hardstop>")) {
+			return text.substring(0, text.length() - 10);
+		}
+		return text;
 	}
 	
 	public YesNoMenu(String text, StateInfo stateInfo, MenuListener listener) {
@@ -44,35 +52,42 @@ public class YesNoMenu extends SpeechMenu
 
 	@Override
 	public MenuUpdate handleUserInput(FCInput input, StateInfo stateInfo) {
-		if (input.isKeyDown(KeyMapping.BUTTON_1) || input.isKeyDown(KeyMapping.BUTTON_3))
-		{
-			// Handle unlistened to selections
-			if (this.getMenuListener() == null && yesTrigger != null && noTrigger != null) {
-				if (yesSelected) {
-					if (yesTrigger != Trigger.TRIGGER_NONE)
-						stateInfo.getResourceManager().getTriggerEventById(yesTrigger).perform(stateInfo);
-				}
-				else {
-					if (noTrigger != Trigger.TRIGGER_NONE)
-						stateInfo.getResourceManager().getTriggerEventById(noTrigger).perform(stateInfo);
-				}
+		super.handleUserInput(input, stateInfo);
+		if (isDone) {
+			if (consumeInput) {
+				input.clear();
+				consumeInput = false;
 			}
-			return MenuUpdate.MENU_CLOSE;
-		}
-		else if (input.isKeyDown(KeyMapping.BUTTON_LEFT))
-		{
-			selectRect.setX(120);
-			yesSelected = true;
-		}
-		else if (input.isKeyDown(KeyMapping.BUTTON_RIGHT))
-		{
-			selectRect.setX(170);
-			yesSelected = false;
-		}
-		else if (input.isKeyDown(KeyMapping.BUTTON_2))
-		{
-			yesSelected = false;
-			return MenuUpdate.MENU_CLOSE;
+			if (input.isKeyDown(KeyMapping.BUTTON_1) || input.isKeyDown(KeyMapping.BUTTON_3))
+			{
+				// Handle unlistened to selections
+				if (this.getMenuListener() == null && yesTrigger != null && noTrigger != null) {
+					if (yesSelected) {
+						if (yesTrigger != Trigger.TRIGGER_NONE)
+							stateInfo.getResourceManager().getTriggerEventById(yesTrigger).perform(stateInfo);
+					}
+					else {
+						if (noTrigger != Trigger.TRIGGER_NONE)
+							stateInfo.getResourceManager().getTriggerEventById(noTrigger).perform(stateInfo);
+					}
+				}
+				return MenuUpdate.MENU_CLOSE;
+			}
+			else if (input.isKeyDown(KeyMapping.BUTTON_LEFT))
+			{
+				selectRect.setX(120);
+				yesSelected = true;
+			}
+			else if (input.isKeyDown(KeyMapping.BUTTON_RIGHT))
+			{
+				selectRect.setX(170);
+				yesSelected = false;
+			}
+			else if (input.isKeyDown(KeyMapping.BUTTON_2))
+			{
+				yesSelected = false;
+				return MenuUpdate.MENU_CLOSE;
+			}
 		}
 		return MenuUpdate.MENU_NO_ACTION;
 	}
@@ -89,7 +104,7 @@ public class YesNoMenu extends SpeechMenu
 	public void render(PaddedGameContainer gc, Graphics graphics)
 	{
 		super.render(gc, graphics);
-		if (menuIsMovedIn)
+		if (menuIsMovedIn && isDone)
 		{
 			// Draw background
 			yesPanel.drawPanel(graphics);

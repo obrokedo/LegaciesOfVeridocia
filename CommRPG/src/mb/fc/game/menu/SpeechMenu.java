@@ -40,6 +40,7 @@ public class SpeechMenu extends Menu
 	private String waitingOn = null;
 	private Timer timer;
 	private Speech speech = null;
+	protected boolean isDone = false;
 
 
 	/**
@@ -249,6 +250,7 @@ public class SpeechMenu extends Menu
 						else
 						{
 							if (speech == null || !speech.hasMoreSpeech()) {
+								isDone = true;
 								Log.debug("Speech Menu: Send Trigger " + triggerId);
 								if (triggerId != NO_TRIGGER)
 									stateInfo.getResourceManager().getTriggerEventById(triggerId).perform(stateInfo);
