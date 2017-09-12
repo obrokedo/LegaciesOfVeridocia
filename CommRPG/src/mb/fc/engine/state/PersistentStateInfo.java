@@ -63,7 +63,10 @@ public class PersistentStateInfo implements PacketHandler
 
 		getGame().setLoadingInfo(mapData,
 				(LoadableGameState) getGame().getState(CommRPG.STATE_GAME_TOWN), getResourceManager());
-		getGame().enterState(CommRPG.STATE_GAME_LOADING, new FadeOutTransition(Color.black, 250), new EmptyTransition());
+		getGame().enterState(CommRPG.STATE_GAME_LOADING, 
+				// Do not fade out when coming from a cinematic
+				(getGame().getCurrentStateID() != CommRPG.STATE_GAME_CINEMATIC) ? new FadeOutTransition(Color.black, 250) :
+					new EmptyTransition(), new EmptyTransition());
 	}
 	
 	public void loadMapFromSave()
@@ -82,7 +85,10 @@ public class PersistentStateInfo implements PacketHandler
 		getGame().setLoadingInfo(mapData,
 				(LoadableGameState) getGame().getState(CommRPG.STATE_GAME_BATTLE), getResourceManager());
 		
-		getGame().enterState(CommRPG.STATE_GAME_LOADING, new FadeOutTransition(Color.black, 250), new EmptyTransition());
+		getGame().enterState(CommRPG.STATE_GAME_LOADING, 
+				// Do not fade out when coming from a cinematic
+				(getGame().getCurrentStateID() != CommRPG.STATE_GAME_CINEMATIC) ? new FadeOutTransition(Color.black, 250) :
+					new EmptyTransition(), new EmptyTransition());
 	}
 
 	public void loadCinematic(String mapData, int cinematicID)
@@ -96,7 +102,9 @@ public class PersistentStateInfo implements PacketHandler
 		getGame().setLoadingInfo(mapData,
 				(LoadableGameState) getGame().getState(CommRPG.STATE_GAME_CINEMATIC),
 					getResourceManager());
-		getGame().enterState(CommRPG.STATE_GAME_LOADING, new FadeOutTransition(Color.black, 250), new EmptyTransition());
+		getGame().enterState(CommRPG.STATE_GAME_LOADING, // Do not fade out when coming from a cinematic
+				(getGame().getCurrentStateID() != CommRPG.STATE_GAME_CINEMATIC) ? new FadeOutTransition(Color.black, 250) :
+					new EmptyTransition(), new EmptyTransition());
 	}
 
 	public Camera getCamera() {

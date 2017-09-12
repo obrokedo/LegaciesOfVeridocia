@@ -103,21 +103,27 @@ public class CinematicState extends LoadableGameState
 		if (stateInfo.isInitialized())
 		{
 			// stateInfo.getCamera().realSetLocation();
+			
+			if (!cinematicManager.isBlocking()) {
+				g.setColor(Color.black);
+				g.fillRect(0, 0, container.getWidth(), container.getHeight());
+			} else {
 
-			float xOffset = stateInfo.getCamera().getLocationX() % stateInfo.getCurrentMap().getTileRenderWidth();
-			float yOffset = stateInfo.getCamera().getLocationY() % stateInfo.getCurrentMap().getTileRenderHeight();
-
-			tileMapRenderer.render(xOffset, yOffset, stateInfo.getCamera(), g, stateInfo.getFCGameContainer());
-			cinematicManager.render(g);
-			// cinematic.render(g, stateInfo.getCamera(), stateInfo.getGc(), stateInfo);
-			tileMapRenderer.renderForeground(xOffset, yOffset, stateInfo.getCamera(), g, stateInfo.getFCGameContainer());
-			cinematicManager.renderPostEffects(g);
-			// cinematic.renderPostEffects(g, stateInfo.getCamera(), stateInfo.getGc(), stateInfo);
-			menuRenderer.render(g);
-			if (cinematicSpeed != 1)
-			{
-				g.setColor(Color.red);
-				StringUtils.drawString("Cinematic speed: " + cinematicSpeed, 15, 15, g);
+				float xOffset = stateInfo.getCamera().getLocationX() % stateInfo.getCurrentMap().getTileRenderWidth();
+				float yOffset = stateInfo.getCamera().getLocationY() % stateInfo.getCurrentMap().getTileRenderHeight();
+	
+				tileMapRenderer.render(xOffset, yOffset, stateInfo.getCamera(), g, stateInfo.getFCGameContainer());
+				cinematicManager.render(g);
+				// cinematic.render(g, stateInfo.getCamera(), stateInfo.getGc(), stateInfo);
+				tileMapRenderer.renderForeground(xOffset, yOffset, stateInfo.getCamera(), g, stateInfo.getFCGameContainer());
+				cinematicManager.renderPostEffects(g);
+				// cinematic.renderPostEffects(g, stateInfo.getCamera(), stateInfo.getGc(), stateInfo);
+				menuRenderer.render(g);
+				if (cinematicSpeed != 1)
+				{
+					g.setColor(Color.red);
+					StringUtils.drawString("Cinematic speed: " + cinematicSpeed, 15, 15, g);
+				}
 			}
 		}
 

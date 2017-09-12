@@ -70,8 +70,9 @@ public class CinematicManager extends Manager
 					this.exitTrigId = Trigger.TRIGGER_NONE;
 				}
 				
-				cinematic = stateInfo.getResourceManager().getCinematicById(cinId).duplicateCinematic();
-				cinematic.initialize(stateInfo, initializeCamera);
+				Cinematic cin = stateInfo.getResourceManager().getCinematicById(cinId).duplicateCinematic();
+				cin.initialize(stateInfo, initializeCamera);
+				cinematic = cin;
 				break;
 			case CIN_NEXT_ACTION:
 				if (cinematic != null)

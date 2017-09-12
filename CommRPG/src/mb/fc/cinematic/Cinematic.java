@@ -602,8 +602,10 @@ public class Cinematic {
 				CinematicState.cinematicSpeed = 1;
 				break;
 			case LOAD_CIN:
-				if (stateInfo.getClientProgress().getMapData().equalsIgnoreCase((String) ce.getParam(0)))
+				if (stateInfo.getClientProgress().getMapData().equalsIgnoreCase((String) ce.getParam(0))) {
 					stateInfo.sendMessage(new IntMessage(MessageType.SHOW_CINEMATIC, (int) ce.getParam(1)));
+					cinematicEvents.add(new CinematicEvent(CinematicEventType.WAIT, 500));
+				}
 				else
 					stateInfo.getPersistentStateInfo().loadCinematic((String) ce.getParam(0), (int) ce.getParam(1));
 				CinematicState.cinematicSpeed = 1;
