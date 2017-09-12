@@ -1,25 +1,25 @@
 <map file="EriumCastleNight.tmx"/>
-<trigger id=0 description="MapStart" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+<trigger id=0 description="MapStart" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<playmusic music="castlenight"/>
 </trigger>
 <cinematic id=0 description="scene1-1" camerax=600 cameray=0>
-	<addactor x=0 y=0 name="Cam" anim="Noah" startanim="Down" visible=false init=true associatedhero=0/>
-	<addactor x=816 y=1056 name="Noah" anim="Noah" startanim="Left" visible=true init=true associatedhero=0/>
-	<addactor x=816 y=1068 name="Sharna" anim="Sharna" startanim="Left" visible=true init=true associatedhero=1/>
+	<addactor x=0 y=0 name="Cam" anim="Noah" startanim="Down" visible=false init=true associatedhero="Noah"/>
+	<addactor x=816 y=1056 name="Noah" anim="Noah" startanim="Left" visible=true init=true associatedhero="Noah"/>
+	<addactor x=816 y=1068 name="Sharna" anim="Sharna" startanim="Left" visible=true init=true associatedhero="Sharna"/>
 	<playmusic music="castlenight" volume=30/>
 	<camerafollow name="Noah"/>
 	<fadein time=4000 halting=false init=true/>
 	<move name="Noah" x=600 y=1056 speed="1" movehor=true movediag=false/>
 	<move name="Sharna" x=600 y=1068 speed="1" movehor=true movediag=false/>
-	<speech text="You know, just the other day I caught Huun sleeping at his post!<pause> <linebreak> Can you believe it? Sleeping!<hardstop>" heroportrait=1 enemyportrait=-1 animportrait=""/>
+	<speech text="You know, just the other day I caught Huun sleeping at his post!<pause> <linebreak> Can you believe it? Sleeping!<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
 	<move name="Noah" x=600 y=1056 speed="1" movehor=true movediag=false/>
 	<haltingmove name="Sharna" x=600 y=1068 speed="1" movehor=true movediag=false/>
 	<facing name="Noah" dir=1/>
-	<speech text="I'm sure you let him have it.<pause> What did he have to say about that?<hardstop>" heroportrait=0 enemyportrait=-1 animportrait="Noah"/>
+	<speech text="I'm sure you let him have it.<pause> What did he have to say about that?<hardstop>" heroportrait="Noah" enemyportrait="" animportrait="Noah"/>
 	<facing name="Sharna" dir=0/>
-	<speech text="He said he was resting his eyes.<pause><linebreak> Said he gets more done listening for footfalls on the flagstones.<hardstop>" heroportrait=1 enemyportrait=-1 animportrait=""/>
+	<speech text="He said he was resting his eyes.<pause><linebreak> Said he gets more done listening for footfalls on the flagstones.<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
 	<move name="Noah" x=528 y=1056 speed="1.5" movehor=true movediag=false/>
-	<speech text="Well, as long as he is doing his job, does it matter which sense he uses?<hardstop>" heroportrait=0 enemyportrait=-1 animportrait=""/>
+	<speech text="Well, as long as he is doing his job, does it matter which sense he uses?<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<haltingmove name="Sharna" x=504 y=1056 speed="2.5" movehor=true movediag=false/>
 	<facing name="Sharna" dir=3/>
 	<wait time=100/>
@@ -27,13 +27,13 @@
 	<wait time=300/>
 	<shakehead name="Sharna" time=300/>
 	<wait time=300/>
-	<speech text="Of course it matters!!<pause><linebreak> You still have to be awake to use your ears!<softstop><linebreak> Besides, not everyone walks these halls in full armor.<pause> Eyes are better than ears for catching sneaks.<hardstop>" heroportrait=1 enemyportrait=-1 animportrait=""/>
+	<speech text="Of course it matters!!<pause><linebreak> You still have to be awake to use your ears!<softstop><linebreak> Besides, not everyone walks these halls in full armor.<pause> Eyes are better than ears for catching sneaks.<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
 	<move name="Noah" x=552 y=1008 speed="1.5" movehor=false movediag=false/>
 	<wait time=1200/>
 	<forcedmove name="Noah" x=559 y=1008 speed=1 facing=2 movehor=true movediag=false/>
 	<wait time=200/>
 	<stopanim name="Noah"/>
-	<speech text="I think you should ease up on him.<pause>  Huun does things a little differently sometimes;<softstop> it could be a cover<pause> but it could also be a legitimate explanation.<hardstop>" heroportrait=0 enemyportrait=-1 animportrait=""/>
+	<speech text="I think you should ease up on him.<pause>  Huun does things a little differently sometimes;<softstop> it could be a cover<pause> but it could also be a legitimate explanation.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<quiver name="Sharna"/>
 	<wait time=750/>
 	<stopse name="Sharna"/>
@@ -47,30 +47,30 @@
 	<wait time=125/>
 	<forcedmove name="Sharna" x=528 y=1008 speed=9 facing=3 movehor=false movediag=false/>
 	<wait time=125/>
-	<speech text="Sometimes I feel like you never agree with me!<softstop><linebreak> I swear you do it just to ...<nextcin><softstop>1000 <nextcin><softstop>500 <linebreak>...tease me...<hardstop>" heroportrait=1 enemyportrait=-1 animportrait=""/>
+	<speech text="Sometimes I feel like you never agree with me!<softstop><linebreak> I swear you do it just to ...<nextcin><softstop>1000 <nextcin><softstop>500 <linebreak>...tease me...<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
 	<camerashake time=1000 severity=1/>
 	<haltingmove name="Sharna" x=504 y=984 speed="2" movehor=false movediag=false/>
 	<haltingmove name="Noah" x=528 y=984 speed="2" movehor=true movediag=false/>
 	<facing name="Noah" dir=2/>
-	<speech text="What is it?  It's unlike you to get distracted.<hardstop>" heroportrait=0 enemyportrait=-1 animportrait=""/>
+	<speech text="What is it?  It's unlike you to get distracted.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<haltingmove name="Cam" x=528 y=984 speed="99" movehor=true movediag=true/>
 	<camerafollow name="Cam"/>
 	<facing name="Sharna" dir=3/>
-	<speech text="I hear something! Follow me.<hardstop>" heroportrait=1 enemyportrait=-1 animportrait=""/>
+	<speech text="I hear something! Follow me.<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
 	<haltingmove name="Cam" x=504 y=984 speed="1" movehor=true movediag=true/>
 	<camerafollow name="Sharna"/>
 	<facing name="Noah" dir=0/>
-	<addactor x=624 y=432 name="Huun" anim="Huun" startanim="Down" visible=true init=false associatedhero=2/>
+	<addactor x=624 y=432 name="Huun" anim="Huun" startanim="Down" visible=true init=false associatedhero="Huun"/>
 	<stopanim name="Huun"/>
 	<haltingmove name="Sharna" x=620 y=432 speed="4" movehor=false movediag=false/>
 	<camerashake time=350 severity=3/>
 	<stopanim name="Sharna"/>
 	<playsound sound="impact" volume=75/>
 	<wait time=350/>
-	<speech text="Uhn...<hardstop>" heroportrait=2 enemyportrait=-1 animportrait=""/>
+	<speech text="Uhn...<hardstop>" heroportrait="Huun" enemyportrait="" animportrait=""/>
 	<playsound sound="hit3" volume=75/>
 	<layonsideright name="Huun" dir=3/>
-	<speech text="Eeeeep!!!<hardstop>" heroportrait=1 enemyportrait=-1 animportrait=""/>
+	<speech text="Eeeeep!!!<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
 	<playsound sound="fall" volume=75/>
 	<forcedmove name="Sharna" x=672 y=432 speed=3 facing=3 movehor=false movediag=false/>
 	<stopanim name="Sharna"/>
@@ -102,8 +102,8 @@
 	<wait time=750/>
 	<facing name="Huun" dir=2/>
 	<wait time=1500/>
-	<speech text="Wh-who's there?! Noah? What's...<hardstop>" heroportrait=2 enemyportrait=-1 animportrait=""/>
-	<speech text="Calm down, Huun.<pause><nextcin> Are you OK, Sharna?<hardstop>" heroportrait=0 enemyportrait=-1 animportrait=""/>
+	<speech text="Wh-who's there?! Noah? What's...<hardstop>" heroportrait="Huun" enemyportrait="" animportrait=""/>
+	<speech text="Calm down, Huun.<pause><nextcin> Are you OK, Sharna?<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<stopse name="Sharna"/>
 	<facing name="Sharna" dir=1/>
 	<shakehead name="Sharna" time=300/>
@@ -111,15 +111,15 @@
 	<shakehead name="Sharna" time=300/>
 	<wait time=300/>
 	<facing name="Sharna" dir=2/>
-	<speech text="Erium's number one guard using his ears again, I see. <linebreak> I can't believe you even get paid.<hardstop>" heroportrait=1 enemyportrait=-1 animportrait=""/>
+	<speech text="Erium's number one guard using his ears again, I see. <linebreak> I can't believe you even get paid.<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
 	<facing name="Huun" dir=3/>
 	<wait time=500/>
 	<tremble name="Huun"/>
 	<wait time=750/>
 	<stopse name="Huun"/>
-	<speech text="Alright, Sharna. What's this about?<hardstop>" heroportrait=0 enemyportrait=-1 animportrait=""/>
-	<speech text="I heard something in the courtyard. It sounded like voices.<hardstop>" heroportrait=1 enemyportrait=-1 animportrait=""/>
-	<speech text="No one's authorised to be out there this late besides us. We'd better check it out. Sharna, Huun, let's go.<hardstop>" heroportrait=0 enemyportrait=-1 animportrait=""/>
+	<speech text="Alright, Sharna. What's this about?<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
+	<speech text="I heard something in the courtyard. It sounded like voices.<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
+	<speech text="No one's authorised to be out there this late besides us. We'd better check it out. Sharna, Huun, let's go.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<forcedmove name="Huun" x=624 y=420 speed=3 facing=1 movehor=true movediag=false/>
 	<forcedmove name="Sharna" x=672 y=420 speed=3 facing=1 movehor=false movediag=false/>
 	<haltingmove name="Noah" x=744 y=600 speed="2" movehor=true movediag=false/>
@@ -127,7 +127,7 @@
 	<move name="Huun" x=624 y=432 speed="3" movehor=false movediag=false/>
 	<haltingmove name="Huun" x=672 y=432 speed="3" movehor=false movediag=false/>
 	<facing name="Huun" dir=3/>
-	<speech text="But I...<hardstop>" heroportrait=2 enemyportrait=-1 animportrait=""/>
+	<speech text="But I...<hardstop>" heroportrait="Huun" enemyportrait="" animportrait=""/>
 	<quiver name="Sharna"/>
 	<wait time=750/>
 	<stopse name="Sharna"/>
@@ -151,23 +151,23 @@
 	<tremble name="Huun"/>
 	<wait time=750/>
 	<stopse name="Huun"/>
-	<speech text="What did I do now<pause>.<pause>.<pause>.<pause>?<pause><hardstop>" heroportrait=2 enemyportrait=-1 animportrait=""/>
+	<speech text="What did I do now<pause>.<pause>.<pause>.<pause>?<pause><hardstop>" heroportrait="Huun" enemyportrait="" animportrait=""/>
 	<haltingmove name="Huun" x=744 y=600 speed="5" movehor=true movediag=false/>
 	<haltingmove name="Huun" x=720 y=600 speed="5" movehor=false movediag=false/>
 	<facing name="Huun" dir=1/>
 	<facing name="Sharna" dir=1/>
 	<haltingmove name="Cam" x=744 y=600 speed="1" movehor=false movediag=true/>
 	<wait time=1000/>
-	<speech text="I heard it over by the trees.<hardstop>" heroportrait=1 enemyportrait=-1 animportrait=""/>
-	<speech text="Right. I'm going to assess the situation.<hardstop> <linebreak>Keep watch over by those bushes, and be ready to assist. <linebreak>Stay out of sight.<hardstop>" heroportrait=0 enemyportrait=-1 animportrait=""/>
+	<speech text="I heard it over by the trees.<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
+	<speech text="Right. I'm going to assess the situation.<hardstop> <linebreak>Keep watch over by those bushes, and be ready to assist. <linebreak>Stay out of sight.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<facing name="Sharna" dir=2/>
 	<facing name="Huun" dir=3/>
 	<wait time=375/>
 	<nod name="Sharna"/>
-	<speech text="Yes, Sir.<hardstop>" heroportrait=1 enemyportrait=-1 animportrait=""/>
+	<speech text="Yes, Sir.<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
 	<wait time=375/>
 	<nod name="Huun"/>
-	<speech text="Aye, Sir.<hardstop>" heroportrait=2 enemyportrait=-1 animportrait=""/>
+	<speech text="Aye, Sir.<hardstop>" heroportrait="Huun" enemyportrait="" animportrait=""/>
 	<wait time=1250/>
 	<move name="Noah" x=744 y=624 speed="1" movehor=false movediag=false/>
 	<move name="Huun" x=672 y=600 speed="1" movehor=false movediag=false/>
@@ -175,8 +175,8 @@
 	<facing name="Huun" dir=1/>
 	<facing name="Sharna" dir=1/>
 	<wait time=250/>
-	<addactor x=648 y=804 name="Lexus" anim="Lexus" startanim="UnRight" visible=true init=false associatedhero=-1/>
-	<addactor x=672 y=804 name="Mistal" anim="MistalCloakedHooded" startanim="UnLeft" visible=true init=false associatedhero=-1/>
+	<addactor x=648 y=804 name="Lexus" anim="Lexus" startanim="UnRight" visible=true init=false associatedhero=""/>
+	<addactor x=672 y=804 name="Mistal" anim="MistalCloakedHooded" startanim="UnLeft" visible=true init=false associatedhero=""/>
 	<haltingmove name="Cam" x=672 y=805 speed="1.5" movehor=false movediag=true/>
 	<fademusic duration=2000/>
 	<wait time=2000/>
@@ -185,17 +185,17 @@
 	<move name="Noah" x=720 y=744 speed="2.4" movehor=true movediag=false/>
 	<wait time=600/>
 	<facing name="Noah" dir=2/>
-	<speech text="... time... the seals... begin...<hardstop>" heroportrait=-1 enemyportrait=-1 animportrait=""/>
+	<speech text="... time... the seals... begin...<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
 	<nod name="Mistal"/>
 	<wait time=1250/>
-	<speech text="... our Majesty... problem... compliant...<hardstop>" heroportrait=-1 enemyportrait=-1 animportrait=""/>
-	<speech text="(His Majesty? What are they plotting?<pause><linebreak> If I could just get close enough to hear...)<hardstop>" heroportrait=0 enemyportrait=-1 animportrait=""/>
+	<speech text="... our Majesty... problem... compliant...<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
+	<speech text="(His Majesty? What are they plotting?<pause><linebreak> If I could just get close enough to hear...)<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<haltingmove name="Noah" x=708 y=756 speed=".5" movehor=true movediag=true/>
 	<wait time=750/>
 	<haltingmove name="Noah" x=696 y=768 speed=".5" movehor=false movediag=true/>
 	<wait time=750/>
 	<haltingmove name="Noah" x=684 y=780 speed=".5" movehor=false movediag=true/>
-	<speech text="... Crap!<hardstop>" heroportrait=0 enemyportrait=-1 animportrait=""/>
+	<speech text="... Crap!<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<facing name="Mistal" dir=0/>
 	<wait time=500/>
 	<playsound sound="fall" volume=75/>
@@ -216,7 +216,7 @@
 	<playsound sound="casting" volume=75/>
 	<removeactor name="Lexus"/>
 	<wait time=3000/>
-	<speech text="Get OFF of me, you miscreant!!<hardstop>" heroportrait=-1 enemyportrait=-1 animportrait=""/>
+	<speech text="Get OFF of me, you miscreant!!<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
 	<stopse name="Mistal"/>
 	<playsound sound="casting" volume=75/>
 	<flash name="Mistal" time=1500 speed=100/>
@@ -247,29 +247,29 @@
 	<forcedmove name="Sharna" x=696 y=600 speed=9 facing=1 movehor=false movediag=false/>
 	<wait time=125/>
 	<rendernormal name="Noah"/>
-	<speech text="Noah!!<hardstop>" heroportrait=1 enemyportrait=-1 animportrait=""/>
-	<speech text="Ugh...<pause> I'm OK.<hardstop>" heroportrait=0 enemyportrait=-1 animportrait=""/>
+	<speech text="Noah!!<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
+	<speech text="Ugh...<pause> I'm OK.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<stopse name="Noah"/>
 	<facing name="Noah" dir=1/>
 	<shakehead name="Noah" time=300/>
 	<wait time=300/>
 	<shakehead name="Noah" time=300/>
 	<wait time=300/>
-	<addactor x=672 y=696 name="Mistal" anim="MistalCloaked" startanim="UnUp" visible=true init=false associatedhero=-1/>
+	<addactor x=672 y=696 name="Mistal" anim="MistalCloaked" startanim="UnUp" visible=true init=false associatedhero=""/>
 	<flash name="Mistal" time=1500 speed=100/>
-	<addactor x=840 y=588 name="ooze0" anim="Darkling Ooze" startanim="UnDown" visible=false init=false associatedhero=-1/>
-	<addactor x=960 y=684 name="ooze1" anim="Darkling Ooze" startanim="UnDown" visible=false init=false associatedhero=-1/>
-	<addactor x=936 y=852 name="ooze2" anim="Darkling Ooze" startanim="UnDown" visible=false init=false associatedhero=-1/>
-	<addactor x=876 y=900 name="ooze3" anim="Darkling Ooze" startanim="UnDown" visible=false init=false associatedhero=-1/>
-	<addactor x=744 y=948 name="ooze4" anim="Darkling Ooze" startanim="UnDown" visible=false init=false associatedhero=-1/>
-	<addactor x=672 y=876 name="ooze5" anim="Darkling Ooze" startanim="UnDown" visible=false init=false associatedhero=-1/>
-	<addactor x=624 y=744 name="ooze6" anim="Darkling Ooze" startanim="UnDown" visible=false init=false associatedhero=-1/>
-	<addactor x=816 y=756 name="ooze7" anim="Darkling Ooze" startanim="UnDown" visible=false init=false associatedhero=-1/>
+	<addactor x=840 y=588 name="ooze0" anim="Darkling Ooze" startanim="UnDown" visible=false init=false associatedhero=""/>
+	<addactor x=960 y=684 name="ooze1" anim="Darkling Ooze" startanim="UnDown" visible=false init=false associatedhero=""/>
+	<addactor x=936 y=852 name="ooze2" anim="Darkling Ooze" startanim="UnDown" visible=false init=false associatedhero=""/>
+	<addactor x=876 y=900 name="ooze3" anim="Darkling Ooze" startanim="UnDown" visible=false init=false associatedhero=""/>
+	<addactor x=744 y=948 name="ooze4" anim="Darkling Ooze" startanim="UnDown" visible=false init=false associatedhero=""/>
+	<addactor x=672 y=876 name="ooze5" anim="Darkling Ooze" startanim="UnDown" visible=false init=false associatedhero=""/>
+	<addactor x=624 y=744 name="ooze6" anim="Darkling Ooze" startanim="UnDown" visible=false init=false associatedhero=""/>
+	<addactor x=816 y=756 name="ooze7" anim="Darkling Ooze" startanim="UnDown" visible=false init=false associatedhero=""/>
 	<wait time=2000/>
-	<speech text="What...Grand Mage Mistal?!<hardstop>" heroportrait=1 enemyportrait=-1 animportrait=""/>
+	<speech text="What...Grand Mage Mistal?!<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
 	<quiver name="Mistal"/>
 	<wait time=750/>
-	<speech text="You meddlesome cretin!<hardstop>" heroportrait=-1 enemyportrait=-1 animportrait="Mistal"/>
+	<speech text="You meddlesome cretin!<hardstop>" heroportrait="" enemyportrait="" animportrait="Mistal"/>
 	<stopse name="Mistal"/>
 	<wait time=750/>
 	<flashscreen time=250/>
@@ -325,7 +325,7 @@
 	<visible name="ooze7" isvis=true/>
 	<wait time=2000/>
 	<haltingmove name="Cam" x=648 y=696 speed="1.5" movehor=false movediag=true/>
-	<speech text="I don't have time to deal with you, but I can't have you getting away, either. My pets will keep you busy!<hardstop>" heroportrait=-1 enemyportrait=-1 animportrait="Mistal"/>
+	<speech text="I don't have time to deal with you, but I can't have you getting away, either. My pets will keep you busy!<hardstop>" heroportrait="" enemyportrait="" animportrait="Mistal"/>
 	<playsound sound="casting" volume=75/>
 	<flash name="Mistal" time=1500 speed=100/>
 	<flashscreen time=250/>
@@ -336,10 +336,10 @@
 </cinematic>
 <cinematic id=1 description="Battle1 Aftermath" camerax=600 cameray=960>
 	<playmusic music="battle1" volume=30/>
-	<addactor x=840 y=840 name="Huun" anim="Huun" startanim="UnDown" visible=true init=true associatedhero=-1/>
-	<addactor x=864 y=864 name="Noah" anim="Noah" startanim="UnDown" visible=true init=true associatedhero=-1/>
-	<addactor x=888 y=840 name="Sharna" anim="Sharna" startanim="UnDown" visible=true init=true associatedhero=-1/>
-	<addactor x=936 y=840 name="Mistal" anim="MistalCloaked" startanim="UnLeft" visible=false init=true associatedhero=-1/>
+	<addactor x=840 y=840 name="Huun" anim="Huun" startanim="UnDown" visible=true init=true associatedhero=""/>
+	<addactor x=864 y=864 name="Noah" anim="Noah" startanim="UnDown" visible=true init=true associatedhero=""/>
+	<addactor x=888 y=840 name="Sharna" anim="Sharna" startanim="UnDown" visible=true init=true associatedhero=""/>
+	<addactor x=936 y=840 name="Mistal" anim="MistalCloaked" startanim="UnLeft" visible=false init=true associatedhero=""/>
 	<camerafollow name="Noah"/>
 	<fadein time=1000 halting=false init=true/>
 	<nod name="Noah"/>
@@ -360,7 +360,7 @@
 	<wait time=250/>
 	<nod name="Sharna"/>
 	<wait time=2000/>
-	<speech text="What's going on? What were those things?!<hardstop>" heroportrait=1 enemyportrait=-1 animportrait=""/>
+	<speech text="What's going on? What were those things?!<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
 	<flashscreen time=250/>
 	<playsound sound="casting" volume=75/>
 	<wait time=125/>
@@ -369,21 +369,21 @@
 	<facing name="Noah" dir=3/>
 	<facing name="Huun" dir=3/>
 	<facing name="Sharna" dir=3/>
-	<speech text="It would seem I underestimated you.<hardstop>" heroportrait=-1 enemyportrait=-1 animportrait="Mistal"/>
-	<speech text="The commotion came from the courtyard!<hardstop>" heroportrait=-1 enemyportrait=-1 animportrait=""/>
+	<speech text="It would seem I underestimated you.<hardstop>" heroportrait="" enemyportrait="" animportrait="Mistal"/>
+	<speech text="The commotion came from the courtyard!<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
 	<facing name="Mistal" dir=0/>
-	<speech text="But you won't interfere any further.<hardstop>" heroportrait=-1 enemyportrait=-1 animportrait="Mistal"/>
+	<speech text="But you won't interfere any further.<hardstop>" heroportrait="" enemyportrait="" animportrait="Mistal"/>
 	<flashscreen time=250/>
 	<wait time=250/>
 	<flashscreen time=250/>
 	<wait time=250/>
 	<flashscreen time=250/>
 	<playsound sound="dark" volume=75/>
-	<addactor x=840 y=840 name="Fog0" anim="Fog" startanim="UnDown" visible=true init=false associatedhero=-1/>
-	<addactor x=864 y=864 name="Fog1" anim="Fog" startanim="UnDown" visible=true init=false associatedhero=-1/>
-	<addactor x=888 y=840 name="Fog2" anim="Fog" startanim="UnDown" visible=true init=false associatedhero=-1/>
+	<addactor x=840 y=840 name="Fog0" anim="Fog" startanim="UnDown" visible=true init=false associatedhero=""/>
+	<addactor x=864 y=864 name="Fog1" anim="Fog" startanim="UnDown" visible=true init=false associatedhero=""/>
+	<addactor x=888 y=840 name="Fog2" anim="Fog" startanim="UnDown" visible=true init=false associatedhero=""/>
 	<wait time=250/>
-	<speech text="Ugggghh.<pause>.<pause>.<pause><hardstop>" heroportrait=0 enemyportrait=-1 animportrait=""/>
+	<speech text="Ugggghh.<pause>.<pause>.<pause><hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<playsound sound="hit3" volume=75/>
 	<fallonface name="Noah" dir=1/>
 	<layonsideright name="Huun" dir=3/>
@@ -395,21 +395,21 @@
 	<removeactor name="Fog2"/>
 	<wait time=500/>
 	<move name="Mistal" x=936 y=672 speed="3" movehor=true movediag=false/>
-	<speech text="Oh, thank goodness you arrived! I have uncovered traitors to the crown!<pause> Secure them in the cells!<hardstop>" heroportrait=-1 enemyportrait=-1 animportrait="Mistal"/>
+	<speech text="Oh, thank goodness you arrived! I have uncovered traitors to the crown!<pause> Secure them in the cells!<hardstop>" heroportrait="" enemyportrait="" animportrait="Mistal"/>
 	<fadeout time=3000 halting=true/>
 	<loadcin mapdata="eriumjail" cinid=0/>
 </cinematic>
 <cinematic id=2 description="Battle 2 Craig First" camerax=1176 cameray=120>
-	<addactor x=1368 y=240 name="Olivia" anim="Olivia" startanim="UnUp" visible=true init=true associatedhero=-1/>
-	<addactor x=1344 y=240 name="Craig" anim="Craig" startanim="UnUp" visible=true init=true associatedhero=-1/>
-	<addactor x=1440 y=192 name="Noah" anim="Noah" startanim="UnDown" visible=true init=true associatedhero=-1/>
+	<addactor x=1368 y=240 name="Olivia" anim="Olivia" startanim="UnUp" visible=true init=true associatedhero=""/>
+	<addactor x=1344 y=240 name="Craig" anim="Craig" startanim="UnUp" visible=true init=true associatedhero=""/>
+	<addactor x=1440 y=192 name="Noah" anim="Noah" startanim="UnDown" visible=true init=true associatedhero=""/>
 	<haltingmove name="Noah" x=1416 y=192 speed="1" movehor=false movediag=false/>
-	<addactor x=1440 y=192 name="Sharna" anim="Sharna" startanim="UnDown" visible=true init=false associatedhero=-1/>
+	<addactor x=1440 y=192 name="Sharna" anim="Sharna" startanim="UnDown" visible=true init=false associatedhero=""/>
 	<forcedmove name="Noah" x=1392 y=192 speed=1 facing=2 movehor=false movediag=false/>
 	<wait time=200/>
 	<forcedmove name="Sharna" x=1416 y=192 speed=1 facing=2 movehor=false movediag=false/>
 	<wait time=200/>
-	<addactor x=1440 y=192 name="Huun" anim="Huun" startanim="UnDown" visible=true init=false associatedhero=-1/>
+	<addactor x=1440 y=192 name="Huun" anim="Huun" startanim="UnDown" visible=true init=false associatedhero=""/>
 	<wait time=200/>
 	<forcedmove name="Noah" x=1344 y=192 speed=1 facing=2 movehor=false movediag=false/>
 	<wait time=200/>
@@ -425,16 +425,16 @@
 	<loadcin mapdata="eriumcastlenight" cinid=4/>
 </cinematic>
 <cinematic id=3 description="Battle 2 Noah First" camerax=1176 cameray=120>
-	<addactor x=1104 y=504 name="Olivia" anim="Olivia" startanim="UnUp" visible=true init=true associatedhero=-1/>
-	<addactor x=1104 y=504 name="Craig" anim="Craig" startanim="UnUp" visible=true init=true associatedhero=-1/>
-	<addactor x=1440 y=192 name="Noah" anim="Noah" startanim="UnDown" visible=true init=true associatedhero=-1/>
+	<addactor x=1104 y=504 name="Olivia" anim="Olivia" startanim="UnUp" visible=true init=true associatedhero=""/>
+	<addactor x=1104 y=504 name="Craig" anim="Craig" startanim="UnUp" visible=true init=true associatedhero=""/>
+	<addactor x=1440 y=192 name="Noah" anim="Noah" startanim="UnDown" visible=true init=true associatedhero=""/>
 	<haltingmove name="Noah" x=1416 y=192 speed="1" movehor=false movediag=false/>
-	<addactor x=1440 y=192 name="Sharna" anim="Sharna" startanim="UnDown" visible=true init=false associatedhero=-1/>
+	<addactor x=1440 y=192 name="Sharna" anim="Sharna" startanim="UnDown" visible=true init=false associatedhero=""/>
 	<move name="Noah" x=1392 y=192 speed="1" movehor=false movediag=false/>
 	<wait time=200/>
 	<move name="Sharna" x=1416 y=192 speed="1" movehor=false movediag=false/>
 	<wait time=200/>
-	<addactor x=1440 y=192 name="Huun" anim="Huun" startanim="UnDown" visible=true init=false associatedhero=-1/>
+	<addactor x=1440 y=192 name="Huun" anim="Huun" startanim="UnDown" visible=true init=false associatedhero=""/>
 	<wait time=200/>
 	<move name="Noah" x=1104 y=360 speed="2" movehor=true movediag=false/>
 	<wait time=200/>
@@ -447,9 +447,9 @@
 	<wait time=300/>
 	<move name="Olivia" x=1104 y=408 speed="2" movehor=false movediag=false/>
 	<wait time=1000/>
-	<speech text="I'm relived to see that you made it out in once peice.<hardstop>" heroportrait=0 enemyportrait=-1 animportrait=""/>
+	<speech text="I'm relived to see that you made it out in once peice.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<playsound sound="hit2" volume=100/>
-	<speech text="Someones coming lets hide!<hardstop>" heroportrait=4 enemyportrait=-1 animportrait=""/>
+	<speech text="Someones coming lets hide!<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait=""/>
 	<move name="Huun" x=1392 y=192 speed="2" movehor=false movediag=false/>
 	<move name="Sharna" x=1368 y=192 speed="2" movehor=false movediag=false/>
 	<move name="Noah" x=1344 y=192 speed="2" movehor=false movediag=false/>
@@ -461,12 +461,12 @@
 	<loadcin mapdata="eriumcastlenight" cinid=4/>
 </cinematic>
 <cinematic id=4 description="Battle 2 Core" camerax=1176 cameray=120>
-	<addactor x=1368 y=240 name="Olivia" anim="Olivia" startanim="UnUp" visible=true init=true associatedhero=-1/>
-	<addactor x=1344 y=240 name="Craig" anim="Craig" startanim="UnUp" visible=true init=true associatedhero=-1/>
-	<addactor x=1344 y=192 name="Noah" anim="Noah" startanim="UnDown" visible=true init=true associatedhero=-1/>
-	<addactor x=1368 y=192 name="Sharna" anim="Sharna" startanim="UnDown" visible=true init=false associatedhero=-1/>
-	<addactor x=1392 y=192 name="Huun" anim="Huun" startanim="UnDown" visible=true init=false associatedhero=-1/>
-	<speech text="Okay, follow me. We've got to get out of here quickly before someone finds out your gone.<hardstop>" heroportrait=4 enemyportrait=-1 animportrait=""/>
+	<addactor x=1368 y=240 name="Olivia" anim="Olivia" startanim="UnUp" visible=true init=true associatedhero=""/>
+	<addactor x=1344 y=240 name="Craig" anim="Craig" startanim="UnUp" visible=true init=true associatedhero=""/>
+	<addactor x=1344 y=192 name="Noah" anim="Noah" startanim="UnDown" visible=true init=true associatedhero=""/>
+	<addactor x=1368 y=192 name="Sharna" anim="Sharna" startanim="UnDown" visible=true init=false associatedhero=""/>
+	<addactor x=1392 y=192 name="Huun" anim="Huun" startanim="UnDown" visible=true init=false associatedhero=""/>
+	<speech text="Okay, follow me. We've got to get out of here quickly before someone finds out your gone.<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait=""/>
 	<haltingmove name="Olivia" x=1440 y=216 speed="2" movehor=true movediag=false/>
 	<playsound sound="casting" volume=100/>
 	<addstatic x=1440 y=192 spriteid="fire" spriteim="fire"/>
@@ -475,24 +475,24 @@
 	<quiver name="Sharna"/>
 	<wait time=500/>
 	<stopse name="Sharna"/>
-	<speech text="What's this all about? What's going on? Why should we trust you when you go around breaking people out of jail?<hardstop>" heroportrait=1 enemyportrait=-1 animportrait=""/>
-	<speech text="You're a grateful one, ain't ya?<hardstop>" heroportrait=3 enemyportrait=-1 animportrait=""/>
+	<speech text="What's this all about? What's going on? Why should we trust you when you go around breaking people out of jail?<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
+	<speech text="You're a grateful one, ain't ya?<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
 	<shakehead name="Huun" time=500/>
-	<speech text="You have no idea.<hardstop>" heroportrait=2 enemyportrait=-1 animportrait=""/>
+	<speech text="You have no idea.<hardstop>" heroportrait="Huun" enemyportrait="" animportrait=""/>
 	<facing name="Olivia" dir=2/>
-	<speech text="There's no reason to keep them in the dark, Craig.<hardstop>" heroportrait=4 enemyportrait=-1 animportrait=""/>
+	<speech text="There's no reason to keep them in the dark, Craig.<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait=""/>
 	<facing name="Craig" dir=3/>
 	<quiver name="Craig"/>
 	<wait time=500/>
 	<stopse name="Craig"/>
-	<speech text="No reason to waste time chattin' here, either. Make it quick!<hardstop>" heroportrait=3 enemyportrait=-1 animportrait=""/>
+	<speech text="No reason to waste time chattin' here, either. Make it quick!<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
 	<facing name="Craig" dir=0/>
-	<speech text="Alright, alright. The three of you saw Mistal meeting with a stranger last night, right?<pause> Craig and I have been watching Mistal for some time and were on our way to confront the pair,<pause> but you got to them first.<hardstop>" heroportrait=4 enemyportrait=-1 animportrait=""/>
-	<speech text="Woulda helped ya there but not with the whole castle coming to see what was happenin'.<hardstop>" heroportrait=3 enemyportrait=-1 animportrait=""/>
+	<speech text="Alright, alright. The three of you saw Mistal meeting with a stranger last night, right?<pause> Craig and I have been watching Mistal for some time and were on our way to confront the pair,<pause> but you got to them first.<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait=""/>
+	<speech text="Woulda helped ya there but not with the whole castle coming to see what was happenin'.<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
 	<haltingmove name="Olivia" x=1392 y=240 speed="2" movehor=false movediag=false/>
 	<facing name="Olivia" dir=0/>
-	<speech text="So, we still don't know who Mistal was meeting with, but we couldn't let you be executed either.<hardstop>" heroportrait=4 enemyportrait=-1 animportrait=""/>
-	<speech text="Now, instead of finding out something useful, we tip our hand by breaking you out. Now Mistal will be wise to us. Want to yap about it some more, or are ya happy? Let's get moving!<hardstop>" heroportrait=3 enemyportrait=-1 animportrait=""/>
+	<speech text="So, we still don't know who Mistal was meeting with, but we couldn't let you be executed either.<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait=""/>
+	<speech text="Now, instead of finding out something useful, we tip our hand by breaking you out. Now Mistal will be wise to us. Want to yap about it some more, or are ya happy? Let's get moving!<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
 	<forcedmove name="Noah" x=1080 y=192 speed=1 facing=2 movehor=false movediag=false/>
 	<forcedmove name="Sharna" x=1080 y=216 speed=1 facing=2 movehor=false movediag=false/>
 	<forcedmove name="Huun" x=1080 y=192 speed=1 facing=2 movehor=false movediag=false/>

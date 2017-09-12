@@ -24,9 +24,10 @@ image,largeflor,image/lgflor.png
 image,attackplatform,image/CastleFloor.png
 image,selectside,image/selectside.png
 image,selecttop,image/selecttop.png
+font,speechfont,font/TimesNewRoman.ttf,45,true,false
 font,menufont,font/MenuFont.ttf,54
 font,smallmenufont,font/MenuFont.ttf,12
 ss,portraits,image/Portraits.png,48,64,0
-herodefs,/definitions/Heroes
 itemdefs,/definitions/Items
+herodefs,/definitions/Heroes
 enemydefs,/definitions/Enemies
