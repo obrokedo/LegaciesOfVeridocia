@@ -90,6 +90,7 @@ public abstract class Panel
 		PANEL_FONT = frm.getFontByName("menufont");
 		MUSIC_SELECTOR = GlobalPythonFactory.createJMusicSelector();
 
+		/*
 		Font awtFont = new Font("Times New Roman", Font.ITALIC, 24);
 		UnicodeFont ufont = new UnicodeFont(awtFont, 45, false, true);
 		ufont.getEffects().add(new ColorEffect(java.awt.Color.WHITE));
@@ -105,6 +106,9 @@ public abstract class Panel
 					"Error loading font glyphs", JOptionPane.ERROR_MESSAGE);
 			throw new BadResourceException(e);
 		}
+		*/
+		
+		SPEECH_FONT = frm.getFontByName("speechfont");
 
 		// stateInfo.getGc().getGraphics().setFont(PANEL_FONT);
 

@@ -5,6 +5,7 @@ import java.util.Hashtable;
 import mb.fc.game.definition.ItemDefinition;
 import mb.fc.game.item.Item;
 import mb.fc.loading.FCResourceManager;
+import mb.fc.utils.StringUtils;
 
 public class ItemResource
 {
@@ -23,6 +24,13 @@ public class ItemResource
 	public static Item getUninitializedItem(int itemId)
 	{
 		return itemDefinitionsById.get(itemId).getUnintializedItem();
+	}
+	
+	public static int getItemIdByName(String itemName) {
+		if (StringUtils.isNotEmpty(itemName))
+			return itemDefinitionsById.values().stream().filter(
+				id -> id.getUnintializedItem().getName().equals(itemName)).findFirst().get().getId();
+		return -1;
 	}
 
 	public static void initializeItem(Item item, FCResourceManager fcrm)

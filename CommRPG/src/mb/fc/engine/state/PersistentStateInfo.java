@@ -107,12 +107,12 @@ public class PersistentStateInfo implements PacketHandler
 		return gc;
 	}
 
-	public void setQuestComplete(int id)
+	public void setQuestComplete(String id)
 	{
 		this.clientProgress.setQuestComplete(id);
 	}
 
-	public boolean isQuestCompelte(int questId)
+	public boolean isQuestCompelte(String questId)
 	{
 		return this.clientProgress.isQuestComplete(questId);
 	}

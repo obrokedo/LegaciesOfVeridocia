@@ -1,6 +1,5 @@
 package mb.fc.cinematic;
 
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Hashtable;
@@ -18,6 +17,7 @@ import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.IntMessage;
 import mb.fc.engine.message.MessageType;
 import mb.fc.engine.message.SpeechMessage;
+import mb.fc.engine.message.SpriteContextMessage;
 import mb.fc.engine.state.CinematicState;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.Camera;
@@ -602,7 +602,10 @@ public class Cinematic {
 				CinematicState.cinematicSpeed = 1;
 				break;
 			case LOAD_CIN:
-				stateInfo.getPersistentStateInfo().loadCinematic((String) ce.getParam(0), (int) ce.getParam(1));
+				if (stateInfo.getClientProgress().getMapData().equalsIgnoreCase((String) ce.getParam(0)))
+					stateInfo.sendMessage(new IntMessage(MessageType.SHOW_CINEMATIC, (int) ce.getParam(1)));
+				else
+					stateInfo.getPersistentStateInfo().loadCinematic((String) ce.getParam(0), (int) ce.getParam(1));
 				CinematicState.cinematicSpeed = 1;
 				break;
 			case HALTING_ANIMATION:
@@ -846,9 +849,13 @@ public class Cinematic {
 	 */
 	public void endCinematic(StateInfo stateInfo)
 	{
-		for (CinematicActor ca : actors.values())
-			ca.resetSprite(stateInfo);
-		stateInfo.sendMessage(MessageType.CIN_END);
+		ArrayList<AnimatedSprite> associated = new ArrayList<>();
+		for (CinematicActor ca : actors.values()) {
+			AnimatedSprite as = ca.resetSprite(stateInfo);
+			if (as != null)
+				associated.add(as);
+		}
+		stateInfo.sendMessage(new SpriteContextMessage(MessageType.CIN_END, associated));
 	}
 	
 	

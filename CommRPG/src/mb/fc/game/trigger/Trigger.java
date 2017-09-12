@@ -24,6 +24,7 @@ import mb.fc.game.sprite.Sprite;
 import mb.fc.game.sprite.StaticSprite;
 import mb.fc.game.text.Speech;
 import mb.fc.map.MapObject;
+import mb.fc.utils.StringUtils;
 
 public class Trigger
 {
@@ -33,18 +34,29 @@ public class Trigger
 
 	private ArrayList<Triggerable> triggerables = new ArrayList<Triggerable>();
 
+	private String name;
 	private boolean retrigOnEnter;
 	private boolean nonRetrig;
 	private boolean triggerOnce;
 	private boolean triggerImmediately;
 	private boolean triggered = false;
-	private int[] requires;
-	private int[] excludes;
+	private String[] requires;
+	private String[] excludes;
 	private int id;
+	
+	public enum TriggerStatus {
+		TRIGGERED,
+		REQUIRED_QUEST_NOT_DONE,
+		EXCLUDED_QUEST_DONE,
+		NON_RETRIG,
+		TRIGGER_ONCE,
+		IS_IMMEDIATE
+	}
 
-	public Trigger(int id, boolean retrigOnEnter, boolean nonRetrig,
-			boolean triggerOnce, boolean triggerImmediately, int[] requires, int[] excludes) {
+	public Trigger(String name, int id, boolean retrigOnEnter, boolean nonRetrig,
+			boolean triggerOnce, boolean triggerImmediately, String[] requires, String[] excludes) {
 		super();
+		this.name = name;
 		this.retrigOnEnter = retrigOnEnter;
 		this.nonRetrig = nonRetrig;
 		this.triggerOnce = triggerOnce;
@@ -59,17 +71,17 @@ public class Trigger
 		triggerables.add(tt);
 	}
 
-	public void perform(StateInfo stateInfo)
+	public TriggerStatus perform(StateInfo stateInfo)
 	{
-		perform(stateInfo, false);
+		return perform(stateInfo, false);
 	}
 
-	public void perform(StateInfo stateInfo, boolean immediate)
+	public TriggerStatus perform(StateInfo stateInfo, boolean immediate)
 	{
 		Log.debug("Beginning Trigger Perform: " + this.id);
 		if (triggerImmediately != immediate) {
 			Log.debug("Trigger will not be executed, movement is immediate " + immediate + " trigger is immediate " + triggerImmediately);
-			return;
+			return TriggerStatus.IS_IMMEDIATE;
 		}
 
 		/* WHY IS THIS HERE?!??!?!?!
@@ -82,11 +94,11 @@ public class Trigger
 		// Check to see if this trigger meets all required quests
 		if (requires != null)
 		{
-			for (int i : requires)
+			for (String quest : requires)
 			{
-				if (i != -1 && !stateInfo.isQuestComplete(i)) {
-					Log.debug("Trigger will not be executed due to a failed requires " + i);
-					return;
+				if (StringUtils.isNotEmpty(quest) && !stateInfo.isQuestComplete(quest)) {
+					Log.debug("Trigger will not be executed due to a failed requires " + quest);
+					return TriggerStatus.REQUIRED_QUEST_NOT_DONE;
 				}
 			}
 		}
@@ -95,11 +107,11 @@ public class Trigger
 		// then we can't use this trigger
 		if (excludes != null)
 		{
-			for (int i : excludes)
+			for (String quest : excludes)
 			{
-				if (i != -1 && stateInfo.isQuestComplete(i)) {
-					Log.debug("Trigger will not be executed due to a failed excludes " + i);
-					return;
+				if (StringUtils.isNotEmpty(quest) && stateInfo.isQuestComplete(quest)) {
+					Log.debug("Trigger will not be executed due to a failed excludes " + quest);
+					return TriggerStatus.EXCLUDED_QUEST_DONE;
 				}
 			}
 		}
@@ -118,7 +130,7 @@ public class Trigger
 				// The state has been changed and triggers should not be executed
 				else
 					Log.debug("Trigger will not be performed because the state has been changed on strange path");
-				return;
+				return TriggerStatus.NON_RETRIG;
 			}
 			else {
 				stateInfo.getClientProgress().addNonretriggerableByMap(id);
@@ -129,7 +141,7 @@ public class Trigger
 		{
 			if (triggered) {
 				Log.debug("Trigger will not be triggered as it has already been triggered once");
-				return;
+				return TriggerStatus.TRIGGER_ONCE;
 			}
 			else
 				triggered = true;
@@ -142,6 +154,7 @@ public class Trigger
 
 		Log.debug("Trigger will be performed");
 		performTriggerImpl(stateInfo);
+		return TriggerStatus.TRIGGERED;
 	}
 
 	private void performTriggerImpl(StateInfo stateInfo)
@@ -156,21 +169,17 @@ public class Trigger
 
 	public class TriggerCompleteQuest implements Triggerable
 	{
-		private int questId;
+		private String questId;
 
-		public TriggerCompleteQuest(int questId) {
+		public TriggerCompleteQuest(String questId) {
 			super();
 			this.questId = questId;
 		}
-
-		public int getQuestId() {
-			return questId;
-		}
-
+		
 		@Override
 		public boolean perform(StateInfo stateInfo) {
 			Log.debug("Completing Quest: " + questId);
-			stateInfo.sendMessage(new IntMessage(MessageType.COMPLETE_QUEST, questId));
+			stateInfo.sendMessage(new StringMessage(MessageType.COMPLETE_QUEST, questId));
 			return false;
 		}
 	}
@@ -725,5 +734,9 @@ public class Trigger
 			return false;
 		}
 		
+	}
+
+	public String getName() {
+		return name;
 	}
 }

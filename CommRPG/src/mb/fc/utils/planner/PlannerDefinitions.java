@@ -252,7 +252,7 @@ public class PlannerDefinitions {
 		definingValues
 		.add(new PlannerValueDef(
 				PlannerValueDef.REFERS_HERO,
-				PlannerValueDef.TYPE_INT,
+				PlannerValueDef.TYPE_STRING,
 				"associatedhero",
 				true,
 				"Associated Hero",
@@ -273,7 +273,7 @@ public class PlannerDefinitions {
 				"name", false, "Actor Name",
 				"The name that will be used to reference the actor in the cinematic"));
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_HERO,
-				PlannerValueDef.TYPE_INT, "hero", true, "Associate Hero",
+				PlannerValueDef.TYPE_STRING, "hero", true, "Associate Hero",
 				"If true then the specified hero will be established as a cinematic actor. When in 'town' this only can be used to associate the main character. "
 				+ "In 'battle' you must be sure the specified hero is actually in the battle. In 'cinematic' this doesn't really have a use"));
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
@@ -1152,11 +1152,11 @@ public class PlannerDefinitions {
 						+ "will do a line break (as opposed to letting them happen naturally) and a &lt;nextcin&gt; tag "
 						+ "will drive the next cinematic action if this message is being shown in a cinematic."));
 		definingValues.add(new PlannerValueDef(
-				PlannerValueDef.REFERS_HERO, PlannerValueDef.TYPE_INT,
+				PlannerValueDef.REFERS_HERO, PlannerValueDef.TYPE_STRING,
 				"heroportrait", true, "Hero Portrait",
 				"The hero whose portrait should be shown for this text."));
 		definingValues.add(new PlannerValueDef(
-				PlannerValueDef.REFERS_ENEMY, PlannerValueDef.TYPE_INT,
+				PlannerValueDef.REFERS_ENEMY, PlannerValueDef.TYPE_STRING,
 				"enemyportrait", true, "Enemy Portrait",
 				"The enemy whose portrait should be shown for this text."));
 		definingValues.add(new PlannerValueDef(
@@ -1239,7 +1239,7 @@ public class PlannerDefinitions {
 		// Add hero
 		definingValues = new ArrayList<PlannerValueDef>();
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_HERO,
-				PlannerValueDef.TYPE_INT, "heroid", false, "Hero ID",
+				PlannerValueDef.TYPE_STRING, "heroid", false, "Hero ID",
 				"The ID of the hero that should be added to the force"));
 		allowableLines.add(new PlannerLineDef("addhero", "Add Hero",
 				"Adds a new hero to the force", definingValues));
@@ -1574,12 +1574,12 @@ public class PlannerDefinitions {
 		
 		definingValues
 				.add(new PlannerValueDef(PlannerValueDef.REFERS_QUEST,
-						PlannerValueDef.TYPE_MULTI_INT, "require", true,
+						PlannerValueDef.TYPE_MULTI_STRING, "require", true,
 						"Required Quest",
 						"The ID of the quest that must be complete for this to be shown"));
 		definingValues
 				.add(new PlannerValueDef(PlannerValueDef.REFERS_QUEST,
-						PlannerValueDef.TYPE_MULTI_INT, "exclude", true,
+						PlannerValueDef.TYPE_MULTI_STRING, "exclude", true,
 						"Exclude Quest",
 						"The ID of the quest that CAN NOT be complete for this to be shown"));
 		definingValues
@@ -1588,11 +1588,11 @@ public class PlannerDefinitions {
 						"Trigger ID",
 						"The ID of the trigger that should be run after this message is complete."));
 		definingValues.add(new PlannerValueDef(
-				PlannerValueDef.REFERS_HERO, PlannerValueDef.TYPE_INT,
+				PlannerValueDef.REFERS_HERO, PlannerValueDef.TYPE_STRING,
 				"heroportrait", true, "Hero Portrait",
 				"The hero whose portrait should be shown for this text."));
 		definingValues.add(new PlannerValueDef(
-				PlannerValueDef.REFERS_ENEMY, PlannerValueDef.TYPE_INT,
+				PlannerValueDef.REFERS_ENEMY, PlannerValueDef.TYPE_STRING,
 				"enemyportrait", true, "Enemy Portrait",
 				"The enemy whose portrait should be shown for this text."));
 		definingValues.add(new PlannerValueDef(
@@ -1620,12 +1620,12 @@ public class PlannerDefinitions {
 		
 		definingValues
 				.add(new PlannerValueDef(PlannerValueDef.REFERS_QUEST,
-						PlannerValueDef.TYPE_MULTI_INT, "require", true,
+						PlannerValueDef.TYPE_MULTI_STRING, "require", true,
 						"Required Quest",
 						"The ID of the quest that must be complete for this to be shown"));
 		definingValues
 				.add(new PlannerValueDef(PlannerValueDef.REFERS_QUEST,
-						PlannerValueDef.TYPE_MULTI_INT, "exclude", true,
+						PlannerValueDef.TYPE_MULTI_STRING, "exclude", true,
 						"Exclude Quest",
 						"The ID of the quest that CAN NOT be complete for this to be shown"));
 		definingValues
@@ -1639,11 +1639,11 @@ public class PlannerDefinitions {
 				"No Trigger ID",
 				"The ID of the trigger that should be run if a 'no' is selected."));
 		definingValues.add(new PlannerValueDef(
-				PlannerValueDef.REFERS_HERO, PlannerValueDef.TYPE_INT,
+				PlannerValueDef.REFERS_HERO, PlannerValueDef.TYPE_STRING,
 				"heroportrait", true, "Hero Portrait",
 				"The hero whose portrait should be shown for this text."));
 		definingValues.add(new PlannerValueDef(
-				PlannerValueDef.REFERS_ENEMY, PlannerValueDef.TYPE_INT,
+				PlannerValueDef.REFERS_ENEMY, PlannerValueDef.TYPE_STRING,
 				"enemyportrait", true, "Enemy Portrait",
 				"The enemy whose portrait should be shown for this text."));
 		definingValues.add(new PlannerValueDef(
@@ -1671,12 +1671,12 @@ public class PlannerDefinitions {
 		
 		definingValues
 				.add(new PlannerValueDef(PlannerValueDef.REFERS_QUEST,
-						PlannerValueDef.TYPE_MULTI_INT, "require", true,
+						PlannerValueDef.TYPE_MULTI_STRING, "require", true,
 						"Required Quest",
 						"The ID of the quest that must be complete for this to be shown"));
 		definingValues
 				.add(new PlannerValueDef(PlannerValueDef.REFERS_QUEST,
-						PlannerValueDef.TYPE_MULTI_INT, "exclude", true,
+						PlannerValueDef.TYPE_MULTI_STRING, "exclude", true,
 						"Exclude Quest",
 						"The ID of the quest that CAN NOT be complete for this to be shown"));
 		definingValues
@@ -1685,11 +1685,11 @@ public class PlannerDefinitions {
 						"Trigger ID",
 						"The ID of the trigger that should be run after this message is complete."));
 		definingValues.add(new PlannerValueDef(
-				PlannerValueDef.REFERS_HERO, PlannerValueDef.TYPE_INT,
+				PlannerValueDef.REFERS_HERO, PlannerValueDef.TYPE_STRING,
 				"heroportrait1", true, "Hero Portrait",
 				"First Speaker: The hero whose portrait should be shown for this text."));
 		definingValues.add(new PlannerValueDef(
-				PlannerValueDef.REFERS_ENEMY, PlannerValueDef.TYPE_INT,
+				PlannerValueDef.REFERS_ENEMY, PlannerValueDef.TYPE_STRING,
 				"enemyportrait1", true, "Enemy Portrait",
 				"First Speaker: The enemy whose portrait should be shown for this text."));
 		definingValues.add(new PlannerValueDef(
@@ -1697,11 +1697,11 @@ public class PlannerDefinitions {
 				"animportrait1", true, "Portrait From Animation",
 				"First Speaker: The animation that contains the portrait should be shown for this text."));
 		definingValues.add(new PlannerValueDef(
-				PlannerValueDef.REFERS_HERO, PlannerValueDef.TYPE_INT,
+				PlannerValueDef.REFERS_HERO, PlannerValueDef.TYPE_STRING,
 				"heroportrait2", true, "Hero Portrait",
 				"Second Speaker: The hero whose portrait should be shown for this text."));
 		definingValues.add(new PlannerValueDef(
-				PlannerValueDef.REFERS_ENEMY, PlannerValueDef.TYPE_INT,
+				PlannerValueDef.REFERS_ENEMY, PlannerValueDef.TYPE_STRING,
 				"enemyportrait2", true, "Enemy Portrait",
 				"Second Speaker: The enemy whose portrait should be shown for this text."));
 		definingValues.add(new PlannerValueDef(
@@ -1888,7 +1888,7 @@ public class PlannerDefinitions {
 		// Items Equipped
 		definingValues = new ArrayList<PlannerValueDef>();
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_ITEM,
-				PlannerValueDef.TYPE_INT, "itemid", false, "Item ID",
+				PlannerValueDef.TYPE_STRING, "itemid", false, "Item ID",
 				"The ID of the item that this enemy should start with"));
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
 				PlannerValueDef.TYPE_BOOLEAN, "equipped", false,
@@ -1974,7 +1974,7 @@ public class PlannerDefinitions {
 		definingValues
 		.add(new PlannerValueDef(
 				PlannerValueDef.REFERS_ITEM,
-				PlannerValueDef.TYPE_INT,
+				PlannerValueDef.TYPE_STRING,
 				"specialpromoteitem",
 				true,
 				"Special Promotion Required Item",
@@ -2191,7 +2191,7 @@ public class PlannerDefinitions {
 		// Items Equipped
 		definingValues = new ArrayList<PlannerValueDef>();
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_ITEM,
-				PlannerValueDef.TYPE_INT, "itemid", false, "Item ID",
+				PlannerValueDef.TYPE_STRING, "itemid", false, "Item ID",
 				"The ID of the item that this hero should start with"));
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
 				PlannerValueDef.TYPE_BOOLEAN, "equipped", false,
@@ -2216,12 +2216,12 @@ public class PlannerDefinitions {
 				"Description", "Description"));
 		definingValues
 				.add(new PlannerValueDef(PlannerValueDef.REFERS_QUEST,
-						PlannerValueDef.TYPE_MULTI_INT, "require", true,
+						PlannerValueDef.TYPE_MULTI_STRING, "require", true,
 						"Required Quest",
 						"The ID of the quest that must be complete for this to be shown"));
 		definingValues
 				.add(new PlannerValueDef(PlannerValueDef.REFERS_QUEST,
-						PlannerValueDef.TYPE_MULTI_INT, "exclude", true,
+						PlannerValueDef.TYPE_MULTI_STRING, "exclude", true,
 						"Exclude Quest",
 						"The ID of the quest that CAN NOT be complete for this to be shown"));
 		definingValues
@@ -2256,7 +2256,7 @@ public class PlannerDefinitions {
 		// Complete Quest
 		definingValues = new ArrayList<PlannerValueDef>();
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_QUEST,
-				PlannerValueDef.TYPE_INT, "questid", false, "Quest ID",
+				PlannerValueDef.TYPE_STRING, "questid", false, "Quest ID",
 				"The ID of the equest that should be marked as complete"));
 		allowableLines.add(new PlannerLineDef("completequest",
 				"Complete Quest", "Marks a given quest as completed",
@@ -2289,11 +2289,11 @@ public class PlannerDefinitions {
 				"Defeat when all leaders killed ",
 				"If true, then battle will only end in defeat if all of the hero leaders have been killed"));
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_HERO,
-				PlannerValueDef.TYPE_MULTI_INT, "templeader", true,
+				PlannerValueDef.TYPE_MULTI_STRING, "templeader", true,
 				"Temporary Leaders. If killed battle ends ",
 				"The ids of the heroes that should be ruled as temporary leaders."));
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_ENEMY,
-				PlannerValueDef.TYPE_MULTI_INT, "tempenemyleader", true,
+				PlannerValueDef.TYPE_MULTI_STRING, "tempenemyleader", true,
 				"Temporary Enemy Leaders. If killed battle ends ",
 				"The type of enemies that should be ruled as temporary leaders."));
 		allowableLines.add(new PlannerLineDef("setbattlecond", "Set Battle Conditions",
@@ -2410,7 +2410,7 @@ public class PlannerDefinitions {
 				PlannerValueDef.TYPE_STRING, "sellpercent", false, "Buy Percent",
 				"The percent of the item price that items will be sold for when sold to this shop. Should be in the form #.# (0.8, 1.2)"));
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_ITEM,
-				PlannerValueDef.TYPE_MULTI_INT, "itemssold", false, "Items For Sale",
+				PlannerValueDef.TYPE_MULTI_STRING, "itemssold", false, "Items For Sale",
 				"The items that are sold in this shop"));
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_ANIMATIONS,
 				PlannerValueDef.TYPE_STRING, "portrait", false, "Portrait Animation File",
@@ -2423,7 +2423,7 @@ public class PlannerDefinitions {
 		// Add hero
 		definingValues = new ArrayList<PlannerValueDef>();
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_HERO,
-				PlannerValueDef.TYPE_INT, "heroid", false, "Hero ID",
+				PlannerValueDef.TYPE_STRING, "heroid", false, "Hero ID",
 				"The ID of the hero that should be added to the force"));
 		allowableLines.add(new PlannerLineDef("addhero", "Add Hero",
 				"Adds a new hero to the force", definingValues));
@@ -2527,7 +2527,7 @@ public class PlannerDefinitions {
 		// Add Item
 		definingValues = new ArrayList<PlannerValueDef>();
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_ITEM,
-				PlannerValueDef.TYPE_INT, "itemid", false, "Item ID",
+				PlannerValueDef.TYPE_STRING, "itemid", false, "Item ID",
 				"The item that should be given to the group"));
 		allowableLines
 				.add(new PlannerLineDef(
@@ -2624,7 +2624,7 @@ public class PlannerDefinitions {
 		// Set Battle Condition - Hero Death
 		definingValues = new ArrayList<PlannerValueDef>();
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_HERO,
-				PlannerValueDef.TYPE_INT, "unitid", false,
+				PlannerValueDef.TYPE_STRING, "unitid", false,
 				"Hero Id",
 				"The id of the hero whose death will trigger this condition"));
 		allowableLines.add(new PlannerLineDef("herodeath", "On Hero Death",
@@ -2682,7 +2682,7 @@ public class PlannerDefinitions {
 		// Hero in battle
 		definingValues = new ArrayList<PlannerValueDef>();
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_HERO,
-				PlannerValueDef.TYPE_INT, "id", false,
+				PlannerValueDef.TYPE_STRING, "id", false,
 				"Hero Id",
 				"The id of the hero that is checked for participation and being alived in the current battle."));
 		allowableLines.add(new PlannerLineDef("heroinbat", "(Qualifier): Hero In Battle",
@@ -2826,7 +2826,7 @@ public class PlannerDefinitions {
 		// enemy
 		definingValues = new ArrayList<PlannerValueDef>();
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_ENEMY,
-				PlannerValueDef.TYPE_INT, "enemyid", false, "Enemy ID",
+				PlannerValueDef.TYPE_STRING, "enemyid", false, "Enemy ID",
 				"The type of enemy that should be at this location"));
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_AI,
 				PlannerValueDef.TYPE_STRING, "ai", false, "Enemy AI",
@@ -2895,7 +2895,7 @@ public class PlannerDefinitions {
 
 		plannerContainer = new PlannerContainerDef(definingLine,
 				allowableLines, listOfLists,
-				PlannerValueDef.REFERS_ITEM - 1);
+				-1);
 		containersByName.put("mapedit", plannerContainer);
 	}
 }

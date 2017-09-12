@@ -518,7 +518,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 			
 			PlannerReference.establishReferences(tabsWithReferences, referenceListByReferenceType);
 			updateErrorList(PlannerReference.getBadReferences(getDataInputTabs()));
-		} catch (IOException e) {
+		} catch (Throwable e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "An error occurred while trying to open the file:"
 					+ e.getMessage(), "Error opening file", JOptionPane.ERROR_MESSAGE);

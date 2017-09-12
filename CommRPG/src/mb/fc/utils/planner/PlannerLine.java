@@ -209,6 +209,7 @@ public class PlannerLine
 							((JComboBox<?>) c).setSelectedItem(((PlannerReference) values.get(i)).getName());
 					}
 					break;
+				case PlannerValueDef.TYPE_MULTI_STRING:
 				case PlannerValueDef.TYPE_MULTI_INT:
 					Vector<String> mitems = new Vector<String>();
 					mitems.add("No value selected");
@@ -428,9 +429,25 @@ public class PlannerLine
 								values.set(i, ((JComboBox<?>) components.get(i)).getSelectedIndex());
 						}
 						break;
-					case PlannerValueDef.TYPE_MULTI_INT:
+					case PlannerValueDef.TYPE_MULTI_STRING:
 						String multi = "";
 						MultiIntPanel mip = (MultiIntPanel) components.get(i);
+						for (int j = 2; j < mip.getComponentCount(); j++)
+						{
+							multi = multi + ((JComboBox<?>)mip.getComponent(j)).getSelectedItem();
+							if (j + 1 != mip.getComponentCount())
+								multi = multi + ",";
+						}
+
+						if (i >= values.size())
+							values.add(multi);
+						else
+							values.set(i, multi);
+
+						break;
+					case PlannerValueDef.TYPE_MULTI_INT:
+						multi = "";
+						mip = (MultiIntPanel) components.get(i);
 						for (int j = 2; j < mip.getComponentCount(); j++)
 						{
 							multi = multi + ((JComboBox<?>)mip.getComponent(j)).getSelectedIndex();

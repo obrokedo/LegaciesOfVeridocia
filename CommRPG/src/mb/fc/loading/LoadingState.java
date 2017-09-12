@@ -86,7 +86,7 @@ public class LoadingState extends BasicGameState
 
 					// Regardless of whether we are loading other resources, add the text file
 					// that was specified to be loaded
-					allLines.add(0, "text,/mapdata/" + textName);
+					allLines.add("text,/mapdata/" + textName);
 
 				}
 				// If we are not loading the map then we just want to load the specified resources

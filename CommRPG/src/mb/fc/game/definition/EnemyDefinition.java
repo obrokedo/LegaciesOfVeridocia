@@ -101,7 +101,7 @@ public class EnemyDefinition
 			}
 			else if (childTagArea.getTagType().equalsIgnoreCase("item"))
 			{
-				hd.items.add(Integer.parseInt(childTagArea.getAttribute("itemid")));
+				hd.items.add(ItemResource.getItemIdByName(childTagArea.getAttribute("itemid")));
 				if (childTagArea.getAttribute("equipped") != null)
 					hd.itemsEquipped.add(Boolean.parseBoolean(childTagArea.getAttribute("equipped")));
 				else

@@ -3,11 +3,13 @@ package mb.fc.game.ui;
 import java.util.ArrayList;
 
 import org.newdawn.slick.Color;
+import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 
 import mb.fc.game.Timer;
+import mb.fc.utils.StringUtils;
 
 public class ListUI {
 	protected ArrayList<Button> resourceFileButtons = new ArrayList<Button>();
@@ -23,21 +25,29 @@ public class ListUI {
 	protected int buttonHeight = 20;
 	private Timer clickCooldown = new Timer(200);
 	private Button upButton, downButton;
+	private Font font;
 	
 	public ListUI(String title)
 	{
-		this.title = title;
+		this(title, 0, new ArrayList<String>());
 	}
-
+	
 	public ListUI(String title, int drawX, ArrayList<String> values)
 	{
+		this(title, drawX, values, 15);
+	}
+
+	public ListUI(String title, int drawX, ArrayList<String> values, int listLength)
+	{
 		longestNameWidth = 150;
+		this.listLength = listLength;
 		this.drawX = drawX;
 		for (String value : values)
 			this.resourceFileButtons.add(new Button(drawX, 0, longestNameWidth, buttonHeight, value));
 		this.title = title;
 		this.layoutItems();
 		this.setupDirectionalButtons();
+		this.font = StringUtils.loadFont("Times New Roman", 14, false, false);
 	}
 	
 	protected void setupDirectionalButtons() {
@@ -53,6 +63,7 @@ public class ListUI {
 
 	public void render(Graphics g)
 	{
+		g.setFont(font);
 		if (!minimized)
 		{
 			g.drawString(title, drawX + 5, drawY);
@@ -94,13 +105,15 @@ public class ListUI {
 		{
 			if (button.handleUserInput(x, y, clicked))
 			{
-				this.selectedItem = button;
-				
 				if (listener != null)
 				{
-					if (!listener.resourceSelected(selectedItem.getText(), this))
+					if (!listener.resourceSelected(button.getText(), this))
 						this.selectedItem = null;
+					else
+						this.selectedItem = button;
 				}
+				else
+					this.selectedItem = button;
 				
 				
 					
@@ -175,5 +188,9 @@ public class ListUI {
 				button.setVisible(false);
 			}
 		}
+	}
+
+	public void setListLength(int listLength) {
+		this.listLength = listLength;
 	}
 }

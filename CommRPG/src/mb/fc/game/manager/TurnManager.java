@@ -726,7 +726,7 @@ public class TurnManager extends Manager implements KeyboardListener
 				// At this point we know who we intend to target, but we need to inject the BattleCommand.
 				// Only the owner will have a value for the battle command so they will have to be
 				// the one to send the BattleResults
-				turnActions.add(new AttackSpriteAction(((SpriteContextMessage) message).getSprites(stateInfo.getSprites()), battleCommand));
+				turnActions.add(new AttackSpriteAction(((SpriteContextMessage) message).getSprites(stateInfo.getCombatSprites()), battleCommand));
 				break;
 			// THIS IS SENT BY THE OWNER
 			case SELECT_SPELL:

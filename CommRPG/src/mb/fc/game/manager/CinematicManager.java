@@ -21,7 +21,8 @@ public class CinematicManager extends Manager
 
 	@Override
 	public void initialize() {
-
+		this.cinematic = null;
+		this.exitTrigId = Trigger.TRIGGER_NONE;
 	}
 
 	public void update(int delta)
@@ -31,6 +32,7 @@ public class CinematicManager extends Manager
 		{
 			cinematic.endCinematic(stateInfo);
 			cinematic = null;
+			
 			if (exitTrigId != Trigger.TRIGGER_NONE) {
 				stateInfo.getResourceManager().getTriggerEventById(exitTrigId).perform(stateInfo);
 				exitTrigId = Trigger.TRIGGER_NONE;

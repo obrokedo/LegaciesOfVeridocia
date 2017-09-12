@@ -146,8 +146,7 @@ public class TownState extends LoadableGameState
 			{
 				if (container.getInput().isKeyDown(Input.KEY_ESCAPE))
 				{
-					stateInfo.sendMessage(MessageType.SHOW_SYSTEM_MENU);
-					stateInfo.setInputDelay(System.currentTimeMillis() + 200);
+					game.enterState(CommRPG.STATE_GAME_MENU_DEVEL);
 				}
 				/*
 				else if (container.getInput().isKeyDown(Input.KEY_C))
@@ -163,8 +162,11 @@ public class TownState extends LoadableGameState
 				*/
 				else if (container.getInput().isKeyDown(Input.KEY_D) && !stateInfo.areMenusDisplayed())
 				{
-					stateInfo.sendMessage(MessageType.INVESTIGATE);
-					stateInfo.setInputDelay(System.currentTimeMillis() + 200);
+					if (!menuManager.isBlocking() && !cinematicManager.isBlocking())
+					{
+						stateInfo.sendMessage(MessageType.INVESTIGATE);
+						stateInfo.setInputDelay(System.currentTimeMillis() + 200);
+					}
 				}
 				else if (container.getInput().isKeyDown(Input.KEY_ENTER))
 				{
@@ -174,10 +176,6 @@ public class TownState extends LoadableGameState
 				else if (container.getInput().isKeyDown(Input.KEY_F7))
 				{
 					((CommRPG) game).toggleFullScreen();
-				}
-				else if (container.getInput().isKeyPressed(Input.KEY_ESCAPE))
-				{
-					game.enterState(CommRPG.STATE_GAME_MENU_DEVEL);
 				}
 				// Key for debugging menus
 				else if (container.getInput().isKeyDown(Input.KEY_Z))

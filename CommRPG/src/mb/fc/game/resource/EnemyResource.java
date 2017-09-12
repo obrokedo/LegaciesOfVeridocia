@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import mb.fc.game.definition.EnemyDefinition;
 import mb.fc.game.sprite.CombatSprite;
+import mb.fc.utils.StringUtils;
 
 public class EnemyResource
 {
@@ -26,6 +27,12 @@ public class EnemyResource
 	public static String getAnimation(int enemyId)
 	{
 		return enemyDefinitionsById.get(enemyId).getAnimation();
+	}
+	
+	public static int getEnemyIdByName(String enemyName) {
+		if (StringUtils.isNotEmpty(enemyName))
+			return enemyDefinitionsById.values().stream().filter(ed -> ed.getName().equals(enemyName)).findFirst().get().getId();
+		return -1;
 	}
 	
 	public static CombatSprite getEnemy(String enemyName) {

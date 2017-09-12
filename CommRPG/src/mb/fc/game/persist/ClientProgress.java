@@ -28,7 +28,7 @@ public class ClientProgress implements Serializable
 	private static final long serialVersionUID = 1L;
 	public static final String PROGRESS_EXTENSION = ".progress";
 
-	private HashSet<Integer> questsCompleted;
+	private HashSet<String> questsCompleted;
 	private Hashtable<String, ArrayList<Integer>> retriggerablesPerMapData;
 	private Hashtable<String, ArrayList<Integer>> nonretriggerablesPerMapData;
 	private ArrayList<Integer> dealItems;
@@ -45,7 +45,7 @@ public class ClientProgress implements Serializable
 
 	public ClientProgress(String name)
 	{
-		questsCompleted = new HashSet<Integer>();
+		questsCompleted = new HashSet<String>();
 		retriggerablesPerMapData = new Hashtable<String, ArrayList<Integer>>();
 		nonretriggerablesPerMapData = new Hashtable<String, ArrayList<Integer>>();
 		dealItems = new ArrayList<>();
@@ -53,12 +53,12 @@ public class ClientProgress implements Serializable
 		lastSaveTime = System.currentTimeMillis();
 	}
 
-	public void setQuestComplete(int questId)
+	public void setQuestComplete(String questId)	
 	{
 		questsCompleted.add(questId);
 	}
 
-	public boolean isQuestComplete(int questId)
+	public boolean isQuestComplete(String questId)
 	{
 		return questsCompleted.contains(questId);
 	}

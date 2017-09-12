@@ -1,7 +1,5 @@
 package mb.fc.game.text;
 
-import java.util.ArrayList;
-
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.menu.Portrait;
 
@@ -12,7 +10,7 @@ public class Conversation extends Speech {
 	private String[] messages;
 	private int messageIndex;
 	
-	public Conversation(String[] messages, int[] requires, int[] excludes, int triggerId, int heroPortrait,
+	public Conversation(String[] messages, String[] requires, String[] excludes, int triggerId, int heroPortrait,
 			int enemyPortrait, String spriteAnimsName, int heroPortrait2, int enemyPortrait2, String spriteAnimsName2) {
 		super(null, requires, excludes, triggerId, heroPortrait, enemyPortrait, spriteAnimsName);
 		this.heroPortrait2 = heroPortrait2;

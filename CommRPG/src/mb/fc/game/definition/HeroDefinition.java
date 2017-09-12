@@ -11,6 +11,7 @@ import mb.fc.game.resource.ItemResource;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.sprite.HeroProgression;
 import mb.fc.game.sprite.Progression;
+import mb.fc.utils.StringUtils;
 import mb.fc.utils.XMLParser.TagArea;
 
 public class HeroDefinition
@@ -199,7 +200,7 @@ public class HeroDefinition
 			// These are starting items and should be associated with the starting progression
 			else if (childTagArea.getTagType().equalsIgnoreCase("item"))
 			{
-				hd.items.add(Integer.parseInt(childTagArea.getAttribute("itemid")));
+				hd.items.add(ItemResource.getItemIdByName(childTagArea.getAttribute("itemid")));
 				if (childTagArea.getAttribute("equipped") != null)
 					hd.itemsEquipped.add(Boolean.parseBoolean(childTagArea.getAttribute("equipped")));
 				else
@@ -220,7 +221,7 @@ public class HeroDefinition
 				hd.specialPromoted[index] = Boolean.parseBoolean(childTagArea.getAttribute("specialpromoted"));
 				if (hd.specialPromoted[index])
 					hd.promotedProgression[index] = false;
-				if (childTagArea.getAttribute("specialpromoteitem") != null)
+				if (StringUtils.isNotEmpty(childTagArea.getAttribute("specialpromoteitem")))
 					hd.specialPromotionItemId[index] = Integer.parseInt(childTagArea.getAttribute("specialpromoteitem"));
 				
 				hd.move[index] = Integer.parseInt(childTagArea.getAttribute("move"));

@@ -1,15 +1,15 @@
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="66" height="34" tilewidth="12" tileheight="12" nextobjectid="53">
+<map version="1.0" tiledversion="1.0.2" orientation="orthogonal" renderorder="right-down" width="66" height="34" tilewidth="12" tileheight="12" nextobjectid="66">
 <properties>
 <property name="background" value="1"/>
 <property name="shadow" value="13"/>
 </properties>
-<tileset firstgid="1" name="Tiles" tilewidth="12" tileheight="12" tilecount="1296">
+<tileset firstgid="1" name="Tiles" tilewidth="12" tileheight="12" tilecount="1296" columns="36">
 <image source="../image/overworld(day)-Master.png" trans="495d47" width="432" height="432"/>
 </tileset>
-<tileset firstgid="1297" name="Castle Night" tilewidth="12" tileheight="12" tilecount="900">
+<tileset firstgid="1297" name="Castle Night" tilewidth="12" tileheight="12" tilecount="900" columns="25">
 <image source="../image/castletown(night)-Master.png" trans="495d47" width="300" height="440"/>
 </tileset>
-<tileset firstgid="2197" name="Castle Night 2" tilewidth="12" tileheight="12" tilecount="495">
+<tileset firstgid="2197" name="Castle Night 2" tilewidth="12" tileheight="12" tilecount="495" columns="15">
 <image source="../image/castletown(night)-Slave1.png" trans="495d47" width="180" height="400"/>
 </tileset>
 <layer name="BG" width="66" height="34">
@@ -37,9 +37,9 @@ H4sIAAAAAAAAA+1Z3S4EMRSeC8MM7pZLwtVGMm5JXIkHINyxZOMJNryAV8HiCUSCxWuQcGmfwW/iNNMm
 H4sIAAAAAAAAA+3VQQqEQAxEUTcKnlXP7TUUrJ0gpO2YrsV/MLvYxj/DOE340zHr46pqPzrU3ueryv3o4I8Owv+D0KFWtIP7XK+3+2xr7twenIvul835ez5nOrTO9XJ/Pjq0zfVyf2/SQZw6RPfIOud5jUuHkeggdBA6iPt+Vdw63Lss9ed96ZD1fsu+ruc8t9/DKHQQOggdhA5CBwBRF0VrpgUQIwAA
 </data>
 </layer>
-<layer name="Roof" width="66" height="34">
+<layer name="Roof" width="66" height="34" visible="0">
 <data encoding="base64" compression="gzip">
-H4sIAAAAAAAAA+3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAA/Bgz5kUWECMAAA==
+H4sIAAAAAAAAA+3QIQ4AIBADwTN8k/8/A1GHQFwIQcwktRVbBQDAz+Y47/Zf5/MFHUKH0CF0CB0AAAAAgN0Cq6U8XxAjAAA=
 </data>
 </layer>
 <layer name="Walk" width="66" height="34" visible="0" opacity="0.6">
@@ -148,27 +148,27 @@ H4sIAAAAAAAAA+2TQQ6AMAgEe/H/r/ELvssYb6YWSkoLOpNwcosy0lIAANrsm09Z+/ees7znwIPoQbsv
 </object>
 </objectgroup>
 <objectgroup name="Meta">
-<object id="14" name="StartLocation" x="192" y="312" width="48" height="24">
+<object id="14" name="StartLocation" x="744" y="288" width="24" height="24">
 <properties>
 <property name="start" value="exit=stairs"/>
 </properties>
 </object>
-<object id="15" name="Door Sprite" x="360" y="204" width="24" height="24">
+<object id="15" name="Door Sprite2" x="360" y="204" width="24" height="24">
 <properties>
 <property name="door" value="image=jaildoor(night)"/>
 </properties>
 </object>
-<object id="16" name="Door Sprite" x="480" y="204" width="24" height="24">
+<object id="16" name="Door Sprite3" x="480" y="204" width="24" height="24">
 <properties>
 <property name="door" value="image=jaildoor(night)"/>
 </properties>
 </object>
-<object id="17" name="Door Sprite" x="576" y="204" width="24" height="24">
+<object id="17" name="Door Sprite4" x="576" y="204" width="24" height="24">
 <properties>
 <property name="door" value="image=jaildoor(night)"/>
 </properties>
 </object>
-<object id="18" name="Door Sprite" x="216" y="288" width="24" height="24">
+<object id="18" name="Door Sprite1" x="216" y="288" width="24" height="24">
 <properties>
 <property name="door" value="image=jaildoor(night)"/>
 </properties>
@@ -180,8 +180,30 @@ H4sIAAAAAAAAA+2TQQ6AMAgEe/H/r/ELvssYb6YWSkoLOpNwcosy0lIAANrsm09Z+/ees7znwIPoQbsv
 </object>
 <object id="20" name="NPC" x="648" y="312" width="24" height="24">
 <properties>
-<property name="npc" value="animation=eriumguard textid=0 wander=1"/>
+<property name="npc" value="facing=2 name=Guard1 animation=eriumguard textid=0 wander=0"/>
 </properties>
+</object>
+<object id="57" name="Create2" x="696" y="336" width="24" height="24">
+<properties>
+<property name="npc" value="facing=-1 name= animation=eriumguard textid=4 wander=3"/>
+</properties>
+</object>
+<object id="60" name="Create1" x="672" y="336" width="24" height="24">
+<properties>
+<property name="npc" value="facing=-1 name= animation=eriumguard textid=3 wander=3"/>
+</properties>
+</object>
+<object id="64" x="312" y="108">
+<properties>
+<property name="roof" value=""/>
+</properties>
+<polyline points="0,36 96,36 96,84 96,96 48,96 48,60 0,60 0,36"/>
+</object>
+<object id="65" name="TopArea" x="24" y="48">
+<properties>
+<property name="null" value=""/>
+</properties>
+<polyline points="0,0 744,0 744,72 264,72 264,240 0,240 0,0"/>
 </object>
 </objectgroup>
 <objectgroup name="Battle">
@@ -291,7 +313,7 @@ H4sIAAAAAAAAA+2TQQ6AMAgEe/H/r/ELvssYb6YWSkoLOpNwcosy0lIAANrsm09Z+/ees7znwIPoQbsv
 </properties>
 </object>
 </objectgroup>
-<layer name="Grid Pattern" width="66" height="34" visible="0" opacity="0.1">
+<layer name="Grid Pattern" width="66" height="34" opacity="0.1">
 <data encoding="base64" compression="gzip">
 H4sIAAAAAAAAA+XROQ3AQBDAwOPPIg+VPLCyLMZSChdTe1tr7dMxndP2U1/TPT3T+2PrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxV/SfvTARAjAAA=
 </data>

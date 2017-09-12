@@ -5,18 +5,19 @@ import java.util.ArrayList;
 import mb.fc.engine.message.SpeechBundleMessage;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.menu.Portrait;
+import mb.fc.utils.StringUtils;
 
 public class Speech
 {
 	private String message;
-	private int[] requires;
-	private int[] excludes;
+	private String[] requires;
+	private String[] excludes;
 	private int triggerId;
 	protected int heroPortrait;
 	protected int enemyPortrait;
 	protected String spriteAnimsName;
 
-	public Speech(String message, int[] requires, int[] excludes, int triggerId,
+	public Speech(String message, String[] requires, String[] excludes, int triggerId,
 			int heroPortrait, int enemyPortrait, String spriteAnimsName) {
 		super();
 		this.message = message;
@@ -32,11 +33,11 @@ public class Speech
 		return message;
 	}
 
-	public int[] getRequires() {
+	public String[] getRequires() {
 		return requires;
 	}
 
-	public int[] getExcludes() {
+	public String[] getExcludes() {
 		return excludes;
 	}
 
@@ -58,9 +59,9 @@ public class Speech
 				// Check to see if this mesage meets all required quests
 				if (s.getRequires() != null && s.getRequires().length > 0)
 				{
-					for (int i : s.getRequires())
+					for (String quest : s.getRequires())
 					{
-						if (i != -1 && !stateInfo.isQuestComplete(i))
+						if (StringUtils.isNotEmpty(quest) && !stateInfo.isQuestComplete(quest))
 							continue SPEECHLOOP;
 					}
 				}
@@ -69,9 +70,9 @@ public class Speech
 				// then we can't use this message
 				if (s.getExcludes() != null && s.getExcludes().length > 0)
 				{
-					for (int i : s.getExcludes())
+					for (String quest : s.getExcludes())
 					{
-						if (i != -1 && stateInfo.isQuestComplete(i))
+						if (StringUtils.isNotEmpty(quest) && stateInfo.isQuestComplete(quest))
 							continue SPEECHLOOP;
 					}
 				}

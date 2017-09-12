@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Hashtable;
 
@@ -36,8 +37,8 @@ import mb.fc.game.resource.EnemyResource;
 import mb.fc.game.resource.HeroResource;
 import mb.fc.game.resource.ItemResource;
 import mb.fc.game.text.Speech;
-import mb.fc.game.trigger.TriggerCondition;
 import mb.fc.game.trigger.Trigger;
+import mb.fc.game.trigger.TriggerCondition;
 import mb.fc.map.Map;
 import mb.fc.utils.SpriteAnims;
 import mb.fc.utils.XMLParser;
@@ -205,7 +206,15 @@ public class FCResourceManager {
 			try
 			{
 				Font awtFont = Font.createFont(Font.TRUETYPE_FONT, inputStream);
-				UnicodeFont ufont = new UnicodeFont(awtFont, Integer.parseInt(split[3]), false, false);
+				boolean italic = false;
+				boolean bold = false;
+				if (split.length > 4) {
+					italic = Boolean.parseBoolean(split[4]);
+				}
+				if (split.length > 5) {
+					bold = Boolean.parseBoolean(split[5]);
+				}
+				UnicodeFont ufont = new UnicodeFont(awtFont, Integer.parseInt(split[3]), bold, italic);
 				ufont.getEffects().add(new ColorEffect(java.awt.Color.WHITE));
 				ufont.addAsciiGlyphs();
 				ufont.addGlyphs(400, 600);
@@ -420,7 +429,7 @@ public class FCResourceManager {
 		// TODO This is just to exit the game on hero death
 		if (id == Trigger.TRIGGER_ID_EXIT)
 		{
-			Trigger te = new Trigger(Trigger.TRIGGER_ID_EXIT, false, false, false, false, null, null);
+			Trigger te = new Trigger("Game Exit", Trigger.TRIGGER_ID_EXIT, false, false, false, false, null, null);
 			te.addTriggerable(te.new TriggerExit());
 			return te;
 		}
@@ -439,6 +448,14 @@ public class FCResourceManager {
 	public void addTriggerCondition(TriggerCondition triggerCondition)
 	{
 		this.conditions.add(triggerCondition);
+	}
+
+	public Collection<Trigger> getTriggers() {
+		return triggerEventById.values();
+	}
+
+	public void setTriggerEventById(Hashtable<Integer, Trigger> triggerEventById) {
+		this.triggerEventById = triggerEventById;
 	}
 
 	public Cinematic getCinematicById(int id)

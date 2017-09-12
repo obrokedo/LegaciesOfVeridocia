@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import mb.fc.game.definition.HeroDefinition;
 import mb.fc.game.exception.BadResourceException;
 import mb.fc.game.sprite.CombatSprite;
+import mb.fc.utils.StringUtils;
 
 public class HeroResource
 {
@@ -31,6 +32,12 @@ public class HeroResource
 		}
 		
 		throw new BadResourceException("Unable to find a hero with the name: " + heroName + " Did you misspell the name in DevParams?");
+	}
+	
+	public static int getHeroIdByName(String heroName) {
+		if (StringUtils.isNotEmpty(heroName))
+			return heroDefinitionsById.values().stream().filter(hd -> hd.getName().equals(heroName)).findFirst().get().getId();
+		return -1;
 	}
 
 	public static String getAnimation(int heroId)

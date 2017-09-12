@@ -879,7 +879,7 @@ public class CinematicActor implements Comparable<CinematicActor>
 		}
 	}
 
-	public void resetSprite(StateInfo stateInfo)
+	public AnimatedSprite resetSprite(StateInfo stateInfo)
 	{
 		if (sprite != null)
 		{
@@ -888,6 +888,7 @@ public class CinematicActor implements Comparable<CinematicActor>
 			sprite.setFacing(facing);
 			sprite.setVisible(true);
 		}
+		return sprite;
 	}
 
 	@Override

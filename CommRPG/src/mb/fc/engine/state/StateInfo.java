@@ -11,11 +11,11 @@ import java.util.Stack;
 import org.newdawn.slick.util.Log;
 
 import mb.fc.engine.message.BooleanMessage;
-import mb.fc.engine.message.IntMessage;
 import mb.fc.engine.message.LoadMapMessage;
 import mb.fc.engine.message.Message;
 import mb.fc.engine.message.MessageType;
 import mb.fc.engine.message.SpriteContextMessage;
+import mb.fc.engine.message.StringMessage;
 import mb.fc.game.Camera;
 import mb.fc.game.exception.BadResourceException;
 import mb.fc.game.hudmenu.Panel;
@@ -313,7 +313,7 @@ public class StateInfo
 					System.exit(0);
 					break;
 				case COMPLETE_QUEST:
-					this.setQuestComplete(((IntMessage) m).getValue());
+					this.setQuestComplete(((StringMessage) m).getString());
 					break;
 				case CONTINUE:
 					if (!initialized)
@@ -362,7 +362,9 @@ public class StateInfo
 
 	public Menu getTopMenu()
 	{
-		return menus.get(menus.size() - 1);
+		if (menus.size() > 0)
+			return menus.get(menus.size() - 1);
+		return null;
 	}
 
 	public void removeTopMenu()
@@ -513,12 +515,12 @@ public class StateInfo
 		getResourceManager().checkTriggerCondtions(null, false, this);
 	}
 
-	public void setQuestComplete(int id)
+	public void setQuestComplete(String id)
 	{
 		psi.setQuestComplete(id);
 	}
 
-	public boolean isQuestComplete(int questId)
+	public boolean isQuestComplete(String questId)
 	{
 		return psi.isQuestCompelte(questId);
 	}

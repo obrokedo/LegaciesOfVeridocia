@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Hashtable;
+import java.util.function.Function;
 
 import org.newdawn.slick.SlickException;
 
@@ -11,6 +12,9 @@ import mb.fc.cinematic.Cinematic;
 import mb.fc.cinematic.event.CinematicEvent;
 import mb.fc.cinematic.event.CinematicEvent.CinematicEventType;
 import mb.fc.game.exception.BadResourceException;
+import mb.fc.game.resource.EnemyResource;
+import mb.fc.game.resource.HeroResource;
+import mb.fc.game.resource.ItemResource;
 import mb.fc.game.text.Conversation;
 import mb.fc.game.text.Speech;
 import mb.fc.game.text.YesNoSpeech;
@@ -63,25 +67,19 @@ public class TextParser
 						triggerNo = childTagArea.getAttribute("triggerno");
 					}
 					
-					int[] requireIds = null;
+					String[] requireIds = null;
 
 					if (requires != null)
 					{
-						String[] splitReq = requires.split(",");
-						requireIds = new int[splitReq.length];
-						for (int i = 0; i < splitReq.length; i++)
-							requireIds[i] = Integer.parseInt(splitReq[i]);
+						requireIds = requires.split(",");
 					}
 
 
-					int[] excludeIds = null;
+					String[] excludeIds = null;
 
 					if (excludes != null)
 					{
-						String[] splitEx = excludes.split(",");
-						excludeIds = new int[splitEx.length];
-						for (int i = 0; i < splitEx.length; i++)
-							excludeIds[i] = Integer.parseInt(splitEx[i]);
+						excludeIds = excludes.split(",");
 					}
 
 
@@ -94,8 +92,8 @@ public class TextParser
 							customAnim = null;
 
 						speeches.add(new Speech(message, requireIds, excludeIds, triggerId,
-								Integer.parseInt(childTagArea.getAttribute("heroportrait")),
-								Integer.parseInt(childTagArea.getAttribute("enemyportrait")),
+								HeroResource.getHeroIdByName(childTagArea.getAttribute("heroportrait")),
+								EnemyResource.getEnemyIdByName(childTagArea.getAttribute("enemyportrait")),
 								customAnim));
 					} else if (childTagArea.getTagType().equalsIgnoreCase("yesno")) {
 						String customAnim = childTagArea.getAttribute("animportrait");
@@ -103,8 +101,8 @@ public class TextParser
 							customAnim = null;
 
 						speeches.add(new YesNoSpeech(message, requireIds, excludeIds, triggerId, Integer.parseInt(triggerNo),
-								Integer.parseInt(childTagArea.getAttribute("heroportrait")),
-								Integer.parseInt(childTagArea.getAttribute("enemyportrait")),
+								HeroResource.getHeroIdByName(childTagArea.getAttribute("heroportrait")),
+								EnemyResource.getEnemyIdByName(childTagArea.getAttribute("enemyportrait")),
 								customAnim));
 					} else if (childTagArea.getTagType().equalsIgnoreCase("conversation")) {
 						String customAnim1 = childTagArea.getAttribute("animportrait1");
@@ -114,11 +112,11 @@ public class TextParser
 						if (StringUtils.isEmpty(customAnim2))
 							customAnim2 = null;
 						speeches.add(new Conversation(message.split("<split>"), requireIds, excludeIds, triggerId, 
-								Integer.parseInt(childTagArea.getAttribute("heroportrait1")),
-								Integer.parseInt(childTagArea.getAttribute("enemyportrait1")),
+								HeroResource.getHeroIdByName(childTagArea.getAttribute("heroportrait1")),
+								EnemyResource.getEnemyIdByName(childTagArea.getAttribute("enemyportrait1")),
 								customAnim1,
-								Integer.parseInt(childTagArea.getAttribute("heroportrait2")),
-								Integer.parseInt(childTagArea.getAttribute("enemyportrait2")),
+								HeroResource.getHeroIdByName(childTagArea.getAttribute("heroportrait2")),
+								EnemyResource.getEnemyIdByName(childTagArea.getAttribute("enemyportrait2")),
 								customAnim2));
 					}
 
@@ -156,8 +154,7 @@ public class TextParser
 					}
 					else if (ta.getTagType().equalsIgnoreCase("herodeath"))
 					{
-						int unitId = ta.getIntAttribute("unitid");
-						condition.addCondition(new UnitDeath(unitId, false));
+						condition.addCondition(new UnitDeath(HeroResource.getHeroIdByName(ta.getAttribute("unitid")), false));
 					}
 					else if (ta.getTagType().equalsIgnoreCase("enterloc"))
 					{
@@ -174,7 +171,7 @@ public class TextParser
 					}
 					else if (ta.getTagType().equalsIgnoreCase("heroinbat"))
 					{
-						condition.addCondition(new HeroInBattle(ta.getIntAttribute("id")));
+						condition.addCondition(new HeroInBattle(HeroResource.getHeroIdByName(ta.getAttribute("id"))));
 					}
 					else if (ta.getTagType().equalsIgnoreCase("enemyinbat"))
 					{
@@ -220,8 +217,8 @@ public class TextParser
 		boolean retrigOnEnter = false;
 		boolean triggerOnce = false;
 		boolean triggerImmediately = false;
-		int[] requireIds = null;
-		int[] excludeIds = null;
+		String[] requireIds = null;
+		String[] excludeIds = null;
 		if (tagArea.getAttribute("nonretrig") != null)
 			nonRetrig = Boolean.parseBoolean(tagArea.getAttribute("nonretrig"));
 		if (tagArea.getAttribute("retrigonenter") != null)
@@ -236,21 +233,15 @@ public class TextParser
 
 		if (requires != null)
 		{
-			String[] splitReq = requires.split(",");
-			requireIds = new int[splitReq.length];
-			for (int i = 0; i < splitReq.length; i++)
-				requireIds[i] = Integer.parseInt(splitReq[i]);
+			requireIds = requires.split(",");
 		}
 
 		if (excludes != null)
 		{
-			String[] splitEx = excludes.split(",");
-			excludeIds = new int[splitEx.length];
-			for (int i = 0; i < splitEx.length; i++)
-				excludeIds[i] = Integer.parseInt(splitEx[i]);
+			excludeIds = excludes.split(",");
 		}
 
-		Trigger te = new Trigger(id, retrigOnEnter, nonRetrig, triggerOnce, triggerImmediately, requireIds, excludeIds);
+		Trigger te = new Trigger(tagArea.getAttribute("description"), id, retrigOnEnter, nonRetrig, triggerOnce, triggerImmediately, requireIds, excludeIds);
 		if (tagArea.getChildren().size() > 0)
 		{
 			for (int k = 0; k < tagArea.getChildren().size(); k++)
@@ -260,7 +251,7 @@ public class TextParser
 				String tagType = tagArea.getChildren().get(k).getTagType();
 				if (tagType.equalsIgnoreCase("completequest"))
 				{
-					te.addTriggerable(te.new TriggerCompleteQuest(Integer.parseInt(actionParams.get("questid"))));
+					te.addTriggerable(te.new TriggerCompleteQuest(actionParams.get("questid")));
 				}
 				else if (tagType.equalsIgnoreCase("startbattle"))
 				{
@@ -274,8 +265,8 @@ public class TextParser
 				else if (tagType.equalsIgnoreCase("setbattlecond"))
 				{
 					te.addTriggerable(te.new TriggerBattleCond(
-							parsePositiveMultiInt("templeader", actionParams),
-							parsePositiveMultiInt("tempenemyleader", actionParams), 
+							parseMultiString("templeader", actionParams, heid -> HeroResource.getHeroIdByName(heid)),
+							parseMultiString("tempenemyleader", actionParams, enid -> EnemyResource.getEnemyIdByName(enid)), 
 							Boolean.parseBoolean(actionParams.get("allleaders"))));
 				}
 				else if (tagType.equalsIgnoreCase("loadmap"))
@@ -285,7 +276,7 @@ public class TextParser
 				else if (tagType.equalsIgnoreCase("showshop"))
 				{
 					te.addTriggerable(te.new TriggerShowShop(actionParams.get("buypercent"), actionParams.get("sellpercent"),
-							parsePositiveMultiInt("itemssold", actionParams), actionParams.get("portrait")));
+							parseMultiString("itemssold", actionParams, itid -> ItemResource.getItemIdByName(itid)), actionParams.get("portrait")));
 				}
 				else if (tagType.equalsIgnoreCase("showpriest"))
 				{
@@ -293,7 +284,7 @@ public class TextParser
 				}
 				else if (tagType.equalsIgnoreCase("addhero"))
 				{
-					te.addTriggerable(te.new TriggerAddHero(Integer.parseInt(actionParams.get("heroid"))));
+					te.addTriggerable(te.new TriggerAddHero(HeroResource.getHeroIdByName(actionParams.get("heroid"))));
 				}
 				else if (tagType.equalsIgnoreCase("playmusic"))
 				{
@@ -368,9 +359,10 @@ public class TextParser
 				}
 				else if (tagType.equalsIgnoreCase("additem"))
 				{
-					te.addTriggerable(te.new TriggerAddItem(Integer.parseInt(actionParams.get("itemid"))));
-				} else if (tagType.equalsIgnoreCase("runtriggers")) {
-					te.addTriggerable(te.new TriggerRunTriggers(parsePositiveMultiInt("triggers", actionParams)));
+					te.addTriggerable(te.new TriggerAddItem(ItemResource.getItemIdByName(actionParams.get("itemid"))));
+				} 
+				else if (tagType.equalsIgnoreCase("runtriggers")) {
+					te.addTriggerable(te.new TriggerRunTriggers(parseMultiString("triggers", actionParams, s -> Integer.parseInt(s))));
 				}
 				else if (tagType.equalsIgnoreCase("exit"))
 				{
@@ -399,23 +391,24 @@ public class TextParser
 		triggerEventById.put(id, te);
 	}
 	
-	private static int[] parsePositiveMultiInt(String tag, Hashtable<String, String> actionParams)
+	private static int[] parseMultiString(String tag, Hashtable<String, String> actionParams, Function<String, Integer> createMethod)
 	{
 		String leaders = actionParams.get(tag);
-		int[] leaderIds = new int[0];
+		int[] ids = null;
 
 		if (leaders != null)
 		{
 			String[] splitLeader = leaders.split(",");
-			leaderIds = new int[splitLeader.length];
-			for (int i = 0; i < splitLeader.length; i++)
-				leaderIds[i] = Integer.parseInt(splitLeader[i]);
-			
-			if (leaderIds.length == 1 && leaderIds[0] == -1)
-				leaderIds = new int[0];
-		}
+			ids = new int[splitLeader.length];
+			for (int i = 0; i < splitLeader.length; i++) {
+				String val = splitLeader[i];
+				if (val != null && val.trim().length() > 0)
+					ids[i] = createMethod.apply(val);
+			}
+		} else
+			ids = new int[0];
 		
-		return leaderIds;
+		return ids;
 	}
 
 	public ArrayList<CinematicEvent> parseCinematicEvents(TagArea tagArea, ArrayList<CinematicEvent> initEvents,
@@ -444,7 +437,8 @@ public class TextParser
 			CinematicEvent ce = new CinematicEvent(CinematicEventType.ADD_ACTOR, Integer.parseInt(area.getAttribute("x")),
 					Integer.parseInt(area.getAttribute("y")),
 					area.getAttribute("name"), area.getAttribute("anim"),
-					area.getAttribute("startanim"), Boolean.parseBoolean(area.getAttribute("visible")), Integer.parseInt(area.getAttribute("associatedhero")));
+					area.getAttribute("startanim"), Boolean.parseBoolean(area.getAttribute("visible")), 
+					HeroResource.getHeroIdByName(area.getAttribute("associatedhero")));
 			animToLoad.add(area.getAttribute("anim"));
 			if (Boolean.parseBoolean(area.getAttribute("init")))
 			{
@@ -460,7 +454,7 @@ public class TextParser
 			return new CinematicEvent(CinematicEventType.REMOVE_STATIC_SPRITE, area.getAttribute("spriteid"));
 		else if (type.equalsIgnoreCase("assactor"))
 			return new CinematicEvent(CinematicEventType.ASSOCIATE_AS_ACTOR, area.getAttribute("name"),
-					Integer.parseInt(area.getAttribute("hero")), Integer.parseInt(area.getAttribute("enemyid")), area.getAttribute("npcid"));
+					HeroResource.getHeroIdByName(area.getAttribute("hero")), Integer.parseInt(area.getAttribute("enemyid")), area.getAttribute("npcid"));
 		else if (type.equalsIgnoreCase("camerafollow"))
 			return new CinematicEvent(CinematicEventType.CAMERA_FOLLOW, area.getAttribute("name"));
 		else if (type.equalsIgnoreCase("haltingmove"))
@@ -496,9 +490,9 @@ public class TextParser
 			return new CinematicEvent(CinematicEventType.CAMERA_MOVE_TO_ACTOR, area.getAttribute("actor"), Integer.parseInt(area.getAttribute("time")));
 		else if (type.equalsIgnoreCase("speech"))
 			return new CinematicEvent(CinematicEventType.SPEECH, area.getAttribute("text"),
-					(area.getAttribute("heroportrait") == null ? -1 : Integer.parseInt(area.getAttribute("heroportrait"))),
-							(area.getAttribute("enemyportrait") == null ? -1 : Integer.parseInt(area.getAttribute("enemyportrait"))),
-							area.getAttribute("animportrait"));
+					HeroResource.getHeroIdByName(area.getAttribute("heroportrait")),
+					EnemyResource.getEnemyIdByName(area.getAttribute("enemyportrait")),
+					area.getAttribute("animportrait"));
 		else if (type.equalsIgnoreCase("loadmap"))
 			return new CinematicEvent(CinematicEventType.LOAD_MAP, area.getAttribute("mapdata"), area.getAttribute("enter"));
 		else if (type.equalsIgnoreCase("loadbattle"))
@@ -587,7 +581,8 @@ public class TextParser
 			return new CinematicEvent(CinematicEventType.EXIT_GAME);
 		else if (type.equalsIgnoreCase("addhero"))
 		{
-			CinematicEvent ce = new CinematicEvent(CinematicEventType.ADD_HERO, Integer.parseInt(area.getAttribute("heroid")));
+			CinematicEvent ce = new CinematicEvent(CinematicEventType.ADD_HERO, 
+					HeroResource.getHeroIdByName(area.getAttribute("heroid")));
 			if (Boolean.parseBoolean(area.getAttribute("init")))
 			{
 				initEvents.add(ce);

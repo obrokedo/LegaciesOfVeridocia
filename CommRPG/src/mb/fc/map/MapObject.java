@@ -103,7 +103,7 @@ public class MapObject
 			for (int i = 0; i < splitParams.length; i++)
 			{
 				String[] attributes = splitParams[i].split("=");
-				params.put(attributes[0], attributes[1]);
+				params.put(attributes[0], (attributes.length >= 2 ? attributes[1] : "" ));
 			}
 		}
 	}
@@ -189,7 +189,7 @@ public class MapObject
 		Direction facingVal = Direction.DOWN;
 		if (wander != null)
 			wanderVal = wander;
-		if (facing != null)
+		if (facing != null && facing != -1)
 			facingVal = Direction.values()[facing];
 		
 		npc.setInitialPosition(x, y, fcrm.getMap().getTileEffectiveWidth(), 

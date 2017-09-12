@@ -14,7 +14,7 @@
 	<changeai aitype=3 id=6 heroid=0 targetid=7 x=0 y=0/>
 </trigger>
 <trigger id=4 description="Test Craig Exit" require=-1, exclude=-1, nonretrig=true retrigonenter=false triggeronce=false triggerimmediately=false>
-	<showcin cinid=0/>
+	<showcin cinid=0 exittrigid=-1/>
 	<killenemies unitid=3/>
 </trigger>
 <trigger id=5 description="Test Noah Exit" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
@@ -22,11 +22,11 @@
 	<killenemies unitid=2/>
 </trigger>
 <text id=0 description="TestExit">
-	<string message="Noah will exit<hardstop>" require=-1, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait=""/>
+	<string require=-1, exclude=-1, trigger=-1 heroportrait=-1 enemyportrait=-1 animportrait="" message="Noah will exit<hardstop>"/>
 </text>
 <cinematic id=0 description="Test Exit" camerax=0 cameray=0>
-	<assactor name="Craig" hero=3 enemyid=0 npcid=0/>
-	<assactor name="Olivia" hero=4 enemyid=0 npcid=0/>
+	<assactor name="Craig" hero=3 enemyid=0 npcid="0"/>
+	<assactor name="Olivia" hero=4 enemyid=0 npcid="0"/>
 	<cameramovetoactor actor="Craig" time=1000/>
 	<wait time=1000/>
 	<camerafollow name="Craig"/>
@@ -56,5 +56,5 @@
 </condition>
 <condition id=3 description="NoahFirst" triggerid=5>
 	<heroinbat id=3/>
-	<enterloc location="TopBattleExit" immediate=false/>
+	<loccontains location="TopArea" enemy=true operator="Equals" amount=0/>
 </condition>

@@ -45,6 +45,7 @@ public class PlannerValueDef
 	public static final int TYPE_LONG_STRING = 4;
 	public static final int TYPE_UNBOUNDED_INT = 5;
 	public static final int TYPE_MULTI_LONG_STRING = 6;
+	public static final int TYPE_MULTI_STRING = 7;
 
 	// Refers to
 	private int refersTo;

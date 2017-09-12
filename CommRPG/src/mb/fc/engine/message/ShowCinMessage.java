@@ -19,4 +19,12 @@ public class ShowCinMessage extends Message {
 	public int getExitTrigId() {
 		return exitTrigId;
 	}
+
+	@Override
+	public boolean isImmediate() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+	
+	
 }

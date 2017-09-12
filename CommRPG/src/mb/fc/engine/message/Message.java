@@ -30,6 +30,7 @@ public class Message implements Serializable
 			case MOVETO_SPRITELOC:
 			case OVERLAND_MOVE_MESSAGE:
 			case NEXT_TURN:
+			case CIN_END:
 				immediate = true;
 				break;
 			case SHOW_BATTLEMENU:

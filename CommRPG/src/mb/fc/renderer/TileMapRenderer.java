@@ -41,21 +41,23 @@ public class TileMapRenderer extends Manager
 		{
 			for (int mapY =  camY, frameY = 0; mapY < lastTileY; mapY++, frameY++)
 			{
-				map.renderSprite(map.getMapLayer(0).getTiles()[mapY][mapX],
-					frameX * map.getTileRenderWidth() - xOffset, frameY * map.getTileRenderHeight() - yOffset);
-
-				for (MapLayer ml : map.getFlashingLayersByPosition(1))
-					renderLayer(ml, mapX, mapY, frameX, frameY, xOffset, yOffset);
-				
-				renderLayer(map.getMapLayer(1), mapX, mapY, frameX, frameY, xOffset, yOffset);
-				
-				for (MapLayer ml : map.getFlashingLayersByPosition(2))
-					renderLayer(ml, mapX, mapY, frameX, frameY, xOffset, yOffset);
-				
-				renderLayer(map.getMapLayer(2), mapX, mapY, frameX, frameY, xOffset, yOffset);
-				
-				for (MapLayer ml : map.getFlashingLayersByPosition(3))
-					renderLayer(ml, mapX, mapY, frameX, frameY, xOffset, yOffset);
+				if (mapY >= 0 && mapX >= 0) {
+					map.renderSprite(map.getMapLayer(0).getTiles()[mapY][mapX],
+						frameX * map.getTileRenderWidth() - xOffset, frameY * map.getTileRenderHeight() - yOffset);
+	
+					for (MapLayer ml : map.getFlashingLayersByPosition(1))
+						renderLayer(ml, mapX, mapY, frameX, frameY, xOffset, yOffset);
+					
+					renderLayer(map.getMapLayer(1), mapX, mapY, frameX, frameY, xOffset, yOffset);
+					
+					for (MapLayer ml : map.getFlashingLayersByPosition(2))
+						renderLayer(ml, mapX, mapY, frameX, frameY, xOffset, yOffset);
+					
+					renderLayer(map.getMapLayer(2), mapX, mapY, frameX, frameY, xOffset, yOffset);
+					
+					for (MapLayer ml : map.getFlashingLayersByPosition(3))
+						renderLayer(ml, mapX, mapY, frameX, frameY, xOffset, yOffset);
+				}
 			}
 		}
 
@@ -93,10 +95,12 @@ public class TileMapRenderer extends Manager
 		{
 			for (int mapY = camY, frameY = 0; mapY < lastTileY; mapY++, frameY++)
 			{
-				for (int mapLayer = 3; mapLayer < map.getMapLayerAmount(); mapLayer++) {
-					renderLayer(map.getMapLayer(mapLayer), mapX, mapY, frameX, frameY, xOffset, yOffset);
-					for (MapLayer ml : map.getFlashingLayersByPosition(mapLayer + 1))
-						renderLayer(ml, mapX, mapY, frameX, frameY, xOffset, yOffset);
+				if (mapY >= 0 && mapX >= 0) { 
+					for (int mapLayer = 3; mapLayer < map.getMapLayerAmount(); mapLayer++) {
+						renderLayer(map.getMapLayer(mapLayer), mapX, mapY, frameX, frameY, xOffset, yOffset);
+						for (MapLayer ml : map.getFlashingLayersByPosition(mapLayer + 1))
+							renderLayer(ml, mapX, mapY, frameX, frameY, xOffset, yOffset);
+					}
 				}
 			}
 		}
@@ -113,11 +117,13 @@ public class TileMapRenderer extends Manager
 					for (int mapY = (int) roof.getRoofShape().getMinY() / map.getTileRenderHeight(); 
 							mapY < roof.getRoofShape().getMaxY() / map.getTileRenderHeight(); mapY++)
 					{
-						if (map.getRoofLayer().getTiles()[mapY][mapX] != 0)
-						{
-							map.renderSprite(map.getRoofLayer().getTiles()[mapY][mapX],
-								mapX * map.getTileRenderWidth() - camera.getLocationX(),
-									mapY * map.getTileRenderHeight() - camera.getLocationY());
+						if (mapY >= 0 && mapX >= 0) {
+							if (map.getRoofLayer().getTiles()[mapY][mapX] != 0)
+							{
+								map.renderSprite(map.getRoofLayer().getTiles()[mapY][mapX],
+									mapX * map.getTileRenderWidth() - camera.getLocationX(),
+										mapY * map.getTileRenderHeight() - camera.getLocationY());
+							}
 						}
 					}
 				}

@@ -115,6 +115,15 @@ public class PlannerIO {
 				}
 
 				stringBuffer += newVals;
+			} else if (pvd.getValueType() == PlannerValueDef.TYPE_MULTI_STRING) {
+				String newVals = "";
+				ArrayList<PlannerReference> refs = (ArrayList<PlannerReference>) pl.getValues().get(i);
+				for (int j = 0; j < refs.size(); j++) {
+					newVals = newVals + refs.get(j).getName();
+					if (j + 1 <= refs.size())
+						newVals += ",";
+				}
+				stringBuffer +=  "\"" + newVals + "\"";
 			}
 		}
 		if (pl.isDefining())
@@ -215,8 +224,18 @@ public class PlannerIO {
 							newVals = newVals + ",";
 					}
 				} else
-					newVals = "0";
+					newVals = "-1";
 
+				plannerLine.getValues().add(newVals);
+			// Handle multi strings
+			} else if (pvd.getValueType() == PlannerValueDef.TYPE_MULTI_STRING) {
+				String newVals = "";
+
+				if (ta.getAttribute(pvd.getTag()) != null)
+					newVals = ta.getAttribute(pvd.getTag());
+				else
+					newVals = "";
+				
 				plannerLine.getValues().add(newVals);
 			// Handle boolean valuess
 			} else if (pvd.getValueType() == PlannerValueDef.TYPE_BOOLEAN)

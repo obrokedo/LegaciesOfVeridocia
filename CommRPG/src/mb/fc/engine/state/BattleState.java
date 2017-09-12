@@ -16,6 +16,7 @@ import mb.fc.game.manager.PanelManager;
 import mb.fc.game.manager.SoundManager;
 import mb.fc.game.manager.SpriteManager;
 import mb.fc.game.manager.TurnManager;
+import mb.fc.game.menu.DebugMenu;
 import mb.fc.game.ui.PaddedGameContainer;
 import mb.fc.loading.FCResourceManager;
 import mb.fc.loading.LoadableGameState;
@@ -163,7 +164,11 @@ public class BattleState extends LoadableGameState
 
 		// delta /= 2;
 
-		stateInfo.processMessages();
+		if (stateInfo.getTopMenu() == null || !(stateInfo.getTopMenu() instanceof DebugMenu)) {
+			stateInfo.processMessages();
+		}
+		
+		
 		if (stateInfo.isInitialized() && !stateInfo.isWaiting())
 		{
 			

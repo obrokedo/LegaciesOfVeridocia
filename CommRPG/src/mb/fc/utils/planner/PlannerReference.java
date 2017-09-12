@@ -75,7 +75,7 @@ public class PlannerReference {
 			PlannerValueDef pvd = pl.getPlDef().getPlannerValues().get(j);
 			
 			if (pvd.getRefersTo() != PlannerValueDef.REFERS_NONE && !pvd.isOptional()) {
-				if (pvd.getValueType() == PlannerValueDef.TYPE_MULTI_INT) {
+				if (pvd.getValueType() == PlannerValueDef.TYPE_MULTI_INT || pvd.getValueType() == PlannerValueDef.TYPE_MULTI_STRING) {
 					ArrayList<PlannerReference> refs = (ArrayList<PlannerReference>) pl.getValues().get(j);
 					for (PlannerReference ref : refs) {
 						if (ref.getName().equalsIgnoreCase("")) {
@@ -140,34 +140,72 @@ public class PlannerReference {
 					int index = (int) pl.getValues().get(j) - 1;
 					pl.getValues().set(j, establishIntReference(index, badReferences, plannerContainer, pl, j, references, pvd));
 				} else if (pvd.getValueType() == PlannerValueDef.TYPE_MULTI_INT) {
-					String[] vals = ((String) pl.getValues().get(j)).split(",");
-					List<PlannerReference> multiIntList = new ArrayList<PlannerReference>();
-					for (String val : vals) {
-						int valParsed = Integer.parseInt(val) - 1;
-						multiIntList.add(establishIntReference(valParsed, badReferences, plannerContainer, pl, j, references, pvd));
-					}
-					pl.getValues().set(j, multiIntList);
-				} else if (pvd.getValueType() == PlannerValueDef.TYPE_STRING) {
-					int referenceIndex = references.indexOf(new PlannerReference((String) pl.getValues().get(j)));
-					if (referenceIndex != -1) {
-						pl.getValues().set(j, references.get(referenceIndex));
-					} else if (pvd.isOptional()) {
-						pl.getValues().set(j, new PlannerReference(""));
-					} else {
-						if (plannerContainer != null) {
-							addBadStringReference(badReferences, plannerContainer, pl, j);
-						} else {
-							badReferences.add("Attribute " + pl.getPlDef().getName() + 
-								" has a bad reference to '" + (String) pl.getValues().get(j) + "' on it's " + 
-								pl.getPlDef().getPlannerValues().get(j).getDisplayTag() + " value");
+					establishMultiIntReference(badReferences, plannerContainer, pl, j, pvd, references);
+				} else if (pvd.getValueType() == PlannerValueDef.TYPE_MULTI_STRING) {
+					String[] vals = null;
+				
+					try {
+						String[] values = ((String) pl.getValues().get(j)).split(",");
+						String newVals = "";
+						for (int valIdx = 0; valIdx < values.length; valIdx++) {
+							newVals = newVals + (Integer.parseInt(values[valIdx]) + 1);
+							if (valIdx + 1 != values.length)
+								newVals = newVals + ",";
 						}
-						//badReferences.add(pl.getValues().get(0) + " of type " + plannerContainer.getDefLine().getPlDef().getName() + 
-							//	" has a bad reference to " + (String) pl.getValues().get(j) + " of type " + pvd.getRefersTo());
-						pl.getValues().set(j, new PlannerReference(""));
+						pl.getValues().set(j, newVals);
+						
+						establishMultiIntReference(badReferences, plannerContainer, pl, j, pvd, references);
+					} catch (Throwable t) {
+						vals = ((String) pl.getValues().get(j)).split(",");
+						List<PlannerReference> multiStringList = new ArrayList<PlannerReference>();
+						for (String val : vals) {
+							multiStringList.add(establishStringReference(val, badReferences, plannerContainer, pl, j, pvd, references));
+						}
+						pl.getValues().set(j, multiStringList);
+					}
+				} else if (pvd.getValueType() == PlannerValueDef.TYPE_STRING) {
+					try {
+						int intval =  Integer.parseInt((String) pl.getValues().get(j));
+						pl.getValues().set(j, establishIntReference(intval, badReferences, plannerContainer, pl, j, references, pvd));
+					} catch (Throwable e) {
+						pl.getValues().set(j, establishStringReference((String) pl.getValues().get(j), 
+								badReferences, plannerContainer, pl, j, pvd, references));
 					}
 				}
 			}
 		}
+	}
+
+	private static void establishMultiIntReference(List<String> badReferences, PlannerContainer plannerContainer, PlannerLine pl,
+			int j, PlannerValueDef pvd, ArrayList<PlannerReference> references) {
+		String[] vals = ((String) pl.getValues().get(j)).split(",");
+		List<PlannerReference> multiIntList = new ArrayList<PlannerReference>();
+		for (String val : vals) {
+			int valParsed = Integer.parseInt(val) - 1;
+			multiIntList.add(establishIntReference(valParsed, badReferences, plannerContainer, pl, j, references, pvd));
+		}
+		pl.getValues().set(j, multiIntList);
+	}
+
+	private static PlannerReference establishStringReference(String val, List<String> badReferences, PlannerContainer plannerContainer,
+			PlannerLine pl, int j, PlannerValueDef pvd, ArrayList<PlannerReference> references) {
+		PlannerReference refToAdd;
+		int referenceIndex = references.indexOf(new PlannerReference(val));
+		if (referenceIndex != -1) {
+			refToAdd = references.get(referenceIndex);
+		} else if (pvd.isOptional()) {
+			refToAdd = new PlannerReference("");
+		} else {
+			if (plannerContainer != null) {
+				addBadStringReference(badReferences, plannerContainer, pl, j);
+			} else {
+				badReferences.add("Attribute " + pl.getPlDef().getName() + 
+					" has a bad reference to '" + (String) pl.getValues().get(j) + "' on it's " + 
+					pl.getPlDef().getPlannerValues().get(j).getDisplayTag() + " value");
+			}
+			refToAdd = new PlannerReference("");
+		}
+		return refToAdd;
 	}
 
 	private static PlannerReference establishIntReference(int index, List<String> badReferences, PlannerContainer plannerContainer, PlannerLine pl, int j,

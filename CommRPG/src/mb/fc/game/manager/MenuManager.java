@@ -28,9 +28,7 @@ import mb.fc.game.text.Speech;
 import mb.fc.game.text.YesNoSpeech;
 
 public class MenuManager extends Manager
-{
-	private static DebugMenu DEBUG_MENU;
-	
+{	
 	@Override
 	public void initialize()
 	{
@@ -145,10 +143,7 @@ public class MenuManager extends Manager
 				stateInfo.addMenu(new MultiHeroJoinMenu(heroesToChooseList, stateInfo));
 				break;
 			case SHOW_DEBUG:
-				if (DEBUG_MENU == null)
-					DEBUG_MENU = new DebugMenu(stateInfo.getFCGameContainer());
-				DEBUG_MENU.clearText();
-				stateInfo.addMenu(DEBUG_MENU);
+				stateInfo.addMenu(new DebugMenu(stateInfo));
 				break;
 			default:
 				break;

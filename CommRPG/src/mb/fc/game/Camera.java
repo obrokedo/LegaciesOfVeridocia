@@ -46,6 +46,10 @@ public class Camera
 			x = stateInfo.getCurrentMap().getMapWidthInPixels() - getViewportWidth();
 		if (y + getViewportHeight() > stateInfo.getCurrentMap().getMapHeightInPixels())
 			y = stateInfo.getCurrentMap().getMapHeightInPixels() - getViewportHeight();
+		if (x <= 0)
+			x = 0;
+		if (y <= 0)
+			y = 0;
 		viewport.setLocation(x, y);
 		// nextX = x;
 		// nextY = y;

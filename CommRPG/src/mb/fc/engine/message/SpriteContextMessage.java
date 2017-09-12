@@ -2,6 +2,7 @@ package mb.fc.engine.message;
 
 import java.util.ArrayList;
 
+import mb.fc.game.sprite.AnimatedSprite;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.sprite.Sprite;
 
@@ -24,12 +25,12 @@ public class SpriteContextMessage extends Message
 		this.sprites = new ArrayList<Integer>();
 		sprites.add(sprite.getId());
 	}
-
-	public SpriteContextMessage(MessageType messageType, ArrayList<CombatSprite> sprites)
+	
+	public SpriteContextMessage(MessageType messageType, ArrayList<AnimatedSprite> sprites)
 	{
 		super(messageType);
 		this.sprites = new ArrayList<Integer>();
-		for (CombatSprite cs : sprites)
+		for (AnimatedSprite cs : sprites)
 			this.sprites.add(cs.getId());
 	}
 
@@ -51,21 +52,23 @@ public class SpriteContextMessage extends Message
 		return null;
 	}
 
-	public ArrayList<CombatSprite> getSprites(Iterable<Sprite> sprites) {
-		ArrayList<CombatSprite> cSprites = new ArrayList<CombatSprite>();
-		for (Sprite s : sprites)
+	public <T extends Sprite> ArrayList<T> getSprites(Iterable<T> sprites) {
+		ArrayList<T> cSprites = new ArrayList<>();
+		for (T s : sprites)
 		{
 			for (Integer id : this.sprites)
 			{
 				if (id == s.getId())
 				{
-					cSprites.add((CombatSprite) s);
+					cSprites.add(s);
 					break;
 				}
 			}
 		}
 		return cSprites;
 	}
+	
+	
 
 	public ArrayList<Integer> getSpriteIds() {
 		return sprites;

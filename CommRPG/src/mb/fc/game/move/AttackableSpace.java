@@ -2,6 +2,11 @@ package mb.fc.game.move;
 
 import java.util.ArrayList;
 
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.util.Log;
+
 import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.InfoMessage;
 import mb.fc.engine.message.MessageType;
@@ -16,13 +21,9 @@ import mb.fc.game.input.FCInput;
 import mb.fc.game.input.KeyMapping;
 import mb.fc.game.listener.KeyboardListener;
 import mb.fc.game.listener.MouseListener;
+import mb.fc.game.sprite.AnimatedSprite;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.ui.PaddedGameContainer;
-
-import org.newdawn.slick.Color;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.util.Log;
 
 public class AttackableSpace implements KeyboardListener, MouseListener
 {
@@ -259,7 +260,7 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 			stateInfo.removePanel(PanelType.PANEL_ENEMY_HEALTH_BAR);
 			stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, "menuselect", 1f, false));
 
-			ArrayList<CombatSprite> sprites = new ArrayList<CombatSprite>();
+			ArrayList<AnimatedSprite> sprites = new ArrayList<>();
 
 			if (!targetsAll) {
 				for (int i = 0; i < area.length; i++)

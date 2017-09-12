@@ -1,8 +1,12 @@
 package mb.fc.game.manager;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+
+import org.newdawn.slick.util.Log;
 
 import mb.fc.engine.message.Message;
+import mb.fc.engine.message.SpriteContextMessage;
 import mb.fc.engine.message.SpriteMoveMessage;
 import mb.fc.game.constants.Direction;
 import mb.fc.game.input.KeyMapping;
@@ -12,8 +16,6 @@ import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.sprite.Door;
 import mb.fc.game.sprite.Sprite;
 import mb.fc.map.Map;
-
-import org.newdawn.slick.util.Log;
 
 public class TownMoveManager extends Manager
 {
@@ -70,7 +72,7 @@ public class TownMoveManager extends Manager
 				}
 			}
 		}
-
+		
 		while (updateDelta >= UPDATE_TIME)
 		{
 			updateDelta -= UPDATE_TIME;
@@ -208,6 +210,23 @@ public class TownMoveManager extends Manager
 			case INTIIALIZE:
 				stateInfo.getCurrentMap().checkRoofs(
 						(int) stateInfo.getCurrentSprite().getLocX(), (int) stateInfo.getCurrentSprite().getLocY());
+				break;
+			// If we are in town and a cinematic ends, make sure none of the "associated"
+			// actors have "MovingSprites" associated with them
+			case CIN_END:
+				SpriteContextMessage scm = (SpriteContextMessage) message;
+				ArrayList<Integer> sprites = scm.getSpriteIds();
+				for (Integer s : sprites) {
+					Iterator<MovingSprite> movingIt = movers.iterator();
+					while (movingIt.hasNext()) {
+						MovingSprite moving = movingIt.next();
+						if (moving.getAnimatedSprite().getId() == s) {
+							if (moving.getAnimatedSprite().getId() == stateInfo.getCurrentSprite().getId())
+								this.moving = false;
+							movingIt.remove();
+						}
+					}
+				}
 				break;
 			default:
 				break;
