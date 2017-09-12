@@ -464,8 +464,8 @@
 	<addactor x=1368 y=240 name="Olivia" anim="Olivia" startanim="UnUp" visible=true init=true associatedhero=""/>
 	<addactor x=1344 y=240 name="Craig" anim="Craig" startanim="UnUp" visible=true init=true associatedhero=""/>
 	<addactor x=1344 y=192 name="Noah" anim="Noah" startanim="UnDown" visible=true init=true associatedhero=""/>
-	<addactor x=1368 y=192 name="Sharna" anim="Sharna" startanim="UnDown" visible=true init=false associatedhero=""/>
-	<addactor x=1392 y=192 name="Huun" anim="Huun" startanim="UnDown" visible=true init=false associatedhero=""/>
+	<addactor x=1368 y=192 name="Sharna" anim="Sharna" startanim="UnDown" visible=true init=true associatedhero=""/>
+	<addactor x=1392 y=192 name="Huun" anim="Huun" startanim="UnDown" visible=true init=true associatedhero=""/>
 	<speech text="Okay, follow me. We've got to get out of here quickly before someone finds out your gone.<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait=""/>
 	<haltingmove name="Olivia" x=1440 y=216 speed="2" movehor=true movediag=false/>
 	<playsound sound="casting" volume=100/>
