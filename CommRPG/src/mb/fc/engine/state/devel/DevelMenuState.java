@@ -256,8 +256,16 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 			
 			if (loadTownButton.handleUserInput(x, y, true))
 				start(LoadTypeEnum.TOWN, textSelector.getSelectedResource(), entranceSelector.getSelectedResource());
-			if (loadCinButton.handleUserInput(x, y, true))
-				start(LoadTypeEnum.CINEMATIC, textSelector.getSelectedResource(), null);
+			if (loadCinButton.handleUserInput(x, y, true)) {
+				String id = JOptionPane.showInputDialog("Enter the cinematic id (a number) to run");
+				try {
+					int iId = Integer.parseInt(id);
+					startCinematic(textSelector.getSelectedResource(), iId);
+				} catch (NumberFormatException e) {
+					JOptionPane.showMessageDialog(null, "The value must be a number");
+				}
+				
+			}
 			if (loadBattleButton.handleUserInput(x, y, true)) 
 				start(LoadTypeEnum.BATTLE, textSelector.getSelectedResource(), entranceSelector.getSelectedResource());
 		}
