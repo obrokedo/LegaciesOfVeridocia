@@ -15,7 +15,7 @@ class MenuConfiguration(JMenuConfiguration):
         return amount
     
     def getPriestSelectSomeoneToResurrectText(self, name, cost):
-        return "Oh my! " + name + " has passed to the other side, but I can revive him for " + `cost` + " gold.<hardstop>"
+        return "Oh my! " + name + " has passed to the other side, but I can revive them for " + `cost` + " gold.<hardstop>"
     
     def getPriestTargetHasBeenResurrectedText(self, name):
         return name + " has returned to the land of the living!<hardstop>"
@@ -37,7 +37,7 @@ class MenuConfiguration(JMenuConfiguration):
     def getPriestNoOneToCureText(self):
         return "None of the members of the party are under the effect of any maladies.<hardstop>"
     
-    def getPriestCureCost(self, battleEffectNames, batteEffectLevels):
+    def getPriestCureCost(self, battleEffectNames, battleEffectLevels):
         amount = 0
         
         for index in range(0, len(battleEffectNames)):
@@ -46,8 +46,8 @@ class MenuConfiguration(JMenuConfiguration):
         return amount
     
     def getPriestSelectSomeoneToCureText(self, name, battleEffectNames, cost):
-        return "Oh my! " + name + "'s body is riddled with maladies, but I can restore him to perfect health for " + `cost` + " gold<hardstop>"
-    def getPriestNotEnoughGoldToCureText():
+        return "Oh my! " + name + "'s body is riddled with maladies, but I can restore them to perfect health for " + `cost` + " gold<hardstop>"
+    def getPriestNotEnoughGoldToCureText(self):
         return "I'm sorry, you do not have enough gold...<hardstop>"
     def getPriestTargetHasBeenCuredText(self, name):
         return name + "'s ailments have been cured!<hardstop>"
