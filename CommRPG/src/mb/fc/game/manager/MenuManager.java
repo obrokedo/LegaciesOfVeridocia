@@ -127,6 +127,7 @@ public class MenuManager extends Manager
 				break;
 			case SHOW_HEROES:
 				stateInfo.addSingleInstanceMenu(new HeroesStatMenu(stateInfo));
+				stateInfo.setInputDelay(System.currentTimeMillis() + 200);
 				break;
 			case SHOW_HERO:
 				stateInfo.addMenu(new HeroStatMenu(stateInfo.getFCGameContainer(), ((SpriteContextMessage) message).getCombatSprite(

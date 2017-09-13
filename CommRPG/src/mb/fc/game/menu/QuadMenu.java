@@ -38,6 +38,7 @@ public abstract class QuadMenu extends Menu
 	protected Color flashColor = new Color(100, 100, 100);
 	protected Timer timer;
 	protected Portrait portrait;
+	protected boolean visible = true;
 
 	protected QuadMenu(PanelType menuType, StateInfo stateInfo) {
 		this(menuType, null, true, stateInfo);
@@ -151,6 +152,9 @@ public abstract class QuadMenu extends Menu
 	@Override
 	public final void render(PaddedGameContainer gc, Graphics graphics)
 	{
+		if (!visible)
+			return;
+		
 		renderTextBox(gc, graphics);
 
 		int iconWidth = getIconImage(Direction.UP, false).getWidth();

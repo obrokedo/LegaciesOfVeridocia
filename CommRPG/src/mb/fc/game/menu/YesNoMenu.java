@@ -22,11 +22,20 @@ public class YesNoMenu extends SpeechMenu
 	private Integer yesTrigger = null;
 	private Integer noTrigger = null;
 	private boolean consumeInput = true;
+	private RectUI goldPanel = null;
+	private TextUI goldTitleText = null, goldAmountText = null;
 
 	public YesNoMenu(String text, int yesTrigger, int noTrigger, StateInfo stateInfo) {
 		this(replaceLastHardstop(text), Trigger.TRIGGER_NONE, null, stateInfo, null);
 		this.yesTrigger = yesTrigger;
 		this.noTrigger = noTrigger;
+	}
+	
+	public YesNoMenu(String text, int yesTrigger, int noTrigger, StateInfo stateInfo, boolean showGold) {
+		this(replaceLastHardstop(text), Trigger.TRIGGER_NONE, null, stateInfo, null, showGold);
+		this.yesTrigger = yesTrigger;
+		this.noTrigger = noTrigger;
+		
 	}
 	
 	private static String replaceLastHardstop(String text) {
@@ -37,17 +46,27 @@ public class YesNoMenu extends SpeechMenu
 	}
 	
 	public YesNoMenu(String text, StateInfo stateInfo, MenuListener listener) {
-		this(text, Trigger.TRIGGER_NONE, null, stateInfo, listener);
+		this(text, Trigger.TRIGGER_NONE, null, stateInfo, listener, false);
+	}
+	
+	public YesNoMenu(String text, int triggerId,
+			Portrait portrait, StateInfo stateInfo, MenuListener listener) {
+		this(replaceLastHardstop(text), triggerId, portrait, stateInfo, listener, false);
 	}
 
 	public YesNoMenu(String text, int triggerId,
-			Portrait portrait, StateInfo stateInfo, MenuListener listener) {
+			Portrait portrait, StateInfo stateInfo, MenuListener listener, boolean showGold) {
 		super(text, stateInfo.getFCGameContainer(),triggerId, portrait, listener);
 		yesPanel = new RectUI(120, 146, 32, 32);
 		noPanel = new RectUI(170, 146, 32, 32);
 		yesText = new TextUI("Yes", 125, 148);
 		noText = new TextUI("No", 179, 148);
 		selectRect = new SelectRectUI(120, 146, 32, 32);
+		if (showGold) {
+			goldPanel = new RectUI(243, 148, 62, 32);
+			goldTitleText = new TextUI("Gold", 249, 144);
+			goldAmountText = new TextUI(stateInfo.getClientProfile().getGold() + "", 249, 156);
+		}
 	}
 
 	@Override
@@ -116,6 +135,12 @@ public class YesNoMenu extends SpeechMenu
 
 			// Draw selection square
 			selectRect.draw(graphics, Color.red);
+			
+			if (goldPanel != null) {
+				goldPanel.drawPanel(graphics);
+				goldTitleText.drawText(graphics, Color.white);
+				goldAmountText.drawText(graphics, Color.white);
+			}
 		}
 	}
 

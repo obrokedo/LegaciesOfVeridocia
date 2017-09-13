@@ -141,8 +141,10 @@ public class PriestMenu extends QuadMenu implements MenuListener
 					beItr.remove();
 			}
 			
-			if (cs.getBattleEffects().size() > 0)
+			if (cs.getBattleEffects().size() > 0) {
 				curableHeroes.add(cs);
+				found = true;
+			}
 		}
 		
 		if (!found)
@@ -157,6 +159,7 @@ public class PriestMenu extends QuadMenu implements MenuListener
 	}
 	
 	private void promptNextCombatSprite() {
+		this.visible = false;
 		if (promotableHeroes.size() > 0) {
 			PromotableHero ph = promotableHeroes.get(0);
 			String itemUsed = null;
@@ -173,11 +176,13 @@ public class PriestMenu extends QuadMenu implements MenuListener
 				effectLevels[i] = cs.getBattleEffects().get(i).getEffectLevel();
 			}
 			stateInfo.addMenu(new YesNoMenu(menuConfig.getPriestSelectSomeoneToCureText(cs.getName(), effectNames,
-					menuConfig.getPriestCureCost(effectNames, effectLevels)), Trigger.TRIGGER_NONE, portrait, stateInfo, this));
+					menuConfig.getPriestCureCost(effectNames, effectLevels)), Trigger.TRIGGER_NONE, portrait, stateInfo, this, true));
 		} else if (revivableHeroes.size() > 0) {
 			CombatSprite cs = revivableHeroes.get(0);
 			stateInfo.addMenu(new YesNoMenu(menuConfig.getPriestSelectSomeoneToResurrectText(cs.getName(), 
-					menuConfig.getPriestResurrectCost(cs.getLevel(), cs.isPromoted())), Trigger.TRIGGER_NONE, portrait, stateInfo, this));
+					menuConfig.getPriestResurrectCost(cs.getLevel(), cs.isPromoted())), Trigger.TRIGGER_NONE, portrait, stateInfo, this, true));
+		} else {
+			this.visible = true;
 		}
 	}
 
@@ -215,7 +220,7 @@ public class PriestMenu extends QuadMenu implements MenuListener
 				establishPromotables();
 			}
 		} else if (curableHeroes.size() > 0) {
-			CombatSprite cs = revivableHeroes.remove(0);
+			CombatSprite cs = curableHeroes.remove(0);
 			String[] effectNames = new String[cs.getBattleEffects().size()];
 			int[] effectLevels = new int[cs.getBattleEffects().size()];
 			for (int i = 0; i < cs.getBattleEffects().size(); i++) {
@@ -236,13 +241,13 @@ public class PriestMenu extends QuadMenu implements MenuListener
 	private void restoreCombatSprite(CombatSprite cs, int cost, 
 			String notEnoughGoldString, String hasBeenRestoredString, StateInfo stateInfo, Object value) {
 		if ((boolean) value) {
-			if (stateInfo.getClientProfile().getGold() >= cost) {
+			if (stateInfo.getClientProfile().getGold() < cost) {
 				stateInfo.sendMessage(new SpeechMessage(notEnoughGoldString, Trigger.TRIGGER_NONE, portrait));
 			// If we have the gold then update the parties gold amount and "restore" the character
 			} else {
 				stateInfo.getClientProfile().setGold(stateInfo.getClientProfile().getGold() - cost);
 				cs.setCurrentHP(cs.getMaxHP());
-				cs.getBattleEffects().stream().forEach(be -> cs.removeBattleEffect(be));
+				cs.getBattleEffects().clear();
 				stateInfo.sendMessage(new SpeechMessage(hasBeenRestoredString, Trigger.TRIGGER_NONE, portrait));
 			}
 		}

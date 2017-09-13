@@ -7,8 +7,9 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 import mb.fc.engine.CommRPG;
+import mb.fc.engine.message.Message;
 import mb.fc.engine.message.MessageType;
-import mb.fc.engine.message.ShopMessage;
+import mb.fc.game.input.KeyMapping;
 import mb.fc.game.manager.CinematicManager;
 import mb.fc.game.manager.MenuManager;
 import mb.fc.game.manager.PanelManager;
@@ -160,13 +161,17 @@ public class TownState extends LoadableGameState
 					stateInfo.setInputDelay(System.currentTimeMillis() + 200);
 				}
 				*/
-				else if (container.getInput().isKeyDown(Input.KEY_D) && !stateInfo.areMenusDisplayed())
+				else if (container.getInput().isKeyDown(KeyMapping.BUTTON_3) && !stateInfo.areMenusDisplayed())
 				{
 					if (!menuManager.isBlocking() && !cinematicManager.isBlocking())
 					{
 						stateInfo.sendMessage(MessageType.INVESTIGATE);
 						stateInfo.setInputDelay(System.currentTimeMillis() + 200);
 					}
+				}
+				else if (container.getInput().isKeyDown(KeyMapping.BUTTON_1) && !stateInfo.areMenusDisplayed())
+				{
+					stateInfo.sendMessage(new Message(MessageType.SHOW_HEROES));
 				}
 				else if (container.getInput().isKeyDown(Input.KEY_ENTER))
 				{

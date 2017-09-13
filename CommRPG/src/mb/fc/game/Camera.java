@@ -5,6 +5,7 @@ import java.awt.Point;
 import org.newdawn.slick.geom.Rectangle;
 
 import mb.fc.engine.state.StateInfo;
+import mb.fc.game.sprite.AnimatedSprite;
 import mb.fc.game.sprite.Sprite;
 import mb.fc.map.Map;
 
@@ -152,6 +153,11 @@ public class Camera
 	{
 		return new Point((int) this.getLocationX() + getViewportWidth() / 2,
 				(int) this.getLocationY() + getViewportHeight() / 2);
+	}
+	
+	public boolean isVisible(AnimatedSprite animatedSprite) {
+		return this.viewport.contains(animatedSprite.getSpriteBounds().getCenterX(),
+				animatedSprite.getSpriteBounds().getCenterY());
 	}
 
 	public Camera duplicate()

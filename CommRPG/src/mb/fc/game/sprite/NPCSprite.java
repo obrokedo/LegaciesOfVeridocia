@@ -58,9 +58,11 @@ public class NPCSprite extends AnimatedSprite
 	@Override
 	public void update(StateInfo stateInfo) {
 		super.update(stateInfo);
-
-		if (maxWander > 0)
-			wanderMove(stateInfo);
+		
+		if (stateInfo.getCamera().isVisible(this)) {
+			if (maxWander > 0)
+				wanderMove(stateInfo);
+		}
 	}
 
 	private void wanderMove(StateInfo stateInfo)

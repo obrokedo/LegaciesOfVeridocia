@@ -2429,6 +2429,7 @@ public class PlannerDefinitions {
 				"Adds a new hero to the force", definingValues));
 
 		// Hide Roof
+		/*
 		definingValues = new ArrayList<PlannerValueDef>();
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
 				PlannerValueDef.TYPE_INT, "roofid", false, "Roof ID",
@@ -2447,6 +2448,7 @@ public class PlannerDefinitions {
 				"The ID of the roof that should be visible"));
 		allowableLines.add(new PlannerLineDef("showroof", "Show Roof",
 				"Shows the roof with designated ID.", definingValues));
+				*/
 
 		// Add NPC
 		definingValues = new ArrayList<PlannerValueDef>();
