@@ -72,19 +72,27 @@
 	<showtext textid=18/>
 </trigger>
 <trigger id=24 description="GuardWarning1" require="Battle2," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<showtext textid=19/>
 	<showcin cinid=2 exittrigid=-1/>
 </trigger>
 <trigger id=25 description="GuardWarning2" require="Battle2," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<showtext textid=19/>
 	<showcin cinid=3 exittrigid=-1/>
 </trigger>
 <trigger id=26 description="GuardWarning3" require="Battle2," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<showtext textid=19/>
 	<showcin cinid=4 exittrigid=-1/>
 </trigger>
 <trigger id=27 description="GuardWarning4" require="Battle2," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<showtext textid=19/>
 	<showcin cinid=5 exittrigid=-1/>
 </trigger>
 <trigger id=28 description="OpenWeaponShop" require="Battle2," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<showshop buypercent="1.2" sellpercent="0.8" itemssold="Erium Blade,Erium Cane,Erium Arrow," portrait="Shopkeeper1"/>
+</trigger>
+<trigger id=29 description="GuardWarning5" require="Battle2," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<showtext textid=19/>
+	<showcin cinid=6 exittrigid=-1/>
 </trigger>
 <text id=0 description="citizen1">
 	<conversation require="," exclude="," trigger=-1 heroportrait1="" enemyportrait1="" animportrait1="" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="Good evening, Noah.<pause>  That blizzard the other night was really bizarre, wasn't it?<hardstop><split>I've never seen anything like that.<pause>  It came and went in almost no time at all.<hardstop><split>And you wouldn't even know it by the weather today!<hardstop>"/>
@@ -108,8 +116,8 @@
 	<string require="," exclude="," trigger=1 heroportrait="" enemyportrait="" animportrait="Shopkeeper1" message="We have the finest remedies in the city. How can I help you?<hardstop>"/>
 </text>
 <text id=7 description="Weapon Shop">
-	<string require="EriumWeaponShopInitialTalk," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="Shopkeeper1" message="See you tomorrow.<hardstop>"/>
-	<conversation require="," exclude="EriumWeaponShopInitialTalk," trigger=2 heroportrait1="" enemyportrait1="" animportrait1="Shopkeeper1" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="Sorry, I'm out of stock right now.<hardstop><split>Out of stock? You're never out of stock!<hardstop><split>Grand Mage Mistal cleaned me out. I guess she's going to start a new training plan?<hardstop><split>She's not exactly in charge of training. Maybe it was a special request from king Erium.<hardstop><split>I'm not sure. I'm expecting a new shipment any day now though. The trade caravan should be here this week.<hardstop><split>I'll check another day then. Thank you.<hardstop>"/>
+	<string require="EriumWeaponShopInitialTalk," exclude="Battle2," trigger=-1 heroportrait="" enemyportrait="" animportrait="Shopkeeper1" message="See you tomorrow.<hardstop>"/>
+	<conversation require="," exclude="EriumWeaponShopInitialTalk,Battle2," trigger=2 heroportrait1="" enemyportrait1="" animportrait1="Shopkeeper1" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="Sorry, I'm out of stock right now.<hardstop><split>Out of stock? You're never out of stock!<hardstop><split>Grand Mage Mistal cleaned me out. I guess she's going to start a new training plan?<hardstop><split>She's not exactly in charge of training. Maybe it was a special request from king Erium.<hardstop><split>I'm not sure. I'm expecting a new shipment any day now though. The trade caravan should be here this week.<hardstop><split>I'll check another day then. Thank you.<hardstop>"/>
 	<string require="Battle2," exclude="," trigger=28 heroportrait="" enemyportrait="" animportrait="" message="Looking for some sharp new weapon?<hardstop>"/>
 </text>
 <text id=8 description="Priestess">
@@ -144,6 +152,9 @@
 </text>
 <text id=18 description="Demo2Over">
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="This is the end Of Demo 2. Thanks for playing!<hardstop>"/>
+</text>
+<text id=19 description="GuardWarning">
+	<string require="Battle2," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="I see guard's up ahead. We should avoid getting seen.<hardstop>"/>
 </text>
 <cinematic id=0 description="NoahGettingReady" camerax=0 cameray=0>
 	<playmusic music="castlenight" volume=100/>
@@ -194,18 +205,23 @@
 </cinematic>
 <cinematic id=3 description="GuardWarning2" camerax=0 cameray=0>
 	<assactor name="Noah" hero="Noah" enemyid=0 npcid=""/>
-	<haltingmove name="Noah" x=1272 y=240 speed="2.4" movehor=true movediag=false/>
 	<camerafollow name="Noah"/>
+	<haltingmove name="Noah" x=1272 y=240 speed="2.4" movehor=true movediag=false/>
 </cinematic>
 <cinematic id=4 description="GuardWarning3" camerax=0 cameray=0>
 	<assactor name="Noah" hero="Noah" enemyid=0 npcid=""/>
-	<haltingmove name="Noah" x=456 y=216 speed="2.4" movehor=true movediag=false/>
 	<camerafollow name="Noah"/>
+	<haltingmove name="Noah" x=456 y=216 speed="2.4" movehor=true movediag=false/>
 </cinematic>
 <cinematic id=5 description="GuardWarning4" camerax=0 cameray=0>
 	<assactor name="Noah" hero="Noah" enemyid=0 npcid=""/>
-	<haltingmove name="Noah" x=360 y=672 speed="2.4" movehor=true movediag=false/>
 	<camerafollow name="Noah"/>
+	<haltingmove name="Noah" x=336 y=528 speed="2.4" movehor=true movediag=false/>
+</cinematic>
+<cinematic id=6 description="GuardWarning5" camerax=0 cameray=0>
+	<assactor name="Noah" hero="Noah" enemyid=0 npcid=""/>
+	<camerafollow name="Noah"/>
+	<haltingmove name="Noah" x=336 y=576 speed="2.4" movehor=true movediag=false/>
 </cinematic>
 <condition id=0 description="NorthWestExit1" triggerid=4>
 	<enterloc location="NorthWestExit1" immediate=false/>
@@ -260,4 +276,7 @@
 </condition>
 <condition id=17 description="GuardWarning4" triggerid=27>
 	<enterloc location="Guard Warning 4" immediate=false/>
+</condition>
+<condition id=18 description="GuardWarning5" triggerid=27>
+	<enterloc location="Guard Warning 5" immediate=false/>
 </condition>

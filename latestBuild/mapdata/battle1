@@ -33,6 +33,9 @@
 	<changeai aitype=2 id=7 heroid=0 targetid=0 x=0 y=0/>
 	<changeai aitype=3 id=1 heroid=0 targetid=7 x=0 y=0/>
 </trigger>
+<trigger id=7 description="Fail Results" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="erium" enter="InfrontPreistess"/>
+</trigger>
 <text id=0 description="Defcon 1">
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="Defcon 1 Activated!!<hardstop>"/>
 </text>
@@ -59,4 +62,7 @@
 </condition>
 <condition id=4 description="BREnter" triggerid=6>
 	<enterloc location="Darkling Ooze" immediate=false/>
+</condition>
+<condition id=5 description="Noah Dies" triggerid=7>
+	<herodeath unitid="Noah"/>
 </condition>
