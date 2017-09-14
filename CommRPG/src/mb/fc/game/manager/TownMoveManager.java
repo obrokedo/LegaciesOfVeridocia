@@ -3,8 +3,6 @@ package mb.fc.game.manager;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import org.newdawn.slick.util.Log;
-
 import mb.fc.engine.message.Message;
 import mb.fc.engine.message.SpriteContextMessage;
 import mb.fc.engine.message.SpriteMoveMessage;
@@ -51,8 +49,9 @@ public class TownMoveManager extends Manager
 				ms.getAnimatedSprite().doneMoving();
 				i--;
 
-				if (ms.getAnimatedSprite().getSpriteType() == Sprite.TYPE_COMBAT)
+				if (ms.getAnimatedSprite().getSpriteType() == Sprite.TYPE_COMBAT) {
 					stateInfo.checkTriggersMovement((int) ms.getAnimatedSprite().getLocX(), (int) ms.getAnimatedSprite().getLocY(), false);
+				}	
 				if (stateInfo.getCurrentSprite() == ms.getAnimatedSprite()) {
 					moving = false;
 					currentSpriteJustFinishedMoving = true;
@@ -155,8 +154,6 @@ public class TownMoveManager extends Manager
 
 			return false;
 		}
-		else
-			Log.info("Blocked by tile");
 		return true;
 	}
 

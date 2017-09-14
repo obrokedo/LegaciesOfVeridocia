@@ -8,7 +8,6 @@ import org.newdawn.slick.util.Log;
 
 import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.BattleCondMessage;
-import mb.fc.engine.message.IntMessage;
 import mb.fc.engine.message.LoadMapMessage;
 import mb.fc.engine.message.MessageType;
 import mb.fc.engine.message.ShopMessage;
@@ -167,19 +166,24 @@ public class Trigger
 				tt.remove();
 	}
 
-	public class TriggerCompleteQuest implements Triggerable
+	public class TriggerToggleQuest implements Triggerable
 	{
 		private String questId;
+		private boolean complete = false;
 
-		public TriggerCompleteQuest(String questId) {
+		public TriggerToggleQuest(String questId, boolean complete) {
 			super();
 			this.questId = questId;
+			this.complete = complete;
 		}
 		
 		@Override
 		public boolean perform(StateInfo stateInfo) {
 			Log.debug("Completing Quest: " + questId);
-			stateInfo.sendMessage(new StringMessage(MessageType.COMPLETE_QUEST, questId));
+			if (complete)
+				stateInfo.sendMessage(new StringMessage(MessageType.COMPLETE_QUEST, questId));
+			else
+				stateInfo.sendMessage(new StringMessage(MessageType.UNCOMPLETE_QUEST, questId));
 			return false;
 		}
 	}

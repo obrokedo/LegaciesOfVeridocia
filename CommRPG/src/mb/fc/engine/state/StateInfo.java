@@ -313,7 +313,10 @@ public class StateInfo
 					System.exit(0);
 					break;
 				case COMPLETE_QUEST:
-					this.setQuestComplete(((StringMessage) m).getString());
+					this.setQuestStatus(((StringMessage) m).getString(), true);
+					break;
+				case UNCOMPLETE_QUEST:
+					this.setQuestStatus(((StringMessage) m).getString(), false);
 					break;
 				case CONTINUE:
 					if (!initialized)
@@ -515,14 +518,14 @@ public class StateInfo
 		getResourceManager().checkTriggerCondtions(null, false, this);
 	}
 
-	public void setQuestComplete(String id)
+	public void setQuestStatus(String id, boolean completed)
 	{
-		psi.setQuestComplete(id);
+		psi.setQuestStatus(id, completed);
 	}
 
 	public boolean isQuestComplete(String questId)
 	{
-		return psi.isQuestCompelte(questId);
+		return psi.isQuestComplete(questId);
 	}
 
 	/*********************/
@@ -749,6 +752,10 @@ public class StateInfo
 
 	public PersistentStateInfo getPersistentStateInfo() {
 		return psi;
+	}
+	
+	public boolean isInCinematicState() {
+		return isCinematic;
 	}
 
 	public boolean isWaiting() {

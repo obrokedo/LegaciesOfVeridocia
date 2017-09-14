@@ -827,7 +827,7 @@ public class CombatSprite extends AnimatedSprite
 		this.level = level;
 	}
 
-	public String levelUp()
+	public String levelUpHiddenStatistics()
 	{
 		JLevelProgression jlp = GlobalPythonFactory.createLevelProgression();
 		String text = jlp.levelUpHero(this);

@@ -11,7 +11,6 @@ import org.newdawn.slick.Input;
 import mb.fc.engine.CommRPG;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.Camera;
-import mb.fc.game.Timer;
 import mb.fc.game.constants.Direction;
 import mb.fc.game.input.FCInput;
 import mb.fc.game.sprite.CombatSprite;
@@ -233,7 +232,13 @@ public class DebugMenu extends Menu implements ResourceSelectorListener
 				timerReset();
 			}
 			if (levelButton.handleUserInput(x, y, leftClick)) {
-				selectedSprite.setExp(100);
+				if (selectedSprite.isHero()) {
+					selectedSprite.levelUpHiddenStatistics();
+					selectedSprite.getHeroProgression().levelUp(selectedSprite, selectedSprite.getHeroProgression().
+							getLevelUpResults(selectedSprite, stateInfo.getResourceManager()), stateInfo.getResourceManager());
+					selectedSprite.setExp(0);
+					
+				}
 				timerReset();
 			}
 			if (healButton.handleUserInput(x, y, leftClick)) {

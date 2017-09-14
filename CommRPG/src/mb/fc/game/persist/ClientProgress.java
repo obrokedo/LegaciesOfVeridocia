@@ -52,10 +52,13 @@ public class ClientProgress implements Serializable
 		this.name = name;
 		lastSaveTime = System.currentTimeMillis();
 	}
-
-	public void setQuestComplete(String questId)	
+	
+	public void setQuestStatus(String questId, boolean completed)	
 	{
-		questsCompleted.add(questId);
+		if (completed)
+			questsCompleted.add(questId);
+		else
+			questsCompleted.remove(questId);
 	}
 
 	public boolean isQuestComplete(String questId)

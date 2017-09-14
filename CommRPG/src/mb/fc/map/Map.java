@@ -60,6 +60,7 @@ public class Map
 	private int roofCount = -1;
 	private int backgroundImageIndex;
 	private JConfigurationValues jConfigValues;
+	private boolean disableRoofs = false;
 
 	private float tileRatio = 2f;
 
@@ -627,7 +628,13 @@ public class Map
 	}
 	
 	public MapLayer getRoofLayer() {
-		return roofLayer;
+		if (!disableRoofs)
+			return roofLayer;
+		return null;
+	}
+
+	public void setDisableRoofs(boolean disableRoofs) {
+		this.disableRoofs = disableRoofs;
 	}
 
 	public String getName() {

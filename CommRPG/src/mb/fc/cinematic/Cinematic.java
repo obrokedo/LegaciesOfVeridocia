@@ -234,7 +234,6 @@ public class Cinematic {
 	 */
 	public void initialize(StateInfo stateInfo, boolean inCinematicState) {
 		this.inCinematicState = inCinematicState;
-		stateInfo.getCurrentMap().setRoofLayer(null);
 		if (inCinematicState)
 			stateInfo.getCamera().setLocation(cameraStartX, cameraStartY, stateInfo);
 

@@ -251,7 +251,11 @@ public class TextParser
 				String tagType = tagArea.getChildren().get(k).getTagType();
 				if (tagType.equalsIgnoreCase("completequest"))
 				{
-					te.addTriggerable(te.new TriggerCompleteQuest(actionParams.get("questid")));
+					te.addTriggerable(te.new TriggerToggleQuest(actionParams.get("questid"), true));
+				}
+				else if (tagType.equalsIgnoreCase("uncompletequest"))
+				{
+					te.addTriggerable(te.new TriggerToggleQuest(actionParams.get("questid"), false));
 				}
 				else if (tagType.equalsIgnoreCase("startbattle"))
 				{

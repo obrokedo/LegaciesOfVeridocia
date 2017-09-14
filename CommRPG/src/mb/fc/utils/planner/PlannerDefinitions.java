@@ -1859,10 +1859,10 @@ public class PlannerDefinitions {
 		// Palette Swap
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_PALETTE,
 				PlannerValueDef.TYPE_STRING, "palette", true, "Palette",
-				"The palette that should be used to modify the selected animation colors"));
+				"(CURRENTLY UNUSED) The palette that should be used to modify the selected animation colors"));
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
 				PlannerValueDef.TYPE_BOOLEAN, "leader", false, "Is Leader",
-				"Whether this enemy is the leader of the force"));
+				"Whether this enemy is the leader of the force (killing this enemy will win the battle for the heroes). This should only be used for 'unique' enemies, otherwise battle conditions should be used to set up battle-specific leaders."));
 
 		// definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
 		// PlannerValueDef.TYPE_INT, "triggerid", false,
@@ -2262,6 +2262,16 @@ public class PlannerDefinitions {
 				"Complete Quest", "Marks a given quest as completed",
 				definingValues));
 
+		
+		// Uncomplete Quest
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_QUEST,
+				PlannerValueDef.TYPE_STRING, "questid", false, "Quest ID",
+				"The ID of the equest that should be marked as NOT complete"));
+		allowableLines.add(new PlannerLineDef("uncompletequest",
+				"Uncomplete Quest", "Marks a given quest as NOT completed. This has no effect if the quest was not already completed.",
+				definingValues));
+		
 		// Start Battle
 		definingValues = new ArrayList<PlannerValueDef>();
 		definingValues
@@ -2581,9 +2591,6 @@ public class PlannerDefinitions {
 						"Exit Game",
 						"Causes the game to exit.",
 						definingValues));
-
-		// TODO SHOW SHOP
-		// TODO ADD HERO
 
 		triggerContainer = new PlannerContainerDef(definingLine,
 				allowableLines, listOfLists,

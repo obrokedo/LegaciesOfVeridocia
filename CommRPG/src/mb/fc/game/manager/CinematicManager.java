@@ -27,17 +27,21 @@ public class CinematicManager extends Manager
 
 	public void update(int delta)
 	{
-		if (cinematic != null && cinematic.update(delta, stateInfo.getCamera(),
-				stateInfo.getInput(), stateInfo.getCurrentMap(), stateInfo))
+		if (cinematic != null)
 		{
-			cinematic.endCinematic(stateInfo);
-			cinematic = null;
+			stateInfo.getCurrentMap().checkRoofs(stateInfo.getCamera().getCenterOfCamera(stateInfo.getCurrentMap()).x,
+					stateInfo.getCamera().getCenterOfCamera(stateInfo.getCurrentMap()).y);
 			
-			if (exitTrigId != Trigger.TRIGGER_NONE) {
-				stateInfo.getResourceManager().getTriggerEventById(exitTrigId).perform(stateInfo);
-				exitTrigId = Trigger.TRIGGER_NONE;
+			if (cinematic.update(delta, stateInfo.getCamera(),
+				stateInfo.getInput(), stateInfo.getCurrentMap(), stateInfo)) {
+				cinematic.endCinematic(stateInfo);
+				cinematic = null;
+				stateInfo.getCurrentMap().setDisableRoofs(false);
+				if (exitTrigId != Trigger.TRIGGER_NONE) {
+					stateInfo.getResourceManager().getTriggerEventById(exitTrigId).perform(stateInfo);
+					exitTrigId = Trigger.TRIGGER_NONE;
+				}
 			}
-			// stateInfo.getCamera().centerOnSprite(stateInfo.getCurrentSprite(), stateInfo.getCurrentMap());
 		}
 
 	}
@@ -60,6 +64,8 @@ public class CinematicManager extends Manager
 		switch (message.getMessageType())
 		{
 			case SHOW_CINEMATIC:
+				if (stateInfo.isInCinematicState())
+					stateInfo.getCurrentMap().setDisableRoofs(true);
 				int cinId = -1;
 				if (message instanceof ShowCinMessage) {
 					ShowCinMessage m = ((ShowCinMessage) message);
