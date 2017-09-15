@@ -93,6 +93,9 @@ public class TownState extends LoadableGameState
 	public void enter(GameContainer container, StateBasedGame game)
 			throws SlickException {
 		super.enter(container, game);
+		// To allow the hero to continue moving between maps, initialize the input
+		// with any movement keys that are already pressed
+		stateInfo.getInput().setInitialMovementInput(container.getInput());
 	}
 
 	@Override
@@ -149,18 +152,6 @@ public class TownState extends LoadableGameState
 				{
 					game.enterState(CommRPG.STATE_GAME_MENU_DEVEL);
 				}
-				/*
-				else if (container.getInput().isKeyDown(Input.KEY_C))
-				{
-					stateInfo.sendMessage(MessageType.SHOW_HEROES);
-					stateInfo.setInputDelay(System.currentTimeMillis() + 200);
-				}
-				else if (container.getInput().isKeyDown(Input.KEY_S))
-				{
-					stateInfo.sendMessage(MessageType.SHOW_PRIEST);
-					stateInfo.setInputDelay(System.currentTimeMillis() + 200);
-				}
-				*/
 				else if (container.getInput().isKeyDown(KeyMapping.BUTTON_3) && !stateInfo.areMenusDisplayed())
 				{
 					if (!menuManager.isBlocking() && !cinematicManager.isBlocking())

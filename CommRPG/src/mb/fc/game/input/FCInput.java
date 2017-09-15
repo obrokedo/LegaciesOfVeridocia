@@ -29,6 +29,19 @@ public class FCInput implements KeyListener
 			keysPressed.clear();
 		}
 	}
+	
+	public void setInitialMovementInput(Input input) {
+		checkKeyPressed(input, KeyMapping.BUTTON_DOWN);
+		checkKeyPressed(input, KeyMapping.BUTTON_RIGHT);
+		checkKeyPressed(input, KeyMapping.BUTTON_LEFT);
+		checkKeyPressed(input, KeyMapping.BUTTON_UP);
+	}
+	
+	private void checkKeyPressed(Input input, int key) {
+		if (input.isKeyDown(key)) {
+			this.keysHeld.add(key);
+		}
+	}
 
 	public void clear()
 	{

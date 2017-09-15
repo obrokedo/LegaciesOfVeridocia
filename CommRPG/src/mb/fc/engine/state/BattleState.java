@@ -174,6 +174,7 @@ public class BattleState extends LoadableGameState
 			
 			menuManager.update(delta);
 			cinematicManager.update(delta);
+			
 			if (!menuManager.isBlocking() && !cinematicManager.isBlocking())
 			{
 				//hudMenuManager.update();

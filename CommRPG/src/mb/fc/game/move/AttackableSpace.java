@@ -10,6 +10,7 @@ import org.newdawn.slick.util.Log;
 import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.InfoMessage;
 import mb.fc.engine.message.MessageType;
+import mb.fc.engine.message.SpeechMessage;
 import mb.fc.engine.message.SpriteContextMessage;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.Camera;
@@ -146,7 +147,6 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 		else
 		{
 			Log.debug("\tNo targets found in range");
-			stateInfo.sendMessage(new InfoMessage(null, "No targets in range!"));
 		}
 
 		if (currentSprite.isHero())

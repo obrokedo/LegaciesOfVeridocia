@@ -363,4 +363,9 @@ public abstract class QuadMenu extends Menu
 			g.drawImage(image, x, y);
 
 	}
+
+	@Override
+	public boolean displayWhenNotTop() {
+		return false;
+	}
 }

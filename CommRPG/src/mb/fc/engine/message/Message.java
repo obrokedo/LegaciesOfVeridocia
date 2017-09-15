@@ -17,6 +17,13 @@ public class Message implements Serializable
 	private boolean immediate = false;
 	private boolean internal = false;
 
+	public Message(MessageType messageType, boolean immediate, boolean internal) {
+		super();
+		this.messageType = messageType;
+		this.immediate = immediate;
+		this.internal = internal;
+	}
+
 	public Message(MessageType messageType) {
 		super();
 		this.messageType = messageType;

@@ -22,9 +22,9 @@ public class LandEffectPanel extends Panel
 		StringUtils.drawString("Land", 20, 2, graphics);
 		StringUtils.drawString("Effect", 14, 14, graphics);
 		if (landEffect == 0)
-			StringUtils.drawString(" " + landEffect + "%", 60, 8, graphics);
+			StringUtils.drawString(" " + landEffect + "%", 55, 8, graphics);
 		else
-			StringUtils.drawString(" " + landEffect + "%", 60, 8, graphics);
+			StringUtils.drawString(" " + landEffect + "%", 55, 8, graphics);
 		// StringUtils.drawString(landEffect + "%", 37, 26, graphics);
 	}
 

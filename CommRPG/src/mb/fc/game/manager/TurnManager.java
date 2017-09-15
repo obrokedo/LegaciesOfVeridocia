@@ -10,6 +10,7 @@ import mb.fc.engine.message.IntMessage;
 import mb.fc.engine.message.LocationMessage;
 import mb.fc.engine.message.Message;
 import mb.fc.engine.message.MessageType;
+import mb.fc.engine.message.SpeechMessage;
 import mb.fc.engine.message.SpriteContextMessage;
 import mb.fc.engine.message.TurnActionsMessage;
 import mb.fc.engine.state.StateInfo;
@@ -662,7 +663,10 @@ public class TurnManager extends Manager implements KeyboardListener
 		as = new AttackableSpace(stateInfo, currentSprite, targetsHero, range, area);
 		if (as.getTargetAmount() == 0)
 		{
-			stateInfo.sendMessage(MessageType.SHOW_BATTLEMENU);
+			// Because the speech message is immediate this message also needs to be
+			// otherwise the battle menu is shown after the speech menu
+			stateInfo.sendMessage(new Message(MessageType.SHOW_BATTLEMENU, true, false));
+			stateInfo.sendMessage(new SpeechMessage("No targets in range!<hardstop>"));
 		}
 		else
 		{

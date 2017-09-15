@@ -99,4 +99,9 @@ public class BattleActionsMenu extends QuadMenu
 
 		return MenuUpdate.MENU_CLOSE;
 	}
+
+	@Override
+	public boolean displayWhenNotTop() {
+		return false;
+	}
 }

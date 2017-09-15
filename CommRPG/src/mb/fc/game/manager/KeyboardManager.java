@@ -3,6 +3,13 @@ package mb.fc.game.manager;
 import mb.fc.engine.message.Message;
 import mb.fc.game.listener.KeyboardListener;
 
+/**
+ * Manager to pass along keyboard input to listeners and delay keyboard 
+ * input between KeyboardListeners so actions aren't triggered
+ * multiple times when a keyboard key is pressed.
+ * 
+ * @author Broked
+ */
 public class KeyboardManager extends Manager
 {
 	@Override
