@@ -40,6 +40,13 @@ public class ListUI {
 	public ListUI(String title, int drawX, ArrayList<String> values, int listLength)
 	{
 		longestNameWidth = 150;
+		this.font = StringUtils.loadFont("Times New Roman", 14, false, false);
+		for (String s : values) {
+			int width = this.font.getWidth(s);
+			if (width > longestNameWidth)
+				longestNameWidth = width;
+		}
+		longestNameWidth += 10;
 		this.listLength = listLength;
 		this.drawX = drawX;
 		for (String value : values)
@@ -47,7 +54,7 @@ public class ListUI {
 		this.title = title;
 		this.layoutItems();
 		this.setupDirectionalButtons();
-		this.font = StringUtils.loadFont("Times New Roman", 14, false, false);
+		
 	}
 	
 	protected void setupDirectionalButtons() {

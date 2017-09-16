@@ -22,19 +22,30 @@ import mb.fc.game.ui.PaddedGameContainer;
 
 public class DebugMenu extends Menu implements ResourceSelectorListener
 {
+	private enum DebugMenuState {
+		CHOOSE_TRIGGER,
+		SEE_QUEST,
+		CHOOSE_SPRITE,
+		SPRITE_OPTIONS,
+		PLACE_SPRITE,
+		SHOW_QUESTS
+	}
+	
 	private StateInfo stateInfo;
 	private ListUI triggerList;
+	private ListUI questList;
 	private CombatSprite selectedSprite = null;
-	private Button moveButton = new Button(200, 50, 140, 20, "Move Combatant");
-	private Button killButton = new Button(200, 80, 140, 20, "Kill Combatant");
-	private Button levelButton = new Button(200, 110, 140, 20, "Level Up Hero");
-	private Button healButton = new Button(200, 140, 140, 20, "Heal");
-	private Button setToOneButton = new Button(200, 170, 140, 20, "Set to 1 HP");
-	private Button chooseSprite = new Button(200, 50, 140, 20, "Choose Sprite");
+	private Button moveButton = new Button(270, 25, 140, 20, "Move Combatant");
+	private Button killButton = new Button(270, 55, 140, 20, "Kill Combatant");
+	private Button levelButton = new Button(270, 85, 140, 20, "Level Up Hero");
+	private Button healButton = new Button(270, 115, 140, 20, "Heal");
+	private Button setToOneButton = new Button(270, 145, 140, 20, "Set to 1 HP");
+	
+	private Button chooseSprite = new Button(270, 55, 140, 20, "Choose Sprite");
+	private Button showQuests = new Button(270, 25, 200, 20, "Show Completed Quests");
 	private int inputTimer = 0;
 	private String triggerStatus = null;
-	
-	private boolean choosingSprite = false, moveSprite = false;
+	private DebugMenuState state = DebugMenuState.CHOOSE_TRIGGER;
 
 	public DebugMenu(StateInfo stateInfo) {
 		super(PanelType.PANEL_DEBUG);
@@ -164,7 +175,7 @@ public class DebugMenu extends Menu implements ResourceSelectorListener
 		int mouseMove = 10;
 		int mouseBounds = 20;
 		Camera camera = stateInfo.getCamera();
-		if (choosingSprite || moveSprite) {
+		if (state == DebugMenuState.CHOOSE_SPRITE || state == DebugMenuState.PLACE_SPRITE) {
 			if (x > stateInfo.getFCGameContainer().getWidth() - mouseBounds) {
 				camera.setLocation(camera.getLocationX() + mouseMove, 
 						camera.getLocationY(), stateInfo);
@@ -186,18 +197,19 @@ public class DebugMenu extends Menu implements ResourceSelectorListener
 		boolean rightClick = stateInfo.getFCGameContainer().getInput().isMouseButtonDown(Input.MOUSE_RIGHT_BUTTON);
 		
 		if (rightClick) {
-			if (moveSprite)
-				moveSprite = false;
-			else if (selectedSprite != null)
-				selectedSprite = null;
-			else if (choosingSprite)
-				choosingSprite = false;
-			
+			if (state == DebugMenuState.PLACE_SPRITE)
+				state = DebugMenuState.SPRITE_OPTIONS;
+			else if (state == DebugMenuState.SPRITE_OPTIONS)
+				state = DebugMenuState.CHOOSE_TRIGGER;
+			else if (state == DebugMenuState.CHOOSE_SPRITE)
+				state = DebugMenuState.CHOOSE_TRIGGER;
+			else if (state == DebugMenuState.SHOW_QUESTS)
+				state = DebugMenuState.CHOOSE_TRIGGER;
 			
 			timerReset();
 		}
 		
-		if (leftClick && (choosingSprite || moveSprite)) {
+		if (leftClick && (state == DebugMenuState.CHOOSE_SPRITE || state == DebugMenuState.PLACE_SPRITE)) {
 			int clickX =  (int) (x / CommRPG.GAME_SCREEN_SCALE + camera.getLocationX()) ; 
 			int clickY =  (int) (y / CommRPG.GAME_SCREEN_SCALE + camera.getLocationY());
 			
@@ -209,25 +221,25 @@ public class DebugMenu extends Menu implements ResourceSelectorListener
 				cs = stateInfo.getCombatSpriteAtMapLocation(tilePixelX, 
 						tilePixelY, true);
 			}
-			if (choosingSprite) {
+			if (state == DebugMenuState.CHOOSE_SPRITE) {
 				this.selectedSprite = cs;
 				if (selectedSprite != null)
-					choosingSprite = false;
-			} else if (moveSprite && cs == null) {
+					state = DebugMenuState.SPRITE_OPTIONS;
+			} else if (state == DebugMenuState.PLACE_SPRITE && cs == null) {
 				selectedSprite.setLocation(tilePixelX, tilePixelY, stateInfo.getTileWidth(), stateInfo.getTileHeight());
 				selectedSprite.setFacing(Direction.DOWN);
 			}
 			timerReset();
 		}
 		
-		if (selectedSprite != null && !moveSprite) {
+		if (state == DebugMenuState.SPRITE_OPTIONS) {
 			if (moveButton.handleUserInput(x, y, leftClick)) {
-				moveSprite = true;
+				state = DebugMenuState.PLACE_SPRITE;
 				timerReset();
 			}
 			if (killButton.handleUserInput(x, y, leftClick)) {
-				selectedSprite.setCurrentHP(selectedSprite.getMaxHP());
-				selectedSprite.setCurrentMP(selectedSprite.getMaxMP());
+				selectedSprite.setCurrentHP(0);
+				state = DebugMenuState.CHOOSE_TRIGGER;
 				selectedSprite = null;
 				timerReset();
 			}
@@ -242,7 +254,8 @@ public class DebugMenu extends Menu implements ResourceSelectorListener
 				timerReset();
 			}
 			if (healButton.handleUserInput(x, y, leftClick)) {
-				selectedSprite.initializeStats();
+				selectedSprite.setCurrentHP(selectedSprite.getMaxHP());
+				selectedSprite.setCurrentMP(selectedSprite.getMaxMP());
 				timerReset();
 			}
 			
@@ -251,10 +264,18 @@ public class DebugMenu extends Menu implements ResourceSelectorListener
 				timerReset();
 			}
 		} 
-		if (!choosingSprite && selectedSprite == null && stateInfo.isCombat()) {
-			if (chooseSprite.handleUserInput(x, y, leftClick)) {
-				choosingSprite = true;
+		if (state == DebugMenuState.CHOOSE_TRIGGER) {
+			if (stateInfo.isCombat() && chooseSprite.handleUserInput(x, y, leftClick)) {
+				state = DebugMenuState.CHOOSE_SPRITE;
 				triggerStatus = null;
+				timerReset();
+			}
+			if (showQuests.handleUserInput(x, y, leftClick)) {
+				state = DebugMenuState.SHOW_QUESTS;
+				triggerStatus = null;
+				questList = new ListUI("Completed Quests", 5, 
+				new ArrayList<String>(stateInfo.getClientProgress().getQuestsCompleted()),
+				22);
 				timerReset();
 			}
 		}
@@ -274,18 +295,22 @@ public class DebugMenu extends Menu implements ResourceSelectorListener
 		
 		graphics.setColor(new Color(0, 0, 0, 120));
 		graphics.scale(1.0f / CommRPG.GAME_SCREEN_SCALE, 1.0f / CommRPG.GAME_SCREEN_SCALE);
-		if (!choosingSprite && !moveSprite) {
+		if (state == DebugMenuState.CHOOSE_TRIGGER || state == DebugMenuState.SPRITE_OPTIONS) {
 			graphics.fillRect(0, 0, gc.getWidth() / 2, gc.getHeight());
 			triggerList.render(graphics);
+		}
+		else if (state == DebugMenuState.SHOW_QUESTS) {
+			graphics.fillRect(0, 0, gc.getWidth() / 2, gc.getHeight());
+			questList.render(graphics);
 		}
 		
 		int mouseBounds = 20;
 		
 		graphics.setColor(Color.yellow);
-		if (choosingSprite || moveSprite)
+		if (state == DebugMenuState.CHOOSE_SPRITE || state == DebugMenuState.PLACE_SPRITE)
 			graphics.drawRect(mouseBounds, mouseBounds, gc.getWidth() - mouseBounds * 2, gc.getHeight() - mouseBounds * 2);
 		graphics.setColor(Color.white);
-		if (selectedSprite != null && !moveSprite) {
+		if (state == DebugMenuState.SPRITE_OPTIONS) {
 			graphics.drawString("Selected " + selectedSprite.getName() + " " + selectedSprite.getUniqueEnemyId(), 200, 15);
 			moveButton.render(graphics);
 			killButton.render(graphics);
@@ -294,8 +319,10 @@ public class DebugMenu extends Menu implements ResourceSelectorListener
 			setToOneButton.render(graphics);
 		} 
 		
-		if (!choosingSprite && selectedSprite == null && stateInfo.isCombat()) {
-			chooseSprite.render(graphics);
+		if (state == DebugMenuState.CHOOSE_TRIGGER) {
+			if (stateInfo.isCombat())
+				chooseSprite.render(graphics);
+			showQuests.render(graphics);
 		}
 		graphics.drawString("Right Click to Go Back", 5, 650);
 		

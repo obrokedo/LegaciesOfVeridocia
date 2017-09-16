@@ -229,4 +229,8 @@ public class ClientProgress implements Serializable
 	public void setDealItems(ArrayList<Integer> dealItems) {
 		this.dealItems = dealItems;
 	}
+
+	public HashSet<String> getQuestsCompleted() {
+		return questsCompleted;
+	}
 }
