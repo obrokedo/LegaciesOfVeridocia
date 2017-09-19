@@ -3,6 +3,32 @@ from org.newdawn.slick import Image
 import random
 from java.lang import Math
 
+class RandomHorizontalParticleEmitter(JParticleEmitter):
+    drawX = 0
+    width = 160
+    interval = 150
+    timer = 0
+    
+    def initialize(self, isHero):
+        # Resolution is interpreted as 320x240
+        if isHero:
+            self.drawX = 160
+        else:
+            self.drawX = 0
+        self.timer = 0
+    
+    def update(self, particleSystem, delta):
+        self.timer = self.timer - delta
+        if self.timer <= 0:
+            self.timer = self.interval
+            p = particleSystem.getNewParticle(self, 200);
+
+            rand = random.randint(50, self.width)
+            p.setSize(20)
+            p.setLife(400)
+            p.setPosition(rand + self.drawX, 125)
+
+
 class RainParticleEmitter(JParticleEmitter):
     drawX = 0
     width = 160

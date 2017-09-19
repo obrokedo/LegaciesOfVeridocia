@@ -7,6 +7,8 @@ from org.newdawn.slick import Color
 from java.lang import String
 from BattleEffect import BattleEffect
 from ParticleEmitter import RainParticleEmitter
+from ParticleEmitter import RandomHorizontalParticleEmitter
+
 import CommonFunctions
 
 class Blaze(JSpell):    
@@ -116,19 +118,20 @@ class Blaze(JSpell):
         return Color(255, 0, 0)
     
     def getSpellAnimationFile(self, level):
-        return "Fire1"
+        return "Blaze"
     
 	# To turn OFF rain animation just return None here
 	# return None
     def getSpellRainAnimationFile(self, level):
         # return "Flame"
-        return "Fire1"
+        return "Blaze"
     
     def getSpellRainAnimationName(self, level):
-        return "hit"
+        return "level"+str(level)
         
     def getSpellRainFrequency(self, level):
         return 100
     
     def getEmitter(self, level):
-        return RainParticleEmitter()
+        return RandomHorizontalParticleEmitter()
+        #return RainParticleEmitter()
