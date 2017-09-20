@@ -12,8 +12,8 @@
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="Halt! Who goes there.<hardstop>"/>
 </text>
 <cinematic id=0 description="Cinematic Jailbreak" camerax=0 cameray=0>
-	<addhero heroid="Craig"/>
-	<addhero heroid="Olivia"/>
+	<addhero heroid="Craig" init=true/>
+	<addhero heroid="Olivia" init=true/>
 	<addactor x=576 y=144 name="Noah" anim="Noah" startanim="Up" visible=true init=true associatedhero="Noah"/>
 	<addactor x=600 y=228 name="Guard" anim="eriumguard" startanim="UnDown" visible=true init=true associatedhero=""/>
 	<addactor x=624 y=144 name="Sharna" anim="Sharna" startanim="Up" visible=true init=true associatedhero="Sharna"/>
