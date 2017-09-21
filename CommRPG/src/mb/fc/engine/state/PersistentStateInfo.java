@@ -2,12 +2,16 @@ package mb.fc.engine.state;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.transition.EmptyTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.Message;
+import mb.fc.engine.transition.MoveMapTransition;
 import mb.fc.game.Camera;
+import mb.fc.game.constants.Direction;
 import mb.fc.game.persist.ClientProfile;
 import mb.fc.game.persist.ClientProgress;
 import mb.fc.game.sprite.CombatSprite;
@@ -54,19 +58,54 @@ public class PersistentStateInfo implements PacketHandler
 	/* Map Management	*/
 	/********************/
 	public void loadMap(String mapData, String entrance)
-	{
+	{	
+		loadMap(mapData, entrance, null);
+	}
+	
+	public void loadMap(String mapData, String entrance, Direction transitionDir)
+	{	
 		this.entranceLocation = entrance;
 
+		cleanupStateAndLoadNext(mapData, CommRPG.STATE_GAME_TOWN, transitionDir);
+	}
+
+	private void cleanupStateAndLoadNext(String mapData, int nextState, Direction transitionDir) {
 		gc.getInput().removeAllKeyListeners();
 
 		getClientProgress().setMapData(mapData, false);
 
-		getGame().setLoadingInfo(mapData,
-				(LoadableGameState) getGame().getState(CommRPG.STATE_GAME_TOWN), getResourceManager());
+		if (transitionDir != null) {
+			TownState townState = (TownState) getGame().getCurrentState();
+			try {
+				Image image = townState.getStateImageScreenshot(true);
+				getGame().setLoadingInfo(mapData,
+					(LoadableGameState) getGame().getState(nextState), getResourceManager(),
+					image,
+					new MoveMapTransition(townState, transitionDir));
+			} catch (SlickException e) {
+				e.printStackTrace();
+				getGame().setLoadingInfo(mapData,
+						(LoadableGameState) getGame().getState(nextState), getResourceManager(), null, null);
+			}
+		} else {
+			getGame().setLoadingInfo(mapData,
+					(LoadableGameState) getGame().getState(nextState), getResourceManager(), null, null);
+		}
+		
+		// Do not fade out when coming from a cinematic or if the map is going to 'slide' out
+		if (getGame().getCurrentStateID() == CommRPG.STATE_GAME_CINEMATIC ||
+				transitionDir != null)
+			getGame().enterState(CommRPG.STATE_GAME_LOADING);
+		else
+			getGame().enterState(CommRPG.STATE_GAME_LOADING, 
+					// Do not fade out when coming from a cinematic
+					new FadeOutTransition(Color.black, 250), new EmptyTransition());
+		/*
 		getGame().enterState(CommRPG.STATE_GAME_LOADING, 
 				// Do not fade out when coming from a cinematic
 				(getGame().getCurrentStateID() != CommRPG.STATE_GAME_CINEMATIC) ? new FadeOutTransition(Color.black, 250) :
 					new EmptyTransition(), new EmptyTransition());
+					*/
 	}
 	
 	public void loadMapFromSave()
@@ -78,33 +117,14 @@ public class PersistentStateInfo implements PacketHandler
 	{
 		this.entranceLocation = entrance;
 
-		gc.getInput().removeAllKeyListeners();
-
-		getClientProgress().setMapData(mapData, true);
-		
-		getGame().setLoadingInfo(mapData,
-				(LoadableGameState) getGame().getState(CommRPG.STATE_GAME_BATTLE), getResourceManager());
-		
-		getGame().enterState(CommRPG.STATE_GAME_LOADING, 
-				// Do not fade out when coming from a cinematic
-				(getGame().getCurrentStateID() != CommRPG.STATE_GAME_CINEMATIC) ? new FadeOutTransition(Color.black, 250) :
-					new EmptyTransition(), new EmptyTransition());
+		cleanupStateAndLoadNext(mapData, CommRPG.STATE_GAME_BATTLE, null);
 	}
 
 	public void loadCinematic(String mapData, int cinematicID)
 	{
-		gc.getInput().removeAllKeyListeners();
-
-		this.cinematicID = cinematicID;
+		this.cinematicID = cinematicID;		
 		
-		getClientProgress().setMapData(mapData, false);
-
-		getGame().setLoadingInfo(mapData,
-				(LoadableGameState) getGame().getState(CommRPG.STATE_GAME_CINEMATIC),
-					getResourceManager());
-		getGame().enterState(CommRPG.STATE_GAME_LOADING, // Do not fade out when coming from a cinematic
-				(getGame().getCurrentStateID() != CommRPG.STATE_GAME_CINEMATIC) ? new FadeOutTransition(Color.black, 250) :
-					new EmptyTransition(), new EmptyTransition());
+		cleanupStateAndLoadNext(mapData, CommRPG.STATE_GAME_CINEMATIC, null);
 	}
 
 	public Camera getCamera() {

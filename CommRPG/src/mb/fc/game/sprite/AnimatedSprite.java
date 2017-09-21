@@ -1,6 +1,7 @@
 package mb.fc.game.sprite;
 
 import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
@@ -9,7 +10,6 @@ import mb.fc.game.Camera;
 import mb.fc.game.constants.Direction;
 import mb.fc.game.exception.BadResourceException;
 import mb.fc.game.move.MovingSprite;
-import mb.fc.game.ui.PaddedGameContainer;
 import mb.fc.loading.FCResourceManager;
 import mb.fc.utils.AnimSprite;
 import mb.fc.utils.Animation;
@@ -29,7 +29,7 @@ public class AnimatedSprite extends Sprite
 
 	protected transient Animation currentAnim;
 	protected String imageName;
-	protected Direction facing;
+	protected transient Direction facing;
 	private int animationUpdate = 10;
 
 	public AnimatedSprite(int locX, int locY, String imageName, int id) {
@@ -43,21 +43,22 @@ public class AnimatedSprite extends Sprite
 	}
 
 	@Override
-	public void render(Camera camera, Graphics graphics, PaddedGameContainer cont, int tileHeight) {
+	public void render(Camera camera, Graphics graphics, GameContainer cont, int tileHeight) {
+		float xPos = this.getLocX() - camera.getLocationX();
+		float yPos = this.getLocY() - camera.getLocationY() - tileHeight / 2;
 		for (AnimSprite as : currentAnim.frames.get(imageIndex).sprites)
 		{
-			AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), this.getLocX(), this.getLocY(), camera, true, tileHeight);
+			AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), xPos, yPos, camera, true, tileHeight);
 
-			graphics.drawImage(spriteAnims.getImageAtIndex(as.imageIndex), this.getLocX() - camera.getLocationX(),
-					this.getLocY() - camera.getLocationY() - tileHeight / 2);
+			graphics.drawImage(spriteAnims.getImageAtIndex(as.imageIndex), xPos, yPos);
 		}
 	}
 
 	public static void drawShadow(Image originalIm, float locX, float locY, Camera camera, boolean tileOffset, int tileHeight)
 	{
 		Image i = (originalIm).getScaledCopy(originalIm.getWidth(), (int) (originalIm.getHeight() * .65));
-		i.drawSheared((float) (locX - camera.getLocationX() - SHADOW_OFFSET * (1.0 * originalIm.getHeight() / tileHeight)),
-				locY - camera.getLocationY() - (tileOffset ? tileHeight / 2 : 0) + originalIm.getHeight() - i.getHeight(),
+		i.drawSheared((float) (locX - SHADOW_OFFSET * (1.0 * originalIm.getHeight() / tileHeight)),
+				locY + originalIm.getHeight() - i.getHeight(),
 				(int) (SHADOW_OFFSET * (1.0 * originalIm.getHeight() / tileHeight)),
 				0, SHADOW_COLOR);
 	}

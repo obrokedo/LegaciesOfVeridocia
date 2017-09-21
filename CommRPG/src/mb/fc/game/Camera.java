@@ -1,7 +1,7 @@
 package mb.fc.game;
 
-import java.awt.Point;
 
+import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Rectangle;
 
 import mb.fc.engine.state.StateInfo;
@@ -151,13 +151,18 @@ public class Camera
 	
 	public Point getCenterOfCamera(Map map)
 	{
-		return new Point((int) this.getLocationX() + getViewportWidth() / 2,
-				(int) this.getLocationY() + getViewportHeight() / 2);
+		return new Point(this.getLocationX() + getViewportWidth() / 2,
+				this.getLocationY() + getViewportHeight() / 2);
 	}
 	
 	public boolean isVisible(AnimatedSprite animatedSprite) {
 		return this.viewport.contains(animatedSprite.getSpriteBounds().getCenterX(),
 				animatedSprite.getSpriteBounds().getCenterY());
+	}
+	
+	public Point getSpriteScreenPosition(AnimatedSprite animatedSprite, int tileHeight) {
+		return new Point((int) (animatedSprite.getLocX() - getLocationX()),
+					(int) (animatedSprite.getLocY() - getLocationY() - tileHeight / 2));
 	}
 
 	public Camera duplicate()

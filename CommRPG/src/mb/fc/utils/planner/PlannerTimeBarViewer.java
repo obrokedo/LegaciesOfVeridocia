@@ -34,7 +34,6 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 
 	public PlannerTimeBarViewer(ArrayList<CinematicEvent> ces, CinematicTimeline ct, int cameraStartX, int cameraStartY)
 	{
-		System.out.println("PlannerTimeBarViewer: Constructor");
 		this.markers = new ArrayList<TimeBarMarkerImpl>();
 		generateGraph(ces, ct, cameraStartX, cameraStartY);
 

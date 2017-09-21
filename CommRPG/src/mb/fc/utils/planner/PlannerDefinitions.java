@@ -13,6 +13,8 @@ public class PlannerDefinitions {
 	private static String PATH_SPRITE_IMAGE = "sprite";
 	private static String PATH_PALETTE = "palette";
 	private static String PATH_MAPDATA = "mapdata";
+	private static String PATH_MUSIC = "music";
+	private static String PATH_SOUND = "sound";
 
 	public static void setupDefintions(ArrayList<ArrayList<PlannerReference>> listOfLists,
 			Hashtable<String, PlannerContainerDef> containersByName)
@@ -144,6 +146,17 @@ public class PlannerDefinitions {
 		for (File f : mapDataFiles.listFiles())
 			if (f.isFile() && !f.isHidden())
 				listOfLists.get(PlannerValueDef.REFERS_MAPDATA - 1).add(new PlannerReference(f.getName()));
+		
+		// Music files
+		File music = new File(PATH_MUSIC);
+		for (String f : music.list())
+			if (f.endsWith(".ogg") || f.endsWith(".wav"))
+				listOfLists.get(PlannerValueDef.REFERS_MUSIC - 1).add(new PlannerReference(f.replaceFirst(".ogg", "").replaceFirst(".wav", "")));
+		// Sound files
+		File sound = new File(PATH_SOUND);
+		for (String f : sound.list())
+			if (f.endsWith(".ogg") || f.endsWith(".wav"))
+				listOfLists.get(PlannerValueDef.REFERS_SOUND - 1).add(new PlannerReference(f.replaceFirst(".ogg", "").replaceFirst(".wav", "")));
 	}
 
 	public static void setupCinematicDefinitions(ArrayList<ArrayList<PlannerReference>> listOfLists,
@@ -961,7 +974,7 @@ public class PlannerDefinitions {
 
 		// Play Music
 		definingValues = new ArrayList<PlannerValueDef>();
-		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_MUSIC,
 				PlannerValueDef.TYPE_STRING, "music", false, "Music Title",
 				"The name of the music that should be played"));
 		definingValues
@@ -1010,7 +1023,7 @@ public class PlannerDefinitions {
 
 		// Play Sound
 		definingValues = new ArrayList<PlannerValueDef>();
-		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_SOUND,
 				PlannerValueDef.TYPE_STRING, "sound", false, "Sound Title",
 				"The name of the sound that should be played"));
 		definingValues
@@ -1241,6 +1254,14 @@ public class PlannerDefinitions {
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_HERO,
 				PlannerValueDef.TYPE_STRING, "heroid", false, "Hero ID",
 				"The ID of the hero that should be added to the force"));
+		definingValues
+		.add(new PlannerValueDef(
+				PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_BOOLEAN,
+				"init",
+				false,
+				"Initialize before Cinematic",
+				"Indicates that this action should be taken before the scene is rendered. Blocking actions should NEVER be initialized before the scene"));
 		allowableLines.add(new PlannerLineDef("addhero", "Add Hero",
 				"Adds a new hero to the force", definingValues));
 		progressControl.add("Add Hero");
@@ -2319,6 +2340,9 @@ public class PlannerDefinitions {
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE, PlannerValueDef.TYPE_STRING, "enter", false,
 				"Entrance location",
 				"The name of the map location that the hero will be placed at when the map loads"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_DIRECTION, PlannerValueDef.TYPE_STRING, "transdir", true,
+				"Map Transition Direction",
+				"If specified: the map will be transitioned out via a 'slide' effect in the direction indicated. This value should be set to the direction that the NEW map is relative to the current map."));
 		allowableLines.add(new PlannerLineDef("loadmap", "Load Map",
 				"Loads the given map and places the hero at the given location", definingValues));
 
@@ -2345,7 +2369,7 @@ public class PlannerDefinitions {
 
 		// Play Music
 		definingValues = new ArrayList<PlannerValueDef>();
-		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_MUSIC,
 				PlannerValueDef.TYPE_STRING, "music", false, "Music File",
 				"The name of the music that should be played"));
 		allowableLines.add(new PlannerLineDef("playmusic", "Play Music",
@@ -2353,7 +2377,7 @@ public class PlannerDefinitions {
 
 		// Play Sound
 		definingValues = new ArrayList<PlannerValueDef>();
-		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_SOUND,
 				PlannerValueDef.TYPE_STRING, "sound", false, "Sound File",
 				"The name of the sound that should be played"));
 		definingValues
@@ -2846,6 +2870,9 @@ public class PlannerDefinitions {
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
 				PlannerValueDef.TYPE_INT, "unit", false, "Unit ID",
 				"Use this ID to specifiy which enemy should be the target of triggers (Change AI)"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_MUSIC,
+				PlannerValueDef.TYPE_STRING, "music", true, "Custom Music",
+				"The music that should be played when this enemy attacks, this overrides script values."));
 		allowableLines.add(new PlannerLineDef("enemy", "enemy",
 				"Creates an enemy at this location at the start of battle",
 				definingValues));

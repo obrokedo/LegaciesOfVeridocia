@@ -1,11 +1,11 @@
 package mb.fc.game.sprite;
 
-import mb.fc.engine.state.StateInfo;
-import mb.fc.game.Camera;
-import mb.fc.game.ui.PaddedGameContainer;
-
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+
+import mb.fc.engine.state.StateInfo;
+import mb.fc.game.Camera;
 
 public class StaticSprite extends Sprite
 {
@@ -31,7 +31,7 @@ public class StaticSprite extends Sprite
 	}
 
 	@Override
-	public void render(Camera camera, Graphics graphics, PaddedGameContainer cont, int tileHeight) {
+	public void render(Camera camera, Graphics graphics, GameContainer cont, int tileHeight) {
 		if (image == null)
 			return;
 		graphics.drawImage(image, Math.round(this.getLocX() - camera.getLocationX()),

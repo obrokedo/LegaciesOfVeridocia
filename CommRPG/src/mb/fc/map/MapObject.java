@@ -100,10 +100,15 @@ public class MapObject
 		if (value != null && value.length() > 0)
 		{
 			String[] splitParams = value.split(" ");
-			for (int i = 0; i < splitParams.length; i++)
+			for (int i = splitParams.length - 1; i >= 0; i--)
 			{
 				String[] attributes = splitParams[i].split("=");
-				params.put(attributes[0], (attributes.length >= 2 ? attributes[1] : "" ));
+				// Handle the case where we've parsed something with a space in it
+				if (attributes.length == 1) {
+					splitParams[i - 1] = splitParams[i - 1] + " " + splitParams[i];
+					continue;
+				}
+				params.put(attributes[0], attributes[1]);
 			}
 		}
 	}
@@ -145,8 +150,14 @@ public class MapObject
 			{
 				if (shape.contains(x + startX + 1, y + startY + 1))
 				{
-					((CombatSprite) sprite).setLocation((x + startX), (y + startY), stateInfo.getTileWidth(), stateInfo.getTileHeight());
-					((CombatSprite) sprite).setFacing(Direction.DOWN);
+					CombatSprite cs = ((CombatSprite) sprite);
+					Direction facing = cs.getFacing();
+					cs.setLocation((x + startX), (y + startY), stateInfo.getTileWidth(), stateInfo.getTileHeight());
+					if (stateInfo.isCombat() || facing == null)
+						cs.setFacing(Direction.DOWN);
+					else
+						cs.setFacing(facing);
+					
 				}
 				else
 					getOnNext = false;
@@ -202,12 +213,12 @@ public class MapObject
 
 	public CombatSprite getEnemy(FCResourceManager fcrm)
 	{
-		int enemyId = Integer.parseInt(params.get("enemyid"));
-		CombatSprite enemy = EnemyResource.getEnemy(enemyId);
+		CombatSprite enemy = EnemyResource.getEnemy(params.get("enemyid"));
 		if (params.containsKey("ai"))
 		{
 			String type = params.get("ai");
 			String approach = params.get("aiapproach");
+			String music = params.get("music");
 
 			int id = 0;
 			if (params.containsKey("unit"))
@@ -230,6 +241,9 @@ public class MapObject
 
 			if (id != -1)
 				enemy.setUniqueEnemyId(id);
+			
+			if (music != null)
+				enemy.setCustomMusic(music);
 		}
 
 		enemy.initializeSprite(fcrm);

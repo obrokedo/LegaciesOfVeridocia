@@ -1,5 +1,7 @@
 package mb.fc.engine.message;
 
+import mb.fc.game.constants.Direction;
+
 /**
  * A message that indicates that a new map, battle or cinematic should be loaded
  *
@@ -13,7 +15,16 @@ public class LoadMapMessage extends Message
 	private String location;
 	private int cinematicID;
 	private int battleBG;
+	private Direction transDir = null;
 
+	public LoadMapMessage(MessageType messageType, String mapData, String location, Direction transitionDir)
+	{
+		super(messageType);
+		this.mapData = mapData;
+		this.location = location;
+		this.transDir = transitionDir;
+	}
+	
 	public LoadMapMessage(MessageType messageType, String mapData, String location, int battleBG)
 	{
 		super(messageType);
@@ -43,5 +54,9 @@ public class LoadMapMessage extends Message
 
 	public int getBattleBG() {
 		return battleBG;
+	}
+
+	public Direction getTransDir() {
+		return transDir;
 	}
 }

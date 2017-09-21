@@ -9,6 +9,7 @@ import mb.fc.engine.message.BattleCondMessage;
 import mb.fc.engine.message.BooleanMessage;
 import mb.fc.engine.message.Message;
 import mb.fc.engine.message.SpeechMessage;
+import mb.fc.game.constants.Direction;
 import mb.fc.game.definition.EnemyDefinition;
 import mb.fc.game.dev.BattleOptimizer;
 import mb.fc.game.exception.BadMapException;
@@ -62,8 +63,13 @@ public class SpriteManager extends Manager
 			// view items, spells and pictures
 			for (CombatSprite cs : stateInfo.getAllHeroes())
 			{
+				Direction facing = cs.getFacing();
 				cs.initializeSprite(stateInfo.getResourceManager());
 				cs.initializeStats();
+				if (facing != null)
+					cs.setFacing(facing);
+				else
+					cs.setFacing(Direction.DOWN);
 			}
 
 			boolean foundStart = false;

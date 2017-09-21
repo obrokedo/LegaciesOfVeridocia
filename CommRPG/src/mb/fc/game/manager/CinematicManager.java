@@ -29,8 +29,8 @@ public class CinematicManager extends Manager
 	{
 		if (cinematic != null)
 		{
-			stateInfo.getCurrentMap().checkRoofs(stateInfo.getCamera().getCenterOfCamera(stateInfo.getCurrentMap()).x,
-					stateInfo.getCamera().getCenterOfCamera(stateInfo.getCurrentMap()).y);
+			stateInfo.getCurrentMap().checkRoofs((int) stateInfo.getCamera().getCenterOfCamera(stateInfo.getCurrentMap()).getX(),
+					(int) stateInfo.getCamera().getCenterOfCamera(stateInfo.getCurrentMap()).getY());
 			
 			if (cinematic.update(delta, stateInfo.getCamera(),
 				stateInfo.getInput(), stateInfo.getCurrentMap(), stateInfo)) {
@@ -49,13 +49,13 @@ public class CinematicManager extends Manager
 	public void render(Graphics g)
 	{
 		if (cinematic != null)
-			cinematic.render(g, stateInfo.getCamera(), stateInfo.getFCGameContainer(), stateInfo);
+			cinematic.render(g, stateInfo.getCamera(), stateInfo.getPaddedGameContainer(), stateInfo);
 	}
 
 	public void renderPostEffects(Graphics g)
 	{
 		if (cinematic != null)
-			cinematic.renderPostEffects(g, stateInfo.getCamera(), stateInfo.getFCGameContainer(), stateInfo);
+			cinematic.renderPostEffects(g, stateInfo.getCamera(), stateInfo.getPaddedGameContainer(), stateInfo);
 	}
 
 	@Override

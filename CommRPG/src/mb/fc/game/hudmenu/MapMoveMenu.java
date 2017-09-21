@@ -24,10 +24,10 @@ public class MapMoveMenu extends Panel
 		super(PanelType.PANEL_MAPMOVE);
 
 		listeners = new ArrayList<MapListener>();
-		listeners.add(new MapListener(new Rectangle(20, 0, stateInfo.getFCGameContainer().getPaddedWidth() - 40, 20), 1, 0, -CAMERA_MOVE));
-		listeners.add(new MapListener(new Rectangle(20, stateInfo.getFCGameContainer().getHeight() - 20, stateInfo.getFCGameContainer().getPaddedWidth() - 40, 20), 2, 0, CAMERA_MOVE));
-		listeners.add(new MapListener(new Rectangle(stateInfo.getFCGameContainer().getPaddedWidth() - 20, 20, 20, stateInfo.getFCGameContainer().getHeight() - 40), 3, CAMERA_MOVE, 0));
-		listeners.add(new MapListener(new Rectangle(0, 20, 20, stateInfo.getFCGameContainer().getHeight() - 40), 4, -CAMERA_MOVE, 0));
+		listeners.add(new MapListener(new Rectangle(20, 0, stateInfo.getPaddedGameContainer().getPaddedWidth() - 40, 20), 1, 0, -CAMERA_MOVE));
+		listeners.add(new MapListener(new Rectangle(20, stateInfo.getPaddedGameContainer().getHeight() - 20, stateInfo.getPaddedGameContainer().getPaddedWidth() - 40, 20), 2, 0, CAMERA_MOVE));
+		listeners.add(new MapListener(new Rectangle(stateInfo.getPaddedGameContainer().getPaddedWidth() - 20, 20, 20, stateInfo.getPaddedGameContainer().getHeight() - 40), 3, CAMERA_MOVE, 0));
+		listeners.add(new MapListener(new Rectangle(0, 20, 20, stateInfo.getPaddedGameContainer().getHeight() - 40), 4, -CAMERA_MOVE, 0));
 
 		for (MouseListener ml : listeners)
 			stateInfo.registerMouseListener(ml);

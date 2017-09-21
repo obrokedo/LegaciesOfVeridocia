@@ -108,7 +108,7 @@ public class MenuManager extends Manager
 				}
 				break;
 			case SHOW_SYSTEM_MENU:
-				stateInfo.addSingleInstanceMenu(new SystemMenu(stateInfo.getFCGameContainer()));
+				stateInfo.addSingleInstanceMenu(new SystemMenu(stateInfo.getPaddedGameContainer()));
 				break;
 			case SHOW_SHOP:
 				ShopMessage sm = (ShopMessage) message;
@@ -130,7 +130,7 @@ public class MenuManager extends Manager
 				stateInfo.setInputDelay(System.currentTimeMillis() + 200);
 				break;
 			case SHOW_HERO:
-				stateInfo.addMenu(new HeroStatMenu(stateInfo.getFCGameContainer(), ((SpriteContextMessage) message).getCombatSprite(
+				stateInfo.addMenu(new HeroStatMenu(stateInfo.getPaddedGameContainer(), ((SpriteContextMessage) message).getCombatSprite(
 						stateInfo.getAllHeroes()), stateInfo));
 				break;
 			case SHOW_PRIEST:

@@ -211,7 +211,7 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 			currentSprite.setFacing(Direction.UP);
 
 		stateInfo.removePanel(PanelType.PANEL_ENEMY_HEALTH_BAR);
-		stateInfo.addPanel(new SpriteContextPanel(PanelType.PANEL_ENEMY_HEALTH_BAR, targetsInRange.get(selectedTarget), stateInfo.getFCGameContainer()));
+		stateInfo.addPanel(new SpriteContextPanel(PanelType.PANEL_ENEMY_HEALTH_BAR, targetsInRange.get(selectedTarget), stateInfo.getPaddedGameContainer()));
 
 		stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, "menumove", 1f, false));
 	}

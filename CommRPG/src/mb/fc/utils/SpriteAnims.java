@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Set;
 
-import mb.fc.game.exception.BadResourceException;
-import mb.fc.utils.XMLParser.TagArea;
-
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
+
+import mb.fc.game.exception.BadResourceException;
+import mb.fc.utils.XMLParser.TagArea;
 
 public class SpriteAnims
 {
@@ -191,50 +191,26 @@ public class SpriteAnims
 		{
 			if (ta.getTagType().equalsIgnoreCase("img"))
 			{
-				TagArea spriteDirTag = null;
 				String spriteSheetName = ta.getAttribute("name");
 				spriteSheetName = spriteSheetName.replace("../animationsheets/", "");
 				String spriteSheet = spriteSheetName.split("\\.")[0];
-
-
-				String dirName = "";
-
-				while (spriteDirTag == null)
+				
+				// Find the first sprite entry in the directory structure
+				while (true)
 				{
-					if (ta.getChildren() != null && ta.getChildren().size() > 0)
-					{
-						if (ta.getTagType().equalsIgnoreCase("dir"))
-						{
-							dirName += ta.getAttribute("name");
-						}
-
-						if (ta.getChildren().get(0).getTagType().equalsIgnoreCase("spr"))
-						{
-							spriteDirTag = ta;
-							break;
-						}
-
-						ta = ta.getChildren().get(0);
+					if (ta.getTagType().equalsIgnoreCase("dir")) {
+						getSpritesRecursive(ta, "", imageNames, imageLocs);
+						break;
 					}
-					else
-					{
+					if (ta.getChildren() != null && ta.getChildren().size() > 0) {
+						ta = ta.getChildren().get(0);
+					} else {
 						break;
 					}
 				}
 
-				if (spriteDirTag != null)
-				{
-					for (TagArea sprites : ta.getChildren())
-					{
-						imageNames.add(dirName + "/" + sprites.getAttribute("name"));
-						imageLocs.add(new Rectangle(Integer.parseInt(sprites.getAttribute("x")),
-												Integer.parseInt(sprites.getAttribute("y")),
-												Integer.parseInt(sprites.getAttribute("w")),
-												Integer.parseInt(sprites.getAttribute("h"))));
-
-					}
-				}
-				else
+				
+				if (imageNames.size() == 0)
 					throw new BadResourceException("Unable to parse .sprites file " + spritesFile + ". Could not find any defined sprites");
 
 				return spriteSheet;
@@ -242,5 +218,27 @@ public class SpriteAnims
 		}
 
 		return null;
+	}
+	
+	private static void getSpritesRecursive(TagArea ta, String dirName, ArrayList<String> imageNames, ArrayList<Rectangle> imageLocs) {		
+		if (ta.getTagType().equalsIgnoreCase("dir"))
+		{
+			dirName += ta.getAttribute("name");
+			if (ta.getChildren() != null && ta.getChildren().size() > 0)
+				for (TagArea childTagArea : ta.getChildren())
+					getSpritesRecursive(childTagArea, dirName, imageNames, imageLocs);
+			return;
+		}
+		
+		// Once we've found a sprite in a directory, get all of the sprites from that dir
+		if (ta.getTagType().equalsIgnoreCase("spr"))
+		{
+			imageNames.add(dirName + "/" + ta.getAttribute("name"));
+			imageLocs.add(new Rectangle(Integer.parseInt(ta.getAttribute("x")),
+									Integer.parseInt(ta.getAttribute("y")),
+									Integer.parseInt(ta.getAttribute("w")),
+									Integer.parseInt(ta.getAttribute("h"))));
+
+		}
 	}
 }

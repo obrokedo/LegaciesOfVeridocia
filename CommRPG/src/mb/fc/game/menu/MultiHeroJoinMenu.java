@@ -20,7 +20,7 @@ public class MultiHeroJoinMenu extends Menu implements MenuListener {
 	public MultiHeroJoinMenu(List<CombatSprite> combatSpriteHeroOptions, StateInfo stateInfo) {
 		super(PanelType.PANEL_MULTI_JOIN_CHOOSE);
 		heroMenus = new ArrayList<>();
-		combatSpriteHeroOptions.forEach(cs -> heroMenus.add(new HeroStatMenu(stateInfo.getFCGameContainer(), cs, stateInfo)));
+		combatSpriteHeroOptions.forEach(cs -> heroMenus.add(new HeroStatMenu(stateInfo.getPaddedGameContainer(), cs, stateInfo)));
 		System.out.println("PLEASE?");
 	}
 

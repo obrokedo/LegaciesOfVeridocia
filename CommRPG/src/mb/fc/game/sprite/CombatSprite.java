@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.util.Log;
@@ -23,7 +24,6 @@ import mb.fc.game.hudmenu.SpriteContextPanel;
 import mb.fc.game.item.EquippableItem;
 import mb.fc.game.item.Item;
 import mb.fc.game.resource.ItemResource;
-import mb.fc.game.ui.PaddedGameContainer;
 import mb.fc.loading.FCResourceManager;
 import mb.fc.utils.AnimSprite;
 import mb.fc.utils.Animation;
@@ -98,6 +98,7 @@ public class CombatSprite extends AnimatedSprite
 	private int attackEffectChance;
 	private int attackEffectLevel;
 	private boolean drawShadow = true;
+	private transient String customMusic = null;
 
 
 	/**
@@ -391,15 +392,14 @@ public class CombatSprite extends AnimatedSprite
 	}
 
 	@Override
-	public void render(Camera camera, Graphics graphics, PaddedGameContainer cont, int tileHeight)
+	public void render(Camera camera, Graphics graphics, GameContainer cont, int tileHeight)
 	{
-		graphics.setColor(Color.white);
-		/*
-		if (this.isHero && stateInfo.getPersistentStateInfo().getClientId() != this.clientId) {
-			graphics.drawString("x", this.getLocX() - camera.getLocationX(),
-					this.getLocY() - camera.getLocationY() - stateInfo.getResourceManager().getMap().getTileEffectiveHeight() / 2);
-		}
-		*/
+		float xPos = this.getLocX() - camera.getLocationX();
+		float yPos = this.getLocY() - camera.getLocationY() - tileHeight / 2;
+		renderDirect(xPos, yPos, camera, graphics, cont, tileHeight);
+	}
+	
+	public void renderDirect(float xPos, float yPos, Camera camera, Graphics graphics, GameContainer cont, int tileHeight) {
 		for (AnimSprite as : currentAnim.frames.get(imageIndex).sprites)
 		{
 			Image im = spriteAnims.getImageAtIndex(as.imageIndex);
@@ -412,11 +412,10 @@ public class CombatSprite extends AnimatedSprite
 
 			if (drawShadow)
 			{
-				AnimatedSprite.drawShadow(im, this.getLocX(), this.getLocY(), camera, true, tileHeight);
+				AnimatedSprite.drawShadow(im, xPos, yPos, camera, true, tileHeight);
 			}
 
-			graphics.drawImage(im, this.getLocX() - camera.getLocationX(),
-					this.getLocY() - camera.getLocationY() - tileHeight / 2, fadeColor);
+			graphics.drawImage(im, xPos, yPos, fadeColor);
 		}
 	}
 
@@ -963,7 +962,7 @@ public class CombatSprite extends AnimatedSprite
 
 	public void triggerOverEvent(StateInfo stateInfo)
 	{
-		stateInfo.addPanel(new SpriteContextPanel(PanelType.PANEL_HEALTH_BAR, this, stateInfo.getFCGameContainer()));
+		stateInfo.addPanel(new SpriteContextPanel(PanelType.PANEL_HEALTH_BAR, this, stateInfo.getPaddedGameContainer()));
 	}
 
 	public int getClientId() {
@@ -1207,6 +1206,15 @@ public class CombatSprite extends AnimatedSprite
 	 */
 	public void setBaseCrit(int currentCrit) {
 		this.baseCrit = currentCrit;
+	}
+
+	public String getCustomMusic() {
+		return customMusic;
+	}
+
+
+	public void setCustomMusic(String customMusic) {
+		this.customMusic = customMusic;
 	}
 
 

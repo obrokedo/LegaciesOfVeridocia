@@ -15,6 +15,7 @@ import mb.fc.engine.message.ShowCinMessage;
 import mb.fc.engine.message.StringMessage;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.ai.AI;
+import mb.fc.game.constants.Direction;
 import mb.fc.game.resource.HeroResource;
 import mb.fc.game.resource.ItemResource;
 import mb.fc.game.sprite.CombatSprite;
@@ -188,21 +189,23 @@ public class Trigger
 		}
 	}
 
-	public class TriggerEnter implements Triggerable
+	public class TriggerLoadMap implements Triggerable
 	{
 		private String mapData;
 		private String location;
+		private Direction transDir;
 
-		public TriggerEnter(String mapData, String location) {
+		public TriggerLoadMap(String mapData, String location, Direction transDir) {
 			super();
 			this.location = location;
 			this.mapData = mapData;
+			this.transDir = transDir;
 		}
 
 		@Override
 		public boolean perform(StateInfo stateInfo)
 		{
-			stateInfo.sendMessage(new LoadMapMessage(MessageType.LOAD_MAP, mapData, location, 0), true);
+			stateInfo.sendMessage(new LoadMapMessage(MessageType.LOAD_MAP, mapData, location, transDir), true);
 			return false;
 		}
 	}

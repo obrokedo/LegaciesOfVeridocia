@@ -402,8 +402,10 @@ public class Cinematic {
 									(int) ce.getParam(0), (int) ce.getParam(1), stateInfo, false);
 				}
 				
-				ca.moveAlongPath(path, (float) ce.getParam(2), true, stateInfo);
-				haltedMovers++;
+				if (path != null) {
+					ca.moveAlongPath(path, (float) ce.getParam(2), true, stateInfo);
+					haltedMovers++;
+				}
 				break;
 			case MOVE:
 				ca = getCinematicActorByName((String) ce.getParam(3), ce.getType());

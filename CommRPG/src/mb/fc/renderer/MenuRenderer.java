@@ -19,7 +19,7 @@ public class MenuRenderer extends Manager {
 		for (Menu m : stateInfo.getMenus())
 		{
 			if (m.displayWhenNotTop() || m == stateInfo.getTopMenu())
-				m.render(stateInfo.getFCGameContainer(), graphics);
+				m.render(stateInfo.getPaddedGameContainer(), graphics);
 		}
 	}
 

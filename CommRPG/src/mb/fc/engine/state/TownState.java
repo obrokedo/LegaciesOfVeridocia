@@ -2,6 +2,7 @@ package mb.fc.engine.state;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
@@ -45,6 +46,8 @@ public class TownState extends LoadableGameState
 	private SoundManager soundManager;
 
 	private StateInfo stateInfo;
+	
+	private Image image;
 
 	public TownState() { }
 
@@ -117,13 +120,19 @@ public class TownState extends LoadableGameState
 			float xOffset = stateInfo.getCamera().getLocationX() % stateInfo.getCurrentMap().getTileRenderWidth();
 			float yOffset = stateInfo.getCamera().getLocationY() % stateInfo.getCurrentMap().getTileRenderHeight();
 
-			tileMapRenderer.render(xOffset, yOffset, stateInfo.getCamera(), g, stateInfo.getFCGameContainer());
+			tileMapRenderer.render(xOffset, yOffset, stateInfo.getCamera(), g, stateInfo.getPaddedGameContainer());
 			spriteRenderer.render(g);
 			cinematicManager.render(g);
-			tileMapRenderer.renderForeground(xOffset, yOffset, stateInfo.getCamera(), g, stateInfo.getFCGameContainer());
+			tileMapRenderer.renderForeground(xOffset, yOffset, stateInfo.getCamera(), g, stateInfo.getPaddedGameContainer());
 			panelRenderer.render(g);
 			cinematicManager.renderPostEffects(g);
 			menuRenderer.render(g);
+		}
+		
+		if (image != null) {
+			g.resetTransform();
+			image.draw(0, 0);
+			image = null;
 		}
 	}
 
@@ -176,6 +185,10 @@ public class TownState extends LoadableGameState
 				// Key for debugging menus
 				else if (container.getInput().isKeyDown(Input.KEY_Z))
 				{
+					// image = null;
+					
+					// container.getGraphics().copyArea(image, 0, 0);
+					// image.flushPixelData();
 					// 	stateInfo.sendMessage(new Message(MessageType.SHOW_HEROES));
 					// stateInfo.sendMessage(new ShopMessage(1.2, .8, new int[] {1, 1, 2, 2, 0, 0, 1, 1, 2, 2, 0, 0}, "Noah"));
 					
@@ -203,5 +216,22 @@ public class TownState extends LoadableGameState
 	@Override
 	public void stateLoaded(FCResourceManager resourceManager) {
 		this.stateInfo.setResourceManager(resourceManager);
+	}
+
+	public StateInfo getStateInfo() {
+		return stateInfo;
+	}
+	
+	public Image getStateImageScreenshot(boolean showHero) throws SlickException {
+		PaddedGameContainer container = stateInfo.getPaddedGameContainer();
+		Image image = new Image(container.getPaddedWidth(), container.getHeight());
+		if (!showHero)
+			stateInfo.getCurrentSprite().setVisible(false);
+		render(container, null, container.getGraphics());
+		container.getGraphics().copyArea(image, 0, 0);
+		if (!showHero)
+			stateInfo.getCurrentSprite().setVisible(true);
+		container.getGraphics().resetTransform();
+		return image;
 	}
 }

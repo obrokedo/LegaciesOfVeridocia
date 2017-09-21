@@ -2,13 +2,13 @@ package mb.fc.game.sprite;
 
 import java.io.Serializable;
 
-import mb.fc.engine.state.StateInfo;
-import mb.fc.game.Camera;
-import mb.fc.game.ui.PaddedGameContainer;
-import mb.fc.loading.FCResourceManager;
-
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Rectangle;
+
+import mb.fc.engine.state.StateInfo;
+import mb.fc.game.Camera;
+import mb.fc.loading.FCResourceManager;
 
 public class Sprite implements Serializable
 {
@@ -39,7 +39,7 @@ public class Sprite implements Serializable
 
 	}
 
-	public void render(Camera camera, Graphics graphics, PaddedGameContainer cont, int tileHeight)
+	public void render(Camera camera, Graphics graphics, GameContainer cont, int tileHeight)
 	{
 
 	}

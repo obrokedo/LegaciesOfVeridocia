@@ -61,7 +61,7 @@ public class DebugMenu extends Menu implements ResourceSelectorListener
 
 	@Override
 	public MenuUpdate handleUserInput(FCInput input, StateInfo stateInfo) {
-		if (stateInfo.getFCGameContainer().getInput().isKeyDown(Input.KEY_ENTER))
+		if (stateInfo.getPaddedGameContainer().getInput().isKeyDown(Input.KEY_ENTER))
 		{
 			stateInfo.getCamera().centerOnSprite(stateInfo.getCurrentSprite(), stateInfo.getCurrentMap());
 			return MenuUpdate.MENU_CLOSE;
@@ -169,14 +169,14 @@ public class DebugMenu extends Menu implements ResourceSelectorListener
 			return MenuUpdate.MENU_NO_ACTION;
 		}
 		
-		int x = stateInfo.getFCGameContainer().getInput().getMouseX();
-		int y = stateInfo.getFCGameContainer().getInput().getMouseY();
+		int x = stateInfo.getPaddedGameContainer().getInput().getMouseX();
+		int y = stateInfo.getPaddedGameContainer().getInput().getMouseY();
 		
 		int mouseMove = 10;
 		int mouseBounds = 20;
 		Camera camera = stateInfo.getCamera();
 		if (state == DebugMenuState.CHOOSE_SPRITE || state == DebugMenuState.PLACE_SPRITE) {
-			if (x > stateInfo.getFCGameContainer().getWidth() - mouseBounds) {
+			if (x > stateInfo.getPaddedGameContainer().getWidth() - mouseBounds) {
 				camera.setLocation(camera.getLocationX() + mouseMove, 
 						camera.getLocationY(), stateInfo);
 			} else if (x < mouseBounds) {
@@ -184,7 +184,7 @@ public class DebugMenu extends Menu implements ResourceSelectorListener
 						camera.getLocationY(), stateInfo);
 			}
 			
-			if (y > stateInfo.getFCGameContainer().getHeight() - mouseBounds) {
+			if (y > stateInfo.getPaddedGameContainer().getHeight() - mouseBounds) {
 				camera.setLocation(camera.getLocationX(), 
 						camera.getLocationY() + mouseMove, stateInfo);
 			} else if (y < mouseBounds) {
@@ -193,8 +193,8 @@ public class DebugMenu extends Menu implements ResourceSelectorListener
 			}
 		}
 		
-		boolean leftClick = stateInfo.getFCGameContainer().getInput().isMouseButtonDown(Input.MOUSE_LEFT_BUTTON);
-		boolean rightClick = stateInfo.getFCGameContainer().getInput().isMouseButtonDown(Input.MOUSE_RIGHT_BUTTON);
+		boolean leftClick = stateInfo.getPaddedGameContainer().getInput().isMouseButtonDown(Input.MOUSE_LEFT_BUTTON);
+		boolean rightClick = stateInfo.getPaddedGameContainer().getInput().isMouseButtonDown(Input.MOUSE_RIGHT_BUTTON);
 		
 		if (rightClick) {
 			if (state == DebugMenuState.PLACE_SPRITE)
@@ -282,7 +282,7 @@ public class DebugMenu extends Menu implements ResourceSelectorListener
 		
 		
 		// stateInfo.getCamera().setLocation(x, y, stateInfo);
-		triggerList.update(stateInfo.getFCGameContainer(), (int) delta);
+		triggerList.update(stateInfo.getPaddedGameContainer(), (int) delta);
 		return super.update(delta, stateInfo);
 	}
 

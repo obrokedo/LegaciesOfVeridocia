@@ -11,6 +11,7 @@ import org.newdawn.slick.SlickException;
 import mb.fc.cinematic.Cinematic;
 import mb.fc.cinematic.event.CinematicEvent;
 import mb.fc.cinematic.event.CinematicEvent.CinematicEventType;
+import mb.fc.game.constants.Direction;
 import mb.fc.game.exception.BadResourceException;
 import mb.fc.game.resource.EnemyResource;
 import mb.fc.game.resource.HeroResource;
@@ -275,7 +276,13 @@ public class TextParser
 				}
 				else if (tagType.equalsIgnoreCase("loadmap"))
 				{
-					te.addTriggerable(te.new TriggerEnter(actionParams.get("mapdata"), actionParams.get("enter")));
+					Direction dir = null;
+					if (actionParams.containsKey("transdir")) {
+						String dirString = actionParams.get("transdir").toUpperCase();
+						if (dirString.length() > 0)
+							dir = Direction.valueOf(dirString);
+					}
+					te.addTriggerable(te.new TriggerLoadMap(actionParams.get("mapdata"), actionParams.get("enter"), dir));
 				}
 				else if (tagType.equalsIgnoreCase("showshop"))
 				{

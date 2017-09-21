@@ -164,7 +164,7 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 								*/
 				// Image im = frm.getImage(rainFile);
 				String rainAnimation =  battleResults.battleCommand.getSpell().getSpellRainAnimationName(battleResults.battleCommand.getLevel());
-				rainParticleSystem = new AnimatedParticleSystem(rainFile, rainAnimation, frm);
+				rainParticleSystem = new AnimatedParticleSystem(rainFile, rainAnimation, frm, backgroundScale);
 				JParticleEmitter emitter = battleResults.battleCommand.getSpell().getEmitter(battleResults.battleCommand.getLevel());
 				emitter.initialize(battleResults.targets.get(0).isHero());
 				rainParticleSystem.addEmitter(emitter);
@@ -186,9 +186,12 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 			musicSelector = GlobalPythonFactory.createJMusicSelector();
 		}
 
-		String mus = musicSelector.getAttackMusic(attacker, targetsAllies);
+		String mus = attacker.getCustomMusic(); 
+		if (StringUtils.isEmpty(mus))
+			mus = musicSelector.getAttackMusic(attacker, targetsAllies);
 		music = frm.getMusicByName(mus);
-		// Why the fuck is there a _L postfix?
+		// Why the fuck is there a _L postfix. I think it's to make
+		// finding a leadup intro easier to find?
 		if (frm.containsMusic(mus + "_L"))
 			introMusic = frm.getMusicByName(mus + "_L");
 

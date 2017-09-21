@@ -49,7 +49,7 @@ public class PerformAttackAction extends TurnAction
 		
 		stateInfo.setShowAttackCinematic(true);
 		LOVAttackCinematicState acs = (LOVAttackCinematicState) stateInfo.getPersistentStateInfo().getGame().getState(CommRPG.STATE_GAME_BATTLE_ANIM);
-		acs.setBattleInfo(turnManager.getCurrentSprite(), stateInfo.getResourceManager(), battleResults, stateInfo.getFCGameContainer());
+		acs.setBattleInfo(turnManager.getCurrentSprite(), stateInfo.getResourceManager(), battleResults, stateInfo.getPaddedGameContainer());
 		stateInfo.getPersistentStateInfo().getGame().enterState(CommRPG.STATE_GAME_BATTLE_ANIM, new FadeOutTransition(Color.black, 250), new EmptyTransition());
 		return true;
 	}

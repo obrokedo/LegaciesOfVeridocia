@@ -9,10 +9,12 @@ public class AnimatedParticle extends Particle
 {
 	private AnimationWrapper animWrapper;
 	private boolean flipHorz = false;
+	private float scale;
 	
-	public AnimatedParticle(AnimationWrapper animWrapper, ParticleSystem engine) {
+	public AnimatedParticle(AnimationWrapper animWrapper, ParticleSystem engine, float scale) {
 		super(engine);
 		this.animWrapper = animWrapper;
+		this.scale = scale;
 	}
 	
 	@Override
@@ -23,7 +25,7 @@ public class AnimatedParticle extends Particle
 
 	@Override
 	public void render() {
-		animWrapper.drawAnimationDirect((int) x,  (int) y, null, flipHorz);
+		animWrapper.drawAnimationDirect((int) x,  (int) y, scale, flipHorz);
 	}
 	
 	public void flipHorizontal(boolean flip)

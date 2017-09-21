@@ -1,7 +1,14 @@
 package mb.fc.game.manager;
 
-import java.awt.Point;
 import java.util.ArrayList;
+
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.geom.Point;
+import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.util.Log;
 
 import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.BattleResultsMessage;
@@ -41,13 +48,6 @@ import mb.fc.game.turnaction.TurnAction;
 import mb.fc.game.turnaction.WaitAction;
 import mb.jython.GlobalPythonFactory;
 import mb.jython.JBattleEffect;
-
-import org.newdawn.slick.Color;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.geom.Rectangle;
-import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.util.Log;
 
 public class TurnManager extends Manager implements KeyboardListener
 {
@@ -155,10 +155,10 @@ public class TurnManager extends Manager implements KeyboardListener
 	{
 
 		if (displayMoveable)
-			ms.renderMoveable(stateInfo.getFCGameContainer(), stateInfo.getCamera(), graphics);
+			ms.renderMoveable(stateInfo.getPaddedGameContainer(), stateInfo.getCamera(), graphics);
 
 		if (displayAttackable)
-			as.render(stateInfo.getFCGameContainer(), stateInfo.getCamera(), graphics);
+			as.render(stateInfo.getPaddedGameContainer(), stateInfo.getCamera(), graphics);
 
 		if (displayCursor)
 		{
@@ -372,6 +372,7 @@ public class TurnManager extends Manager implements KeyboardListener
 					turnActions.remove(0);
 				break;
 			case TurnAction.ACTION_PERFORM_ATTACK:
+				displayMoveable = false;
 				a.perform(delta, this, stateInfo);
 				turnActions.remove(0);
 				break;
@@ -489,8 +490,8 @@ public class TurnManager extends Manager implements KeyboardListener
 
 			// If this a sprite resetting location then we don't end our movement
 			// until they are actually at the start
-			if (!resetSpriteLoc || (spriteStartPoint.x == currentSprite.getTileX() &&
-				spriteStartPoint.y == currentSprite.getTileY()))
+			if (!resetSpriteLoc || (spriteStartPoint.getX() == currentSprite.getTileX() &&
+				spriteStartPoint.getY() == currentSprite.getTileY()))
 			{
 				ms.setCheckEvents(true);
 				// ms.handleKeyboardInput(stateInfo.getInput(), stateInfo);
@@ -750,8 +751,8 @@ public class TurnManager extends Manager implements KeyboardListener
 				initializeCombatantTurn(((SpriteContextMessage) message).getSprite(stateInfo.getSprites()));
 				break;
 			case RESET_SPRITELOC:
-				if (spriteStartPoint.x == currentSprite.getTileX() &&
-						spriteStartPoint.y == currentSprite.getTileY())
+				if (((int) spriteStartPoint.getX()) == currentSprite.getTileX() &&
+						((int) spriteStartPoint.getY()) == currentSprite.getTileY())
 				{
 					// If we are already reset then switch to cursor mode
 					setToCursorMode();
@@ -759,7 +760,7 @@ public class TurnManager extends Manager implements KeyboardListener
 				else
 				{
 					ms.setCheckEvents(false);
-					ms.addMoveActionsToLocation(spriteStartPoint.x, spriteStartPoint.y, currentSprite, turnActions);
+					ms.addMoveActionsToLocation((int) spriteStartPoint.getX(), (int) spriteStartPoint.getY(), currentSprite, turnActions);
 					this.resetSpriteLoc = true;
 				}
 				break;
@@ -819,7 +820,7 @@ public class TurnManager extends Manager implements KeyboardListener
 				break;
 			case CIN_END:
 				Point currCam = stateInfo.getCamera().getCenterOfCamera(stateInfo.getCurrentMap());
-				cursor.setLocation(currCam.x, currCam.y);
+				cursor.setLocation(currCam.getX(), currCam.getY());
 				cinWasDisplayed = true;
 				break;
 			default:
@@ -855,7 +856,7 @@ public class TurnManager extends Manager implements KeyboardListener
 				// if there is a combat sprite here display it's health panel
 				if (cs != null)
 				{
-					stateInfo.addMenu(new HeroStatMenu(stateInfo.getFCGameContainer(), cs, stateInfo));
+					stateInfo.addMenu(new HeroStatMenu(stateInfo.getPaddedGameContainer(), cs, stateInfo));
 					return true;
 				}
 			}

@@ -9,8 +9,10 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.Transition;
 import org.newdawn.slick.util.Log;
 
 import mb.fc.engine.config.DefaultEngineConfiguration;
@@ -285,15 +287,18 @@ public class CommRPG extends StateBasedGame   {
 	 * @param text The text file to load
 	 * @param nextState The next state that should be entered once the loading is done
 	 * @param fcResourceManager Existing resource manager that contains all resources already loaded
+	 * @param intermediateImage An image to show for the loading screen background
+	 * @param transition the Transition that should be used to load in to the next state. A value of 
+	 * 			null will use the default transition
 	 */
 	public void setLoadingInfo(String text, LoadableGameState nextState,
-			FCResourceManager fcResourceManager)
+			FCResourceManager fcResourceManager, Image intermediateImage, Transition transition)
 	{
 		if (fcResourceManager != null)
 			loadingState.setLoadingInfo(text, true, false,
 				fcResourceManager,
 					nextState,
-						new FCLoadingRenderSystem(this.getContainer()));
+						new FCLoadingRenderSystem(this.getContainer()), intermediateImage, transition);
 		else
 			setLoadingInfo(text, nextState);
 	}

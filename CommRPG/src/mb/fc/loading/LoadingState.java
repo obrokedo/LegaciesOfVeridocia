@@ -3,20 +3,22 @@ package mb.fc.loading;
 import java.util.ArrayList;
 import java.util.List;
 
-import mb.fc.game.exception.BadResourceException;
-import mb.fc.game.hudmenu.Panel;
-import mb.fc.game.resource.SpellResource;
-import mb.jython.GlobalPythonFactory;
-
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.EmptyTransition;
 import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.Transition;
 import org.newdawn.slick.util.Log;
+
+import mb.fc.game.exception.BadResourceException;
+import mb.fc.game.hudmenu.Panel;
+import mb.fc.game.resource.SpellResource;
+import mb.jython.GlobalPythonFactory;
 
 public class LoadingState extends BasicGameState
 {
@@ -33,6 +35,8 @@ public class LoadingState extends BasicGameState
 	private int loadAmount;
 	private boolean loadingMap;
 	private String errorMessage = null;
+	private Transition enterNextStateTransition;
+	private Image intermediateImage = null;
 	public static final boolean inJar = false;
 	public static Class<?> MY_CLASS;
 
@@ -53,7 +57,10 @@ public class LoadingState extends BasicGameState
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
-		loadingRenderer.update(loadingStatus);
+		if (intermediateImage != null)
+			g.drawImage(intermediateImage, 0, 0);
+		else 
+			loadingRenderer.update(loadingStatus);
 		if (errorMessage != null)
 		{
 			g.setColor(Color.white);
@@ -87,13 +94,18 @@ public class LoadingState extends BasicGameState
 					// Regardless of whether we are loading other resources, add the text file
 					// that was specified to be loaded
 					allLines.add("text,/mapdata/" + textName);
+					
+					if (!loadResources)
+					{
+						while (allLines.size() > 0)
+							loadResourceLine();
+					}
 
 				}
 				// If we are not loading the map then we just want to load the specified resources
 				else if (loadResources)
 					allLines = FCResourceManager.readAllLines(textName);
 				loadAmount = allLines.size();
-
 			}
 			catch (Throwable e)
 			{
@@ -105,28 +117,7 @@ public class LoadingState extends BasicGameState
 		}
 		else if (allLines.size() > 0)
 		{
-			String line = allLines.remove(0);
-			if (!line.startsWith("//"))
-			{
-				try
-				{
-					resourceManager.addResource(line, loadingStatus, loadIndex, loadAmount);
-				}
-				catch (BadResourceException e)
-				{
-					Log.debug("Error loading resource: " + line);
-					errorMessage = "Error loading resource: " + line + ": " + e.getMessage();
-					e.printStackTrace();
-					throw e;
-				}
-				catch (Throwable e)
-				{
-					Log.debug("Error loading resource: " + line);
-					errorMessage = "Error loading resource: " + line;
-					e.printStackTrace();
-					throw new BadResourceException("Error loading resource: " + line + ".\n" + e.getMessage());
-				}
-			}
+			loadResourceLine();
 		}
 
 		loadIndex++;
@@ -146,27 +137,62 @@ public class LoadingState extends BasicGameState
 
 			// Only alert the loadable state if resources are being loaded. If they are not being loaded
 			// then map data will be updated in the current resource manager
-			if (loadResources)
+			if (loadResources)	
 				nextState.stateLoaded(resourceManager);
 			nextState.initAfterLoad();
-			game.enterState(nextState.getID(), new EmptyTransition(), new FadeInTransition(Color.black, 250));
+			if (enterNextStateTransition == null)
+				game.enterState(nextState.getID(), new EmptyTransition(), new FadeInTransition(Color.black, 250));
+			else
+				game.enterState(nextState.getID(), new EmptyTransition(), enterNextStateTransition);
 		}
 
 	}
 
+	private void loadResourceLine() {
+		String line = allLines.remove(0);
+		if (!line.startsWith("//"))
+		{
+			try
+			{
+				resourceManager.addResource(line, loadingStatus, loadIndex, loadAmount);
+			}
+			catch (BadResourceException e)
+			{
+				Log.debug("Error loading resource: " + line);
+				errorMessage = "Error loading resource: " + line + ": " + e.getMessage();
+				e.printStackTrace();
+				throw e;
+			}
+			catch (Throwable e)
+			{
+				Log.debug("Error loading resource: " + line);
+				errorMessage = "Error loading resource: " + line;
+				e.printStackTrace();
+				throw new BadResourceException("Error loading resource: " + line + ".\n" + e.getMessage());
+			}
+		}
+	}
+	
 	public void setLoadingInfo(String textName, boolean loadMap, boolean loadResources,
 			FCResourceManager resourceManager, LoadableGameState nextState,
-				FCLoadingRenderSystem loadingRenderer)
+				FCLoadingRenderSystem loadingRenderer) {
+		setLoadingInfo(textName, loadMap, loadResources, resourceManager, nextState, loadingRenderer, null, null);
+	}
+
+	public void setLoadingInfo(String textName, boolean loadMap, boolean loadResources,
+			FCResourceManager resourceManager, LoadableGameState nextState,
+				FCLoadingRenderSystem loadingRenderer, Image intermediateImage, Transition transition)
 	{
 		this.errorMessage = null;
 		this.textName = textName;
-		this.mapName = mapName;
 		this.loadingMap = loadMap;
 		this.nextState = nextState;
 		this.loadingRenderer = loadingRenderer;
 		this.loadResources = loadResources;
 		this.resourceManager = resourceManager;
 		this.loadIndex = -1;
+		this.intermediateImage = intermediateImage;
+		this.enterNextStateTransition = transition;
 		allLines = new ArrayList<String>();
 		loadingStatus = new LoadingStatus();
 	}

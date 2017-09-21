@@ -20,9 +20,11 @@ public class TileMapRenderer extends Manager
 	public void initialize() {
 		this.map = this.stateInfo.getResourceManager().getMap();
 	}
+	
+	
 
 	public void render(float xOffset, float yOffset, Camera camera, Graphics g, PaddedGameContainer gc)
-	{
+	{	
 		int maxScreenTilesX = camera.getViewportWidth() / map.getTileRenderWidth() + 1;
 		int maxScreenTilesY = camera.getViewportHeight() / map.getTileRenderHeight() + 1;
 
@@ -42,8 +44,10 @@ public class TileMapRenderer extends Manager
 			for (int mapY =  camY, frameY = 0; mapY < lastTileY; mapY++, frameY++)
 			{
 				if (mapY >= 0 && mapX >= 0) {
+					renderLayer(map.getMapLayer(0), mapX, mapY, frameX, frameY, xOffset, yOffset);
+					/*
 					map.renderSprite(map.getMapLayer(0).getTiles()[mapY][mapX],
-						frameX * map.getTileRenderWidth() - xOffset, frameY * map.getTileRenderHeight() - yOffset);
+						frameX * map.getTileRenderWidth() - xOffset, frameY * map.getTileRenderHeight() - yOffset); */
 	
 					for (MapLayer ml : map.getFlashingLayersByPosition(1))
 						renderLayer(ml, mapX, mapY, frameX, frameY, xOffset, yOffset);

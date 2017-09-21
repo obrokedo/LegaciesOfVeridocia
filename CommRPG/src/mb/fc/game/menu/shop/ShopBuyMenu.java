@@ -94,7 +94,7 @@ public class ShopBuyMenu extends Menu implements MenuListener
 				31, 17,
 				35, 21});
 
-		itemPanel = new RectUI(27, 2, -54, 32, 0, 0, stateInfo.getFCGameContainer().getPaddedWidth(), 0);
+		itemPanel = new RectUI(27, 2, -54, 32, 0, 0, stateInfo.getPaddedGameContainer().getPaddedWidth(), 0);
 		itemNamePanel = new RectUI(27, 34, 68, 37);
 		selectedItemRect = new RectUI(36,  6,  24,  24);
 
@@ -226,10 +226,10 @@ public class ShopBuyMenu extends Menu implements MenuListener
 	private void showBuyPanel(StateInfo stateInfo)
 	{
 		if (shopMessage.getMessageType() == MessageType.SHOW_SHOP_BUY)
-			speechMenu = new SpeechMenu(menuConfig.getShopLookAtNormalText(), stateInfo.getFCGameContainer(),
+			speechMenu = new SpeechMenu(menuConfig.getShopLookAtNormalText(), stateInfo.getPaddedGameContainer(),
 				Trigger.TRIGGER_NONE, null, null);
 		else
-			speechMenu = new SpeechMenu(menuConfig.getShopLookAtDealsText(), stateInfo.getFCGameContainer(),
+			speechMenu = new SpeechMenu(menuConfig.getShopLookAtDealsText(), stateInfo.getPaddedGameContainer(),
 					Trigger.TRIGGER_NONE, null, null);
 		currentStep = ShopStepEnum.SELECT_ITEM;
 	}
@@ -258,10 +258,10 @@ public class ShopBuyMenu extends Menu implements MenuListener
 					if (gold >= (int) (selectedItem.getCost() * buyPercent)) {
 						currentStep = ShopStepEnum.WHO_WILL_USE;
 						speechMenu = null;
-						stateInfo.addMenu(new SpeechMenu(menuConfig.getShopPromptWhoGetsItemText(), stateInfo.getFCGameContainer(),
+						stateInfo.addMenu(new SpeechMenu(menuConfig.getShopPromptWhoGetsItemText(), stateInfo.getPaddedGameContainer(),
 								Trigger.TRIGGER_NONE, shopMessage.getPortrait(stateInfo), this));
 					} else {
-						stateInfo.addMenu(new SpeechMenu(menuConfig.getShopNotEnoughGoldText(), stateInfo.getFCGameContainer(),
+						stateInfo.addMenu(new SpeechMenu(menuConfig.getShopNotEnoughGoldText(), stateInfo.getPaddedGameContainer(),
 								Trigger.TRIGGER_NONE, shopMessage.getPortrait(stateInfo), this));
 						currentStep = ShopStepEnum.SALE_COMPLETED;
 					}
@@ -276,7 +276,7 @@ public class ShopBuyMenu extends Menu implements MenuListener
 				if (value == null)
 				{
 					currentStep = ShopStepEnum.SALE_COMPLETED;
-					stateInfo.addMenu(new SpeechMenu(menuConfig.getShopTransactionCancelledText(), stateInfo.getFCGameContainer(),
+					stateInfo.addMenu(new SpeechMenu(menuConfig.getShopTransactionCancelledText(), stateInfo.getPaddedGameContainer(),
 							Trigger.TRIGGER_NONE, shopMessage.getPortrait(stateInfo), this));
 				}
 				else
@@ -303,7 +303,7 @@ public class ShopBuyMenu extends Menu implements MenuListener
 							handleDealPurchase(stateInfo);
 							
 							currentStep = ShopStepEnum.SALE_COMPLETED;
-							stateInfo.addMenu(new SpeechMenu(menuConfig.getShopTransactionSuccessfulText(), stateInfo.getFCGameContainer(),
+							stateInfo.addMenu(new SpeechMenu(menuConfig.getShopTransactionSuccessfulText(), stateInfo.getPaddedGameContainer(),
 									Trigger.TRIGGER_NONE, shopMessage.getPortrait(stateInfo), this));
 						}
 					}
@@ -311,7 +311,7 @@ public class ShopBuyMenu extends Menu implements MenuListener
 					else
 					{
 						currentStep = ShopStepEnum.WHO_WILL_USE;
-						stateInfo.addMenu(new SpeechMenu(menuConfig.getShopCantCarryMoreText(selectedHero.getName()), stateInfo.getFCGameContainer(),
+						stateInfo.addMenu(new SpeechMenu(menuConfig.getShopCantCarryMoreText(selectedHero.getName()), stateInfo.getPaddedGameContainer(),
 								Trigger.TRIGGER_NONE, shopMessage.getPortrait(stateInfo), this));
 					}
 				}
@@ -339,7 +339,7 @@ public class ShopBuyMenu extends Menu implements MenuListener
 					}
 				}
 				currentStep = ShopStepEnum.SALE_COMPLETED;
-				stateInfo.addMenu(new SpeechMenu(menuConfig.getShopTransactionSuccessfulText(), stateInfo.getFCGameContainer(),
+				stateInfo.addMenu(new SpeechMenu(menuConfig.getShopTransactionSuccessfulText(), stateInfo.getPaddedGameContainer(),
 						Trigger.TRIGGER_NONE, shopMessage.getPortrait(stateInfo), this));
 				break;
 			case EQUIP_NOW:
@@ -360,7 +360,7 @@ public class ShopBuyMenu extends Menu implements MenuListener
 						selectedHero.addItem(selectedItem);
 						selectedHero.equipItem((EquippableItem) selectedItem);
 						currentStep = ShopStepEnum.SALE_COMPLETED;
-						stateInfo.addMenu(new SpeechMenu(menuConfig.getShopTransactionSuccessfulText(), stateInfo.getFCGameContainer(),
+						stateInfo.addMenu(new SpeechMenu(menuConfig.getShopTransactionSuccessfulText(), stateInfo.getPaddedGameContainer(),
 								Trigger.TRIGGER_NONE, shopMessage.getPortrait(stateInfo), this));
 					}
 					else
@@ -377,7 +377,7 @@ public class ShopBuyMenu extends Menu implements MenuListener
 					gold -= (int) (selectedItem.getCost() * buyPercent);
 					goldAmountText.setText(gold + "");
 					currentStep = ShopStepEnum.SALE_COMPLETED;
-					stateInfo.addMenu(new SpeechMenu(menuConfig.getShopTransactionSuccessfulText(), stateInfo.getFCGameContainer(),
+					stateInfo.addMenu(new SpeechMenu(menuConfig.getShopTransactionSuccessfulText(), stateInfo.getPaddedGameContainer(),
 							Trigger.TRIGGER_NONE, shopMessage.getPortrait(stateInfo), this));
 				}
 				break;

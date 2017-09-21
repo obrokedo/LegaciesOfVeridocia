@@ -56,7 +56,7 @@ public class YesNoMenu extends SpeechMenu
 
 	public YesNoMenu(String text, int triggerId,
 			Portrait portrait, StateInfo stateInfo, MenuListener listener, boolean showGold) {
-		super(text, stateInfo.getFCGameContainer(),triggerId, portrait, listener);
+		super(text, stateInfo.getPaddedGameContainer(),triggerId, portrait, listener);
 		yesPanel = new RectUI(120, 146, 32, 32);
 		noPanel = new RectUI(170, 146, 32, 32);
 		yesText = new TextUI("Yes", 125, 148);

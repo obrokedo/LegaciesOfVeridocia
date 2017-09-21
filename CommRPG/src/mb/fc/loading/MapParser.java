@@ -186,10 +186,6 @@ public class MapParser
 								if (image != null)
 									spriteToLoad.add(image);
 							}
-							else if (mapObject.getKey().equalsIgnoreCase("enemy"))
-							{
-								Integer.parseInt(mapObject.getParam("enemyid"));
-							}
 						}
 						else if (propArea.getTagType().equalsIgnoreCase("polyline"))
 						{

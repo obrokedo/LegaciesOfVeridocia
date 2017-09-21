@@ -67,7 +67,7 @@ public class SpeechMenu extends Menu
 	 */
 	public SpeechMenu(String text, StateInfo stateInfo)
 	{
-		this(text, stateInfo.getFCGameContainer(), NO_TRIGGER, null, null);
+		this(text, stateInfo.getPaddedGameContainer(), NO_TRIGGER, null, null);
 	}
 	
 	/**
@@ -82,7 +82,7 @@ public class SpeechMenu extends Menu
 	 */
 	public SpeechMenu(String text, Portrait portrait, MenuListener listener, StateInfo stateInfo)
 	{
-		this(text, stateInfo.getFCGameContainer(), NO_TRIGGER, portrait, listener);
+		this(text, stateInfo.getPaddedGameContainer(), NO_TRIGGER, portrait, listener);
 	}
 	
 	/**
@@ -93,7 +93,7 @@ public class SpeechMenu extends Menu
 	 * @param stateInfo the stateinfo that resources should be retrieved from
 	 */
 	public SpeechMenu(Speech speech, StateInfo stateInfo) {
-		this(speech.getMessage(), stateInfo.getFCGameContainer(), speech.getTriggerId(), speech.getPortrait(stateInfo), null);
+		this(speech.getMessage(), stateInfo.getPaddedGameContainer(), speech.getTriggerId(), speech.getPortrait(stateInfo), null);
 		this.speech = speech;
 	}
 	
@@ -109,7 +109,7 @@ public class SpeechMenu extends Menu
 	public SpeechMenu(String text, int triggerId,
 			Portrait portrait, StateInfo stateInfo)
 	{
-		this(text, stateInfo.getFCGameContainer(), triggerId, portrait, null);
+		this(text, stateInfo.getPaddedGameContainer(), triggerId, portrait, null);
 	}
 
 	public SpeechMenu(String text, PaddedGameContainer gc, int triggerId,

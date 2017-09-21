@@ -18,7 +18,7 @@ public class PanelRenderer extends Manager
 		// displayMenubar();
 		if (stateInfo.arePanelsDisplayed())
 			for (Panel m : stateInfo.getPanels())
-				m.render(stateInfo.getFCGameContainer(), graphics);
+				m.render(stateInfo.getPaddedGameContainer(), graphics);
 	}
 
 	@Override

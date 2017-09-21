@@ -285,7 +285,7 @@ public class StateInfo
 					sendMessage(MessageType.PAUSE_MUSIC);
 
 					LoadMapMessage lmm = (LoadMapMessage) m;
-					psi.loadMap(lmm.getMapData(), lmm.getLocation());
+					psi.loadMap(lmm.getMapData(), lmm.getLocation(), lmm.getTransDir());
 					break MESSAGES;
 				case START_BATTLE:
 					sendMessage(MessageType.PAUSE_MUSIC);
@@ -698,7 +698,7 @@ public class StateInfo
 		return psi.getCamera();
 	}
 
-	public PaddedGameContainer getFCGameContainer() {
+	public PaddedGameContainer getPaddedGameContainer() {
 		return psi.getGc();
 	}
 
