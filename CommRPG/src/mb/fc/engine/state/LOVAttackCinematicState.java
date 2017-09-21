@@ -135,50 +135,6 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 
 		attacker.initializeBattleEffects(frm);
 
-		/*****************************/
-		/** Setup battle animations **/
-		/*****************************/
-		if (battleResults.battleCommand.getSpell() != null)
-		{
-			spellAnimation = new AnimationWrapper(frm.getSpriteAnimation(
-					battleResults.battleCommand.getSpell().getSpellAnimationFile(battleResults.battleCommand.getLevel())));
-			
-			// Get the correct animation from the animation set
-			String animationString = Integer.toString(battleResults.battleCommand.getLevel());
-			boolean loops = battleResults.battleCommand.getSpell().isLoops();
-			if (spellAnimation.hasAnimation(animationString))
-				spellAnimation.setAnimation(animationString, loops);
-			else
-				spellAnimation.setAnimation("1", loops);
-				
-			spellOverlayColor = battleResults.battleCommand.getSpell().getSpellOverlayColor(battleResults.battleCommand.getLevel());
-			spellTargetsHeroes = battleResults.targets.get(0).isHero();
-			
-			String rainFile = battleResults.battleCommand.getSpell().getSpellRainAnimationFile(battleResults.battleCommand.getLevel());
-			if (rainFile != null)
-			{
-				/*rainParticleSystem.addEmitter(new RainEmitter(
-						180, 
-						battleResults.battleCommand.getSpell().getSpellRainFrequency(battleResults.battleCommand.getLevel()), 
-								!battleResults.targets.get(0).isHero()));
-								*/
-				// Image im = frm.getImage(rainFile);
-				String rainAnimation =  battleResults.battleCommand.getSpell().getSpellRainAnimationName(battleResults.battleCommand.getLevel());
-				rainParticleSystem = new AnimatedParticleSystem(rainFile, rainAnimation, frm, backgroundScale);
-				JParticleEmitter emitter = battleResults.battleCommand.getSpell().getEmitter(battleResults.battleCommand.getLevel());
-				emitter.initialize(battleResults.targets.get(0).isHero());
-				rainParticleSystem.addEmitter(emitter);
-			}
-			else
-				rainParticleSystem = null;
-		}
-		else {
-			spellAnimation = null;
-			rainParticleSystem = null;
-		}
-		
-		
-
 		boolean targetsAllies = battleResults.targets.get(0).isHero() == attacker.isHero();
 
 		if (musicSelector == null)
@@ -234,6 +190,49 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 		bgXPos = 0;
 		bgYPos = (CommRPG.GAME_SCREEN_SIZE.height - backgroundImage.getHeight()) / 2;
 		combatAnimationYOffset = bgYPos + backgroundImage.getHeight();
+		
+		/*****************************/
+		/** Setup battle animations **/
+		/*****************************/
+		if (battleResults.battleCommand.getSpell() != null)
+		{
+			spellAnimation = new AnimationWrapper(frm.getSpriteAnimation(
+					battleResults.battleCommand.getSpell().getSpellAnimationFile(battleResults.battleCommand.getLevel())));
+			
+			// Get the correct animation from the animation set
+			String animationString = Integer.toString(battleResults.battleCommand.getLevel());
+			boolean loops = battleResults.battleCommand.getSpell().isLoops();
+			if (spellAnimation.hasAnimation(animationString))
+				spellAnimation.setAnimation(animationString, loops);
+			else
+				spellAnimation.setAnimation("1", loops);
+				
+			spellOverlayColor = battleResults.battleCommand.getSpell().getSpellOverlayColor(battleResults.battleCommand.getLevel());
+			spellTargetsHeroes = battleResults.targets.get(0).isHero();
+			
+			String rainFile = battleResults.battleCommand.getSpell().getSpellRainAnimationFile(battleResults.battleCommand.getLevel());
+			if (rainFile != null)
+			{
+				/*rainParticleSystem.addEmitter(new RainEmitter(
+						180, 
+						battleResults.battleCommand.getSpell().getSpellRainFrequency(battleResults.battleCommand.getLevel()), 
+								!battleResults.targets.get(0).isHero()));
+								*/
+				// Image im = frm.getImage(rainFile);
+				String rainAnimation =  battleResults.battleCommand.getSpell().getSpellRainAnimationName(battleResults.battleCommand.getLevel());
+				rainParticleSystem = new AnimatedParticleSystem(rainFile, rainAnimation, frm, backgroundScale);
+				JParticleEmitter emitter = battleResults.battleCommand.getSpell().getEmitter(battleResults.battleCommand.getLevel());
+				emitter.initialize(battleResults.targets.get(0).isHero());
+				emitter.setFcResourceManager(frm);
+				rainParticleSystem.addEmitter(emitter);
+			}
+			else
+				rainParticleSystem = null;
+		}
+		else {
+			spellAnimation = null;
+			rainParticleSystem = null;
+		}
 		
 		BattleSceneCreator bsc = BattleSceneCreator.initializeBattleScene(attacker, frm, battleResults, gc, 
 				targetsAllies, bgXPos, bgYPos, backgroundImage);

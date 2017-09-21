@@ -14,7 +14,8 @@ public class AnimatedParticleSystem extends ParticleSystem
 	private SpriteAnims spriteAnims;
 	private float scale;
 	
-	public AnimatedParticleSystem(String spriteAnimsName, String animationName, FCResourceManager frm, float scale) {
+	public AnimatedParticleSystem(String spriteAnimsName, 
+			String animationName, FCResourceManager frm, float scale) {
 		// Kind of a kludge but we really don't want to load a default image here
 		super(new Image() 
 		{
@@ -31,8 +32,9 @@ public class AnimatedParticleSystem extends ParticleSystem
 
 	@Override
 	protected Particle createParticle(ParticleSystem system) {
-		if (spriteAnims == null)
+		if (spriteAnims == null) {
 			return super.createParticle(system);
+		}
 		return new AnimatedParticle(new AnimationWrapper(spriteAnims, animationName, true), system, scale);
 	}
 }

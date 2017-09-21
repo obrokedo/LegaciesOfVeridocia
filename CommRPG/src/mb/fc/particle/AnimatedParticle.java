@@ -1,6 +1,7 @@
 package mb.fc.particle;
 
 import org.newdawn.slick.particles.Particle;
+import org.newdawn.slick.particles.ParticleEmitter;
 import org.newdawn.slick.particles.ParticleSystem;
 
 import mb.fc.utils.AnimationWrapper;
@@ -17,6 +18,16 @@ public class AnimatedParticle extends Particle
 		this.scale = scale;
 	}
 	
+	@Override
+	public void init(ParticleEmitter emitter, float life) {
+		super.init(emitter, life);
+		animWrapper.resetCurrentAnimation();
+		if (life == 0)
+			this.setLife(animWrapper.getAnimationLength());
+	}
+
+
+
 	@Override
 	public void update(int delta) {
 		animWrapper.update(delta);

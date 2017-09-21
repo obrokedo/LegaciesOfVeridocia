@@ -261,7 +261,7 @@ public class AnimationWrapper
 			if (as.angle != 0)
 				im.rotate(as.angle);
 		}
-
+		
 		return im;
 	}
 

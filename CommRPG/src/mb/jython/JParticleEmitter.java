@@ -5,8 +5,12 @@ import org.newdawn.slick.particles.Particle;
 import org.newdawn.slick.particles.ParticleEmitter;
 import org.newdawn.slick.particles.ParticleSystem;
 
+import mb.fc.loading.FCResourceManager;
+
 public abstract class JParticleEmitter implements ParticleEmitter
 {
+	protected FCResourceManager fcResourceManager;
+	
 	public abstract void initialize(boolean isHero);
 
 	@Override
@@ -27,7 +31,6 @@ public abstract class JParticleEmitter implements ParticleEmitter
 
 	@Override
 	public void updateParticle(Particle particle, int delta) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -69,5 +72,13 @@ public abstract class JParticleEmitter implements ParticleEmitter
 	@Override
 	public void resetState() {
 		// TODO Auto-generated method stub
+	}
+
+	public FCResourceManager getFcResourceManager() {
+		return fcResourceManager;
+	}
+
+	public void setFcResourceManager(FCResourceManager fcResourceManager) {
+		this.fcResourceManager = fcResourceManager;
 	}
 }
