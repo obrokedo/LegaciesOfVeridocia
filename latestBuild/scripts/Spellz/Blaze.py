@@ -88,16 +88,16 @@ class Blaze(JSpell):
         self.setEffectLevel(jarray.array([3], 'i'), 3) # Level 3 battle effects
         self.setEffectLevel(jarray.array([4], 'i'), 4) # Level 4 battle effects
     
-	# Affinity methods are
-	#----------------------
-	# getCurrentFireAffin()
-	# getCurrentElecAffin()
-	# getCurrentColdAffin()
-	# getCurrentDarkAffin()
-	# getCurrentWaterAffin()
-	# getCurrentEarthAffin()
-	# getCurrentWindAffin()
-	# getCurrentLightAffin()
+    # Affinity methods are
+    #----------------------
+    # getCurrentFireAffin()
+    # getCurrentElecAffin()
+    # getCurrentColdAffin()
+    # getCurrentDarkAffin()
+    # getCurrentWaterAffin()
+    # getCurrentEarthAffin()
+    # getCurrentWindAffin()
+    # getCurrentLightAffin()
     def getEffectiveDamage(self, attacker, target, spellLevel):
         baseDamage = self.getDamage()[spellLevel]
         # Keep in mind that damaging spells will have a negative base damage value. 
@@ -120,8 +120,8 @@ class Blaze(JSpell):
     def getSpellAnimationFile(self, level):
         return "Blaze"
     
-	# To turn OFF rain animation just return None here
-	# return None
+    # To turn OFF rain animation just return None here
+    # return None
     def getSpellRainAnimationFile(self, level):
         # return "Flame"
         return "Blaze"
@@ -133,5 +133,8 @@ class Blaze(JSpell):
         return 100
     
     def getEmitter(self, level):
+        # You could create a emitter with sounds here
+        # For example, new particle plays "fall", particle end plays "blast"
+        # return RandomHorizontalParticleEmitter("fall", "blast")
         return RandomHorizontalParticleEmitter()
         #return RainParticleEmitter()

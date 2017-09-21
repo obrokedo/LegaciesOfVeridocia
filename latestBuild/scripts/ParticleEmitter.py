@@ -6,8 +6,14 @@ from java.lang import Math
 class RandomHorizontalParticleEmitter(JParticleEmitter):
     drawX = 0
     width = 160
-    interval = 150
+    interval = 350
     timer = 0
+    onCreateSound = None
+    onEndSound = None
+    
+    def __init__(self, createSound=None, endSound=None):
+        self.onCreateSound = createSound
+        self.onEndSound = endSound
     
     def initialize(self, isHero):
         # Resolution is interpreted as 320x240
@@ -21,12 +27,21 @@ class RandomHorizontalParticleEmitter(JParticleEmitter):
         self.timer = self.timer - delta
         if self.timer <= 0:
             self.timer = self.interval
-            p = particleSystem.getNewParticle(self, 200);
-
+            # Create a new particle for the scene. A value of 0 in the life (second) field
+            # indicates that we just want to use the length of the animation specified (not looping)
+            p = particleSystem.getNewParticle(self, 0);
+            # Play a sound here if you want an 'on create' sound
+            if self.onCreateSound:
+                self.getFcResourceManager().getSoundByName(self.onCreateSound).play()
             rand = random.randint(50, self.width)
             p.setSize(20)
-            p.setLife(400)
             p.setPosition(rand + self.drawX, 125)
+            
+    def updateParticle(self, particle, delta):
+        # Detect when this particle is about to die. This would be the place to play an 'on end' sound
+        if self.onEndSound and particle.getLife() <= delta:
+            self.getFcResourceManager().getSoundByName(self.onEndSound).play()
+        return
 
 
 class RainParticleEmitter(JParticleEmitter):
