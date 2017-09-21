@@ -41,8 +41,6 @@ public class PriestMenu extends QuadMenu implements MenuListener
 		enabled = new boolean[4];
 		for (int i = 0; i < enabled.length; i++) 
 			enabled[i] = true;
-		
-		this.paintSelectionCursor = true;
 	}
 
 	@Override
