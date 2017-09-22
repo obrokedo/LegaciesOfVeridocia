@@ -455,9 +455,10 @@
 	<move name="Noah" x=1344 y=192 speed="2" movehor=false movediag=false/>
 	<move name="Craig" x=1344 y=240 speed="2" movehor=false movediag=false/>
 	<move name="Olivia" x=1368 y=264 speed="2" movehor=false movediag=false/>
-	<move name="Olivia" x=1368 y=240 speed="2" movehor=true movediag=false/>
 	<cameramove x=1336 y=240 time=4350/>
-	<wait time=4350/>
+	<wait time=4200/>
+	<move name="Olivia" x=1368 y=240 speed="2" movehor=false movediag=false/>
+	<wait time=250/>
 	<loadcin mapdata="eriumcastlenight" cinid=4/>
 </cinematic>
 <cinematic id=4 description="Battle 2 Core" camerax=1176 cameray=120>

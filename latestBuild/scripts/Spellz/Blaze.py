@@ -130,11 +130,11 @@ class Blaze(JSpell):
         return "level"+str(level)
         
     def getSpellRainFrequency(self, level):
-        return 100
+        return 100*level
     
     def getEmitter(self, level):
         # You could create a emitter with sounds here
         # For example, new particle plays "fall", particle end plays "blast"
-        # return RandomHorizontalParticleEmitter("fall", "blast")
-        return RandomHorizontalParticleEmitter()
+        return RandomHorizontalParticleEmitter(None, "BlazeExplosion")
+        #return RandomHorizontalParticleEmitter()
         #return RainParticleEmitter()

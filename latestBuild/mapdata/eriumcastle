@@ -3,64 +3,65 @@
 	<playmusic music="castlenight"/>
 </trigger>
 <trigger id=1 description="ContinueStory" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadcin mapdata="eriumcastlenight" cinid=0/>
+	<runtriggers triggers=36,/>
+	<runtriggers triggers=35,/>
 </trigger>
 <trigger id=2 description="SouthWestExit1" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="erium" enter="NorthWestEntrance1"/>
+	<loadmap mapdata="erium" enter="NorthWestEntrance1" transdir=""/>
 </trigger>
 <trigger id=3 description="SouthWestExit2" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="erium" enter="NorthWestEntrance2"/>
+	<loadmap mapdata="erium" enter="NorthWestEntrance2" transdir=""/>
 </trigger>
 <trigger id=4 description="SouthWestExit3" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="erium" enter="NorthWestEntrance3"/>
+	<loadmap mapdata="erium" enter="NorthWestEntrance3" transdir=""/>
 </trigger>
 <trigger id=5 description="SouthWestExit4" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="erium" enter="NorthWestEntrance4"/>
+	<loadmap mapdata="erium" enter="NorthWestEntrance4" transdir=""/>
 </trigger>
 <trigger id=6 description="SouthWestExit5" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="erium" enter="NorthWestEntrance5"/>
+	<loadmap mapdata="erium" enter="NorthWestEntrance5" transdir=""/>
 </trigger>
 <trigger id=7 description="SouthEastExit1" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="erium" enter="NorthEastEntrance1"/>
+	<loadmap mapdata="erium" enter="NorthEastEntrance1" transdir=""/>
 </trigger>
 <trigger id=8 description="SouthEastExit2" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="erium" enter="NorthEastEntrance2"/>
+	<loadmap mapdata="erium" enter="NorthEastEntrance2" transdir=""/>
 </trigger>
 <trigger id=9 description="SouthEastExit3" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="erium" enter="NorthEastEntrance3"/>
+	<loadmap mapdata="erium" enter="NorthEastEntrance3" transdir=""/>
 </trigger>
 <trigger id=10 description="SouthEastExit4" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="erium" enter="NorthEastEntrance4"/>
+	<loadmap mapdata="erium" enter="NorthEastEntrance4" transdir=""/>
 </trigger>
 <trigger id=11 description="SouthEastExit5" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="erium" enter="NorthEastEntrance5"/>
+	<loadmap mapdata="erium" enter="NorthEastEntrance5" transdir=""/>
 </trigger>
 <trigger id=12 description="SouthEastExit6" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="erium" enter="NorthEastEntrance6"/>
+	<loadmap mapdata="erium" enter="NorthEastEntrance6" transdir=""/>
 </trigger>
 <trigger id=13 description="SouthEastExit7" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="erium" enter="NorthEastEntrance7"/>
+	<loadmap mapdata="erium" enter="NorthEastEntrance7" transdir=""/>
 </trigger>
 <trigger id=14 description="NorthWestStairsExit" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="eriumcastleupper" enter="NorthWestHallStairsEntrance"/>
+	<loadmap mapdata="eriumcastleupper" enter="NorthWestHallStairsEntrance" transdir=""/>
 </trigger>
 <trigger id=15 description="NorthEastStairsExit" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="eriumcastleupper" enter="NorthEastHallStairsEntrance"/>
+	<loadmap mapdata="eriumcastleupper" enter="NorthEastHallStairsEntrance" transdir=""/>
 </trigger>
 <trigger id=16 description="SouthWestStairsExit" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="eriumcastleupper" enter="SouthWestHallStairsEntrance"/>
+	<loadmap mapdata="eriumcastleupper" enter="SouthWestHallStairsEntrance" transdir=""/>
 </trigger>
 <trigger id=17 description="SouthEastStairsExit" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="eriumcastleupper" enter="SouthEastHallStairsEntrance"/>
+	<loadmap mapdata="eriumcastleupper" enter="SouthEastHallStairsEntrance" transdir=""/>
 </trigger>
 <trigger id=18 description="KingChamberStairsExit" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="eriumcastleupper" enter="KingChamberEntrance"/>
+	<loadmap mapdata="eriumcastleupper" enter="KingChamberEntrance" transdir=""/>
 </trigger>
 <trigger id=19 description="SouthJailStairsExit" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="eriumjail" enter="SouthStairsEntrance"/>
+	<loadmap mapdata="eriumjail" enter="SouthStairsEntrance" transdir=""/>
 </trigger>
 <trigger id=20 description="NorthJailStairsExit" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="eriumjail" enter="NorthStairsEntrance"/>
+	<loadmap mapdata="eriumjail" enter="NorthStairsEntrance" transdir=""/>
 </trigger>
 <trigger id=21 description="SearchNoItem" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<showtext textid=21/>
@@ -103,6 +104,12 @@
 </trigger>
 <trigger id=34 description="AfterMage2RunsOff" require="," exclude="," nonretrig=false retrigonenter=true triggeronce=false triggerimmediately=false>
 	<removesprite name="Mage2"/>
+</trigger>
+<trigger id=35 description="SkipContinueStoryCinimatic" require="PreBattle1CinimaticWatched," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<startbattle battletriggers="battle1" entrance="battle1" battbg=1/>
+</trigger>
+<trigger id=36 description="PlayContinueStoryCinimatic" require="," exclude="PreBattle1CinimaticWatched," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadcin mapdata="eriumcastlenight" cinid=0/>
 </trigger>
 <text id=0 description="Entrance Guard">
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="Your shift is about to start; you had better get going!<hardstop>"/>

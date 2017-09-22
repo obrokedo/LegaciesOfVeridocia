@@ -10,8 +10,10 @@ class MusicScript(JMusicSelector):
             return "PrHero"
 	elif attacker.isHero():
             return "UnHero"
-	elif attacker.isLeader():
+        elif attacker.isLeader():
             return "Boss"
+        elif attacker.getName() == "Erium Captain":
+            return "PrHero"
         else:
             return "Enemy"
         

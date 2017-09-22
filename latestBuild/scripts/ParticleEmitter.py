@@ -35,7 +35,7 @@ class RandomHorizontalParticleEmitter(JParticleEmitter):
                 self.getFcResourceManager().getSoundByName(self.onCreateSound).play()
             rand = random.randint(50, self.width)
             p.setSize(20)
-            p.setPosition(rand + self.drawX, 125)
+            p.setPosition(rand + self.drawX, 113)
             
     def updateParticle(self, particle, delta):
         # Detect when this particle is about to die. This would be the place to play an 'on end' sound
@@ -91,7 +91,7 @@ class OrientedFlashParticleEmitter(JParticleEmitter):
             self.timer = self.interval
             p = particleSystem.getNewParticle(self, 1000);
 
-            rand = random.randint(0, self.width)
+            rand = random.randint(50, self.width)
             
             
             if rand < self.width / 2:
@@ -101,7 +101,7 @@ class OrientedFlashParticleEmitter(JParticleEmitter):
             
 
             p.adjustSize(160)
-            p.setPosition(rand + self.drawX, 70)
+            p.setPosition(rand + self.drawX, 113)
             p.setLife(100)
             
 class OrbitParticleEmitter(JParticleEmitter):

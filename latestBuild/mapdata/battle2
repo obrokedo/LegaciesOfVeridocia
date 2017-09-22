@@ -36,6 +36,11 @@
 	<completequest questid="Battle2CraigFinishedFirst"/>
 	<showcin cinid=0 exittrigid=-1/>
 </trigger>
+<trigger id=9 description="Fail Result" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<uncompletequest questid="Battle2NoahFinishedFirst"/>
+	<uncompletequest questid="Battle2CraigFinishedFirst"/>
+	<loadmap mapdata="eriumjail" enter="JailBattleFail" transdir=""/>
+</trigger>
 <cinematic id=0 description="Craig Olivia Exit" camerax=0 cameray=0>
 	<assactor name="Craig" hero="Craig" enemyid=0 npcid="0"/>
 	<assactor name="Olivia" hero="Olivia" enemyid=0 npcid="0"/>
@@ -85,4 +90,10 @@
 </condition>
 <condition id=3 description="Top Half Killed" triggerid=5>
 	<loccontains location="Noah Half" enemy=true operator="Equals" amount=0/>
+</condition>
+<condition id=4 description="Noah Die" triggerid=9>
+	<herodeath unitid="Noah"/>
+</condition>
+<condition id=5 description="Craig Die" triggerid=9>
+	<herodeath unitid="Craig"/>
 </condition>

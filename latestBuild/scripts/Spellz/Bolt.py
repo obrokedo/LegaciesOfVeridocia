@@ -80,7 +80,7 @@ class Bolt(JSpell):
         return "BOLT"
     
     def getSpellRainAnimationName(self, level):
-        return "hit"
+        return "level"+str(level)
     
     def getEmitter(self, level):
         return OrientedFlashParticleEmitter()
