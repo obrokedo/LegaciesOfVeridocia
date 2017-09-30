@@ -55,7 +55,16 @@ public class ClientProfile implements Serializable
 
 	public void addHero(CombatSprite hero)
 	{
-		this.heroes.add(hero);
+		// Don't add someone who is already in the party
+		boolean inParty = false;
+		for (CombatSprite cs : heroes) {
+			if (cs.getId() == hero.getId())
+				inParty = true;
+		}
+		
+		if (!inParty)
+			this.heroes.add(hero);
+		
 		JConfigurationValues configValues = GlobalPythonFactory.createConfigurationValues();
 		int maxHeros = configValues.getMaxPartySize();
 		

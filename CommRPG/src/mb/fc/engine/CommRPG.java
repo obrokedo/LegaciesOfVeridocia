@@ -73,6 +73,8 @@ public class CommRPG extends StateBasedGame   {
 	public static final int STATE_GAME_BATTLE_ANIM_VIEW = 11;
 
 	public static final Dimension GAME_SCREEN_SIZE = new Dimension(320, 240);
+	// public static final Dimension GAME_SCREEN_SIZE = new Dimension(256, 192);
+	
 	public static int GAME_SCREEN_SCALE = 3;
 	public static int GAME_SCREEN_PADDING = 0;
 
@@ -180,14 +182,14 @@ public class CommRPG extends StateBasedGame   {
 				
 				try
 				{
-					container.setDisplayMode(320 * 3, 240 * 3, false);
 					GAME_SCREEN_SCALE = 3;
-					container.setDisplayPaddingX(0);
+					container.setDisplayMode(GAME_SCREEN_SIZE.width * GAME_SCREEN_SCALE, 
+							GAME_SCREEN_SIZE.height * GAME_SCREEN_SCALE, false);
 					GAME_SCREEN_PADDING = 0;
 				}
 				catch (SlickException se)
 				{
-					container.setDisplayMode(320, 240, false);
+					container.setDisplayMode(GAME_SCREEN_SIZE.width, GAME_SCREEN_SIZE.height, false);
 				}
 			}
 			else

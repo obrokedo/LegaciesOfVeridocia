@@ -22,10 +22,13 @@ import mb.fc.game.text.YesNoSpeech;
 import mb.fc.game.trigger.Conditional;
 import mb.fc.game.trigger.Trigger;
 import mb.fc.game.trigger.TriggerCondition;
+import mb.fc.game.trigger.TriggerCondition.EnemiesRemaining;
 import mb.fc.game.trigger.TriggerCondition.EnemyInBattle;
 import mb.fc.game.trigger.TriggerCondition.HeroEntersLocation;
 import mb.fc.game.trigger.TriggerCondition.HeroInBattle;
 import mb.fc.game.trigger.TriggerCondition.LocationContainsUnits;
+import mb.fc.game.trigger.TriggerCondition.MapLoaded;
+import mb.fc.game.trigger.TriggerCondition.QuestComplete;
 import mb.fc.game.trigger.TriggerCondition.UnitDeath;
 import mb.fc.game.trigger.Triggerable;
 import mb.fc.utils.StringUtils;
@@ -169,6 +172,18 @@ public class TextParser
 								ta.getBoolAttribute("enemy"), 
 								ta.getIntAttribute("amount"),
 								ta.getAttribute("operator")));
+					}
+					else if (ta.getTagType().equalsIgnoreCase("enemremain"))
+					{
+						condition.addCondition(new EnemiesRemaining(
+								ta.getIntAttribute("amount"),
+								ta.getAttribute("operator")));
+					}
+					else if (ta.getTagType().equalsIgnoreCase("maploaded")) {
+						condition.addCondition(new MapLoaded());
+					}
+					else if (ta.getTagType().equalsIgnoreCase("questcomp")) {
+						condition.addCondition(new QuestComplete(ta.getAttribute("quest")));
 					}
 					else if (ta.getTagType().equalsIgnoreCase("heroinbat"))
 					{
@@ -381,7 +396,10 @@ public class TextParser
 				}
 				else if (tagType.equalsIgnoreCase("reviveheroes"))
 				{
-					te.addTriggerable(te.new TriggerReviveHeroes());
+					String heroName = actionParams.get("hero");
+					if (StringUtils.isEmpty(heroName))
+						heroName = null;
+					te.addTriggerable(te.new TriggerReviveHeroes(heroName));
 				}
 				else if (tagType.equalsIgnoreCase("killenemies"))
 				{

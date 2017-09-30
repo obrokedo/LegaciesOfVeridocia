@@ -463,11 +463,11 @@ public class FCResourceManager {
 		return cinematicById.get(id);
 	}
 
-	public void checkTriggerCondtions(String locationEntered, boolean immediate, StateInfo stateInfo)
+	public void checkTriggerCondtions(String locationEntered, boolean immediate, boolean onMapLoad, StateInfo stateInfo)
 	{
 		for (TriggerCondition tc : this.conditions)
 		{
-			tc.executeCondtions(locationEntered, immediate, stateInfo);
+			tc.executeCondtions(locationEntered, immediate, onMapLoad, stateInfo);
 		}
 	}
 

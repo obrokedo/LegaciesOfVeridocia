@@ -713,13 +713,22 @@ public class Trigger
 	
 	public class TriggerReviveHeroes implements Triggerable
 	{
+		private String spriteToRev = null;
+		
+		// Create a trigger to revive a specific hero or all
+		// heroes if the specified sprite name is null
+		public TriggerReviveHeroes(String spriteToRev) {
+			super();
+			this.spriteToRev = spriteToRev;
+		}
+		
 		@Override
 		public boolean perform(StateInfo stateInfo) {
 			for (CombatSprite cs : stateInfo.getAllHeroes())
-				cs.setCurrentHP(cs.getMaxHP());
+				if (spriteToRev == null || cs.getName().equalsIgnoreCase(spriteToRev))
+					cs.setCurrentHP(cs.getMaxHP());
 			return false;
 		}
-		
 	}
 	
 	public class TriggerKillEnemies implements Triggerable

@@ -1,14 +1,11 @@
 package mb.fc.game.manager;
 
 import java.awt.Point;
-import java.util.HashSet;
 import java.util.Iterator;
 
 import mb.fc.engine.CommRPG;
-import mb.fc.engine.message.BattleCondMessage;
 import mb.fc.engine.message.BooleanMessage;
 import mb.fc.engine.message.Message;
-import mb.fc.engine.message.SpeechMessage;
 import mb.fc.game.constants.Direction;
 import mb.fc.game.definition.EnemyDefinition;
 import mb.fc.game.dev.BattleOptimizer;
@@ -19,24 +16,18 @@ import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.sprite.NPCSprite;
 import mb.fc.game.sprite.Sprite;
 import mb.fc.game.sprite.StaticSprite;
-import mb.fc.game.trigger.Trigger;
 import mb.fc.map.MapObject;
 
 public class SpriteManager extends Manager
 {
 	private int updateDelta = 0;
 	private static final int UPDATE_TIME = 50;
-	private HashSet<CombatSprite> heroLeaders;
-	private HashSet<Integer> temporaryLeaderEnemyIds;
-	private boolean killAllHeroLeaders = false;
-	private boolean battleConditionsSet = false;
 	private static BattleOptimizer battleOptimizer = new BattleOptimizer();
 
 	@Override
 	public void initialize()
 	{
-		this.battleConditionsSet = false;
-		this.temporaryLeaderEnemyIds = new HashSet<Integer>();
+		
 	}
 
 	private void initializeAfterSprites(boolean fromLoad)
@@ -113,16 +104,6 @@ public class SpriteManager extends Manager
 		// Otherwise just add all of the heroes
 		else
 		{
-			// If the battle conditions weren't set then initialize
-			// uninitialized values
-			if (!this.battleConditionsSet) {
-				killAllHeroLeaders = false;
-				heroLeaders = new HashSet<CombatSprite>();
-			// Reset the battle conditions for the next battle
-			} else
-				this.battleConditionsSet = false;
-			
-		
 			// Initialize all of the heroes, this just sets images and initializes effects.
 			// Stats are initialized above for all heroes
 			for (CombatSprite cs : stateInfo.getAllHeroes())
@@ -141,9 +122,6 @@ public class SpriteManager extends Manager
 				// Only initialize stats if this is a "new" battle
 				if (!fromLoad)
 					cs.initializeStats();
-				
-				if (cs.isLeader())
-					heroLeaders.add(cs);
 			}
 
 			// Since this battle is not loaded we need to add all of the heroes and enemies
@@ -171,9 +149,6 @@ public class SpriteManager extends Manager
 						// Enemies do not need to be initialized as it was 
 						// already done via the .getEnemy() method above
 						cs.initializeStats();
-						
-						if (temporaryLeaderEnemyIds.contains(cs.getId()))
-							cs.setLeader(true);
 						stateInfo.addSprite(cs);
 					}
 					
@@ -253,26 +228,10 @@ public class SpriteManager extends Manager
 						stateInfo.removeCombatSprite(cs);
 						s.destroy(stateInfo);
 
-						if (cs.isHero())
+						if (CommRPG.BATTLE_MODE_OPTIMIZE && cs.isLeader())
 						{
-							// This returns TRUE if a leader was removed
-							if (heroLeaders.remove(cs))
-							{
-								if (heroLeaders.size() == 0 || !killAllHeroLeaders)
-								{
-									if (CommRPG.BATTLE_MODE_OPTIMIZE)
-										loadBattleOptmize(false);
-									else
-										loadBattleDefeat();
-								}
-							}
-						}
-						else if (cs.isLeader())
-						{
-							if (CommRPG.BATTLE_MODE_OPTIMIZE)
-								loadBattleOptmize(true);
-							else
-								loadBattleVictory();
+							// If it's a hero then we've lost
+							loadBattleOptmize(!cs.isHero());
 						}
 						
 						if (cs.isHero())
@@ -288,21 +247,9 @@ public class SpriteManager extends Manager
 
 			// If we are in battle and there are no enemies alive then the
 			// battle has been won! Trigger the default "battle over" trigger
-			if (!isEnemyAlive && stateInfo.isCombat())
+			if (CommRPG.BATTLE_MODE_OPTIMIZE && !isEnemyAlive && stateInfo.isCombat())
 			{
-				/*
-				 * Clear these values here so that when we load a battle
-				 * we don't think that we're loading from a mid-battle save
-				 */
-				stateInfo.getClientProgress().setCurrentTurn(null);
-				stateInfo.getClientProgress().setBattleSprites(null);
-				
-				if (CommRPG.BATTLE_MODE_OPTIMIZE)
-				{
-					loadBattleOptmize(true);
-				}
-				else
-					loadBattleVictory();
+				loadBattleOptmize(true);
 			}
 		}
 	}
@@ -318,16 +265,6 @@ public class SpriteManager extends Manager
 			this.battleOptimizer.lostBattle();
 		stateInfo.getPersistentStateInfo().loadBattle(stateInfo.getClientProgress().getMapData(), 
 				stateInfo.getPersistentStateInfo().getEntranceLocation(), 0);
-	}
-	
-	private void loadBattleVictory()
-	{
-		stateInfo.getResourceManager().getTriggerEventById(1).perform(stateInfo);
-	}
-	
-	private void loadBattleDefeat()
-	{
-		stateInfo.sendMessage(new SpeechMessage("You have been defeated...]", Trigger.TRIGGER_ID_EXIT, null));
 	}
 
 	@Override
@@ -381,23 +318,6 @@ public class SpriteManager extends Manager
 							break;
 						}
 					}
-				}
-				break;
-			case BATTLE_COND:
-				BattleCondMessage bcm = (BattleCondMessage) message;
-				heroLeaders = new HashSet<CombatSprite>();
-				this.killAllHeroLeaders = bcm.isKillAllLeaders();
-				this.battleConditionsSet = true;
-				this.temporaryLeaderEnemyIds = new HashSet<>();
-				
-				for (int id : bcm.getEnemyLeaderIds())
-				{
-					temporaryLeaderEnemyIds.add(id);
-				}
-				
-				for (Integer i : bcm.getLeaderIds())
-				{
-					this.heroLeaders.add(stateInfo.getHeroById(i));
 				}
 				break;
 			default:

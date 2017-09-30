@@ -1881,10 +1881,6 @@ public class PlannerDefinitions {
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_PALETTE,
 				PlannerValueDef.TYPE_STRING, "palette", true, "Palette",
 				"(CURRENTLY UNUSED) The palette that should be used to modify the selected animation colors"));
-		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
-				PlannerValueDef.TYPE_BOOLEAN, "leader", false, "Is Leader",
-				"Whether this enemy is the leader of the force (killing this enemy will win the battle for the heroes). This should only be used for 'unique' enemies, otherwise battle conditions should be used to set up battle-specific leaders."));
-
 		// definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
 		// PlannerValueDef.TYPE_INT, "triggerid", false,
 		// "Unique Trigger Id",
@@ -2313,24 +2309,6 @@ public class PlannerDefinitions {
 				"Starts the battle with the given triggers and map",
 				definingValues));
 
-		// Set Battle Conditions
-		definingValues = new ArrayList<PlannerValueDef>();
-		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
-				PlannerValueDef.TYPE_BOOLEAN, "allleaders", false,
-				"Defeat when all leaders killed ",
-				"If true, then battle will only end in defeat if all of the hero leaders have been killed"));
-		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_HERO,
-				PlannerValueDef.TYPE_MULTI_STRING, "templeader", true,
-				"Temporary Leaders. If killed battle ends ",
-				"The ids of the heroes that should be ruled as temporary leaders."));
-		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_ENEMY,
-				PlannerValueDef.TYPE_MULTI_STRING, "tempenemyleader", true,
-				"Temporary Enemy Leaders. If killed battle ends ",
-				"The type of enemies that should be ruled as temporary leaders."));
-		allowableLines.add(new PlannerLineDef("setbattlecond", "Set Battle Conditions",
-				"Set conditions for the battle, should only be called during battle initialization",
-				definingValues));
-
 		// Load map
 		definingValues = new ArrayList<PlannerValueDef>();
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_MAPDATA,
@@ -2574,11 +2552,14 @@ public class PlannerDefinitions {
 
 		// Revive Heroes
 		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_HERO,
+				PlannerValueDef.TYPE_STRING, "hero", true, "Hero to Revive",
+				"If specified only this hero will be revived."));
 		allowableLines
 				.add(new PlannerLineDef(
 						"reviveheroes",
 						"Revive Heroes",
-						"'Revives' all heroes; this will not bring them back in to an active battle,"
+						"'Revives' all heroes if no specific hero is specified or revives only the specified hero; this will not bring them back in to an active battle,"
 						+ " but can be used between scenes so that they are not dead for the next battle.",
 						definingValues));
 		
@@ -2649,9 +2630,7 @@ public class PlannerDefinitions {
 				"Enemy Unit Id",
 				"The unit id (as specified on the map) of the enemy whose death will trigger this condition"));
 		allowableLines.add(new PlannerLineDef("enemydeath", "On Enemy Death",
-				"Sets a condition for the battle that upon the specified enemies death, the specified trigger will be executed. If"
-				+ " your intention is just to end the battle if this enemy dies, consider using the 'Set Battle Conditions' trigger instead"
-				+ " to mark this enemy as a temporary leader",
+				"Sets a condition for the battle that upon the specified enemies death, the specified trigger will be executed.",
 				definingValues));
 		
 		// Set Battle Condition - Hero Death
@@ -2661,9 +2640,7 @@ public class PlannerDefinitions {
 				"Hero Id",
 				"The id of the hero whose death will trigger this condition"));
 		allowableLines.add(new PlannerLineDef("herodeath", "On Hero Death",
-				"Sets a condition that will activate the given trigger if the specified hero dies. If"
-				+ " your intention is just to end the battle if this hero dies, consider using the "
-				+ "'Set Battle Conditions' trigger instead to mark this hero as a temporary leader",
+				"Sets a condition that will activate the given trigger if the specified hero dies.",
 				definingValues));
 		
 		// Enter location
@@ -2712,6 +2689,37 @@ public class PlannerDefinitions {
 				+ "and therefore should only be used in the battle state.",
 				definingValues));
 		
+		// Enemies Remaining
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_OPERATOR,
+				PlannerValueDef.TYPE_STRING, "operator", false,
+				"Numeric Operator",
+				"The operator that should be used to determine if the given amount of enemies satisfies the numeric condition."));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_INT, "amount", false,
+				"Amount",
+				"The amount of enemies that should be compared against the actual amount of enemies "
+				+ "using the specified operator."));
+		allowableLines.add(new PlannerLineDef("enemremain", "Enemies Remaining",
+				"Sets a condition that will activate when the given amount of enemies meet the numeric requirements set.",
+				definingValues));
+		
+		// Map Loaded
+		definingValues = new ArrayList<PlannerValueDef>();
+		allowableLines.add(new PlannerLineDef("maploaded", "Map Loaded",
+				"Sets a condition that will activate when the map is loaded.",
+				definingValues));
+		
+		// Quest Completed
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_QUEST,
+				PlannerValueDef.TYPE_STRING, "quest", false,
+				"Quest ID",
+				"The id of the quest that must be completed."));
+		allowableLines.add(new PlannerLineDef("questcomp", "Quest Completed",
+				"Sets a condition that will activate once the given quest is completed.",
+				definingValues));
+		
 		// Hero in battle
 		definingValues = new ArrayList<PlannerValueDef>();
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_HERO,
@@ -2730,7 +2738,7 @@ public class PlannerDefinitions {
 				PlannerValueDef.TYPE_INT, "id", false,
 				"Enemy Unit Id",
 				"The unit id (as specified on the map) of the enemy that is checked for participation and being alived in the current battle."));
-		allowableLines.add(new PlannerLineDef("enemyinbat", "(Qualifier): Hero In Battle",
+		allowableLines.add(new PlannerLineDef("enemyinbat", "(Qualifier): Enemy In Battle",
 				"Sets a condition that should be used as a Qualifier (that is, this can't actually drive triggers in itself,"
 				+ "it should be used in conjunction with an on death or location based condition) with other conditions that ensures "
 				+ "that the given enemy is in the current battle and is alive. This should only be used in battle.",

@@ -52,7 +52,8 @@ public abstract class LoadableGameState extends BasicGameState
 		g.fillRect(0, 0, container.getWidth(), container.getHeight());
 		g.translate(((PaddedGameContainer) container).getDisplayPaddingX(), 0);
 		g.scale(CommRPG.GAME_SCREEN_SCALE, CommRPG.GAME_SCREEN_SCALE);
-		g.setClip(((PaddedGameContainer) container).getDisplayPaddingX(), 0, ((PaddedGameContainer) container).getPaddedWidth(), container.getHeight());
+		g.setClip(((PaddedGameContainer) container).getDisplayPaddingX(), 0, 
+				((PaddedGameContainer) container).getPaddedWidth(), container.getHeight());
 		doRender((PaddedGameContainer) container, game, g);
 		
 		if (paused) {

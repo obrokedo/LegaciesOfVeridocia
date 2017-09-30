@@ -80,10 +80,11 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 	private Color spellOverlayColor = null;
 	private AnimatedParticleSystem rainParticleSystem;
 	private int exitState;
+	private int clipBackgroundWidth = 0;
 
 	// The amount that the background has been scaled to fit the screen,
 	// other animations should be scaled up accordingly
-	private float backgroundScale;
+	private int backgroundScale;
 
 	private Music music;
 	private Music introMusic;
@@ -104,10 +105,6 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 		this.battleResults = battleResults;
 		this.attacker = attacker;
 		this.frm = frm;
-
-		// Get the land tile image for the current target
-		// TODO Change this on a by-target basis
-		FLOOR_IMAGE = frm.getImage("attackplatform");
 
 		input = new FCInput();
 		gc.getInput().addKeyListener(input);
@@ -183,13 +180,19 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 		
 		bgIm = battleBGSS.getSprite(battleBackgroundIndex % battleBGSS.getHorizontalCount(),
 				battleBackgroundIndex / battleBGSS.getHorizontalCount());
+		backgroundScale = (int) (CommRPG.GAME_SCREEN_SIZE.width / (float) bgIm.getWidth());
 		
-		backgroundScale = CommRPG.GAME_SCREEN_SIZE.width / (float) bgIm.getWidth();
+		clipBackgroundWidth = (CommRPG.GAME_SCREEN_SIZE.width - (bgIm.getWidth() * backgroundScale)) / 2;
+		
 		backgroundImage = bgIm.getScaledCopy(backgroundScale);
 
 		bgXPos = 0;
 		bgYPos = (CommRPG.GAME_SCREEN_SIZE.height - backgroundImage.getHeight()) / 2;
 		combatAnimationYOffset = bgYPos + backgroundImage.getHeight();
+		
+		// Get the land tile image for the current target
+		// TODO Change this on a by-target basis
+		FLOOR_IMAGE = frm.getImage("attackplatform").getScaledCopy(backgroundScale);
 		
 		/*****************************/
 		/** Setup battle animations **/
@@ -266,6 +269,7 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 			g.fillRect(0, 0, CommRPG.GAME_SCREEN_SIZE.width, CommRPG.GAME_SCREEN_SIZE.height);
 		}
 		
+		setCinematicClip(container, g);
 		g.drawImage(backgroundImage, bgXPos, bgYPos);
 		if (heroCombatAnim != null)
 			heroCombatAnim.render(gc, g, combatAnimationYOffset, backgroundScale);
@@ -274,12 +278,14 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 		if (drawingSpell && spellFlash == null)
 		{
 			if (spellTargetsHeroes)
-				spellAnimation.drawAnimation(230,
-					combatAnimationYOffset - 10, g);
+				spellAnimation.drawAnimation(184 * backgroundScale,
+					combatAnimationYOffset - 30 / backgroundScale, g);
 			else
-				spellAnimation.drawAnimation(95,
-					combatAnimationYOffset - 30, g);
+				spellAnimation.drawAnimation(76 * backgroundScale,
+					combatAnimationYOffset - 37 / backgroundScale, g);
 		}
+		
+		clearCinematicClip(g);
 		if (textMenu != null)
 			textMenu.render(gc, g);
 
@@ -288,12 +294,13 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 		if (enemyHealthPanel != null)
 			enemyHealthPanel.render(gc, g);
 		
+		setCinematicClip(container, g);
 		if (drawingSpell && spellFlash == null)
 		{
 			if (rainParticleSystem != null)
-				rainParticleSystem.render();
-			
+				rainParticleSystem.render();	
 		}
+		clearCinematicClip(g);
 		
 		// Draw the spell overlay fade in
 		if (spellOverlayFadeIn > 0)
@@ -310,6 +317,18 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 			g.setColor(Color.white);
 			StringUtils.drawString("Press R to restart attack cinematic", 20, 90, g);
 		}
+	}
+
+	private void clearCinematicClip(Graphics g) {
+		g.clearClip();
+		g.translate(-clipBackgroundWidth, 0);
+	}
+
+	private void setCinematicClip(PaddedGameContainer container, Graphics g) {
+		g.clearClip();
+		g.setClip(clipBackgroundWidth * CommRPG.GAME_SCREEN_SCALE, 0, container.getWidth() - 
+				(2 * clipBackgroundWidth) * CommRPG.GAME_SCREEN_SCALE, container.getHeight());
+		g.translate(clipBackgroundWidth, 0);
 	}
 
 	@Override

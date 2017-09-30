@@ -138,7 +138,7 @@ public class StateInfo
 			 * be the same (in memory) as the CombatSprites in the client profile, this is not
 			 * the case. 
 			 */
-			this.addAllCombatSprites(psi.getClientProgress().getBattleSprites(this));
+			this.addAllCombatSprites(getClientProgress().getBattleSprites(this));
 			for (CombatSprite cs : this.combatSprites)
 			{
 				if (cs.getId() == psi.getClientProgress().getCurrentTurn())
@@ -147,6 +147,13 @@ public class StateInfo
 					break;
 				}
 			}
+			
+			/*
+			 * Clear these values here so that when we load a battle
+			 * we don't think that we're loading from a mid-battle save
+			 */
+			getClientProgress().setCurrentTurn(null);
+			getClientProgress().setBattleSprites(null);
 		}
 		else if (isCombat)
 		{
@@ -159,6 +166,8 @@ public class StateInfo
 			for (Integer triggerId : this.getClientProgress().getRetriggerablesByMap())
 				getResourceManager().getTriggerEventById(triggerId).perform(this);
 
+		this.getResourceManager().checkTriggerCondtions(null, false, true, this);
+		
 		psi.getGc().getInput().addKeyListener(fcInput);
 
 		if (psi.isOnline())
@@ -200,13 +209,6 @@ public class StateInfo
 		for (Manager m : managers)
 			m.initializeSystem(this);
 		this.getCurrentMap().initializeObjects(isCombat, this);
-
-		if (!isCinematic)
-		{
-			Log.debug("Perform first trigger");
-			psi.getResourceManager().getTriggerEventById(0).perform(this);
-		}
-
 	}
 
 	public void registerManager(Manager m)
@@ -490,7 +492,7 @@ public class StateInfo
 	{
 		keyboardListeners.add(kl);
 	}
-
+	
 	/****************************/
 	/* Plot Progression Methods	*/
 	/****************************/
@@ -500,22 +502,22 @@ public class StateInfo
 		{
 			if (mo.contains(mapX, mapY))
 			{
-				this.getResourceManager().checkTriggerCondtions(mo.getName(), immediate, this);
+				this.getResourceManager().checkTriggerCondtions(mo.getName(), immediate, false, this);
 			}
 		}
-		this.getResourceManager().checkTriggerCondtions(null, false, this);
+		this.getResourceManager().checkTriggerCondtions(null, false, false, this);
 
 		this.getResourceManager().getMap().checkRoofs(mapX, mapY);
 	}
 	
 	public void checkTriggersEnemyDeath(CombatSprite cs)
 	{
-		getResourceManager().checkTriggerCondtions(null, false, this);
+		getResourceManager().checkTriggerCondtions(null, false, false, this);
 	}
 	
 	public void checkTriggersHeroDeath(CombatSprite cs)
 	{
-		getResourceManager().checkTriggerCondtions(null, false, this);
+		getResourceManager().checkTriggerCondtions(null, false, false, this);
 	}
 
 	public void setQuestStatus(String id, boolean completed)
