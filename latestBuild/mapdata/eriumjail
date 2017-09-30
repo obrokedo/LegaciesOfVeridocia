@@ -242,3 +242,6 @@
 <condition id=2 description="ReStart Battle2" triggerid=3>
 	<enterloc location="Battle2Restart" immediate=false/>
 </condition>
+<condition id=3 description="MapLoad" triggerid=0>
+	<maploaded/>
+</condition>

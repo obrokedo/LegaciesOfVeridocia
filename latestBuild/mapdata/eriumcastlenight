@@ -2,6 +2,9 @@
 <trigger id=0 description="MapStart" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<playmusic music="castlenight"/>
 </trigger>
+<condition id=0 description="MapLoad" triggerid=0>
+	<maploaded/>
+</condition>
 <cinematic id=0 description="scene1-1" camerax=600 cameray=0>
 	<addactor x=0 y=0 name="Cam" anim="Noah" startanim="Down" visible=false init=true associatedhero="Noah"/>
 	<addactor x=816 y=1056 name="Noah" anim="Noah" startanim="Left" visible=true init=true associatedhero="Noah"/>

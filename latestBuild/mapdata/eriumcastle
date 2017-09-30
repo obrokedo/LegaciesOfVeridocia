@@ -278,3 +278,6 @@
 <condition id=18 description="NorthJailStairsExit" triggerid=20>
 	<enterloc location="NorthJailStairsExit" immediate=false/>
 </condition>
+<condition id=19 description="MapLoad" triggerid=0>
+	<maploaded/>
+</condition>

@@ -280,3 +280,6 @@
 <condition id=18 description="GuardWarning5" triggerid=27>
 	<enterloc location="Guard Warning 5" immediate=false/>
 </condition>
+<condition id=19 description="MapLoad" triggerid=0>
+	<maploaded/>
+</condition>

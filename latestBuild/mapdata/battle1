@@ -35,6 +35,7 @@
 	<changeai aitype=3 id=1 heroid=0 targetid=7 x=0 y=0/>
 </trigger>
 <trigger id=7 description="Fail Results" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<reviveheroes hero="Noah"/>
 	<loadmap mapdata="erium" enter="InfrontPreistess" transdir=""/>
 </trigger>
 <text id=0 description="Defcon 1">
@@ -66,4 +67,10 @@
 </condition>
 <condition id=5 description="Noah Dies" triggerid=7>
 	<herodeath unitid="Noah"/>
+</condition>
+<condition id=6 description="MapLoad" triggerid=0>
+	<maploaded/>
+</condition>
+<condition id=7 description="AllEnemiesKilled" triggerid=1>
+	<enemremain operator="Equals" amount=0/>
 </condition>

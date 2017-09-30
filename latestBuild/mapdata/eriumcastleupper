@@ -123,3 +123,6 @@
 <condition id=4 description="KingChamberStairsExit" triggerid=6>
 	<enterloc location="KingChamberExit" immediate=false/>
 </condition>
+<condition id=5 description="MapLoad" triggerid=0>
+	<maploaded/>
+</condition>
