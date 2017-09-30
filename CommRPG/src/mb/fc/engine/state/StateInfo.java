@@ -166,7 +166,11 @@ public class StateInfo
 			for (Integer triggerId : this.getClientProgress().getRetriggerablesByMap())
 				getResourceManager().getTriggerEventById(triggerId).perform(this);
 
-		this.getResourceManager().checkTriggerCondtions(null, false, true, this);
+		// If this isn't a cinematic check MapLoad conditions
+		if (!isCinematic)
+		{
+			this.getResourceManager().checkTriggerCondtions(null, false, true, this);
+		}
 		
 		psi.getGc().getInput().addKeyListener(fcInput);
 

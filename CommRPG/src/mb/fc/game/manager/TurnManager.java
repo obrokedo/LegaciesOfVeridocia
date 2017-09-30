@@ -373,6 +373,7 @@ public class TurnManager extends Manager implements KeyboardListener
 				break;
 			case TurnAction.ACTION_PERFORM_ATTACK:
 				displayMoveable = false;
+				stateInfo.removePanel(landEffectPanel);
 				a.perform(delta, this, stateInfo);
 				turnActions.remove(0);
 				break;
