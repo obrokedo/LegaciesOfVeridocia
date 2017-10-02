@@ -33,7 +33,7 @@ class RandomHorizontalParticleEmitter(JParticleEmitter):
             # Play a sound here if you want an 'on create' sound
             if self.onCreateSound:
                 self.getFcResourceManager().getSoundByName(self.onCreateSound).play()
-            rand = random.randint(50, self.width)
+            rand = random.randint(50, self.width -50)
             p.setSize(20)
             p.setPosition(rand + self.drawX, 113)
             
@@ -71,10 +71,10 @@ class RainParticleEmitter(JParticleEmitter):
             
 class OrientedFlashParticleEmitter(JParticleEmitter):
     drawX = 0
-    width = 120
-    interval = 200
+    width = 160
+    interval = 350
     timer = 0
-    myImage = 0
+    #myImage = 0
     
     def initialize(self, isHero):
         # Resolution is interpreted as 320x240
@@ -89,9 +89,9 @@ class OrientedFlashParticleEmitter(JParticleEmitter):
         self.timer = self.timer - delta
         if self.timer <= 0:
             self.timer = self.interval
-            p = particleSystem.getNewParticle(self, 1000);
+            p = particleSystem.getNewParticle(self, 0);
 
-            rand = random.randint(50, self.width)
+            rand = random.randint(50, self.width -50)
             
             
             if rand < self.width / 2:
@@ -100,9 +100,9 @@ class OrientedFlashParticleEmitter(JParticleEmitter):
                 p.flipHorizontal(True)
             
 
-            p.adjustSize(160)
+            #p.adjustSize(160)
             p.setPosition(rand + self.drawX, 113)
-            p.setLife(100)
+            #p.setLife(100)
             
 class OrbitParticleEmitter(JParticleEmitter):
     drawX = 0

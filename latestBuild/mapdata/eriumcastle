@@ -109,6 +109,7 @@
 	<startbattle battletriggers="battle1" entrance="battle1" battbg=1/>
 </trigger>
 <trigger id=36 description="PlayContinueStoryCinimatic" require="," exclude="PreBattle1CinimaticWatched," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<completequest questid="PreBattle1CinimaticWatched"/>
 	<loadcin mapdata="eriumcastlenight" cinid=0/>
 </trigger>
 <text id=0 description="Entrance Guard">
