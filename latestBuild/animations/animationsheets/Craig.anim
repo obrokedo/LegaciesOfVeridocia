@@ -114,7 +114,7 @@
       <spr name="/Unpromoted/Frame13" x="151" y="-40" z="0"/>
       <spr name="/Weapon" x="137" y="-17" z="0" angle="205.0"/>
     </cell>
-    <cell index="7" delay="1000">
+    <cell index="7" delay="50">
       <spr name="/Unpromoted/Frame14" x="151" y="-40" z="0"/>
       <spr name="/Weapon" x="137" y="-18" z="0" angle="205.0"/>
     </cell>
@@ -286,7 +286,7 @@
       <spr name="/Unpromoted/Frame13" x="151" y="-40" z="0"/>
       <spr name="/Weapon" x="137" y="-17" z="0" angle="205.0"/>
     </cell>
-    <cell index="7" delay="1000">
+    <cell index="7" delay="50">
       <spr name="/Unpromoted/Frame14" x="151" y="-40" z="0"/>
       <spr name="/Weapon" x="137" y="-18" z="0" angle="205.0"/>
     </cell>
@@ -296,11 +296,13 @@
       <spr name="/Unpromoted/Frame20" x="151" y="-40" z="0"/>
       <spr name="/Weapon" x="200" y="-27" z="0" angle="295.0"/>
     </cell>
-    <cell index="1" delay="1000">
+    <cell index="1" delay="50">
       <spr name="/Unpromoted/Frame21" x="151" y="-40" z="0"/>
       <spr name="/Weapon" x="197" y="-27" z="0" angle="295.0"/>
     </cell>
-    <cell index="2" delay="30">
+  </anim>
+  <anim name="ProDodgeWinddown" loops="0">
+    <cell index="0" delay="30">
       <spr name="/Unpromoted/Frame22" x="151" y="-40" z="0"/>
       <spr name="/Weapon" x="200" y="-27" z="0" angle="295.0"/>
     </cell>

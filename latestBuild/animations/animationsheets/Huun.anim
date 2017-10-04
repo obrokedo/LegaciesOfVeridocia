@@ -252,19 +252,21 @@
     <cell index="2" delay="60">
       <spr name="/Unpromoted/Frame36" x="159" y="-41" z="0"/>
     </cell>
-    <cell index="3" delay="410">
+    <cell index="3" delay="50">
       <spr name="/Unpromoted/Frame37" x="159" y="-41" z="0"/>
     </cell>
-    <cell index="4" delay="50">
+  </anim>
+  <anim name="UnDodgeWinddown" loops="0">
+    <cell index="0" delay="50">
       <spr name="/Unpromoted/Frame38" x="159" y="-41" z="0"/>
     </cell>
-    <cell index="5" delay="50">
+    <cell index="1" delay="50">
       <spr name="/Unpromoted/Frame39" x="159" y="-41" z="0"/>
     </cell>
-    <cell index="6" delay="50">
+    <cell index="2" delay="50">
       <spr name="/Unpromoted/Frame40" x="159" y="-41" z="0"/>
     </cell>
-    <cell index="7" delay="1">
+    <cell index="3" delay="50">
       <spr name="/Unpromoted/Frame0" x="159" y="-41" z="0"/>
     </cell>
   </anim>

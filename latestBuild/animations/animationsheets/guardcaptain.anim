@@ -141,22 +141,24 @@
     <cell index="3" delay="100">
       <spr name="/Unpromoted/Frame32" x="74" y="-50" z="0"/>
     </cell>
-    <cell index="4" delay="1000">
+    <cell index="4" delay="50">
       <spr name="/Unpromoted/Frame33" x="74" y="-50" z="0"/>
     </cell>
-    <cell index="5" delay="50">
+  </anim>
+  <anim name="UnDodgeWinddown" loops="0">
+    <cell index="0" delay="50">
       <spr name="/Unpromoted/Frame34" x="74" y="-50" z="0"/>
     </cell>
-    <cell index="6" delay="30">
+    <cell index="1" delay="30">
       <spr name="/Unpromoted/Frame35" x="74" y="-50" z="0"/>
     </cell>
-    <cell index="7" delay="30">
+    <cell index="2" delay="30">
       <spr name="/Unpromoted/Frame36" x="74" y="-50" z="0"/>
     </cell>
-    <cell index="8" delay="50">
+    <cell index="3" delay="50">
       <spr name="/Unpromoted/Frame37" x="74" y="-50" z="0"/>
     </cell>
-    <cell index="9" delay="50">
+    <cell index="4" delay="50">
       <spr name="/Unpromoted/Frame38" x="74" y="-50" z="0"/>
     </cell>
   </anim>

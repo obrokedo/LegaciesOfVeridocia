@@ -139,28 +139,30 @@
     <cell index="7" delay="50">
       <spr name="/Unpromoted/Frame32" x="77" y="-54" z="0"/>
     </cell>
-    <cell index="8" delay="50">
+  </anim>
+  <anim name="UnDodgeWinddown" loops="0">
+    <cell index="0" delay="50">
       <spr name="/Unpromoted/Frame33" x="77" y="-54" z="0"/>
     </cell>
-    <cell index="9" delay="50">
+    <cell index="1" delay="50">
       <spr name="/Unpromoted/Frame34" x="77" y="-54" z="0"/>
     </cell>
-    <cell index="10" delay="50">
+    <cell index="2" delay="50">
       <spr name="/Unpromoted/Frame35" x="77" y="-54" z="0"/>
     </cell>
-    <cell index="11" delay="50">
+    <cell index="3" delay="50">
       <spr name="/Unpromoted/Frame36" x="77" y="-54" z="0"/>
     </cell>
-    <cell index="12" delay="50">
+    <cell index="4" delay="50">
       <spr name="/Unpromoted/Frame37" x="77" y="-54" z="0"/>
     </cell>
-    <cell index="13" delay="50">
+    <cell index="5" delay="50">
       <spr name="/Unpromoted/Frame38" x="77" y="-54" z="0"/>
     </cell>
-    <cell index="14" delay="50">
+    <cell index="6" delay="50">
       <spr name="/Unpromoted/Frame39" x="77" y="-54" z="0"/>
     </cell>
-    <cell index="15" delay="50">
+    <cell index="7" delay="50">
       <spr name="/Unpromoted/Frame40" x="77" y="-54" z="0"/>
     </cell>
   </anim>
