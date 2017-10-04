@@ -35,6 +35,8 @@ class RandomHorizontalParticleEmitter(JParticleEmitter):
                 self.getFcResourceManager().getSoundByName(self.onCreateSound).play()
             rand = random.randint(50, self.width -50)
             p.setSize(20)
+            # You can scale animations size with setScale(float)
+            # p.setScale(.3)
             p.setPosition(rand + self.drawX, 113)
             
     def updateParticle(self, particle, delta):

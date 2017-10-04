@@ -213,11 +213,10 @@
     </cell>
     <cell index="11" delay="1">
       <spr name="/Unpromoted/Frame25" x="159" y="-41" z="0"/>
-      <spr name="/Weapon" x="-22" y="-45" z="0" flipH="1"/>
     </cell>
   </anim>
   <anim name="UnWinddown" loops="0">
-      <cell index="0" delay="50">
+    <cell index="0" delay="50">
       <spr name="/Unpromoted/Frame26" x="159" y="-41" z="0"/>
     </cell>
     <cell index="1" delay="50">
