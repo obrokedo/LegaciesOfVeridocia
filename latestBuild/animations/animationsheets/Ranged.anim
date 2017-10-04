@@ -29,9 +29,6 @@
     <cell index="8" delay="30">
       <spr name="/Weapon" x="79" y="-40" z="0" flipH="1"/>
     </cell>
-    <cell index="9" delay="30">
-      <spr name="/Weapon" x="55" y="-40" z="0" flipH="1"/>
-    </cell>
-    <cell index="10" delay="1"/>
+    <cell index="9" delay="1"/>
   </anim>
 </animations>
