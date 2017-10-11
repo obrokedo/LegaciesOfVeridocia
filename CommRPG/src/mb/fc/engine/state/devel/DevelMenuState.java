@@ -51,7 +51,7 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 	private ListUI entranceSelector;
 	private PlannerFrame plannerFrame = new PlannerFrame(this);
 	private GifFrame quickAnimate = new GifFrame(true);
-	private ParticleSystem ps;
+	public static ParticleSystem ps;
 	private String currentMap;
 	private Button loadTownButton = new Button(0, 550, 150, 25, "Load Town");
 	private Button loadCinButton = new Button(0, 580, 150, 25, "Load Cin");
@@ -106,12 +106,11 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 		}
 		*/
 		
-		/*
-		ps = new ParticleSystem(new Image("sprite/lightning.png"));
-		JParticleEmitter emitter = GlobalPythonFactory.createParticleEmitter();
-		emitter.initialize(false, new Image("sprite/lightning.png"));
-		ps.addEmitter(emitter);
-		*/
+		
+		//ps = new ParticleSystem(new Image("image/RainBig.png"));
+		//RainEmitter rainEmitter = new RainEmitter(500, 100, true);
+		//ps.addEmitter(rainEmitter);
+		
 	}
 	
 	

@@ -54,6 +54,7 @@ public class CombatAnimation
 			if (be.getEffectAnimation() != null)
 				be.getEffectAnimation().update(delta);
 		}
+		
 		if (minimumTimePassed > -1 && totalTimePassed >= minimumTimePassed)
 			return true;
 
@@ -68,8 +69,9 @@ public class CombatAnimation
 		if (displayPlatform)
 			g.drawImage(LOVAttackCinematicState.FLOOR_IMAGE, x + 135, y - 15);
 
-		if (renderColor != null || parentSprite.getCurrentHP() > 0)
+		if (renderColor != null || parentSprite.getCurrentHP() > 0) {
 			animationWrapper.drawAnimation(x, y, renderColor, scale, g);
+		}
 
 		// TODO Scale battle animations
 		for (JBattleEffect be : parentSprite.getBattleEffects())
@@ -110,6 +112,10 @@ public class CombatAnimation
 	public boolean isDamaging()
 	{
 		return false;
+	}
+
+	public void setMinimumTimePassed(int minimumTimePassed) {
+		this.minimumTimePassed = minimumTimePassed;
 	}
 
 	@Override

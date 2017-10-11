@@ -46,8 +46,6 @@ public class TownState extends LoadableGameState
 	private SoundManager soundManager;
 
 	private StateInfo stateInfo;
-	
-	private Image image;
 
 	public TownState() { }
 
@@ -127,12 +125,6 @@ public class TownState extends LoadableGameState
 			panelRenderer.render(g);
 			cinematicManager.renderPostEffects(g);
 			menuRenderer.render(g);
-		}
-		
-		if (image != null) {
-			g.resetTransform();
-			image.draw(0, 0);
-			image = null;
 		}
 	}
 

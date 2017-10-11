@@ -317,6 +317,14 @@ public class TextParser
 					te.addTriggerable(te.new TriggerPlayMusic(actionParams.get("music")));
 					musicToLoad.add(actionParams.get("music"));
 				}
+				else if (tagType.equalsIgnoreCase("pausemusic"))
+				{
+					te.addTriggerable(te.new TriggerPauseMusic());
+				}
+				else if (tagType.equalsIgnoreCase("resumemusic"))
+				{
+					te.addTriggerable(te.new TriggerResumeMusic());
+				}
 				else if (tagType.equalsIgnoreCase("playsound"))
 				{
 					te.addTriggerable(te.new TriggerPlaySound(actionParams.get("sound"), Integer.parseInt(actionParams.get("volume"))));

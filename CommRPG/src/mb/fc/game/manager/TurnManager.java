@@ -419,7 +419,7 @@ public class TurnManager extends Manager implements KeyboardListener
 				stateInfo.removePanel(landEffectPanel);
 				stateInfo.removePanel(PanelType.PANEL_HEALTH_BAR);
 				stateInfo.removePanel(PanelType.PANEL_ENEMY_HEALTH_BAR);
-				// stateInfo.removeKeyboardListeners();
+				stateInfo.removeKeyboardListeners();
 				displayAttackable = false;
 				displayMoveable = false;
 				

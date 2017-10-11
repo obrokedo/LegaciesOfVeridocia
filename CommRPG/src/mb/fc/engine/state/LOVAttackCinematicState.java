@@ -468,6 +468,8 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 				if (text != null)
 				{
 					textMenu = new SpeechMenu(text, gc);
+				} else {
+					nextAction(game);
 				}
 			}
 			else

@@ -338,6 +338,24 @@ public class Trigger
 			return false;
 		}
 	}
+	
+	public class TriggerPauseMusic implements Triggerable
+	{
+		@Override
+		public boolean perform(StateInfo stateInfo) {
+			stateInfo.sendMessage(MessageType.PAUSE_MUSIC);
+			return false;
+		}
+	}
+	
+	public class TriggerResumeMusic implements Triggerable
+	{
+		@Override
+		public boolean perform(StateInfo stateInfo) {
+			stateInfo.sendMessage(MessageType.RESUME_MUSIC);
+			return false;
+		}
+	}
 
 	public class TriggerPlaySound implements Triggerable
 	{

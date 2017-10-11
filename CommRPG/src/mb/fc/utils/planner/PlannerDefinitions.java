@@ -1555,6 +1555,9 @@ public class PlannerDefinitions {
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
 				PlannerValueDef.TYPE_STRING, "description", false,
 				"Description", "Description"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_LONG_STRING, "extradescription", false,
+				"Extra Description", "Use this area to describe what this quest is supposed to control and who is responsible for toggling it. This is not used in the engine."));
 		// definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
 		// PlannerValueDef.TYPE_INT, "triggerid", false,
 		// "Unique Trigger Id",
@@ -2352,6 +2355,16 @@ public class PlannerDefinitions {
 				"The name of the music that should be played"));
 		allowableLines.add(new PlannerLineDef("playmusic", "Play Music",
 				"Plays the specified music", definingValues));
+		
+		// Pause Music
+		definingValues = new ArrayList<PlannerValueDef>();
+		allowableLines.add(new PlannerLineDef("pausemusic", "Pause Music",
+				"Pause any playing music", definingValues));
+		
+		// Resume Music
+		definingValues = new ArrayList<PlannerValueDef>();
+		allowableLines.add(new PlannerLineDef("resumemusic", "Resume Music",
+				"Resume paused music", definingValues));
 
 		// Play Sound
 		definingValues = new ArrayList<PlannerValueDef>();

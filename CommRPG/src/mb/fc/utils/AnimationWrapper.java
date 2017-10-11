@@ -203,7 +203,7 @@ public class AnimationWrapper
 		}
 	}
 	
-	public void drawAnimationDirect(int x, int y, Float scale, boolean flip)
+	public void drawAnimationDirect(int x, int y, Float scale, boolean scaleCoords, boolean flip)
 	{
 		if (animation != null)
 		{
@@ -213,13 +213,18 @@ public class AnimationWrapper
 				{
 					if (!flip)
 						getRotatedImageIfNeeded(spriteAnims.getImageAtIndex(as.imageIndex), as, scale).draw(
-								x + as.x * (scale == null ? 1 : scale), y + as.y * (scale == null ? 1 : scale));
+								x + as.x * (scale == null || ! scaleCoords? 1 : scale), y + as.y * (scale == null || ! scaleCoords ? 1 : scale));
 					else
 						getRotatedImageIfNeeded(spriteAnims.getImageAtIndex(as.imageIndex), as, scale).getFlippedCopy(true, false).draw(
-								x + as.x * (scale == null ? 1 : scale), y + as.y * (scale == null ? 1 : scale));
+								x + as.x * (scale == null || ! scaleCoords ? 1 : scale), y + as.y * (scale == null || ! scaleCoords ? 1 : scale));
 				}
 			}
 		}
+	}
+	
+	public void drawAnimationDirect(int x, int y, Float scale, boolean flip)
+	{
+		drawAnimationDirect(x, y, scale, true, flip);
 	}
 
 	protected void drawWeapon(AnimSprite as, int x, int y, Color filter, Float scale, Graphics g)

@@ -8,6 +8,7 @@ import mb.fc.engine.CommRPG;
 import mb.fc.game.battle.command.BattleCommand;
 import mb.fc.game.combat.AttackCombatAnimation;
 import mb.fc.game.combat.CombatAnimation;
+import mb.fc.game.combat.CompoundCombatAnimation;
 import mb.fc.game.combat.DamagedCombatAnimation;
 import mb.fc.game.combat.DeathCombatAnimation;
 import mb.fc.game.combat.DodgeCombatAnimation;
@@ -22,6 +23,7 @@ import mb.fc.game.ui.PaddedGameContainer;
 import mb.fc.loading.FCResourceManager;
 import mb.fc.utils.AnimationWrapper;
 import mb.fc.utils.HeroAnimationWrapper;
+import mb.fc.utils.SpriteAnims;
 
 public class BattleSceneCreator {
 	private static final int WAIT_TIME_FOR_DMG_AFTER_TRANS = 600;
@@ -271,17 +273,33 @@ public class BattleSceneCreator {
 				CommRPG.GAME_SCREEN_SIZE.width, null, false, attacker.isHero()));
 		addCombatAnimationWithNoSpeechNoReaction(attacker.isHero(), new TransBGCombatAnimation(backgroundImage, bgXPos, bgYPos,
 				CommRPG.GAME_SCREEN_SIZE.width, sca, true, !attacker.isHero()));
-
+		
+		addCombatAnimation(attacker.isHero(), new InvisibleCombatAnimation());
+		addCombatAnimation(target.isHero(), new StandCombatAnimation(target, 0));
+		textToDisplay.add(null);
+		
 		addAttackAction(attacker, target, battleResults, index, false, true);
+		
 
 		addCombatAnimationWithNoSpeechNoReaction(target.isHero(), new TransBGCombatAnimation(backgroundImage, bgXPos, bgYPos,
 				CommRPG.GAME_SCREEN_SIZE.width, sca, false, target.isHero()));
+		// Create a attack combat combat animation that is at it's final frame so that it can
+		// be displayed when the attack transitions back in
+		AttackCombatAnimation aca = new AttackCombatAnimation(attacker,
+				battleResults, true, true, false);
+		aca.update(aca.getAnimationLength());
 		addCombatAnimationWithNoSpeechNoReaction(target.isHero(), new TransBGCombatAnimation(backgroundImage, bgXPos, bgYPos,
-				CommRPG.GAME_SCREEN_SIZE.width, new StandCombatAnimation(attacker), true, !target.isHero()));
+				CommRPG.GAME_SCREEN_SIZE.width, aca, true, !target.isHero()));
+		
+		// For ranged attacks the winddown won't happen until the attacker is back on the screen
+		if (attacker.hasAnimation("Winddown")) {
+			addAttackerWinddown(attacker, target, new InvisibleCombatAnimation());
+		}
 
 		addCombatAnimation(target.isHero(), new InvisibleCombatAnimation());
 		addCombatAnimation(attacker.isHero(), new StandCombatAnimation(attacker));
 		textToDisplay.add(null);
+		
 	}
 
 	private void addAttackAction(CombatSprite attacker, CombatSprite target, BattleResults battleResults,
@@ -302,56 +320,15 @@ public class BattleSceneCreator {
 						"Ranged", false, attacker.getCurrentWeaponImage()), attacker);
 		}
 		aca.setDrawSpell(isSpell);
-		addCombatAnimation(attacker.isHero(), aca);
+		
 
 		if (battleResults.dodged.get(index))
 		{
-			DodgeCombatAnimation targetDodge = new DodgeCombatAnimation(target, frm);
-			int startDodge = Math.max(0, aca.getAnimationLength() - targetDodge.getAnimationLength());
-
-			if (startDodge == 0)
-			{
-				addCombatAnimation(target.isHero(), targetDodge);
-				textToDisplay.add(battleResults.text.get(index));
-			}
-			else
-			{
-				StandCombatAnimation targetStand = new StandCombatAnimation(target,
-						startDodge);
-				addCombatAnimation(target.isHero(), targetStand);
-				textToDisplay.add(null);
-				addCombatAnimation(attacker.isHero(), null);
-				addCombatAnimation(target.isHero(), targetDodge);
-				textToDisplay.add(battleResults.text.get(index));
-
-			}
-			
-			//TODO We probably need winddown even on miss
-			//TODO Add block winddown here
-			
-			if (attacker.hasAnimation("Winddown") || target.hasAnimation("BlockWinddown")) {
-				if (attacker.hasAnimation("Winddown"))
-				{
-					AnimationWrapper aw = new HeroAnimationWrapper(attacker, "Winddown");
-					addCombatAnimation(attacker.isHero(), new CombatAnimation(aw, attacker, aw.getAnimationLength()));
-				} else {
-					addCombatAnimation(attacker.isHero(), null);
-				}
-				
-				if (target.hasAnimation("BlockWinddown"))
-				{
-					AnimationWrapper aw = new HeroAnimationWrapper(target, "BlockWinddown");
-					addCombatAnimation(target.isHero(), new CombatAnimation(aw, target, aw.getAnimationLength()));
-					
-				} else {
-					addCombatAnimation(target.isHero(), null);
-				}
-				
-				textToDisplay.add(null);
-			}
+			addDodgeAnimations(attacker, target, battleResults, index, aca, rangedAttack);
 		}
 		else
 		{
+			addCombatAnimation(attacker.isHero(), aca);
 			StandCombatAnimation targetStand = new StandCombatAnimation(target,
 					(isSpell ? aca.getAnimationLength() + 200 : aca.getAnimationLengthMinusLast()));
 			addCombatAnimation(target.isHero(), targetStand);
@@ -376,25 +353,136 @@ public class BattleSceneCreator {
 			}
 			textToDisplay.add(battleResults.text.get(index));
 
-			if (!isSpell && attacker.hasAnimation("Winddown"))
+			if (!isSpell && !rangedAttack && attacker.hasAnimation("Winddown"))
 			{
-				AnimationWrapper aw = new HeroAnimationWrapper(attacker, "Winddown");
-				addCombatAnimation(attacker.isHero(), new CombatAnimation(aw, attacker, aw.getAnimationLength()));
-				addCombatAnimation(target.isHero(), null);
-				textToDisplay.add(null);
+				addAttackerWinddown(attacker, target, null);
 			}
 		}
 	}
 
-	private void addActionAndTransitionOut(CombatSprite transitioner, BattleResults battleResults, boolean isSpell,
+	private void addAttackerWinddown(CombatSprite attacker, CombatSprite target, CombatAnimation targetAction) {
+		AnimationWrapper aw = new HeroAnimationWrapper(attacker, "Winddown");
+		addCombatAnimation(attacker.isHero(), new CombatAnimation(aw, attacker, aw.getAnimationLength()));
+		addCombatAnimation(target.isHero(), targetAction);
+		textToDisplay.add(null);
+	}
+
+	private void addDodgeAnimations(CombatSprite attacker, CombatSprite target, BattleResults battleResults, int index,
+			AttackCombatAnimation aca, boolean isRanged) {
+		DodgeCombatAnimation targetDodge = new DodgeCombatAnimation(target, frm, null);
+		int dodgeDiff = aca.getAnimationLength() - targetDodge.getAnimationLength();
+		
+		// Start the longer animation of the two (attack vs dodge) and have the other animation
+		// start later so that they both finish at the same time
+		if (dodgeDiff == 0)
+		{
+			addCombatAnimation(attacker.isHero(), aca);
+			addCombatAnimation(target.isHero(), targetDodge);
+			textToDisplay.add(battleResults.text.get(index));
+		} else
+			setAnimationsToFinishAtTheSameTime(attacker, target, 
+					battleResults, index, aca, targetDodge, dodgeDiff, battleResults.text.get(index));
+		
+		//TODO We probably need winddown even on miss
+		//TODO Add block winddown here
+		
+		CombatAnimation spellShieldCA = getSpellShieldCombatAnimation(target);
+		
+		CombatAnimation attackerCA = null;
+		CombatAnimation targetCA = null;
+		if (attacker.hasAnimation("Winddown") || target.hasAnimation("DodgeWinddown") || spellShieldCA != null) {
+			if (!isRanged && attacker.hasAnimation("Winddown"))
+			{
+				AnimationWrapper aw = new HeroAnimationWrapper(attacker, "Winddown");
+				attackerCA = new CombatAnimation(aw, attacker, aw.getAnimationLength());
+			}
+			
+			if (target.hasAnimation("DodgeWinddown") || spellShieldCA != null)
+			{
+				
+				AnimationWrapper aw = null;
+				if (target.hasAnimation("DodgeWinddown"))
+					aw = new HeroAnimationWrapper(target, "DodgeWinddown");
+				// Have both winddown and spell winddown
+				if (spellShieldCA != null && aw != null) {
+					targetCA = new CompoundCombatAnimation(aw, target, spellShieldCA);
+				// Have just a winddown
+				} else if (aw != null){
+					targetCA = new CombatAnimation(aw, target, aw.getAnimationLength());
+				// Have just a spell winddown
+				} else {
+					targetCA = new CompoundCombatAnimation(new HeroAnimationWrapper(target, "Stand"), target, spellShieldCA);
+					
+				}
+			}
+			
+			if (attackerCA != null && targetCA != null) {
+				setAnimationsToFinishAtTheSameTime(attacker, target, battleResults, index, 
+						attackerCA, targetCA, attackerCA.getAnimationLength() - targetCA.getAnimationLength(), null);
+			} else {
+				addCombatAnimation(attacker.isHero(), attackerCA);
+				addCombatAnimation(target.isHero(), targetCA);
+
+				textToDisplay.add(null);
+			}
+			
+		}
+	}
+
+	private void setAnimationsToFinishAtTheSameTime(CombatSprite attacker, CombatSprite target,
+			BattleResults battleResults, int index, CombatAnimation firstCA, CombatAnimation secondCA,
+			int diff, String text) {
+		if (diff > 0)
+		{
+			firstCA.setMinimumTimePassed(diff);
+			addCombatAnimation(attacker.isHero(), firstCA);
+			addCombatAnimation(target.isHero(), null);
+			textToDisplay.add(null);
+			
+			addCombatAnimation(attacker.isHero(), null);
+			addCombatAnimation(target.isHero(), secondCA);
+			textToDisplay.add(text);
+
+		}
+		else
+		{
+			diff = Math.abs(diff);
+			secondCA.setMinimumTimePassed(diff);
+			addCombatAnimation(attacker.isHero(), null);
+			addCombatAnimation(target.isHero(), secondCA);
+			textToDisplay.add(null);
+			
+			addCombatAnimation(attacker.isHero(), firstCA);
+			addCombatAnimation(target.isHero(), null);
+			textToDisplay.add(text);
+
+		}
+	}
+	
+	private CombatAnimation getSpellShieldCombatAnimation(CombatSprite sprite) {
+		if (sprite.getSpellsDescriptors().size() > 0) {
+			String animName = "Shield";
+			if (!sprite.isHero())
+				animName = "EnemyShield";
+			SpriteAnims spriteAnims = frm.getSpriteAnimation(animName);
+			if (spriteAnims.hasAnimation("DodgeWinddown")) {
+				AnimationWrapper animationWrapper = new AnimationWrapper(spriteAnims, "DodgeWinddown");
+				return new CombatAnimation(animationWrapper, sprite, animationWrapper.getAnimationLength());
+			}
+		}
+		return null;
+	}
+
+	private AttackCombatAnimation addActionAndTransitionOut(CombatSprite transitioner, BattleResults battleResults, boolean isSpell,
 			boolean ranged)
 	{
 		AttackCombatAnimation aca = new AttackCombatAnimation(transitioner,
-				battleResults, true, ranged);
+				battleResults, true, ranged, false);
 		addCombatAnimationWithNoSpeechNoReaction(transitioner.isHero(), aca);
 		TransCombatAnimation tca = new TransCombatAnimation(aca, true);
 		tca.setDrawSpell(isSpell);
 		addCombatAnimationWithNoSpeechNoReaction(transitioner.isHero(), tca);
+		return aca;
 	}
 
 	private void addTransitionInAndOut(boolean showSpell, CombatSprite transitioner,
