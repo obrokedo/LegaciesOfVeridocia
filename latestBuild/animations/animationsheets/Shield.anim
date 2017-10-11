@@ -11,37 +11,39 @@
     <cell index="2" delay="50">
       <spr name="/Unpromoted/Frame2" x="147" y="-55" z="0"/>
     </cell>
-    <cell index="3" delay="50">
+  </anim>
+  <anim name="DodgeWinddown" loops="0">
+    <cell index="0" delay="50">
       <spr name="/Unpromoted/Frame3" x="147" y="-55" z="0"/>
     </cell>
-    <cell index="4" delay="50">
+    <cell index="1" delay="50">
       <spr name="/Unpromoted/Frame4" x="147" y="-55" z="0"/>
     </cell>
-    <cell index="5" delay="50">
+    <cell index="2" delay="50">
       <spr name="/Unpromoted/Frame5" x="147" y="-55" z="0"/>
     </cell>
-    <cell index="6" delay="50">
+    <cell index="3" delay="50">
       <spr name="/Unpromoted/Frame6" x="147" y="-55" z="0"/>
     </cell>
-    <cell index="7" delay="50">
+    <cell index="4" delay="50">
       <spr name="/Unpromoted/Frame7" x="147" y="-55" z="0"/>
     </cell>
-    <cell index="8" delay="50">
+    <cell index="5" delay="50">
       <spr name="/Unpromoted/Frame8" x="147" y="-55" z="0"/>
     </cell>
-    <cell index="9" delay="50">
+    <cell index="6" delay="50">
       <spr name="/Unpromoted/Frame9" x="147" y="-55" z="0"/>
     </cell>
-    <cell index="10" delay="50">
+    <cell index="7" delay="50">
       <spr name="/Unpromoted/Frame10" x="147" y="-55" z="0"/>
     </cell>
-    <cell index="11" delay="50">
+    <cell index="8" delay="50">
       <spr name="/Unpromoted/Frame11" x="147" y="-55" z="0"/>
     </cell>
-    <cell index="12" delay="50">
+    <cell index="9" delay="50">
       <spr name="/Unpromoted/Frame12" x="147" y="-55" z="0"/>
     </cell>
-    <cell index="13" delay="330">
+    <cell index="10" delay="50">
       <spr name="/Unpromoted/Frame13" x="147" y="-55" z="0"/>
     </cell>
   </anim>
