@@ -17,7 +17,7 @@ class BattleEffect(JBattleEffect):
 		return jarray.array(["Poison", "Bleed", "Shock", "Burn", "Confusion",
 							 "Frozen", "Sleep", "Petrify", "HP Drain", "Daze", 
 							 "Dispel", "Blind", "Addled", "Detox", "Heal"], String)
-	# Intialize the BattleEffects, generally this includes
+	# Intialize the BattleEffects,  generally this includes
 	# setting duration
 	def createEffect(self, id, level):
 		
