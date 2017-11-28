@@ -351,6 +351,14 @@ public class CommRPG extends StateBasedGame   {
 		return 15;
 	}
 	
+	public EngineConfigurator getEngineConfiguratior() {
+		return engineConfiguratior;
+	}
+
+	public void setEngineConfiguratior(EngineConfigurator engineConfiguratior) {
+		this.engineConfiguratior = engineConfiguratior;
+	}
+
 	public void setEngineConfiguration(EngineConfigurator engineConfiguration)
 	{
 		this.engineConfiguratior = engineConfiguration;

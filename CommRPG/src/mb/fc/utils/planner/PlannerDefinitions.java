@@ -605,7 +605,7 @@ public class PlannerDefinitions {
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
 				PlannerValueDef.TYPE_STRING, "anim", false,
 				"Animation to Show",
-				"The name of the animation that the actor should take"));
+				"The name of the animation that the actor should take. If the actor is 'hero backed' then an unpromoted/promoted prefix do not need to be included. If the actor is NOT 'hero backed' then the Unpromoted/Promoted prefix must be included."));
 
 		allowableLines
 				.add(new PlannerLineDef(
@@ -631,7 +631,7 @@ public class PlannerDefinitions {
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
 				PlannerValueDef.TYPE_STRING, "anim", false,
 				"Animation to Show",
-				"The name of the animation that the actor should take"));
+				"The name of the animation that the actor should take. If the actor is 'hero backed' then an unpromoted/promoted prefix do not need to be included. If the actor is NOT 'hero backed' then the Unpromoted/Promoted prefix must be included."));
 		definingValues
 				.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
 						PlannerValueDef.TYPE_BOOLEAN, "loops", false,

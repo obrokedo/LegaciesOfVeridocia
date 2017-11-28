@@ -3,7 +3,6 @@ package mb.fc.engine.state.devel;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 import javax.swing.JOptionPane;
 
@@ -289,7 +288,7 @@ public class DevelBattleAnimViewState extends LoadableGameState implements Resou
 			nextInput = 200;
 		}
 		if (reloadButton.handleUserInput(x, y, click)) {
-			fcrm.reloadAnimations();
+			fcrm.reloadAnimations(((CommRPG) game).getEngineConfiguratior());
 			nextInput = 200;
 		}
 		

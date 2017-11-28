@@ -137,7 +137,7 @@ public class SpeechMenu extends Menu
 		
 		text = TextSpecialCharacters.replaceControlTagsWithInternalValues(text);
 
-		int maxTextWidth = width - 10;
+		int maxTextWidth = width - 13;
 		int spaceWidth = StringUtils.getStringWidth("_", SPEECH_FONT);
 		String[] splitText = text.split(" ");
 		int currentLineWidth = 0;
@@ -204,8 +204,8 @@ public class SpeechMenu extends Menu
 
 		for (int i = Math.max(0, textIndex - posY); i <= textIndex; i++)
 		{
-			StringUtils.drawString((i == textIndex ? panelText.get(i).substring(0, textMovingIndex) : panelText.get(i)), x + 5,
-					CommRPG.GAME_SCREEN_SIZE.height - (posY + 1) * 24 + 15 + (i - textIndex + (textIndex >= posY ? posY : textIndex)) * 15 - (posY == 1 ? 5 : 0), graphics);
+			StringUtils.drawString((i == textIndex ? panelText.get(i).substring(0, textMovingIndex) : panelText.get(i)), x + 8,
+					CommRPG.GAME_SCREEN_SIZE.height - (posY + 1) * 24 + 18 + (i - textIndex + (textIndex >= posY ? posY : textIndex)) * 15 - (posY == 1 ? 5 : 0), graphics);
 		}
 
 		if (portrait != null)

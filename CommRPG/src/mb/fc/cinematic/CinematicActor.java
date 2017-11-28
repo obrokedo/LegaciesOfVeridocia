@@ -1,7 +1,5 @@
 package mb.fc.cinematic;
 
-import java.util.ArrayList;
-
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -20,6 +18,7 @@ import mb.fc.utils.AnimSprite;
 import mb.fc.utils.Animation;
 import mb.fc.utils.SpriteAnims;
 import mb.jython.GlobalPythonFactory;
+import mb.jython.JAnimationConfiguration;
 import mb.jython.JCinematicActor;
 
 /**
@@ -86,8 +85,6 @@ public class CinematicActor implements Comparable<CinematicActor>
 	private float specialEffectCounter;
 	private Direction specialEffectDirection;
 
-	private int moveCounter = 0;
-
 	boolean isHeroBacked = false;
 	boolean isHeroPromoted = false;
 
@@ -141,13 +138,13 @@ public class CinematicActor implements Comparable<CinematicActor>
 		if (!visible)
 			return;
 		if (specialEffectType == SE_FALL_ON_FACE)
-			renderFaceDown(graphics, camera, cont);
+			renderOnDirection(Direction.UP, graphics, camera, cont);
 		else if (specialEffectType == SE_LAY_ON_SIDE_RIGHT)
-			renderOnSideRight(graphics, camera, cont);
+			renderOnDirection(Direction.RIGHT, graphics, camera, cont);
 		else if (specialEffectType == SE_LAY_ON_SIDE_LEFT)
-			renderOnSideLeft(graphics, camera, cont);
+			renderOnDirection(Direction.LEFT, graphics, camera, cont);
 		else if (specialEffectType == SE_LAY_ON_BACK)
-			renderOnBack(graphics, camera, cont);
+			renderOnDirection(Direction.DOWN, graphics, camera, cont);
 		else
 		{
 			for (AnimSprite as : currentAnim.frames.get(imageIndex).sprites)
@@ -291,41 +288,15 @@ public class CinematicActor implements Comparable<CinematicActor>
 		}
 	}
 
-	private void renderFaceDown(Graphics graphics, Camera camera, PaddedGameContainer cont)
+	private void renderOnDirection(Direction dir, Graphics graphics, Camera camera, PaddedGameContainer cont)
 	{
+		Animation anim = null;
 		if (isHeroBacked)
-			renderOnDirection(spriteAnims.getCharacterAnimation("Up", isHeroPromoted).frames.get(0).sprites, graphics, camera, cont);
+			anim = spriteAnims.getCharacterDirectionAnimation(dir, isHeroPromoted);
 		else
-			renderOnDirection(spriteAnims.getAnimation("UnUp").frames.get(0).sprites, graphics, camera, cont);
-	}
-
-	private void renderOnBack(Graphics graphics, Camera camera, PaddedGameContainer cont)
-	{
-		if (isHeroBacked)
-			renderOnDirection(spriteAnims.getCharacterAnimation("Down", isHeroPromoted).frames.get(0).sprites, graphics, camera, cont);
-		else
-			renderOnDirection(spriteAnims.getAnimation("UnDown").frames.get(0).sprites, graphics, camera, cont);
-	}
-
-	private void renderOnSideLeft(Graphics graphics, Camera camera, PaddedGameContainer cont)
-	{
-		if (isHeroBacked)
-			renderOnDirection(spriteAnims.getCharacterAnimation("Left", isHeroPromoted).frames.get(0).sprites, graphics, camera, cont);
-		else
-			renderOnDirection(spriteAnims.getAnimation("UnLeft").frames.get(0).sprites, graphics, camera, cont);
-	}
-
-	private void renderOnSideRight(Graphics graphics, Camera camera, PaddedGameContainer cont)
-	{
-		if (isHeroBacked)
-			renderOnDirection(spriteAnims.getCharacterAnimation("Right", isHeroPromoted).frames.get(0).sprites, graphics, camera, cont);
-		else
-			renderOnDirection(spriteAnims.getAnimation("UnRight").frames.get(0).sprites, graphics, camera, cont);
-	}
-
-	private void renderOnDirection(ArrayList<AnimSprite> sprites, Graphics graphics, Camera camera, PaddedGameContainer cont)
-	{
-		for (AnimSprite as : sprites)
+			anim = spriteAnims.getDirectionAnimation(dir);
+			
+		for (AnimSprite as : anim.frames.get(0).sprites)
 		{
 			Image im = spriteAnims.getImageAtIndex(as.imageIndex).copy();
 			switch (specialEffectDirection)
@@ -437,12 +408,6 @@ public class CinematicActor implements Comparable<CinematicActor>
 
 		if (moving)
 		{
-			moveCounter += delta;
-			if (moveCounter > 30)
-			{
-
-			}
-
 			/*
 			movingDelta += delta;
 			while (movingDelta > jCinematicActor.getMoveUpdate())
@@ -741,33 +706,10 @@ public class CinematicActor implements Comparable<CinematicActor>
 
 	public void setFacing(Direction dir)
 	{
-		switch (dir)
-		{
-			case UP:
-				if (isHeroBacked)
-					currentAnim = spriteAnims.getCharacterAnimation("Up", isHeroPromoted);
-				else
-					currentAnim = spriteAnims.getAnimation("UnUp");
-				break;
-			case DOWN:
-				if (isHeroBacked)
-					currentAnim = spriteAnims.getCharacterAnimation("Down", isHeroPromoted);
-				else
-					currentAnim = spriteAnims.getAnimation("UnDown");
-				break;
-			case LEFT:
-				if (isHeroBacked)
-					currentAnim = spriteAnims.getCharacterAnimation("Left", isHeroPromoted);
-				else
-					currentAnim = spriteAnims.getAnimation("UnLeft");
-				break;
-			case RIGHT:
-				if (isHeroBacked)
-					currentAnim = spriteAnims.getCharacterAnimation("Right", isHeroPromoted);
-				else
-					currentAnim = spriteAnims.getAnimation("UnRight");
-				break;
-		}
+		if (isHeroBacked) 
+			currentAnim = spriteAnims.getCharacterDirectionAnimation(dir, isHeroPromoted);
+		else
+			currentAnim = spriteAnims.getDirectionAnimation(dir);
 		facing = dir;
 	}
 
@@ -787,13 +729,19 @@ public class CinematicActor implements Comparable<CinematicActor>
 	{
 		this.animHalting = halting;
 		this.animationLooping = looping;
-		if (isHeroBacked)
+		if (isHeroBacked) {
+			if (animation.startsWith(JAnimationConfiguration.getUnpromotedPrefix()))
+				animation.replaceFirst(JAnimationConfiguration.getUnpromotedPrefix(), "");
+			else if (animation.startsWith(JAnimationConfiguration.getPromotedPrefix()))
+				animation.replaceFirst(JAnimationConfiguration.getPromotedPrefix(), "");
 			this.currentAnim = spriteAnims.getCharacterAnimation(animation, isHeroPromoted);
+		}
 		else
 			this.currentAnim = spriteAnims.getAnimation(animation);
 
 		if (currentAnim == null)
-			throw new BadAnimationException("Unable to find animation: " + (isHeroBacked ? (isHeroPromoted ? "Pro" : "Un") : "" ) + animation + " for cinematic actor");
+			throw new BadAnimationException("Unable to find animation: " + (isHeroBacked ? 
+					(isHeroPromoted ? JAnimationConfiguration.getPromotedPrefix() : JAnimationConfiguration.getUnpromotedPrefix()) : "" ) + animation + " for cinematic actor");
 		this.animDelta = 0;
 		this.animUpdate = time / currentAnim.frames.size();
 	}

@@ -15,6 +15,8 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.Transition;
 import org.newdawn.slick.util.Log;
 
+import mb.fc.engine.CommRPG;
+import mb.fc.engine.config.EngineConfigurator;
 import mb.fc.game.exception.BadResourceException;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.resource.SpellResource;
@@ -98,7 +100,7 @@ public class LoadingState extends BasicGameState
 					if (!loadResources)
 					{
 						while (allLines.size() > 0)
-							loadResourceLine();
+							loadResourceLine(((CommRPG) game).getEngineConfiguratior());
 					}
 
 				}
@@ -117,7 +119,7 @@ public class LoadingState extends BasicGameState
 		}
 		else if (allLines.size() > 0)
 		{
-			loadResourceLine();
+			loadResourceLine(((CommRPG) game).getEngineConfiguratior());
 		}
 
 		loadIndex++;
@@ -148,13 +150,13 @@ public class LoadingState extends BasicGameState
 
 	}
 
-	private void loadResourceLine() {
+	private void loadResourceLine(EngineConfigurator configurator) {
 		String line = allLines.remove(0);
 		if (!line.startsWith("//"))
 		{
 			try
 			{
-				resourceManager.addResource(line, loadingStatus, loadIndex, loadAmount);
+				resourceManager.addResource(line, loadingStatus, loadIndex, loadAmount, configurator);
 			}
 			catch (BadResourceException e)
 			{

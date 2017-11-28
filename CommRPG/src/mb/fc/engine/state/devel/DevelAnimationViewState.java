@@ -39,6 +39,7 @@ public class DevelAnimationViewState extends BasicGameState implements ResourceS
 	private static final Color BG_COLOR = new Color(172, 205, 183);
 	private JSpell spell = null;
 	private ParticleSystem rainParticleSystem = null;
+	private CommRPG commRPG;
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
@@ -55,11 +56,12 @@ public class DevelAnimationViewState extends BasicGameState implements ResourceS
 	public void enter(GameContainer container, StateBasedGame game)
 			throws SlickException {
 		super.enter(container, game);
+		commRPG = (CommRPG) game;
 		frm = new FCResourceManager();
 		try {
-			frm.addResource(FCResourceManager.ANIMATIONS_FOLDER_IDENTIFIER + "," + FCResourceManager.ANIMATIONS_FOLDER, null, 0, 0);
-			frm.addResource(FCResourceManager.IMAGES_FOLDER_IDENTIFIER + "," + FCResourceManager.WEAPONS_FOLDER, null, 0, 0);
-			frm.addResource("spritedir,sprite", null, 0, 0);
+			frm.addResource(FCResourceManager.ANIMATIONS_FOLDER_IDENTIFIER + "," + FCResourceManager.ANIMATIONS_FOLDER, null, 0, 0, ((CommRPG) game).getEngineConfiguratior());
+			frm.addResource(FCResourceManager.IMAGES_FOLDER_IDENTIFIER + "," + FCResourceManager.WEAPONS_FOLDER, null, 0, 0, ((CommRPG) game).getEngineConfiguratior());
+			frm.addResource("spritedir,sprite", null, 0, 0, ((CommRPG) game).getEngineConfiguratior());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -159,7 +161,8 @@ public class DevelAnimationViewState extends BasicGameState implements ResourceS
 		if (parentSelector == animationFileSelector)
 		{
 			try {
-				frm.addResource(FCResourceManager.ANIMATION_IDENTIFIER + "," + selectedItem + "," + FCResourceManager.ANIMATIONS_FOLDER + "/" + selectedItem,  null, 0, 0);
+				frm.addResource(FCResourceManager.ANIMATION_IDENTIFIER + "," + selectedItem + "," + FCResourceManager.ANIMATIONS_FOLDER + "/" + selectedItem, 
+						null, 0, 0, commRPG.getEngineConfiguratior());
 				currentAnimation = new AnimationWrapper(frm.getSpriteAnimation(selectedItem));
 				ArrayList<String> animNames = new ArrayList<>(currentAnimation.getAnimations());
 				animationSelector = new ListUI("Anim", 550, animNames);

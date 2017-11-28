@@ -28,6 +28,7 @@ import org.newdawn.slick.util.ResourceLoader;
 
 import mb.fc.cinematic.Cinematic;
 import mb.fc.engine.CommRPG;
+import mb.fc.engine.config.EngineConfigurator;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.definition.EnemyDefinition;
 import mb.fc.game.definition.HeroDefinition;
@@ -100,7 +101,7 @@ public class FCResourceManager {
 
 	@SuppressWarnings("unchecked")
 	public void addResource(String resource, LoadingStatus loadingStatus, int currentIndex,
-			int maxIndex) throws IOException, SlickException {
+			int maxIndex, EngineConfigurator configurator) throws IOException, SlickException {
 		String[] split = resource.split(",");
 		if (split[0].equalsIgnoreCase("image"))
 		{
@@ -129,7 +130,7 @@ public class FCResourceManager {
 		}
 		else if (split[0].equalsIgnoreCase("anim"))
 		{
-			SpriteAnims sa = SpriteAnims.parseAnimations(split[2]);
+			SpriteAnims sa = configurator.getAnimationParser().parseAnimations(split[2]);
 			if (!images.containsKey(sa.getSpriteSheet()))
 				throw new BadResourceException("Error while attempting to load animation file: " + split[2] + ".\n The"
 					+ " animation file has refers to an image '" + sa.getSpriteSheet() + "' which does not exist\n."
@@ -296,7 +297,7 @@ public class FCResourceManager {
 			{
 				if (file.getName().endsWith(".anim")) {
 					Log.debug(file.getName());
-					SpriteAnims sa = SpriteAnims.parseAnimations(file.getPath());
+					SpriteAnims sa = configurator.getAnimationParser().parseAnimations(file.getPath());
 					if (!images.containsKey(sa.getSpriteSheet()))
 					{
 						throw new BadResourceException("Error while attempting to load animation file: " + file.getName() + ".\n The"
@@ -490,9 +491,9 @@ public class FCResourceManager {
 		return allLines;
 	}
 	
-	public void reloadAnimations() {
+	public void reloadAnimations(EngineConfigurator configurator) {
 		try {
-			this.addResource("animsheetdir,animations/animationsheets", null, 0, 0);
+			this.addResource("animsheetdir,animations/animationsheets", null, 0, 0, configurator);
 		} catch (IOException | SlickException e) {
 			JOptionPane.showMessageDialog(null, "An error occurred reloading animations: " + e.getMessage());
 		}
