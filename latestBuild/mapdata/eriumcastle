@@ -137,7 +137,7 @@
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="No treasure is as valuable as an exceptional book.<hardstop>"/>
 </text>
 <text id=8 description="Citizen 3 library">
-	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="There are many magical objects in this world that we do not fully understand but I plan to solve all of them!<hardstop>"/>
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="There are many magical objects in this world that we do not fully understand but I plan to solve all of their mysteries!<hardstop>"/>
 </text>
 <text id=9 description="Citizen 4 library">
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="She's a bit of a fanatic about magic but doesn't have a single magical bone in her body. Still, I admire her determination.<hardstop>"/>
@@ -158,10 +158,10 @@
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="You shouldn't be drinking on the job, soldier. Get to work!<hardstop>"/>
 </text>
 <text id=15 description="Citizen 2 pub">
-	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="Better be careful with the booze around all these guards. Wouldn't want to spend the night in jail.<hardstop>"/>
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="Better be careful with the booze around all these guards. Wouldn't want to spend the night locked up.<hardstop>"/>
 </text>
 <text id=16 description="Servant 1 quarters">
-	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="What a messy lot this group is! you'd think they could pick up after themselves!<hardstop>"/>
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="What a messy lot this group is! You'd think they could pick up after themselves!<hardstop>"/>
 </text>
 <text id=17 description="Sleeping Soldiers">
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="Zzzz...zzz...<hardstop>"/>
@@ -170,13 +170,13 @@
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="I always wished I knew a bit of magic to make cooking easier, but thease old hands will just have to do!<hardstop>"/>
 </text>
 <text id=19 description="Cook 2 Kitchen">
-	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="Despite working in the kitchen, I stay thin by delivering the food upstairs!<hardstop>"/>
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="Despite working in the kitchen, I stay thin by delivering the food upstairs.<hardstop>"/>
 </text>
 <text id=20 description="Soldier near courtyard">
 	<yesno require="," exclude="," triggeryes=1 triggerno=22 heroportrait="" enemyportrait="" animportrait="" message="You're a bit early, Noah. Are you reporting for duty?"/>
 </text>
 <text id=21 description="SearchNoItem">
-	<string require="," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="There doesnt seem to be anything here<hardstop>"/>
+	<string require="," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="There doesn't seem to be anything here.<hardstop>"/>
 </text>
 <text id=22 description="KeepRoaming">
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="Don't be late!<hardstop>"/>
@@ -191,7 +191,7 @@
 	<string require="," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, The Quartermaster's Manifest.<hardstop>"/>
 </text>
 <text id=26 description="Book4">
-	<string require="," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Mixed Unit Strategy for irregular Forces.<hardstop>"/>
+	<string require="," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Mixed Unit Strategy for Irregular Forces.<hardstop>"/>
 </text>
 <text id=27 description="Book5">
 	<string require="," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, The Adventures of a Princess.<hardstop>"/>

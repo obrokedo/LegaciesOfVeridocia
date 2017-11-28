@@ -7,19 +7,19 @@
 	<showcin cinid=0 exittrigid=-1/>
 </trigger>
 <trigger id=2 description="NorthWestStairsExit1" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="eriumcastle" enter="NorthWestHallStairsEntrance"/>
+	<loadmap mapdata="eriumcastle" enter="NorthWestHallStairsEntrance" transdir=""/>
 </trigger>
 <trigger id=3 description="NorthEastStairsExit1" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="eriumcastle" enter="NorthEastHallStairsEntrance"/>
+	<loadmap mapdata="eriumcastle" enter="NorthEastHallStairsEntrance" transdir=""/>
 </trigger>
 <trigger id=4 description="SouthWestStairsExit1" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="eriumcastle" enter="SouthWestHallStairsEntrance"/>
+	<loadmap mapdata="eriumcastle" enter="SouthWestHallStairsEntrance" transdir=""/>
 </trigger>
 <trigger id=5 description="SouthEastStairsExit1" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="eriumcastle" enter="SouthEastHallStairsEntrance"/>
+	<loadmap mapdata="eriumcastle" enter="SouthEastHallStairsEntrance" transdir=""/>
 </trigger>
 <trigger id=6 description="KingChamberStairsExit" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="eriumcastle" enter="KingChamberStairsEntrance"/>
+	<loadmap mapdata="eriumcastle" enter="KingChamberStairsEntrance" transdir=""/>
 </trigger>
 <trigger id=7 description="NoSearchItem" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<showtext textid=7/>
@@ -55,10 +55,10 @@
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="I had better hurry up and finish cleaning before the sun sets fully. Candle light tends to hide dirt more than you'd think!<hardstop>"/>
 </text>
 <text id=3 description="Servant 2 Dining Hall">
-	<conversation require="," exclude="," trigger=-1 heroportrait1="" enemyportrait1="" animportrait1="" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="These soldiers are such slobs! Every single one of them have the manners of a toddl...<pause> Oh! Hi, Noah! I don't mean you of course!<hardstop><split>You just don't see my messes because I make them at home. Can I lend a hand?<hardstop><split>Oh, that's alright. I complain but I really do enjoy my job and the company of everyone. Besides, doesn't your shift start soon?<hardstop><split>it does but I can still help...<hardstop><split>That's okay, I'm almost finished anyway. Thank you though.<hardstop>"/>
+	<conversation require="," exclude="," trigger=-1 heroportrait1="" enemyportrait1="" animportrait1="" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="These soldiers are such slobs! Every single one of them have the manners of a toddl...<pause> Oh! Hi, Noah! I don't mean you of course!<hardstop><split>You just don't see my messes because I make them at home. Can I lend a hand?<hardstop><split>Oh, that's alright. I complain but I really do enjoy my job and the company of everyone. Besides, doesn't your shift start soon?<hardstop><split>It does but I can still help...<hardstop><split>That's okay, I'm almost finished anyway. Thank you though.<hardstop>"/>
 </text>
 <text id=4 description="Soldier 1 Study">
-	<conversation require="," exclude="," trigger=-1 heroportrait1="" enemyportrait1="" animportrait1="" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="I love serving King Erium but I'm studying to work for the Kingdom. I hope to one day be a great blacksmith but...<pause> well, you can see the quality of my work.<hardstop><split>I think this is a great start! We'll all be lucky to have you making our weapons one day.<hardstop><split>You really think so? That means a lot! Please take this and let me know how well it fares in your training. *Received a 'useless' item*<hardstop>"/>
+	<conversation require="," exclude="," trigger=-1 heroportrait1="" enemyportrait1="" animportrait1="" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="I love serving King Erium but I'm studying to work for the Kingdom. I hope to one day be a great blacksmith but...<pause> well, you can see the quality of my work.<hardstop><split>This is a great start! We'll all be lucky to have you making our weapons one day.<hardstop><split>You really think so? That means a lot! Please take this and let me know how well it fares in your training. *Received a 'useless' item*<hardstop>"/>
 </text>
 <text id=5 description="Soldier 1 Storage">
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="I'm going to start studying to become a Warlord but I can't decide which weapon I should train with. I've heard that taking this career path requires a lot of discipline, if you want to be any good with your weapon of choice. Diversifying will only weaken your ablilities.<hardstop>"/>
@@ -68,7 +68,7 @@
 	<string require="EriumCastleUpperSharnaTalk," exclude="," trigger=-1 heroportrait="Sharna" enemyportrait="" animportrait="" message="Dont be late for patrol!<hardstop>"/>
 </text>
 <text id=7 description="SearchNoItem">
-	<string require="," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="There doesnt seem to be anything here<hardstop>"/>
+	<string require="," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="There doesn't seem to be anything here.<hardstop>"/>
 </text>
 <text id=8 description="Book1">
 	<string require="," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, The Beacon of Veridocia.<hardstop>"/>
@@ -80,7 +80,7 @@
 	<string require="," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Atlas of the Veridocian Continent.<hardstop>"/>
 </text>
 <text id=11 description="Book4">
-	<string require="," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Glory and Honor: Tales of Erium's Past Military Victories A History of Erium.<hardstop>"/>
+	<string require="," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Glory and Honor: Tales of Erium's Past Military Victories.<hardstop>"/>
 </text>
 <text id=12 description="Book5">
 	<string require="," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, The Adventures of Finn and Xander.<hardstop>"/>

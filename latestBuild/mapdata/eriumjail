@@ -12,7 +12,7 @@
 	<startbattle battletriggers="battle2" entrance="battlestart" battbg=0/>
 </trigger>
 <text id=0 description="guard1">
-	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="Halt! Who goes there.<hardstop>"/>
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="Halt! Who goes there?<hardstop>"/>
 </text>
 <cinematic id=0 description="Cinematic Jailbreak" camerax=0 cameray=0>
 	<addhero heroid="Craig" init=true/>
@@ -68,8 +68,8 @@
 	<nod name="Noah"/>
 	<wait time=1500/>
 	<speech text="Go on, Sharna.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
-	<speech text="If Mistal willingly attacked castle guards like us,<pause> then she's betrayed the country!<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
-	<speech text="I heard them mention the king<pause>.<pause><pause>.<pause><pause>.<pause><pause> it makes sense.<pause><pause><linebreak> And it seems she's set us up to take the fall for whatever it is she's up to.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
+	<speech text="If Mistal willingly attacked castle guards like us,<pause> then she's betrayed the kingdom!<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
+	<speech text="I heard them mention the King<pause>.<pause><pause>.<pause><pause>.<pause><pause> it makes sense.<pause><pause><linebreak> And it seems she's set us up to take the fall for whatever it is she's up to.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<speech text="Exactly!<pause><pause> I don't want to believe it,<pause> but what other possibility is there?<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
 	<tremble name="Huun"/>
 	<wait time=750/>
@@ -79,7 +79,7 @@
 	<facing name="Noah" dir=1/>
 	<speech text="You both have a point<pause>.<pause><pause>.<pause><pause>.<pause><pause> our only chance of exonerating ourselves is to get out of here.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<haltingmove name="Noah" x=576 y=192 speed="2.4" movehor=false movediag=false/>
-	<speech text="Daniel, would you let us out?<pause><pause> Mistal's plotting against the King.<pause><linebreak> He must be warned!<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
+	<speech text="Please, would you let us out?<pause><pause> Mistal's plotting against the King.<pause><linebreak> He must be warned!<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<cameramove x=600 y=228 time=500/>
 	<wait time=500/>
 	<camerafollow name="Guard"/>
@@ -180,9 +180,9 @@
 	<facing name="Noah" dir=0/>
 	<wait time=500/>
 	<facing name="Olivia" dir=1/>
-	<speech text="Good.<pause> You rescued them finally.<softstop> You know I can't maintain this spell indefinitely, Craig.<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait=""/>
+	<speech text="Good.<pause> You've finally rescued them.<softstop> You know I can't maintain this spell indefinitely, Craig.<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait=""/>
 	<speech text="Um,<pause> excuse me,<pause> but who are you?<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
-	<speech text="Oh, forgive us dear, we're<pause>.<pause>.<pause>.<nextcin><nextcin><softstop> There it goes.<pause> We must make haste!<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait=""/>
+	<speech text="Oh, forgive us dear, we're<pause>.<pause>.<pause>.<nextcin><nextcin><softstop> no good, there it goes.<pause> We must make haste!<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait=""/>
 	<remstatic spriteid="Fire"/>
 	<playsound sound="dark" volume=75/>
 	<facing name="Huun" dir=2/>

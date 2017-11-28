@@ -1,10 +1,10 @@
-<quest id=0 description="EriumWeaponShopInitialTalk">
+<quest id=0 description="EriumWeaponShopInitialTalk" extradescription="null">
 </quest>
-<quest id=1 description="EriumCastleUpperSharnaTalk">
+<quest id=1 description="EriumCastleUpperSharnaTalk" extradescription="null">
 </quest>
-<quest id=2 description="Battle2">
+<quest id=2 description="Battle2" extradescription="null">
 </quest>
-<quest id=3 description="Battle1">
+<quest id=3 description="Battle1" extradescription="null">
 </quest>
-<quest id=4 description="PreBattle1CinimaticWatched">
+<quest id=4 description="PreBattle1CinimaticWatched" extradescription="null">
 </quest>
