@@ -122,13 +122,13 @@
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="Hey, look who decided to show up early for once! Maybe Sharna is finally rubbing off on you.<hardstop>"/>
 </text>
 <text id=3 description="Citizen 1 Garden">
-	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="This garden is beautiful during the day, but it is especially enchanting during the sunrise. I thought sunset would be nice too but the castle walls shorten the experience.<hardstop>"/>
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="This garden is beautiful during the day, but it is especially enchanting during the sunrise. <hardstop>I thought sunset would be nice too but the castle walls shorten the experience.<hardstop>"/>
 </text>
 <text id=4 description="Soldier 1 weapon room">
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="I envy you. I'm stuck in here cleaning these weapons while you get to patrol the castle.<hardstop>"/>
 </text>
 <text id=5 description="Soldier 2 weapon room">
-	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="Cleaning this equipment is thankless work but when it's all done, I feel like it is worth it. I just remember that the maintenance I perform contributes to the combat readiness of our soldiers.<hardstop>"/>
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="Cleaning this equipment is thankless work but when it's all done, I feel like it is worth it. <hardstop>I just remember that the maintenance I perform contributes to the combat readiness of our soldiers.<hardstop>"/>
 </text>
 <text id=6 description="Citizen 1 library">
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="Typical boorish soldier, talking in the library. Maybe if you'd put down your sword and pick up a book, we'd all be better off.<hardstop>"/>

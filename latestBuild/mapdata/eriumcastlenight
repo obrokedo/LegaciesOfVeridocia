@@ -159,7 +159,7 @@
 	<haltingmove name="Cam" x=744 y=600 speed="1" movehor=false movediag=true/>
 	<wait time=1000/>
 	<speech text="I heard it over by the trees.<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
-	<speech text="Right. I'm going to assess the situation.<hardstop> <linebreak>Keep watch over by those bushes, and be ready to assist. <linebreak>Stay out of sight.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
+	<speech text="Right. I'm going to assess the situation.<hardstop> <linebreak> Keep watch over by those bushes, and be ready to assist. <linebreak> Stay out of sight.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<facing name="Sharna" dir=2/>
 	<facing name="Huun" dir=3/>
 	<wait time=375/>
@@ -488,12 +488,12 @@
 	<stopse name="Craig"/>
 	<speech text="No reason to waste time chattin' here, either. Make it quick!<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
 	<facing name="Craig" dir=0/>
-	<speech text="Alright, alright. The three of you saw Mistal meeting with a stranger last night, right?<pause> Craig and I have been watching Mistal for some time and were on our way to confront the pair,<pause> but you got to them first.<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait=""/>
+	<speech text="Alright, alright. The three of you saw Mistal meeting with a stranger last night, right?<hardstop> Craig and I have been watching Mistal for some time and were on our way to confront the pair,<hardstop> but you got to them first.<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait=""/>
 	<speech text="Woulda helped ya there but not with the whole castle coming to see what was happenin'.<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
 	<haltingmove name="Olivia" x=1392 y=240 speed="2" movehor=false movediag=false/>
 	<facing name="Olivia" dir=0/>
 	<speech text="So, we still don't know who Mistal was meeting with, but we couldn't let you be executed either.<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait=""/>
-	<speech text="Now, instead of finding out something useful, we tip our hand by breaking you out. Now Mistal will be wise to us. Want to yap about it some more, or are ya happy? Let's get moving!<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
+	<speech text="Now, instead of finding out something useful, we tip our hand by breaking you out.<hardstop> Now Mistal will be wise to us. Want to yap about it some more, or are ya happy? Let's get moving!<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
 	<forcedmove name="Noah" x=1080 y=192 speed=1 facing=2 movehor=false movediag=false/>
 	<forcedmove name="Sharna" x=1080 y=216 speed=1 facing=2 movehor=false movediag=false/>
 	<forcedmove name="Huun" x=1080 y=192 speed=1 facing=2 movehor=false movediag=false/>

@@ -117,7 +117,7 @@
 </text>
 <text id=7 description="Weapon Shop">
 	<string require="EriumWeaponShopInitialTalk," exclude="Battle2," trigger=-1 heroportrait="" enemyportrait="" animportrait="Shopkeeper1" message="See you again.<hardstop>"/>
-	<conversation require="," exclude="EriumWeaponShopInitialTalk,Battle2," trigger=2 heroportrait1="" enemyportrait1="" animportrait1="Shopkeeper1" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="Sorry, I'm out of stock right now.<hardstop><split>Out of stock? You're never out of stock!<hardstop><split>Grand Mage Mistal cleaned me out. I guess she's going to start a new training plan?<hardstop><split>She's not exactly in charge of training. Maybe it was a special request from king Erium.<hardstop><split>I'm not sure. I'm expecting a new shipment any day now though. The trade caravan should be here this week.<hardstop><split>I'll check another day then. Thank you.<hardstop>"/>
+	<conversation require="," exclude="EriumWeaponShopInitialTalk,Battle2," trigger=2 heroportrait1="" enemyportrait1="" animportrait1="Shopkeeper1" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="Sorry, I'm out of stock right now.<hardstop><split>Out of stock? You're never out of stock!<hardstop><split>Grand Mage Mistal cleaned me out. I guess she's going to start a new training plan?<hardstop><split>She's not exactly in charge of training. Maybe it was a special request from King Erium.<hardstop><split>I'm not sure. I'm expecting a new shipment any day now though. The trade caravan should be here this week.<hardstop><split>I'll check another day then. Thank you.<hardstop>"/>
 	<string require="Battle2," exclude="," trigger=28 heroportrait="" enemyportrait="" animportrait="" message="Looking for some sharp new weapon?<hardstop>"/>
 </text>
 <text id=8 description="Priestess">
@@ -136,7 +136,7 @@
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="Welcome to Erium<hardstop>"/>
 </text>
 <text id=13 description="SearchStatue">
-	<string require="," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="I wonder who this statue is supposed to represent.?<hardstop>"/>
+	<string require="," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="I wonder who this statue is supposed to represent.<hardstop>"/>
 </text>
 <text id=14 description="BehindCounter">
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="Shopkeeper1" message="Who said you were allowed back here!<hardstop>"/>

@@ -45,7 +45,7 @@
 	<fadein time=2000 halting=false init=true/>
 	<speech text="... But we can't prove that.<hardstop>" heroportrait="Huun" enemyportrait="" animportrait=""/>
 	<speech text="Noah only fell on her.<pause><pause> Are you suggesting that she just attacks any person that mistakenly runs into her?<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
-	<speech text="Hey<pause>.<pause><pause>.<pause><pause>.<pause><pause> I tripped.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
+	<speech text="Hey<pause>.<pause><pause>.<pause><pause>.<pause><pause> I tripped!<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<haltingmove name="Huun" x=552 y=144 speed="2.4" movehor=false movediag=false/>
 	<facing name="Huun" dir=3/>
 	<wait time=500/>
