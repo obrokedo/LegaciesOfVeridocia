@@ -336,9 +336,9 @@
 </cinematic>
 <cinematic id=1 description="Battle1 Aftermath" camerax=600 cameray=960>
 	<playmusic music="battle1" volume=30/>
-	<addactor x=840 y=840 name="Huun" anim="Huun" startanim="UnDown" visible=true init=true associatedhero=""/>
+	<addactor x=816 y=840 name="Huun" anim="Huun" startanim="UnDown" visible=true init=true associatedhero=""/>
 	<addactor x=864 y=864 name="Noah" anim="Noah" startanim="UnDown" visible=true init=true associatedhero=""/>
-	<addactor x=888 y=840 name="Sharna" anim="Sharna" startanim="UnDown" visible=true init=true associatedhero=""/>
+	<addactor x=888 y=816 name="Sharna" anim="Sharna" startanim="UnDown" visible=true init=true associatedhero=""/>
 	<addactor x=936 y=840 name="Mistal" anim="MistalCloaked" startanim="UnLeft" visible=false init=true associatedhero=""/>
 	<camerafollow name="Noah"/>
 	<fadein time=1000 halting=false init=true/>
@@ -379,9 +379,9 @@
 	<wait time=250/>
 	<flashscreen time=250/>
 	<playsound sound="dark" volume=75/>
-	<addactor x=840 y=840 name="Fog0" anim="Fog" startanim="UnDown" visible=true init=false associatedhero=""/>
+	<addactor x=816 y=840 name="Fog0" anim="Fog" startanim="UnDown" visible=true init=false associatedhero=""/>
 	<addactor x=864 y=864 name="Fog1" anim="Fog" startanim="UnDown" visible=true init=false associatedhero=""/>
-	<addactor x=888 y=840 name="Fog2" anim="Fog" startanim="UnDown" visible=true init=false associatedhero=""/>
+	<addactor x=888 y=816 name="Fog2" anim="Fog" startanim="UnDown" visible=true init=false associatedhero=""/>
 	<wait time=250/>
 	<speech text="Ugggghh.<pause>.<pause>.<pause><hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<playsound sound="hit3" volume=75/>
