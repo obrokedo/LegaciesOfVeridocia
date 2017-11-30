@@ -1,6 +1,5 @@
 <map file="EriumCastleUpper.tmx"/>
 <trigger id=0 description="MapStart" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<playmusic music="castlenight"/>
 </trigger>
 <trigger id=1 description="Sharna cutscene" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<completequest questid="EriumCastleUpperSharnaTalk"/>
