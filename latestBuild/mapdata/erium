@@ -1,6 +1,6 @@
 <map file="Erium.tmx"/>
 <trigger id=0 description="MapStart" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<playmusic music="castlenight"/>
+	<playmusic music="erium"/>
 </trigger>
 <trigger id=1 description="OpenItemShop" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<showshop buypercent="1.2" sellpercent="0.8" itemssold="Medical Herb," portrait="Shopkeeper1"/>
@@ -157,7 +157,7 @@
 	<string require="Battle2," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="I see guards up ahead. We should avoid getting seen.<hardstop>"/>
 </text>
 <cinematic id=0 description="NoahGettingReady" camerax=0 cameray=0>
-	<playmusic music="castlenight" volume=100/>
+	<playmusic music="hq" volume=100/>
 	<addactor x=144 y=156 name="cam" anim="Noah" startanim="Down" visible=false init=true associatedhero="Noah"/>
 	<addactor x=144 y=156 name="Noah" anim="Noah" startanim="Down" visible=true init=true associatedhero="Noah"/>
 	<camerafollow name="Noah"/>
