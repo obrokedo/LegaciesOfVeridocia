@@ -27,6 +27,7 @@ import mb.fc.game.trigger.TriggerCondition.EnemyInBattle;
 import mb.fc.game.trigger.TriggerCondition.HeroEntersLocation;
 import mb.fc.game.trigger.TriggerCondition.HeroInBattle;
 import mb.fc.game.trigger.TriggerCondition.LocationContainsUnits;
+import mb.fc.game.trigger.TriggerCondition.LocationSearched;
 import mb.fc.game.trigger.TriggerCondition.MapLoaded;
 import mb.fc.game.trigger.TriggerCondition.QuestComplete;
 import mb.fc.game.trigger.TriggerCondition.UnitDeath;
@@ -164,6 +165,11 @@ public class TextParser
 					{
 						String location = ta.getAttribute("location");
 						condition.addCondition(new HeroEntersLocation(location, ta.getBoolAttribute("immediate")));
+					}
+					else if (ta.getTagType().equalsIgnoreCase("searchloc"))
+					{
+						String location = ta.getAttribute("location");
+						condition.addCondition(new LocationSearched(location));
 					}
 					else if (ta.getTagType().equalsIgnoreCase("loccontains"))
 					{
@@ -412,6 +418,9 @@ public class TextParser
 				else if (tagType.equalsIgnoreCase("killenemies"))
 				{
 					te.addTriggerable(te.new TriggerKillEnemies(Integer.parseInt(actionParams.get("unitid"))));
+				}
+				else if (tagType.equalsIgnoreCase("npcspeech")) {
+					te.addTriggerable(te.new TriggerNPCSpeech(actionParams.get("npcname")));
 				}
 				else
 				{

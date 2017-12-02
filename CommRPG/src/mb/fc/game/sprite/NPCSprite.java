@@ -16,9 +16,13 @@ public class NPCSprite extends AnimatedSprite
 	private int initialTileX = -1;
 	private int initialTileY = -1;
 	private int maxWander = 0;
+	private boolean throughWall = false;
+	
+	private boolean waitingForSpeechToEnd = false;
+	private Direction originalFacing = null;
 
 	public NPCSprite(String imageName,
-			int speechId, int id, String name)
+			int speechId, int id, String name, boolean throughWall)
 	{
 		super(0, 0, imageName, Integer.MAX_VALUE);
 		this.name = name;
@@ -26,6 +30,7 @@ public class NPCSprite extends AnimatedSprite
 		this.spriteType = Sprite.TYPE_NPC;
 		this.uniqueNPCId = 0;
 		this.id = id;
+		this.throughWall = throughWall;
 	}
 
 	public void setInitialPosition(int xLoc, int yLoc,
@@ -42,6 +47,8 @@ public class NPCSprite extends AnimatedSprite
 	public void triggerButton1Event(StateInfo stateInfo)
 	{
 		if (Speech.showFirstSpeechMeetsReqs(speechId, stateInfo)) {
+			originalFacing = this.getFacing();
+			waitingForSpeechToEnd = true;
 			if (stateInfo.getCurrentSprite().getLocX() > this.getLocX())
 				this.setFacing(Direction.RIGHT);
 			else if (stateInfo.getCurrentSprite().getLocX() < this.getLocX())
@@ -59,9 +66,11 @@ public class NPCSprite extends AnimatedSprite
 	public void update(StateInfo stateInfo) {
 		super.update(stateInfo);
 		
-		if (stateInfo.getCamera().isVisible(this)) {
-			if (maxWander > 0)
-				wanderMove(stateInfo);
+		if (!waitingForSpeechToEnd) {
+			if (stateInfo.getCamera().isVisible(this)) {
+				if (maxWander > 0)
+					wanderMove(stateInfo);
+			}
 		}
 	}
 
@@ -122,5 +131,25 @@ public class NPCSprite extends AnimatedSprite
 	public void doneMoving() {
 		super.doneMoving();
 		moving = false;
+	}
+
+	public boolean isThroughWall() {
+		return throughWall;
+	}
+
+	public boolean isWaitingForSpeechToEnd() {
+		return waitingForSpeechToEnd;
+	}
+
+	public void setWaitingForSpeechToEnd(boolean waitingForSpeechToEnd) {
+		this.waitingForSpeechToEnd = waitingForSpeechToEnd;
+	}
+
+	public Direction getOriginalFacing() {
+		return originalFacing;
+	}
+
+	public void setOriginalFacing(Direction originalFacing) {
+		this.originalFacing = originalFacing;
 	}
 }

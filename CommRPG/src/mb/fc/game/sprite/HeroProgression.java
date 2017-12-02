@@ -193,9 +193,7 @@ public class HeroProgression implements Serializable
 				// System.out.println("New Level ---- " + i);
 				float gain = getStatIncrease(new Object[]{"4", 30, 90}, true, val, i);
 				val += (int) gain;
-				System.out.print("NEW " + val +", ");
 			}
-			System.out.println();
 		}
 
 		if (val > max)

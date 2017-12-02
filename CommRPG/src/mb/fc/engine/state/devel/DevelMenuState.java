@@ -149,7 +149,7 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 		g.drawString("F2 - Open Planner", container.getWidth() - 250, container.getHeight() - amount-- * 30);
 		g.drawString("F3 - Open Quick Animator", container.getWidth() - 250, container.getHeight() - amount-- * 30);
 		g.drawString("F4 - Open Animation Viewer", container.getWidth() - 250, container.getHeight() - amount-- * 30);
-		g.drawString("F5 - Run Test", container.getWidth() - 250, container.getHeight() - amount-- * 30);
+		// g.drawString("F5 - Run Test", container.getWidth() - 250, container.getHeight() - amount-- * 30);
 		g.drawString("F6 - Open Battle Viewer", container.getWidth() - 250, container.getHeight() - amount-- * 30);
 		g.drawString("F8 - Load Saved Game", container.getWidth() - 250, container.getHeight() - amount-- * 30);
 		
@@ -197,12 +197,14 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 			game.enterState(CommRPG.STATE_GAME_ANIM_VIEW);
 		}
 
+		/*
 		if (container.getInput().isKeyPressed(Input.KEY_F5))
 		{
 			CommRPG.TEST_MODE_ENABLED = true;
 			this.gameSetup(game, container);
 			start(LoadTypeEnum.CINEMATIC, "neweriumcastle", null);
 		}
+		*/
 		
 		if (container.getInput().isKeyPressed(Input.KEY_F6))
 		{

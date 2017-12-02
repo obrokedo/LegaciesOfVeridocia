@@ -21,14 +21,12 @@ public class MultiHeroJoinMenu extends Menu implements MenuListener {
 		super(PanelType.PANEL_MULTI_JOIN_CHOOSE);
 		heroMenus = new ArrayList<>();
 		combatSpriteHeroOptions.forEach(cs -> heroMenus.add(new HeroStatMenu(stateInfo.getPaddedGameContainer(), cs, stateInfo)));
-		System.out.println("PLEASE?");
 	}
 
 	@Override
 	public MenuUpdate handleUserInput(FCInput input, StateInfo stateInfo) {
 		if (activeMenu + 1 < heroMenus.size() && input.isKeyDown(KeyMapping.BUTTON_RIGHT)) {
 			activeMenu++;
-			System.out.println(activeMenu);
 			return MenuUpdate.MENU_ACTION_SHORT;
 		} else if (activeMenu > 0 && input.isKeyDown(KeyMapping.BUTTON_LEFT)) {
 			activeMenu--;

@@ -99,7 +99,6 @@ public class ShopChooseItemMenu extends HeroesStatMenu implements MenuListener
 		if (selectingItemState)
 		{
 			selectingItemState = false;
-			System.out.println("STOP SELECTING ITEM STATE");
 			return MenuUpdate.MENU_ACTION_LONG;
 		}
 		else

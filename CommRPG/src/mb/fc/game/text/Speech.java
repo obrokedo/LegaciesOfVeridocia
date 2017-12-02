@@ -8,7 +8,7 @@ import mb.fc.game.menu.Portrait;
 import mb.fc.utils.StringUtils;
 
 public class Speech
-{
+{	
 	private String message;
 	private String[] requires;
 	private String[] excludes;

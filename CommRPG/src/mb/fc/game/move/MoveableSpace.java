@@ -378,7 +378,6 @@ public class MoveableSpace implements KeyboardListener, TileBasedMap
 	 * @param checkEvents A boolean indicating whether user input should be checked on update
 	 */
 	public void setCheckEvents(boolean checkEvents) {
-		System.out.println("Set check events " + checkEvents);
 		this.checkEvents = checkEvents;
 	}
 

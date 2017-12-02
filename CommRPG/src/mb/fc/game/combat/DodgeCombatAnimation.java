@@ -37,7 +37,6 @@ public class DodgeCombatAnimation extends CombatAnimation
 			// We're going to set the longer animation to the one that is driven by the super class
 			// and we'll manually update the shorter one
 			if (spellAnimationLength > blockAnimationLength) {
-				System.out.println("SWAP ANIMATIONS");
 				AnimationWrapper temp = spellBlockAnimation;
 				spellBlockAnimation = animationWrapper;
 				animationWrapper = temp;

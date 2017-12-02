@@ -30,6 +30,7 @@ import mb.fc.cinematic.Cinematic;
 import mb.fc.engine.CommRPG;
 import mb.fc.engine.config.EngineConfigurator;
 import mb.fc.engine.state.StateInfo;
+import mb.fc.game.constants.TextSpecialCharacters;
 import mb.fc.game.definition.EnemyDefinition;
 import mb.fc.game.definition.HeroDefinition;
 import mb.fc.game.definition.ItemDefinition;
@@ -56,7 +57,6 @@ public class FCResourceManager {
 	public static final String WEAPONS_EXTENSION = ".png";
 
 	public static final String IMAGES_FOLDER_IDENTIFIER = "imagedir";
-
 
 	private Hashtable<String, Image> images = new Hashtable<String, Image>();
 	private Hashtable<String, SpriteSheet> spriteSheets = new Hashtable<String, SpriteSheet>();
@@ -162,7 +162,6 @@ public class FCResourceManager {
 			{
 				HeroDefinition hd = HeroDefinition.parseHeroDefinition(ta);
 				heroDefinitionsById.put(hd.getId(), hd);
-				System.out.println("Added hero " + hd.getName() + " with id " + hd.getId());
 			}
 
 			HeroResource.initialize(heroDefinitionsById);
@@ -464,11 +463,12 @@ public class FCResourceManager {
 		return cinematicById.get(id);
 	}
 
-	public void checkTriggerCondtions(String locationEntered, boolean immediate, boolean onMapLoad, StateInfo stateInfo)
+	public void checkTriggerCondtions(String location, 
+			boolean locationEntered, boolean immediate, boolean onMapLoad, boolean searching, StateInfo stateInfo)
 	{
 		for (TriggerCondition tc : this.conditions)
 		{
-			tc.executeCondtions(locationEntered, immediate, onMapLoad, stateInfo);
+			tc.executeCondtions(location, locationEntered, immediate, onMapLoad, searching, stateInfo);
 		}
 	}
 

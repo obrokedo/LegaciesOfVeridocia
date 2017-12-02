@@ -92,7 +92,7 @@ public class Map
 	
 	public void initializeObjects(boolean isCombat, StateInfo stateInfo)
 	{
-		int doorId = 500;
+		int incrementingIds = 5000;
 		for (MapObject mo : getMapObjects())
 		{
 			if (mo.getKey().equalsIgnoreCase("sprite"))
@@ -101,7 +101,7 @@ public class Map
 			}
 			else if (mo.getKey().equalsIgnoreCase("door"))
 			{
-				Door door = (Door) mo.getDoor(stateInfo.getResourceManager(), doorId++);
+				Door door = (Door) mo.getDoor(stateInfo.getResourceManager(), incrementingIds++);
 				stateInfo.addSprite(door);
 				// stateInfo.addMapTrigger(new TriggerLocation(stateInfo, mo, door));
 				Trigger event = new Trigger("Door Trigger " + door.getId(), -100, false, false, true, true, null, null);
@@ -114,7 +114,12 @@ public class Map
 			}
 			else if (mo.getKey().equalsIgnoreCase("searcharea"))
 			{
-				stateInfo.addSprite(mo.getSearchArea(stateInfo.getResourceManager()));
+				mo.setName("Search Area " + incrementingIds++);
+				mo.establishSearchArea(stateInfo.getResourceManager());
+			}
+			else if (mo.getKey().equalsIgnoreCase("chest")) {
+				mo.setName("Chest " + incrementingIds++);
+				stateInfo.addSprite(mo.establishChest(incrementingIds++, incrementingIds++, stateInfo.getResourceManager()));
 			}
 			/*
 			else if (mo.getKey().equalsIgnoreCase("roof"))

@@ -12,10 +12,13 @@ import mb.fc.engine.message.LoadMapMessage;
 import mb.fc.engine.message.MessageType;
 import mb.fc.engine.message.ShopMessage;
 import mb.fc.engine.message.ShowCinMessage;
+import mb.fc.engine.message.SpeechMessage;
 import mb.fc.engine.message.StringMessage;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.ai.AI;
 import mb.fc.game.constants.Direction;
+import mb.fc.game.constants.TextSpecialCharacters;
+import mb.fc.game.item.Item;
 import mb.fc.game.resource.HeroResource;
 import mb.fc.game.resource.ItemResource;
 import mb.fc.game.sprite.CombatSprite;
@@ -413,16 +416,25 @@ public class Trigger
 	public class TriggerShowText implements Triggerable
 	{
 		private int textId;
+		private String message;
 
 		public TriggerShowText(int textId)
 		{
 			this.textId = textId;
+			message = null;
+		}
+		
+		public TriggerShowText(String message) {
+			this.message = message;
 		}
 
 		@Override
 		public boolean perform(StateInfo stateInfo)
 		{
-			Speech.showFirstSpeechMeetsReqs(textId, stateInfo);
+			if (message == null)
+				Speech.showFirstSpeechMeetsReqs(textId, stateInfo);
+			else
+				stateInfo.sendMessage(new SpeechMessage(message));
 			return false;
 		}
 	}
@@ -633,7 +645,7 @@ public class Trigger
 		public boolean perform(StateInfo stateInfo) {
 			for (MapObject mo : stateInfo.getCurrentMap().getMapObjects()) {
 				if (locationName.equalsIgnoreCase(mo.getName())) {
-					stateInfo.addSprite(mo.getNPC(textId, name, animation, facing, wander, npcId, stateInfo.getResourceManager()));
+					stateInfo.addSprite(mo.getNPC(textId, name, animation, facing, wander, npcId, false, stateInfo.getResourceManager()));
 					break;
 				}
 			}
@@ -702,6 +714,7 @@ public class Trigger
 
 		public TriggerAddItem(int itemId) {
 			super();
+			this.itemId = itemId;
 		}
 
 		@Override
@@ -710,7 +723,9 @@ public class Trigger
 			{
 				if (hero.getItemsSize() != 4)
 				{
-					hero.addItem(ItemResource.getItem(itemId, stateInfo.getResourceManager()));
+					Item item = ItemResource.getItem(itemId, stateInfo.getResourceManager());
+					hero.addItem(item);
+					stateInfo.sendMessage(new SpeechMessage(hero.getName() + " recieved the " + item.getName() + TextSpecialCharacters.CHAR_HARD_STOP));
 					break;
 				}
 			}
@@ -766,7 +781,28 @@ public class Trigger
 			}
 			
 			return false;
+		}	
+	}
+	
+	public class TriggerNPCSpeech implements Triggerable
+	{
+		private String npcName;
+		
+		public TriggerNPCSpeech(String npcName) {
+			super();
+			this.npcName = npcName;
 		}
+
+		@Override
+		public boolean perform(StateInfo stateInfo) {
+			for (Sprite s : stateInfo.getSprites()) {
+				if (s.getSpriteType() == Sprite.TYPE_NPC && npcName.equalsIgnoreCase(s.getName())) {
+					((NPCSprite) s).triggerButton1Event(stateInfo);
+				}
+			}
+			return false;
+		}
+		
 		
 	}
 

@@ -168,4 +168,8 @@ public class Portrait
 		isTalking = talking;
 		talkAnim.resetCurrentAnimation();
 	}
+
+	public boolean isTalking() {
+		return isTalking;
+	}
 }

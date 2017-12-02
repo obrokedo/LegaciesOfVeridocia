@@ -16,13 +16,19 @@ import mb.fc.game.ai.ClericAI;
 import mb.fc.game.ai.WarriorAI;
 import mb.fc.game.ai.WizardAI;
 import mb.fc.game.constants.Direction;
+import mb.fc.game.constants.TextSpecialCharacters;
+import mb.fc.game.item.Item;
 import mb.fc.game.resource.EnemyResource;
+import mb.fc.game.resource.ItemResource;
 import mb.fc.game.resource.NPCResource;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.sprite.Door;
 import mb.fc.game.sprite.NPCSprite;
 import mb.fc.game.sprite.Sprite;
 import mb.fc.game.sprite.StaticSprite;
+import mb.fc.game.text.Speech;
+import mb.fc.game.trigger.Trigger;
+import mb.fc.game.trigger.TriggerCondition;
 import mb.fc.loading.FCResourceManager;
 
 public class MapObject
@@ -102,7 +108,10 @@ public class MapObject
 			String[] splitParams = value.split(" ");
 			for (int i = splitParams.length - 1; i >= 0; i--)
 			{
+				if (splitParams[i].endsWith("="))
+					continue;
 				String[] attributes = splitParams[i].split("=");
+				
 				// Handle the case where we've parsed something with a space in it
 				if (attributes.length == 1) {
 					splitParams[i - 1] = splitParams[i - 1] + " " + splitParams[i];
@@ -189,11 +198,16 @@ public class MapObject
 			facing = Integer.parseInt(params.get("facing"));
 		}
 		
-		return getNPC(Integer.parseInt(params.get("textid")), params.get("name"), animation, facing, wander, uniqueId, fcrm);
+		boolean throughWall = false;
+		if (params.containsKey("throughwall")) {
+			throughWall = Boolean.getBoolean(params.get("throughwall"));
+		}
+		
+		return getNPC(Integer.parseInt(params.get("textid")), params.get("name"), animation, facing, wander, uniqueId, throughWall, fcrm);
 	}
 	
-	public NPCSprite getNPC(int textId, String name, String animation, Integer facing, Integer wander, Integer npcId, FCResourceManager fcrm) {
-		NPCSprite npc = NPCResource.getNPC(animation, textId, name);
+	public NPCSprite getNPC(int textId, String name, String animation, Integer facing, Integer wander, Integer npcId, boolean throughWall, FCResourceManager fcrm) {
+		NPCSprite npc = NPCResource.getNPC(animation, textId, name, throughWall);
 		npc.initializeSprite(fcrm);
 		
 		int wanderVal = 0;
@@ -281,7 +295,7 @@ public class MapObject
 		return s;
 	}
 
-	public Sprite getSearchArea(FCResourceManager fcrm)
+	public void establishSearchArea(FCResourceManager fcrm)
 	{
 		int[] trigger = null;
 		if (params.containsKey("searchtrigger"))
@@ -291,12 +305,45 @@ public class MapObject
 			for (int i = 0; i < split.length; i++)
 				trigger[i] = Integer.parseInt(split[i]);
 		}
-
-		Sprite s = new StaticSprite(x, y, trigger);
-		s.initializeSprite(fcrm);
-		s.setLocX(x, fcrm.getMap().getTileEffectiveWidth());
-		s.setLocY(y, fcrm.getMap().getTileEffectiveHeight());
-		return s;
+		
+		TriggerCondition tc = new TriggerCondition(trigger[0], "");
+		tc.addCondition(new TriggerCondition.LocationSearched(name));
+		fcrm.addTriggerCondition(tc);
+	}
+	
+	public Sprite establishChest(int triggerId1, int triggerId2, FCResourceManager fcrm) {
+		// parse sprite image
+		// setup chest sprite
+		// create trigger
+		// 1. give item
+		// 2. remove sprite
+		// add search vondition
+		
+		String spriteImage = params.get("spriteimage");
+		String itemString = params.get("itemid");
+		Item item = null;
+		if (itemString != null && itemString.trim().length() > 0 && !itemString.equalsIgnoreCase("-1")) {
+			item = ItemResource.getItem(Integer.parseInt(itemString), fcrm);
+		}
+		
+		Trigger searchTrigger1 = new Trigger("SearchChest" + triggerId1, triggerId1, true, false, true, false,
+				 null, null);
+		Trigger searchTrigger2 = new Trigger("SearchChest" + triggerId2, triggerId2, false, 
+				true, true, false, null, null);
+		
+		Sprite chestSprite = new StaticSprite(x, y, name, fcrm.getImage(spriteImage), new int[] {triggerId1, triggerId2} );
+		chestSprite.setLocX(x, fcrm.getMap().getTileEffectiveWidth());
+		chestSprite.setLocY(y, fcrm.getMap().getTileEffectiveHeight());
+		searchTrigger1.addTriggerable(searchTrigger1.new TriggerRemoveSprite(name));
+		if (item != null) {
+			searchTrigger2.addTriggerable(searchTrigger2.new TriggerAddItem(item.getItemId()));
+			searchTrigger2.addTriggerable(searchTrigger2.new TriggerShowText("There was a " + item.getName() + " inside!"  + TextSpecialCharacters.CHAR_HARD_STOP));
+		} else {
+			searchTrigger2.addTriggerable(searchTrigger2.new TriggerShowText("There was nothing inside..." + TextSpecialCharacters.CHAR_HARD_STOP));
+		}
+		fcrm.addTriggerEvent(triggerId1, searchTrigger1);
+		fcrm.addTriggerEvent(triggerId2, searchTrigger2);
+		return chestSprite;
 	}
 
 	public Sprite getDoor(FCResourceManager fcrm, int doorId)

@@ -244,8 +244,9 @@ public class PlannerLine
 					break;
 				case PlannerValueDef.TYPE_BOOLEAN:
 					c = new JCheckBox();
-					if (values.size() > i)
-						((JCheckBox) c).setSelected((boolean) values.get(i));
+					if (values.size() > i && values.get(i) != null) {
+						((JCheckBox) c).setSelected(Boolean.parseBoolean(values.get(i).toString()));
+					}
 					break;
 				case PlannerValueDef.TYPE_STRING:
 					if (pv.getRefersTo() == PlannerValueDef.REFERS_NONE)

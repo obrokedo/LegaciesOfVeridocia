@@ -63,7 +63,7 @@ public class Sprite implements Serializable
 
 	public void setLocX(float locX, int tileWidth) {
 		spriteBounds.setX(locX);
-		tileX = (int) (locX / tileWidth);
+		tileX = (int) Math.ceil(locX / tileWidth);
 	}
 
 	public float getLocY() {
@@ -72,7 +72,7 @@ public class Sprite implements Serializable
 	
 	public void setLocY(float locY, int tileHeight) {
 		spriteBounds.setY(locY);
-		tileY = (int) (locY / tileHeight);
+		tileY = (int) Math.ceil(locY / tileHeight);
 	}
 
 	public int getTileX() {
@@ -101,6 +101,5 @@ public class Sprite implements Serializable
 
 	public void setId(int id) {
 		this.id = id;
-		System.out.println("Set hero ID " + id);
 	}
 }

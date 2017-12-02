@@ -169,7 +169,7 @@ public class StateInfo
 		// If this isn't a cinematic check MapLoad conditions
 		if (!isCinematic)
 		{
-			this.getResourceManager().checkTriggerCondtions(null, false, true, this);
+			this.getResourceManager().checkTriggerCondtions(null, false ,false, true, false, this);
 		}
 		
 		psi.getGc().getInput().addKeyListener(fcInput);
@@ -506,22 +506,22 @@ public class StateInfo
 		{
 			if (mo.contains(mapX, mapY))
 			{
-				this.getResourceManager().checkTriggerCondtions(mo.getName(), immediate, false, this);
+				this.getResourceManager().checkTriggerCondtions(mo.getName(), true, immediate, false, false, this);
 			}
 		}
-		this.getResourceManager().checkTriggerCondtions(null, false, false, this);
+		this.getResourceManager().checkTriggerCondtions(null, false, false, false, false, this);
 
 		this.getResourceManager().getMap().checkRoofs(mapX, mapY);
 	}
 	
 	public void checkTriggersEnemyDeath(CombatSprite cs)
 	{
-		getResourceManager().checkTriggerCondtions(null, false, false, this);
+		getResourceManager().checkTriggerCondtions(null, false, false, false, false, this);
 	}
 	
 	public void checkTriggersHeroDeath(CombatSprite cs)
 	{
-		getResourceManager().checkTriggerCondtions(null, false, false, this);
+		getResourceManager().checkTriggerCondtions(null, false, false, false, false, this);
 	}
 
 	public void setQuestStatus(String id, boolean completed)

@@ -41,7 +41,10 @@ public class SpeechMenu extends Menu
 	private Timer timer;
 	private Speech speech = null;
 	protected boolean isDone = false;
+	private int linesSincePause = 0;
 
+	private int LINES_DISPLAYED_IN_TOWN = 3;
+	private int LINES_DISPLAYED_IN_BATTLE = 2;
 
 	/**
 	 * Constructor to create a SpeechMenu to be displayed in an Attack Cinematic
@@ -190,9 +193,9 @@ public class SpeechMenu extends Menu
 	@Override
 	public void render(PaddedGameContainer gc, Graphics graphics)
 	{
-		int posY = 2;
+		int posY = LINES_DISPLAYED_IN_TOWN - 1;
 		if (isAttackCinematic)
-			posY = 1;
+			posY =  LINES_DISPLAYED_IN_BATTLE -1;
 
 		Panel.drawPanelBox(x, CommRPG.GAME_SCREEN_SIZE.height - (posY + 1) * 20 + y, width, (posY + 1) * (20 + (posY == 1 ? 1 : 0)) - 5, graphics);
 
@@ -243,9 +246,16 @@ public class SpeechMenu extends Menu
 					{
 						if (textIndex + 1 < panelText.size())
 						{
-							textMovingIndex = panelText.get(textIndex).length();
-							textMovingIndex = 0;
-							textIndex++;
+							if (++linesSincePause >= (isAttackCinematic ? LINES_DISPLAYED_IN_BATTLE : LINES_DISPLAYED_IN_TOWN))
+							{
+								textMoving = false;
+								if (portrait != null)
+									portrait.setTalking(false);
+								waitingOn = TextSpecialCharacters.INTERNAL_HARD_STOP;
+							} else {
+								textMovingIndex = 0;
+								textIndex++;
+							}
 						}
 						else
 						{
@@ -254,6 +264,8 @@ public class SpeechMenu extends Menu
 								Log.debug("Speech Menu: Send Trigger " + triggerId);
 								if (triggerId != NO_TRIGGER)
 									stateInfo.getResourceManager().getTriggerEventById(triggerId).perform(stateInfo);
+								else 
+									stateInfo.sendMessage(MessageType.MENU_CLOSED);
 								return MenuUpdate.MENU_CLOSE;
 							} else {
 								this.initialize(speech.getMessage(), speech.getPortrait(stateInfo));
@@ -304,8 +316,15 @@ public class SpeechMenu extends Menu
 							return MenuUpdate.MENU_NEXT_ACTION;
 						}
 
-						if (textMoving)
+						if (textMoving) {
 							textMovingIndex += 1;
+							if (portrait != null)
+								if (nextLetter.equalsIgnoreCase(".") || nextLetter.equalsIgnoreCase("!")) {
+									portrait.setTalking(false);
+								} else if (!portrait.isTalking()) {
+									portrait.setTalking(true);
+								}
+						}
 						else
 							panelText.set(textIndex, panelText.get(textIndex).replaceFirst("\\" + waitingOn, ""));
 						// Only display the speech blip when we are not in battle
@@ -342,6 +361,7 @@ public class SpeechMenu extends Menu
 				textMoving = true;
 				if (portrait != null && textIndex + 1 < panelText.size())
 					portrait.setTalking(true);
+				linesSincePause = 0;
 			}
 		}
 

@@ -127,7 +127,6 @@ public enum Range {
 			case 6:
 				return THREE_NO_ONE_OR_TWO;
 			default:
-				System.out.println();
 				throw new BadResourceException("Attempted to create a resource with an illegal range");
 		}
 	}

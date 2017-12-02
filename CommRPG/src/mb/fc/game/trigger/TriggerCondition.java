@@ -23,11 +23,11 @@ public class TriggerCondition {
 		this.conditions.add(c);
 	}
 	
-	public boolean executeCondtions(String locationEntered, boolean immediate, boolean onMapLoad,
-			StateInfo stateInfo)
+	public boolean executeCondtions(String location, boolean locationEntered, boolean immediate,
+			boolean onMapLoad, boolean searching, StateInfo stateInfo)
 	{
 		for (Conditional c : conditions)
-			if (!c.conditionIsMet(locationEntered, immediate, onMapLoad, stateInfo))
+			if (!c.conditionIsMet(location, locationEntered, immediate, onMapLoad, searching, stateInfo))
 				return false;
 		stateInfo.getResourceManager().getTriggerEventById(triggerId).perform(stateInfo, immediate);
 		return true;
@@ -44,7 +44,8 @@ public class TriggerCondition {
 		}
 
 		@Override
-		public boolean conditionIsMet(String locationEntered, boolean immediate, boolean onMapLoad, StateInfo stateInfo) {
+		public boolean conditionIsMet(String location, boolean locationEntered, 
+				boolean immediate, boolean onMapLoad, boolean searching, StateInfo stateInfo) {
 			int count = 0;
 			for (CombatSprite cs : stateInfo.getCombatSprites())
 			{
@@ -73,7 +74,8 @@ public class TriggerCondition {
 	
 	public static class MapLoaded implements Conditional {
 		@Override
-		public boolean conditionIsMet(String locationEntered, boolean immediate, boolean onMapLoad, StateInfo stateInfo) {
+		public boolean conditionIsMet(String location, boolean locationEntered, 
+				boolean immediate, boolean onMapLoad, boolean searching, StateInfo stateInfo) {
 			return onMapLoad;
 		}
 	}
@@ -87,7 +89,8 @@ public class TriggerCondition {
 		}
 
 		@Override
-		public boolean conditionIsMet(String locationEntered, boolean immediate, boolean onMapLoad, StateInfo stateInfo) {
+		public boolean conditionIsMet(String location, boolean locationEntered, 
+				boolean immediate, boolean onMapLoad, boolean searching, StateInfo stateInfo) {
 			return stateInfo.isQuestComplete(quest);
 		}
 		
@@ -108,7 +111,8 @@ public class TriggerCondition {
 		// specified unit id exists anymore, if not then this condition
 		// is met
 		@Override
-		public boolean conditionIsMet(String locationEntered, boolean immediate, boolean onMapLoad, StateInfo stateInfo) {
+		public boolean conditionIsMet(String location, boolean locationEntered, 
+				boolean immediate, boolean onMapLoad, boolean searching, StateInfo stateInfo) {
 			if (enemy)
 			{
 				for (CombatSprite cs : stateInfo.getCombatSprites()) {
@@ -125,6 +129,21 @@ public class TriggerCondition {
 		}
 	}
 	
+	public static class LocationSearched implements Conditional 
+	{
+		private String location;
+		
+		public LocationSearched(String location) {
+			super();
+			this.location = location;
+		}
+
+		public boolean conditionIsMet(String location, boolean locationEntered, 
+				boolean immediate, boolean onMapLoad, boolean searching, StateInfo stateInfo) {
+			return searching && location != null && location.equalsIgnoreCase(this.location);
+		}
+	}
+	
 	public static class HeroEntersLocation implements Conditional
 	{
 		private String location;
@@ -137,8 +156,9 @@ public class TriggerCondition {
 		}
 
 		@Override
-		public boolean conditionIsMet(String locationEntered, boolean immediate, boolean onMapLoad, StateInfo stateInfo) {
-			if (locationEntered != null && this.immediate == immediate && location.equalsIgnoreCase(locationEntered))
+		public boolean conditionIsMet(String location, boolean locationEntered, 
+				boolean immediate, boolean onMapLoad, boolean searching, StateInfo stateInfo) {
+			if (locationEntered && location != null && this.immediate == immediate && location.equalsIgnoreCase(this.location))
 			{
 				return true;
 			}
@@ -164,7 +184,8 @@ public class TriggerCondition {
 		}
 
 		@Override
-		public boolean conditionIsMet(String locationEntered, boolean immediate, boolean onMapLoad, StateInfo stateInfo) {
+		public boolean conditionIsMet(String location, boolean locationEntered, 
+				boolean immediate, boolean onMapLoad, boolean searching, StateInfo stateInfo) {
 			int count = 0;
 			for (MapObject mo : stateInfo.getCurrentMap().getMapObjects())
 			{
@@ -211,7 +232,8 @@ public class TriggerCondition {
 		}
 
 		@Override
-		public boolean conditionIsMet(String locationEntered, boolean immediate, boolean onMapLoad, StateInfo stateInfo) {
+		public boolean conditionIsMet(String location, boolean locationEntered, 
+				boolean immediate, boolean onMapLoad, boolean searching, StateInfo stateInfo) {
 			return stateInfo.getCombatantById(id) != null;
 		}
 	}
@@ -226,7 +248,8 @@ public class TriggerCondition {
 		}
 
 		@Override
-		public boolean conditionIsMet(String locationEntered, boolean immediate, boolean onMapLoad, StateInfo stateInfo) {
+		public boolean conditionIsMet(String location, boolean locationEntered, 
+				boolean immediate, boolean onMapLoad, boolean searching, StateInfo stateInfo) {
 			return stateInfo.getEnemyCombatSpriteByUnitId(unitId) != null;
 		}
 	}

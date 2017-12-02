@@ -5,6 +5,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.particles.ParticleSystem;
 import org.newdawn.slick.state.StateBasedGame;
 
 import mb.fc.engine.CommRPG;
@@ -20,6 +21,8 @@ import mb.fc.game.manager.TownMoveManager;
 import mb.fc.game.ui.PaddedGameContainer;
 import mb.fc.loading.FCResourceManager;
 import mb.fc.loading.LoadableGameState;
+import mb.fc.map.MapObject;
+import mb.fc.particle.RainEmitter;
 import mb.fc.renderer.MenuRenderer;
 import mb.fc.renderer.PanelRenderer;
 import mb.fc.renderer.SpriteRenderer;
@@ -46,8 +49,20 @@ public class TownState extends LoadableGameState
 	private SoundManager soundManager;
 
 	private StateInfo stateInfo;
+	public static ParticleSystem ps = null;
 
-	public TownState() { }
+	public TownState() { 
+		/*
+		try {
+			ps = new ParticleSystem(new Image("image/RainBig.png"));
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		RainEmitter rainEmitter = new RainEmitter(500, 100, true);
+		ps.addEmitter(rainEmitter);
+		*/
+	}
 
 	public void setPersistentStateInfo(PersistentStateInfo psi)
 	{
@@ -124,6 +139,10 @@ public class TownState extends LoadableGameState
 			tileMapRenderer.renderForeground(xOffset, yOffset, stateInfo.getCamera(), g, stateInfo.getPaddedGameContainer());
 			panelRenderer.render(g);
 			cinematicManager.renderPostEffects(g);
+			
+			if (ps != null)
+				ps.render();
+			
 			menuRenderer.render(g);
 		}
 	}
@@ -146,6 +165,9 @@ public class TownState extends LoadableGameState
 			stateInfo.getCurrentMap().update(delta);
 			spriteManager.update(delta);
 			soundManager.update(delta);
+			
+			if (ps != null)
+				ps.update(delta);
 
 			if (System.currentTimeMillis() > stateInfo.getInputDelay())
 			{
@@ -159,6 +181,8 @@ public class TownState extends LoadableGameState
 					{
 						stateInfo.sendMessage(MessageType.INVESTIGATE);
 						stateInfo.setInputDelay(System.currentTimeMillis() + 200);
+						
+						checkSearchLocation();
 					}
 				}
 				else if (container.getInput().isKeyDown(KeyMapping.BUTTON_1) && !stateInfo.areMenusDisplayed())
@@ -197,6 +221,37 @@ public class TownState extends LoadableGameState
 			}
 
 			stateInfo.getInput().update(delta);
+		}
+	}
+
+	private void checkSearchLocation() {
+		int checkX = stateInfo.getCurrentSprite().getTileX();
+		int checkY = stateInfo.getCurrentSprite().getTileY();
+
+		switch (stateInfo.getCurrentSprite().getFacing())
+		{
+			case UP:
+				checkY--;
+				break;
+			case DOWN:
+				checkY++;
+				break;
+			case LEFT:
+				checkX--;
+				break;
+			case RIGHT:
+				checkX++;
+				break;
+		}
+		
+		for (MapObject mo : stateInfo.getCurrentMap().getMapObjects())
+		{
+			if (mo.contains(checkX * stateInfo.getTileWidth() + 1, 
+					checkY * stateInfo.getTileHeight() + 1))
+			{
+				stateInfo.getResourceManager().checkTriggerCondtions(
+						mo.getName(), false, false, false, true, stateInfo);
+			}
 		}
 	}
 

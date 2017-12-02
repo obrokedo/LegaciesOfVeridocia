@@ -28,7 +28,7 @@ import mb.jython.JSpell;
 
 public class DevelAnimationViewState extends BasicGameState implements ResourceSelectorListener
 {
-	private ResourceSelector animationFileSelector, weaponSelector, spellSelector;
+	private ResourceSelector animationFileSelector, weaponSelector; //, spellSelector;
 	private ListUI animationSelector;
 	private FCResourceManager frm;
 	private int updateDelta;
@@ -48,8 +48,8 @@ public class DevelAnimationViewState extends BasicGameState implements ResourceS
 		animationFileSelector.setListener(this);
 		weaponSelector = new ResourceSelector("Weapons", 300, true, FCResourceManager.WEAPONS_FOLDER, FCResourceManager.WEAPONS_EXTENSION, container);
 		weaponSelector.setListener(this);
-		spellSelector = new ResourceSelector("Spells",  0,  false, "scripts/Spellz", ".py", container);
-		spellSelector.setListener(this);
+		//spellSelector = new ResourceSelector("Spells",  0,  false, "scripts/Spellz", ".py", container);
+		//spellSelector.setListener(this);
 	}
 
 	@Override
@@ -96,7 +96,7 @@ public class DevelAnimationViewState extends BasicGameState implements ResourceS
 		g.setColor(Color.black);
 		weaponSelector.render(g);
 		g.setColor(Color.black);
-		spellSelector.render(g);
+		//spellSelector.render(g);
 
 		g.setColor(Color.black);
 		if (animationSelector != null)
@@ -138,7 +138,7 @@ public class DevelAnimationViewState extends BasicGameState implements ResourceS
 		if (animationSelector != null)
 			animationSelector.update(container, delta);
 		
-		spellSelector.update(container, delta);
+		//spellSelector.update(container, delta);
 		
 
 		if (container.getInput().isKeyPressed(Input.KEY_ESCAPE))
@@ -198,10 +198,11 @@ public class DevelAnimationViewState extends BasicGameState implements ResourceS
 				currentAnimation.setWeapon(frm.getImage(selectedItem.replace(FCResourceManager.WEAPONS_EXTENSION, "")));
 			}
 		}
+		/*
 		else if (parentSelector == spellSelector)
 		{
 			GlobalPythonFactory.intialize(); 
-			spell = GlobalPythonFactory.createJSpell().init(spellSelector.getSelectedResource().replace(".py", "").toUpperCase());
+			spell = GlobalPythonFactory.createJSpell().init(selectedItem.replace(".py", "").toUpperCase());
 			
 			String rainFile = spell.getSpellRainAnimationFile(1);
 			if (rainFile != null)
@@ -212,6 +213,7 @@ public class DevelAnimationViewState extends BasicGameState implements ResourceS
 			else
 				rainParticleSystem = null;
 		}
+		*/
 
 		return true;
 	}

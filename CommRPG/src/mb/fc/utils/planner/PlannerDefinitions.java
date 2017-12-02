@@ -2601,6 +2601,19 @@ public class PlannerDefinitions {
 				+ "you don't want to run multiple times into smaller parts that can be run multiple times.",
 				definingValues));
 		
+		// Run Triggers
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_STRING, "npcname", true,
+				"Npc Name",
+				"The name of the npc to drive speech with"));
+		allowableLines.add(new PlannerLineDef(
+				"npcspeech",
+				"Show NPC Speech",
+				"Drives speech with the given npc as if they were spoken to directly. This allows"
+				+ " for speaking with npcs over counters and at range.",
+				definingValues));
+		
 		// Exit Game
 		definingValues = new ArrayList<PlannerValueDef>();
 		allowableLines
@@ -2609,6 +2622,8 @@ public class PlannerDefinitions {
 						"Exit Game",
 						"Causes the game to exit.",
 						definingValues));
+		
+		
 
 		triggerContainer = new PlannerContainerDef(definingLine,
 				allowableLines, listOfLists,
@@ -2756,6 +2771,19 @@ public class PlannerDefinitions {
 				+ "it should be used in conjunction with an on death or location based condition) with other conditions that ensures "
 				+ "that the given enemy is in the current battle and is alive. This should only be used in battle.",
 				definingValues));
+		
+		// Search location
+		// DISABLED BECAUSE WE ALREADY HAVE A SEARCH AREA 
+		/*
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_LOCATIONS,
+				PlannerValueDef.TYPE_STRING, "location", false,
+				"Location Name",
+				"The name of the location that needs to be entered"));
+		allowableLines.add(new PlannerLineDef("searchloc", "On Location Searched",
+				"Sets a condition that will activate the given trigger when the specified location is 'searched'",
+				definingValues));
+				*/
 
 		conditionContainer = new PlannerContainerDef(definingLine,
 				allowableLines, listOfLists,
@@ -2873,6 +2901,9 @@ public class PlannerDefinitions {
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_DIRECTION,
 				PlannerValueDef.TYPE_INT, "facing", false, "Initial Facing",
 				"The direction that this npc will initially face, if wander is greater then 0 then this is likely to change'"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_BOOLEAN, "throughwall", false, "Can talk through wall",
+				"If set to true then this NPC can be spoken to at a range of two tiles (twice normal) this should be used for shop keepers or places beghind bars/altars."));
 		allowableLines.add(new PlannerLineDef("npc", "npc",
 				"Marks this locations as the starting place for an npc. Depending on the 'wander' the npc may not remain here.",
 				definingValues));
@@ -2950,6 +2981,19 @@ public class PlannerDefinitions {
 		allowableLines.add(new PlannerLineDef("searcharea", "searcharea",
 				"Places a searchable area at this location, it has no visible aspect", definingValues));
 
+		// chest
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_SPRITE_IMAGE,
+				PlannerValueDef.TYPE_STRING, "spriteimage", false, "Sprite Image",
+				"The image of the chest lid"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_ITEM,
+				PlannerValueDef.TYPE_INT, "itemid", true, "Item",
+				"The item that will be found by 'searching' this chest."));
+		allowableLines.add(new PlannerLineDef("chest", "chest",
+				"Marks the location as a chest with the given item contained inside.", definingValues));
+
+		
+		
 		plannerContainer = new PlannerContainerDef(definingLine,
 				allowableLines, listOfLists,
 				-1);

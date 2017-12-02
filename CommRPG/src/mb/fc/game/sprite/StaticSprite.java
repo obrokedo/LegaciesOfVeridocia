@@ -13,7 +13,6 @@ public class StaticSprite extends Sprite
 
 	private Image image;
 	private int[] triggerIds;
-	private final static String SEARCH_AREA_NAME = "SEARCHAREA--!!";
 
 	public StaticSprite(int locX, int locY, String name, Image image, int[] triggerIds)
 	{
@@ -23,11 +22,6 @@ public class StaticSprite extends Sprite
 		this.triggerIds = triggerIds;
 		this.spriteType = Sprite.TYPE_STATIC_SPRITE;
 		this.id = Integer.MIN_VALUE;
-	}
-
-	public StaticSprite(int locX, int locY, int[] triggerIds)
-	{
-		this(locX, locY, SEARCH_AREA_NAME, null, triggerIds);
 	}
 
 	@Override

@@ -43,6 +43,10 @@ public class SoundManager extends Manager implements MusicListener
 
 	public void playMusicByName(String name, float volume, float position)
 	{
+		if (name.equalsIgnoreCase(playingMusicName)) {
+			return;
+		}
+		
 		Music playingMusic = stateInfo.getResourceManager().getMusicByName(name);
 		musicPosition = 0;
 		playingMusic.stop();

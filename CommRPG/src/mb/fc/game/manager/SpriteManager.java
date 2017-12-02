@@ -2,6 +2,7 @@ package mb.fc.game.manager;
 
 import java.awt.Point;
 import java.util.Iterator;
+import java.util.Map;
 
 import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.BooleanMessage;
@@ -276,37 +277,48 @@ public class SpriteManager extends Manager
 				initializeAfterSprites(((BooleanMessage) message).isBool());
 				break;
 			case INVESTIGATE:
+				
 				int checkX = stateInfo.getCurrentSprite().getTileX();
 				int checkY = stateInfo.getCurrentSprite().getTileY();
-
+				int checkX2 = checkX;
+				int checkY2 = checkY;
+				
 				switch (stateInfo.getCurrentSprite().getFacing())
 				{
 					case UP:
 						checkY--;
+						checkY2 -= 2;
 						break;
 					case DOWN:
 						checkY++;
+						checkY2 += 2;
 						break;
 					case LEFT:
 						checkX--;
+						checkX2 -= 2;
 						break;
 					case RIGHT:
 						checkX++;
+						checkX2 += 2;
 						break;
 				}
 
+				boolean checkThroughWall = false;
+				if (!stateInfo.getCurrentMap().isMarkedMoveable(checkX, checkY))
+					checkThroughWall = true;
 				for (Sprite s : stateInfo.getSprites())
 				{
 					if (s.getSpriteType() == Sprite.TYPE_NPC)
 					{
 						NPCSprite npc = (NPCSprite) s;
 						if (npc.getTileX() == checkX &&
-								npc.getTileY() == checkY)
+								npc.getTileY() == checkY || (checkThroughWall && 
+										npc.getTileX() == checkX2 &&
+										npc.getTileY() == checkY2))
 						{
 							npc.triggerButton1Event(stateInfo);
 							break;
 						}
-
 					}
 					else if (s.getSpriteType() == Sprite.TYPE_STATIC_SPRITE)
 					{
@@ -316,6 +328,17 @@ public class SpriteManager extends Manager
 						{
 							ss.triggerButton1Event(stateInfo);
 							break;
+						}
+					}
+				}
+				break;
+			case MENU_CLOSED:
+				for (Sprite s : stateInfo.getSprites()) {
+					if (s.getSpriteType() == Sprite.TYPE_NPC) {
+						NPCSprite npc = (NPCSprite) s;
+						if (npc.isWaitingForSpeechToEnd()) {
+							npc.setWaitingForSpeechToEnd(false);
+							npc.setFacing(npc.getOriginalFacing());
 						}
 					}
 				}

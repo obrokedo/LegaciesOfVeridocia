@@ -129,7 +129,6 @@ public class LoadingState extends BasicGameState
 			// This is the entry point into the actual game. Initialize static variables here
 			if (loadingMap && loadResources)
 			{
-				System.out.println("Initialize python");
 				GlobalPythonFactory.intialize();
 				Panel.intialize(resourceManager);
 				SpellResource.initSpells(resourceManager);
