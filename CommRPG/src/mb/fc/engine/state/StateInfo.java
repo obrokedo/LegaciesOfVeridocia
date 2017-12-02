@@ -288,7 +288,7 @@ public class StateInfo
 			switch (m.getMessageType())
 			{
 				case LOAD_MAP:
-					sendMessage(MessageType.PAUSE_MUSIC);
+					// sendMessage(MessageType.PAUSE_MUSIC);
 
 					LoadMapMessage lmm = (LoadMapMessage) m;
 					psi.loadMap(lmm.getMapData(), lmm.getLocation(), lmm.getTransDir());
