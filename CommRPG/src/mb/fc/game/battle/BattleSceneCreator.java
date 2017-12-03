@@ -76,7 +76,7 @@ public class BattleSceneCreator {
 			// This is a spell
 			if (isSpell)
 				textToDisplay.add(attacker.getName() + " casts " + battleResults.battleCommand.getSpell().getName() + " " +
-						battleResults.battleCommand.getLevel() + TextSpecialCharacters.CHAR_HARD_STOP);
+						battleResults.battleCommand.getLevel() + "!" + TextSpecialCharacters.CHAR_HARD_STOP);
 			// This is an item
 			else if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_ITEM) {
 				// Check to see if the item being used has a spell effect, if so then display the correct

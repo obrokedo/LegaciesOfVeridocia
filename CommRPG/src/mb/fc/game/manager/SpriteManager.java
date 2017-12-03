@@ -5,8 +5,10 @@ import java.util.Iterator;
 import java.util.Map;
 
 import mb.fc.engine.CommRPG;
+import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.BooleanMessage;
 import mb.fc.engine.message.Message;
+import mb.fc.engine.message.MessageType;
 import mb.fc.game.constants.Direction;
 import mb.fc.game.definition.EnemyDefinition;
 import mb.fc.game.dev.BattleOptimizer;
@@ -18,6 +20,9 @@ import mb.fc.game.sprite.NPCSprite;
 import mb.fc.game.sprite.Sprite;
 import mb.fc.game.sprite.StaticSprite;
 import mb.fc.map.MapObject;
+import mb.jython.GlobalPythonFactory;
+import mb.jython.JMusicSelector;
+import mb.jython.JythonObjectFactory;
 
 public class SpriteManager extends Manager
 {
@@ -227,6 +232,11 @@ public class SpriteManager extends Manager
 						
 						spriteItr.remove();
 						stateInfo.removeCombatSprite(cs);
+						JMusicSelector musicSelector = GlobalPythonFactory.createJMusicSelector();
+						stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, 
+								musicSelector.getSpriteDeathOnMapSoundEffect(cs.getName()), 
+								1.0f, false));
+						
 						s.destroy(stateInfo);
 
 						if (CommRPG.BATTLE_MODE_OPTIMIZE && cs.isLeader())

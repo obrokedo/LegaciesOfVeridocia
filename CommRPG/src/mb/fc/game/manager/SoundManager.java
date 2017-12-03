@@ -38,7 +38,8 @@ public class SoundManager extends Manager implements MusicListener
 		if (name == null)
 			return;
 		Sound sound = stateInfo.getResourceManager().getSoundByName(name);
-		sound.play(1f, volume);
+		if (sound != null)
+			sound.play(1f, volume);
 	}
 
 	public void playMusicByName(String name, float volume, float position)

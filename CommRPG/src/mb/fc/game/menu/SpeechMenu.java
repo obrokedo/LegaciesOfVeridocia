@@ -264,7 +264,7 @@ public class SpeechMenu extends Menu
 								Log.debug("Speech Menu: Send Trigger " + triggerId);
 								if (triggerId != NO_TRIGGER)
 									stateInfo.getResourceManager().getTriggerEventById(triggerId).perform(stateInfo);
-								else 
+								else if (stateInfo != null)
 									stateInfo.sendMessage(MessageType.MENU_CLOSED);
 								return MenuUpdate.MENU_CLOSE;
 							} else {

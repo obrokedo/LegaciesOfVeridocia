@@ -31,4 +31,6 @@ public interface JMusicSelector {
 	public String getMenuAddedSoundEffect();
 
 	public String getMenuRemovedSoundEffect();
+	
+	public String getSpriteDeathOnMapSoundEffect(String name);
 }
