@@ -73,3 +73,6 @@ class MusicScript(JMusicSelector):
 
     def getAfterSpellFlashSoundEffect(self, isHero, spellName):
         return None
+    
+    def getSpriteDeathOnMapSoundEffect(self, deadSpriteName):
+        return None
