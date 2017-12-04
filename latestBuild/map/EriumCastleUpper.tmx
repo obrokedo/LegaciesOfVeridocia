@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="2017.07.25" orientation="orthogonal" renderorder="right-down" width="120" height="110" tilewidth="12" tileheight="12" nextobjectid="53">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="120" height="110" tilewidth="12" tileheight="12" nextobjectid="53">
  <tileset firstgid="1" name="overworld(day)-Master" tilewidth="12" tileheight="12" tilecount="1296" columns="36">
   <image source="../image/overworld(day)-Master.png" trans="495d47" width="432" height="432"/>
  </tileset>
@@ -49,7 +49,7 @@
    H4sIAAAAAAAAC+3BAQ0AAADCoPdPbQ43oAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD4Mz3ekHEDOAAA=
   </data>
  </layer>
- <layer name="Walkable" width="120" height="110" opacity="0.75">
+ <layer name="Walkable" width="120" height="110" visible="0" opacity="0.75">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAC+2XUW4kMQhE5/63SO6ye67kh48gMWbATRU2T4rQrnrsMlNler5er9f379/X1CPrv9+//1OPrWh/TZ38Tp38Tp383ljlex5iRHP16Tr6uZUeQb7nIUY0V5+uo59b6RFW/kDPj+pq9cHqRxbvOlE9K3+g50d1tfpg9SOLd52ontvzuntOru6Dat2353X3nFzdB9W6vT47lafzG70nsvsKXp+dytP5jd4T2X2Fye/kd/Lrf75Lfq1/n0b29y9b1ax+992WX/3/q+fZqgb9O429Wv1irwL6dxp71aD1ZHM89f087lI1aL+x1q790aD9xlq79keD9htr7dofDdpvrLVrfzRov7HWrv0RrO+7Cyvf3o51X3dhNXdux3t/f7rebj2n1Gg/rP5Yzwne9y8vuz5/ao32w+qP9ZzA8r6I2vfUcwos74uofU89p4DOjwadL5b5u2t9dH4sPadWL7vWZ8svSgdLbrPn17DlF6WDJbfZ81uw+But45Rzalj8jdZxyjk1t/gaXavOqbnF1+hadU7NLb5G16pzam7xNbpWnVOwvu8s0XXR+Totv9Z9nSW6Ljpfp+VXQPs6OlfY2K1/17nRvo76ko3d+nedG51LtvnVXZcGnUu2+dVdlwbtt645YdWlQfuta05YdWnQfuuaE1ZdGrTfuuaEVdfTWD769PPsOfHqqtb9NFkfdcmJV1e1bi9ef+zyU7c5x6rLi9cfu/zUbc6x6tKw+K1bTqL6q2HxW7ecRPWzweZ/dF5359eb79V+Udj8j87r7vx6873aLwpLLrN62PO7W48Xllxm9bDnd7ceodo3k9/3/djd/6d8493Pq2O33tPyazH5rc3v0zo0k9/a/D6tQ6h+r2P3/yn6her3Onb/n6JfYPGZd78qXaflF+0z735Vuk7Lr0W1/1f7Vuvald/qvgps83e1b7WuXfmt7quG3f/d87u6Jy2in9Ow+797flf3pEX0c5pu/kfrZdel6eZ/tF52XZoqX1v7eXU8rXfym/O1tZ9Xx9N6T80vC91ywqqLlW45YdUloH0Wnb+soPuo+4T2WXT+soLuY/f8dq+fkr230D5jnV8s77XZewvt58nvX7L90qD9PPn9S7ZfGrSfb81v1T5oP9+a36p90H6e/L6fn9n5jvbz5Pf9/MzOd7Sfn85vdF2UHs3M32fWRenRnDZ/V6B1djmHgM6t5VsLtM4u5xDQfs/mo5ueKt0C2u/ZfHTTU6VbQPu/W56z+1XrRPu/W56z+1XrROfvKd+yrlsNOn9P+ZZ13WrQeauak1nQ54lWdN6q5mQW9HmiFe2vqZPfqZPfqZPfGyvaX1Mnv1Mnv1MnvzfWH4sIc0RAzgAA
   </data>
@@ -91,7 +91,7 @@
     <property name="start" value="exit=NorthWestHallStairsEntrance"/>
    </properties>
   </object>
-  <object id="45" name="Book1" x="984" y="96" width="24" height="24">
+  <object id="45" name="Book1" x="984" y="96" width="48" height="24">
    <properties>
     <property name="SEARCHAREA" value="searchtrigger=8"/>
    </properties>
@@ -111,17 +111,17 @@
     <property name="SEARCHAREA" value="searchtrigger=11"/>
    </properties>
   </object>
-  <object id="50" name="Book5" x="1128" y="1008" width="24" height="24">
+  <object id="50" name="Book5" x="1128" y="1008" width="48" height="24">
    <properties>
     <property name="SEARCHAREA" value="searchtrigger=12"/>
    </properties>
   </object>
-  <object id="51" name="Book6" x="288" y="336" width="24" height="24">
+  <object id="51" name="Book6" x="264" y="336" width="48" height="24">
    <properties>
     <property name="SEARCHAREA" value="searchtrigger=13"/>
    </properties>
   </object>
-  <object id="52" name="Book7" x="336" y="336" width="24" height="24">
+  <object id="52" name="Book7" x="312" y="336" width="48" height="24">
    <properties>
     <property name="SEARCHAREA" value="searchtrigger=14"/>
    </properties>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="2017.07.25" orientation="orthogonal" renderorder="right-down" width="128" height="128" tilewidth="12" tileheight="12" nextobjectid="142">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="128" height="128" tilewidth="12" tileheight="12" nextobjectid="142">
  <tileset firstgid="1" name="overworld(day)-Master" tilewidth="12" tileheight="12" tilecount="1296" columns="36">
   <image source="../image/overworld(day)-Master.png" trans="495d47" width="432" height="432"/>
  </tileset>
@@ -49,7 +49,7 @@
    H4sIAAAAAAAAC+2cQW7UMBhGs5lKsIfuywE5EhL0EEgoh6gEnIADwB4q0oUlYxLHcZLfv/O9J30aeSYLz/dkz6RJZxj+5fdtGP6QS+b5NqyC/+sG/9rBv3bwrx38awf/2sG/dvCvHfxrB//awb928K8d/GsH/9rBv3bwrx38awf/2sG/dvCvHfxrB//awb928K8d/GsH/9rBv3bwrx38awf/2sG/dq7s/+3dOWn9vvBf9r4+TvkU5UMyrk2PfSj6/zLlfZTPybg2PfaBf/wr+v855deM//j5reMe+1D1/2r6vvb67n//8fNbxz32oer/YXL2bsZ//PzWcY99qPo/4/P/TeV5o8cer+z/65RvUZ6ScW3i88rcOWX82uPNZ49X9n8W8b6S21Pi10b8u3tf+Mc//vG/lfh7Re47Rfzad/y7e1/WeOwR/3Z47BH/dnjsEf92eOwR/3Z47BH/dnjsEf92eOwR/3Z47BH/dnjsEf92eOwR/3Z47BH/dnjsEf92eOwR/3Z47BH/dnjsEf92eOwR/3Z47BH/dnjsEf92eOwR/3Z47BH/dnjsEf92eOwR/3Z47BH/dnjssaSn2v93bf27Sz+cpbXrWv/p7yi1isf103tK/Kf/R98q+Pfhf89v59SM8e/L/57fzqkZ49+X/z2/nVMzxr8v/3z+Xyf41w7+tYN/7Xj8O+kS+Md/676uFvxrB//a6cl/6XXI1p2uxdP8e/Jfeh3S8z7x7Gz+PfkvPQ9N94nWzuO53M/8Xbvlee4V/IfrheEx3Sda7gfpen/MzBv/eZb8h+uF4TE9zno/yK33MTNv/OdZ8h+uF4bHcFyL/WBuvcfrO/afzhv/eUo//8Nxa/vBGet+br3H63u8rc/f8n7Ll/n2wlb/a/vBkessrPu59R6v7xL/lvdbvsy3F7b6X9sPjlxn95Hf3Hov8W95vW0U8p/uB0eus/C9fm294/98lvyn4yN7HpPHJd8lfeN/H7X+l+47TjN3HP79UOt/6b7jNHPH5fzvnT/+91Hqf+m+4zRzx+G/H87+/D9qfvg/B/xr+w8c7R/6Av8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANATfwHs0Ud1AAABAA==
   </data>
  </layer>
- <layer name="Walkable" width="128" height="128" opacity="0.81">
+ <layer name="Walkable" width="128" height="128" visible="0" opacity="0.81">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAC+2XyW0YMQxF3X8XSS9JXclFFwIEt89FGn7AIDzScJH1hvSvn5+f3/9/fq39pP3z/+fv2s/a7vu3dvlfu/yvXf7XLv9rl/+1y//a5X/tPP61muIXbW/JM4t/rab4Rdtb8ozyz0nab+VE8ivF6eIfnZ/1fKyy8s9J2m/lRPIrxeniH52f9Xys8vLf3Z+ieXmF5t8bj3sfdW5TOUPl5RWaf2887n3UuX2Ff1QcyR9dn3KOXB5f4R8VR/JH16ecI5fH7fxr5Y1j9cflN+3cXuFfK28cqz8uv2nn1sW/JO/73Xxx+XXnM41/Sd73u/ni8uvOx8q/Vt33eVp/nZYPJ4l/rbrv87T+Oi0fTlr+u+/vbbxNzcfa/4+67+9tvE3Nx9v/u+/rrbxNy2f5/3Y+y/+381n+v52PlX96X6yKvl/lF1WvN26XJP7pfbEq+n6VX1S93rhd0vb/I+1z7XfE+zy7D2bF0+YTFbr/H2mfa78j3ufZfTArnjafqF6b/6m685n6/4L2fW7fFA60343XbLQ+7fvcvmr+Of/0eXYeUyxXt1W38M/5p8+z85hiubqtQvN/pH0evedT55Dp/T8aR9t3pefRez51Dpne/6NxtPy/ykW3za5T8q/l/1Uuum12nZJ/L//SevQ9r//bLKpOqmz+pfXoe17/t1lUnVRZ/HPPrfc8K85tVlun9rzouuTfyj/33HrPs+LcZrV1as+Lrkv+p3HHybpfEsqPNQ6qzuhcIPHfzQOVdb8klB9rHFSd0blgKv/evtid77S8OE3n39sXu/OdlhenV/nnpPXHrUfVfY5SfdPubXQuptL649aj6j5Hqb5X+Pf2v6j/W+YXLs4r/Hv7X9T/LfMLF8fbV6tkvdfW97Prv41/VN9DyXqvre9n138b/9Nk5bR7bsmeX6LS9v8psnLaPbdkzy9RvTr/S/u165y8c8Nt/f/oNn6k/dp1Tt654db+/wr/kqR9Xf1/+dflQeXlWlqv7v/d/FuVNb+i+Ufzm93/6br3dy4Oau7Mml/R/KP5ze7/dN37Oxfna/0/u14p3vb/3v6fXa8U75b+P4V/KR9pn9ZPdf/35vU1/qV8pH1aP9X935tXFf9WofxIfqO8af1o46P6f5W0/FuF8iP5jfKm9aONj+r/Vbqt/1fzXzW3VPPPxZ/e/6v5r5pbqvnn4nfPpWh+rPvQ9Wbln/Ud7Z5L0fxY96Hrzco/6zta1f85v9bnKN6y6vXmg84jyn/VPbQ+R/GWVa83H3Qey//d/HOS1q31Lf/Yer35cHlZ1631VfUhdN+q4tnLvTX/rLwlv1V9CN23qnj2cm/NPytvye9RNz+v8B/Nvzqvo25+XuE/mn91XkfauZKTth9G/b7KP/e+dV3axz3XzpWctP0w6vdV/rn3revSPu55d7/3zsVeZX2vpDjR/xdQ50jV3e+9c7FXWd8rKU70/wXUOVJ1826di615S/VmnYe2DnTcV/hHzc1SvVnnoa0DHfd1/l+x3N+Bk3ZeeZ3/Vyz3d+CknVe0/lHz7/KP5b/q+4Kaf5d/LP9V35epvE3L5/Y6aZyjqbxNy+f2Ommco6m8ZeVDNbU/d/X/bh6y86Ga2p+3/+vUnectddA4R9P5l9Sd5y110DhHVv6ppvF1Wz5VedM4R1b+qabxdVs+VXnTOEe389+dXzRedZ6v8d+dXzRedZ6v81/FF8qvVtb9Wj+v8V/FF8qvVtb9Wj+v8y9xk/XedHv0Ov8SN1nvTbdH1XPo2hn2qHoOXTvDHi3/37RHy/837RG9D1513+e1GP696r7Pa338H3Xfx7U9/B9138e1y//a5X/t8r92+V+7/K9d/tfW8J8l7338ilD8TtW0+zhN3fyi+0lWn+rul9PqQflB95OsPtXdL6fVg/Iz7V7vd2D53+/A8k/Vzeu0c0L5mXKfOX9ov90WVQ/Kzz9LsC1KAAABAA==
   </data>
@@ -538,32 +538,32 @@
     <property name="SEARCHAREA" value="searchtrigger=27"/>
    </properties>
   </object>
-  <object id="130" name="Book5" x="168" y="672" width="24" height="24">
+  <object id="130" name="Book5" x="144" y="672" width="72" height="24">
    <properties>
     <property name="SEARCHAREA" value="searchtrigger=28"/>
    </properties>
   </object>
-  <object id="131" name="Book6" x="288" y="672" width="24" height="24">
+  <object id="131" name="Book6" x="264" y="672" width="72" height="24">
    <properties>
     <property name="SEARCHAREA" value="searchtrigger=29"/>
    </properties>
   </object>
-  <object id="132" name="Book7" x="384" y="744" width="24" height="24">
+  <object id="132" name="Book7" x="384" y="744" width="72" height="24">
    <properties>
     <property name="SEARCHAREA" value="searchtrigger=30"/>
    </properties>
   </object>
-  <object id="133" name="Book8" x="144" y="744" width="24" height="24">
+  <object id="133" name="Book8" x="144" y="744" width="72" height="24">
    <properties>
     <property name="SEARCHAREA" value="searchtrigger=31"/>
    </properties>
   </object>
-  <object id="134" name="Book9" x="96" y="816" width="24" height="24">
+  <object id="134" name="Book9" x="72" y="816" width="72" height="24">
    <properties>
     <property name="SEARCHAREA" value="searchtrigger=32"/>
    </properties>
   </object>
-  <object id="135" name="Book10" x="312" y="816" width="24" height="24">
+  <object id="135" name="Book10" x="312" y="816" width="72" height="24">
    <properties>
     <property name="SEARCHAREA" value="searchtrigger=33"/>
    </properties>

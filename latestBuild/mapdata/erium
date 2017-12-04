@@ -179,6 +179,7 @@
 	<haltingmove name="Noah" x=168 y=156 speed="1" movehor=true movediag=false/>
 	<facing name="Noah" dir=3/>
 	<playsound sound="impact" volume=100/>
+	<speech text="There we go some seasoned jerky.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<wait time=1000/>
 	<haltingmovepath name="Noah" x=144 y=132 speed="1"/>
 	<facing name="Noah" dir=1/>
