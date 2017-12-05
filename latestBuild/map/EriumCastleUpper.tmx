@@ -113,37 +113,37 @@
   </object>
   <object id="45" name="Book1" x="984" y="96" width="48" height="24">
    <properties>
-    <property name="SEARCHAREA" value="searchtrigger=8"/>
+    <property name="searcharea" value="searchtrigger=8"/>
    </properties>
   </object>
   <object id="47" name="Book2" x="1032" y="96" width="24" height="24">
    <properties>
-    <property name="SEARCHAREA" value="searchtrigger=9"/>
+    <property name="searcharea" value="searchtrigger=9"/>
    </properties>
   </object>
   <object id="48" name="Book3" x="312" y="648" width="24" height="24">
    <properties>
-    <property name="SEARCHAREA" value="searchtrigger=10"/>
+    <property name="searcharea" value="searchtrigger=10"/>
    </properties>
   </object>
   <object id="49" name="Book4" x="72" y="648" width="24" height="24">
    <properties>
-    <property name="SEARCHAREA" value="searchtrigger=11"/>
+    <property name="searcharea" value="searchtrigger=11"/>
    </properties>
   </object>
   <object id="50" name="Book5" x="1128" y="1008" width="48" height="24">
    <properties>
-    <property name="SEARCHAREA" value="searchtrigger=12"/>
+    <property name="searcharea" value="searchtrigger=12"/>
    </properties>
   </object>
   <object id="51" name="Book6" x="264" y="336" width="48" height="24">
    <properties>
-    <property name="SEARCHAREA" value="searchtrigger=13"/>
+    <property name="searcharea" value="searchtrigger=13"/>
    </properties>
   </object>
   <object id="52" name="Book7" x="312" y="336" width="48" height="24">
    <properties>
-    <property name="SEARCHAREA" value="searchtrigger=14"/>
+    <property name="searcharea" value="searchtrigger=14"/>
    </properties>
   </object>
  </objectgroup>
@@ -220,47 +220,47 @@
   </object>
   <object id="36" name="SearchNoItem" x="1392" y="408" width="24" height="24">
    <properties>
-    <property name="SEARCHAREA" value="searchtrigger=7"/>
+    <property name="searcharea" value="searchtrigger=7"/>
    </properties>
   </object>
   <object id="37" name="SearchNoItem" x="1392" y="384" width="24" height="24">
    <properties>
-    <property name="SEARCHAREA" value="searchtrigger=7"/>
+    <property name="searcharea" value="searchtrigger=7"/>
    </properties>
   </object>
   <object id="38" name="SearchNoItem" x="288" y="912" width="24" height="24">
    <properties>
-    <property name="SEARCHAREA" value="searchtrigger=7"/>
+    <property name="searcharea" value="searchtrigger=7"/>
    </properties>
   </object>
   <object id="39" name="SearchNoItem" x="336" y="912" width="24" height="24">
    <properties>
-    <property name="SEARCHAREA" value="searchtrigger=7"/>
+    <property name="searcharea" value="searchtrigger=7"/>
    </properties>
   </object>
   <object id="40" name="SearchNoItem" x="192" y="336" width="24" height="24">
    <properties>
-    <property name="SEARCHAREA" value="searchtrigger=7"/>
+    <property name="searcharea" value="searchtrigger=7"/>
    </properties>
   </object>
   <object id="41" name="SearchNoItem" x="24" y="384" width="24" height="24">
    <properties>
-    <property name="SEARCHAREA" value="searchtrigger=7"/>
+    <property name="searcharea" value="searchtrigger=7"/>
    </properties>
   </object>
   <object id="42" name="SearchNoItem" x="24" y="408" width="24" height="24">
    <properties>
-    <property name="SEARCHAREA" value="searchtrigger=7"/>
+    <property name="searcharea" value="searchtrigger=7"/>
    </properties>
   </object>
   <object id="43" name="SearchNoItem" x="384" y="408" width="24" height="24">
    <properties>
-    <property name="SEARCHAREA" value="searchtrigger=7"/>
+    <property name="searcharea" value="searchtrigger=7"/>
    </properties>
   </object>
   <object id="44" name="SearchNoItem" x="384" y="384" width="24" height="24">
    <properties>
-    <property name="SEARCHAREA" value="searchtrigger=7"/>
+    <property name="searcharea" value="searchtrigger=7"/>
    </properties>
   </object>
  </objectgroup>

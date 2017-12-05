@@ -17,6 +17,7 @@ ss,actionicons,image/ActionIcons.png,24,24,2
 ss,spellicons,image/SpellIcons.png,16,24,2
 // A scale value of -1 means the image is NOT scaled to the game engine proportions
 ss,menuborder,image/MenuBorder.png,12,12,0,.3333333333
+ss,healthbar,image/HealthBars.png,2,8
 // TYPE,NAME,PATH,SCALE
 image,battlecursor,image/battlecursor.gif
 image,smallflor,image/smflor.png
