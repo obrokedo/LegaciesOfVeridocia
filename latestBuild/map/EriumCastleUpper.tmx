@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="120" height="110" tilewidth="12" tileheight="12" nextobjectid="53">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="120" height="110" tilewidth="12" tileheight="12" nextobjectid="54">
  <tileset firstgid="1" name="overworld(day)-Master" tilewidth="12" tileheight="12" tilecount="1296" columns="36">
   <image source="../image/overworld(day)-Master.png" trans="495d47" width="432" height="432"/>
  </tileset>
@@ -66,8 +66,16 @@
     <property name="start" value="exit=InfrontOfSharna"/>
    </properties>
   </object>
-  <object id="24" name="KingChamberExit" x="912" y="96" width="24" height="24"/>
-  <object id="27" name="NorthEastHallStairsExit1" x="1080" y="384" width="24" height="24"/>
+  <object id="24" name="KingChamberExit" x="912" y="96" width="24" height="24">
+   <properties>
+    <property name="null" value=""/>
+   </properties>
+  </object>
+  <object id="27" name="NorthEastHallStairsExit1" x="1080" y="384" width="24" height="24">
+   <properties>
+    <property name="null" value=""/>
+   </properties>
+  </object>
   <object id="28" name="SouthWestHallStairsEntrance" x="456" y="984" width="24" height="24">
    <properties>
     <property name="start" value="exit=SouthWestHallStairsEntrance"/>
@@ -78,9 +86,21 @@
     <property name="start" value="exit=SouthEastHallStairsEntrance"/>
    </properties>
   </object>
-  <object id="30" name="SouthWestHallStairsExit1" x="432" y="984" width="24" height="24"/>
-  <object id="31" name="NorthWestHallStairsExit1" x="432" y="384" width="24" height="24"/>
-  <object id="32" name="SouthEastHallStairsExit1" x="1080" y="984" width="24" height="24"/>
+  <object id="30" name="SouthWestHallStairsExit1" x="432" y="984" width="24" height="24">
+   <properties>
+    <property name="null" value=""/>
+   </properties>
+  </object>
+  <object id="31" name="NorthWestHallStairsExit1" x="432" y="384" width="24" height="24">
+   <properties>
+    <property name="null" value=""/>
+   </properties>
+  </object>
+  <object id="32" name="SouthEastHallStairsExit1" x="1080" y="984" width="24" height="24">
+   <properties>
+    <property name="null" value=""/>
+   </properties>
+  </object>
   <object id="33" name="NorthEastHallStairsEntrance" x="1056" y="384" width="24" height="24">
    <properties>
     <property name="start" value="exit=NorthEastHallStairsEntrance"/>
@@ -150,7 +170,7 @@
   </object>
   <object id="7" name="Soldier 2 Dining Hall" x="240" y="216" width="24" height="24">
    <properties>
-    <property name="npc" value="facing=0 animation=Baldcaptain textid=1 wander=0"/>
+    <property name="npc" value="facing=0 name= throughwall=false animation=Baldcaptain textid=1 wander=0"/>
    </properties>
   </object>
   <object id="8" name="Soldier 1 Storage" x="192" y="384" width="24" height="24">

@@ -44,6 +44,13 @@
 <trigger id=14 description="Book7" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<showtext textid=14/>
 </trigger>
+<trigger id=15 description="GiveSwordToHero" require="," exclude="," nonretrig=true retrigonenter=false triggeronce=false triggerimmediately=false>
+	<additem itemid="Erium Blade"/>
+	<showtext textid=15/>
+</trigger>
+<trigger id=16 description="SleepingGuard" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<showtext textid=1/>
+</trigger>
 <text id=0 description="Soldier 1 Dining Hall">
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="Sometimes I enjoy a good nightcap by myself as opposed to the pub. It's usually quiet in here at the very least.<hardstop>"/>
 </text>
@@ -57,7 +64,7 @@
 	<conversation require="," exclude="," trigger=-1 heroportrait1="" enemyportrait1="" animportrait1="" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="These soldiers are such slobs! Every single one of them have the manners of a toddl...<pause> Oh! Hi, Noah! I don't mean you of course!<hardstop><split>You just don't see my messes because I make them at home. Can I lend a hand?<hardstop><split>Oh, that's alright. I complain but I really do enjoy my job and the company of everyone. Besides, doesn't your shift start soon?<hardstop><split>It does but I can still help...<hardstop><split>That's okay, I'm almost finished anyway. Thank you though.<hardstop>"/>
 </text>
 <text id=4 description="Soldier 1 Study">
-	<conversation require="," exclude="," trigger=-1 heroportrait1="" enemyportrait1="" animportrait1="" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="I love serving King Erium but I'm studying to work for the Kingdom.<hardstop> I hope to one day be a great blacksmith but...<pause> well, you can see the quality of my work.<hardstop><split>This is a great start! We'll all be lucky to have you making our weapons one day.<hardstop><split>You really think so? That means a lot! Please take this and let me know how well it fares in your training.<hardstop>"/>
+	<conversation require="," exclude="," trigger=15 heroportrait1="" enemyportrait1="" animportrait1="" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="I love serving King Erium but I'm studying to work for the Kingdom.<hardstop> I hope to one day be a great blacksmith but...<pause> well, you can see the quality of my work.<hardstop><split>This is a great start! We'll all be lucky to have you making our weapons one day.<hardstop><split>You really think so? That means a lot! <hardstop>"/>
 </text>
 <text id=5 description="Soldier 1 Storage">
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="I'm going to start studying to become a Warlord but I can't decide which weapon I should train with.<hardstop> I've heard that taking this career path requires a lot of discipline, if you want to be any good with your weapon of choice.<hardstop> Diversifying will only weaken your ablilities.<hardstop>"/>
@@ -89,6 +96,9 @@
 </text>
 <text id=14 description="Book7">
 	<string require="," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Castle Architecture.<hardstop>"/>
+</text>
+<text id=15 description="ReceiveSwordFromGuard">
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="Please take this and let me know how well it fares in your training.<hardstop>"/>
 </text>
 <cinematic id=0 description="SharnaCutScene" camerax=72 cameray=672>
 	<assactor name="Sharna" hero="" enemyid=0 npcid="Sharna"/>

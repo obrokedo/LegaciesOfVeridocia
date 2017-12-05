@@ -33,14 +33,14 @@
 	<addstatic x=360 y=204 spriteid="Door2" spriteim="jaildoor(night)"/>
 	<addstatic x=216 y=288 spriteid="Door3" spriteim="jaildoor(night)"/>
 	<addstatic x=96 y=288 spriteid="Door2" spriteim="jaildoor(night)"/>
-	<addstatic x=264 y=192 spriteid="Fire" spriteim="fire"/>
-	<addstatic x=240 y=192 spriteid="Fire" spriteim="fire"/>
-	<addstatic x=216 y=192 spriteid="Fire" spriteim="fire"/>
-	<addstatic x=192 y=192 spriteid="Fire" spriteim="fire"/>
-	<addstatic x=120 y=192 spriteid="Fire" spriteim="fire"/>
-	<addstatic x=96 y=192 spriteid="Fire" spriteim="fire"/>
-	<addstatic x=72 y=192 spriteid="Fire" spriteim="fire"/>
-	<addstatic x=48 y=192 spriteid="Fire" spriteim="fire"/>
+	<addactor x=264 y=192 name="Fire1" anim="SpriteFire" startanim="UnUp" visible=true init=false associatedhero=""/>
+	<addactor x=240 y=192 name="Fire2" anim="SpriteFire" startanim="UnUp" visible=true init=false associatedhero=""/>
+	<addactor x=216 y=192 name="Fire3" anim="SpriteFire" startanim="UnUp" visible=true init=false associatedhero=""/>
+	<addactor x=192 y=192 name="Fire4" anim="SpriteFire" startanim="UnUp" visible=true init=false associatedhero=""/>
+	<addactor x=120 y=192 name="Fire5" anim="SpriteFire" startanim="UnUp" visible=true init=false associatedhero=""/>
+	<addactor x=96 y=192 name="Fire6" anim="SpriteFire" startanim="UnUp" visible=true init=false associatedhero=""/>
+	<addactor x=72 y=192 name="Fire7" anim="SpriteFire" startanim="UnUp" visible=true init=false associatedhero=""/>
+	<addactor x=48 y=192 name="Fire8" anim="SpriteFire" startanim="UnUp" visible=true init=false associatedhero=""/>
 	<playmusic music="castlenight" volume=50/>
 	<fadein time=2000 halting=false init=true/>
 	<speech text="... But we can't prove that.<hardstop>" heroportrait="Huun" enemyportrait="" animportrait=""/>
@@ -183,7 +183,14 @@
 	<speech text="Good.<pause> You've finally rescued them.<softstop> You know I can't maintain this spell indefinitely, Craig.<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait=""/>
 	<speech text="Um,<pause> excuse me,<pause> but who are you?<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
 	<speech text="Oh, forgive us dear, we're<pause>.<pause>.<pause>.<nextcin><nextcin><softstop> no good, there it goes.<pause> We must make haste!<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait=""/>
-	<remstatic spriteid="Fire"/>
+	<removeactor name="Fire1"/>
+	<removeactor name="Fire2"/>
+	<removeactor name="Fire3"/>
+	<removeactor name="Fire4"/>
+	<removeactor name="Fire5"/>
+	<removeactor name="Fire6"/>
+	<removeactor name="Fire7"/>
+	<removeactor name="Fire8"/>
 	<playsound sound="dark" volume=75/>
 	<facing name="Huun" dir=2/>
 	<facing name="Sharna" dir=2/>

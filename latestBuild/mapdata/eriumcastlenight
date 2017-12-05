@@ -470,7 +470,7 @@
 	<speech text="Okay, follow me. We've got to get out of here quickly before someone finds out you're gone.<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait=""/>
 	<haltingmove name="Olivia" x=1440 y=216 speed="2" movehor=true movediag=false/>
 	<playsound sound="casting" volume=100/>
-	<addstatic x=1440 y=192 spriteid="fire" spriteim="fire"/>
+	<addactor x=1440 y=192 name="SpriteFire" anim="SpriteFire" startanim="UnUp" visible=true init=false associatedhero=""/>
 	<wait time=500/>
 	<haltingmove name="Sharna" x=1368 y=216 speed="1" movehor=false movediag=false/>
 	<quiver name="Sharna"/>
