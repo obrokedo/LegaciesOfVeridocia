@@ -2,4 +2,3 @@ font,menufont,font/MenuFont.ttf,24
 image,mainbg,image/menuscreen.png
 itemdefs,/definitions/Items
 herodefs,/definitions/Heroes
-image,rain,image/Rain2.png
