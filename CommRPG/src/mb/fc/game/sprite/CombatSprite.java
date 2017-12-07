@@ -962,7 +962,9 @@ public class CombatSprite extends AnimatedSprite
 
 	public void triggerOverEvent(StateInfo stateInfo)
 	{
-		stateInfo.addPanel(new SpriteContextPanel(PanelType.PANEL_HEALTH_BAR, this, stateInfo.getPaddedGameContainer()));
+		stateInfo.addPanel(new SpriteContextPanel(PanelType.PANEL_HEALTH_BAR, this, 
+				stateInfo.getPersistentStateInfo().getGame().getEngineConfiguratior().getHealthPanelRenderer(),
+				stateInfo.getResourceManager(), stateInfo.getPaddedGameContainer()));
 	}
 
 	public int getClientId() {

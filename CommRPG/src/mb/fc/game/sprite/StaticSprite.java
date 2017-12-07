@@ -13,6 +13,7 @@ public class StaticSprite extends Sprite
 
 	private Image image;
 	private int[] triggerIds;
+	private boolean offsetUp = false;
 
 	public StaticSprite(int locX, int locY, String name, Image image, int[] triggerIds)
 	{
@@ -28,8 +29,14 @@ public class StaticSprite extends Sprite
 	public void render(Camera camera, Graphics graphics, GameContainer cont, int tileHeight) {
 		if (image == null)
 			return;
+		
+		float yPos = this.getLocY() - camera.getLocationY();
+		
+		if (offsetUp)
+			yPos -= tileHeight / 2;
+		
 		graphics.drawImage(image, Math.round(this.getLocX() - camera.getLocationX()),
-			Math.round(this.getLocY() - camera.getLocationY()));
+			Math.round(yPos));
 	}
 
 	public void setImage(Image image) {
@@ -44,5 +51,9 @@ public class StaticSprite extends Sprite
 				if (triggerId != -1)
 					stateInfo.getResourceManager().getTriggerEventById(triggerId).perform(stateInfo);
 		}
+	}
+
+	public void setOffsetUp(boolean offsetUp) {
+		this.offsetUp = offsetUp;
 	}
 }

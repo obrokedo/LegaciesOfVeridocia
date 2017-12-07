@@ -200,7 +200,7 @@ public class MapObject
 		
 		boolean throughWall = false;
 		if (params.containsKey("throughwall")) {
-			throughWall = Boolean.getBoolean(params.get("throughwall"));
+			throughWall = Boolean.parseBoolean(params.get("throughwall"));
 		}
 		
 		return getNPC(Integer.parseInt(params.get("textid")), params.get("name"), animation, facing, wander, uniqueId, throughWall, fcrm);
@@ -331,9 +331,10 @@ public class MapObject
 		Trigger searchTrigger2 = new Trigger("SearchChest" + triggerId2, triggerId2, false, 
 				true, true, false, null, null);
 		
-		Sprite chestSprite = new StaticSprite(x, y, name, fcrm.getImage(spriteImage), new int[] {triggerId1, triggerId2} );
+		StaticSprite chestSprite = new StaticSprite(x, y, name, fcrm.getImage(spriteImage), new int[] {triggerId1, triggerId2} );
 		chestSprite.setLocX(x, fcrm.getMap().getTileEffectiveWidth());
 		chestSprite.setLocY(y, fcrm.getMap().getTileEffectiveHeight());
+		chestSprite.setOffsetUp(true);
 		searchTrigger1.addTriggerable(searchTrigger1.new TriggerRemoveSprite(name));
 		if (item != null) {
 			searchTrigger2.addTriggerable(searchTrigger2.new TriggerAddItem(item.getItemId()));

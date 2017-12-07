@@ -1,21 +1,14 @@
 package mb.fc.game.hudmenu;
 
-import java.awt.Font;
-
-import javax.swing.JOptionPane;
-
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.UnicodeFont;
-import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.geom.Rectangle;
 
 import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.MessageType;
 import mb.fc.engine.state.StateInfo;
-import mb.fc.game.exception.BadResourceException;
 import mb.fc.game.menu.Menu.MenuUpdate;
 import mb.fc.game.ui.PaddedGameContainer;
 import mb.fc.loading.FCResourceManager;

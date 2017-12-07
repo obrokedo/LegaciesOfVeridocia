@@ -32,6 +32,10 @@ public class NPCSprite extends AnimatedSprite
 		this.id = id;
 		this.throughWall = throughWall;
 	}
+	
+	public void setMoving(boolean moving) {
+		this.moving = moving;
+	}
 
 	public void setInitialPosition(int xLoc, int yLoc,
 			int tileWidth, int tileHeight, int maxWander, Direction direction)
@@ -78,7 +82,9 @@ public class NPCSprite extends AnimatedSprite
 	{
 		if (!moving)
 		{
-			if (moveCounter == 30)
+			if (name != null && this.name.equalsIgnoreCase("Bartender1"))
+				System.out.println(moveCounter);
+			if (moveCounter >= 30)
 			{
 				Direction nextDir = null;
 				int count = 0;

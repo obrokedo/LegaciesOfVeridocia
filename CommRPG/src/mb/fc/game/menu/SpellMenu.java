@@ -1,24 +1,23 @@
 package mb.fc.game.menu;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
+import mb.fc.engine.config.SpellMenuRenderer;
 import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.BattleSelectionMessage;
 import mb.fc.engine.message.MessageType;
 import mb.fc.engine.state.StateInfo;
-import mb.fc.game.battle.spell.KnownSpell;
 import mb.fc.game.constants.Direction;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.ui.PaddedGameContainer;
-import mb.fc.utils.StringUtils;
 
 public class SpellMenu extends QuadMenu
 {
 	private Image emptySpot;
 	private int selectedLevel = 0;
 	private boolean choseSpell = false;
+	private SpellMenuRenderer spellMenuRenderer;
 
 	public SpellMenu(StateInfo stateInfo) {
 		super(PanelType.PANEL_SPELL, null, false, stateInfo);
@@ -28,6 +27,8 @@ public class SpellMenu extends QuadMenu
 		this.icons = new Image[4];
 		this.text = new String[4];
 		this.paintSelectionCursor = true;
+		spellMenuRenderer = stateInfo.getPersistentStateInfo().getGame().
+				getEngineConfiguratior().getSpellMenuRenderer();
 	}
 
 	@Override
@@ -94,47 +95,10 @@ public class SpellMenu extends QuadMenu
 
 	@Override
 	protected void renderTextBox(PaddedGameContainer gc, Graphics graphics) {
-		graphics.setColor(Panel.COLOR_FOREFRONT);
-
-		Panel.drawPanelBox(198,
-				200 - 40, 75,
-				36 + 18, graphics);
-
-		KnownSpell overSpell = stateInfo.getCurrentSprite().getSpellsDescriptors().get(getSelectedInt());
-
-		graphics.setColor(COLOR_FOREFRONT);
-		StringUtils.drawString(text[getSelectedInt()], 205, 160, graphics);
-		if (choseSpell)
-		{
-			graphics.setColor(Color.red);
-			graphics.setLineWidth(2);
-			graphics.drawRoundRect(204,
-					183,
-					64, 11, 4);
-		}
-		else
-			selectedLevel = 0;
-
-		for (int i = 0; i < overSpell.getMaxLevel(); i++)
-		{
-			if (i <= selectedLevel)
-			{
-				graphics.setColor(Color.yellow);
-				graphics.fillRoundRect(206 + i * 15,
-						185,
-						14, 7, 4);
-				graphics.setColor(COLOR_FOREFRONT);
-			}
-			graphics.drawRoundRect(206 + i * 15,
-					185,
-					14, 7, 4);
-		}
-		// graphics.drawString(spellName, 410, 399);
-		StringUtils.drawString("Cost:", 205, 185, graphics);
-
-		if (stateInfo.getCurrentSprite().getCurrentMP() < overSpell.getSpell().getCosts()[selectedLevel])
-			graphics.setColor(Color.red);
-		StringUtils.drawString(overSpell.getSpell().getCosts()[selectedLevel] + "", 245, 185, graphics);
+		spellMenuRenderer.render(text[getSelectedInt()], stateInfo.getCurrentSprite(), stateInfo.getResourceManager(), 
+				choseSpell, selectedLevel, 
+				stateInfo.getCurrentSprite().getSpellsDescriptors().get(getSelectedInt()), 
+				stateInfo, graphics, Panel.COLOR_FOREFRONT);
 	}
 
 	@Override
@@ -161,6 +125,7 @@ public class SpellMenu extends QuadMenu
 		{
 			stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, "menumove", 1f, false));
 			selectedLevel--;
+			spellMenuRenderer.spellLevelChanged(selectedLevel);
 		}
 		return MenuUpdate.MENU_ACTION_LONG;
 	}
@@ -173,7 +138,14 @@ public class SpellMenu extends QuadMenu
 		{
 			stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, "menumove", 1f, false));
 			selectedLevel++;
+			spellMenuRenderer.spellLevelChanged(selectedLevel);
 		}
 		return MenuUpdate.MENU_ACTION_LONG;
+	}
+
+	@Override
+	public MenuUpdate update(long delta, StateInfo stateInfo) {
+		spellMenuRenderer.update(delta);
+		return super.update(delta, stateInfo);
 	}
 }

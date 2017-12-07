@@ -2,7 +2,6 @@ package mb.fc.game.manager;
 
 import java.awt.Point;
 import java.util.Iterator;
-import java.util.Map;
 
 import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.AudioMessage;
@@ -22,7 +21,6 @@ import mb.fc.game.sprite.StaticSprite;
 import mb.fc.map.MapObject;
 import mb.jython.GlobalPythonFactory;
 import mb.jython.JMusicSelector;
-import mb.jython.JythonObjectFactory;
 
 public class SpriteManager extends Manager
 {
@@ -323,6 +321,7 @@ public class SpriteManager extends Manager
 						NPCSprite npc = (NPCSprite) s;
 						if (npc.getTileX() == checkX &&
 								npc.getTileY() == checkY || (checkThroughWall && 
+										npc.isThroughWall() &&
 										npc.getTileX() == checkX2 &&
 										npc.getTileY() == checkY2))
 						{

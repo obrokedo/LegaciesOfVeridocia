@@ -8,9 +8,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.util.Log;
 
 import mb.fc.engine.message.AudioMessage;
-import mb.fc.engine.message.InfoMessage;
 import mb.fc.engine.message.MessageType;
-import mb.fc.engine.message.SpeechMessage;
 import mb.fc.engine.message.SpriteContextMessage;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.Camera;
@@ -211,7 +209,9 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 			currentSprite.setFacing(Direction.UP);
 
 		stateInfo.removePanel(PanelType.PANEL_ENEMY_HEALTH_BAR);
-		stateInfo.addPanel(new SpriteContextPanel(PanelType.PANEL_ENEMY_HEALTH_BAR, targetsInRange.get(selectedTarget), stateInfo.getPaddedGameContainer()));
+		stateInfo.addPanel(new SpriteContextPanel(PanelType.PANEL_ENEMY_HEALTH_BAR, targetsInRange.get(selectedTarget), 
+				stateInfo.getPersistentStateInfo().getGame().getEngineConfiguratior().getHealthPanelRenderer(), 
+				stateInfo.getResourceManager(), stateInfo.getPaddedGameContainer()));
 
 		stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, "menumove", 1f, false));
 	}

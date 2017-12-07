@@ -6,4 +6,8 @@ public interface EngineConfigurator {
 	public void getAttackCinematic();
 	
 	public AnimationParser getAnimationParser();
+	
+	public HealthPanelRenderer getHealthPanelRenderer();
+	
+	public SpellMenuRenderer getSpellMenuRenderer();
 }

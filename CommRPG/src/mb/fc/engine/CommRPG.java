@@ -15,8 +15,8 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.Transition;
 import org.newdawn.slick.util.Log;
 
-import mb.fc.engine.config.DefaultEngineConfiguration;
 import mb.fc.engine.config.EngineConfigurator;
+import mb.fc.engine.config.LOVEngineConfigration;
 import mb.fc.engine.log.FileLogger;
 import mb.fc.engine.state.BattleState;
 import mb.fc.engine.state.CinematicState;
@@ -89,8 +89,8 @@ public class CommRPG extends StateBasedGame   {
 
 	private static int fullScreenWidth, fullScreenHeight;
 
-	public static final String VERSION = "DEV 1.363 Aug 30, 2017";
-	public static final String FILE_VERSION = "LoV-Dev-1.364";
+	public static final String VERSION = "DEV 1.365 Dec 5, 2017";
+	public static final String FILE_VERSION = "LoV-Dev";
 
 	public static final String GAME_TITLE = "Legacies of Veridocia";
 
@@ -106,7 +106,7 @@ public class CommRPG extends StateBasedGame   {
 	
 	public static TextParser TEXT_PARSER = new TextParser();
 	
-	protected EngineConfigurator engineConfiguratior = new DefaultEngineConfiguration();
+	protected EngineConfigurator engineConfiguratior = new LOVEngineConfigration();
 
 	private class DEBUG_HOLDER
 	{

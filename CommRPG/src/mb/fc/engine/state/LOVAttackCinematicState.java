@@ -553,7 +553,9 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 				else
 					heroHealthPanel = new SpriteContextPanel(
 							PanelType.PANEL_HEALTH_BAR,
-							hero.getParentSprite(), gc);
+							hero.getParentSprite(), 
+							((CommRPG) game).getEngineConfiguratior().getHealthPanelRenderer(),
+							frm, gc);
 				hero.initialize();
 				if (hero instanceof StandCombatAnimation && heroCombatAnim instanceof StandCombatAnimation)
 					((StandCombatAnimation) hero).continueStandAnimation(heroCombatAnim);
@@ -570,7 +572,8 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 				else
 					enemyHealthPanel = new SpriteContextPanel(
 							PanelType.PANEL_TARGET_HEALTH_BAR,
-							enemy.getParentSprite(), gc);
+							enemy.getParentSprite(), ((CommRPG) game).getEngineConfiguratior().getHealthPanelRenderer(), 
+							frm, gc);
 				enemy.initialize();
 				if (enemy instanceof StandCombatAnimation && enemyCombatAnim instanceof StandCombatAnimation)
 					((StandCombatAnimation) enemy).continueStandAnimation(enemyCombatAnim);

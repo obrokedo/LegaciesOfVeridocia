@@ -13,6 +13,8 @@ import mb.fc.game.constants.Direction;
 import mb.fc.game.exception.BadAnimationException;
 import mb.fc.game.sprite.AnimatedSprite;
 import mb.fc.game.sprite.CombatSprite;
+import mb.fc.game.sprite.NPCSprite;
+import mb.fc.game.sprite.Sprite;
 import mb.fc.game.ui.PaddedGameContainer;
 import mb.fc.utils.AnimSprite;
 import mb.fc.utils.Animation;
@@ -837,6 +839,10 @@ public class CinematicActor implements Comparable<CinematicActor>
 			sprite.setLocY(locY + stateInfo.getResourceManager().getMap().getTileRenderHeight(), stateInfo.getTileHeight());
 			sprite.setFacing(facing);
 			sprite.setVisible(true);
+			if (sprite.getSpriteType() == Sprite.TYPE_NPC) {
+				NPCSprite npc = (NPCSprite) sprite;
+				npc.setMoving(false);
+			}
 		}
 		return sprite;
 	}
