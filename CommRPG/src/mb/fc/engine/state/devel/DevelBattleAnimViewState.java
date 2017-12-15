@@ -81,10 +81,12 @@ public class DevelBattleAnimViewState extends LoadableGameState implements Resou
 					options.add("Normal Attack"); options.add("Critical Attack"); options.add("Ranged Attack"); // options.add("Miss Attack"); options.add("Double Attack"); 
 					String[] spells = CommRPG.engineConfiguratior.getSpellFactory().getSpellList();
 					for (String spell : spells) {
-						SpellDefinition initSpell = CommRPG.engineConfiguratior.getSpellFactory().createSpell(spell);
-						for (int i = 0; i < initSpell.getMaxLevel(); i++) {
-							options.add(spell + " " + (i + 1));
-						}
+						try {
+							SpellDefinition initSpell = CommRPG.engineConfiguratior.getSpellFactory().createSpell(spell);
+							for (int i = 0; i < initSpell.getMaxLevel(); i++) {
+								options.add(spell + " " + (i + 1));
+							}
+						} catch (Exception e) {};
 					}
 					break;
 				case PICK_DEFENDER_ACTION:

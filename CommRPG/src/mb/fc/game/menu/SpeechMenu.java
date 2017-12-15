@@ -340,6 +340,7 @@ public class SpeechMenu extends Menu
 				if (portrait != null)
 					portrait.setTalking(true);
 				waitUntil = -1;
+				linesSincePause = 0;
 			}
 		}
 

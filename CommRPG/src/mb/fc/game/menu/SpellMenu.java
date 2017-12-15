@@ -36,6 +36,7 @@ public class SpellMenu extends QuadMenu
 	{
 		this.selected = Direction.UP;
 		choseSpell = false;
+		spellMenuRenderer.spellLevelChanged(0);
 
 		for (int i = 0; i < 4; i++)
 		{
