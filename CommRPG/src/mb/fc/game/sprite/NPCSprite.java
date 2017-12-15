@@ -90,8 +90,6 @@ public class NPCSprite extends AnimatedSprite
 	{
 		if (!moving)
 		{
-			if (name != null && this.name.equalsIgnoreCase("Bartender1"))
-				System.out.println(moveCounter);
 			if (moveCounter >= 30)
 			{
 				Direction nextDir = null;

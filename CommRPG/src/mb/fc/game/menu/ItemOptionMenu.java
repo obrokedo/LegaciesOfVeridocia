@@ -34,7 +34,8 @@ public class ItemOptionMenu extends QuadMenu
 			Item item = stateInfo.getCurrentSprite().getItem(i);
 			if (item.isUsuable() && item.getDurability() != ItemDurability.BROKEN) {
 				enabled[0] = true;
-			} else if(item.isEquippable() && 
+			} 
+			if(item.isEquippable() && 
 					stateInfo.getCurrentSprite().isEquippable((EquippableItem) item) &&
 					item.getDurability() != ItemDurability.BROKEN) {
 				enabled[2] = true;
