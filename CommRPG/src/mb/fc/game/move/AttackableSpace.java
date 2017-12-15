@@ -7,6 +7,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.util.Log;
 
+import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.MessageType;
 import mb.fc.engine.message.SpriteContextMessage;
@@ -41,6 +42,7 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 	private Image cursorImage;
 	private final Color ATTACKABLE_COLOR = new Color(255, 0, 0, 70);
 	private boolean targetsAll = false;
+	private boolean canTargetSelf = true;
 
 	public static final int[][] AREA_0 = {{1}};
 
@@ -92,7 +94,7 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 
 
 	public AttackableSpace(StateInfo stateInfo, CombatSprite currentSprite, boolean targetsHero,
-			int[][] range, int[][] area)
+			int[][] range, int[][] area, boolean canTargetSelf)
 	{
 		this.currentSprite = currentSprite;
 		this.range = range;
@@ -100,6 +102,7 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 		this.targetsHero = targetsHero;
 		this.tileWidth = stateInfo.getTileWidth();
 		this.tileHeight = stateInfo.getTileHeight();
+		this.canTargetSelf = canTargetSelf;
 		spriteTileX = currentSprite.getTileX();
 		spriteTileY = currentSprite.getTileY();
 		Log.debug("Finding attackables for " + currentSprite.getName());
@@ -122,7 +125,7 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 							(currentSprite.getTileY() - rangeOffset + j));
 					CombatSprite targetable = stateInfo.getCombatSpriteAtTile(currentSprite.getTileX() - rangeOffset + i,
 							currentSprite.getTileY() - rangeOffset + j, targetsHero);
-					if (targetable != null)
+					if (targetable != null && (targetable != currentSprite || canTargetSelf))
 					{
 						targetsInRange.add(targetable);
 
@@ -163,7 +166,8 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 		{
 			for (int j = 0; j < range[0].length; j++)
 			{
-				if (range[j][i] != -1 && (i != rangeOffset || j != rangeOffset || targetsHero == currentSprite.isHero()))
+				if (range[j][i] != -1 && (i != rangeOffset || 
+						j != rangeOffset || (targetsHero == currentSprite.isHero() && canTargetSelf)))
 				{
 					graphics.fillRect((spriteTileX - rangeOffset + i) * tileWidth - camera.getLocationX(),
 							(spriteTileY - rangeOffset + j) * tileHeight - camera.getLocationY(), tileWidth, tileHeight);
@@ -210,7 +214,7 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 
 		stateInfo.removePanel(PanelType.PANEL_ENEMY_HEALTH_BAR);
 		stateInfo.addPanel(new SpriteContextPanel(PanelType.PANEL_ENEMY_HEALTH_BAR, targetsInRange.get(selectedTarget), 
-				stateInfo.getPersistentStateInfo().getGame().getEngineConfiguratior().getHealthPanelRenderer(), 
+				CommRPG.engineConfiguratior.getHealthPanelRenderer(), 
 				stateInfo.getResourceManager(), stateInfo.getPaddedGameContainer()));
 
 		stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, "menumove", 1f, false));
@@ -291,9 +295,6 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 					sprites.add(currentSprite);
 				}
 				stateInfo.sendMessage(new SpriteContextMessage(MessageType.TARGET_SPRITE, sprites));
-
-				// Once we've targeted a sprite there can not be anymore keyboard input
-				stateInfo.removeKeyboardListeners();
 
 				Log.debug("Target Amount -> " + sprites.size());
 

@@ -160,7 +160,7 @@ public class MultiplayerMenuState extends MenuState implements PacketHandler, St
 					// Add starting heroes if they haven't been added yet
 					if (persistentStateInfo.getClientProfile().getHeroes().size() == 0)
 					{
-						for (String heroName : GlobalPythonFactory.createConfigurationValues().getStartingHeroIds())
+						for (String heroName : CommRPG.engineConfiguratior.getConfigurationValues().getStartingHeroIds())
 							persistentStateInfo.getClientProfile().addHero(HeroResource.getHero(heroName));
 					}
 
@@ -188,7 +188,7 @@ public class MultiplayerMenuState extends MenuState implements PacketHandler, St
 					// Add starting heroes if they haven't been added yet
 					if (persistentStateInfo.getClientProfile().getHeroes().size() == 0)
 					{
-						for (String heroName : GlobalPythonFactory.createConfigurationValues().getStartingHeroIds())
+						for (String heroName : CommRPG.engineConfiguratior.getConfigurationValues().getStartingHeroIds())
 							persistentStateInfo.getClientProfile().addHero(HeroResource.getHero(heroName));
 					}
 

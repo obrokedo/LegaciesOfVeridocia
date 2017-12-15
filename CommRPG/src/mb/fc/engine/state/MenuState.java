@@ -13,6 +13,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.util.Log;
 
 import mb.fc.engine.CommRPG;
+import mb.fc.engine.config.EngineConfigurationValues;
 import mb.fc.game.Camera;
 import mb.fc.game.dev.DevParams;
 import mb.fc.game.input.FCInput;
@@ -25,7 +26,6 @@ import mb.fc.loading.LoadableGameState;
 import mb.fc.loading.LoadingState;
 import mb.fc.utils.StringUtils;
 import mb.jython.GlobalPythonFactory;
-import mb.jython.JConfigurationValues;
 
 /**
  * State that handles the main menu
@@ -178,7 +178,7 @@ public class MenuState extends LoadableGameState
 
 			if (input.isKeyDown(Input.KEY_ENTER))
 			{
-				JConfigurationValues jcv = GlobalPythonFactory.createConfigurationValues();
+				EngineConfigurationValues jcv = CommRPG.engineConfiguratior.getConfigurationValues();
 				if (menuIndex == 0 && stateIndex == 0)
 					start(LoadTypeEnum.valueOf(jcv.getStartingState()), 
 							jcv.getStartingMapData(), jcv.getStartingLocation());

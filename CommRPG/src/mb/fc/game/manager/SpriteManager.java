@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.util.Iterator;
 
 import mb.fc.engine.CommRPG;
+import mb.fc.engine.config.MusicConfiguration;
 import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.BooleanMessage;
 import mb.fc.engine.message.Message;
@@ -20,7 +21,6 @@ import mb.fc.game.sprite.Sprite;
 import mb.fc.game.sprite.StaticSprite;
 import mb.fc.map.MapObject;
 import mb.jython.GlobalPythonFactory;
-import mb.jython.JMusicSelector;
 
 public class SpriteManager extends Manager
 {
@@ -230,7 +230,7 @@ public class SpriteManager extends Manager
 						
 						spriteItr.remove();
 						stateInfo.removeCombatSprite(cs);
-						JMusicSelector musicSelector = GlobalPythonFactory.createJMusicSelector();
+						MusicConfiguration musicSelector = CommRPG.engineConfiguratior.getMusicConfiguration();
 						stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, 
 								musicSelector.getSpriteDeathOnMapSoundEffect(cs.getName()), 
 								1.0f, false));

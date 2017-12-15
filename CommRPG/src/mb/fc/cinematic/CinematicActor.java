@@ -7,6 +7,9 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.util.pathfinding.Path;
 import org.newdawn.slick.util.pathfinding.Path.Step;
 
+import mb.fc.engine.CommRPG;
+import mb.fc.engine.config.AnimationConfiguration;
+import mb.fc.engine.config.CinematicActorConfiguration;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.Camera;
 import mb.fc.game.constants.Direction;
@@ -20,8 +23,6 @@ import mb.fc.utils.AnimSprite;
 import mb.fc.utils.Animation;
 import mb.fc.utils.SpriteAnims;
 import mb.jython.GlobalPythonFactory;
-import mb.jython.JAnimationConfiguration;
-import mb.jython.JCinematicActor;
 
 /**
  * Defines an "Actor" in a cinematic and contains the state information
@@ -94,12 +95,12 @@ public class CinematicActor implements Comparable<CinematicActor>
 
 	private boolean moving;
 
-	public JCinematicActor jCinematicActor;
+	public CinematicActorConfiguration jCinematicActor;
 
 	public CinematicActor(SpriteAnims spriteAnims, String initialAnimation, int x, int y, boolean visible,
 			boolean isHeroBacked, boolean isHeroPromoted)
 	{
-		jCinematicActor = GlobalPythonFactory.createJCinematicActor();
+		jCinematicActor = CommRPG.engineConfiguratior.getCinematicActorConfiguration();
 		this.isHeroBacked = isHeroBacked;
 		this.isHeroPromoted = isHeroPromoted;
 		this.facing = Direction.DOWN;
@@ -118,7 +119,7 @@ public class CinematicActor implements Comparable<CinematicActor>
 
 	public CinematicActor(AnimatedSprite sprite, StateInfo stateInfo)
 	{
-		jCinematicActor = GlobalPythonFactory.createJCinematicActor();
+		jCinematicActor = CommRPG.engineConfiguratior.getCinematicActorConfiguration();
 		// Set the sprite that is in the town or battle to invisible
 		sprite.setVisible(false);
 		this.isHeroBacked = true;
@@ -732,10 +733,10 @@ public class CinematicActor implements Comparable<CinematicActor>
 		this.animHalting = halting;
 		this.animationLooping = looping;
 		if (isHeroBacked) {
-			if (animation.startsWith(JAnimationConfiguration.getUnpromotedPrefix()))
-				animation.replaceFirst(JAnimationConfiguration.getUnpromotedPrefix(), "");
-			else if (animation.startsWith(JAnimationConfiguration.getPromotedPrefix()))
-				animation.replaceFirst(JAnimationConfiguration.getPromotedPrefix(), "");
+			if (animation.startsWith(AnimationConfiguration.getUnpromotedPrefix()))
+				animation.replaceFirst(AnimationConfiguration.getUnpromotedPrefix(), "");
+			else if (animation.startsWith(AnimationConfiguration.getPromotedPrefix()))
+				animation.replaceFirst(AnimationConfiguration.getPromotedPrefix(), "");
 			this.currentAnim = spriteAnims.getCharacterAnimation(animation, isHeroPromoted);
 		}
 		else
@@ -743,7 +744,7 @@ public class CinematicActor implements Comparable<CinematicActor>
 
 		if (currentAnim == null)
 			throw new BadAnimationException("Unable to find animation: " + (isHeroBacked ? 
-					(isHeroPromoted ? JAnimationConfiguration.getPromotedPrefix() : JAnimationConfiguration.getUnpromotedPrefix()) : "" ) + animation + " for cinematic actor");
+					(isHeroPromoted ? AnimationConfiguration.getPromotedPrefix() : AnimationConfiguration.getUnpromotedPrefix()) : "" ) + animation + " for cinematic actor");
 		this.animDelta = 0;
 		this.animUpdate = time / currentAnim.frames.size();
 	}

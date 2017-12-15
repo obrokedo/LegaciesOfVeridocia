@@ -1,4 +1,4 @@
-package mb.jython;
+package mb.fc.engine.config;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.particles.Particle;
@@ -7,7 +7,7 @@ import org.newdawn.slick.particles.ParticleSystem;
 
 import mb.fc.loading.FCResourceManager;
 
-public abstract class JParticleEmitter implements ParticleEmitter
+public abstract class ParticleEmitterConfiguration implements ParticleEmitter
 {
 	protected FCResourceManager fcResourceManager;
 	

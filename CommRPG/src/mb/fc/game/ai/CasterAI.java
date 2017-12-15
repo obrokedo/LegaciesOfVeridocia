@@ -3,23 +3,23 @@ package mb.fc.game.ai;
 import java.awt.Point;
 import java.util.ArrayList;
 
+import org.newdawn.slick.util.Log;
+
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.Range;
 import mb.fc.game.battle.command.BattleCommand;
 import mb.fc.game.battle.spell.KnownSpell;
+import mb.fc.game.battle.spell.SpellDefinition;
 import mb.fc.game.item.EquippableItem;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.turnaction.AttackSpriteAction;
-import mb.jython.JSpell;
-
-import org.newdawn.slick.util.Log;
 
 public abstract class CasterAI extends AI
 {
 	protected boolean willKill;
 	protected boolean willHeal;
 	protected int mostConfident = 0;
-	protected JSpell bestSpell;
+	protected SpellDefinition bestSpell;
 	protected KnownSpell bestKnownSpell;
 	protected int spellLevel;
 	protected ArrayList<CombatSprite> targets;
@@ -102,7 +102,7 @@ public abstract class CasterAI extends AI
 		{
 			for (KnownSpell sd : currentSprite.getSpellsDescriptors())
 			{
-				JSpell spell = sd.getSpell();
+				SpellDefinition spell = sd.getSpell();
 
 				for (int i = 1; i <= sd.getMaxLevel(); i++)
 				{
@@ -129,7 +129,7 @@ public abstract class CasterAI extends AI
 		}
 	}
 
-	protected int checkForMaxConfidence(int mostConfident, int confidence, JSpell currentSpell, KnownSpell currentKnownSpell,
+	protected int checkForMaxConfidence(int mostConfident, int confidence, SpellDefinition currentSpell, KnownSpell currentKnownSpell,
 			int level, ArrayList<CombatSprite> targets, boolean willKill, boolean willHeal)
 	{
 		if (confidence > mostConfident)
@@ -159,7 +159,7 @@ public abstract class CasterAI extends AI
 		{
 			for (KnownSpell sd : currentSprite.getSpellsDescriptors())
 			{
-				JSpell spell = sd.getSpell();
+				SpellDefinition spell = sd.getSpell();
 
 				for (int i = 1; i <= sd.getMaxLevel(); i++)
 				{
@@ -189,7 +189,7 @@ public abstract class CasterAI extends AI
 		}
 	}
 
-	protected abstract void handleSpell(JSpell spell,  KnownSpell knownSpell, int i, int tileWidth, int tileHeight, CombatSprite currentSprite,
+	protected abstract void handleSpell(SpellDefinition spell,  KnownSpell knownSpell, int i, int tileWidth, int tileHeight, CombatSprite currentSprite,
 			CombatSprite targetSprite, StateInfo stateInfo, int baseConfidence, int cost, Point attackPoint, int distance);
 
 	protected abstract int determineBaseConfidence(CombatSprite currentSprite,

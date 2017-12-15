@@ -26,7 +26,6 @@ import mb.fc.game.sprite.Door;
 import mb.fc.game.sprite.NPCSprite;
 import mb.fc.game.sprite.Sprite;
 import mb.fc.game.sprite.StaticSprite;
-import mb.fc.game.text.Speech;
 import mb.fc.game.trigger.Trigger;
 import mb.fc.game.trigger.TriggerCondition;
 import mb.fc.loading.FCResourceManager;
@@ -203,11 +202,25 @@ public class MapObject
 			throughWall = Boolean.parseBoolean(params.get("throughwall"));
 		}
 		
-		return getNPC(Integer.parseInt(params.get("textid")), params.get("name"), animation, facing, wander, uniqueId, throughWall, fcrm);
+		boolean turnOnTalk = true;
+		boolean animate = true;
+		
+		if (params.containsKey("noanimate")) {
+			animate = !Boolean.parseBoolean(params.get("noanimate"));
+		}
+		
+		if (params.containsKey("noturn")) {
+			turnOnTalk = !Boolean.parseBoolean(params.get("noturn"));
+		}
+		
+		return getNPC(Integer.parseInt(params.get("textid")), params.get("name"), 
+				animation, facing, wander, uniqueId, throughWall, animate, turnOnTalk, fcrm);
 	}
 	
-	public NPCSprite getNPC(int textId, String name, String animation, Integer facing, Integer wander, Integer npcId, boolean throughWall, FCResourceManager fcrm) {
-		NPCSprite npc = NPCResource.getNPC(animation, textId, name, throughWall);
+	public NPCSprite getNPC(int textId, String name, String animation, Integer facing, 
+			Integer wander, Integer npcId, boolean throughWall,
+			boolean animate, boolean turnOnTalk, FCResourceManager fcrm) {
+		NPCSprite npc = NPCResource.getNPC(animation, textId, name, throughWall, animate, turnOnTalk);
 		npc.initializeSprite(fcrm);
 		
 		int wanderVal = 0;
@@ -336,6 +349,7 @@ public class MapObject
 		chestSprite.setLocY(y, fcrm.getMap().getTileEffectiveHeight());
 		chestSprite.setOffsetUp(true);
 		searchTrigger1.addTriggerable(searchTrigger1.new TriggerRemoveSprite(name));
+		searchTrigger1.addTriggerable(searchTrigger1.new TriggerAddSearchArea(this, Trigger.TRIGGER_CHEST_NO_ITEM));
 		if (item != null) {
 			searchTrigger2.addTriggerable(searchTrigger2.new TriggerAddItem(item.getItemId()));
 			searchTrigger2.addTriggerable(searchTrigger2.new TriggerShowText("There was a " + item.getName() + " inside!"  + TextSpecialCharacters.CHAR_HARD_STOP));
@@ -344,6 +358,7 @@ public class MapObject
 		}
 		fcrm.addTriggerEvent(triggerId1, searchTrigger1);
 		fcrm.addTriggerEvent(triggerId2, searchTrigger2);
+		
 		return chestSprite;
 	}
 

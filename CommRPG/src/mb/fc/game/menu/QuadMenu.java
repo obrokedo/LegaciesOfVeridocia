@@ -136,6 +136,25 @@ public abstract class QuadMenu extends Menu
 		}
 		return 0;
 	}
+	
+	protected void setSelectedInt(int dir)
+	{
+		switch (dir)
+		{
+			case 0:
+				selected = Direction.UP;
+				return;
+			case 1:
+				selected = Direction.LEFT;
+				return;
+			case 2:
+				selected = Direction.RIGHT;
+				return;
+			case 3:
+				selected = Direction.DOWN;
+				return;
+		}
+	}
 
 	protected void renderTextBox(PaddedGameContainer gc, Graphics graphics)
 	{

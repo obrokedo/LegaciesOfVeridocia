@@ -10,6 +10,7 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.util.Log;
 
+import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.BattleResultsMessage;
 import mb.fc.engine.message.BattleSelectionMessage;
@@ -21,6 +22,8 @@ import mb.fc.engine.message.SpeechMessage;
 import mb.fc.engine.message.SpriteContextMessage;
 import mb.fc.engine.message.TurnActionsMessage;
 import mb.fc.engine.state.StateInfo;
+import mb.fc.game.Range;
+import mb.fc.game.battle.BattleEffect;
 import mb.fc.game.battle.BattleResults;
 import mb.fc.game.battle.command.BattleCommand;
 import mb.fc.game.constants.Direction;
@@ -36,6 +39,7 @@ import mb.fc.game.menu.ItemOptionMenu;
 import mb.fc.game.menu.LandEffectPanel;
 import mb.fc.game.menu.SpeechMenu;
 import mb.fc.game.menu.SpellMenu;
+import mb.fc.game.menu.ItemMenu.ItemOption;
 import mb.fc.game.move.AttackableSpace;
 import mb.fc.game.move.MoveableSpace;
 import mb.fc.game.move.MovingSprite;
@@ -46,8 +50,6 @@ import mb.fc.game.turnaction.PerformAttackAction;
 import mb.fc.game.turnaction.TargetSpriteAction;
 import mb.fc.game.turnaction.TurnAction;
 import mb.fc.game.turnaction.WaitAction;
-import mb.jython.GlobalPythonFactory;
-import mb.jython.JBattleEffect;
 
 public class TurnManager extends Manager implements KeyboardListener
 {
@@ -322,7 +324,7 @@ public class TurnManager extends Manager implements KeyboardListener
 						for (int i = 0; i < currentSprite.getBattleEffects().size(); i++)
 						{
 							String effectText = null;
-							JBattleEffect be = currentSprite.getBattleEffects().get(i);
+							BattleEffect be = currentSprite.getBattleEffects().get(i);
 	
 							if (be.isDone())
 							{
@@ -389,7 +391,7 @@ public class TurnManager extends Manager implements KeyboardListener
 				turnActions.remove(0);
 				for (int i = 0; i < currentSprite.getBattleEffects().size(); i++)
 				{
-					JBattleEffect be = currentSprite.getBattleEffects().get(i);
+					BattleEffect be = currentSprite.getBattleEffects().get(i);
 					be.performEffect(currentSprite);
 					//TODO Add a new message saying the hero has died?
 					if (currentSprite.getCurrentHP() <= 0) {
@@ -406,7 +408,7 @@ public class TurnManager extends Manager implements KeyboardListener
 				break;
 			case TurnAction.ACTION_CURRENT_SPRITE_DEATH:
 				turnActions.remove(0);
-				stateInfo.addMenu(new SpeechMenu(GlobalPythonFactory.createJBattleFunctions().getCombatantDeathText(null, currentSprite), stateInfo));
+				stateInfo.addMenu(new SpeechMenu(CommRPG.engineConfiguratior.getBattleFunctionConfiguration().getCombatantDeathText(null, currentSprite), stateInfo));
 				break;
 			case TurnAction.ACTION_CHECK_SPEECH_END_TURN:
 				turnActions.remove(0);
@@ -566,7 +568,7 @@ public class TurnManager extends Manager implements KeyboardListener
 		boolean turnPrevented = false;
 		String effectName = null;
 		// Check to see if we can move
-		for (JBattleEffect effect : currentSprite.getBattleEffects()) {
+		for (BattleEffect effect : currentSprite.getBattleEffects()) {
 			if (effect.preventsTurn()) {
 				turnPrevented = true;
 				effectName = effect.getBattleEffectId();
@@ -604,6 +606,7 @@ public class TurnManager extends Manager implements KeyboardListener
 		int[][] range = null;
 		int[][] area = null;
 		boolean targetsHero = !currentSprite.isHero();
+		boolean canTargetSelf = true;
 
 		// If the command is to attack, get the characters attack range
 		if (battleCommand.getCommand() == BattleCommand.COMMAND_ATTACK)
@@ -644,6 +647,12 @@ public class TurnManager extends Manager implements KeyboardListener
 						targetsHero = currentSprite.isHero();
 				}
 			}
+			else if (battleCommand.getCommand() == BattleCommand.COMMAND_GIVE_ITEM) {
+				area = AttackableSpace.AREA_0;
+				range = Range.ONE_ONLY.getAttackableSpace();
+				targetsHero = currentSprite.isHero();
+				canTargetSelf = false;
+			}
 
 			switch (areaSize)
 			{
@@ -662,7 +671,7 @@ public class TurnManager extends Manager implements KeyboardListener
 			}
 		}
 
-		as = new AttackableSpace(stateInfo, currentSprite, targetsHero, range, area);
+		as = new AttackableSpace(stateInfo, currentSprite, targetsHero, range, area, canTargetSelf);
 		if (as.getTargetAmount() == 0)
 		{
 			// Because the speech message is immediate this message also needs to be
@@ -688,7 +697,7 @@ public class TurnManager extends Manager implements KeyboardListener
 		displayMoveable = false;
 		displayCursor = true;
 		displayOverCursor = false;
-		stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, GlobalPythonFactory.createJMusicSelector().getMenuAddedSoundEffect(), 1f, false));
+		stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, CommRPG.engineConfiguratior.getMusicConfiguration().getMenuAddedSoundEffect(), 1f, false));
 		stateInfo.removeKeyboardListener();
 		this.turnManagerHasFocus = true;
 	}
@@ -711,11 +720,11 @@ public class TurnManager extends Manager implements KeyboardListener
 				stateInfo.addMenu(spellMenu);
 				break;
 			case SHOW_ITEM_MENU:
-				itemMenu.initialize();
+				itemMenu.initialize(ItemOption.values()[((IntMessage) message).getValue()]);
 				stateInfo.addMenu(itemMenu);
 				break;
 			case SHOW_ITEM_OPTION_MENU:
-				itemOptionMenu.initialize(((IntMessage) message).getValue());
+				itemOptionMenu.initialize();
 				stateInfo.addMenu(itemOptionMenu);
 				break;
 			// THIS IS SENT BY THE OWNER
@@ -726,13 +735,35 @@ public class TurnManager extends Manager implements KeyboardListener
 			// This message should never be sent by AI
 			// THIS IS SENT BY THE OWNER
 			case TARGET_SPRITE:
-				displayAttackable = false;
-				displayMoveable = true;
-
 				// At this point we know who we intend to target, but we need to inject the BattleCommand.
 				// Only the owner will have a value for the battle command so they will have to be
 				// the one to send the BattleResults
-				turnActions.add(new AttackSpriteAction(((SpriteContextMessage) message).getSprites(stateInfo.getCombatSprites()), battleCommand));
+				if (!(battleCommand.getCommand() == BattleCommand.COMMAND_GIVE_ITEM)) {
+					displayAttackable = false;
+					displayMoveable = true;
+					// Once we've targeted a sprite there can not be anymore keyboard input
+					stateInfo.removeKeyboardListeners();
+					turnActions.add(new AttackSpriteAction(
+						((SpriteContextMessage) message).getSprites(stateInfo.getCombatSprites()), battleCommand));
+				} else {
+					Item item = battleCommand.getItem();
+					CombatSprite targetSprite = ((SpriteContextMessage) message).getSprites(stateInfo.getCombatSprites()).get(0);
+					
+					if (targetSprite.getItemsSize() < 4) {
+						displayAttackable = false;
+						displayMoveable = true;
+						
+						// Once we've targeted a sprite there can not be anymore keyboard input
+						stateInfo.removeKeyboardListeners();
+						stateInfo.addMenu(new SpeechMenu(currentSprite.getName() + " gave the " + item.getName() + " to " + 
+								targetSprite.getName() + ".<hardstop>", stateInfo));
+						currentSprite.removeItem(item);
+						targetSprite.addItem(item);
+						turnActions.add(new TurnAction(TurnAction.ACTION_END_TURN));
+					} else {
+						stateInfo.addMenu(new SpeechMenu(targetSprite.getName() + " has no room!<hardstop>", stateInfo));
+					}
+				}
 				break;
 			// THIS IS SENT BY THE OWNER
 			case SELECT_SPELL:
@@ -742,9 +773,15 @@ public class TurnManager extends Manager implements KeyboardListener
 						currentSprite.getSpellsDescriptors().get(bsm.getSelectionIndex()), bsm.getLevel());
 				determineAttackableSpace(true);
 				break;
-			case SELECT_ITEM:
+			case USE_ITEM:
 				BattleSelectionMessage ibsm = (BattleSelectionMessage) message;
 				battleCommand = new BattleCommand(BattleCommand.COMMAND_ITEM,
+						currentSprite.getItem(ibsm.getSelectionIndex()));
+				determineAttackableSpace(true);
+				break;
+			case GIVE_ITEM:
+				ibsm = (BattleSelectionMessage) message;
+				battleCommand = new BattleCommand(BattleCommand.COMMAND_GIVE_ITEM,
 						currentSprite.getItem(ibsm.getSelectionIndex()));
 				determineAttackableSpace(true);
 				break;

@@ -17,6 +17,9 @@ import org.newdawn.slick.state.transition.EmptyTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import mb.fc.engine.CommRPG;
+import mb.fc.engine.config.MusicConfiguration;
+import mb.fc.engine.config.ParticleEmitterConfiguration;
+import mb.fc.game.battle.BattleEffect;
 import mb.fc.game.battle.BattleResults;
 import mb.fc.game.battle.BattleSceneCreator;
 import mb.fc.game.battle.command.BattleCommand;
@@ -40,13 +43,10 @@ import mb.fc.particle.AnimatedParticleSystem;
 import mb.fc.utils.AnimationWrapper;
 import mb.fc.utils.StringUtils;
 import mb.jython.GlobalPythonFactory;
-import mb.jython.JBattleEffect;
-import mb.jython.JMusicSelector;
-import mb.jython.JParticleEmitter;
 
 public class LOVAttackCinematicState extends LoadableGameState implements MusicListener
 {
-	private JMusicSelector musicSelector = null;
+	private MusicConfiguration musicSelector = null;
 
 	private ArrayList<CombatAnimation> heroCombatAnimations;
 	private CombatAnimation heroCombatAnim;
@@ -122,21 +122,21 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 
 		// Initialize battle effects
 		for (CombatSprite cs : battleResults.targets)
-			cs.initializeBattleEffects(frm);
+			cs.initializeBattleAttributes(frm);
 
-		for (ArrayList<JBattleEffect> effs : battleResults.targetEffects)
+		for (ArrayList<BattleEffect> effs : battleResults.targetEffects)
 		{
-			for (JBattleEffect eff : effs)
+			for (BattleEffect eff : effs)
 				eff.initializeAnimation(frm);
 		}
 
-		attacker.initializeBattleEffects(frm);
+		attacker.initializeBattleAttributes(frm);
 
 		boolean targetsAllies = battleResults.targets.get(0).isHero() == attacker.isHero();
 
 		if (musicSelector == null)
 		{
-			musicSelector = GlobalPythonFactory.createJMusicSelector();
+			musicSelector = CommRPG.engineConfiguratior.getMusicConfiguration();
 		}
 
 		String mus = attacker.getCustomMusic(); 
@@ -174,7 +174,7 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 				throw new BadMapException("Location " + attacker.getTileX() + " " + attacker.getTileY() + " has either no terrain type or a "
 						+ "bad terrain type assigned to it and\n so the battle background image can not be determined");
 			}
-			battleBackgroundIndex = GlobalPythonFactory.createConfigurationValues().
+			battleBackgroundIndex = CommRPG.engineConfiguratior.getConfigurationValues().
 					getBattleBackgroundImageIndexByTerrainType(terrainType);
 		}
 		
@@ -224,7 +224,7 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 				// Image im = frm.getImage(rainFile);
 				String rainAnimation =  battleResults.battleCommand.getSpell().getSpellRainAnimationName(battleResults.battleCommand.getLevel());
 				rainParticleSystem = new AnimatedParticleSystem(rainFile, rainAnimation, frm, backgroundScale);
-				JParticleEmitter emitter = battleResults.battleCommand.getSpell().getEmitter(battleResults.battleCommand.getLevel());
+				ParticleEmitterConfiguration emitter = battleResults.battleCommand.getSpell().getEmitter(battleResults.battleCommand.getLevel());
 				emitter.initialize(battleResults.targets.get(0).isHero());
 				emitter.setFcResourceManager(frm);
 				rainParticleSystem.addEmitter(emitter);
@@ -340,7 +340,7 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 			delta *= CommRPG.getTestMultiplier();
 
 		// Update the input so that released keys are realized
-		input.update(delta);
+		input.update(delta, container.getInput());
 
 		// Whether the current animation says that
 		// a spell should be rendered
@@ -554,7 +554,7 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 					heroHealthPanel = new SpriteContextPanel(
 							PanelType.PANEL_HEALTH_BAR,
 							hero.getParentSprite(), 
-							((CommRPG) game).getEngineConfiguratior().getHealthPanelRenderer(),
+							CommRPG.engineConfiguratior.getHealthPanelRenderer(),
 							frm, gc);
 				hero.initialize();
 				if (hero instanceof StandCombatAnimation && heroCombatAnim instanceof StandCombatAnimation)
@@ -572,7 +572,7 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 				else
 					enemyHealthPanel = new SpriteContextPanel(
 							PanelType.PANEL_TARGET_HEALTH_BAR,
-							enemy.getParentSprite(), ((CommRPG) game).getEngineConfiguratior().getHealthPanelRenderer(), 
+							enemy.getParentSprite(), CommRPG.engineConfiguratior.getHealthPanelRenderer(), 
 							frm, gc);
 				enemy.initialize();
 				if (enemy instanceof StandCombatAnimation && enemyCombatAnim instanceof StandCombatAnimation)

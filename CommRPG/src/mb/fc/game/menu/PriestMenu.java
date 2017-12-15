@@ -5,30 +5,30 @@ import java.util.Iterator;
 
 import org.newdawn.slick.Image;
 
+import mb.fc.engine.CommRPG;
+import mb.fc.engine.config.MenuConfiguration;
 import mb.fc.engine.message.MessageType;
 import mb.fc.engine.message.SpeechMessage;
 import mb.fc.engine.state.StateInfo;
+import mb.fc.game.battle.BattleEffect;
 import mb.fc.game.listener.MenuListener;
 import mb.fc.game.resource.ItemResource;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.sprite.Progression;
 import mb.fc.game.trigger.Trigger;
-import mb.jython.GlobalPythonFactory;
-import mb.jython.JBattleEffect;
-import mb.jython.JMenuConfiguration;
 
 public class PriestMenu extends QuadMenu implements MenuListener
 {	
 	private ArrayList<PromotableHero> promotableHeroes = new ArrayList<>();
 	private ArrayList<CombatSprite> curableHeroes = new ArrayList<>();
 	private ArrayList<CombatSprite> revivableHeroes = new ArrayList<>();
-	private JMenuConfiguration menuConfig;
+	private MenuConfiguration menuConfig;
 	
 	public PriestMenu(String portaitAnim, StateInfo stateInfo)
 	{
 		super(PanelType.PANEL_PRIEST, Portrait.getPortrait(-1, -1, portaitAnim, stateInfo), true, stateInfo);
 		
-		menuConfig = GlobalPythonFactory.createMenuConfig();
+		menuConfig = CommRPG.engineConfiguratior.getMenuConfiguration();
 		
 		this.enabled = new boolean[4];
 		this.icons = new Image[8];
@@ -83,7 +83,7 @@ public class PriestMenu extends QuadMenu implements MenuListener
 	private void establishPromotables() {
 		boolean found = false;
 		promotableHeroes.clear();
-		int heroPromotionLevels = GlobalPythonFactory.createConfigurationValues().getHeroPromotionLevel();
+		int heroPromotionLevels = CommRPG.engineConfiguratior.getConfigurationValues().getHeroPromotionLevel();
 		for (CombatSprite cs : stateInfo.getAllHeroes()) {
 			if (!cs.isPromoted() && cs.getLevel() >= heroPromotionLevels) {
 				found = true;
@@ -131,10 +131,10 @@ public class PriestMenu extends QuadMenu implements MenuListener
 		for (CombatSprite cs : stateInfo.getAllHeroes()) {
 			if (cs.getCurrentHP() <= 0)
 				continue;
-			Iterator<JBattleEffect> beItr = cs.getBattleEffects().iterator();
+			Iterator<BattleEffect> beItr = cs.getBattleEffects().iterator();
 			
 			while (beItr.hasNext()) {
-				JBattleEffect be = beItr.next();
+				BattleEffect be = beItr.next();
 				if (!be.doesEffectPersistAfterBattle())
 					beItr.remove();
 			}

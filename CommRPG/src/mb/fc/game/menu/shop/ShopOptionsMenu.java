@@ -2,6 +2,8 @@ package mb.fc.game.menu.shop;
 
 import org.newdawn.slick.Image;
 
+import mb.fc.engine.CommRPG;
+import mb.fc.engine.config.MenuConfiguration;
 import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.MessageType;
 import mb.fc.engine.message.ShopMessage;
@@ -9,17 +11,15 @@ import mb.fc.engine.message.SpeechMessage;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.menu.QuadMenu;
 import mb.fc.game.trigger.Trigger;
-import mb.jython.GlobalPythonFactory;
-import mb.jython.JMenuConfiguration;
 
 public class ShopOptionsMenu extends QuadMenu
 {
 	private ShopMessage shopMessage;
-	protected JMenuConfiguration menuConfig;
+	protected MenuConfiguration menuConfig;
 
 	public ShopOptionsMenu(ShopMessage shopMessage, StateInfo stateInfo) {
 		super(PanelType.PANEL_SHOP_OPTIONS, shopMessage.getPortrait(stateInfo), true, stateInfo);
-		this.menuConfig = GlobalPythonFactory.createMenuConfig();
+		this.menuConfig = CommRPG.engineConfiguratior.getMenuConfiguration();
 		this.shopMessage = shopMessage;
 		
 		icons = new Image[8];

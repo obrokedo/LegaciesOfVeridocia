@@ -1,4 +1,4 @@
-package mb.jython;
+package mb.fc.engine.config;
 
 import mb.fc.game.sprite.CombatSprite;
 
@@ -11,7 +11,7 @@ import mb.fc.game.sprite.CombatSprite;
  * @author Broked
  *
  */
-public interface JMusicSelector {
+public interface MusicConfiguration {
 	public String getAttackMusic(CombatSprite attacker, boolean targetsAllies);
 
 	public String getAttackHitSoundEffect(boolean isHero, boolean isCritical, boolean isDodge, int weaponType);

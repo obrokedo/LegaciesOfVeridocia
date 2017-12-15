@@ -106,7 +106,7 @@ public class CommRPG extends StateBasedGame   {
 	
 	public static TextParser TEXT_PARSER = new TextParser();
 	
-	protected EngineConfigurator engineConfiguratior = new LOVEngineConfigration();
+	public static EngineConfigurator engineConfiguratior = new LOVEngineConfigration();
 
 	private class DEBUG_HOLDER
 	{
@@ -350,17 +350,8 @@ public class CommRPG extends StateBasedGame   {
 	{
 		return 15;
 	}
-	
-	public EngineConfigurator getEngineConfiguratior() {
-		return engineConfiguratior;
-	}
 
 	public void setEngineConfiguratior(EngineConfigurator engineConfiguratior) {
 		this.engineConfiguratior = engineConfiguratior;
-	}
-
-	public void setEngineConfiguration(EngineConfigurator engineConfiguration)
-	{
-		this.engineConfiguratior = engineConfiguration;
 	}
 }

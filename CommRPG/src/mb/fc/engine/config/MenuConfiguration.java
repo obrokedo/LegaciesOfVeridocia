@@ -1,6 +1,6 @@
-package mb.jython;
+package mb.fc.engine.config;
 
-public interface JMenuConfiguration {
+public interface MenuConfiguration {
 	public String getPriestSavingText();
 	
 	public String getPriestNoOneToCureText();
@@ -44,4 +44,6 @@ public interface JMenuConfiguration {
 	public String getShopCantCarryMoreText(String personName);
 	public String getShopNoMoreDealsText();
 	public String getShopPromptSellOldText(String itemName, String cost);
+	
+	public String getNoItemInChestText();
 }

@@ -33,7 +33,8 @@ public class Trigger
 {
 	public static final int TRIGGER_NONE = -1;
 	public static final int TRIGGER_ID_EXIT = -2;
-	public static final int TRIGGER_SAVE = 3;
+	
+	public static final int TRIGGER_CHEST_NO_ITEM = 50000;
 
 	private ArrayList<Triggerable> triggerables = new ArrayList<Triggerable>();
 
@@ -131,9 +132,10 @@ public class Trigger
 					performTriggerImpl(stateInfo);
 				}
 				// The state has been changed and triggers should not be executed
-				else
+				else {
 					Log.debug("Trigger will not be performed because the state has been changed on strange path");
-				return TriggerStatus.NON_RETRIG;
+					return TriggerStatus.NON_RETRIG;
+				}
 			}
 			else {
 				stateInfo.getClientProgress().addNonretriggerableByMap(id);
@@ -645,7 +647,8 @@ public class Trigger
 		public boolean perform(StateInfo stateInfo) {
 			for (MapObject mo : stateInfo.getCurrentMap().getMapObjects()) {
 				if (locationName.equalsIgnoreCase(mo.getName())) {
-					stateInfo.addSprite(mo.getNPC(textId, name, animation, facing, wander, npcId, false, stateInfo.getResourceManager()));
+					stateInfo.addSprite(mo.getNPC(textId, name, animation, 
+							facing, wander, npcId, false, true, true, stateInfo.getResourceManager()));
 					break;
 				}
 			}
@@ -800,6 +803,27 @@ public class Trigger
 					((NPCSprite) s).triggerButton1Event(stateInfo);
 				}
 			}
+			return false;
+		}
+		
+		
+	}
+	
+	public class TriggerAddSearchArea implements Triggerable
+	{
+		private MapObject mapObject;
+		private int searchTriggerId;
+		
+		public TriggerAddSearchArea(MapObject mapObject, int searchTriggerId) {
+			super();
+			this.mapObject = mapObject;
+			this.searchTriggerId = searchTriggerId;
+		}
+
+		@Override
+		public boolean perform(StateInfo stateInfo) {
+			mapObject.getParams().put("searchtrigger", "" + searchTriggerId);
+			mapObject.establishSearchArea(stateInfo.getResourceManager());
 			return false;
 		}
 		

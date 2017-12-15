@@ -1,4 +1,4 @@
-package mb.jython;
+package mb.fc.engine.config;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SpriteSheet;
@@ -15,7 +15,7 @@ import org.newdawn.slick.SpriteSheet;
  * @author Broked
  *
  */
-public interface JPanelRender
+public interface PanelRenderer
 {
 	public void render(SpriteSheet menuBorder, int x, int y, int width, int height, Graphics graphics);
 	public void reload();

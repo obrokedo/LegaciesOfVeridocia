@@ -100,7 +100,7 @@ public class LoadingState extends BasicGameState
 					if (!loadResources)
 					{
 						while (allLines.size() > 0)
-							loadResourceLine(((CommRPG) game).getEngineConfiguratior());
+							loadResourceLine(CommRPG.engineConfiguratior);
 					}
 
 				}
@@ -119,7 +119,7 @@ public class LoadingState extends BasicGameState
 		}
 		else if (allLines.size() > 0)
 		{
-			loadResourceLine(((CommRPG) game).getEngineConfiguratior());
+			loadResourceLine(CommRPG.engineConfiguratior);
 		}
 
 		loadIndex++;
@@ -142,7 +142,7 @@ public class LoadingState extends BasicGameState
 				nextState.stateLoaded(resourceManager);
 			nextState.initAfterLoad();
 			if (enterNextStateTransition == null)
-				game.enterState(nextState.getID(), new EmptyTransition(), new FadeInTransition(Color.black, 250));
+				game.enterState(nextState.getID(), new EmptyTransition(), new FadeInTransition(Color.black, 500));
 			else
 				game.enterState(nextState.getID(), new EmptyTransition(), enterNextStateTransition);
 		}

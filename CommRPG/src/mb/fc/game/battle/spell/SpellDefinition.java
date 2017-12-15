@@ -1,12 +1,14 @@
-package mb.jython;
+package mb.fc.game.battle.spell;
 
 import java.io.Serializable;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
 
+import mb.fc.engine.CommRPG;
+import mb.fc.engine.config.ParticleEmitterConfiguration;
 import mb.fc.game.Range;
-import mb.fc.game.battle.spell.KnownSpell;
+import mb.fc.game.battle.BattleEffect;
 import mb.fc.game.sprite.CombatSprite;
 
 /**
@@ -19,7 +21,7 @@ import mb.fc.game.sprite.CombatSprite;
  * @author Broked
  *
  */
-public abstract class JSpell implements Serializable
+public abstract class SpellDefinition implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 
@@ -42,18 +44,10 @@ public abstract class JSpell implements Serializable
 	protected boolean loops = false;
 	protected int spellIconIndex = 0;
 
-	/**
-	 * Creates a new JSpell Jython object and initializes it with
-	 * the values associated with the given spellId.
-	 *
-	 * @param spellId the id of the spell that should be created and populated
-	 * @return a new JSpell Jython objects with values initialized as determined by
-	 * the spellId
-	 */
-	public abstract JSpell init(String spellId);
-
-	public abstract String[] getSpellList();
-
+	public SpellDefinition() {
+		
+	}
+	
 	/**
 	 * Gets the spell's name
 	 *
@@ -118,15 +112,15 @@ public abstract class JSpell implements Serializable
 	 * A value of null will be returned for a given index if there is no
 	 * BattleEffect for that level
 	 */
-	public JBattleEffect[] getEffects(int spellLevel) {
+	public BattleEffect[] getEffects(int spellLevel) {
 		if (effects == null || effects.length <= spellLevel || 
 				effects[spellLevel] == null || effects[spellLevel].length == 0)
 			return null;
-		JBattleEffect[] instantiatedEffects = new JBattleEffect[effects[spellLevel].length];
+		BattleEffect[] instantiatedEffects = new BattleEffect[effects[spellLevel].length];
 		for (int i = 0; i < instantiatedEffects.length; i++)
 		{
 
-			instantiatedEffects[i] = GlobalPythonFactory.createJBattleEffect(effects[spellLevel][i], effectLevel[spellLevel][i]);
+			instantiatedEffects[i] = CommRPG.engineConfiguratior.getBattleEffectFactory().createEffect(effects[spellLevel][i], effectLevel[spellLevel][i]);
 			instantiatedEffects[i].setEffectChance(effectChance[spellLevel][i]);
 		}
 
@@ -249,7 +243,7 @@ public abstract class JSpell implements Serializable
 	
 	public abstract int getSpellRainFrequency(int spellLevel);
 	
-	public abstract JParticleEmitter getEmitter(int spellLevel);
+	public abstract ParticleEmitterConfiguration getEmitter(int spellLevel);
 
 	/*****************************************************************************/
 	/* Protected methods used by the Python scripts to set values for this spell */

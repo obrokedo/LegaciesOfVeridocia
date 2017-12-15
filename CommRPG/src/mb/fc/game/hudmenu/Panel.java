@@ -6,6 +6,9 @@ import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.geom.Rectangle;
 
+import mb.fc.engine.CommRPG;
+import mb.fc.engine.config.MusicConfiguration;
+import mb.fc.engine.config.PanelRenderer;
 import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.MessageType;
 import mb.fc.engine.state.StateInfo;
@@ -13,8 +16,6 @@ import mb.fc.game.menu.Menu.MenuUpdate;
 import mb.fc.game.ui.PaddedGameContainer;
 import mb.fc.loading.FCResourceManager;
 import mb.jython.GlobalPythonFactory;
-import mb.jython.JMusicSelector;
-import mb.jython.JPanelRender;
 
 /**
  * A container to display information to the screen that does not generally need to be interacted with.
@@ -57,12 +58,12 @@ public abstract class Panel
 	protected PanelType panelType;
 	public final static Color COLOR_MOUSE_OVER = new Color(0, 0, 153);
 	public final static Color COLOR_FOREFRONT = Color.white;
-	protected static JMusicSelector MUSIC_SELECTOR;
+	protected static MusicConfiguration MUSIC_SELECTOR;
 
 	public static SpriteSheet MENU_BORDER;
 	protected static UnicodeFont PANEL_FONT;
 	protected static UnicodeFont SPEECH_FONT;
-	protected static JPanelRender renderer;
+	protected static PanelRenderer renderer;
 
 
 	public Panel(PanelType menuType) {
@@ -81,7 +82,7 @@ public abstract class Panel
 	{
 		MENU_BORDER = frm.getSpriteSheet("menuborder");
 		PANEL_FONT = frm.getFontByName("menufont");
-		MUSIC_SELECTOR = GlobalPythonFactory.createJMusicSelector();
+		MUSIC_SELECTOR = CommRPG.engineConfiguratior.getMusicConfiguration();
 
 		/*
 		Font awtFont = new Font("Times New Roman", Font.ITALIC, 24);
@@ -105,7 +106,7 @@ public abstract class Panel
 
 		// stateInfo.getGc().getGraphics().setFont(PANEL_FONT);
 
-        renderer =  GlobalPythonFactory.createJPanelRender();
+        renderer =  CommRPG.engineConfiguratior.getPanelRenderer();
 	}
 
 	public abstract void render(PaddedGameContainer gc, Graphics graphics);

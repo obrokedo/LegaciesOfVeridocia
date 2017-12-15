@@ -210,7 +210,7 @@ public class BattleState extends LoadableGameState
 				}
 			}
 
-			stateInfo.getInput().update(delta);
+			stateInfo.getInput().update(delta, container.getInput());
 		}
 		
 		if (stateInfo.getInput().isKeyDown(Input.KEY_F8))

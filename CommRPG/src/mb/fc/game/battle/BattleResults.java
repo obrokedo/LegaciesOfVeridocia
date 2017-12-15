@@ -7,16 +7,15 @@ import java.util.List;
 import org.newdawn.slick.util.Log;
 
 import mb.fc.engine.CommRPG;
+import mb.fc.engine.config.BattleFunctionConfiguration;
 import mb.fc.game.battle.command.BattleCommand;
+import mb.fc.game.battle.spell.SpellDefinition;
 import mb.fc.game.constants.TextSpecialCharacters;
 import mb.fc.game.item.Item;
 import mb.fc.game.item.ItemUse;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.loading.FCResourceManager;
 import mb.jython.GlobalPythonFactory;
-import mb.jython.JBattleEffect;
-import mb.jython.JBattleFunctions;
-import mb.jython.JSpell;
 
 public class BattleResults implements Serializable
 {
@@ -30,7 +29,7 @@ public class BattleResults implements Serializable
 	public ArrayList<Integer> remainingHP;
 	public ArrayList<String> text;
 	public List<CombatSprite> targets;
-	public ArrayList<ArrayList<JBattleEffect>> targetEffects;
+	public ArrayList<ArrayList<BattleEffect>> targetEffects;
 	public BattleCommand battleCommand;
 	public ArrayList<Integer> attackerHPDamage;
 	public ArrayList<Integer> attackerMPDamage;
@@ -48,7 +47,7 @@ public class BattleResults implements Serializable
 	public static BattleResults determineBattleResults(CombatSprite attacker,
 			List<CombatSprite> targets, BattleCommand battleCommand, FCResourceManager fcrm)
 	{
-        JBattleFunctions jBattleFunctions = GlobalPythonFactory.createJBattleFunctions();
+        BattleFunctionConfiguration jBattleFunctions = CommRPG.engineConfiguratior.getBattleFunctionConfiguration();
 
 		BattleResults br = new BattleResults();
 		br.battleCommand = battleCommand;
@@ -56,7 +55,7 @@ public class BattleResults implements Serializable
 		br.hpDamage = new ArrayList<Integer>();
 		br.mpDamage = new ArrayList<Integer>();
 		br.text = new ArrayList<String>();
-		br.targetEffects = new ArrayList<ArrayList<JBattleEffect>>();
+		br.targetEffects = new ArrayList<ArrayList<BattleEffect>>();
 		br.attackerHPDamage = new ArrayList<Integer>();
 		br.attackerMPDamage = new ArrayList<Integer>();
 		br.remainingHP = new ArrayList<>();
@@ -65,12 +64,12 @@ public class BattleResults implements Serializable
 		br.critted = new ArrayList<Boolean>();
 		br.doubleAttack = false;
 
-		JSpell spell = null;
+		SpellDefinition spell = null;
 		ItemUse itemUse = null;
 		int spellLevel = 0;
 		String preventEffectName = null;
 
-		for (JBattleEffect effect : attacker.getBattleEffects()) {
+		for (BattleEffect effect : attacker.getBattleEffects()) {
 			if ((battleCommand.getCommand() == BattleCommand.COMMAND_ITEM && effect.preventsItems()) ||
 					(battleCommand.getCommand() == BattleCommand.COMMAND_ATTACK && effect.preventsAttack()) ||
 					(battleCommand.getCommand() == BattleCommand.COMMAND_SPELL && effect.preventsSpells()))
@@ -214,7 +213,7 @@ public class BattleResults implements Serializable
 	}
 
 	private static String addCombatantDeathText(CombatSprite killer, CombatSprite target,
-			String text, BattleResults br, JBattleFunctions jBattleFunctions) {
+			String text, BattleResults br, BattleFunctionConfiguration jBattleFunctions) {
 		br.death = true;
 		int idx = text.lastIndexOf(TextSpecialCharacters.CHAR_SOFT_STOP);
 		if (idx != -1)
@@ -253,9 +252,9 @@ public class BattleResults implements Serializable
 		else
 			br.mpDamage.add(0);
 
-		ArrayList<JBattleEffect> appliedEffects = new ArrayList<>();
+		ArrayList<BattleEffect> appliedEffects = new ArrayList<>();
 
-		JBattleEffect eff = null;
+		BattleEffect eff = null;
 		if ((eff = itemUse.getEffects()) != null && eff.isEffected(target))
 		{
 			appliedEffects.add(eff);
@@ -264,7 +263,7 @@ public class BattleResults implements Serializable
 
 		br.targetEffects.add(appliedEffects);
 
-		for (JBattleEffect effect : appliedEffects)
+		for (BattleEffect effect : appliedEffects)
 		{
 			String effectText = effect.effectStartedText(attacker, target);
 			if (effectText != null)
@@ -287,7 +286,7 @@ public class BattleResults implements Serializable
 		commandResult.text = text;
 	}
 
-	private static void handleSpellAction(CombatSprite attacker, BattleResults br, JSpell spell, int spellLevel,
+	private static void handleSpellAction(CombatSprite attacker, BattleResults br, SpellDefinition spell, int spellLevel,
 			int index, CombatSprite target, CommandResult commandResult) {
 		int damage = 0;
 		String text;
@@ -310,16 +309,16 @@ public class BattleResults implements Serializable
 		else
 			br.mpDamage.add(0);
 
-		ArrayList<JBattleEffect> appliedEffects = new ArrayList<>();
+		ArrayList<BattleEffect> appliedEffects = new ArrayList<>();
 		
 		// This spell will NOT kill the target so effects should still be applied
 		if (target.getCurrentHP() + damage > 0)
 		{
 			// Check to see if a battle effect should be applied via this spell
-			JBattleEffect[] effs = null;
+			BattleEffect[] effs = null;
 			if ((effs = spell.getEffects(spellLevel)) != null)
 			{
-				for (JBattleEffect eff : effs)
+				for (BattleEffect eff : effs)
 				{
 					if (eff.isEffected(target))
 					{
@@ -345,7 +344,7 @@ public class BattleResults implements Serializable
 		// br.targetEffects.get(br.targetEffects.size() - 1)
 
 		// If a battle effect was applied then append that to the battle text
-		for (JBattleEffect eff : appliedEffects) {
+		for (BattleEffect eff : appliedEffects) {
 			String effectText = eff.effectStartedText(attacker, target);
 			if (effectText != null)
 			{
@@ -368,7 +367,7 @@ public class BattleResults implements Serializable
 	}
 
 	private static void handleAttackAction(CombatSprite attacker, FCResourceManager fcrm,
-			JBattleFunctions jBattleFunctions, BattleResults br, CombatSprite target, CommandResult commandResult) {
+			BattleFunctionConfiguration jBattleFunctions, BattleResults br, CombatSprite target, CommandResult commandResult) {
 		int damage = 0;
 		int sumDamage = 0;
 		String text;
@@ -457,7 +456,7 @@ public class BattleResults implements Serializable
 	}
 
 	private static String addAttack(CombatSprite attacker, CombatSprite target, BattleResults br,
-			FCResourceManager fcrm, JBattleFunctions jBattleFunctions, boolean counter)
+			FCResourceManager fcrm, BattleFunctionConfiguration jBattleFunctions, boolean counter)
 	{
 		String text;
 
@@ -475,7 +474,7 @@ public class BattleResults implements Serializable
 				text = jBattleFunctions.getDodgeText(attacker, target);
 			else
 				text = jBattleFunctions.getBlockText(attacker, target);
-			br.targetEffects.add(new ArrayList<JBattleEffect>());
+			br.targetEffects.add(new ArrayList<BattleEffect>());
 			br.attackerHPDamage.add(0);
 			br.attackerMPDamage.add(0);
 			br.dodged.add(true);
@@ -514,12 +513,12 @@ public class BattleResults implements Serializable
 
 			br.mpDamage.add(0);
 
-			ArrayList<JBattleEffect> appliedEffects = new ArrayList<>();
+			ArrayList<BattleEffect> appliedEffects = new ArrayList<>();
 
 			// This spell will NOT kill the target so effects should still be applied
 			if (target.getCurrentHP() + damage > 0)
 			{
-				JBattleEffect eff = null;
+				BattleEffect eff = null;
 				if ((eff = attacker.getAttackEffect()) != null && eff.isEffected(target))
 				{
 					appliedEffects.add(eff);
@@ -593,7 +592,7 @@ public class BattleResults implements Serializable
 		{
 			attackerLevel += 10;
 		}
-		return GlobalPythonFactory.createJBattleFunctions().getExperienceGainedByDamage(damage, attackerLevel, target);
+		return CommRPG.engineConfiguratior.getBattleFunctionConfiguration().getExperienceGainedByDamage(damage, attackerLevel, target);
 		/*
 		int maxExp = Math.max(1, Math.min(49, (target.getLevel() - attackerLevel) * 7 + 35));
 		// Check to see if we've killed the target

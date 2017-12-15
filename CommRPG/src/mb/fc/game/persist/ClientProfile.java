@@ -19,6 +19,8 @@ import java.util.HashSet;
 
 import org.newdawn.slick.util.Log;
 
+import mb.fc.engine.CommRPG;
+import mb.fc.engine.config.EngineConfigurationValues;
 import mb.fc.game.battle.LevelUpResult;
 import mb.fc.game.dev.DevParams;
 import mb.fc.game.exception.BadResourceException;
@@ -26,7 +28,6 @@ import mb.fc.game.resource.HeroResource;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.loading.FCResourceManager;
 import mb.jython.GlobalPythonFactory;
-import mb.jython.JConfigurationValues;
 
 public class ClientProfile implements Serializable
 {
@@ -65,7 +66,7 @@ public class ClientProfile implements Serializable
 		if (!inParty)
 			this.heroes.add(hero);
 		
-		JConfigurationValues configValues = GlobalPythonFactory.createConfigurationValues();
+		EngineConfigurationValues configValues = CommRPG.engineConfiguratior.getConfigurationValues();
 		int maxHeros = configValues.getMaxPartySize();
 		
 		if (this.inBattleHeroIds.size() < maxHeros)
@@ -163,7 +164,7 @@ public class ClientProfile implements Serializable
 		{
 			// Add the heroes specified in the configuration values,
 			// these are the heroes that the force will initially contain
-			for (String heroName : GlobalPythonFactory.createConfigurationValues().getStartingHeroIds())
+			for (String heroName : CommRPG.engineConfiguratior.getConfigurationValues().getStartingHeroIds())
 				addHero(HeroResource.getHero(heroName));
 			
 			applyDevParams(fcrm);

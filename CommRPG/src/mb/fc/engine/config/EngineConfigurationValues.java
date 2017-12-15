@@ -1,8 +1,8 @@
-package mb.jython;
+package mb.fc.engine.config;
 
 import java.io.Serializable;
 
-public abstract class JConfigurationValues implements Serializable {
+public abstract class EngineConfigurationValues implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public abstract String[] getStartingHeroIds();

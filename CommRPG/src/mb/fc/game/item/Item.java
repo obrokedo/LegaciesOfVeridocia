@@ -117,7 +117,7 @@ public class Item implements Serializable
 
 	public static class EquippableDifference
 	{
-		public int atk, def, spd;
+		public int atk, def, spd, mov;
 
 		public EquippableDifference(EquippableItem oldItem, EquippableItem newItem)
 		{

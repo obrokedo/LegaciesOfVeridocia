@@ -11,11 +11,13 @@ import org.newdawn.slick.util.pathfinding.Path;
 import org.newdawn.slick.util.pathfinding.PathFindingContext;
 import org.newdawn.slick.util.pathfinding.TileBasedMap;
 
+import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.LocationMessage;
 import mb.fc.engine.message.MessageType;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.Camera;
+import mb.fc.game.battle.BattleEffect;
 import mb.fc.game.constants.Direction;
 import mb.fc.game.input.FCInput;
 import mb.fc.game.input.KeyMapping;
@@ -26,8 +28,6 @@ import mb.fc.game.turnaction.MoveToTurnAction;
 import mb.fc.game.turnaction.TurnAction;
 import mb.fc.game.ui.PaddedGameContainer;
 import mb.fc.map.Map;
-import mb.jython.GlobalPythonFactory;
-import mb.jython.JBattleEffect;
 
 /**
  * Displays the possible moveable range for the currently acting CombatSprite, this also
@@ -64,7 +64,7 @@ public class MoveableSpace implements KeyboardListener, TileBasedMap
 		int currentMove = currentSprite.getCurrentMove();
 		
 		// Check to see if we can move
-		for (JBattleEffect effect : currentSprite.getBattleEffects()) {
+		for (BattleEffect effect : currentSprite.getBattleEffects()) {
 			if (effect.preventsMovement()) {
 				currentMove = 0;
 				break;
@@ -393,13 +393,13 @@ public class MoveableSpace implements KeyboardListener, TileBasedMap
 			{
 				stateInfo.sendMessage(MessageType.SHOW_BATTLEMENU);
 				stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT,
-						GlobalPythonFactory.createJMusicSelector().getMenuAddedSoundEffect(), 1f, false));
+						CommRPG.engineConfiguratior.getMusicConfiguration().getMenuAddedSoundEffect(), 1f, false));
 				return true;
 			}
 			else
 			{
 				stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT,
-						GlobalPythonFactory.createJMusicSelector().getInvalidActionSoundEffect(), 1f, false));
+						CommRPG.engineConfiguratior.getMusicConfiguration().getInvalidActionSoundEffect(), 1f, false));
 			}
 		}
 		else if (input.isKeyDown(KeyMapping.BUTTON_2))

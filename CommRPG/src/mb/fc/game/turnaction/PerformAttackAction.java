@@ -7,11 +7,11 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 import mb.fc.engine.CommRPG;
 import mb.fc.engine.state.LOVAttackCinematicState;
 import mb.fc.engine.state.StateInfo;
+import mb.fc.game.battle.BattleEffect;
 import mb.fc.game.battle.BattleResults;
 import mb.fc.game.hudmenu.Panel.PanelType;
 import mb.fc.game.manager.TurnManager;
 import mb.fc.game.sprite.CombatSprite;
-import mb.jython.JBattleEffect;
 
 public class PerformAttackAction extends TurnAction
 {
@@ -38,7 +38,7 @@ public class PerformAttackAction extends TurnAction
 				turnManager.getCurrentSprite().modifyCurrentHP(battleResults.attackerHPDamage.get(i));
 				turnManager.getCurrentSprite().modifyCurrentMP(battleResults.attackerMPDamage.get(i));
 				if (battleResults.targetEffects.get(i) != null)
-					for (JBattleEffect be : battleResults.targetEffects.get(i))
+					for (BattleEffect be : battleResults.targetEffects.get(i))
 					{
 						be.effectStarted(turnManager.getCurrentSprite(), t);
 					}

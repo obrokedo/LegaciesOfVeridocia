@@ -1,9 +1,9 @@
-package mb.jython;
+package mb.fc.engine.config;
 
 import mb.fc.game.constants.AttributeStrength;
 import mb.fc.game.sprite.CombatSprite;
 
-public interface JLevelProgression {
+public interface LevelProgressionConfiguration {
 	public float[] getProgressArray(String progressionType, boolean promoted);
 
 	public abstract String[] getStandardStatProgressionTypeList();

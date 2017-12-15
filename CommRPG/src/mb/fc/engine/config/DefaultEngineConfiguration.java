@@ -27,4 +27,59 @@ public class DefaultEngineConfiguration implements EngineConfigurator {
 	public SpellMenuRenderer getSpellMenuRenderer() {
 		return spellMenuRenderer;
 	}
+
+	@Override
+	public SpellFactory getSpellFactory() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public BattleEffectFactory getBattleEffectFactory() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CinematicActorConfiguration getCinematicActorConfiguration() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public BattleFunctionConfiguration getBattleFunctionConfiguration() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PanelRenderer getPanelRenderer() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public MusicConfiguration getMusicConfiguration() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LevelProgressionConfiguration getLevelProgression() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public EngineConfigurationValues getConfigurationValues() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public MenuConfiguration getMenuConfiguration() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 }

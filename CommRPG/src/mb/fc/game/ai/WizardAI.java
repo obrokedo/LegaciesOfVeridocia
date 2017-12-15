@@ -3,13 +3,13 @@ package mb.fc.game.ai;
 import java.awt.Point;
 import java.util.ArrayList;
 
+import org.newdawn.slick.util.Log;
+
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.battle.spell.KnownSpell;
+import mb.fc.game.battle.spell.SpellDefinition;
 import mb.fc.game.move.AttackableSpace;
 import mb.fc.game.sprite.CombatSprite;
-import mb.jython.JSpell;
-
-import org.newdawn.slick.util.Log;
 
 public class WizardAI extends CasterAI
 {
@@ -18,7 +18,7 @@ public class WizardAI extends CasterAI
 	}
 
 	@Override
-	protected void handleSpell(JSpell spell,  KnownSpell knownSpell, int spellLevel, int tileWidth, int tileHeight, CombatSprite currentSprite,
+	protected void handleSpell(SpellDefinition spell,  KnownSpell knownSpell, int spellLevel, int tileWidth, int tileHeight, CombatSprite currentSprite,
 			CombatSprite targetSprite, StateInfo stateInfo, int baseConfidence, int cost, Point attackPoint, int distance)
 	{
 		// Check to see if this spell does damage, if so then use the damage to determine the confidence

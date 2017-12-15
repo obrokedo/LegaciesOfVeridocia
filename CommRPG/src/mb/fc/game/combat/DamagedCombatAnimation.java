@@ -6,9 +6,9 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 import mb.fc.engine.CommRPG;
+import mb.fc.game.battle.BattleEffect;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.ui.PaddedGameContainer;
-import mb.jython.JBattleEffect;
 
 public class DamagedCombatAnimation extends CombatAnimation
 {
@@ -17,13 +17,13 @@ public class DamagedCombatAnimation extends CombatAnimation
 	private CombatAnimation childAnimation;
 	private int hpDamage;
 	private int mpDamage;
-	private ArrayList<JBattleEffect> battleEffects;
+	private ArrayList<BattleEffect> battleEffects;
 	private CombatSprite attacker;
 	private boolean isNegativeEffect = false;
 	private int battleResultIndex;
 
 	public DamagedCombatAnimation(CombatAnimation childAnimation, int hpDamage, int mpDamage,
-			ArrayList<JBattleEffect> battleEffects, CombatSprite attacker, int battleResultIndex)
+			ArrayList<BattleEffect> battleEffects, CombatSprite attacker, int battleResultIndex)
 	{
 		super();
 		this.minimumTimePassed = 200;
@@ -36,7 +36,7 @@ public class DamagedCombatAnimation extends CombatAnimation
 		if (hpDamage < 0 || mpDamage < 0)
 			isNegativeEffect =  true;
 		
-		for (JBattleEffect eff : battleEffects)
+		for (BattleEffect eff : battleEffects)
 		{
 			if (eff.isNegativeEffect())
 				isNegativeEffect = true;
@@ -68,7 +68,7 @@ public class DamagedCombatAnimation extends CombatAnimation
 
 		childAnimation.parentSprite.modifyCurrentHP(hpDamage);
 		childAnimation.parentSprite.modifyCurrentMP(mpDamage);
-		for (JBattleEffect battleEffect : battleEffects)
+		for (BattleEffect battleEffect : battleEffects)
 		{
 			// If the effect is already done then it is instantaneous so don't bother adding it to the target
 			if (!battleEffect.isDone())

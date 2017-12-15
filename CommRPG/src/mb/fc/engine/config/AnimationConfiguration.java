@@ -1,8 +1,8 @@
-package mb.jython;
+package mb.fc.engine.config;
 
 import mb.fc.game.constants.Direction;
 
-public class JAnimationConfiguration {
+public class AnimationConfiguration {
 	public static String getUpAnimationName() {
 		return "Up";
 	}

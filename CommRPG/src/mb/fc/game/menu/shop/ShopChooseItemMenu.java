@@ -3,6 +3,8 @@ package mb.fc.game.menu.shop;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
+import mb.fc.engine.CommRPG;
+import mb.fc.engine.config.MenuConfiguration;
 import mb.fc.engine.message.MessageType;
 import mb.fc.engine.message.ShopMessage;
 import mb.fc.engine.message.SpeechMessage;
@@ -16,8 +18,6 @@ import mb.fc.game.menu.YesNoMenu;
 import mb.fc.game.trigger.Trigger;
 import mb.fc.game.ui.RectUI;
 import mb.fc.game.ui.TextUI;
-import mb.jython.GlobalPythonFactory;
-import mb.jython.JMenuConfiguration;
 
 public class ShopChooseItemMenu extends HeroesStatMenu implements MenuListener
 {
@@ -28,11 +28,11 @@ public class ShopChooseItemMenu extends HeroesStatMenu implements MenuListener
 	
 	protected RectUI goldPanel;
 	protected TextUI goldTitleText, goldAmountText;
-	protected JMenuConfiguration menuConfig;
+	protected MenuConfiguration menuConfig;
 
 	public ShopChooseItemMenu(StateInfo stateInfo, MenuListener listener, ShopMessage shopMessage) {
 		super(stateInfo, listener);
-		this.menuConfig = GlobalPythonFactory.createMenuConfig();
+		this.menuConfig = CommRPG.engineConfiguratior.getMenuConfiguration();
 		this.shopMessage = shopMessage;
 		
 		if (shopMessage.getMessageType() == MessageType.SHOW_SHOP_SELL)

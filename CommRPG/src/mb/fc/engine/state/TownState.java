@@ -220,7 +220,7 @@ public class TownState extends LoadableGameState
 				}
 			}
 
-			stateInfo.getInput().update(delta);
+			stateInfo.getInput().update(delta, container.getInput());
 		}
 	}
 

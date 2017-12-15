@@ -6,6 +6,8 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Polygon;
 
+import mb.fc.engine.CommRPG;
+import mb.fc.engine.config.MenuConfiguration;
 import mb.fc.engine.message.MessageType;
 import mb.fc.engine.message.ShopMessage;
 import mb.fc.engine.message.SpeechMessage;
@@ -24,8 +26,6 @@ import mb.fc.game.trigger.Trigger;
 import mb.fc.game.ui.PaddedGameContainer;
 import mb.fc.game.ui.RectUI;
 import mb.fc.game.ui.TextUI;
-import mb.jython.GlobalPythonFactory;
-import mb.jython.JMenuConfiguration;
 
 public class ShopBuyMenu extends Menu implements MenuListener
 {
@@ -54,7 +54,7 @@ public class ShopBuyMenu extends Menu implements MenuListener
 	protected CombatSprite selectedHero;
 	protected ShopMessage shopMessage;
 	protected StateInfo stateInfo;
-	protected JMenuConfiguration menuConfig;
+	protected MenuConfiguration menuConfig;
 
 	// Base UI Shapes
 	protected Polygon leftArrow, rightArrow;
@@ -64,7 +64,7 @@ public class ShopBuyMenu extends Menu implements MenuListener
 	public ShopBuyMenu(StateInfo stateInfo, ShopMessage shopMessage) {
 		super(PanelType.PANEL_SHOP);
 
-		this.menuConfig = GlobalPythonFactory.createMenuConfig();
+		this.menuConfig = CommRPG.engineConfiguratior.getMenuConfiguration();
 		this.sellPercent = shopMessage.getSellPercent();
 		this.buyPercent = shopMessage.getBuyPercent();
 		if (shopMessage.getMessageType() == MessageType.SHOW_SHOP_DEALS) {

@@ -10,4 +10,24 @@ public interface EngineConfigurator {
 	public HealthPanelRenderer getHealthPanelRenderer();
 	
 	public SpellMenuRenderer getSpellMenuRenderer();
+	
+	public SpellFactory getSpellFactory();
+	
+	public BattleEffectFactory getBattleEffectFactory();
+	
+	public CinematicActorConfiguration getCinematicActorConfiguration();
+	
+	public BattleFunctionConfiguration getBattleFunctionConfiguration();
+	
+	public PanelRenderer getPanelRenderer();
+	
+	public MusicConfiguration getMusicConfiguration();
+
+	public LevelProgressionConfiguration getLevelProgression();
+
+	public EngineConfigurationValues getConfigurationValues();
+
+	public MenuConfiguration getMenuConfiguration();
+	
+	
 }

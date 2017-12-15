@@ -3,13 +3,13 @@ package mb.fc.game.ai;
 import java.awt.Point;
 import java.util.ArrayList;
 
+import org.newdawn.slick.util.Log;
+
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.battle.spell.KnownSpell;
+import mb.fc.game.battle.spell.SpellDefinition;
 import mb.fc.game.move.AttackableSpace;
 import mb.fc.game.sprite.CombatSprite;
-import mb.jython.JSpell;
-
-import org.newdawn.slick.util.Log;
 
 public class ClericAI extends CasterAI
 {
@@ -18,7 +18,7 @@ public class ClericAI extends CasterAI
 	}
 
 	@Override
-	protected void handleSpell(JSpell spell, KnownSpell knownSpell, int i, int tileWidth, int tileHeight, CombatSprite currentSprite,
+	protected void handleSpell(SpellDefinition spell, KnownSpell knownSpell, int i, int tileWidth, int tileHeight, CombatSprite currentSprite,
 			CombatSprite targetSprite, StateInfo stateInfo, int baseConfidence, int cost, Point attackPoint, int distance)
 	{
 		// Check to see if this spell does damage, if so then use the damage to determine the confidence
@@ -30,7 +30,7 @@ public class ClericAI extends CasterAI
 
 	// TODO Lots to do here, they aren't really smart enough to move and target them self, kind of need it's own AI for that?
 	// Somehow there is never a time when aura can get 2 people in it
-	private void handleHealingSpell(JSpell spell, KnownSpell knownSpell, int spellLevel, int tileWidth, int tileHeight, CombatSprite currentSprite,
+	private void handleHealingSpell(SpellDefinition spell, KnownSpell knownSpell, int spellLevel, int tileWidth, int tileHeight, CombatSprite currentSprite,
 			CombatSprite targetSprite, StateInfo stateInfo, int baseConfidence, int cost, Point attackPoint)
 	{
 		boolean healSelf = false;
@@ -162,7 +162,7 @@ public class ClericAI extends CasterAI
 		mostConfident = checkForMaxConfidence(mostConfident, currentConfidence, spell, knownSpell, spellLevel, targetsInArea, false, true);
 	}
 
-	private void handleDamagingSpell(JSpell spell, KnownSpell knownSpell, int spellLevel, int tileWidth, int tileHeight, CombatSprite currentSprite,
+	private void handleDamagingSpell(SpellDefinition spell, KnownSpell knownSpell, int spellLevel, int tileWidth, int tileHeight, CombatSprite currentSprite,
 			CombatSprite targetSprite, StateInfo stateInfo, int baseConfidence, int cost, int distance)
 	{
 		boolean willKill = false;

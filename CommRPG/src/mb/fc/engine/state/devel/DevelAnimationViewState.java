@@ -17,14 +17,12 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import mb.fc.engine.CommRPG;
+import mb.fc.game.battle.spell.SpellDefinition;
 import mb.fc.game.ui.ListUI;
 import mb.fc.game.ui.ListUI.ResourceSelectorListener;
 import mb.fc.game.ui.ResourceSelector;
 import mb.fc.loading.FCResourceManager;
-import mb.fc.particle.RainEmitter;
 import mb.fc.utils.AnimationWrapper;
-import mb.jython.GlobalPythonFactory;
-import mb.jython.JSpell;
 
 public class DevelAnimationViewState extends BasicGameState implements ResourceSelectorListener
 {
@@ -37,7 +35,7 @@ public class DevelAnimationViewState extends BasicGameState implements ResourceS
 	private Rectangle loopRect = new Rectangle(500, 675, 100, 30);
 	private int drawX, drawY;
 	private static final Color BG_COLOR = new Color(172, 205, 183);
-	private JSpell spell = null;
+	private SpellDefinition spell = null;
 	private ParticleSystem rainParticleSystem = null;
 	private CommRPG commRPG;
 
@@ -59,9 +57,9 @@ public class DevelAnimationViewState extends BasicGameState implements ResourceS
 		commRPG = (CommRPG) game;
 		frm = new FCResourceManager();
 		try {
-			frm.addResource(FCResourceManager.ANIMATIONS_FOLDER_IDENTIFIER + "," + FCResourceManager.ANIMATIONS_FOLDER, null, 0, 0, ((CommRPG) game).getEngineConfiguratior());
-			frm.addResource(FCResourceManager.IMAGES_FOLDER_IDENTIFIER + "," + FCResourceManager.WEAPONS_FOLDER, null, 0, 0, ((CommRPG) game).getEngineConfiguratior());
-			frm.addResource("spritedir,sprite", null, 0, 0, ((CommRPG) game).getEngineConfiguratior());
+			frm.addResource(FCResourceManager.ANIMATIONS_FOLDER_IDENTIFIER + "," + FCResourceManager.ANIMATIONS_FOLDER, null, 0, 0, CommRPG.engineConfiguratior);
+			frm.addResource(FCResourceManager.IMAGES_FOLDER_IDENTIFIER + "," + FCResourceManager.WEAPONS_FOLDER, null, 0, 0, CommRPG.engineConfiguratior);
+			frm.addResource("spritedir,sprite", null, 0, 0, CommRPG.engineConfiguratior);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -162,7 +160,7 @@ public class DevelAnimationViewState extends BasicGameState implements ResourceS
 		{
 			try {
 				frm.addResource(FCResourceManager.ANIMATION_IDENTIFIER + "," + selectedItem + "," + FCResourceManager.ANIMATIONS_FOLDER + "/" + selectedItem, 
-						null, 0, 0, commRPG.getEngineConfiguratior());
+						null, 0, 0, CommRPG.engineConfiguratior);
 				currentAnimation = new AnimationWrapper(frm.getSpriteAnimation(selectedItem));
 				ArrayList<String> animNames = new ArrayList<>(currentAnimation.getAnimations());
 				animationSelector = new ListUI("Anim", 550, animNames);

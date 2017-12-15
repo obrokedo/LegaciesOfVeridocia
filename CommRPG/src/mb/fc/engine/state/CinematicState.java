@@ -163,7 +163,7 @@ public class CinematicState extends LoadableGameState
 				}
 			}
 		}
-		stateInfo.getInput().update(delta);
+		stateInfo.getInput().update(delta, container.getInput());
 	}
 
 	@Override

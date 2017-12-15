@@ -14,6 +14,8 @@ import org.newdawn.slick.util.pathfinding.Path;
 import org.newdawn.slick.util.pathfinding.PathFindingContext;
 import org.newdawn.slick.util.pathfinding.TileBasedMap;
 
+import mb.fc.engine.CommRPG;
+import mb.fc.engine.config.EngineConfigurationValues;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.exception.BadResourceException;
 import mb.fc.game.sprite.Door;
@@ -22,7 +24,6 @@ import mb.fc.game.trigger.Trigger;
 import mb.fc.game.trigger.TriggerCondition;
 import mb.fc.game.trigger.TriggerCondition.HeroEntersLocation;
 import mb.jython.GlobalPythonFactory;
-import mb.jython.JConfigurationValues;
 
 /**
  * @author Broked
@@ -59,7 +60,7 @@ public class Map
 	private Shape battleRegion = null;
 	private int roofCount = -1;
 	private int backgroundImageIndex;
-	private JConfigurationValues jConfigValues;
+	private EngineConfigurationValues jConfigValues;
 	private boolean disableRoofs = false;
 
 	private float tileRatio = 2f;
@@ -70,7 +71,7 @@ public class Map
 
 	public Map() {
 		super();
-		jConfigValues = GlobalPythonFactory.createConfigurationValues();
+		jConfigValues = CommRPG.engineConfiguratior.getConfigurationValues();
 		for (String movementType : jConfigValues.getMovementTypes())
 			movementCostsByType.put(movementType, new MovementCost(movementType, jConfigValues));
 		for (String terrainType : jConfigValues.getTerrainTypes())
@@ -505,7 +506,7 @@ public class Map
 	{
 		private Hashtable<String, Integer> movementCostByTerrain = new Hashtable<>();
 
-		public MovementCost(String moveType, JConfigurationValues configValues)
+		public MovementCost(String moveType, EngineConfigurationValues configValues)
 		{
 			for (String terrainType : configValues.getTerrainTypes())
 				movementCostByTerrain.put(terrainType, configValues.getMovementCosts(moveType, terrainType));

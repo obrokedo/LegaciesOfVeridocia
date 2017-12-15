@@ -7,15 +7,15 @@ import java.util.List;
 import org.newdawn.slick.util.Log;
 
 import mb.fc.engine.CommRPG;
+import mb.fc.engine.config.LevelProgressionConfiguration;
 import mb.fc.game.battle.LevelUpResult;
 import mb.fc.game.battle.spell.KnownSpell;
+import mb.fc.game.battle.spell.SpellDefinition;
 import mb.fc.game.exception.BadResourceException;
 import mb.fc.game.item.EquippableItem;
 import mb.fc.game.resource.SpellResource;
 import mb.fc.loading.FCResourceManager;
 import mb.jython.GlobalPythonFactory;
-import mb.jython.JLevelProgression;
-import mb.jython.JSpell;
 
 public class HeroProgression implements Serializable
 {
@@ -106,7 +106,7 @@ public class HeroProgression implements Serializable
 			{
 				if (spellLevels.get(i)[j] == (cs.getLevel() + 1))
 				{
-					JSpell spell = SpellResource.getSpell(spellIds.get(i), fcrm);
+					SpellDefinition spell = SpellResource.getSpell(spellIds.get(i), fcrm);
 					text += " " + cs.getName() + " learned " + spell.getName() + " " + (j + 1) + "}[";
 				}
 			}
@@ -148,7 +148,7 @@ public class HeroProgression implements Serializable
 			{
 				if (spellLevels.get(i)[j] == cs.getLevel())
 				{
-					JSpell spell = SpellResource.getSpell(spellIds.get(i), frm);
+					SpellDefinition spell = SpellResource.getSpell(spellIds.get(i), frm);
 
 					boolean found = false;
 					if (cs.getSpellsDescriptors() != null)
@@ -207,7 +207,7 @@ public class HeroProgression implements Serializable
 	private static int getStatIncrease(Object[] stat, boolean isPromoted, int currentStat,
 			int newLevel)
 	{
-		JLevelProgression jlp = GlobalPythonFactory.createLevelProgression();
+		LevelProgressionConfiguration jlp = CommRPG.engineConfiguratior.getLevelProgression();
 		float[] values = jlp.getProgressArray((String) stat[0], isPromoted);
 
 		if (values == null)

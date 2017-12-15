@@ -1,11 +1,11 @@
 package mb.fc.game.item;
 
+import mb.fc.game.battle.spell.SpellDefinition;
 import mb.fc.game.resource.SpellResource;
 import mb.fc.loading.FCResourceManager;
-import mb.jython.JSpell;
 
 public class SpellItemUse {
-	private transient JSpell spell;
+	private transient SpellDefinition spell;
 	private String spellId;
 	private int level;
 	private boolean singleUse;
@@ -17,7 +17,7 @@ public class SpellItemUse {
 		this.singleUse = singleUse;
 	}
 
-	public JSpell getSpell() {
+	public SpellDefinition getSpell() {
 		return spell;
 	}
 

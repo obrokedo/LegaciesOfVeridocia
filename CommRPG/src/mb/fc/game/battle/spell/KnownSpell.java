@@ -2,10 +2,8 @@ package mb.fc.game.battle.spell;
 
 import java.io.Serializable;
 
-import mb.fc.engine.state.StateInfo;
 import mb.fc.game.resource.SpellResource;
 import mb.fc.loading.FCResourceManager;
-import mb.jython.JSpell;
 
 public class KnownSpell implements Serializable
 {
@@ -34,7 +32,7 @@ public class KnownSpell implements Serializable
 
 	private String spellId;
 	private byte maxLevel;
-	private transient JSpell spell;
+	private transient SpellDefinition spell;
 
 	/**
 	 * A constructor to add spell descriptors to add spells to a CombatSprite before resources have been loaded.
@@ -51,7 +49,7 @@ public class KnownSpell implements Serializable
 		this.maxLevel = maxLevel;
 	}
 
-	public KnownSpell(String spellId, byte maxLevel, JSpell spell) {
+	public KnownSpell(String spellId, byte maxLevel, SpellDefinition spell) {
 		super();
 		this.spellId = spellId;
 		this.maxLevel = maxLevel;
@@ -70,7 +68,7 @@ public class KnownSpell implements Serializable
 		this.maxLevel = maxLevel;
 	}
 
-	public JSpell getSpell() {
+	public SpellDefinition getSpell() {
 		return spell;
 	}
 

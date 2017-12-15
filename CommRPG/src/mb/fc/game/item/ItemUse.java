@@ -1,7 +1,7 @@
 package mb.fc.game.item;
 
 import mb.fc.game.Range;
-import mb.jython.JBattleEffect;
+import mb.fc.game.battle.BattleEffect;
 
 public class ItemUse
 {
@@ -10,7 +10,7 @@ public class ItemUse
 	private boolean targetsEnemy;
 	private int damage;
 	private int mpDamage;
-	private JBattleEffect effects;
+	private BattleEffect effects;
 	private Range range;
 	private int area;
 	private String battleText;
@@ -18,7 +18,7 @@ public class ItemUse
 
 	// TODO EFFECTS ARE NOT SUPPORTED FOR ITEM USE YET
 	public ItemUse(boolean targetsEnemy, int damage, int mpDamage,
-			JBattleEffect effects, int range, int area, String battleText, boolean singleUse) {
+			BattleEffect effects, int range, int area, String battleText, boolean singleUse) {
 		super();
 		this.targetsEnemy = targetsEnemy;
 		this.damage = damage;
@@ -42,7 +42,7 @@ public class ItemUse
 		return mpDamage;
 	}
 
-	public JBattleEffect getEffects() {
+	public BattleEffect getEffects() {
 		return effects;
 	}
 

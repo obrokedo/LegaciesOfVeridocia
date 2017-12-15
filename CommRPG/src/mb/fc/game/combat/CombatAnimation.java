@@ -4,10 +4,10 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 import mb.fc.engine.state.LOVAttackCinematicState;
+import mb.fc.game.battle.BattleEffect;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.ui.PaddedGameContainer;
 import mb.fc.utils.AnimationWrapper;
-import mb.jython.JBattleEffect;
 
 public class CombatAnimation
 {
@@ -49,7 +49,7 @@ public class CombatAnimation
 	{
 		totalTimePassed += delta;
 		animationWrapper.update(delta);
-		for (JBattleEffect be : parentSprite.getBattleEffects())
+		for (BattleEffect be : parentSprite.getBattleEffects())
 		{
 			if (be.getEffectAnimation() != null)
 				be.getEffectAnimation().update(delta);
@@ -74,7 +74,7 @@ public class CombatAnimation
 		}
 
 		// TODO Scale battle animations
-		for (JBattleEffect be : parentSprite.getBattleEffects())
+		for (BattleEffect be : parentSprite.getBattleEffects())
 		{
 			if (be.getEffectAnimation() != null)
 				be.getEffectAnimation().drawAnimation(xOffset + (int) ((parentSprite.isHero() ? 276 : 50)),

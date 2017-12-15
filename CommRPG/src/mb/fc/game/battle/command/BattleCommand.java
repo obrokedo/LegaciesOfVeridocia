@@ -2,11 +2,10 @@ package mb.fc.game.battle.command;
 
 import java.io.Serializable;
 
-import mb.fc.engine.state.StateInfo;
 import mb.fc.game.battle.spell.KnownSpell;
+import mb.fc.game.battle.spell.SpellDefinition;
 import mb.fc.game.item.Item;
 import mb.fc.loading.FCResourceManager;
-import mb.jython.JSpell;
 
 public class BattleCommand implements Serializable
 {
@@ -16,10 +15,11 @@ public class BattleCommand implements Serializable
 	public static final int COMMAND_SPELL = 1;
 	public static final int COMMAND_ITEM = 2;
 	public static final int COMMAND_TURN_PREVENTED = 3;
+	public static final int COMMAND_GIVE_ITEM = 4;
 
 	private int command;
 	private KnownSpell spell;
-	private transient JSpell jSpell;
+	private transient SpellDefinition jSpell;
 	private Item item;
 	private int level;
 
@@ -34,7 +34,7 @@ public class BattleCommand implements Serializable
 		this.item = item;
 	}
 
-	public BattleCommand(int command, JSpell jSpell, KnownSpell spell, int level) {
+	public BattleCommand(int command, SpellDefinition jSpell, KnownSpell spell, int level) {
 		super();
 		this.command = command;
 		this.spell = spell;
@@ -46,11 +46,11 @@ public class BattleCommand implements Serializable
 		return command;
 	}
 
-	public JSpell getSpell() {
+	public SpellDefinition getSpell() {
 		return jSpell;
 	}
 
-	public void setjSpell(JSpell jSpell) {
+	public void setjSpell(SpellDefinition jSpell) {
 		this.jSpell = jSpell;
 	}
 

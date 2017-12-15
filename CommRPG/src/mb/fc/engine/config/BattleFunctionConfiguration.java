@@ -1,5 +1,5 @@
 
-package mb.jython;
+package mb.fc.engine.config;
 
 import java.util.Random;
 
@@ -14,7 +14,7 @@ import mb.fc.game.sprite.CombatSprite;
  * @author Broked
  *
  */
-public interface JBattleFunctions {
+public interface BattleFunctionConfiguration {
 	public int getDodgePercent(CombatSprite attacker, CombatSprite target);
 	public int getCritPercent(CombatSprite attacker, CombatSprite target);
 	public int getDoublePercent(CombatSprite attacker, CombatSprite target);

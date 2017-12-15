@@ -1,14 +1,23 @@
 package mb.fc.game.input;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Iterator;
 
 import org.newdawn.slick.Input;
 import org.newdawn.slick.KeyListener;
 
+/**
+ * It's questionable if this class is really necessary... It's not terribly heavy
+ * so maybe it's not to big a deal. I'm just not sure what problem we were looking to solve
+ * when we made this. My guess is that we were probably dropping key inputs because input wasn't polling enough.
+ * Alternatively we may have been attempting to not need to check whether each character was pressed each time.
+ * Potentially clearing the input each update and then cache inputs that have already been checked...
+ * 
+ * @author user
+ *
+ */
 public class FCInput implements KeyListener
 {
-	private HashSet<Integer> keysPressed;
 	private ArrayList<Integer> keysHeld;
 	private int updateDelta = 0;
 	private static final int UPDATE_TIME = 50;
@@ -16,17 +25,24 @@ public class FCInput implements KeyListener
 
 	public FCInput() {
 		super();
-		keysPressed = new HashSet<Integer>();
 		keysHeld = new ArrayList<Integer>();
 	}
 
-	public void update(int delta)
+	public void update(int delta, Input realInput)
 	{
 		updateDelta += delta;
 		if (updateDelta >= UPDATE_TIME)
 		{
 			updateDelta -= UPDATE_TIME;
-			keysPressed.clear();
+			
+			// There are some shitty timing windows where a
+			// key can get in a pressed state even after release.
+			// Make sure keys held are still held
+			Iterator<Integer> keysHeldId = keysHeld.iterator();
+			while(keysHeldId.hasNext()) {
+				if (!realInput.isKeyDown(keysHeldId.next()))
+					keysHeldId.remove();
+			}
 		}
 	}
 	
@@ -45,7 +61,6 @@ public class FCInput implements KeyListener
 
 	public void clear()
 	{
-		keysPressed.clear();
 		keysHeld.clear();
 	}
 
@@ -88,14 +103,9 @@ public class FCInput implements KeyListener
 	public void inputStarted() {
 
 	}
-
-	public HashSet<Integer> getKeysPressed() {
-		return keysPressed;
-	}
-
+	
 	@Override
 	public void keyPressed(int key, char c) {
-		keysPressed.add(key);
 		keysHeld.add(key);
 	}
 

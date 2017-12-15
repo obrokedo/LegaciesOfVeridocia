@@ -432,7 +432,13 @@ public class FCResourceManager {
 			Trigger te = new Trigger("Game Exit", Trigger.TRIGGER_ID_EXIT, false, false, false, false, null, null);
 			te.addTriggerable(te.new TriggerExit());
 			return te;
+		} else if (id == Trigger.TRIGGER_CHEST_NO_ITEM) {
+			Trigger te = new Trigger("Chest No Item", Trigger.TRIGGER_CHEST_NO_ITEM, 
+					false, false, false, false, null, null);
+			te.addTriggerable(te.new TriggerShowText(CommRPG.engineConfiguratior.getMenuConfiguration().getNoItemInChestText()));
+			return te;
 		}
+		
 
 		Trigger retTE = triggerEventById.get(id);
 		if (retTE == null)

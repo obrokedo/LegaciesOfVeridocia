@@ -17,12 +17,15 @@ public class NPCSprite extends AnimatedSprite
 	private int initialTileY = -1;
 	private int maxWander = 0;
 	private boolean throughWall = false;
+	private boolean animate = true;
+	private boolean turnOnTalk = true;
 	
 	private boolean waitingForSpeechToEnd = false;
 	private Direction originalFacing = null;
 
 	public NPCSprite(String imageName,
-			int speechId, int id, String name, boolean throughWall)
+			int speechId, int id, String name, boolean throughWall,
+			boolean animate, boolean turnOnTalk)
 	{
 		super(0, 0, imageName, Integer.MAX_VALUE);
 		this.name = name;
@@ -31,6 +34,8 @@ public class NPCSprite extends AnimatedSprite
 		this.uniqueNPCId = 0;
 		this.id = id;
 		this.throughWall = throughWall;
+		this.animate = animate;
+		this.turnOnTalk = turnOnTalk;
 	}
 	
 	public void setMoving(boolean moving) {
@@ -53,14 +58,16 @@ public class NPCSprite extends AnimatedSprite
 		if (Speech.showFirstSpeechMeetsReqs(speechId, stateInfo)) {
 			originalFacing = this.getFacing();
 			waitingForSpeechToEnd = true;
-			if (stateInfo.getCurrentSprite().getLocX() > this.getLocX())
-				this.setFacing(Direction.RIGHT);
-			else if (stateInfo.getCurrentSprite().getLocX() < this.getLocX())
-				this.setFacing(Direction.LEFT);
-			else if (stateInfo.getCurrentSprite().getLocY() > this.getLocY())
-				this.setFacing(Direction.DOWN);
-			else if (stateInfo.getCurrentSprite().getLocY() < this.getLocY())
-				this.setFacing(Direction.UP);
+			if (turnOnTalk) {
+				if (stateInfo.getCurrentSprite().getLocX() > this.getLocX())
+					this.setFacing(Direction.RIGHT);
+				else if (stateInfo.getCurrentSprite().getLocX() < this.getLocX())
+					this.setFacing(Direction.LEFT);
+				else if (stateInfo.getCurrentSprite().getLocY() > this.getLocY())
+					this.setFacing(Direction.DOWN);
+				else if (stateInfo.getCurrentSprite().getLocY() < this.getLocY())
+					this.setFacing(Direction.UP);
+			}
 		}
 	}
 
@@ -68,7 +75,8 @@ public class NPCSprite extends AnimatedSprite
 
 	@Override
 	public void update(StateInfo stateInfo) {
-		super.update(stateInfo);
+		if (animate)
+			super.update(stateInfo);
 		
 		if (!waitingForSpeechToEnd) {
 			if (stateInfo.getCamera().isVisible(this)) {

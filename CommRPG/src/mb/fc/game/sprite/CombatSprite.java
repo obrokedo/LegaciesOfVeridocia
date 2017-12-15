@@ -10,12 +10,14 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.util.Log;
 
 import mb.fc.engine.CommRPG;
+import mb.fc.engine.config.LevelProgressionConfiguration;
 import mb.fc.engine.message.MessageType;
 import mb.fc.engine.message.SpriteContextMessage;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.Camera;
 import mb.fc.game.Range;
 import mb.fc.game.ai.AI;
+import mb.fc.game.battle.BattleEffect;
 import mb.fc.game.battle.spell.KnownSpell;
 import mb.fc.game.constants.Direction;
 import mb.fc.game.dev.DevHeroAI;
@@ -27,9 +29,6 @@ import mb.fc.game.resource.ItemResource;
 import mb.fc.loading.FCResourceManager;
 import mb.fc.utils.AnimSprite;
 import mb.fc.utils.Animation;
-import mb.jython.GlobalPythonFactory;
-import mb.jython.JBattleEffect;
-import mb.jython.JLevelProgression;
 
 public class CombatSprite extends AnimatedSprite
 {
@@ -92,7 +91,7 @@ public class CombatSprite extends AnimatedSprite
 	private String movementType;
 	private int kills;
 	private int defeat;
-	private ArrayList<JBattleEffect> battleEffects;
+	private ArrayList<BattleEffect> battleEffects;
 	private transient Image currentWeaponImage = null;
 	private String attackEffectId;
 	private int attackEffectChance;
@@ -239,7 +238,7 @@ public class CombatSprite extends AnimatedSprite
 
 	public void setNonRandomStats() {
 		// Load non standard stats
-		JLevelProgression levelProgPython = GlobalPythonFactory.createLevelProgression();
+		LevelProgressionConfiguration levelProgPython = CommRPG.engineConfiguratior.getLevelProgression();
 		this.maxCounter = levelProgPython.getBaseBattleStat(this.getCurrentProgression().getCounterStrength(), this);
 		this.maxEvade = levelProgPython.getBaseBattleStat(this.getCurrentProgression().getEvadeStrength(), this);
 		this.maxDouble = levelProgPython.getBaseBattleStat(this.getCurrentProgression().getDoubleStrength(), this);
@@ -290,7 +289,7 @@ public class CombatSprite extends AnimatedSprite
 	{
 		super.initializeSprite(fcrm);
 
-		drawShadow = GlobalPythonFactory.createConfigurationValues().isAffectedByTerrain(this.movementType);
+		drawShadow = CommRPG.engineConfiguratior.getConfigurationValues().isAffectedByTerrain(this.movementType);
 
 		currentAnim = spriteAnims.getCharacterAnimation("Down", this.isPromoted);
 
@@ -301,7 +300,7 @@ public class CombatSprite extends AnimatedSprite
 		}
 
 		// TODO Does this work?!? We are persisting a jython object
-		for (JBattleEffect effect : battleEffects)
+		for (BattleEffect effect : battleEffects)
 			effect.initializeAnimation(fcrm);
 
 		//TODO Remove (all?) battle effects if this isn't an init mid battle
@@ -354,10 +353,10 @@ public class CombatSprite extends AnimatedSprite
 		this.baseCrit = maxCrit;
 		
 		// Clear out non-persistent battle effects
-		Iterator<JBattleEffect> beItr = this.battleEffects.iterator();
+		Iterator<BattleEffect> beItr = this.battleEffects.iterator();
 		
 		while (beItr.hasNext()) {
-			JBattleEffect be = beItr.next();
+			BattleEffect be = beItr.next();
 			if (!be.doesEffectPersistAfterBattle())
 				beItr.remove();
 		}
@@ -433,6 +432,9 @@ public class CombatSprite extends AnimatedSprite
 	public void removeItem(Item item)
 	{
 		int indexOf = items.indexOf(item);
+		if (equipped.get(indexOf)) {
+			this.unequipItem((EquippableItem) item);
+		}
 		items.remove(indexOf);
 		equipped.remove(indexOf);
 	}
@@ -828,7 +830,7 @@ public class CombatSprite extends AnimatedSprite
 
 	public String levelUpHiddenStatistics()
 	{
-		JLevelProgression jlp = GlobalPythonFactory.createLevelProgression();
+		LevelProgressionConfiguration jlp = CommRPG.engineConfiguratior.getLevelProgression();
 		String text = jlp.levelUpHero(this);
 
 		Log.debug("Leveling up heroes non-displayed stats: " + this.getName());
@@ -900,16 +902,16 @@ public class CombatSprite extends AnimatedSprite
 			return heroProgression.getUnpromotedProgression();
 	}
 
-	public ArrayList<JBattleEffect> getBattleEffects() {
+	public ArrayList<BattleEffect> getBattleEffects() {
 		return battleEffects;
 	}
 
-	public void addBattleEffect(JBattleEffect battleEffect)
+	public void addBattleEffect(BattleEffect battleEffect)
 	{
 		
 		for (int i = 0; i < this.battleEffects.size(); i++)
 		{
-			JBattleEffect be = this.battleEffects.get(i);
+			BattleEffect be = this.battleEffects.get(i);
 
 			if (be.getBattleEffectId().equalsIgnoreCase(battleEffect.getBattleEffectId()))
 			{
@@ -921,7 +923,7 @@ public class CombatSprite extends AnimatedSprite
 		this.battleEffects.add(battleEffect);
 	}
 
-	public void removeBattleEffect(JBattleEffect battleEffect)
+	public void removeBattleEffect(BattleEffect battleEffect)
 	{
 		Log.debug("Removed " + battleEffect.getBattleEffectId() + " from " + this.getName());
 		this.battleEffects.remove(battleEffect);
@@ -931,12 +933,12 @@ public class CombatSprite extends AnimatedSprite
 		return currentWeaponImage;
 	}
 
-	public JBattleEffect getAttackEffect()
+	public BattleEffect getAttackEffect()
 	{
-		JBattleEffect eff = null;
+		BattleEffect eff = null;
 		if (attackEffectId != null)
 		{
-			eff = GlobalPythonFactory.createJBattleEffect(attackEffectId, attackEffectLevel);
+			eff = CommRPG.engineConfiguratior.getBattleEffectFactory().createEffect(attackEffectId, attackEffectLevel);
 			eff.setEffectChance(attackEffectChance);
 		}
 		return eff;
@@ -949,10 +951,16 @@ public class CombatSprite extends AnimatedSprite
 		this.attackEffectLevel = attackEffectLevel;
 	}
 
-	public void initializeBattleEffects(FCResourceManager frm)
+	public void initializeBattleAttributes(FCResourceManager frm)
 	{
-		for (JBattleEffect be : this.battleEffects)
+		for (BattleEffect be : this.battleEffects)
 			be.initializeAnimation(frm);
+		
+		if (this.getEquippedWeapon() == null) {
+			this.currentWeaponImage = null;
+		} else {
+			currentWeaponImage = frm.getImage(this.getEquippedWeapon().getWeaponImage());
+		}
 	}
 
 	public void triggerButton1Event(StateInfo stateInfo)
@@ -963,7 +971,7 @@ public class CombatSprite extends AnimatedSprite
 	public void triggerOverEvent(StateInfo stateInfo)
 	{
 		stateInfo.addPanel(new SpriteContextPanel(PanelType.PANEL_HEALTH_BAR, this, 
-				stateInfo.getPersistentStateInfo().getGame().getEngineConfiguratior().getHealthPanelRenderer(),
+				CommRPG.engineConfiguratior.getHealthPanelRenderer(),
 				stateInfo.getResourceManager(), stateInfo.getPaddedGameContainer()));
 	}
 

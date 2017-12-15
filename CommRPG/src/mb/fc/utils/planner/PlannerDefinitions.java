@@ -4,9 +4,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
+import mb.fc.engine.CommRPG;
+import mb.fc.engine.config.EngineConfigurationValues;
 import mb.fc.game.constants.AttributeStrength;
 import mb.jython.GlobalPythonFactory;
-import mb.jython.JConfigurationValues;
 
 public class PlannerDefinitions {
 	private static String PATH_ANIMATIONS = "animations/animationsheets";
@@ -51,11 +52,11 @@ public class PlannerDefinitions {
 		GlobalPythonFactory.intialize();
 
 		// Setup progression type
-		for (String progressionName : GlobalPythonFactory.createLevelProgression().getStandardStatProgressionTypeList())
+		for (String progressionName : CommRPG.engineConfiguratior.getLevelProgression().getStandardStatProgressionTypeList())
 			listOfLists.get(PlannerValueDef.REFERS_STAT_GAINS - 1).add(new PlannerReference(progressionName));
 
 		// Setup usuable itemstyles
-		for (String weaponName : GlobalPythonFactory.createConfigurationValues().getWeaponTypes())
+		for (String weaponName : CommRPG.engineConfiguratior.getConfigurationValues().getWeaponTypes())
 			listOfLists.get(PlannerValueDef.REFERS_ITEM_STYLE - 1).add(new PlannerReference(weaponName));
 
 		// Setup usuable item types
@@ -79,11 +80,11 @@ public class PlannerDefinitions {
 		listOfLists.get(PlannerValueDef.REFERS_ITEM_AREA - 1).add(new PlannerReference("Everyone"));
 
 		// Setup movement types
-		for (String movementName : GlobalPythonFactory.createConfigurationValues().getMovementTypes())
+		for (String movementName : CommRPG.engineConfiguratior.getConfigurationValues().getMovementTypes())
 			listOfLists.get(PlannerValueDef.REFERS_MOVE_TYPE - 1).add(new PlannerReference(movementName));
 
 		// Setup spells
-		for (String spellName : GlobalPythonFactory.createJSpell().getSpellList())
+		for (String spellName : CommRPG.engineConfiguratior.getSpellFactory().getSpellList())
 			listOfLists.get(PlannerValueDef.REFERS_SPELL - 1).add(new PlannerReference(spellName));
 
 		// Setup Direction
@@ -105,7 +106,7 @@ public class PlannerDefinitions {
 				listOfLists.get(PlannerValueDef.REFERS_SPRITE_IMAGE - 1).add(new PlannerReference(f.replaceFirst(".png", "")));
 
 		// Setup Battle Effects
-		for (String effectName : GlobalPythonFactory.createJBattleEffect("NOTHING", 1).getBattleEffectList())
+		for (String effectName : CommRPG.engineConfiguratior.getBattleEffectFactory().getBattleEffectList())
 			listOfLists.get(PlannerValueDef.REFERS_EFFECT - 1).add(new PlannerReference(effectName));
 		listOfLists.get(PlannerValueDef.REFERS_EFFECT - 1).add(new PlannerReference("CUSTOM"));
 
@@ -115,11 +116,11 @@ public class PlannerDefinitions {
 		listOfLists.get(PlannerValueDef.REFERS_ATTRIBUTE_STRENGTH - 1).add(new PlannerReference(AttributeStrength.STRONG.name()));
 
 		// Setup Body/Mind progression
-		for (String progressionName : GlobalPythonFactory.createLevelProgression().getBodyMindProgressionTypeList())
+		for (String progressionName : CommRPG.engineConfiguratior.getLevelProgression().getBodyMindProgressionTypeList())
 			listOfLists.get(PlannerValueDef.REFERS_BODYMIND_GAIN - 1).add(new PlannerReference(progressionName));
 
 		// Setup Terrain
-		JConfigurationValues jConfigValues = GlobalPythonFactory.createConfigurationValues();
+		EngineConfigurationValues jConfigValues = CommRPG.engineConfiguratior.getConfigurationValues();
 		for (String terrainType : jConfigValues.getTerrainTypes())
 			listOfLists.get(PlannerValueDef.REFERS_TERRAIN - 1).add(new PlannerReference(terrainType));
 
@@ -129,7 +130,7 @@ public class PlannerDefinitions {
 			listOfLists.get(PlannerValueDef.REFERS_PALETTE - 1).add(new PlannerReference(f));
 
 		// Setup affinities
-		for (String affinity : GlobalPythonFactory.createConfigurationValues().getAffinities())
+		for (String affinity : CommRPG.engineConfiguratior.getConfigurationValues().getAffinities())
 			listOfLists.get(PlannerValueDef.REFERS_AFFINITIES - 1).add(new PlannerReference(affinity));
 
 		// Setup weapon damage types
@@ -2904,6 +2905,12 @@ public class PlannerDefinitions {
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
 				PlannerValueDef.TYPE_BOOLEAN, "throughwall", false, "Can talk through wall",
 				"If set to true then this NPC can be spoken to at a range of two tiles (twice normal) this should be used for shop keepers or places beghind bars/altars."));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_BOOLEAN, "noanimate", false, "Prevent NPC Animation",
+				"If set to true, this NPC will only display the first frame of the direction they are facing and will not animate."));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_BOOLEAN, "noturn", false, "Do not talk when spoken to",
+				"If set to true this NPC will not turn when they are spoken to (searched)."));
 		allowableLines.add(new PlannerLineDef("npc", "npc",
 				"Marks this locations as the starting place for an npc. Depending on the 'wander' the npc may not remain here.",
 				definingValues));

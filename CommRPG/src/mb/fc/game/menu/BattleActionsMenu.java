@@ -89,7 +89,7 @@ public class BattleActionsMenu extends QuadMenu
 				stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, "menuselect", 1f, false));
 				break;
 			case RIGHT:
-				stateInfo.sendMessage(MessageType.SHOW_ITEM_MENU);
+				stateInfo.sendMessage(MessageType.SHOW_ITEM_OPTION_MENU);
 				stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, "menuselect", 1f, false));
 				break;
 			case DOWN:

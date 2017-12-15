@@ -3,6 +3,7 @@ package mb.fc.game.menu;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
+import mb.fc.engine.CommRPG;
 import mb.fc.engine.config.SpellMenuRenderer;
 import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.BattleSelectionMessage;
@@ -27,8 +28,7 @@ public class SpellMenu extends QuadMenu
 		this.icons = new Image[4];
 		this.text = new String[4];
 		this.paintSelectionCursor = true;
-		spellMenuRenderer = stateInfo.getPersistentStateInfo().getGame().
-				getEngineConfiguratior().getSpellMenuRenderer();
+		spellMenuRenderer = CommRPG.engineConfiguratior.getSpellMenuRenderer();
 	}
 
 	@Override

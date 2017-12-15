@@ -2,11 +2,22 @@ package mb.jython;
 
 import java.io.File;
 
-import mb.fc.loading.LoadingState;
-
 import org.python.core.Py;
 import org.python.core.PyString;
 import org.python.core.PySystemState;
+
+import mb.fc.engine.config.BattleEffectFactory;
+import mb.fc.engine.config.BattleFunctionConfiguration;
+import mb.fc.engine.config.CinematicActorConfiguration;
+import mb.fc.engine.config.EngineConfigurationValues;
+import mb.fc.engine.config.LevelProgressionConfiguration;
+import mb.fc.engine.config.MenuConfiguration;
+import mb.fc.engine.config.MusicConfiguration;
+import mb.fc.engine.config.PanelRenderer;
+import mb.fc.engine.config.SpellFactory;
+import mb.fc.game.battle.BattleEffect;
+import mb.fc.game.battle.spell.SpellDefinition;
+import mb.fc.loading.LoadingState;
 
 /**
  * Factory to create Jython objects that are backed by the corresponding Python script. Methods
@@ -28,16 +39,15 @@ public class GlobalPythonFactory
 	/**
 	 * Hold an instance of each of the Jython objects that correspond with a Python script
 	 */
-	private static JCinematicActor cinematicActor = null;
-	private static JBattleFunctions battleFunctions = null;
-	private static JPanelRender panelRender = null;
-	private static JMusicSelector musicSelector = null;
-	private static JSpell spell = null;
-	private static JBattleEffect battleEffect = null;
-	private static JLevelProgression levelProgression = null;
-	private static JConfigurationValues configurationValues = null;
-	private static JParticleEmitter particleEmitter = null;
-	private static JMenuConfiguration menuConfiguration = null;
+	private static CinematicActorConfiguration cinematicActor = null;
+	private static BattleFunctionConfiguration battleFunctions = null;
+	private static PanelRenderer panelRender = null;
+	private static MusicConfiguration musicSelector = null;
+	private static SpellFactory spell = null;
+	private static BattleEffectFactory battleEffect = null;
+	private static LevelProgressionConfiguration levelProgression = null;
+	private static EngineConfigurationValues configurationValues = null;
+	private static MenuConfiguration menuConfiguration = null;
 
 	/**
 	 * A boolean flag indicating whether this factory has been initialized.
@@ -88,15 +98,15 @@ public class GlobalPythonFactory
 
 		// There should only ever be a single instance of this class, so set all of the
 		// values so they can be accessed in a static way
-        panelRender = (JPanelRender) (new JythonObjectFactory(JPanelRender.class, "PanelRender", "PanelRender")).createObject();
-        battleFunctions = (JBattleFunctions) (new JythonObjectFactory(JBattleFunctions.class, "BattleFunctions", "BattleFunctions")).createObject();
-        cinematicActor  = (JCinematicActor) (new JythonObjectFactory(JCinematicActor.class, "CinematicActor", "CinematicActor")).createObject();
-        musicSelector  = (JMusicSelector) (new JythonObjectFactory(JMusicSelector.class, "MusicScript", "MusicScript")).createObject();
-        spell  = (JSpell) (new JythonObjectFactory(JSpell.class, "Spells", "Spells")).createObject();
-        battleEffect = (JBattleEffect) (new JythonObjectFactory(JBattleEffect.class, "BattleEffect", "BattleEffect")).createObject();
-        levelProgression = (JLevelProgression) (new JythonObjectFactory(JLevelProgression.class, "LevelProgression", "LevelProgression")).createObject();
-        configurationValues = (JConfigurationValues) (new JythonObjectFactory(JConfigurationValues.class, "ConfigurationValues", "ConfigurationValues")).createObject();
-        menuConfiguration = (JMenuConfiguration) (new JythonObjectFactory(JMenuConfiguration.class, "MenuConfiguration", "MenuConfiguration")).createObject();
+        panelRender = (PanelRenderer) (new JythonObjectFactory(PanelRenderer.class, "PanelRender", "PanelRender")).createObject();
+        battleFunctions = (BattleFunctionConfiguration) (new JythonObjectFactory(BattleFunctionConfiguration.class, "BattleFunctions", "BattleFunctions")).createObject();
+        cinematicActor  = (CinematicActorConfiguration) (new JythonObjectFactory(CinematicActorConfiguration.class, "CinematicActor", "CinematicActor")).createObject();
+        musicSelector  = (MusicConfiguration) (new JythonObjectFactory(MusicConfiguration.class, "MusicScript", "MusicScript")).createObject();
+        spell  = (SpellFactory) (new JythonObjectFactory(SpellFactory.class, "Spells", "Spells")).createObject();
+        battleEffect = (BattleEffectFactory) (new JythonObjectFactory(BattleEffectFactory.class, "BattleEffect", "BattleEffect")).createObject();
+        levelProgression = (LevelProgressionConfiguration) (new JythonObjectFactory(LevelProgressionConfiguration.class, "LevelProgression", "LevelProgression")).createObject();
+        configurationValues = (EngineConfigurationValues) (new JythonObjectFactory(EngineConfigurationValues.class, "ConfigurationValues", "ConfigurationValues")).createObject();
+        menuConfiguration = (MenuConfiguration) (new JythonObjectFactory(MenuConfiguration.class, "MenuConfiguration", "MenuConfiguration")).createObject();
 	}
 
 	/**
@@ -106,7 +116,7 @@ public class GlobalPythonFactory
 	 *
 	 * @return a script-backed JCinematicActor
 	 */
-	public static JCinematicActor createJCinematicActor()
+	public static CinematicActorConfiguration createJCinematicActor()
 	{
 		checkFactoryInitialized();
 		return cinematicActor;
@@ -119,7 +129,7 @@ public class GlobalPythonFactory
 	 *
 	 * @return a script-backed JBattleFunctions
 	 */
-	public static JBattleFunctions createJBattleFunctions()
+	public static BattleFunctionConfiguration createJBattleFunctions()
 	{
 		checkFactoryInitialized();
 		return battleFunctions;
@@ -132,7 +142,7 @@ public class GlobalPythonFactory
 	 *
 	 * @return a script-backed JPanelRender
 	 */
-	public static JPanelRender createJPanelRender()
+	public static PanelRenderer createJPanelRender()
 	{
 		checkFactoryInitialized();
 		return panelRender;
@@ -145,7 +155,7 @@ public class GlobalPythonFactory
 	 *
 	 * @return a script-backed JMusicSelector
 	 */
-	public static JMusicSelector createJMusicSelector()
+	public static MusicConfiguration createJMusicSelector()
 	{
 		checkFactoryInitialized();
 		return musicSelector;
@@ -158,35 +168,36 @@ public class GlobalPythonFactory
 	 *
 	 * @return a script-backed JSpell
 	 */
-	public static JSpell createJSpell()
+	public static SpellFactory getSpellFactory()
 	{
 		checkFactoryInitialized();
 		return spell;
 	}
 
-	public static JBattleEffect createJBattleEffect(String id, int effectLevel)
+	public static BattleEffectFactory getBattleEffectFactory()
 	{
-		return battleEffect.initEffect(id, effectLevel);
+		checkFactoryInitialized();
+		return battleEffect;
 	}
 
-	public static JLevelProgression createLevelProgression()
+	public static LevelProgressionConfiguration createLevelProgression()
 	{
 		checkFactoryInitialized();
 		return levelProgression;
 	}
 
-	public static JConfigurationValues createConfigurationValues()
+	public static EngineConfigurationValues createConfigurationValues()
 	{
 		checkFactoryInitialized();
 		return configurationValues;
 	}
 	
-	public static JMenuConfiguration createMenuConfig()
+	public static MenuConfiguration createMenuConfig()
 	{
 		checkFactoryInitialized();
 		return menuConfiguration;
 	}
-
+	
 	/**
 	 * Ensures that this factory has been initialized before attempting to
 	 * return a Jython object

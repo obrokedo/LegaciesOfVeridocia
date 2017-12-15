@@ -7,10 +7,10 @@ import java.util.Set;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
 
+import mb.fc.engine.config.AnimationConfiguration;
 import mb.fc.game.constants.Direction;
 import mb.fc.game.exception.BadAnimationException;
 import mb.fc.game.exception.BadResourceException;
-import mb.jython.JAnimationConfiguration;
 
 public class SpriteAnims
 {
@@ -52,23 +52,23 @@ public class SpriteAnims
 
 	public boolean hasCharacterAnimation(String name, boolean isPromoted)
 	{
-		return animations.get((isPromoted ? JAnimationConfiguration.getPromotedPrefix() : JAnimationConfiguration.getUnpromotedPrefix()) + name) != null;
+		return animations.get((isPromoted ? AnimationConfiguration.getPromotedPrefix() : AnimationConfiguration.getUnpromotedPrefix()) + name) != null;
 	}
 
 	public Animation getCharacterAnimation(String name, boolean isPromoted)
 	{
-		Animation a = animations.get((isPromoted ? JAnimationConfiguration.getPromotedPrefix() : JAnimationConfiguration.getUnpromotedPrefix()) + name);
+		Animation a = animations.get((isPromoted ? AnimationConfiguration.getPromotedPrefix() : AnimationConfiguration.getUnpromotedPrefix()) + name);
 		if (a == null)
 			throw new BadResourceException("Unable to find animation: " +
-					(isPromoted ? JAnimationConfiguration.getPromotedPrefix() : JAnimationConfiguration.getUnpromotedPrefix()) + name + " for animation using spritesheet: " + spriteSheet);
+					(isPromoted ? AnimationConfiguration.getPromotedPrefix() : AnimationConfiguration.getUnpromotedPrefix()) + name + " for animation using spritesheet: " + spriteSheet);
 		return a;
 	}
 	
 	public Animation getDirectionAnimation(Direction dir) {
 		String animString = null;
-		if (hasAnimation(animString = JAnimationConfiguration.getUnpromotedDirection(dir)))
+		if (hasAnimation(animString = AnimationConfiguration.getUnpromotedDirection(dir)))
 			return getAnimation(animString);
-		else if (hasAnimation(animString = JAnimationConfiguration.getPromotedDirection(dir)))
+		else if (hasAnimation(animString = AnimationConfiguration.getPromotedDirection(dir)))
 			return getAnimation(animString);
 		else 
 			throw new BadAnimationException("Unable to get character direction animation for dir " + dir + " on spritesheet " + 
@@ -79,13 +79,13 @@ public class SpriteAnims
 		switch (dir)
 		{
 			case UP:
-				return getCharacterAnimation(JAnimationConfiguration.getUpAnimationName(), isHeroPromoted);
+				return getCharacterAnimation(AnimationConfiguration.getUpAnimationName(), isHeroPromoted);
 			case DOWN:
-				return getCharacterAnimation(JAnimationConfiguration.getDownAnimationName(), isHeroPromoted);
+				return getCharacterAnimation(AnimationConfiguration.getDownAnimationName(), isHeroPromoted);
 			case LEFT:
-				return getCharacterAnimation(JAnimationConfiguration.getLeftAnimationName(), isHeroPromoted);
+				return getCharacterAnimation(AnimationConfiguration.getLeftAnimationName(), isHeroPromoted);
 			case RIGHT:
-				return getCharacterAnimation(JAnimationConfiguration.getRightAnimationName(), isHeroPromoted);
+				return getCharacterAnimation(AnimationConfiguration.getRightAnimationName(), isHeroPromoted);
 		}
 		throw new BadAnimationException("Unable to get character direction animation for dir " + dir + " on spritesheet " + spriteSheet);
 	}

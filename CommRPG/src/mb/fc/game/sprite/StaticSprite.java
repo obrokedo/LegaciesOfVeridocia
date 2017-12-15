@@ -6,6 +6,7 @@ import org.newdawn.slick.Image;
 
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.Camera;
+import mb.fc.game.trigger.Trigger.TriggerStatus;
 
 public class StaticSprite extends Sprite
 {
@@ -14,6 +15,11 @@ public class StaticSprite extends Sprite
 	private Image image;
 	private int[] triggerIds;
 	private boolean offsetUp = false;
+	/**
+	 * The id of a trigger that should be activated if no other triggers were
+	 * activated on a "search" of this sprite
+	 */
+	private Integer defaultTriggerId = null;
 
 	public StaticSprite(int locX, int locY, String name, Image image, int[] triggerIds)
 	{
@@ -47,13 +53,36 @@ public class StaticSprite extends Sprite
 	{
 		if (triggerIds != null)
 		{
-			for (Integer triggerId : triggerIds)
-				if (triggerId != -1)
-					stateInfo.getResourceManager().getTriggerEventById(triggerId).perform(stateInfo);
+			boolean triggerActivated = false;
+			
+			for (Integer triggerId : triggerIds) {
+				if (triggerId != -1) {
+					if (stateInfo.getResourceManager().getTriggerEventById(
+							triggerId).perform(stateInfo) == TriggerStatus.TRIGGERED) {
+						triggerActivated = true;
+					}
+				}
+			}
+			
+			if (defaultTriggerId != null && !triggerActivated) {
+				stateInfo.getResourceManager().getTriggerEventById(
+						defaultTriggerId).perform(stateInfo);
+			}
 		}
 	}
 
 	public void setOffsetUp(boolean offsetUp) {
 		this.offsetUp = offsetUp;
+	}
+
+	/**
+	 * Set the id of a trigger that should be activated if no other triggers were
+	 * activated on a "search" of this sprite. A value of null means no trigger will
+	 * be activated
+	 *
+	 * @param defaultTriggerId
+	 */
+	public void setDefaultTriggerId(Integer defaultTriggerId) {
+		this.defaultTriggerId = defaultTriggerId;
 	}
 }

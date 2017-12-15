@@ -1,10 +1,8 @@
-package mb.jython;
+package mb.fc.engine.config;
 
 import java.io.Serializable;
 
-import mb.fc.game.sprite.CombatSprite;
-import mb.fc.loading.FCResourceManager;
-import mb.fc.utils.AnimationWrapper;
+import mb.fc.game.battle.BattleEffect;
 
 /**
  * Abstract class to be extended in Jython to create in interface that allows for creation of a 
@@ -40,21 +38,14 @@ import mb.fc.utils.AnimationWrapper;
  * 
  * @author Broked
  */
-public abstract class JBattleEffect implements Serializable
+public abstract class BattleEffectFactory implements Serializable
 {
 	private static final long serialVersionUID = 1L;
-
-	protected int currentTurn;
-	protected int effectChance;
-	protected int effectLevel;
-	protected String battleEffectId;
-	
-	private transient AnimationWrapper effectAnimation;
 
 	public abstract String[] getBattleEffectList();
 	
 	/**
-	 * Creates a JBattleEffect for an effect with the specified name and level.
+	 * Creates a BattleEffect for an effect with the specified name and level.
 	 * <p/>
 	 * This method is marked "abstract" which means that Jython classes that extend
 	 * JBattleEffect MUST implement this method defined like this (parameter names can differ):
@@ -69,108 +60,5 @@ public abstract class JBattleEffect implements Serializable
 	 * @return a JBattleEffect that describes how an effect with the given battleEffectId and level
 	 * 		should be managed.
 	 */
-	public abstract JBattleEffect createEffect(String battleEffectId, int level);
-
-	protected abstract void performEffectImpl(CombatSprite target, int currentTurn);
-	
-	public abstract String performEffectText(CombatSprite target, int currentTurn);
-
-	public abstract void effectStarted(CombatSprite attacker, CombatSprite target);
-
-	public abstract String effectStartedText(CombatSprite attacker, CombatSprite target);
-
-	public abstract void effectEnded(CombatSprite target);
-	
-	public abstract String effectEndedText(CombatSprite target);
-
-	public abstract String getAnimationFile();
-
-	public abstract boolean isEffected(CombatSprite target);
-	
-	public abstract boolean isNegativeEffect();
-	
-	public abstract boolean isDone();
-	
-	public JBattleEffect initEffect(String battleEffectId, int level)
-	{
-		JBattleEffect eff = createEffect(battleEffectId, level);
-		eff.battleEffectId = battleEffectId;
-		eff.effectLevel = level;
-		return eff;
-	}
-	
-	public boolean preventsMovement() {
-		return false;
-	}
-	
-	public boolean preventsAttack(){
-		return false;
-	}
-	
-	public boolean preventsSpells(){
-		return false;
-	}
-	
-	public boolean preventsItems(){
-		return false;
-	}
-	
-	public boolean preventsTurn(){
-		return false;
-	}
-	
-	public boolean doesEffectPersistAfterBattle() {
-		return false;
-	}
-
-	public void initializeAnimation(FCResourceManager frm)
-	{
-		if (getAnimationFile() != null)
-			effectAnimation = new AnimationWrapper(frm.getSpriteAnimation(getAnimationFile()), "Effect", true);
-		else
-			effectAnimation = null;
-	}
-
-	public void performEffect(CombatSprite target)
-	{
-		performEffectImpl(target, currentTurn);
-	}
-	
-	public String getPerformEffectText(CombatSprite target)
-	{
-		return performEffectText(target, currentTurn);
-	}
-	
-	public void setBattleEffectId(String battleEffectId) {
-		this.battleEffectId = battleEffectId;
-	}
-
-	public String getBattleEffectId() {
-		return battleEffectId;
-	}
-
-	public int getCurrentTurn() {
-		return currentTurn;
-	}
-
-	public void incrementTurn() {
-		this.currentTurn++;
-	}
-	public AnimationWrapper getEffectAnimation() {
-		return effectAnimation;
-	}
-
-	public int getEffectChance() {
-		return effectChance;
-	}
-
-	public void setEffectChance(int effectChance) {
-		this.effectChance = effectChance;
-	}
-
-	public int getEffectLevel() {
-		return effectLevel;
-	}
-	
-	
+	public abstract BattleEffect createEffect(String battleEffectId, int level);
 }

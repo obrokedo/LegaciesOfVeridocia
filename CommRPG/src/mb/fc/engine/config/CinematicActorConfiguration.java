@@ -1,4 +1,4 @@
-package mb.jython;
+package mb.fc.engine.config;
 
 /**
  * Interface to call the CinematicActor python methods that will determine
@@ -9,7 +9,7 @@ package mb.jython;
  * @author Broked
  *
  */
-public interface JCinematicActor
+public interface CinematicActorConfiguration
 {
 	public int getMoveUpdate();	// 20
 	public int getNodHeadDuration(); // 500

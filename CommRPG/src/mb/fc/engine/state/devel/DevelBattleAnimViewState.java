@@ -20,6 +20,7 @@ import mb.fc.engine.state.LOVAttackCinematicState;
 import mb.fc.game.battle.BattleResults;
 import mb.fc.game.battle.command.BattleCommand;
 import mb.fc.game.battle.spell.KnownSpell;
+import mb.fc.game.battle.spell.SpellDefinition;
 import mb.fc.game.resource.EnemyResource;
 import mb.fc.game.resource.HeroResource;
 import mb.fc.game.sprite.CombatSprite;
@@ -30,7 +31,6 @@ import mb.fc.game.ui.PaddedGameContainer;
 import mb.fc.loading.FCResourceManager;
 import mb.fc.loading.LoadableGameState;
 import mb.jython.GlobalPythonFactory;
-import mb.jython.JSpell;
 
 public class DevelBattleAnimViewState extends LoadableGameState implements ResourceSelectorListener {
 	private WizardStep wizardIndex;
@@ -79,9 +79,9 @@ public class DevelBattleAnimViewState extends LoadableGameState implements Resou
 				case PICK_ATTACK_ACTION:
 					selectText = "Choose the attackers action";
 					options.add("Normal Attack"); options.add("Critical Attack"); options.add("Ranged Attack"); // options.add("Miss Attack"); options.add("Double Attack"); 
-					String[] spells = GlobalPythonFactory.createJSpell().getSpellList();
+					String[] spells = CommRPG.engineConfiguratior.getSpellFactory().getSpellList();
 					for (String spell : spells) {
-						JSpell initSpell = GlobalPythonFactory.createJSpell().init(spell);
+						SpellDefinition initSpell = CommRPG.engineConfiguratior.getSpellFactory().createSpell(spell);
 						for (int i = 0; i < initSpell.getMaxLevel(); i++) {
 							options.add(spell + " " + (i + 1));
 						}
@@ -170,7 +170,7 @@ public class DevelBattleAnimViewState extends LoadableGameState implements Resou
 			battleCommand = new BattleCommand(BattleCommand.COMMAND_ATTACK);
 		} else {
 			String[] splitSpell = attackAction.split(" ");
-			JSpell spell = GlobalPythonFactory.createJSpell().init(splitSpell[0]);
+			SpellDefinition spell = CommRPG.engineConfiguratior.getSpellFactory().createSpell(splitSpell[0]);
 			KnownSpell ks = new KnownSpell(spell.getId(), (byte) 4, spell);
 			battleCommand = new BattleCommand(BattleCommand.COMMAND_SPELL, ks.getSpell(), ks, Integer.parseInt(splitSpell[1]));
 		}
@@ -288,7 +288,7 @@ public class DevelBattleAnimViewState extends LoadableGameState implements Resou
 			nextInput = 200;
 		}
 		if (reloadButton.handleUserInput(x, y, click)) {
-			fcrm.reloadAnimations(((CommRPG) game).getEngineConfiguratior());
+			fcrm.reloadAnimations(CommRPG.engineConfiguratior);
 			nextInput = 200;
 		}
 		
