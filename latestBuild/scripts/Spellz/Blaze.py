@@ -1,5 +1,4 @@
-from mb.jython import JSpell
-from mb.fc.game.battle.spell import KnownSpell
+from mb.fc.game.battle.spell import SpellDefinition
 from org.python.modules import jarray
 from java.lang import Math
 from mb.fc.game import Range
@@ -11,9 +10,9 @@ from ParticleEmitter import RandomHorizontalParticleEmitter
 
 import CommonFunctions
 
-class Blaze(JSpell):    
+class Blaze(SpellDefinition):    
     # This is where you set up all of the parameters for each of the spells    
-    def init(self, id):
+    def __init__(self):
         # The spell name as it should appear to players
         self.setName("Blaze")
         # The cost in MP per level of the spell, where the first index is in the array is for first level

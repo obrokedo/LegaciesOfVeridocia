@@ -1,6 +1,6 @@
-from mb.jython import JMenuConfiguration
+from mb.fc.engine.config import MenuConfiguration
 
-class MenuConfiguration(JMenuConfiguration):
+class MenuConfiguration(MenuConfiguration):
     # Resurrect methods
     def getPriestNoOneToResurrectText(self):
         return "Hmm it doesn't look like anyone is dead...<hardstop>"
@@ -97,3 +97,5 @@ class MenuConfiguration(JMenuConfiguration):
         return "That's all I've got for now...<hardstop>"
     def getShopPromptSellOldText(self, itemName, cost):
         return "Would you like to sell your old " + itemName + " for " + cost + " gold?]"
+    def getNoItemInChestText(self):
+        return "It was dark inside...<hardstop>"

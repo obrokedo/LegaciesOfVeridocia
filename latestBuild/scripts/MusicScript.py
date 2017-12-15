@@ -1,14 +1,14 @@
-from mb.jython import JMusicSelector
+from mb.fc.engine.config import MusicConfiguration
 from mb.fc.game.item import EquippableItem
 
-class MusicScript(JMusicSelector):
+class MusicScript(MusicConfiguration):
     # Get the name of the music that should be played during a BattleCinematic
     # The attacker is a CombatSprite and targetAllies is a boolean that indicates whether
     # this action is targeting the attackers allies
     def getAttackMusic(self, attacker, targetsAllies):
         if attacker.isHero() and attacker.isPromoted():
             return "PrHero"
-	elif attacker.isHero():
+        elif attacker.isHero():
             return "UnHero"
         elif attacker.isLeader():
             return "Boss"
@@ -25,17 +25,17 @@ class MusicScript(JMusicSelector):
     # 2 = Sword
     # 3 = Staff
     # 4 = Bow
-	# 5 = Blade
-	# 6 = Spellshot
-	# 7 = Claw
-	# 8 = Wand
-	# 9 = Glove
-	#10 = Rapier
-	#11 = Lance
-	#12 = Wing
-	#13 = Mace
-	#14 = Katana
-	#15 = Shuriken
+    # 5 = Blade
+    # 6 = Spellshot
+    # 7 = Claw
+    # 8 = Wand
+    # 9 = Glove
+    #10 = Rapier
+    #11 = Lance
+    #12 = Wing
+    #13 = Mace
+    #14 = Katana
+    #15 = Shuriken
     # EquippableItem.STYLE_SPEAR = 0;
     # EquippableItem.STYLE_AXE = 1;
     # EquippableItem.STYLE_SWORD = 2;

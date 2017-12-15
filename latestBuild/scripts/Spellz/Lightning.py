@@ -1,5 +1,4 @@
-from mb.jython import JSpell
-from mb.fc.game.battle.spell import KnownSpell
+from mb.fc.game.battle.spell import SpellDefinition
 from org.python.modules import jarray
 from java.lang import Math
 from mb.fc.game import Range
@@ -7,9 +6,9 @@ from org.newdawn.slick import Color
 from java.lang import String
 from BattleEffect import BattleEffect
 
-class Lightning(JSpell):    
+class Lightning(SpellDefinition):    
     # This is where you set up all of the parameters for each of the spells    
-    def init(self, id):
+    def __init__(self):
         self.setName("Lightning")       
         self.setCosts(jarray.array([17, 26, 32, 32], 'i'))
         self.setDamage(jarray.array([-25, -30, -37, -47], 'i'))
@@ -30,7 +29,7 @@ class Lightning(JSpell):
         return None
         
     def getExpGained(self, level, attacker, target):
-		return -1
+        return -1
             
     # This is at 30% opacity    
     def getSpellOverlayColor(self, level):

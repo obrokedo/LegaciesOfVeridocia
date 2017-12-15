@@ -1,5 +1,4 @@
-from mb.jython import JSpell
-from mb.fc.game.battle.spell import KnownSpell
+from mb.fc.game.battle.spell import SpellDefinition
 from org.python.modules import jarray
 from java.lang import Math
 from mb.fc.game import Range
@@ -7,9 +6,9 @@ from org.newdawn.slick import Color
 from java.lang import String
 from BattleEffect import BattleEffect
 
-class Heal(JSpell):    
+class Heal(SpellDefinition):    
     # This is where you set up all of the parameters for each of the spells    
-    def init(self, id):
+    def __init__(self):
         self.setName("Heal")              
         self.setCosts(jarray.array([3, 5, 9, 12], 'i'))
         self.setDamage(jarray.array([15, 22, 36, 120], 'i'))
@@ -52,22 +51,22 @@ class Heal(JSpell):
         self.setSpellIconIndex(0)
     
     def getEffectiveDamage(self, attacker, target, spellLevel):
-    	bleeding = False
+        bleeding = False
         baseDamage = self.getDamage()[spellLevel]
-    	# Check to see if the target is bleeding, if so then
-    	# this will just remove that condition, not actually heal
-    	battleEffects = target.getBattleEffects();
+        # Check to see if the target is bleeding, if so then
+        # this will just remove that condition, not actually heal
+        battleEffects = target.getBattleEffects();
         for i in range(battleEffects.size()):
             if "Bleed" == battleEffects.get(i).getName():
-				bleeding = True
-				break;
+                bleeding = True
+                break;
     
-    	if bleeding:
-    		baseDamage = 0
-    	else :
-	        # Keep in mind that healing spells will have a positive base damage value. 
-	        baseDamage = Math.min(target.getMaxHP() - target.getCurrentHP(), # Maximum value is the amount of hp the target is missing 
-	                              baseDamage + (baseDamage * attacker.getCurrentWaterAffin() / 100.0)) # Add the casters affinity (increasing healing)
+        if bleeding:
+            baseDamage = 0
+        else :
+            # Keep in mind that healing spells will have a positive base damage value. 
+            baseDamage = Math.min(target.getMaxHP() - target.getCurrentHP(), # Maximum value is the amount of hp the target is missing 
+                                  baseDamage + (baseDamage * attacker.getCurrentWaterAffin() / 100.0)) # Add the casters affinity (increasing healing)
         return int(baseDamage)
     
     def getBattleText(self, target, damage, mpDamage, attackerHPDamage, attackerMPDamage):
@@ -83,10 +82,10 @@ class Heal(JSpell):
         return target.getName() + "'s wounds are healed. " + target.getName() + " recovers " + `damage` + " HP!"
         
     def getExpGained(self, level, attacker, target):
-		if target.getCurrentHP() == target.getMaxHP():
-			return int(0);
-		else:
-			return int(Math.max(10, Math.min(target.getMaxHP() - target.getCurrentHP(), self.getDamage()[level]) * 1.0/ target.getMaxHP() * 25));
+        if target.getCurrentHP() == target.getMaxHP():
+            return int(0);
+        else:
+            return int(Math.max(10, Math.min(target.getMaxHP() - target.getCurrentHP(), self.getDamage()[level]) * 1.0/ target.getMaxHP() * 25));
             
     # This is at 30% opacity    
     def getSpellOverlayColor(self, level):

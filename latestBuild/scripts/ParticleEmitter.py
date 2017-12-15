@@ -1,9 +1,9 @@
-from mb.jython import JParticleEmitter
+from mb.fc.engine.config import ParticleEmitterConfiguration
 from org.newdawn.slick import Image
 import random
 from java.lang import Math
 
-class RandomHorizontalParticleEmitter(JParticleEmitter):
+class RandomHorizontalParticleEmitter(ParticleEmitterConfiguration):
     drawX = 0
     width = 160
     interval = 350
@@ -46,7 +46,7 @@ class RandomHorizontalParticleEmitter(JParticleEmitter):
         return
 
 
-class RainParticleEmitter(JParticleEmitter):
+class RainParticleEmitter(ParticleEmitterConfiguration):
     drawX = 0
     width = 160
     interval = 150
@@ -71,7 +71,7 @@ class RainParticleEmitter(JParticleEmitter):
             p.setLife(400)
             p.setVelocity(-.01,.1, 3 + random.random() * 2)
             
-class OrientedFlashParticleEmitter(JParticleEmitter):
+class OrientedFlashParticleEmitter(ParticleEmitterConfiguration):
     drawX = 0
     width = 160
     interval = 350
@@ -106,7 +106,7 @@ class OrientedFlashParticleEmitter(JParticleEmitter):
             p.setPosition(rand + self.drawX, 113)
             #p.setLife(100)
             
-class OrbitParticleEmitter(JParticleEmitter):
+class OrbitParticleEmitter(ParticleEmitterConfiguration):
     drawX = 0
     width = 160
     interval = 300

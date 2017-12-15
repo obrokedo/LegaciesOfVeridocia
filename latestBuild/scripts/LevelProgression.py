@@ -1,10 +1,10 @@
-from mb.jython import JLevelProgression
+from mb.fc.engine.config import LevelProgressionConfiguration
 from org.python.modules import jarray
 from java.lang import String
 from mb.fc.game.constants import AttributeStrength
 from mb.fc.game.sprite import CombatSprite
 
-class LevelProgression(JLevelProgression):
+class LevelProgression(LevelProgressionConfiguration):
     # Gets a list of progression types that will be passed in for "progressionType"
     # on the getProgressArray method in this script
     def getStandardStatProgressionTypeList(self):        
@@ -156,10 +156,10 @@ class LevelProgression(JLevelProgression):
         return None
     
     def getProgressArray(self, progressionType, promoted):
-    	# If the progression type is "None" then just return 0's
-    	if progressionType == "None":
-    		return jarray.array([0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00], 'f')
-    	
+        # If the progression type is "None" then just return 0's
+        if progressionType == "None":
+            return jarray.array([0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00], 'f')
+        
         # Unpromoted progressions
         if (not promoted):
             # Linear Progression

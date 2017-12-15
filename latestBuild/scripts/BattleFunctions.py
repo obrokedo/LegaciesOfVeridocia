@@ -1,14 +1,14 @@
 from java.lang import Math
-from mb.jython import JBattleFunctions
+from mb.fc.engine.config import BattleFunctionConfiguration
 
-class BattleFunctions(JBattleFunctions):
+class BattleFunctions(BattleFunctionConfiguration):
     
     # Gets the percent chance that the given target will dodge the attackers attack. This
     # number should be between 0-100
     def getDodgePercent(self, attacker, target):        
         # OLD VALUES
         # return Math.max(5, 5 + (target.getCurrentSpeed() - attacker.getCurrentSpeed()) / 5);
-    	return attacker.getModifiedEvade();
+        return attacker.getModifiedEvade();
     
     # Gets the percent chance that the given attacker will get a critical hit against the target
     # this value should be between 0-100

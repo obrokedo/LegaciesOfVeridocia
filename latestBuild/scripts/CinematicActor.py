@@ -1,7 +1,7 @@
-from mb.jython import JCinematicActor
+from mb.fc.engine.config import CinematicActorConfiguration
 
 # Building object that subclasses a Java interface
-class CinematicActor(JCinematicActor):
+class CinematicActor(CinematicActorConfiguration):
         
     # Get the amount of ms that will elapse between moving an actor. Decreasing this will increase overall move speed 
     def getMoveUpdate(self):

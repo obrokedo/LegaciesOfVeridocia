@@ -1,10 +1,10 @@
 from java.lang import String
-from mb.jython import JConfigurationValues
+from mb.fc.engine.config import EngineConfigurationValues
 import sys
 
 from org.python.modules import jarray
 
-class ConfigurationValues(JConfigurationValues):
+class ConfigurationValues(EngineConfigurationValues):
     
     def getStartingHeroIds(self):
         return jarray.array(["Noah", "Sharna", "Huun"], String)

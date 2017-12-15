@@ -1,5 +1,4 @@
-from mb.jython import JSpell
-from mb.fc.game.battle.spell import KnownSpell
+from mb.fc.game.battle.spell import SpellDefinition
 from org.python.modules import jarray
 from java.lang import Math
 from mb.fc.game import Range
@@ -10,9 +9,9 @@ from ParticleEmitter import OrientedFlashParticleEmitter
 
 import CommonFunctions
 
-class Bolt(JSpell):    
+class Bolt(SpellDefinition):    
     # This is where you set up all of the parameters for each of the spells    
-    def init(self, id):
+    def __init__(self):
         self.setName("Bolt")       
         self.setCosts(jarray.array([4, 7, 13, 20], 'i'))
         self.setDamage(jarray.array([-13, -20, -40, -60], 'i'))

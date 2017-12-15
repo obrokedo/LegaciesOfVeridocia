@@ -1,5 +1,4 @@
-from mb.jython import JSpell
-from mb.fc.game.battle.spell import KnownSpell
+from mb.fc.engine.config import SpellFactory
 from org.python.modules import jarray
 from java.lang import Math
 from mb.fc.game import Range
@@ -13,7 +12,7 @@ from Spellz.Heal import Heal
 from Spellz.Lightning import Lightning
 from Spellz.Spirit import Spirit
 
-class Spells(JSpell):    
+class Spells(SpellFactory):    
     # This defines the id for each spell in the game.
     def getSpellList(self):
         return jarray.array(["HEAL", "AURA", "DETOX", "BOOST", "SLOW", "STRENGTH", "DISPEL", "MUDDLE",
@@ -22,8 +21,7 @@ class Spells(JSpell):
                              "BURST", "DELIRIUM", "GUST", "FLOOD", "CYCLONE", "FIRE BREATH", "HP&MP DRAIN", 
                              "LIGHTNING", "ION BLAST", "QUAKE", "FLARE"], String)
     # This is where you set up all of the parameters for each of the spells    
-    def init(self, id):
-    	initChild = True
+    def createSpell(self, id):
         # This value should appear in the array returned from the spell list above
         if "BLAZE" == id:            
             spell = Blaze()
@@ -37,11 +35,12 @@ class Spells(JSpell):
             spell = Lightning();
         elif "SPIRIT" == id:
             spell = Spirit()
+        elif "DETOX" == id:
+            spell = Heal()
         else:
-            spell = Spells()
-            initChild = False
+            spell = None
+            print "BAD SPELL " + id
         
-        spell.setId(id)
-        if initChild:
-        	spell.init(id);
+        if spell != None:
+            spell.setId(id)
         return spell
