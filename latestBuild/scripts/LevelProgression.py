@@ -158,7 +158,7 @@ class LevelProgression(LevelProgressionConfiguration):
     def getProgressArray(self, progressionType, promoted):
         # If the progression type is "None" then just return 0's
         if progressionType == "None":
-            return jarray.array([0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00], 'f')
+            return jarray.array([0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00], 'f')
         
         # Unpromoted progressions
         if (not promoted):
