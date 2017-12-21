@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.newdawn.slick.util.Log;
+import org.python.core.util.StringUtil;
 
 import mb.fc.engine.CommRPG;
 import mb.fc.engine.config.BattleFunctionConfiguration;
@@ -13,9 +14,10 @@ import mb.fc.game.battle.spell.SpellDefinition;
 import mb.fc.game.constants.TextSpecialCharacters;
 import mb.fc.game.item.Item;
 import mb.fc.game.item.ItemUse;
+import mb.fc.game.resource.EnemyResource;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.loading.FCResourceManager;
-import mb.jython.GlobalPythonFactory;
+import mb.fc.utils.StringUtils;
 
 public class BattleResults implements Serializable
 {
@@ -35,10 +37,11 @@ public class BattleResults implements Serializable
 	public ArrayList<Integer> attackerMPDamage;
 	public boolean death = false;
 	public boolean attackerDeath = false;
-	public String attackOverText = null;
+	public String attackOverText = "";
 	public LevelUpResult levelUpResult = null;
 	public boolean itemDamaged = false;
 	public Item itemUsed = null;
+	public int goldGained;
 	
 	// TODO Retrieve dropped enemy items
 
@@ -127,6 +130,7 @@ public class BattleResults implements Serializable
 		}
 
 		int expGained = 0;
+		br.goldGained = 0;
 
 		int index = 0;
 		for (int targetIndex = 0; targetIndex < targets.size(); targetIndex++)
@@ -159,17 +163,22 @@ public class BattleResults implements Serializable
 					(br.battleCommand.getCommand() == BattleCommand.COMMAND_ATTACK && br.death && !br.attackerDeath))
 			{
 				text = addCombatantDeathText(attacker, target, text, br, jBattleFunctions);
+				if (attacker.isHero() && !target.isHero())
+					br.goldGained += EnemyResource.getGoldDroppedByName(target.getName());
 			}
 			// Check to see if the target will die, if so peel off the special characters at the end
 			// and add the combatant death text
 			else if (br.attackerDeath)
 			{
 				text = addCombatantDeathText(target, attacker, text, br, jBattleFunctions);
+				if (!attacker.isHero() && target.isHero()) {
+					br.goldGained += EnemyResource.getGoldDroppedByName(attacker.getName());
+				}
 			}
 			br.text.add(text);
 			index++;
 		}
-		
+	
 		// The maximum exp you can ever get is 49
 		expGained = Math.min(49, expGained);
 
@@ -179,6 +188,21 @@ public class BattleResults implements Serializable
 		
 		indicateGainedExp(attacker, targets, expGained, br, fcrm);
 
+		if (br.goldGained > 0) {
+			CombatSprite goldGainer;
+			if (!attacker.isHero())		
+				goldGainer = targets.get(0);
+			else
+				goldGainer = attacker;
+			br.attackOverText += (br.attackOverText.length() > 0 ? " " : "") + goldGainer.getName() + " recieved " + 
+				br.goldGained + " gold." + TextSpecialCharacters.CHAR_SOFT_STOP;
+		}
+		
+		// If there is no attack over text, set it to null so nothing
+		// is displayed in battle (null text isn't displayed)
+		if (StringUtils.isEmpty(br.attackOverText))
+			br.attackOverText = null;
+	
 		return br;
 	}
 
@@ -189,12 +213,12 @@ public class BattleResults implements Serializable
 			if (!br.attackerDeath)
 			{
 				attacker.setExp(attacker.getExp() + expGained);
-				br.attackOverText = attacker.getName() + " gained " + expGained +  " experience.}";
+				br.attackOverText += attacker.getName() + " gained " + expGained +  " experience.}";
 				// If the hero has leveled up then set the level up results and the correct text
 				if (attacker.getExp() >= 100)
 				{
 					br.attackOverText += " " + TextSpecialCharacters.CHAR_NEXT_CIN + TextSpecialCharacters.CHAR_LINE_BREAK + " ";
-					br.levelUpResult = attacker.getHeroProgression().getLevelUpResults(attacker, fcrm);
+					br.levelUpResult = attacker.getHeroProgression().getLevelUpResults(attacker);
 					br.attackOverText += br.levelUpResult.text;
 				}
 			}
@@ -202,11 +226,11 @@ public class BattleResults implements Serializable
 		else if (expGained != 0)
 		{
 			targets.get(0).setExp(targets.get(0).getExp() + expGained);
-			br.attackOverText = targets.get(0).getName() + " gained " + expGained +  " experience.}";
+			br.attackOverText += targets.get(0).getName() + " gained " + expGained +  " experience.}";
 			if (targets.get(0).getExp() >= 100)
 			{
 				br.attackOverText += " " + TextSpecialCharacters.CHAR_NEXT_CIN + TextSpecialCharacters.CHAR_LINE_BREAK + " ";
-				br.levelUpResult = targets.get(0).getHeroProgression().getLevelUpResults(targets.get(0), fcrm);
+				br.levelUpResult = targets.get(0).getHeroProgression().getLevelUpResults(targets.get(0));
 				br.attackOverText += br.levelUpResult.text;
 			}
 		}

@@ -440,9 +440,9 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 				if (battleResults.levelUpResult != null)
 				{
 					if (attacker.isHero())
-						attacker.getHeroProgression().levelUp(attacker, battleResults.levelUpResult, frm);
+						attacker.getHeroProgression().levelUp(attacker, battleResults.levelUpResult);
 					else
-						battleResults.targets.get(0).getHeroProgression().levelUp(battleResults.targets.get(0), battleResults.levelUpResult, frm);
+						battleResults.targets.get(0).getHeroProgression().levelUp(battleResults.targets.get(0), battleResults.levelUpResult);
 					String sound = musicSelector.getLevelUpSoundEffect(attacker);
 					if (sound != null)
 						frm.getSoundByName(sound).play();

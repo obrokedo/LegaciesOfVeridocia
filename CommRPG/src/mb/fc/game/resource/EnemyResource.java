@@ -43,4 +43,10 @@ public class EnemyResource
 	public static List<String> getEnemyNames() {
 		return enemyDefinitionsById.values().stream().map(EnemyDefinition::getName).collect(Collectors.toList());
 	}
+	
+	public static int getGoldDroppedByName(String enemyName) {
+		if (StringUtils.isNotEmpty(enemyName))
+			return enemyDefinitionsById.values().stream().filter(ed -> ed.getName().equals(enemyName)).findFirst().get().getGoldDropped();
+		return 0;
+	}
 }

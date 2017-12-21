@@ -1,5 +1,6 @@
 package mb.fc.renderer;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 import mb.fc.engine.message.Message;
@@ -136,8 +137,6 @@ public class TileMapRenderer extends Manager
 
 		map.endUse();
 	}
-
-
 
 	@Override
 	public void recieveMessage(Message message) {

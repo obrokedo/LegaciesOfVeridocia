@@ -352,7 +352,10 @@ public class Map
 			return true;
 
 		return battleRegion.contains(mapX + 1, mapY + 1);
+	}
 
+	public Shape getBattleRegion() {
+		return battleRegion;
 	}
 
 	public boolean isMarkedMoveable(int tileX, int tileY)
@@ -652,5 +655,9 @@ public class Map
 
 	public int getMapLayerAmount() {
 		return mapLayer.size();
+	}
+
+	public float getTileRatio() {
+		return tileRatio;
 	}
 }

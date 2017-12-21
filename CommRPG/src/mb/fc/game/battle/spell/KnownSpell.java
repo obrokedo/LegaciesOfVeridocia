@@ -74,6 +74,6 @@ public class KnownSpell implements Serializable
 
 	public void initializeFromLoad(FCResourceManager fcrm)
 	{
-		this.spell = SpellResource.getSpell(spellId, fcrm);
+		this.spell = SpellResource.getSpell(spellId);
 	}
 }

@@ -189,10 +189,10 @@ public class TriggerCondition {
 			int count = 0;
 			for (MapObject mo : stateInfo.getCurrentMap().getMapObjects())
 			{
-				if (mo.getName() != null && mo.getName().equalsIgnoreCase(location))
+				if (mo.getName() != null && mo.getName().equalsIgnoreCase(this.location))
 				{
 					for (CombatSprite cs : stateInfo.getCombatSprites())
-					{
+					{	
 						if (cs.isHero() && !enemy && mo.contains(cs))
 						{
 							count++;

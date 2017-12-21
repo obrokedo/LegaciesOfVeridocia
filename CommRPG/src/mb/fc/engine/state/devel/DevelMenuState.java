@@ -21,6 +21,7 @@ import org.newdawn.slick.util.Log;
 
 import mb.fc.engine.CommRPG;
 import mb.fc.engine.state.MenuState;
+import mb.fc.game.resource.SpellResource;
 import mb.fc.game.ui.Button;
 import mb.fc.game.ui.ListUI;
 import mb.fc.game.ui.ListUI.ResourceSelectorListener;
@@ -38,6 +39,7 @@ import mb.fc.utils.XMLParser;
 import mb.fc.utils.XMLParser.TagArea;
 import mb.fc.utils.gif.GifFrame;
 import mb.fc.utils.planner.PlannerFrame;
+import mb.fc.utils.progression.ProgressionFrame;
 
 /**
  * Development menu state that allows loading maps programatically
@@ -51,6 +53,7 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 	private ListUI entranceSelector;
 	private PlannerFrame plannerFrame = new PlannerFrame(this);
 	private GifFrame quickAnimate = new GifFrame(true);
+	private ProgressionFrame progressionFrame = new ProgressionFrame();
 	public static ParticleSystem ps;
 	private String currentMap;
 	private Button loadTownButton = new Button(0, 550, 150, 25, "Load Town");
@@ -119,6 +122,8 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
 		Log.debug("Entered DevelMenuState");
 		gameSetup(game, container);
+		SpellResource.initSpells(null);
+		this.progressionFrame.init();
 	}
 
 
@@ -152,6 +157,7 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 		// g.drawString("F5 - Run Test", container.getWidth() - 250, container.getHeight() - amount-- * 30);
 		g.drawString("F6 - Open Battle Viewer", container.getWidth() - 250, container.getHeight() - amount-- * 30);
 		g.drawString("F8 - Load Saved Game", container.getWidth() - 250, container.getHeight() - amount-- * 30);
+		g.drawString("F10 - Open Progression Viewer", container.getWidth() - 250, container.getHeight() - amount-- * 30);
 		
 
 		if (initialized && ps != null)
@@ -240,6 +246,10 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 					entranceSelector.getSelectedResource() != null)
 				start(LoadTypeEnum.BATTLE, textSelector.getSelectedResource(), 
 						entranceSelector.getSelectedResource());
+		}
+		if (container.getInput().isKeyPressed(Input.KEY_F10))
+		{
+			progressionFrame.setVisible(true);
 		}
 		
 		int x = container.getInput().getMouseX();

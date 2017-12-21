@@ -1,5 +1,7 @@
 package mb.fc.engine.state;
 
+import java.util.Stack;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -18,11 +20,12 @@ import mb.fc.game.manager.PanelManager;
 import mb.fc.game.manager.SoundManager;
 import mb.fc.game.manager.SpriteManager;
 import mb.fc.game.manager.TownMoveManager;
+import mb.fc.game.sprite.NPCSprite;
+import mb.fc.game.sprite.Sprite;
 import mb.fc.game.ui.PaddedGameContainer;
 import mb.fc.loading.FCResourceManager;
 import mb.fc.loading.LoadableGameState;
 import mb.fc.map.MapObject;
-import mb.fc.particle.RainEmitter;
 import mb.fc.renderer.MenuRenderer;
 import mb.fc.renderer.PanelRenderer;
 import mb.fc.renderer.SpriteRenderer;
@@ -47,6 +50,8 @@ public class TownState extends LoadableGameState
 	private TownMoveManager townMoveManager;
 	private CinematicManager cinematicManager;
 	private SoundManager soundManager;
+	
+	private Stack<NPCSprite> TEST_NPCS_STACK = null;
 
 	private StateInfo stateInfo;
 	public static ParticleSystem ps = null;
@@ -103,6 +108,15 @@ public class TownState extends LoadableGameState
 	@Override
 	public void initAfterLoad() {
 		stateInfo.initState();
+		
+		if (CommRPG.TEST_MODE_ENABLED) {
+			TEST_NPCS_STACK = new Stack<>();
+			for (Sprite s : stateInfo.getSprites()) {
+				if (s.getSpriteType() == Sprite.TYPE_NPC) {
+					TEST_NPCS_STACK.add((NPCSprite) s);
+				}
+			}
+		}
 	}
 
 	@Override
@@ -151,6 +165,8 @@ public class TownState extends LoadableGameState
 	public void doUpdate(PaddedGameContainer container, StateBasedGame game, int delta)
 			throws SlickException
 	{
+		
+		
 		stateInfo.processMessages();
 
 		if (stateInfo.isInitialized() && !stateInfo.isWaiting())
@@ -161,6 +177,12 @@ public class TownState extends LoadableGameState
 			{
 				panelManager.update(delta);
 				townMoveManager.update(delta);
+				
+				if (CommRPG.TEST_MODE_ENABLED) {
+					if (TEST_NPCS_STACK.size() > 0) {
+						TEST_NPCS_STACK.remove(0).triggerButton1Event(stateInfo);
+					}
+				}
 			}
 			stateInfo.getCurrentMap().update(delta);
 			spriteManager.update(delta);

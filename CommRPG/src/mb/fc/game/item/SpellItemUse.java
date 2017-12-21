@@ -34,6 +34,6 @@ public class SpellItemUse {
 	}
 
 	public void initialize(FCResourceManager fcrm) {
-		spell = SpellResource.getSpell(spellId, fcrm);
+		spell = SpellResource.getSpell(spellId);
 	}
 }

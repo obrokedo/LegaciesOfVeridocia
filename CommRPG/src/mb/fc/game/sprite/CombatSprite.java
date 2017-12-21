@@ -884,6 +884,7 @@ public class CombatSprite extends AnimatedSprite
 	public void setPromoted(boolean isPromoted, int promotionPath) {
 		this.isPromoted = isPromoted;
 		this.promotionPath = promotionPath;
+		this.setLevel(1);
 	}
 
 	public HeroProgression getHeroProgression() {

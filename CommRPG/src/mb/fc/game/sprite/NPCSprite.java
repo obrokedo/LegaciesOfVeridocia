@@ -57,7 +57,6 @@ public class NPCSprite extends AnimatedSprite
 	{
 		if (Speech.showFirstSpeechMeetsReqs(speechId, stateInfo)) {
 			originalFacing = this.getFacing();
-			waitingForSpeechToEnd = true;
 			if (turnOnTalk) {
 				if (stateInfo.getCurrentSprite().getLocX() > this.getLocX())
 					this.setFacing(Direction.RIGHT);
@@ -68,6 +67,7 @@ public class NPCSprite extends AnimatedSprite
 				else if (stateInfo.getCurrentSprite().getLocY() < this.getLocY())
 					this.setFacing(Direction.UP);
 			}
+			waitingForSpeechToEnd = true;
 		}
 	}
 
@@ -129,6 +129,14 @@ public class NPCSprite extends AnimatedSprite
 			else
 				moveCounter++;
 		}
+	}
+	
+	
+
+	@Override
+	public void setFacing(Direction dir) {
+		if (!waitingForSpeechToEnd)
+			super.setFacing(dir);
 	}
 
 	public int getUniqueNPCId() {

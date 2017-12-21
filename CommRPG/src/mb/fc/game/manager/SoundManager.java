@@ -44,7 +44,7 @@ public class SoundManager extends Manager implements MusicListener
 
 	public void playMusicByName(String name, float volume, float position)
 	{
-		if (name.equalsIgnoreCase(playingMusicName)) {
+		if (name.equalsIgnoreCase(playingMusicName) && playingMusic.playing()) {
 			return;
 		}
 		

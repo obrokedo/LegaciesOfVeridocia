@@ -247,7 +247,7 @@ public class DebugMenu extends Menu implements ResourceSelectorListener
 				if (selectedSprite.isHero()) {
 					selectedSprite.levelUpHiddenStatistics();
 					selectedSprite.getHeroProgression().levelUp(selectedSprite, selectedSprite.getHeroProgression().
-							getLevelUpResults(selectedSprite, stateInfo.getResourceManager()), stateInfo.getResourceManager());
+							getLevelUpResults(selectedSprite));
 					selectedSprite.setExp(0);
 					
 				}

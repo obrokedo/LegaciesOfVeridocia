@@ -574,6 +574,23 @@ public class StateInfo
 		}
 		return null;
 	}
+	
+	/**
+	 * Gets the Sprite that is located at the specified tile location.
+	 *
+	 * @param tileX The x location of the specified tile to check
+	 * @param tileY The y location of the specified tile to check
+	 * @return The Sprite at this location, null if there is not one at this location
+	 */
+	public Sprite getSpriteAtTile(int tileX, int tileY)
+	{
+		for (Sprite s : sprites)
+		{
+			if (s.getTileX() == tileX && s.getTileY() == tileY)
+				return s;
+		}
+		return null;
+	}
 
 	/**
 	 * Gets the CombatSprite that is located at the specified map location.

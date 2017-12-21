@@ -121,6 +121,10 @@ public class ClientProfile implements Serializable
 	public void setGold(int gold) {
 		this.gold = gold;
 	}
+	
+	public void modifyGold(int gold) {
+		this.gold += gold;
+	}
 
 	public void serializeToFile()
 	{
@@ -204,9 +208,9 @@ public class ClientProfile implements Serializable
 			{
 				while (cs.getLevel() < devParams.getLevel())
 				{
-					LevelUpResult lur = cs.getHeroProgression().getLevelUpResults(cs, fcrm);
+					LevelUpResult lur = cs.getHeroProgression().getLevelUpResults(cs);
 					cs.setExp(100);
-					cs.getHeroProgression().levelUp(cs, lur, fcrm);
+					cs.getHeroProgression().levelUp(cs, lur);
 				}
 			}
 		}

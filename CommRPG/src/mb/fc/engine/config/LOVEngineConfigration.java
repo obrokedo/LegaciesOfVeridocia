@@ -6,6 +6,7 @@ public class LOVEngineConfigration extends DefaultEngineConfiguration {
 	public LOVEngineConfigration() {
 		healthPanelRenderer = new LOVHealthPanelRenderer();
 		spellMenuRenderer = new LOVSpellMenuRenderer();
+		yesNoMenuRenderer = new LOVYesNoMenuRenderer();
 	}
 	
 	@Override

@@ -33,6 +33,7 @@ import mb.fc.game.input.KeyMapping;
 import mb.fc.game.item.Item;
 import mb.fc.game.listener.KeyboardListener;
 import mb.fc.game.menu.BattleActionsMenu;
+import mb.fc.game.menu.BattleOptionMenu;
 import mb.fc.game.menu.HeroStatMenu;
 import mb.fc.game.menu.ItemMenu;
 import mb.fc.game.menu.ItemOptionMenu;
@@ -513,7 +514,7 @@ public class TurnManager extends Manager implements KeyboardListener
 					resetSpriteLoc = false;
 					currentSprite.setFacing(Direction.DOWN);
 					// If we are already reset then switch to cursor mode
-					// setToCursorMode();
+					setToCursorMode();
 				}
 			}
 			else if (turnActions.get(0).action == TurnAction.ACTION_MOVE_TO) {
@@ -792,6 +793,7 @@ public class TurnManager extends Manager implements KeyboardListener
 				if (((int) spriteStartPoint.getX()) == currentSprite.getTileX() &&
 						((int) spriteStartPoint.getY()) == currentSprite.getTileY())
 				{
+					currentSprite.setFacing(Direction.DOWN);
 					// If we are already reset then switch to cursor mode
 					setToCursorMode();
 				}
@@ -895,6 +897,10 @@ public class TurnManager extends Manager implements KeyboardListener
 				if (cs != null)
 				{
 					stateInfo.addMenu(new HeroStatMenu(stateInfo.getPaddedGameContainer(), cs, stateInfo));
+					return true;
+				}
+				else {
+					stateInfo.sendMessage(MessageType.SHOW_BATTLE_OPTIONS);
 					return true;
 				}
 			}

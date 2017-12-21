@@ -7,6 +7,7 @@ public class DefaultEngineConfiguration implements EngineConfigurator {
 	protected DfAnimationParser animationParser = new DfAnimationParser();
 	protected HealthPanelRenderer healthPanelRenderer = new DefaultHealthPanelRenderer();
 	protected SpellMenuRenderer spellMenuRenderer = new DefaultSpellMenuRenderer();
+	protected YesNoMenuRenderer yesNoMenuRenderer = new DefaultYesNoRenderer();
 	
 	@Override
 	public void getAttackCinematic() {
@@ -26,6 +27,12 @@ public class DefaultEngineConfiguration implements EngineConfigurator {
 	@Override
 	public SpellMenuRenderer getSpellMenuRenderer() {
 		return spellMenuRenderer;
+	}
+	
+	@Override
+	public YesNoMenuRenderer getYesNoMenuRenderer() {
+		// TODO Auto-generated method stub
+		return yesNoMenuRenderer;
 	}
 
 	@Override
@@ -81,5 +88,4 @@ public class DefaultEngineConfiguration implements EngineConfigurator {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
 }

@@ -29,5 +29,5 @@ public interface EngineConfigurator {
 
 	public MenuConfiguration getMenuConfiguration();
 	
-	
+	public YesNoMenuRenderer getYesNoMenuRenderer();
 }

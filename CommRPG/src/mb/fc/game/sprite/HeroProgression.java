@@ -14,7 +14,6 @@ import mb.fc.game.battle.spell.SpellDefinition;
 import mb.fc.game.exception.BadResourceException;
 import mb.fc.game.item.EquippableItem;
 import mb.fc.game.resource.SpellResource;
-import mb.fc.loading.FCResourceManager;
 import mb.jython.GlobalPythonFactory;
 
 public class HeroProgression implements Serializable
@@ -71,32 +70,54 @@ public class HeroProgression implements Serializable
 			cs.equipItem(ring);
 	}
 
+	public LevelUpResult getLevelUpResults(CombatSprite cs) {
+		return getLevelUpResults(cs, null);
+	}
+	
 	//TODO This needs to make sure it uses all values from the LevelProgression script
-	public LevelUpResult getLevelUpResults(CombatSprite cs, FCResourceManager fcrm)
+	public LevelUpResult getLevelUpResults(CombatSprite cs, List<String> statChanges)
 	{
 		Progression p = cs.getCurrentProgression();
 		String text = cs.getName() + " has reached level " + (cs.getLevel() + 1) + "!}[";
 		LevelUpResult level = new LevelUpResult();
 
-		level.hitpointGain = getStatIncrease(p.getHp(), cs.isPromoted(), cs.getMaxHP(), cs.getLevel() + 1);
+		addStatChangeLog(System.lineSeparator() + cs.getName() + " has reached " + (cs.isPromoted() ? "Promoted" : "Unpromoted") + " level " + (cs.getLevel() + 1), statChanges);
+		addStatChangeLog(System.lineSeparator() + "Updating HP", statChanges);
+		level.hitpointGain = getStatIncrease(p.getHp(), cs.isPromoted(), 
+				cs.getMaxHP(), cs.getLevel() + 1, statChanges);
 		if (level.hitpointGain > 0)
 			text += " HP increased by " + level.hitpointGain + ".}[";
 
-		level.magicpointGain = getStatIncrease(p.getMp(), cs.isPromoted(), cs.getMaxMP(), cs.getLevel() + 1);
+		addStatChangeLog(System.lineSeparator() + "Updating MP", statChanges);
+		level.magicpointGain = getStatIncrease(p.getMp(), cs.isPromoted(), 
+				cs.getMaxMP(), cs.getLevel() + 1, statChanges);
 		if (level.magicpointGain > 0)
 			text += " MP increased by " + level.magicpointGain + ".}[";
 
-		level.attackGain = getStatIncrease(p.getAttack(), cs.isPromoted(), cs.getMaxAttack(), cs.getLevel() + 1);
+		addStatChangeLog(System.lineSeparator() + "Updating Attack", statChanges);
+		level.attackGain = getStatIncrease(p.getAttack(), cs.isPromoted(), 
+				cs.getMaxAttack(), cs.getLevel() + 1, statChanges);
 		if (level.attackGain > 0)
 			text += " Attack increased by " + level.attackGain + ".}[";
 
-		level.defenseGain = getStatIncrease(p.getDefense(), cs.isPromoted(), cs.getMaxDefense(), cs.getLevel() + 1);
+		addStatChangeLog(System.lineSeparator() + "Updating Defense", statChanges);
+		level.defenseGain = getStatIncrease(p.getDefense(), cs.isPromoted(), 
+				cs.getMaxDefense(), cs.getLevel() + 1, statChanges);
 		if (level.defenseGain > 0)
 			text += " Defense increased by " + level.defenseGain + ".}[";
 
-		level.speedGain = getStatIncrease(p.getSpeed(), cs.isPromoted(), cs.getMaxSpeed(), cs.getLevel() + 1);
+		addStatChangeLog(System.lineSeparator() + "Updating Speed", statChanges);
+		level.speedGain = getStatIncrease(p.getSpeed(), cs.isPromoted(), 
+				cs.getMaxSpeed(), cs.getLevel() + 1, statChanges);
 		if (level.speedGain > 0)
 			text += " Speed increased by " + level.speedGain + ".}[";
+		
+		addStatChangeLog("HP: " + (cs.getMaxHP() + level.hitpointGain), statChanges);
+		addStatChangeLog("MP: " + (cs.getMaxMP() + level.magicpointGain), statChanges);
+		addStatChangeLog("Attack: " + (cs.getMaxAttack() + level.attackGain), statChanges);
+		addStatChangeLog("Defense: " + (cs.getMaxDefense() + level.defenseGain), statChanges);
+		addStatChangeLog("Speed: " + (cs.getMaxSpeed() + level.speedGain), statChanges);
+		
 
 		ArrayList<int[]> spellLevels = p.getSpellLevelLearned();
 		ArrayList<String> spellIds = p.getSpellIds();
@@ -106,8 +127,12 @@ public class HeroProgression implements Serializable
 			{
 				if (spellLevels.get(i)[j] == (cs.getLevel() + 1))
 				{
-					SpellDefinition spell = SpellResource.getSpell(spellIds.get(i), fcrm);
+					Log.debug(cs.getName() + " will learn " + spellIds.get(i));
+					addStatChangeLog("Will learn spell: " + spellIds.get(i), statChanges);
+					
+					SpellDefinition spell = SpellResource.getSpell(spellIds.get(i));
 					text += " " + cs.getName() + " learned " + spell.getName() + " " + (j + 1) + "}[";
+					
 				}
 			}
 		}
@@ -116,8 +141,17 @@ public class HeroProgression implements Serializable
 
 		return level;
 	}
+	
+	private static void addStatChangeLog(String log, List<String> statChange) {
+		if (statChange != null)
+			statChange.add(log);
+	}
+	
+	public void levelUp(CombatSprite cs, LevelUpResult level) {
+		levelUp(cs, level, null);
+	}
 
-	public void levelUp(CombatSprite cs, LevelUpResult level, FCResourceManager frm)
+	public void levelUp(CombatSprite cs, LevelUpResult level, List<String> statChanges)
 	{
 		Log.debug("Applying level-up for " + cs.getName() + " Level: " + (cs.getLevel() + 1));
 		
@@ -148,7 +182,7 @@ public class HeroProgression implements Serializable
 			{
 				if (spellLevels.get(i)[j] == cs.getLevel())
 				{
-					SpellDefinition spell = SpellResource.getSpell(spellIds.get(i), frm);
+					SpellDefinition spell = SpellResource.getSpell(spellIds.get(i));
 
 					boolean found = false;
 					if (cs.getSpellsDescriptors() != null)
@@ -158,6 +192,7 @@ public class HeroProgression implements Serializable
 							if (sd.getSpellId().equalsIgnoreCase(spell.getId()))
 							{
 								sd.setMaxLevel((byte) (j + 1));
+								addStatChangeLog(spell.getId() + " has been updated to level " + sd.getMaxLevel(), statChanges);
 								found = true;
 								break;
 							}
@@ -165,13 +200,13 @@ public class HeroProgression implements Serializable
 
 						if (!found)
 						{
-							cs.getSpellsDescriptors().add(new KnownSpell(spell.getId(), (byte) j, SpellResource.getSpell(spell.getId(), frm)));
+							cs.getSpellsDescriptors().add(new KnownSpell(spell.getId(), (byte) j, SpellResource.getSpell(spell.getId())));
 						}
 					}
 					else
 					{
 						cs.setSpells(new ArrayList<KnownSpell>());
-						cs.getSpellsDescriptors().add(new KnownSpell(spell.getId(), (byte) j, SpellResource.getSpell(spell.getId(), frm)));
+						cs.getSpellsDescriptors().add(new KnownSpell(spell.getId(), (byte) j, SpellResource.getSpell(spell.getId())));
 					}
 				}
 			}
@@ -191,7 +226,7 @@ public class HeroProgression implements Serializable
 			for (int i = 2; i < 30; i++)
 			{
 				// System.out.println("New Level ---- " + i);
-				float gain = getStatIncrease(new Object[]{"4", 30, 90}, true, val, i);
+				float gain = getStatIncrease(new Object[]{"4", 30, 90}, true, val, i, null);
 				val += (int) gain;
 			}
 		}
@@ -205,7 +240,7 @@ public class HeroProgression implements Serializable
 	}
 
 	private static int getStatIncrease(Object[] stat, boolean isPromoted, int currentStat,
-			int newLevel)
+			int newLevel, List<String> statChanges)
 	{
 		LevelProgressionConfiguration jlp = CommRPG.engineConfiguratior.getLevelProgression();
 		float[] values = jlp.getProgressArray((String) stat[0], isPromoted);
@@ -219,8 +254,10 @@ public class HeroProgression implements Serializable
 			percentDone += values[i];
 
 		percentDone /= 100;
+		addStatChangeLog("Percent through progression: " + percentDone, statChanges);
 
 		int amountToGainTotal = (((int) stat[2]) - ((int) stat[1]));
+		addStatChangeLog("Amount to gain during whole progression: " + amountToGainTotal, statChanges);
 		int amountToGainNowInt = 0;
 		
 		// If the hero is not supposed to ever gain any of the stat then 
@@ -229,29 +266,31 @@ public class HeroProgression implements Serializable
 		{
 			int averageValue = (int) ((amountToGainTotal * percentDone) + // The amount that should have been gained at minimum
 					((int) stat[1]) + // The base stat
-					newLevel / 3); // Assume 33% bonus hp
+					newLevel / 2); // Assume 50% bonus hp
 	
 			// If promoted then assume 1.5 bonus for each of the "big" levels
 			if (isPromoted)
 				averageValue += (int) ((1 + (newLevel - 1) / 6) * 1.5);
 	
-			// System.out.println("AVG " + averageValue);
-	
+			addStatChangeLog("Average stat value for this level: " + averageValue, statChanges);
 	
 			float amountToGainNow = (values[newLevel - 1] / 100) * amountToGainTotal;
+			
+			addStatChangeLog("Base amount to gain: " + amountToGainNow, statChanges);
 	
-	
-			if (!isPromoted || (newLevel - 1) % 6 != 0)
+			if (!isPromoted || newLevel % 6 != 0)
 			{
 				// Add a value 0 - 1
 				// amountToGainNow += CommRPG.RANDOM.nextInt(2);
-				amountToGainNow += CommRPG.RANDOM.nextFloat() * 1.5;
+				amountToGainNow += CommRPG.RANDOM.nextInt(2);
+				addStatChangeLog("Amount to gain after adding a value 0 or 1: " + amountToGainNow, statChanges);
 			}
 			// BIG LEVEL!
 			else
 			{
 				// Add a value 0 - 3
 				amountToGainNow += CommRPG.RANDOM.nextInt(4);
+				addStatChangeLog("Amount to gain after adding a BIG LEVEL value 0-3: " + amountToGainNow, statChanges);
 			}
 	
 			amountToGainNowInt = Math.round(amountToGainNow);
@@ -264,11 +303,14 @@ public class HeroProgression implements Serializable
 				if (currentStat + amountToGainNowInt < averageValue)
 				{
 					amountToGainNowInt++;
+					addStatChangeLog("Added a pity value because we are below average: " + amountToGainNow, statChanges);
 					// System.out.println("Pity @ " + newLevel);
 				}
 			}
 		}
 
+		addStatChangeLog("Final value to gain: " + amountToGainNowInt, statChanges);
+		
 		return amountToGainNowInt;
 	}
 

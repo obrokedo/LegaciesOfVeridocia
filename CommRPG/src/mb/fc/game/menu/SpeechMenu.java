@@ -45,6 +45,7 @@ public class SpeechMenu extends Menu
 
 	private int LINES_DISPLAYED_IN_TOWN = 3;
 	private int LINES_DISPLAYED_IN_BATTLE = 2;
+	public static int SPEECH_SPEED = 1;
 
 	/**
 	 * Constructor to create a SpeechMenu to be displayed in an Attack Cinematic
@@ -220,12 +221,12 @@ public class SpeechMenu extends Menu
 	@Override
 	public MenuUpdate update(long delta, StateInfo stateInfo) {
 		super.update(delta, stateInfo);
-
-		timer.update(delta);
-
+		
 		if (portrait != null)
 			portrait.update(delta);
 
+		timer.update(delta * SPEECH_SPEED);
+		
 		while (timer.perform())
 		{
 			if (!menuIsMovedIn)
@@ -260,13 +261,8 @@ public class SpeechMenu extends Menu
 						else
 						{
 							if (speech == null || !speech.hasMoreSpeech()) {
-								isDone = true;
-								Log.debug("Speech Menu: Send Trigger " + triggerId);
-								if (triggerId != NO_TRIGGER)
-									stateInfo.getResourceManager().getTriggerEventById(triggerId).perform(stateInfo);
-								else if (stateInfo != null)
-									stateInfo.sendMessage(MessageType.MENU_CLOSED);
-								return MenuUpdate.MENU_CLOSE;
+								isDone = true;	
+								return speechCompleted(stateInfo);
 							} else {
 								this.initialize(speech.getMessage(), speech.getPortrait(stateInfo));
 							}
@@ -345,6 +341,16 @@ public class SpeechMenu extends Menu
 		}
 
 		return MenuUpdate.MENU_NO_ACTION;
+	}
+
+	protected MenuUpdate speechCompleted(StateInfo stateInfo) {
+		if (triggerId != NO_TRIGGER) {
+			Log.debug("Speech Menu: Send Trigger " + triggerId);
+			stateInfo.getResourceManager().getTriggerEventById(triggerId).perform(stateInfo);
+		}
+		else if (stateInfo != null)
+			stateInfo.sendMessage(MessageType.MENU_CLOSED);
+		return MenuUpdate.MENU_CLOSE;
 	}
 
 	@Override

@@ -49,8 +49,10 @@ public class AttackSpriteAction extends TurnAction
 				}
 			}
 		}
-		stateInfo.sendMessage(new BattleResultsMessage(BattleResults.determineBattleResults(turnManager.getCurrentSprite(),
-			targArray, battleCommand, stateInfo.getResourceManager())), true);
+		BattleResults br = BattleResults.determineBattleResults(turnManager.getCurrentSprite(),
+				targArray, battleCommand, stateInfo.getResourceManager());
+		stateInfo.getClientProfile().modifyGold(br.goldGained);
+		stateInfo.sendMessage(new BattleResultsMessage(br), true);
 		turnManager.setDisplayAttackable(false);
 		return true;
 	}

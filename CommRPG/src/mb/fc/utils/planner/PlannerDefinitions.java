@@ -1881,6 +1881,12 @@ public class PlannerDefinitions {
 						PlannerValueDef.TYPE_STRING, "animations", false,
 						"Animation File",
 						"The name of the animation file that should be used for this enemy"));
+		
+		definingValues
+		.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_INT, "gold", false,
+				"Gold Dropped",
+				"The amount of gold that is dropped on death."));
 		// Palette Swap
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_PALETTE,
 				PlannerValueDef.TYPE_STRING, "palette", true, "Palette",

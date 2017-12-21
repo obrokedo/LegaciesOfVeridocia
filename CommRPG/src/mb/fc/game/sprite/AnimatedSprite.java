@@ -120,20 +120,22 @@ public class AnimatedSprite extends Sprite
 
 	public void setFacing(Direction dir)
 	{
-		switch (dir)
-		{
-			case UP:
-				currentAnim = spriteAnims.getCharacterAnimation("Up", false);
-				break;
-			case DOWN:
-				currentAnim = spriteAnims.getCharacterAnimation("Down", false);
-				break;
-			case LEFT:
-				currentAnim = spriteAnims.getCharacterAnimation("Left", false);
-				break;
-			case RIGHT:
-				currentAnim = spriteAnims.getCharacterAnimation("Right", false);
-				break;
+		if (facing != dir) {
+			switch (dir)
+			{
+				case UP:
+					currentAnim = spriteAnims.getCharacterAnimation("Up", false);
+					break;
+				case DOWN:
+					currentAnim = spriteAnims.getCharacterAnimation("Down", false);
+					break;
+				case LEFT:
+					currentAnim = spriteAnims.getCharacterAnimation("Left", false);
+					break;
+				case RIGHT:
+					currentAnim = spriteAnims.getCharacterAnimation("Right", false);
+					break;
+			}
 		}
 		facing = dir;
 	}

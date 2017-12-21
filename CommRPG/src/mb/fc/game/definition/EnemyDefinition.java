@@ -33,6 +33,7 @@ public class EnemyDefinition
 	private String effectId = null;
 	private String paletteName;
 	private int effectChance = -1, effectLevel = -1;
+	private int goldDropped;
 
 	private ArrayList<Integer> spellsPerLevel;
 	private ArrayList<String> spellIds;
@@ -91,6 +92,7 @@ public class EnemyDefinition
 		hd.items = new ArrayList<Integer>();
 		hd.itemsEquipped = new ArrayList<Boolean>();
 		hd.effectId = null;
+		hd.goldDropped = Integer.parseInt(tagArea.getAttribute("gold"));
 
 		for (TagArea childTagArea : tagArea.getChildren())
 		{
@@ -167,5 +169,9 @@ public class EnemyDefinition
 
 	public String getName() {
 		return name;
+	}
+
+	public int getGoldDropped() {
+		return goldDropped;
 	}
 }
