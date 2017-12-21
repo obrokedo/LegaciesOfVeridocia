@@ -15,10 +15,13 @@ ss,battlebg,image/BattleBackgrounds.png,256,96,2
 // TYPE,NAME,PATH,WIDTH,HEIGHT,SPRITESPACING,SCALE
 ss,actionicons,image/ActionIcons.png,24,24,2
 ss,spellicons,image/SpellIcons.png,16,24,2
+ss,yesnoicons,image/YesNo.png,24,24
+ss,battleoptions,image/BattleOptions.png,24,24
 // A scale value of -1 means the image is NOT scaled to the game engine proportions
 ss,menuborder,image/MenuBorder.png,12,12,0,.3333333333
 ss,healthbar,image/HealthBars.png,2,8
 ss,spelllevel,image/SpellLevels.png,14,8
+ss,yesnoselect,image/yesnoselector.png,6,34
 // TYPE,NAME,PATH,SCALE
 image,battlecursor,image/battlecursor.gif
 image,smallflor,image/smflor.png
@@ -26,6 +29,7 @@ image,largeflor,image/lgflor.png
 image,attackplatform,image/CastleFloor.png
 image,selectside,image/selectside.png
 image,selecttop,image/selecttop.png
+image,yesnoflor,image/yesnoflourish.gif
 font,speechfont,font/LoVDialogueFont.ttf,40
 font,menufont,font/MenuFont.ttf,54
 font,smallmenufont,font/MenuFont.ttf,12
