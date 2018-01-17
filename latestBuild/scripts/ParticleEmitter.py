@@ -6,7 +6,7 @@ from java.lang import Math
 class RandomHorizontalParticleEmitter(ParticleEmitterConfiguration):
     drawX = 0
     width = 160
-    interval = 350
+    interval = 500
     timer = 0
     onCreateSound = None
     onEndSound = None
@@ -26,7 +26,8 @@ class RandomHorizontalParticleEmitter(ParticleEmitterConfiguration):
     def update(self, particleSystem, delta):
         self.timer = self.timer - delta
         if self.timer <= 0:
-            self.timer = self.interval
+            #self.timer = self.interval
+            self.timer = random.randint(200, self.interval)
             # Create a new particle for the scene. A value of 0 in the life (second) field
             # indicates that we just want to use the length of the animation specified (not looping)
             p = particleSystem.getNewParticle(self, 0);
@@ -44,7 +45,6 @@ class RandomHorizontalParticleEmitter(ParticleEmitterConfiguration):
         if self.onEndSound and particle.getLife() <= delta:
             self.getFcResourceManager().getSoundByName(self.onEndSound).play()
         return
-
 
 class RainParticleEmitter(ParticleEmitterConfiguration):
     drawX = 0
