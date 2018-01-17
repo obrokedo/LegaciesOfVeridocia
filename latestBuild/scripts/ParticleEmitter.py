@@ -10,10 +10,13 @@ class RandomHorizontalParticleEmitter(ParticleEmitterConfiguration):
     timer = 0
     onCreateSound = None
     onEndSound = None
+    soundPlayed = False;
+    soundTime = 0
     
-    def __init__(self, createSound=None, endSound=None):
+    def __init__(self, createSound=None, endSound=None, soundTime=0):
         self.onCreateSound = createSound
         self.onEndSound = endSound
+        self.soundTime = soundTime
     
     def initialize(self, isHero):
         # Resolution is interpreted as 320x240
@@ -42,8 +45,11 @@ class RandomHorizontalParticleEmitter(ParticleEmitterConfiguration):
             
     def updateParticle(self, particle, delta):
         # Detect when this particle is about to die. This would be the place to play an 'on end' sound
-        if self.onEndSound and particle.getLife() <= delta:
+        if self.onEndSound and particle.getLife() <= self.soundTime and self.soundPlayed == False:#delta:
             self.getFcResourceManager().getSoundByName(self.onEndSound).play()
+            self.soundPlayed = True
+        if particle.getLife() <= delta:
+            self.soundPlayed = False
         return
 
 class RainParticleEmitter(ParticleEmitterConfiguration):

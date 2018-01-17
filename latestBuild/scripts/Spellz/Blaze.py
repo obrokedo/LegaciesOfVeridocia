@@ -134,6 +134,16 @@ class Blaze(SpellDefinition):
     def getEmitter(self, level):
         # You could create a emitter with sounds here
         # For example, new particle plays "fall", particle end plays "blast"
-        return RandomHorizontalParticleEmitter(None, "BlazeExplosion")
+        soundTime = 0
+        if level == 1:
+            soundTime = 240
+        elif level == 2:
+            soundTime = 300
+        elif level == 3:
+            soundTime = 375
+        elif level == 4:
+            soundTime = 375
+            
+        return RandomHorizontalParticleEmitter(None, "BlazeExplosion", soundTime)
         #return RandomHorizontalParticleEmitter()
         #return RainParticleEmitter()
