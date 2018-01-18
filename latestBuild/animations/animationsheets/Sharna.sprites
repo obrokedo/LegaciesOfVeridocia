@@ -59,6 +59,14 @@
         <spr name="10" x="3576" y="141" w="48" h="25"/>
         <spr name="11" x="3626" y="141" w="48" h="25"/>
         <spr name="12" x="3676" y="141" w="48" h="25"/>
+        <spr name="Idle0" x="0" y="96" w="96" h="96"/>
+        <spr name="Idle1" x="96" y="96" w="96" h="96"/>
+        <spr name="Idle2" x="192" y="96" w="96" h="96"/>
+        <spr name="Idle3" x="288" y="96" w="96" h="96"/>
+        <spr name="Idle4" x="384" y="96" w="96" h="96"/>
+        <spr name="Idle5" x="480" y="96" w="96" h="96"/>
+        <spr name="Idle6" x="576" y="96" w="96" h="96"/>
+        <spr name="Idle7" x="672" y="96" w="96" h="96"/>
       </dir>
     </dir>
   </definitions>
