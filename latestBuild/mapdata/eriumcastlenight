@@ -83,7 +83,7 @@
 	<facing name="Noah" dir=1/>
 	<stopanim name="Noah"/>
 	<wait time=750/>
-	<shakehead name="Noah" time=750/>
+	<shakehead name="Noah" time=575/>
 	<wait time=750/>
 	<facing name="Noah" dir=3/>
 	<stopse name="Huun"/>
