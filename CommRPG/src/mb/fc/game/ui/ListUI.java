@@ -26,6 +26,7 @@ public class ListUI {
 	private Timer clickCooldown = new Timer(200);
 	private Button upButton, downButton;
 	private Font font;
+	private boolean ignoreClicksInUpdate = false;
 	
 	public ListUI(String title)
 	{
@@ -106,8 +107,13 @@ public class ListUI {
 		int y = container.getInput().getMouseY();
 		this.clickCooldown.update(delta);
 		
-		boolean clicked = container.getInput().isMouseButtonDown(Input.MOUSE_LEFT_BUTTON) && clickCooldown.perform();
+		boolean clicked = container.getInput().isMouseButtonDown(Input.MOUSE_LEFT_BUTTON) && 
+				clickCooldown.perform() && !ignoreClicksInUpdate;
 		
+		handleInput(x, y, clicked);
+	}
+
+	public void handleInput(int x, int y, boolean clicked) {
 		for (Button button : resourceFileButtons)
 		{
 			if (button.handleUserInput(x, y, clicked))
@@ -199,5 +205,13 @@ public class ListUI {
 
 	public void setListLength(int listLength) {
 		this.listLength = listLength;
+	}
+
+	public boolean isIgnoreClicksInUpdate() {
+		return ignoreClicksInUpdate;
+	}
+
+	public void setIgnoreClicksInUpdate(boolean ignoreClicksInUpdate) {
+		this.ignoreClicksInUpdate = ignoreClicksInUpdate;
 	}
 }

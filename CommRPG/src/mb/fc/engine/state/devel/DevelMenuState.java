@@ -20,7 +20,10 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.util.Log;
 
 import mb.fc.engine.CommRPG;
+import mb.fc.engine.load.BulkLoader;
 import mb.fc.engine.state.MenuState;
+import mb.fc.game.dev.DevParams;
+import mb.fc.game.exception.BadResourceException;
 import mb.fc.game.resource.SpellResource;
 import mb.fc.game.ui.Button;
 import mb.fc.game.ui.ListUI;
@@ -59,6 +62,10 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 	private Button loadTownButton = new Button(0, 550, 150, 25, "Load Town");
 	private Button loadCinButton = new Button(0, 580, 150, 25, "Load Cin");
 	private Button loadBattleButton = new Button(0, 610, 150, 25, "Load Battle");
+	
+	protected int totalResources = 0;
+	private FCResourceManager mainGameFCRM = null;
+	protected BulkLoader mainGameBulkLoader = null;
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
@@ -69,6 +76,7 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 		// mapSelector.setListener(this);
 		textSelector = new ResourceSelector("Select Text", 0, true, "mapdata", "", container);
 		textSelector.setListener(this);
+		textSelector.setIgnoreClicksInUpdate(true);
 		loadTownButton.setEnabled(false);
 		loadBattleButton.setEnabled(false);
 		loadCinButton.setEnabled(false);
@@ -113,7 +121,6 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 		//ps = new ParticleSystem(new Image("image/RainBig.png"));
 		//RainEmitter rainEmitter = new RainEmitter(500, 100, true);
 		//ps.addEmitter(rainEmitter);
-		
 	}
 	
 	
@@ -124,8 +131,23 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 		gameSetup(game, container);
 		SpellResource.initSpells(null);
 		this.progressionFrame.init();
+		initializeBulkLoader();
 	}
 
+	protected void initializeBulkLoader() {
+		if (mainGameBulkLoader == null) {
+			mainGameFCRM = new FCResourceManager();
+			mainGameBulkLoader = new BulkLoader(mainGameFCRM);
+			
+			try {
+				mainGameBulkLoader.start("/loader/Default");
+			} catch (IOException e) {
+				throw new BadResourceException("No default resource loader could be found at: ./loader/Default");
+			}
+			
+			totalResources = mainGameBulkLoader.getResourceAmount();
+		}
+	}
 
 
 	@Override
@@ -137,7 +159,16 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 		g.drawString("DEVELOPMENT MODE", 5, 5);
 
 		g.setColor(Color.white);
+		
+		
+		g.fillRect(container.getWidth() / 2, container.getHeight() - 60, 
+				(float) (170 * (totalResources - mainGameBulkLoader.getResourceAmount()) / totalResources), 15) ;
 
+		g.setColor(Color.blue);
+		g.drawRect(container.getWidth() / 2, container.getHeight() - 60, 
+				170, 15);
+		g.setColor(Color.white);
+		
 		textSelector.render(g);
 
 		if (entranceSelector != null)
@@ -166,6 +197,10 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 			ps.render();
 			g.resetTransform();
 		}
+		
+		if (initialized) {
+			
+		}
 	}
 
 	@Override
@@ -174,83 +209,7 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 	{
 		this.isPaused(container);
 		
-		if (container.getInput().isKeyPressed(Input.KEY_F1))
-		{
-			((LoadingState) game.getState(CommRPG.STATE_GAME_LOADING)).setLoadingInfo("/menu/MainMenu", false, true,
-					new FCResourceManager(),
-						(LoadableGameState) game.getState(CommRPG.STATE_GAME_MENU),
-							new FCLoadingRenderSystem(container));
-
-			game.enterState(CommRPG.STATE_GAME_LOADING);
-		}
-
-
-
-		if (container.getInput().isKeyPressed(Input.KEY_F2) || container.getInput().isKeyPressed(Input.KEY_P))
-		{
-			if (!plannerFrame.isVisible())
-				plannerFrame.setVisible(true);
-		}
-
-		if (container.getInput().isKeyPressed(Input.KEY_F3))
-		{
-			if (!quickAnimate.isVisible())
-				quickAnimate.setVisible(true);
-		}
-
-		if (container.getInput().isKeyPressed(Input.KEY_F4))
-		{
-			game.enterState(CommRPG.STATE_GAME_ANIM_VIEW);
-		}
-
-		/*
-		if (container.getInput().isKeyPressed(Input.KEY_F5))
-		{
-			CommRPG.TEST_MODE_ENABLED = true;
-			this.gameSetup(game, container);
-			start(LoadTypeEnum.CINEMATIC, "neweriumcastle", null);
-		}
-		*/
 		
-		if (container.getInput().isKeyPressed(Input.KEY_F6))
-		{
-			((LoadingState) game.getState(CommRPG.STATE_GAME_LOADING)).setLoadingInfo("eriumjail", true, true,
-					new FCResourceManager(),
-						(LoadableGameState) game.getState(CommRPG.STATE_GAME_BATTLE_ANIM_VIEW),
-							new FCLoadingRenderSystem(container));
-
-			game.enterState(CommRPG.STATE_GAME_LOADING);
-		}
-
-		if (container.getInput().isKeyDown(Input.KEY_F7))
-		{
-			((CommRPG) game).toggleFullScreen();
-			updateDelta = 200;
-			System.out.println("TOGGLE");
-		}
-		
-		if (container.getInput().isKeyDown(Input.KEY_F8))
-		{
-			CommRPG.TEST_MODE_ENABLED = false;
-			LoadTypeEnum loadType = LoadTypeEnum.TOWN;
-			if (persistentStateInfo.getClientProgress().isBattle())
-				loadType = LoadTypeEnum.BATTLE;
-			start(loadType, persistentStateInfo.getClientProgress().getMapData(), null);
-		}
-		
-		if (container.getInput().isKeyDown(Input.KEY_F9))
-		{
-			CommRPG.TEST_MODE_ENABLED = true;
-			CommRPG.BATTLE_MODE_OPTIMIZE = true;
-			if (textSelector.getSelectedResource() != null && 
-					entranceSelector.getSelectedResource() != null)
-				start(LoadTypeEnum.BATTLE, textSelector.getSelectedResource(), 
-						entranceSelector.getSelectedResource());
-		}
-		if (container.getInput().isKeyPressed(Input.KEY_F10))
-		{
-			progressionFrame.setVisible(true);
-		}
 		
 		int x = container.getInput().getMouseX();
 		int y = container.getInput().getMouseY();
@@ -261,25 +220,6 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 		
 		if (updateDelta > 0)
 			updateDelta = Math.max(0, updateDelta - delta);
-		else if (container.getInput().isMouseButtonDown(Input.MOUSE_LEFT_BUTTON))
-		{
-			this.updateDelta = 200;
-			
-			if (loadTownButton.handleUserInput(x, y, true))
-				start(LoadTypeEnum.TOWN, textSelector.getSelectedResource(), entranceSelector.getSelectedResource());
-			if (loadCinButton.handleUserInput(x, y, true)) {
-				String id = JOptionPane.showInputDialog("Enter the cinematic id (a number) to run");
-				try {
-					int iId = Integer.parseInt(id);
-					startCinematic(textSelector.getSelectedResource(), iId);
-				} catch (NumberFormatException e) {
-					JOptionPane.showMessageDialog(null, "The value must be a number");
-				}
-				
-			}
-			if (loadBattleButton.handleUserInput(x, y, true)) 
-				start(LoadTypeEnum.BATTLE, textSelector.getSelectedResource(), entranceSelector.getSelectedResource());
-		}
 		
 		textSelector.update(container, delta);
 
@@ -293,7 +233,175 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 		{
 			ps.update(delta);
 		}
+		
+		if (initialized)
+			mainGameBulkLoader.update();
 	}
+	
+	@Override
+	public void keyPressed(int key, char c) {
+		if (updateDelta <= 0) {
+			updateDelta += 50;
+			if (key == Input.KEY_F1)
+			{
+				((LoadingState) game.getState(CommRPG.STATE_GAME_LOADING)).setLoadingInfo("/menu/MainMenu", false, true,
+						new FCResourceManager(),
+							(LoadableGameState) game.getState(CommRPG.STATE_GAME_MENU),
+								new FCLoadingRenderSystem(this.gc));
+	
+				game.enterState(CommRPG.STATE_GAME_LOADING);
+			}
+	
+			if (key == Input.KEY_F2 || key == Input.KEY_P)
+			{
+				if (!plannerFrame.isVisible())
+					plannerFrame.setVisible(true);
+			}
+	
+			if (key == Input.KEY_F3)
+			{
+				if (!quickAnimate.isVisible())
+					quickAnimate.setVisible(true);
+			}
+	
+			if (key == Input.KEY_F4)
+			{
+				game.enterState(CommRPG.STATE_GAME_ANIM_VIEW);
+			}
+	
+			/*
+			if (container.getInput().isKeyPressed(Input.KEY_F5))
+			{
+				CommRPG.TEST_MODE_ENABLED = true;
+				this.gameSetup(game, container);
+				start(LoadTypeEnum.CINEMATIC, "neweriumcastle", null);
+			}
+			*/
+			
+			if (key == Input.KEY_F6)
+			{
+				((LoadingState) game.getState(CommRPG.STATE_GAME_LOADING)).setLoadingInfo("eriumjail", true, true,
+						new FCResourceManager(),
+							(LoadableGameState) game.getState(CommRPG.STATE_GAME_BATTLE_ANIM_VIEW),
+								new FCLoadingRenderSystem(gc));
+	
+				game.enterState(CommRPG.STATE_GAME_LOADING);
+			}
+	
+			if (key == Input.KEY_F7)
+			{
+				try {
+					((CommRPG) this.game).toggleFullScreen();
+				} catch (SlickException e) {
+					Log.error("Unable to toggle fullscreen mode: " + e.getMessage());
+					JOptionPane.showMessageDialog(null, "Unable to toggle fullscreen mode: " + e.getMessage());
+				}
+				updateDelta = 200;
+				System.out.println("TOGGLE");
+			}
+			
+			if (key == Input.KEY_F8)
+			{
+				CommRPG.TEST_MODE_ENABLED = false;
+				LoadTypeEnum loadType = LoadTypeEnum.TOWN;
+				if (persistentStateInfo.getClientProgress().isBattle())
+					loadType = LoadTypeEnum.BATTLE;
+				start(loadType, persistentStateInfo.getClientProgress().getMapData(), null);
+			}
+			
+			if (key == Input.KEY_F9)
+			{
+				CommRPG.TEST_MODE_ENABLED = true;
+				CommRPG.BATTLE_MODE_OPTIMIZE = true;
+				if (textSelector.getSelectedResource() != null && 
+						entranceSelector.getSelectedResource() != null)
+					start(LoadTypeEnum.BATTLE, textSelector.getSelectedResource(), 
+							entranceSelector.getSelectedResource());
+			}
+			if (key == Input.KEY_F10)
+			{
+				progressionFrame.setVisible(true);
+			}
+		}
+	}
+
+
+
+	@Override
+	public void mousePressed(int button, int x, int y) {
+		if (updateDelta <= 0) {
+			if (button == Input.MOUSE_LEFT_BUTTON)
+			{
+				this.updateDelta = 200;
+				
+				if (loadTownButton.handleUserInput(x, y, true)) {
+					// This whole line of logic is somewhat terrifying... We set the resource manager
+					// of the psi to the one that the bulkloader is using it is NOT set in the
+					// state info at this point. It will be set in the state info and PSI (again)
+					// once the town/cin/battle state loads. What's more concerning is that we manually
+					// set the loading states bulk loader here and it we will use the same bulk loader
+					// for the rest of the game after we get past the menu state. Ideally it would be nice
+					// to pass the bulkloader along on these load* calls (below), but there currently isn't
+					// a use case for that now
+					persistentStateInfo.setResourceManager(mainGameFCRM);
+					((LoadingState) game.getState(CommRPG.STATE_GAME_LOADING)).setBulkLoader(mainGameBulkLoader);
+					
+					start(LoadTypeEnum.TOWN, textSelector.getSelectedResource(), entranceSelector.getSelectedResource());
+				}
+				if (loadCinButton.handleUserInput(x, y, true)) {
+					String id = JOptionPane.showInputDialog("Enter the cinematic id (a number) to run");
+					try {
+						int iId = Integer.parseInt(id);
+						
+						// This whole line of logic is somewhat terrifying... We set the resource manager
+						// of the psi to the one that the bulkloader is using it is NOT set in the
+						// state info at this point. It will be set in the state info and PSI (again)
+						// once the town/cin/battle state loads. What's more concerning is that we manually
+						// set the loading states bulk loader here and it we will use the same bulk loader
+						// for the rest of the game after we get past the menu state. Ideally it would be nice
+						// to pass the bulkloader along on these load* calls (below), but there currently isn't
+						// a use case for that now
+						persistentStateInfo.setResourceManager(mainGameFCRM);
+						((LoadingState) game.getState(CommRPG.STATE_GAME_LOADING)).setBulkLoader(mainGameBulkLoader);
+						
+						startCinematic(textSelector.getSelectedResource(), iId);
+					} catch (NumberFormatException e) {
+						JOptionPane.showMessageDialog(null, "The value must be a number");
+					}
+					
+				}
+				if (loadBattleButton.handleUserInput(x, y, true)) {
+					if (new File(textSelector.getSelectedResource()).exists()) {
+						if (JOptionPane.showConfirmDialog(null, 
+								"A battle configuration was found for this battle, would you like to apply it?", 
+								"Load Configuration", JOptionPane.YES_NO_OPTION)
+								== JOptionPane.YES_OPTION) {
+							DevParams devParams = DevParams.parseDevParams(textSelector.getSelectedResource());
+							if (devParams != null)
+								persistentStateInfo.getClientProfile().setDevParams(devParams);
+						}
+					}
+					
+					// This whole line of logic is somewhat terrifying... We set the resource manager
+					// of the psi to the one that the bulkloader is using it is NOT set in the
+					// state info at this point. It will be set in the state info and PSI (again)
+					// once the town/cin/battle state loads. What's more concerning is that we manually
+					// set the loading states bulk loader here and it we will use the same bulk loader
+					// for the rest of the game after we get past the menu state. Ideally it would be nice
+					// to pass the bulkloader along on these load* calls (below), but there currently isn't
+					// a use case for that now
+					persistentStateInfo.setResourceManager(mainGameFCRM);
+					((LoadingState) game.getState(CommRPG.STATE_GAME_LOADING)).setBulkLoader(mainGameBulkLoader);
+					start(LoadTypeEnum.BATTLE, textSelector.getSelectedResource(), entranceSelector.getSelectedResource());
+				}
+				
+				this.textSelector.handleInput(x, y, true);
+				if (entranceSelector != null)
+					entranceSelector.handleInput(x, y, true);
+			}
+		}
+	}
+
 
 	@Override
 	public void stateLoaded(FCResourceManager resourceManager) {
@@ -342,6 +450,7 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 					entrances.add(mo.getParam("exit"));
 
 			entranceSelector = new ListUI("Select Entrance", (((PaddedGameContainer) gc).getPaddedWidth() - 150) / 2, entrances);
+			entranceSelector.setIgnoreClicksInUpdate(true);
 			loadCinButton.setEnabled(true);
 			return true;
 

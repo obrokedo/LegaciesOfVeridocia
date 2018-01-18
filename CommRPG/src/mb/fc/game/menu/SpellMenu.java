@@ -7,6 +7,7 @@ import mb.fc.engine.CommRPG;
 import mb.fc.engine.config.SpellMenuRenderer;
 import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.BattleSelectionMessage;
+import mb.fc.engine.message.LocationMessage;
 import mb.fc.engine.message.MessageType;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.constants.Direction;
@@ -37,6 +38,7 @@ public class SpellMenu extends QuadMenu
 		this.selected = Direction.UP;
 		choseSpell = false;
 		spellMenuRenderer.spellLevelChanged(0);
+		
 
 		for (int i = 0; i < 4; i++)
 		{
@@ -60,6 +62,8 @@ public class SpellMenu extends QuadMenu
 		if (choseSpell)
 		{
 			choseSpell = false;
+			spellMenuRenderer.spellLevelChanged(0);
+			stateInfo.sendMessage(MessageType.HIDE_ATTACK_AREA);
 			return MenuUpdate.MENU_ACTION_LONG;
 		}
 		else
@@ -90,6 +94,8 @@ public class SpellMenu extends QuadMenu
 			stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, "menuselect", 1f, false));
 			choseSpell = true;
 			selectedLevel = 0;
+			spellMenuRenderer.spellLevelChanged(0);
+			stateInfo.sendMessage(new LocationMessage(MessageType.SHOW_SPELL_LEVEL, this.getSelectedInt(), selectedLevel));
 			return MenuUpdate.MENU_ACTION_LONG;
 		}
 	}
@@ -126,6 +132,7 @@ public class SpellMenu extends QuadMenu
 		{
 			stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, "menumove", 1f, false));
 			selectedLevel--;
+			stateInfo.sendMessage(new LocationMessage(MessageType.SHOW_SPELL_LEVEL, this.getSelectedInt(), selectedLevel));
 			spellMenuRenderer.spellLevelChanged(selectedLevel);
 		}
 		return MenuUpdate.MENU_ACTION_LONG;
@@ -139,6 +146,7 @@ public class SpellMenu extends QuadMenu
 		{
 			stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, "menumove", 1f, false));
 			selectedLevel++;
+			stateInfo.sendMessage(new LocationMessage(MessageType.SHOW_SPELL_LEVEL, this.getSelectedInt(), selectedLevel));
 			spellMenuRenderer.spellLevelChanged(selectedLevel);
 		}
 		return MenuUpdate.MENU_ACTION_LONG;

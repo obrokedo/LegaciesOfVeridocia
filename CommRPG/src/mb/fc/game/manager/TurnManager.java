@@ -26,6 +26,7 @@ import mb.fc.game.Range;
 import mb.fc.game.battle.BattleEffect;
 import mb.fc.game.battle.BattleResults;
 import mb.fc.game.battle.command.BattleCommand;
+import mb.fc.game.battle.spell.KnownSpell;
 import mb.fc.game.constants.Direction;
 import mb.fc.game.hudmenu.Panel.PanelType;
 import mb.fc.game.input.FCInput;
@@ -33,14 +34,13 @@ import mb.fc.game.input.KeyMapping;
 import mb.fc.game.item.Item;
 import mb.fc.game.listener.KeyboardListener;
 import mb.fc.game.menu.BattleActionsMenu;
-import mb.fc.game.menu.BattleOptionMenu;
 import mb.fc.game.menu.HeroStatMenu;
 import mb.fc.game.menu.ItemMenu;
+import mb.fc.game.menu.ItemMenu.ItemOption;
 import mb.fc.game.menu.ItemOptionMenu;
 import mb.fc.game.menu.LandEffectPanel;
 import mb.fc.game.menu.SpeechMenu;
 import mb.fc.game.menu.SpellMenu;
-import mb.fc.game.menu.ItemMenu.ItemOption;
 import mb.fc.game.move.AttackableSpace;
 import mb.fc.game.move.MoveableSpace;
 import mb.fc.game.move.MovingSprite;
@@ -654,22 +654,8 @@ public class TurnManager extends Manager implements KeyboardListener
 				targetsHero = currentSprite.isHero();
 				canTargetSelf = false;
 			}
-
-			switch (areaSize)
-			{
-				case AttackableSpace.AREA_ALL_INDICATOR:
-					area = AttackableSpace.AREA_ALL;
-					break;
-				case 1:
-					area = AttackableSpace.AREA_0;
-					break;
-				case 2:
-					area = AttackableSpace.AREA_1;
-					break;
-				case 3:
-					area = AttackableSpace.AREA_2;
-					break;
-			}
+			
+			area = getAreaFromAreaSize(areaSize);
 		}
 
 		as = new AttackableSpace(stateInfo, currentSprite, targetsHero, range, area, canTargetSelf);
@@ -863,10 +849,41 @@ public class TurnManager extends Manager implements KeyboardListener
 				cursor.setLocation(currCam.getX(), currCam.getY());
 				cinWasDisplayed = true;
 				break;
+			case SHOW_SPELL_LEVEL:
+				LocationMessage lm = (LocationMessage) message;
+				KnownSpell ks = currentSprite.getSpellsDescriptors().get(lm.locX);
+				int[][] range = ks.getSpell().getRange()[lm.locY].getAttackableSpace();
+				int areaSize = ks.getSpell().getArea()[lm.locY];
+				int[][] area = getAreaFromAreaSize(areaSize);
+				
+				as = new AttackableSpace(stateInfo, currentSprite, range, area);
+				displayAttackable = true;
+				
+				break;
 			default:
 				break;
 
 		}
+	}
+	
+	private int[][] getAreaFromAreaSize(int areaSize) {
+		int[][] area = null;
+		switch (areaSize)
+		{
+			case AttackableSpace.AREA_ALL_INDICATOR:
+				area = AttackableSpace.AREA_ALL;
+				break;
+			case 1:
+				area = AttackableSpace.AREA_0;
+				break;
+			case 2:
+				area = AttackableSpace.AREA_1;
+				break;
+			case 3:
+				area = AttackableSpace.AREA_2;
+				break;
+		}
+		return area;
 	}
 
 	@Override

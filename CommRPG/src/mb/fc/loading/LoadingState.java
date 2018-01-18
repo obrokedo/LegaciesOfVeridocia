@@ -1,8 +1,5 @@
 package mb.fc.loading;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -16,8 +13,7 @@ import org.newdawn.slick.state.transition.Transition;
 import org.newdawn.slick.util.Log;
 
 import mb.fc.engine.CommRPG;
-import mb.fc.engine.config.EngineConfigurator;
-import mb.fc.game.exception.BadResourceException;
+import mb.fc.engine.load.BulkLoader;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.resource.SpellResource;
 import mb.jython.GlobalPythonFactory;
@@ -30,10 +26,10 @@ public class LoadingState extends BasicGameState
 	private FCLoadingRenderSystem loadingRenderer;
 	private FCResourceManager resourceManager;
 	private boolean loadResources;
+	private BulkLoader bulkLoader;
 	private LoadingStatus loadingStatus;
 	private int stateId;
 	private int loadIndex;
-	private List<String> allLines;
 	private int loadAmount;
 	private boolean loadingMap;
 	private String errorMessage = null;
@@ -53,7 +49,7 @@ public class LoadingState extends BasicGameState
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException
 	{
-
+		// LoadingList.setDeferredLoading(true);
 	}
 
 	@Override
@@ -88,26 +84,36 @@ public class LoadingState extends BasicGameState
 				{
 					if (loadResources)
 					{
-						// If we are loading maps and resources then this is the first load before enter the actual game state.
-						// In this case initialize the default resources
-						allLines = FCResourceManager.readAllLines("/loader/Default");
+						if (!bulkLoader.hasStarted()) {
+							// If we are loading maps and resources then this is the first load before enter the actual game state.
+							// In this case initialize the default resources
+							bulkLoader.start("/loader/Default");
+						}
 					}
 
 					// Regardless of whether we are loading other resources, add the text file
 					// that was specified to be loaded
-					allLines.add("text,/mapdata/" + textName);
+					bulkLoader.addLine("text,/mapdata/" + textName);
 					
+					// If we are not loading resources then the bulkloader may not have started yet
+					if (!bulkLoader.hasStarted())
+						bulkLoader.start();
+					
+					// If we're not loading resources then just 
+					// blast through loading the map data in one go
 					if (!loadResources)
 					{
-						while (allLines.size() > 0)
-							loadResourceLine(CommRPG.engineConfiguratior);
+						while (!bulkLoader.isDone())
+							bulkLoader.update();
 					}
 
 				}
 				// If we are not loading the map then we just want to load the specified resources
 				else if (loadResources)
-					allLines = FCResourceManager.readAllLines(textName);
-				loadAmount = allLines.size();
+					bulkLoader.start(textName);
+				
+				
+				loadAmount = bulkLoader.getResourceAmount();
 			}
 			catch (Throwable e)
 			{
@@ -117,19 +123,30 @@ public class LoadingState extends BasicGameState
 				// System.exit(0);
 			}
 		}
-		else if (allLines.size() > 0)
+		else if (!bulkLoader.isDone())
 		{
-			loadResourceLine(CommRPG.engineConfiguratior);
+			bulkLoader.update();
 		}
 
 		loadIndex++;
-
-		if (allLines.size() == 0)
+		
+		if (loadingStatus != null)
 		{
+			loadingStatus.currentIndex = loadIndex;
+			loadingStatus.maxIndex = loadAmount;
+		}
+		
+		if (errorMessage != null && bulkLoader.getErrorMessage() != null)
+			errorMessage = bulkLoader.getErrorMessage();
+
+		if (bulkLoader.isDone())
+		{
+			bulkLoader = null;
+			
 			// This is the entry point into the actual game. Initialize static variables here
 			if (loadingMap && loadResources)
 			{
-				GlobalPythonFactory.intialize();
+				CommRPG.engineConfiguratior.initialize();
 				Panel.intialize(resourceManager);
 				SpellResource.initSpells(resourceManager);
 
@@ -147,31 +164,6 @@ public class LoadingState extends BasicGameState
 				game.enterState(nextState.getID(), new EmptyTransition(), enterNextStateTransition);
 		}
 
-	}
-
-	private void loadResourceLine(EngineConfigurator configurator) {
-		String line = allLines.remove(0);
-		if (!line.startsWith("//"))
-		{
-			try
-			{
-				resourceManager.addResource(line, loadingStatus, loadIndex, loadAmount, configurator);
-			}
-			catch (BadResourceException e)
-			{
-				Log.debug("Error loading resource: " + line);
-				errorMessage = "Error loading resource: " + line + ": " + e.getMessage();
-				e.printStackTrace();
-				throw e;
-			}
-			catch (Throwable e)
-			{
-				Log.debug("Error loading resource: " + line);
-				errorMessage = "Error loading resource: " + line;
-				e.printStackTrace();
-				throw new BadResourceException("Error loading resource: " + line + ".\n" + e.getMessage());
-			}
-		}
 	}
 	
 	public void setLoadingInfo(String textName, boolean loadMap, boolean loadResources,
@@ -194,8 +186,13 @@ public class LoadingState extends BasicGameState
 		this.loadIndex = -1;
 		this.intermediateImage = intermediateImage;
 		this.enterNextStateTransition = transition;
-		allLines = new ArrayList<String>();
+		if (bulkLoader == null)
+			this.bulkLoader = new BulkLoader(resourceManager);
 		loadingStatus = new LoadingStatus();
+	}
+	
+	public void setBulkLoader(BulkLoader bulkLoader) {
+		this.bulkLoader = bulkLoader;
 	}
 
 	@Override

@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -30,7 +31,6 @@ import mb.fc.cinematic.Cinematic;
 import mb.fc.engine.CommRPG;
 import mb.fc.engine.config.EngineConfigurator;
 import mb.fc.engine.state.StateInfo;
-import mb.fc.game.constants.TextSpecialCharacters;
 import mb.fc.game.definition.EnemyDefinition;
 import mb.fc.game.definition.HeroDefinition;
 import mb.fc.game.definition.ItemDefinition;
@@ -100,8 +100,7 @@ public class FCResourceManager {
 	*/
 
 	@SuppressWarnings("unchecked")
-	public void addResource(String resource, LoadingStatus loadingStatus, int currentIndex,
-			int maxIndex, EngineConfigurator configurator) throws IOException, SlickException {
+	public void addResource(String resource, EngineConfigurator configurator) throws IOException, SlickException {
 		String[] split = resource.split(",");
 		if (split[0].equalsIgnoreCase("image"))
 		{
@@ -194,7 +193,7 @@ public class FCResourceManager {
 		}
 		else if (split[0].equalsIgnoreCase("music"))
 		{
-			musicByTitle.put(split[1], new Music(split[2], false));
+			musicByTitle.put(split[1], new Music(new FileInputStream(new File(split[2])), split[2]));
 		}
 		else if (split[0].equalsIgnoreCase("sound"))
 		{
@@ -225,8 +224,10 @@ public class FCResourceManager {
 				JOptionPane.showMessageDialog(null, "Unable to load the font " + split[2] + ": " + e.getMessage(), "Error loading resource", JOptionPane.ERROR_MESSAGE);
 			}
 
-		}
-		else if (split[0].equalsIgnoreCase("herodir") || split[0].equalsIgnoreCase("enemydir") || split[0].equalsIgnoreCase("npcdir"))
+		}/*
+		else if (split[0].equalsIgnoreCase("herodir") || 
+				split[0].equalsIgnoreCase("enemydir") || 
+				split[0].equalsIgnoreCase("npcdir"))
 		{
 			File dir = new File(split[1]);
 			for (File file : dir.listFiles())
@@ -240,6 +241,7 @@ public class FCResourceManager {
 				}
 			}
 		}
+		
 		else if (split[0].equalsIgnoreCase("musicdir"))
 		{
 			File dir = new File(split[1]);
@@ -262,6 +264,7 @@ public class FCResourceManager {
 					soundByTitle.put(file.getName().replace(".wav", ""), new Sound(file.getPath()));
 			}
 		}
+		
 		else if (split[0].equalsIgnoreCase("animsheetdir"))
 		{
 			File dir = new File(split[1]);
@@ -270,24 +273,6 @@ public class FCResourceManager {
 				if (file.getName().endsWith(".png"))
 				{
 					Log.debug("Anim sheet " + file.getName());
-					/*
-					if (file.getName().equalsIgnoreCase("Darkling Ooze.png"))
-					{
-						String[] oldColors = "000000#311862#5a41a4#7d6be6#4a244a#e7e7e7#000033#6b496b#cba9cb#a2ae84#94926b#7e7550#eeceac".split("#");
-						String[] newColors = "000000#9f0505#bf3636#d11a1a#4a244a#e7e7e7#5e0000#6b496b#d07070#a2ae84#94926b#7e7550#eeceac".split("#");
-						Hashtable<Color, Color> colorMap = new Hashtable<>();
-						for (int i = 0; i < oldColors.length; i++) {
-							colorMap.put(new Color(Integer.parseInt(oldColors[i], 16)), new Color(Integer.parseInt(newColors[i], 16)));
-						}
-
-						Image i = new Image(file.getPath(), transparent);
-						i = swapColors(i, colorMap);
-						// ((SwappableImage) i).swapColors(new Color(90, 65, 164), new Color(0, 0, 0));
-
-						images.put(file.getName().replace(".png", ""), i);
-					}
-					else
-					*/
 					images.put(file.getName().replace(".png", ""), new Image(file.getPath(), transparent));
 				}
 			}
@@ -335,12 +320,9 @@ public class FCResourceManager {
 					images.put(file.getName().replace(".png", ""), nIm);
 				}
 			}
-		}
-
-		if (loadingStatus != null)
-		{
-			loadingStatus.currentIndex = currentIndex;
-			loadingStatus.maxIndex = maxIndex;
+		} 
+		*/ else {
+			throw new BadResourceException("Unknown resource type to load: " + split[0]);
 		}
 	}
 
@@ -432,6 +414,13 @@ public class FCResourceManager {
 			Trigger te = new Trigger("Game Exit", Trigger.TRIGGER_ID_EXIT, false, false, false, false, null, null);
 			te.addTriggerable(te.new TriggerExit());
 			return te;
+		} else if (id == Trigger.TRIGGER_ID_SAVE_AND_EXIT)
+		{
+			Trigger te = new Trigger("Game Exit", 
+					Trigger.TRIGGER_ID_SAVE_AND_EXIT, false, false, false, false, null, null);
+			te.addTriggerable(te.new TriggerSave());
+			te.addTriggerable(te.new TriggerExit());
+			return te;
 		} else if (id == Trigger.TRIGGER_CHEST_NO_ITEM) {
 			Trigger te = new Trigger("Chest No Item", Trigger.TRIGGER_CHEST_NO_ITEM, 
 					false, false, false, false, null, null);
@@ -499,7 +488,7 @@ public class FCResourceManager {
 	
 	public void reloadAnimations(EngineConfigurator configurator) {
 		try {
-			this.addResource("animsheetdir,animations/animationsheets", null, 0, 0, configurator);
+			this.addResource("animsheetdir,animations/animationsheets", configurator);
 		} catch (IOException | SlickException e) {
 			JOptionPane.showMessageDialog(null, "An error occurred reloading animations: " + e.getMessage());
 		}

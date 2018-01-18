@@ -6,6 +6,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.transition.EmptyTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
+import org.newdawn.slick.state.transition.Transition;
 
 import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.Message;
@@ -16,8 +17,10 @@ import mb.fc.game.persist.ClientProfile;
 import mb.fc.game.persist.ClientProgress;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.ui.PaddedGameContainer;
+import mb.fc.loading.FCLoadingRenderSystem;
 import mb.fc.loading.FCResourceManager;
 import mb.fc.loading.LoadableGameState;
+import mb.fc.loading.LoadingState;
 import mb.fc.network.TCPClient;
 import mb.fc.network.TCPServer;
 import mb.tcp.network.Client;
@@ -43,6 +46,7 @@ public class PersistentStateInfo implements PacketHandler
 	private TCPServer server = null;
 	private TCPClient client = null;
 	private StateInfo currentStateInfo;
+	private transient boolean isFirstLoad = true;
 
 	public PersistentStateInfo(ClientProfile clientProfile, ClientProgress clientProgress, 
 			CommRPG game, Camera camera, GameContainer gc)
@@ -78,18 +82,18 @@ public class PersistentStateInfo implements PacketHandler
 			TownState townState = (TownState) getGame().getCurrentState();
 			try {
 				Image image = townState.getStateImageScreenshot(true);
-				getGame().setLoadingInfo(mapData,
+				setLoadingInfo(mapData,
 					(LoadableGameState) getGame().getState(nextState), getResourceManager(),
 					image,
 					new MoveMapTransition(townState, transitionDir));
 			} catch (SlickException e) {
 				e.printStackTrace();
-				getGame().setLoadingInfo(mapData,
+				setLoadingInfo(mapData,
 						(LoadableGameState) getGame().getState(nextState), getResourceManager(), null, null);
 			}
 		} else {
-			getGame().setLoadingInfo(mapData,
-					(LoadableGameState) getGame().getState(nextState), getResourceManager(), null, null);
+			setLoadingInfo(mapData, (LoadableGameState) getGame().getState(nextState), 
+					getResourceManager(), null, null);
 		}
 		
 		// Do not fade out when coming from a cinematic or if the map is going to 'slide' out
@@ -107,6 +111,29 @@ public class PersistentStateInfo implements PacketHandler
 					new EmptyTransition(), new EmptyTransition());
 					*/
 	}
+	
+	/**
+	 * Sets the loading state to use existing resources that are already contained in the resource manager
+	 * and to just load the specified text and map. It then transitions into the specified next state.
+	 *
+	 * @param text The text file to load
+	 * @param nextState The next state that should be entered once the loading is done
+	 * @param fcResourceManager Existing resource manager that contains all resources already loaded
+	 * @param intermediateImage An image to show for the loading screen background
+	 * @param transition the Transition that should be used to load in to the next state. A value of 
+	 * 			null will use the default transition
+	 */
+	private void setLoadingInfo(String text, LoadableGameState nextState,
+			FCResourceManager fcResourceManager, Image intermediateImage, Transition transition)
+	{
+		// If it's not the first load then we don't want to reload the resources
+		((LoadingState) game.getState(CommRPG.STATE_GAME_LOADING)).setLoadingInfo(text, true, isFirstLoad,
+			(fcResourceManager == null ? new FCResourceManager() : fcResourceManager),
+				nextState,
+					new FCLoadingRenderSystem(gc), intermediateImage, transition);
+		isFirstLoad = false;
+	}
+
 	
 	public void loadMapFromSave()
 	{

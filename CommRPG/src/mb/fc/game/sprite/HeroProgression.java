@@ -215,7 +215,7 @@ public class HeroProgression implements Serializable
 
 	public static void main(String args[])
 	{
-		GlobalPythonFactory.intialize();
+		CommRPG.engineConfiguratior.initialize();
 
 		int val = 30;
 		int max = 0;

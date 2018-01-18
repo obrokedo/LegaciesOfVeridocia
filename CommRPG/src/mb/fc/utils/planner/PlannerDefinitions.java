@@ -49,7 +49,7 @@ public class PlannerDefinitions {
 		listOfLists.get(PlannerValueDef.REFERS_AI - 1).add(new PlannerReference("fighter"));
 
 		// Setup stat gain types
-		GlobalPythonFactory.intialize();
+		CommRPG.engineConfiguratior.initialize();
 
 		// Setup progression type
 		for (String progressionName : CommRPG.engineConfiguratior.getLevelProgression().getStandardStatProgressionTypeList())

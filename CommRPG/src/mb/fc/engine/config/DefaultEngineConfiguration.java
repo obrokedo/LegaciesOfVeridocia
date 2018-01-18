@@ -88,4 +88,10 @@ public class DefaultEngineConfiguration implements EngineConfigurator {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public void initialize() {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -255,8 +255,9 @@ public class AnimationWrapper
 
 		if (as.angle != 0 || as.flipH || as.flipV || scale != null)
 		{
-			if (scale == null)
+			if (scale == null || scale == 1.0f) {
 				im = image.copy();
+			}
 			else
 				im = image.getScaledCopy(scale);
 
@@ -302,5 +303,9 @@ public class AnimationWrapper
 	public void copyAnimationLocation(AnimationWrapper wrapper) {
 		this.animationDelta = wrapper.animationDelta;
 		this.animationIndex = wrapper.animationIndex;
+	}
+	
+	public void setLoops(boolean loops) {
+		this.loops = loops;
 	}
 }

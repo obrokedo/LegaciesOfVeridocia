@@ -165,8 +165,18 @@ public class Portrait
 		if (!portraitFound)
 			return;
 
+		if (talking && !isTalking()) {
+			talkAnim.resetCurrentAnimation();
+		}
 		isTalking = talking;
-		talkAnim.resetCurrentAnimation();
+		talkAnim.setLoops(true);
+	}
+	
+	public void stopTalkingAfterAnimationComplete() {
+		if (!portraitFound)
+			return;
+
+		talkAnim.setLoops(false);
 	}
 
 	public boolean isTalking() {

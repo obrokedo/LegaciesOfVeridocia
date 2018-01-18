@@ -40,9 +40,9 @@ public class BattleOptionMenu extends QuadMenu {
 		{
 			case UP:
 				stateInfo.sendMessage(MessageType.SHOW_HEROES);
+				break;
 			case LEFT:
 				stateInfo.sendMessage(MessageType.SHOW_MINI_MAP);
-				
 				break;
 			case RIGHT:
 				SpeechMenu.SPEECH_SPEED = (SpeechMenu.SPEECH_SPEED % 3) + 1;
@@ -50,7 +50,7 @@ public class BattleOptionMenu extends QuadMenu {
 				break;
 			case DOWN:
 				stateInfo.sendMessage(new SpeechMessage("Are you sure you want to exit?", 
-						Trigger.TRIGGER_ID_EXIT, Trigger.TRIGGER_NONE, null));
+						Trigger.TRIGGER_ID_SAVE_AND_EXIT, Trigger.TRIGGER_NONE, null));
 		}
 
 		return MenuUpdate.MENU_ACTION_LONG;

@@ -89,10 +89,14 @@ public class GlobalPythonFactory
 			JythonObjectFactory.sys.path.append(new PyString(JythonObjectFactory.sys.getPath("scripts")));
 
 			File scriptsFolder = new File(JythonObjectFactory.sys.getPath("scripts"));
-			for (File file : scriptsFolder.listFiles())
-			{
-				if (file.getName().endsWith(".class"))
-					file.delete();
+			if (scriptsFolder.exists()) {
+				for (File file : scriptsFolder.listFiles())
+				{
+					if (file.getName().endsWith(".class"))
+						file.delete();
+				}
+			} else {
+				return;
 			}
 		}
 

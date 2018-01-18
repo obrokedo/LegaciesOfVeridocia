@@ -251,7 +251,7 @@ public class SpeechMenu extends Menu
 							{
 								textMoving = false;
 								if (portrait != null)
-									portrait.setTalking(false);
+									portrait.stopTalkingAfterAnimationComplete();
 								waitingOn = TextSpecialCharacters.INTERNAL_HARD_STOP;
 							} else {
 								textMovingIndex = 0;
@@ -276,14 +276,14 @@ public class SpeechMenu extends Menu
 						{
 							textMoving = false;
 							if (portrait != null)
-								portrait.setTalking(false);
+								portrait.stopTalkingAfterAnimationComplete();
 							waitingOn = TextSpecialCharacters.INTERNAL_HARD_STOP;
 						}
 						else if (nextLetter.equalsIgnoreCase(TextSpecialCharacters.INTERNAL_SOFT_STOP))
 						{
 							textMoving = false;
 							if (portrait != null)
-								portrait.setTalking(false);
+								portrait.stopTalkingAfterAnimationComplete();
 
 							String[] softSplit = panelText.get(textIndex).substring(textMovingIndex).split(" ");
 
@@ -302,7 +302,7 @@ public class SpeechMenu extends Menu
 						{
 							textMoving = false;
 							if (portrait != null)
-								portrait.setTalking(false);
+								portrait.stopTalkingAfterAnimationComplete();
 							waitUntil = System.currentTimeMillis() + 400;
 							waitingOn = TextSpecialCharacters.INTERNAL_CHAR_PAUSE;
 						}
@@ -315,9 +315,10 @@ public class SpeechMenu extends Menu
 						if (textMoving) {
 							textMovingIndex += 1;
 							if (portrait != null)
-								if (nextLetter.equalsIgnoreCase(".") || nextLetter.equalsIgnoreCase("!")) {
-									portrait.setTalking(false);
-								} else if (!portrait.isTalking()) {
+								if (nextLetter.equalsIgnoreCase(".") || 
+										nextLetter.equalsIgnoreCase("!") || nextLetter.equalsIgnoreCase("?")) {
+									portrait.stopTalkingAfterAnimationComplete();
+								} else {
 									portrait.setTalking(true);
 								}
 						}

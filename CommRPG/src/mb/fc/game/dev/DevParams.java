@@ -22,8 +22,13 @@ public class DevParams {
 		this.heroNamesToAdd = heroNamesToAdd;
 		this.level = level;
 	}
-
+	
 	public static DevParams parseDevParams()
+	{
+		return parseDevParams(DEV_PARAMS_FILE);
+	}
+
+	public static DevParams parseDevParams(String fileName)
 	{
 		ArrayList<Integer> heroesToAdd = new ArrayList<>();
 		ArrayList<String> heroNamesToAdd = new ArrayList<>();
@@ -32,7 +37,7 @@ public class DevParams {
 		BufferedReader br = null;
 		try
 		{
-			br = new BufferedReader(new InputStreamReader(new FileInputStream(new File(DEV_PARAMS_FILE))));
+			br = new BufferedReader(new InputStreamReader(new FileInputStream(new File(fileName))));
 			String line;
 			while ((line = br.readLine()) != null) {
 	            if (line.startsWith("HERO ")) {

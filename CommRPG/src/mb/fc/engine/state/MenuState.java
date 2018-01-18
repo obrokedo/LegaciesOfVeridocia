@@ -2,6 +2,8 @@ package mb.fc.engine.state;
 
 import java.io.File;
 
+import javax.swing.JOptionPane;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
@@ -25,7 +27,6 @@ import mb.fc.loading.FCResourceManager;
 import mb.fc.loading.LoadableGameState;
 import mb.fc.loading.LoadingState;
 import mb.fc.utils.StringUtils;
-import mb.jython.GlobalPythonFactory;
 
 /**
  * State that handles the main menu
@@ -53,6 +54,7 @@ public class MenuState extends LoadableGameState
 	protected int updateDelta = 0;
 	protected PersistentStateInfo persistentStateInfo;
 	private Image bgImage;
+	private Image flor;
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
@@ -61,7 +63,6 @@ public class MenuState extends LoadableGameState
 		this.game = game;
 		this.gc = container;
 		input = new FCInput();
-		container.getInput().addKeyListener(input);
 	}
 
 	/**
@@ -81,26 +82,26 @@ public class MenuState extends LoadableGameState
 			// g.setColor(new Color(171, 194, 208));
 			// g.fillRect(0, 0, gc.getWidth(), gc.getHeight());
 			// g.drawImage(bgImage, 0, 0);
-			bgImage.draw(0, 0, 1.25f);
+			bgImage.draw(0, 70, .62f);
 			if (stateIndex == 0)
 			{
 				if (menuIndex == 0)
-					g.setColor(Color.red);
+					g.setColor(Color.blue);
 				else
-					g.setColor(Color.black);
-				StringUtils.drawString("Press Enter to Start Demo", 120, 90, g);
+					g.setColor(Color.white);
+				StringUtils.drawString("Press Enter to Start Demo", 120, 180, g);
 
 				if (menuIndex == 1)
-					g.setColor(Color.red);
+					g.setColor(Color.blue);
 				else
-					g.setColor(Color.black);
-				StringUtils.drawString("Credits", 145, 110, g);
+					g.setColor(Color.white);
+				StringUtils.drawString("Credits", 145, 200, g);
 
 				if (menuIndex == 2)
-					g.setColor(Color.red);
+					g.setColor(Color.blue);
 				else
-					g.setColor(Color.black);
-				StringUtils.drawString("Exit", 150, 130, g);
+					g.setColor(Color.white);
+				StringUtils.drawString("Exit", 150, 220, g);
 			}
 			else if (stateIndex == 1)
 			{
@@ -135,7 +136,7 @@ public class MenuState extends LoadableGameState
 	}
 
 	public void start(LoadTypeEnum loadType, String mapData, String entrance)
-	{
+	{		
 		switch (loadType)
 		{
 			case CINEMATIC:
@@ -154,29 +155,26 @@ public class MenuState extends LoadableGameState
 
 		game.enterState(CommRPG.STATE_GAME_LOADING);
 	}
-
+	
 	@Override
-	public void doUpdate(PaddedGameContainer container, StateBasedGame game, int delta)
-			throws SlickException {
-		if (initialized)
-		{
-			if (container.getInput().isKeyPressed(Input.KEY_F1))
+	public void keyPressed(int key, char c) {
+		super.keyPressed(key, c);
+		
+		if (initialized) {
+			if (key == Input.KEY_F1)
 			{
 				((LoadingState) game.getState(CommRPG.STATE_GAME_LOADING)).setLoadingInfo("/menu/MainMenu", false, true,
 						new FCResourceManager(),
 							(LoadableGameState) game.getState(CommRPG.STATE_GAME_MENU_DEVEL),
-								new FCLoadingRenderSystem(container));
+								new FCLoadingRenderSystem(gc));
 
 				game.enterState(CommRPG.STATE_GAME_LOADING);
 			}
 
 			if (updateDelta != 0)
-			{
-				updateDelta = Math.max(0, updateDelta - delta);
 				return;
-			}
 
-			if (input.isKeyDown(Input.KEY_ENTER))
+			if (key == Input.KEY_ENTER)
 			{
 				EngineConfigurationValues jcv = CommRPG.engineConfiguratior.getConfigurationValues();
 				if (menuIndex == 0 && stateIndex == 0)
@@ -197,20 +195,38 @@ public class MenuState extends LoadableGameState
 				else if (menuIndex == 2)
 					System.exit(0);
 			}
-			else if (input.isKeyDown(Input.KEY_F7))
+			else if (key == Input.KEY_F7)
 			{
-				((CommRPG) game).toggleFullScreen();
+				try {
+					((CommRPG) this.game).toggleFullScreen();
+				} catch (SlickException e) {
+					Log.error("Unable to toggle fullscreen mode: " + e.getMessage());
+					JOptionPane.showMessageDialog(null, "Unable to toggle fullscreen mode: " + e.getMessage());
+				}
 				updateDelta = 200;
 			}
-			else if (input.isKeyDown(Input.KEY_UP) && menuIndex > 0)
+			else if (key == Input.KEY_UP && menuIndex > 0)
 			{
 				menuIndex--;
 				updateDelta = 200;
 			}
-			else if (input.isKeyDown(Input.KEY_DOWN) && menuIndex < 2)
+			else if (key == Input.KEY_DOWN && menuIndex < 2)
 			{
 				menuIndex++;
 				updateDelta = 200;
+			}
+		}
+	}
+
+	@Override
+	public void doUpdate(PaddedGameContainer container, StateBasedGame game, int delta)
+			throws SlickException {
+		if (initialized)
+		{
+			if (updateDelta != 0)
+			{
+				updateDelta = Math.max(0, updateDelta - delta);
+				return;
 			}
 		}
 	}
@@ -221,7 +237,7 @@ public class MenuState extends LoadableGameState
 		font = resourceManager.getFontByName("menufont");
 		bgImage = resourceManager.getImage("mainbg");
 		initialized = true;
-
+		
 	}
 
 	@Override

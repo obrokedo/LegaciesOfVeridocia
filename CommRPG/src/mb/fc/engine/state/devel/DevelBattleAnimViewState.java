@@ -30,7 +30,6 @@ import mb.fc.game.ui.ListUI.ResourceSelectorListener;
 import mb.fc.game.ui.PaddedGameContainer;
 import mb.fc.loading.FCResourceManager;
 import mb.fc.loading.LoadableGameState;
-import mb.jython.GlobalPythonFactory;
 
 public class DevelBattleAnimViewState extends LoadableGameState implements ResourceSelectorListener {
 	private WizardStep wizardIndex;
@@ -225,7 +224,7 @@ public class DevelBattleAnimViewState extends LoadableGameState implements Resou
 	}
 	
 	private void backStep() {
-		GlobalPythonFactory.intialize();
+		CommRPG.engineConfiguratior.initialize();
 		
 		if (wizardIndex.ordinal() != 0) {
 			this.wizardIndex = WizardStep.values()[wizardIndex.ordinal() - 1];
@@ -295,7 +294,7 @@ public class DevelBattleAnimViewState extends LoadableGameState implements Resou
 		}
 		
 		if (reloadScriptsButton.handleUserInput(x, y, click)) {
-			GlobalPythonFactory.intialize();
+			CommRPG.engineConfiguratior.initialize();
 			nextInput = 200;
 		}
 		

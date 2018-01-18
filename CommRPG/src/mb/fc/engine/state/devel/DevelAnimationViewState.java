@@ -57,9 +57,9 @@ public class DevelAnimationViewState extends BasicGameState implements ResourceS
 		commRPG = (CommRPG) game;
 		frm = new FCResourceManager();
 		try {
-			frm.addResource(FCResourceManager.ANIMATIONS_FOLDER_IDENTIFIER + "," + FCResourceManager.ANIMATIONS_FOLDER, null, 0, 0, CommRPG.engineConfiguratior);
-			frm.addResource(FCResourceManager.IMAGES_FOLDER_IDENTIFIER + "," + FCResourceManager.WEAPONS_FOLDER, null, 0, 0, CommRPG.engineConfiguratior);
-			frm.addResource("spritedir,sprite", null, 0, 0, CommRPG.engineConfiguratior);
+			frm.addResource(FCResourceManager.ANIMATIONS_FOLDER_IDENTIFIER + "," + FCResourceManager.ANIMATIONS_FOLDER, CommRPG.engineConfiguratior);
+			frm.addResource(FCResourceManager.IMAGES_FOLDER_IDENTIFIER + "," + FCResourceManager.WEAPONS_FOLDER, CommRPG.engineConfiguratior);
+			frm.addResource("spritedir,sprite", CommRPG.engineConfiguratior);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -160,7 +160,7 @@ public class DevelAnimationViewState extends BasicGameState implements ResourceS
 		{
 			try {
 				frm.addResource(FCResourceManager.ANIMATION_IDENTIFIER + "," + selectedItem + "," + FCResourceManager.ANIMATIONS_FOLDER + "/" + selectedItem, 
-						null, 0, 0, CommRPG.engineConfiguratior);
+						CommRPG.engineConfiguratior);
 				currentAnimation = new AnimationWrapper(frm.getSpriteAnimation(selectedItem));
 				ArrayList<String> animNames = new ArrayList<>(currentAnimation.getAnimations());
 				animationSelector = new ListUI("Anim", 550, animNames);

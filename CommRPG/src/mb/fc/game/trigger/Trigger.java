@@ -33,6 +33,7 @@ public class Trigger
 {
 	public static final int TRIGGER_NONE = -1;
 	public static final int TRIGGER_ID_EXIT = -2;
+	public static final int TRIGGER_ID_SAVE_AND_EXIT = -3;
 	
 	public static final int TRIGGER_CHEST_NO_ITEM = 50000;
 
@@ -827,6 +828,19 @@ public class Trigger
 			return false;
 		}
 		
+		
+	}
+	
+	public class TriggerSave implements Triggerable {
+
+		@Override
+		public boolean perform(StateInfo stateInfo) {
+			if (stateInfo.isCombat())
+				stateInfo.saveBattle();
+			else
+				stateInfo.save();;
+			return false;
+		}
 		
 	}
 

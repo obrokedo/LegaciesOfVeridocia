@@ -306,17 +306,10 @@ public class StateInfo
 					psi.loadCinematic(lmc.getMapData(), lmc.getCinematicID());
 					break;
 				case SAVE:
-					getClientProgress().setInTownLocation(new Point((int) currentSprite.getLocX(), (int) currentSprite.getLocY()));
-					getClientProfile().serializeToFile();
-					getClientProgress().serializeToFile();
+				save();
 					break;
 				case SAVE_BATTLE:
-					getClientProgress().setBattle(true);
-					getClientProgress().setBattleSprites(combatSprites);
-					getClientProgress().setCurrentTurn(currentSprite);
-					getClientProfile().serializeToFile();
-					getClientProgress().serializeToFile();
-					System.exit(0);
+				saveBattle();
 					break;
 				case COMPLETE_QUEST:
 					this.setQuestStatus(((StringMessage) m).getString(), true);
@@ -340,6 +333,21 @@ public class StateInfo
 					break;
 			}
 		}
+	}
+
+	public void save() {
+		getClientProgress().setInTownLocation(new Point((int) currentSprite.getLocX(), (int) currentSprite.getLocY()));
+		getClientProfile().serializeToFile();
+		getClientProgress().serializeToFile();
+	}
+
+	public void saveBattle() {
+		this.currentSprite.setVisible(true);
+		getClientProgress().setBattle(true);
+		getClientProgress().setBattleSprites(combatSprites);
+		getClientProgress().setCurrentTurn(currentSprite);
+		getClientProfile().serializeToFile();
+		getClientProgress().serializeToFile();
 	}
 
 	/********************************/

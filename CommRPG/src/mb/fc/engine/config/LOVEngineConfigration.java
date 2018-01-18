@@ -53,4 +53,9 @@ public class LOVEngineConfigration extends DefaultEngineConfiguration {
 	public MenuConfiguration getMenuConfiguration() {
 		return GlobalPythonFactory.createMenuConfig();
 	}
+
+	@Override
+	public void initialize() {
+		GlobalPythonFactory.intialize();
+	}
 }

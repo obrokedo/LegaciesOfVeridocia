@@ -9,12 +9,11 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.state.transition.Transition;
 import org.newdawn.slick.util.Log;
 
+import mb.fc.engine.config.DefaultEngineConfiguration;
 import mb.fc.engine.config.EngineConfigurator;
 import mb.fc.engine.config.LOVEngineConfigration;
 import mb.fc.engine.log.FileLogger;
@@ -75,7 +74,7 @@ public class CommRPG extends StateBasedGame   {
 	public static final Dimension GAME_SCREEN_SIZE = new Dimension(320, 240);
 	// public static final Dimension GAME_SCREEN_SIZE = new Dimension(256, 192);
 	
-	public static int GAME_SCREEN_SCALE = 3;
+	public static int GAME_SCREEN_SCALE = 1;
 	public static int GAME_SCREEN_PADDING = 0;
 
 	/**
@@ -89,7 +88,7 @@ public class CommRPG extends StateBasedGame   {
 
 	private static int fullScreenWidth, fullScreenHeight;
 
-	public static final String VERSION = "DEV 1.367 Dec 20, 2017";
+	public static final String VERSION = "DEV 1.368 Jan 18, 2018";
 	public static final String FILE_VERSION = "LoV-Dev";
 
 	public static final String GAME_TITLE = "Legacies of Veridocia";
@@ -106,7 +105,9 @@ public class CommRPG extends StateBasedGame   {
 	
 	public static TextParser TEXT_PARSER = new TextParser();
 	
-	public static EngineConfigurator engineConfiguratior = new LOVEngineConfigration();
+	public static EngineConfigurator engineConfiguratior = new DefaultEngineConfiguration();
+	
+	private boolean isFirstLoad = true;
 
 	private class DEBUG_HOLDER
 	{
@@ -132,81 +133,86 @@ public class CommRPG extends StateBasedGame   {
 	 */
 	public static void main(String args[])
 	{
-		// Setup a game container for Eaton and set it's display mode and target
-		// frame rate
-		try
-		{
-			CommRPG fc = new CommRPG();
-			Log.debug("Starting engine version " + VERSION) ;
-			PaddedGameContainer container = new PaddedGameContainer(fc);
-
-			// TODO We want to keep the same screen resolution ratio but then just expand the vertical black bars. Potentially put menus in the bars
-			fullScreenWidth = 0;
-			fullScreenHeight = Integer.MAX_VALUE;
-
-
-			try {
-				double ratio =  container.getScreenWidth() * 1.0 / container.getScreenHeight();
-				Log.debug("Screen Ratio: " + ratio);
-				DisplayMode[] modes = Display.getAvailableDisplayModes();
-
-				for (DisplayMode dm : modes)
-				{
-					double sRatio = 1.0 * dm.getWidth() / dm.getHeight();
-					if (sRatio == ratio && fullScreenHeight > dm.getHeight()
-							&& dm.getHeight() % 240 == 0 && dm.getHeight() > 240)
-					{
-						fullScreenWidth = dm.getWidth();
-						fullScreenHeight = dm.getHeight();
-					}
-				}
-
-				Log.debug("Fullscreen dimensions: " + fullScreenWidth + " " + fullScreenHeight);
-				GAME_SCREEN_SCALE = fullScreenHeight / 240;
-				container.setDisplayPaddingX((fullScreenWidth - GAME_SCREEN_SIZE.width * GAME_SCREEN_SCALE) / 2);
-				GAME_SCREEN_PADDING = container.getDisplayPaddingX();
-
-
-			} catch (LWJGLException e) {
-				e.printStackTrace();
-			}
-
-			fullScreenWidth = 0;
-
-			if (fullScreenWidth == 0)
-			{
-				Log.debug("Unable to enter full screen");
-				for (DisplayMode dm : Display.getAvailableDisplayModes())
-					Log.debug("Supported display modes " + dm);
-				container.setDisplayPaddingX(0);
-				
+		CommRPG rpg = new CommRPG();
+		rpg.engineConfiguratior = new LOVEngineConfigration();
+		rpg.setup();
+	}
+	
+	public void setup() {
+		// Setup a game container: set it's display mode and target
+				// frame rate
 				try
 				{
-					GAME_SCREEN_SCALE = 3;
-					container.setDisplayMode(GAME_SCREEN_SIZE.width * GAME_SCREEN_SCALE, 
-							GAME_SCREEN_SIZE.height * GAME_SCREEN_SCALE, false);
-					GAME_SCREEN_PADDING = 0;
+					Log.debug("Starting engine version " + VERSION) ;
+					PaddedGameContainer container = new PaddedGameContainer(this);
+
+					// TODO We want to keep the same screen resolution ratio but then just expand the vertical black bars. Potentially put menus in the bars
+					fullScreenWidth = 0;
+					fullScreenHeight = Integer.MAX_VALUE;
+
+
+					try {
+						double ratio =  container.getScreenWidth() * 1.0 / container.getScreenHeight();
+						Log.debug("Screen Ratio: " + ratio);
+						DisplayMode[] modes = Display.getAvailableDisplayModes();
+
+						for (DisplayMode dm : modes)
+						{
+							double sRatio = 1.0 * dm.getWidth() / dm.getHeight();
+							if (sRatio == ratio && fullScreenHeight > dm.getHeight()
+									&& dm.getHeight() % 240 == 0 && dm.getHeight() > 240)
+							{
+								fullScreenWidth = dm.getWidth();
+								fullScreenHeight = dm.getHeight();
+							}
+						}
+
+						Log.debug("Fullscreen dimensions: " + fullScreenWidth + " " + fullScreenHeight);
+						GAME_SCREEN_SCALE = fullScreenHeight / 240;
+						container.setDisplayPaddingX((fullScreenWidth - GAME_SCREEN_SIZE.width * GAME_SCREEN_SCALE) / 2);
+						GAME_SCREEN_PADDING = container.getDisplayPaddingX();
+
+
+					} catch (LWJGLException e) {
+						e.printStackTrace();
+					}
+
+					fullScreenWidth = 0;
+
+					if (fullScreenWidth == 0)
+					{
+						Log.debug("Unable to enter full screen");
+						for (DisplayMode dm : Display.getAvailableDisplayModes())
+							Log.debug("Supported display modes " + dm);
+						container.setDisplayPaddingX(0);
+						
+						try
+						{
+							GAME_SCREEN_SCALE = 3;
+							container.setDisplayMode(GAME_SCREEN_SIZE.width * GAME_SCREEN_SCALE, 
+									GAME_SCREEN_SIZE.height * GAME_SCREEN_SCALE, false);
+							GAME_SCREEN_PADDING = 0;
+						}
+						catch (SlickException se)
+						{
+							container.setDisplayMode(GAME_SCREEN_SIZE.width, GAME_SCREEN_SIZE.height, false);
+						}
+					}
+					else
+						container.setDisplayMode(fullScreenWidth, fullScreenHeight, true);
+
+
+					container.setShowFPS(true);
+					container.setVSync(true);
+					container.setAlwaysRender(true);
+					container.setTargetFrameRate(60);
+					container.start();
 				}
-				catch (SlickException se)
+				catch (Throwable ex)
 				{
-					container.setDisplayMode(GAME_SCREEN_SIZE.width, GAME_SCREEN_SIZE.height, false);
+					JOptionPane.showMessageDialog(null, "An error has occurred: " + ex.getMessage());
+					ex.printStackTrace();
 				}
-			}
-			else
-				container.setDisplayMode(fullScreenWidth, fullScreenHeight, true);
-
-
-			container.setShowFPS(true);
-			container.setVSync(true);
-			container.setAlwaysRender(true);
-			container.setTargetFrameRate(60);
-			container.start();
-		}
-		catch (Throwable ex)
-		{
-			JOptionPane.showMessageDialog(null, "An error has occurred: " + ex.getMessage());
-			ex.printStackTrace();
-		}
 	}
 
 	public CommRPG()
@@ -280,45 +286,6 @@ public class CommRPG extends StateBasedGame   {
 
 
 		this.enterState(STATE_GAME_LOADING);
-	}
-
-	/**
-	 * Sets the loading state to use existing resources that are already contained in the resource manager
-	 * and to just load the specified text and map. It then transtions into the specifed next state.
-	 *
-	 * @param text The text file to load
-	 * @param nextState The next state that should be entered once the loading is done
-	 * @param fcResourceManager Existing resource manager that contains all resources already loaded
-	 * @param intermediateImage An image to show for the loading screen background
-	 * @param transition the Transition that should be used to load in to the next state. A value of 
-	 * 			null will use the default transition
-	 */
-	public void setLoadingInfo(String text, LoadableGameState nextState,
-			FCResourceManager fcResourceManager, Image intermediateImage, Transition transition)
-	{
-		if (fcResourceManager != null)
-			loadingState.setLoadingInfo(text, true, false,
-				fcResourceManager,
-					nextState,
-						new FCLoadingRenderSystem(this.getContainer()), intermediateImage, transition);
-		else
-			setLoadingInfo(text, nextState);
-	}
-
-	/**
-	 * Configures the loading state to load all resoruces and once it has will load the specified
-	 * map and text files. It will then move into the next specified state. This should only be called
-	 * once per execution as we don't need to load the files every time.
-	 *
-	 * @param text The text file to load
-	 * @param nextState The state that should be entered once the loading is done
-	 */
-	public void setLoadingInfo(String text, LoadableGameState nextState)
-	{
-		loadingState.setLoadingInfo(text, true, true,
-				new FCResourceManager(),
-					nextState,
-						new FCLoadingRenderSystem(this.getContainer()));
 	}
 
 	public void toggleFullScreen() throws SlickException

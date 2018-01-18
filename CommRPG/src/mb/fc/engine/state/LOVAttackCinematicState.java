@@ -42,7 +42,6 @@ import mb.fc.loading.LoadableGameState;
 import mb.fc.particle.AnimatedParticleSystem;
 import mb.fc.utils.AnimationWrapper;
 import mb.fc.utils.StringUtils;
-import mb.jython.GlobalPythonFactory;
 
 public class LOVAttackCinematicState extends LoadableGameState implements MusicListener
 {
