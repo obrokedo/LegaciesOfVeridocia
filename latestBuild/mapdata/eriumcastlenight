@@ -331,7 +331,7 @@
 	<flashscreen time=250/>
 	<wait time=125/>
 	<removeactor name="Mistal"/>
-	<wait time=500/>
+	<fadeout time=1000 halting=true/>
 	<loadbattle mapdata="battle1" entrance="battle1" battbg=1/>
 </cinematic>
 <cinematic id=1 description="Battle1 Aftermath" camerax=600 cameray=960>

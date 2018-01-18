@@ -45,7 +45,7 @@
   </data>
  </layer>
  <objectgroup name="Meta" visible="0"/>
- <objectgroup name="Enemies" visible="0">
+ <objectgroup name="Enemies">
   <object id="1" name="Darkling Ooze" x="840" y="600" width="24" height="24">
    <properties>
     <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Darkling Ooze unit=0"/>
@@ -87,33 +87,33 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup name="Battle Triggers" visible="0">
+ <objectgroup name="Battle Triggers">
   <object id="9" x="672" y="576" width="72" height="48">
    <properties>
     <property name="start" value="exit=battle1"/>
    </properties>
   </object>
-  <object id="10" x="624" y="648" width="96" height="144">
+  <object id="10" name="Top Left BT" x="624" y="648" width="96" height="144">
    <properties>
     <property name="battletrigger" value="triggerid=2"/>
    </properties>
   </object>
-  <object id="11" x="816" y="648" width="144" height="120">
+  <object id="11" name="Top Right BT" x="816" y="648" width="144" height="120">
    <properties>
     <property name="battletrigger" value="triggerid=5"/>
    </properties>
   </object>
-  <object id="12" x="624" y="696" width="96" height="180">
+  <object id="12" name="Bottom Left BT" x="624" y="696" width="96" height="180">
    <properties>
     <property name="battletrigger" value="triggerid=3"/>
    </properties>
   </object>
-  <object id="13" x="696" y="708" width="168" height="132">
+  <object id="13" name="Kill Box BT" x="696" y="708" width="168" height="132">
    <properties>
     <property name="battletrigger" value="triggerid=4"/>
    </properties>
   </object>
-  <object id="14" x="864" y="744" width="144" height="144">
+  <object id="14" name="Bottom Right BT" x="864" y="744" width="144" height="144">
    <properties>
     <property name="battletrigger" value="triggerid=6"/>
    </properties>
@@ -124,7 +124,7 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup name="Terrain">
+ <objectgroup name="Terrain" visible="0">
   <object id="16" x="600" y="576">
    <properties>
     <property name="terrain" value="type=GRASS"/>

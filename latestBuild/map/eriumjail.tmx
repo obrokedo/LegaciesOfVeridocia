@@ -48,7 +48,7 @@
    H4sIAAAAAAAAC+2TQQ6AMAgEe/H/r/ELvssYb6YWSkoLOpNwcosy0lIAANrsm09Z+/ees7znwIPoQbsv2lz0wsNcD5H9zLwXWT147VsW8HCj3eO3c1J+VQ4PMTxE94UHnYfefYs2nzWHhzqjPEiMyo2ex3ruax6098LL76yS/OHhXx6k78VDG22+N9f7X6z98NB+nnV/tfOMuher58nmwdvbs7/X/8KDb99shYe6B4CLEwO71k8QIwAA
   </data>
  </layer>
- <objectgroup name="Terrain">
+ <objectgroup name="Terrain" visible="0">
   <object id="1" name="Rug" x="480" y="264">
    <properties>
     <property name="terrain" value="type=GRASS"/>
@@ -129,12 +129,12 @@
   </object>
  </objectgroup>
  <objectgroup name="Trigger Regions">
-  <object id="50" name="SecondWave" x="312" y="252" width="120" height="144">
+  <object id="50" name="SecondWave" x="312" y="228" width="120" height="168">
    <properties>
     <property name="null" value=""/>
    </properties>
   </object>
-  <object id="51" name="ThirdWave" x="432" y="252" width="96" height="144">
+  <object id="51" name="ThirdWave" x="432" y="228" width="96" height="168">
    <properties>
     <property name="null" value=""/>
    </properties>
@@ -151,7 +151,7 @@
    <polyline points="3,14 3,86 -477,86 -477,254 -741,254 -741,14 3,14"/>
   </object>
  </objectgroup>
- <objectgroup name="Meta">
+ <objectgroup name="Meta" visible="0">
   <object id="14" name="SouthStairsEntrance" x="720" y="288" width="24" height="24">
    <properties>
     <property name="start" value="exit=SouthStairsEntrance"/>
@@ -213,7 +213,7 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup name="Battle" visible="0">
+ <objectgroup name="Battle">
   <object id="21" name="Battle Start" type="START" x="120" y="240" width="72" height="24">
    <properties>
     <property name="start" value="exit=battlestart"/>
@@ -231,22 +231,22 @@
   </object>
   <object id="24" name="Soldier" type="NPC" x="144" y="120" width="24" height="24">
    <properties>
-    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Erium Soldier unit=1"/>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Erium Soldier unit=0"/>
    </properties>
   </object>
   <object id="25" name="Erium Soldier" type="NPC" x="360" y="336" width="24" height="24">
    <properties>
-    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Erium Soldier unit=3"/>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Erium Soldier unit=7"/>
    </properties>
   </object>
   <object id="26" name="Erium Mage" type="NPC" x="480" y="336" width="24" height="24">
    <properties>
-    <property name="enemy" value="ai=wizard aiapproach=wait enemyid=Erium Mage unit=4"/>
+    <property name="enemy" value="ai=wizard aiapproach=wait enemyid=Erium Mage unit=11"/>
    </properties>
   </object>
   <object id="27" name="Soldier" type="NPC" x="720" y="96" width="24" height="24">
    <properties>
-    <property name="enemy" value="ai=fighter aiapproach=wait enemyid=Erium Soldier unit=2"/>
+    <property name="enemy" value="ai=fighter aiapproach=wait enemyid=Erium Soldier unit=3"/>
    </properties>
   </object>
   <object id="28" name="Soldier" type="NPC" x="720" y="48" width="24" height="24">
@@ -256,67 +256,67 @@
   </object>
   <object id="29" name="Erium Archer" type="NPC" x="480" y="264" width="24" height="24">
    <properties>
-    <property name="enemy" value="ai=fighter aiapproach=wait enemyid=Erium Archer unit=4"/>
+    <property name="enemy" value="ai=fighter aiapproach=wait enemyid=Erium Archer unit=8"/>
    </properties>
   </object>
   <object id="30" name="Erium Captain" type="NPC" x="720" y="288" width="24" height="24">
    <properties>
-    <property name="enemy" value="ai=fighter aiapproach=wait enemyid=Erium Captain unit=7"/>
+    <property name="enemy" value="ai=fighter aiapproach=wait enemyid=Erium Captain unit=18"/>
    </properties>
   </object>
   <object id="32" name="Erium Soldier" type="NPC" x="360" y="288" width="24" height="24">
    <properties>
-    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Erium Soldier unit=3"/>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Erium Soldier unit=5"/>
    </properties>
   </object>
   <object id="33" name="Erium Soldier" type="NPC" x="360" y="264" width="24" height="24">
    <properties>
-    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Erium Soldier unit=3"/>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Erium Soldier unit=4"/>
    </properties>
   </object>
   <object id="34" name="Erium Soldier" type="NPC" x="480" y="312" width="24" height="24">
    <properties>
-    <property name="enemy" value="ai=fighter aiapproach=wait enemyid=Erium Soldier unit=4"/>
+    <property name="enemy" value="ai=fighter aiapproach=wait enemyid=Erium Soldier unit=10"/>
    </properties>
   </object>
   <object id="35" name="Erium Soldier" type="NPC" x="480" y="288" width="24" height="24">
    <properties>
-    <property name="enemy" value="ai=fighter aiapproach=wait enemyid=Erium Soldier unit=4"/>
+    <property name="enemy" value="ai=fighter aiapproach=wait enemyid=Erium Soldier unit=9"/>
    </properties>
   </object>
   <object id="36" name="Erium Soldier" type="NPC" x="360" y="312" width="24" height="24">
    <properties>
-    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Erium Soldier unit=3"/>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Erium Soldier unit=6"/>
    </properties>
   </object>
   <object id="37" name="Erium Soldier" type="NPC" x="576" y="264" width="24" height="24">
    <properties>
-    <property name="enemy" value="ai=fighter aiapproach=wait enemyid=Erium Soldier unit=5"/>
+    <property name="enemy" value="ai=fighter aiapproach=wait enemyid=Erium Soldier unit=12"/>
    </properties>
   </object>
   <object id="38" name="Erium Soldier" type="NPC" x="576" y="312" width="24" height="24">
    <properties>
-    <property name="enemy" value="ai=fighter aiapproach=wait enemyid=Erium Archer unit=5"/>
+    <property name="enemy" value="ai=fighter aiapproach=wait enemyid=Erium Archer unit=14"/>
    </properties>
   </object>
   <object id="39" name="Erium Soldier" type="NPC" x="576" y="336" width="24" height="24">
    <properties>
-    <property name="enemy" value="ai=fighter aiapproach=wait enemyid=Erium Mage unit=5"/>
+    <property name="enemy" value="ai=fighter aiapproach=wait enemyid=Erium Mage unit=15"/>
    </properties>
   </object>
   <object id="40" name="Erium Soldier" type="NPC" x="576" y="288" width="24" height="24">
    <properties>
-    <property name="enemy" value="ai=wizard aiapproach=wait enemyid=Erium Mage unit=5"/>
+    <property name="enemy" value="ai=wizard aiapproach=wait enemyid=Erium Mage unit=13"/>
    </properties>
   </object>
   <object id="43" name="Erium Soldier" type="NPC" x="624" y="288" width="24" height="24">
    <properties>
-    <property name="enemy" value="ai=fighter aiapproach=wait enemyid=Erium Soldier unit=6"/>
+    <property name="enemy" value="ai=fighter aiapproach=wait enemyid=Erium Soldier unit=16"/>
    </properties>
   </object>
   <object id="44" name="Erium Soldier" type="NPC" x="624" y="312" width="24" height="24">
    <properties>
-    <property name="enemy" value="ai=fighter aiapproach=wait enemyid=Erium Soldier unit=6"/>
+    <property name="enemy" value="ai=fighter aiapproach=wait enemyid=Erium Soldier unit=17"/>
    </properties>
   </object>
  </objectgroup>

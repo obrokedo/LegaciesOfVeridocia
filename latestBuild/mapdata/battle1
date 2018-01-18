@@ -6,17 +6,17 @@
 	<completequest questid="Battle1"/>
 	<loadcin mapdata="eriumcastlenight" cinid=1/>
 </trigger>
-<trigger id=2 description="Top Left BT" require="," exclude="," nonretrig=true retrigonenter=false triggeronce=false triggerimmediately=false>
+<trigger id=2 description="Top Left BT" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<changeai aitype=2 id=1 heroid=0 targetid=0 x=0 y=0/>
 </trigger>
-<trigger id=3 description="Bottom Left BT" require="," exclude="," nonretrig=true retrigonenter=false triggeronce=false triggerimmediately=false>
+<trigger id=3 description="Bottom Left BT" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<changeai aitype=2 id=2 heroid=0 targetid=0 x=0 y=0/>
 	<changeai aitype=3 id=6 heroid=0 targetid=2 x=0 y=0/>
 	<changeai aitype=3 id=4 heroid=0 targetid=6 x=0 y=0/>
 	<changeai aitype=4 id=5 heroid=0 targetid=0 x=33 y=38/>
 	<changeai aitype=1 id=7 heroid=0 targetid=0 x=0 y=0/>
 </trigger>
-<trigger id=4 description="Middle Hell" require="," exclude="," nonretrig=true retrigonenter=false triggeronce=false triggerimmediately=false>
+<trigger id=4 description="Middle Hell" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<changeai aitype=1 id=1 heroid=0 targetid=0 x=0 y=0/>
 	<changeai aitype=1 id=2 heroid=0 targetid=0 x=0 y=0/>
 	<changeai aitype=1 id=3 heroid=0 targetid=0 x=0 y=0/>
@@ -25,10 +25,10 @@
 	<changeai aitype=1 id=6 heroid=0 targetid=0 x=0 y=0/>
 	<changeai aitype=1 id=7 heroid=0 targetid=0 x=0 y=0/>
 </trigger>
-<trigger id=5 description="Top Right BT" require="," exclude="," nonretrig=true retrigonenter=false triggeronce=false triggerimmediately=false>
+<trigger id=5 description="Top Right BT" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<changeai aitype=2 id=4 heroid=0 targetid=0 x=0 y=0/>
 </trigger>
-<trigger id=6 description="Bottom Right BT" require="," exclude="," nonretrig=true retrigonenter=false triggeronce=false triggerimmediately=false>
+<trigger id=6 description="Bottom Right BT" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<changeai aitype=1 id=5 heroid=0 targetid=0 x=0 y=0/>
 	<changeai aitype=2 id=6 heroid=0 targetid=0 x=0 y=0/>
 	<changeai aitype=2 id=7 heroid=0 targetid=0 x=0 y=0/>
@@ -51,19 +51,19 @@
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="Defcon 4 Activated!!<hardstop>"/>
 </text>
 <condition id=0 description="TLEnter" triggerid=2>
-	<enterloc location="Darkling Ooze" immediate=false/>
+	<enterloc location="Top Left BT" immediate=false/>
 </condition>
 <condition id=1 description="BLEnter" triggerid=3>
-	<enterloc location="Darkling Ooze" immediate=false/>
+	<enterloc location="Bottom Left BT" immediate=false/>
 </condition>
 <condition id=2 description="MidEnter" triggerid=4>
-	<enterloc location="Darkling Ooze" immediate=false/>
+	<enterloc location="Kill Box BT" immediate=false/>
 </condition>
 <condition id=3 description="TREnter" triggerid=5>
-	<enterloc location="Darkling Ooze" immediate=false/>
+	<enterloc location="Top Right BT" immediate=false/>
 </condition>
 <condition id=4 description="BREnter" triggerid=6>
-	<enterloc location="Darkling Ooze" immediate=false/>
+	<enterloc location="Bottom Right BT" immediate=false/>
 </condition>
 <condition id=5 description="Noah Dies" triggerid=7>
 	<herodeath unitid="Noah"/>

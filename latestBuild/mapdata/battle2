@@ -2,18 +2,32 @@
 <trigger id=0 description="Battle Initialize" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<playmusic music="battle1"/>
 </trigger>
-<trigger id=1 description="Trigger Second Wave" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<changeai aitype=1 id=4 heroid=0 targetid=0 x=0 y=0/>
+<trigger id=1 description="Trigger Second Wave" require="," exclude="," nonretrig=true retrigonenter=false triggeronce=false triggerimmediately=false>
+	<changeai aitype=1 id=8 heroid=4 targetid=0 x=0 y=0/>
+	<changeai aitype=1 id=9 heroid=4 targetid=0 x=0 y=0/>
+	<changeai aitype=1 id=10 heroid=4 targetid=0 x=0 y=0/>
+	<changeai aitype=1 id=11 heroid=4 targetid=0 x=0 y=0/>
 </trigger>
 <trigger id=2 description="Trigger Third Wave" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<changeai aitype=1 id=5 heroid=0 targetid=0 x=0 y=0/>
-	<changeai aitype=3 id=6 heroid=0 targetid=7 x=0 y=0/>
+	<changeai aitype=1 id=12 heroid=4 targetid=0 x=0 y=0/>
+	<changeai aitype=3 id=13 heroid=-1 targetid=7 x=0 y=0/>
 </trigger>
 <trigger id=3 description="Capitan Killed" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=true triggerimmediately=false>
-	<killenemies unitid=3/>
 	<killenemies unitid=4/>
 	<killenemies unitid=5/>
 	<killenemies unitid=6/>
+	<killenemies unitid=7/>
+	<killenemies unitid=8/>
+	<killenemies unitid=9/>
+	<killenemies unitid=10/>
+	<killenemies unitid=11/>
+	<killenemies unitid=12/>
+	<killenemies unitid=13/>
+	<killenemies unitid=14/>
+	<killenemies unitid=15/>
+	<killenemies unitid=16/>
+	<killenemies unitid=17/>
+	<killenemies unitid=18/>
 </trigger>
 <trigger id=4 description="Noah Exit" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=true triggerimmediately=false>
 	<showcin cinid=1 exittrigid=-1/>
@@ -83,7 +97,7 @@
 	<enterloc location="ThirdWave" immediate=false/>
 </condition>
 <condition id=2 description="Capitan Killed Noah Alive" triggerid=7>
-	<enemydeath unitid=7/>
+	<enemydeath unitid=18/>
 	<heroinbat id="Noah"/>
 </condition>
 <condition id=3 description="Top Half Killed Craig Alive" triggerid=4>
