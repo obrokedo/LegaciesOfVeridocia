@@ -185,11 +185,11 @@
     </cell>
     <cell index="4" delay="50">
       <spr name="/Unpromoted/Frame18" x="159" y="-41" z="0"/>
-      <spr name="/Weapon" x="170" y="-47" z="0" flipH="1"/>
+      <spr name="/Weapon" x="168" y="-47" z="0" flipH="1"/>
     </cell>
     <cell index="5" delay="500">
       <spr name="/Unpromoted/Frame19" x="159" y="-41" z="0"/>
-      <spr name="/Weapon" x="170" y="-46" z="0" flipH="1"/>
+      <spr name="/Weapon" x="169" y="-47" z="0" flipH="1"/>
     </cell>
     <cell index="6" delay="50">
       <spr name="/Unpromoted/Frame20" x="159" y="-41" z="0"/>
