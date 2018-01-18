@@ -11,28 +11,28 @@
 </trigger>
 <trigger id=3 description="Bottom Left BT" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<changeai aitype=2 id=2 heroid=0 targetid=0 x=0 y=0/>
-	<changeai aitype=3 id=6 heroid=0 targetid=2 x=0 y=0/>
-	<changeai aitype=3 id=4 heroid=0 targetid=6 x=0 y=0/>
+	<changeai aitype=3 id=6 heroid=-1 targetid=2 x=0 y=0/>
+	<changeai aitype=3 id=4 heroid=-1 targetid=7 x=0 y=0/>
 	<changeai aitype=4 id=5 heroid=0 targetid=0 x=33 y=38/>
-	<changeai aitype=1 id=7 heroid=0 targetid=0 x=0 y=0/>
+	<changeai aitype=1 id=7 heroid=-1 targetid=0 x=0 y=0/>
 </trigger>
 <trigger id=4 description="Middle Hell" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<changeai aitype=1 id=1 heroid=0 targetid=0 x=0 y=0/>
-	<changeai aitype=1 id=2 heroid=0 targetid=0 x=0 y=0/>
-	<changeai aitype=1 id=3 heroid=0 targetid=0 x=0 y=0/>
-	<changeai aitype=1 id=4 heroid=0 targetid=0 x=0 y=0/>
-	<changeai aitype=1 id=5 heroid=0 targetid=0 x=0 y=0/>
-	<changeai aitype=1 id=6 heroid=0 targetid=0 x=0 y=0/>
-	<changeai aitype=1 id=7 heroid=0 targetid=0 x=0 y=0/>
+	<changeai aitype=1 id=1 heroid=-1 targetid=0 x=0 y=0/>
+	<changeai aitype=1 id=2 heroid=-1 targetid=0 x=0 y=0/>
+	<changeai aitype=1 id=3 heroid=-1 targetid=0 x=0 y=0/>
+	<changeai aitype=1 id=4 heroid=-1 targetid=0 x=0 y=0/>
+	<changeai aitype=1 id=5 heroid=-1 targetid=0 x=0 y=0/>
+	<changeai aitype=1 id=6 heroid=-1 targetid=0 x=0 y=0/>
+	<changeai aitype=1 id=7 heroid=-1 targetid=0 x=0 y=0/>
 </trigger>
 <trigger id=5 description="Top Right BT" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<changeai aitype=2 id=4 heroid=0 targetid=0 x=0 y=0/>
 </trigger>
 <trigger id=6 description="Bottom Right BT" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<changeai aitype=1 id=5 heroid=0 targetid=0 x=0 y=0/>
-	<changeai aitype=2 id=6 heroid=0 targetid=0 x=0 y=0/>
-	<changeai aitype=2 id=7 heroid=0 targetid=0 x=0 y=0/>
-	<changeai aitype=3 id=1 heroid=0 targetid=7 x=0 y=0/>
+	<changeai aitype=1 id=5 heroid=-1 targetid=0 x=0 y=0/>
+	<changeai aitype=2 id=6 heroid=-1 targetid=0 x=0 y=0/>
+	<changeai aitype=2 id=7 heroid=-1 targetid=0 x=0 y=0/>
+	<changeai aitype=3 id=1 heroid=-1 targetid=7 x=0 y=0/>
 </trigger>
 <trigger id=7 description="Fail Results" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<reviveheroes hero="Noah"/>

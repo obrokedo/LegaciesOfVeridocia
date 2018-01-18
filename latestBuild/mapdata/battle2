@@ -10,7 +10,11 @@
 </trigger>
 <trigger id=2 description="Trigger Third Wave" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<changeai aitype=1 id=12 heroid=4 targetid=0 x=0 y=0/>
-	<changeai aitype=3 id=13 heroid=-1 targetid=7 x=0 y=0/>
+	<changeai aitype=0 id=13 heroid=3 targetid=-1 x=0 y=0/>
+	<changeai aitype=0 id=14 heroid=3 targetid=-1 x=0 y=0/>
+	<changeai aitype=1 id=15 heroid=4 targetid=-1 x=0 y=0/>
+	<changeai aitype=4 id=17 heroid=-1 targetid=-1 x=30 y=13/>
+	<changeai aitype=4 id=16 heroid=-1 targetid=-1 x=30 y=11/>
 </trigger>
 <trigger id=3 description="Capitan Killed" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=true triggerimmediately=false>
 	<killenemies unitid=4/>
@@ -90,7 +94,7 @@
 	<haltingmovepath name="Huun" x=744 y=72 speed="2"/>
 	<removeactor name="Huun"/>
 </cinematic>
-<condition id=0 description="EnterBottomMid" triggerid=2>
+<condition id=0 description="EnterBottomMid" triggerid=1>
 	<enterloc location="SecondWave" immediate=false/>
 </condition>
 <condition id=1 description="EnterBottomRight" triggerid=2>
