@@ -114,11 +114,11 @@
     </cell>
     <cell index="5" delay="500">
       <spr name="/Unpromoted/Frame19" x="159" y="-41" z="0"/>
-      <spr name="/Weapon" x="150" y="-45" z="0" flipH="1"/>
+      <spr name="/Weapon" x="171" y="-47" z="0" flipH="1"/>
     </cell>
     <cell index="6" delay="50">
       <spr name="/Unpromoted/Frame20" x="159" y="-41" z="0"/>
-      <spr name="/Weapon" x="108" y="-45" z="0" flipH="1"/>
+      <spr name="/Weapon" x="171" y="-46" z="0" flipH="1"/>
     </cell>
     <cell index="7" delay="50">
       <spr name="/Unpromoted/Frame21" x="159" y="-41" z="0"/>
@@ -181,7 +181,7 @@
     </cell>
     <cell index="3" delay="30">
       <spr name="/Unpromoted/Frame17" x="159" y="-41" z="0"/>
-      <spr name="/Weapon" x="162" y="-44" z="0" flipH="1"/>
+      <spr name="/Weapon" x="165" y="-43" z="0" flipH="1"/>
     </cell>
     <cell index="4" delay="50">
       <spr name="/Unpromoted/Frame18" x="159" y="-41" z="0"/>
@@ -189,11 +189,11 @@
     </cell>
     <cell index="5" delay="500">
       <spr name="/Unpromoted/Frame19" x="159" y="-41" z="0"/>
-      <spr name="/Weapon" x="150" y="-45" z="0" flipH="1"/>
+      <spr name="/Weapon" x="170" y="-46" z="0" flipH="1"/>
     </cell>
     <cell index="6" delay="50">
       <spr name="/Unpromoted/Frame20" x="159" y="-41" z="0"/>
-      <spr name="/Weapon" x="108" y="-45" z="0" flipH="1"/>
+      <spr name="/Weapon" x="127" y="-45" z="0" flipH="1"/>
     </cell>
     <cell index="7" delay="50">
       <spr name="/Unpromoted/Frame21" x="159" y="-41" z="0"/>
