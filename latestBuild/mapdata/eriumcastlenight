@@ -151,7 +151,7 @@
 	<tremble name="Huun"/>
 	<wait time=750/>
 	<stopse name="Huun"/>
-	<speech text="What did I do now<pause>.<pause>.<pause>.<pause>?<pause><hardstop>" heroportrait="Huun" enemyportrait="" animportrait=""/>
+	<speech text="What did I do now...?<pause><hardstop>" heroportrait="Huun" enemyportrait="" animportrait=""/>
 	<haltingmove name="Huun" x=744 y=600 speed="5" movehor=true movediag=false/>
 	<haltingmove name="Huun" x=720 y=600 speed="5" movehor=false movediag=false/>
 	<facing name="Huun" dir=1/>
