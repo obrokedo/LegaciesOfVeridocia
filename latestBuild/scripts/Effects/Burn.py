@@ -53,6 +53,9 @@ class Burn(BattleEffect):
         effectChance = self.getEffectChance()
         effectLevel = self.getEffectLevel()
         
+        # Potentially usable values
+        # target.getCurrentMind()
+        # target.getCurrentBody()
         resistance = 0
             
         # Check to see using the given resistance whether the effect is successful

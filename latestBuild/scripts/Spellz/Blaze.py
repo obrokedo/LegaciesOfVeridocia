@@ -68,15 +68,6 @@ class Blaze(SpellDefinition):
         self.setEffects(jarray.array(["Burn"], String), 3) # Level 3 battle effects
         self.setEffects(jarray.array(["Burn"], String), 4) # Level 4 battle effects
         
-        # This sets the BASELINE chance (potency)
-        # No effects = []
-        # 1 effect = [15]
-        # Many effects = [15, 30...]
-        self.setEffectChance(jarray.array([65], 'i'), 1) # Level 1 battle effects
-        self.setEffectChance(jarray.array([75], 'i'), 2) # Level 2 battle effects
-        self.setEffectChance(jarray.array([85], 'i'), 3) # Level 3 battle effects
-        self.setEffectChance(jarray.array([95], 'i'), 4) # Level 4 battle effects
-        
         # Set the effect level for each of the effects specified
         # For effects that don't have levels a value of 1 should be specified
         # No effects = []
@@ -87,7 +78,7 @@ class Blaze(SpellDefinition):
         self.setEffectLevel(jarray.array([3], 'i'), 3) # Level 3 battle effects
         self.setEffectLevel(jarray.array([4], 'i'), 4) # Level 4 battle effects
     
-    # Affinity methods are
+    # Affin methods are
     #----------------------
     # getCurrentFireAffin()
     # getCurrentElecAffin()
@@ -102,8 +93,8 @@ class Blaze(SpellDefinition):
         # Keep in mind that damaging spells will have a negative base damage value. 
         # The damage should never be above -1
         return int(Math.min(-1, baseDamage 
-            + (baseDamage * attacker.getCurrentFireAffin() / 100.0) # Subtract the casters affinity (which adds damage)
-            - (baseDamage * target.getCurrentFireAffin() / 100.0))) # Add the targets affinity (which reduces damage)
+            + (baseDamage * attacker.getCurrentFireAffin() / 100.0) # Subtract the casters Affin (which adds damage)
+            - (baseDamage * target.getCurrentFireAffin() / 100.0))) # Add the targets Affin (which reduces damage)
     
     def getBattleText(self, target, damage, mpDamage, attackerHPDamage, attackerMPDamage):
         return "Flame engulfs " + target.getName() + "'s body dealing " + `damage * -1` + " damage!"
@@ -147,3 +138,18 @@ class Blaze(SpellDefinition):
         return RandomHorizontalParticleEmitter(None, "BlazeExplosion", soundTime)
         #return RandomHorizontalParticleEmitter()
         #return RainParticleEmitter()
+        
+    def getEffectChance(self, caster, level):
+        # Return the base chance for an effect to take place
+        # Likely useful values...
+        # caster.getCurrentMind()
+        # caster.getCurrentBody()
+        # caster.getCurrentFireAffin()
+        # caster.getCurrentColdAffin()
+        # caster.getCurrentElecAffin()
+        # caster.getCurrentDarkAffin()
+        # caster.getCurrentWaterAffin()
+        # caster.getCurrentWindAffin()
+        # caster.getCurrentEarthAffin()
+        # caster.getCurrentLightAffin()
+        return level * 5 + caster.getCurrentMind() + caster.getCurrentFireAffin()

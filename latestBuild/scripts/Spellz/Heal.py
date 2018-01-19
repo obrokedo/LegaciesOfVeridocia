@@ -27,15 +27,6 @@ class Heal(SpellDefinition):
         self.setEffects(jarray.array(["Heal"], String), 3) # Level 3 battle effects
         self.setEffects(jarray.array(["Heal"], String), 4) # Level 4 battle effects
         
-        # This sets the BASELINE chance (potency)
-        # No effects = []
-        # 1 effect = [15]
-        # Many effects = [15, 30...]
-        self.setEffectChance(jarray.array([100], 'i'), 1) # Level 1 battle effects
-        self.setEffectChance(jarray.array([100], 'i'), 2) # Level 2 battle effects
-        self.setEffectChance(jarray.array([100], 'i'), 3) # Level 3 battle effects
-        self.setEffectChance(jarray.array([100], 'i'), 4) # Level 4 battle effects
-        
         # Set the effect level for each of the effects specified
         # For effects that don't have levels a value of 1 should be specified
         # No effects = []
@@ -102,3 +93,6 @@ class Heal(SpellDefinition):
 
     def getSpellRainFrequency(self, level):
         return 0
+    
+    def getEffectChance(self, caster, level):
+        return 100
