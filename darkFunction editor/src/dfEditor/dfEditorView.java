@@ -20,6 +20,7 @@
 
 package dfEditor;
 
+import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
@@ -36,6 +37,8 @@ import javax.swing.tree.DefaultTreeModel;
 
 import org.jdesktop.application.Action;
 import org.jdesktop.application.FrameView;
+
+import com.googlecode.jfilechooserbookmarks.DefaultBookmarksPanel;
 
 import dfEditor.animation.AnimationController;
 import dfEditor.command.CommandManager;
@@ -56,7 +59,7 @@ public class dfEditorView extends FrameView implements TaskChangeListener, org.j
     public dfEditorView(dfEditorApp app) {
         super(app);
 
-        fileChooser = new JFileChooser();
+        fileChooser = createFileChooser();
 
         initComponents();
 
@@ -75,6 +78,16 @@ public class dfEditorView extends FrameView implements TaskChangeListener, org.j
         });
 
     }
+    
+    private static JFileChooser createFileChooser()
+	{
+		JFileChooser jfc = new JFileChooser();
+		DefaultBookmarksPanel panel = new DefaultBookmarksPanel();
+		panel.setOwner(jfc);
+		jfc.setAccessory(panel);
+		jfc.setPreferredSize(new Dimension(800, 600));
+		return jfc;
+	}
 
     @Override
 	public void willExit(java.util.EventObject aObj)
@@ -588,17 +601,21 @@ public class dfEditorView extends FrameView implements TaskChangeListener, org.j
     private void menuItemSetWeaponActionPerformed(java.awt.event.ActionEvent evt)
     {
     	BufferedImage image = loadCustomImage("Load a custom weapon image");
-    	if (image != null) 
+    	if (image != null) {
     		// Set new weapon
 			dfEditorView.weaponImage = image;
+			JOptionPane.showMessageDialog(null, "You will need to reload your animation file for the weapon images to become visible");
+    	}
     }
     
     private void menuItemSetSwooshActionPerformed(java.awt.event.ActionEvent evt)
     {
     	BufferedImage image = loadCustomImage("Load a custom swoosh image");
-    	if (image != null) 
+    	if (image != null) {
     		// Set new weapon
 			dfEditorView.swooshImage = image;
+			JOptionPane.showMessageDialog(null, "You will need to reload your animation file for the swoosh images to become visible");
+    	}
     }
 
 	private BufferedImage loadCustomImage(String fileSelectText) {

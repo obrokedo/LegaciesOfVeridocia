@@ -20,13 +20,17 @@
 
 package dfEditor;
 
+import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.File;
 
+import javax.swing.JFileChooser;
 import javax.swing.UIManager;
 
 import org.jdesktop.application.Application;
 import org.jdesktop.application.SingleFrameApplication;
+
+import com.googlecode.jfilechooserbookmarks.DefaultBookmarksPanel;
 
 import de.muntjak.tinylookandfeel.TinyLookAndFeel;
 
