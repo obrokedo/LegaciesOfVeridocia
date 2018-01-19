@@ -228,6 +228,7 @@ public class SpriteManager extends Manager
 							}
 						}
 						
+						cs.setCurrentHP(0);
 						spriteItr.remove();
 						stateInfo.removeCombatSprite(cs);
 						MusicConfiguration musicSelector = CommRPG.engineConfiguratior.getMusicConfiguration();

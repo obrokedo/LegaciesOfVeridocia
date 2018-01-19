@@ -63,7 +63,7 @@ public class LOVHealthPanelRenderer implements HealthPanelRenderer {
 		
 		int maxStatDigits = Math.max(("" + sprite.getMaxHP()).length(), ("" + sprite.getMaxMP()).length());
 		
-		drawStatBar("HP", sprite.getCurrentHP(), sprite.getMaxHP(), 
+		drawStatBar("HP", Math.max(0, sprite.getCurrentHP()), sprite.getMaxHP(), 
 				maxStatDigits, healthWidth, largestBarWidth, x + 7, y + 3, graphics, sprite.isHero(), fcrm);
 		if (sprite.getMaxMP() != 0)
 			drawStatBar("MP", sprite.getCurrentMP(), sprite.getMaxMP(), 
