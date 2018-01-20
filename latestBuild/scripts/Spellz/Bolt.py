@@ -91,4 +91,4 @@ class Bolt(SpellDefinition):
         # caster.getCurrentWindAffin()
         # caster.getCurrentEarthAffin()
         # caster.getCurrentLightAffin()
-        return level * 5 + caster.getCurrentMind() + caster.getCurrentElecAffin()
+        return level * (6 - self.getArea()[level]) + caster.getCurrentMind() + caster.getCurrentElecAffin()

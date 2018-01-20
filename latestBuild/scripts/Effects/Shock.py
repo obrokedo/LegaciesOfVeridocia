@@ -49,7 +49,7 @@ class Shock(BattleEffect):
         effectChance = self.getEffectChance()
         effectLevel = self.getEffectLevel()
         
-        resistance = 0
+        resistance = target.getCurrentBody()
             
         # Check to see using the given resistance whether the effect is successful
         if (self.getEffectChance() - resistance) >= random.randint(0, 100):

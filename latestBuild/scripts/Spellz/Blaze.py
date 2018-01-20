@@ -152,4 +152,4 @@ class Blaze(SpellDefinition):
         # caster.getCurrentWindAffin()
         # caster.getCurrentEarthAffin()
         # caster.getCurrentLightAffin()
-        return level * 5 + caster.getCurrentMind() + caster.getCurrentFireAffin()
+        return level * (6 - self.getArea()[level]) + caster.getCurrentMind() + caster.getCurrentFireAffin()
