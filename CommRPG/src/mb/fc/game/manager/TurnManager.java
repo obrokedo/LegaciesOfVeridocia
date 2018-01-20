@@ -327,18 +327,29 @@ public class TurnManager extends Manager implements KeyboardListener
 							String effectText = null;
 							BattleEffect be = currentSprite.getBattleEffects().get(i);
 	
-							if (be.isDone())
+							 
+							Log.debug("The battle effect: " + be.getBattleEffectId() + " was performed on " + currentSprite);
+							effectText = be.getPerformEffectText(currentSprite);
+							
+							// If the sprite is still alive and the effect is done
+							// then remove the effect and indicate such
+							if (currentSprite.getCurrentHP() > 0 && be.isDone())
 							{
 								Log.debug("The battle effect: " + be.getBattleEffectId() + " has ended on " + currentSprite);
 								currentSprite.getBattleEffects().remove(i--);
 								be.effectEnded(currentSprite);
-								effectText = be.effectEndedText(currentSprite);
+								effectText = effectText + "} " + be.effectEndedText(currentSprite);
 								currentSprite.removeBattleEffect(be);
-							} else {
-								Log.debug("The battle effect: " + be.getBattleEffectId() + " was performed on " + currentSprite);
-								effectText = be.getPerformEffectText(currentSprite);
 							}
-	
+							
+							// If the current sprite is dead, there will be no more text added after this
+							// so just end here
+							if (currentSprite.getCurrentHP() <= 0) {
+								if (effectText != null)
+									text = text + effectText + "]";
+								break;
+							}
+							
 							if (effectText != null) {
 								text = text + effectText;
 								if (i + 1 == currentSprite.getBattleEffects().size())

@@ -132,6 +132,8 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 		SpellResource.initSpells(null);
 		this.progressionFrame.init();
 		initializeBulkLoader();
+		gc.getInput().removeAllKeyListeners();
+		gc.getInput().addKeyListener(this);
 	}
 
 	protected void initializeBulkLoader() {

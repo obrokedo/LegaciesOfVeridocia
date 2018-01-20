@@ -36,7 +36,6 @@ public abstract class SpellDefinition implements Serializable
 	protected int[] mpDamage;
 	protected String[][] effects;
 	protected int[][] effectLevel;
-	protected int[][] effectChance;
 	protected Range[] range;
 	protected int[] area;
 	protected String id;
@@ -112,7 +111,7 @@ public abstract class SpellDefinition implements Serializable
 	 * A value of null will be returned for a given index if there is no
 	 * BattleEffect for that level
 	 */
-	public BattleEffect[] getEffects(int spellLevel) {
+	public BattleEffect[] getEffects(CombatSprite caster, int spellLevel) {
 		if (effects == null || effects.length <= spellLevel || 
 				effects[spellLevel] == null || effects[spellLevel].length == 0)
 			return null;
@@ -121,7 +120,7 @@ public abstract class SpellDefinition implements Serializable
 		{
 
 			instantiatedEffects[i] = CommRPG.engineConfiguratior.getBattleEffectFactory().createEffect(effects[spellLevel][i], effectLevel[spellLevel][i]);
-			instantiatedEffects[i].setEffectChance(effectChance[spellLevel][i]);
+			instantiatedEffects[i].setEffectChance(getEffectChance(caster, spellLevel));
 		}
 
 		return instantiatedEffects;
@@ -262,7 +261,6 @@ public abstract class SpellDefinition implements Serializable
 	}
 	protected void setMaxLevel(int maxLevel) {
 		this.effects = new String[maxLevel][];
-		this.effectChance = new int[maxLevel][];
 		this.effectLevel = new int[maxLevel][];
 		this.maxLevel = maxLevel;
 	}
@@ -278,9 +276,8 @@ public abstract class SpellDefinition implements Serializable
 	protected void setEffectLevel(int[] effectLevel, int spellLevel) {
 		this.effectLevel[spellLevel - 1] = effectLevel;
 	}
-	public void setEffectChance(int[] effectChance, int spellLevel) {
-		this.effectChance[spellLevel - 1] = effectChance;
-	}
+	public abstract int getEffectChance(CombatSprite caster, int spellLevel); 
+	
 	protected void setRange(Range[] range) {
 		this.range = range;
 	}

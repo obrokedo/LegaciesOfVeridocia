@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.newdawn.slick.util.Log;
-import org.python.core.util.StringUtil;
 
 import mb.fc.engine.CommRPG;
 import mb.fc.engine.config.BattleFunctionConfiguration;
@@ -340,7 +339,7 @@ public class BattleResults implements Serializable
 		{
 			// Check to see if a battle effect should be applied via this spell
 			BattleEffect[] effs = null;
-			if ((effs = spell.getEffects(spellLevel)) != null)
+			if ((effs = spell.getEffects(attacker, spellLevel)) != null)
 			{
 				for (BattleEffect eff : effs)
 				{

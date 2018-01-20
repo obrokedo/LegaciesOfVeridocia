@@ -264,7 +264,7 @@ public class FCResourceManager {
 					soundByTitle.put(file.getName().replace(".wav", ""), new Sound(file.getPath()));
 			}
 		}
-		
+		*/
 		else if (split[0].equalsIgnoreCase("animsheetdir"))
 		{
 			File dir = new File(split[1]);
@@ -321,7 +321,7 @@ public class FCResourceManager {
 				}
 			}
 		} 
-		*/ else {
+		else {
 			throw new BadResourceException("Unknown resource type to load: " + split[0]);
 		}
 	}

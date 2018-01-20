@@ -130,7 +130,8 @@ public class SpellMenu extends QuadMenu
 			return super.onLeft();
 		else if (selectedLevel > 0)
 		{
-			stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, "menumove", 1f, false));
+			// It's kind of ugly but this menu will not play the sound effect
+			// for this menu move, instead it is played by AttackableSpace
 			selectedLevel--;
 			stateInfo.sendMessage(new LocationMessage(MessageType.SHOW_SPELL_LEVEL, this.getSelectedInt(), selectedLevel));
 			spellMenuRenderer.spellLevelChanged(selectedLevel);
@@ -144,7 +145,8 @@ public class SpellMenu extends QuadMenu
 			return super.onRight();
 		else if (selectedLevel + 1 < stateInfo.getCurrentSprite().getSpellsDescriptors().get(getSelectedInt()).getMaxLevel())
 		{
-			stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, "menumove", 1f, false));
+			// It's kind of ugly but this menu will not play the sound effect
+			// for this menu move, instead it is played by AttackableSpace
 			selectedLevel++;
 			stateInfo.sendMessage(new LocationMessage(MessageType.SHOW_SPELL_LEVEL, this.getSelectedInt(), selectedLevel));
 			spellMenuRenderer.spellLevelChanged(selectedLevel);

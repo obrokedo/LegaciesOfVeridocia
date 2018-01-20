@@ -43,6 +43,8 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 	private final Color ATTACKABLE_COLOR = new Color(255, 0, 0, 70);
 	private boolean targetsAll = false;
 	private boolean canTargetSelf = true;
+	
+	private boolean showHealthBar = false;
 
 	public static final int[][] AREA_0 = {{1}};
 
@@ -95,6 +97,7 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 			int[][] range, int[][] area)
 	{
 		this(stateInfo, currentSprite, true, range, area, true);
+		this.showHealthBar = false;
 		this.setTargetSprite(currentSprite, stateInfo);
 		this.targetsInRange.clear();
 		this.targetsInRange.add(currentSprite);
@@ -110,6 +113,7 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 		this.tileWidth = stateInfo.getTileWidth();
 		this.tileHeight = stateInfo.getTileHeight();
 		this.canTargetSelf = canTargetSelf;
+		this.showHealthBar = true;
 		spriteTileX = currentSprite.getTileX();
 		spriteTileY = currentSprite.getTileY();
 		Log.debug("Finding attackables for " + currentSprite.getName());
@@ -220,11 +224,16 @@ public class AttackableSpace implements KeyboardListener, MouseListener
 			currentSprite.setFacing(Direction.UP);
 
 		stateInfo.removePanel(PanelType.PANEL_ENEMY_HEALTH_BAR);
-		stateInfo.addPanel(new SpriteContextPanel(PanelType.PANEL_ENEMY_HEALTH_BAR, targetsInRange.get(selectedTarget), 
+		if (showHealthBar) {
+			stateInfo.addPanel(new SpriteContextPanel(PanelType.PANEL_ENEMY_HEALTH_BAR, targetsInRange.get(selectedTarget), 
 				CommRPG.engineConfiguratior.getHealthPanelRenderer(), 
 				stateInfo.getResourceManager(), stateInfo.getPaddedGameContainer()));
 
-		stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, "menumove", 1f, false));
+			// Including this in here is a bit of kludge, but because this method is going to be called
+			// twice when creating an AttackableSpace for showing Spell range, this prevents the sound effect from
+			// playing twice as well
+			stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, "menumove", 1f, false));
+		}
 	}
 
 	@Override

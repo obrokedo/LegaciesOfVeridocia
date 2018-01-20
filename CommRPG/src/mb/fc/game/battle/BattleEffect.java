@@ -2,7 +2,6 @@ package mb.fc.game.battle;
 
 import java.io.Serializable;
 
-import mb.fc.engine.CommRPG;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.loading.FCResourceManager;
 import mb.fc.utils.AnimationWrapper;
