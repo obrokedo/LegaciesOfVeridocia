@@ -294,17 +294,17 @@
     <property name="enemy" value="ai=fighter aiapproach=wait enemyid=Erium Soldier unit=12"/>
    </properties>
   </object>
-  <object id="38" name="Erium Soldier" type="NPC" x="576" y="312" width="24" height="24">
+  <object id="38" name="Erium Archer" type="NPC" x="576" y="312" width="24" height="24">
    <properties>
     <property name="enemy" value="ai=fighter aiapproach=wait enemyid=Erium Archer unit=14"/>
    </properties>
   </object>
-  <object id="39" name="Erium Soldier" type="NPC" x="576" y="336" width="24" height="24">
+  <object id="39" name="Erium Mage" type="NPC" x="576" y="336" width="24" height="24">
    <properties>
-    <property name="enemy" value="ai=fighter aiapproach=wait enemyid=Erium Mage unit=15"/>
+    <property name="enemy" value="ai=wizard aiapproach=wait enemyid=Erium Mage unit=15"/>
    </properties>
   </object>
-  <object id="40" name="Erium Soldier" type="NPC" x="576" y="288" width="24" height="24">
+  <object id="40" name="Erium Mage" type="NPC" x="576" y="288" width="24" height="24">
    <properties>
     <property name="enemy" value="ai=wizard aiapproach=wait enemyid=Erium Mage unit=13"/>
    </properties>
