@@ -157,33 +157,75 @@
 	<string require="Battle2," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="I see guards up ahead. We should avoid getting seen.<hardstop>"/>
 </text>
 <cinematic id=0 description="NoahGettingReady" camerax=0 cameray=0>
-	<playmusic music="hq" volume=100/>
+	<pausemusic/>
 	<addactor x=144 y=156 name="cam" anim="Noah" startanim="Down" visible=false init=true associatedhero="Noah"/>
-	<addactor x=144 y=156 name="Noah" anim="Noah" startanim="Down" visible=true init=true associatedhero="Noah"/>
-	<camerafollow name="Noah"/>
-	<fadein time=4000 halting=false init=true/>
-	<haltingmove name="Noah" x=144 y=132 speed="1" movehor=false movediag=false/>
-	<haltingmove name="Noah" x=120 y=132 speed="1" movehor=true movediag=false/>
-	<facing name="Noah" dir=0/>
+	<addactor x=96 y=108 name="Noah" anim="Noah" startanim="Down" visible=true init=true associatedhero="Noah"/>
+	<speech text="ZZZZzzzzz......<hardstop><linebreak>ZZZzzzzz.....<pause> Hnnn.... what time...<pause> is it...?<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
+	<wait time=750/>
+	<speech text="Oh no!<pause><pause><linebreak> I'm gonna be late again!!<softstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
+	<camerafollow name="cam"/>
+	<playmusic music="hq" volume=100/>
+	<fadein time=750 halting=true init=true/>
+	<wait time=500/>
+	<playsound sound="jump" volume=100/>
+	<forcedmove name="Noah" x=96 y=96 speed=5 facing=1 movehor=false movediag=false/>
+	<wait time=250/>
+	<forcedmove name="Noah" x=96 y=132 speed=7 facing=1 movehor=false movediag=false/>
 	<playsound sound="impact" volume=100/>
-	<wait time=1000/>
-	<haltingmove name="Noah" x=192 y=132 speed="1" movehor=true movediag=false/>
-	<facing name="Noah" dir=0/>
-	<playsound sound="impact" volume=100/>
-	<wait time=1000/>
-	<speech text="Sword,<pause> knife<pause>.<pause>.<pause>.<pause> What else am I forgetting?<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
-	<shakehead name="Noah" time=1000/>
-	<wait time=1000/>
-	<speech text="A snack!<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
-	<haltingmove name="Noah" x=168 y=132 speed="1" movehor=true movediag=false/>
-	<haltingmove name="Noah" x=168 y=156 speed="1" movehor=true movediag=false/>
+	<wait time=500/>
 	<facing name="Noah" dir=3/>
+	<wait time=750/>
+	<forcedmove name="Noah" x=96 y=120 speed=7 facing=3 movehor=false movediag=false/>
+	<wait time=125/>
+	<forcedmove name="Noah" x=96 y=132 speed=7 facing=3 movehor=false movediag=false/>
+	<wait time=125/>
+	<forcedmove name="Noah" x=96 y=120 speed=7 facing=3 movehor=false movediag=false/>
+	<wait time=125/>
+	<forcedmove name="Noah" x=96 y=132 speed=7 facing=3 movehor=false movediag=false/>
+	<wait time=125/>
+	<speech text="I need to grab my gear!!<softstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
+	<haltingmove name="Noah" x=168 y=120 speed="3" movehor=true movediag=false/>
+	<tremble name="Noah"/>
+	<wait time=125/>
+	<stopse name="Noah"/>
+	<wait time=125/>
+	<tremble name="Noah"/>
+	<wait time=125/>
+	<stopse name="Noah"/>
+	<playsound sound="speechblip" volume=100/>
+	<wait time=500/>
+	<haltingmove name="Noah" x=192 y=120 speed="3" movehor=true movediag=false/>
+	<facing name="Noah" dir=0/>
+	<wait time=125/>
+	<tremble name="Noah"/>
+	<wait time=125/>
+	<stopse name="Noah"/>
+	<playsound sound="impact" volume=100/>
+	<wait time=500/>
+	<haltingmove name="Noah" x=144 y=156 speed="1.2" movehor=true movediag=false/>
+	<speech text="Sword,<pause> knife<pause>.<pause>.<pause>.<pause> What else am I forgetting?<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
+	<wait time=125/>
+	<facing name="Noah" dir=2/>
+	<wait time=500/>
+	<facing name="Noah" dir=3/>
+	<wait time=500/>
+	<shakehead name="Noah" time=350/>
+	<wait time=250/>
+	<speech text="Breakfast!!<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
+	<haltingmove name="Noah" x=180 y=156 speed="3" movehor=true movediag=false/>
+	<wait time=100/>
+	<tremble name="Noah"/>
+	<wait time=125/>
+	<stopse name="Noah"/>
 	<playsound sound="impact" volume=100/>
 	<wait time=1000/>
-	<haltingmovepath name="Noah" x=144 y=132 speed="1"/>
+	<haltingmovepath name="Noah" x=144 y=156 speed="2.4"/>
 	<facing name="Noah" dir=1/>
+	<wait time=500/>
+	<nod name="Noah"/>
 	<speech text="All set.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
-	<haltingmove name="Noah" x=144 y=180 speed="1" movehor=false movediag=false/>
+	<fadeout time=1000 halting=false/>
+	<haltingmove name="Noah" x=144 y=180 speed="1.2" movehor=false movediag=false/>
 	<loadmap mapdata="erium" enter="NoahHouse"/>
 </cinematic>
 <cinematic id=1 description="Bartender" camerax=1752 cameray=384>
