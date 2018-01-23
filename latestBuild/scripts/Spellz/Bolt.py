@@ -5,7 +5,7 @@ from mb.fc.game import Range
 from org.newdawn.slick import Color
 from java.lang import String
 from BattleEffect import BattleEffect
-from ParticleEmitter import OrientedFlashParticleEmitter
+from ParticleEmitter import OrientedFlashParticleEmitter, RandomHorizontalParticleEmitter
 
 import CommonFunctions
 
@@ -60,7 +60,8 @@ class Bolt(SpellDefinition):
             
     # This is at 30% opacity    
     def getSpellOverlayColor(self, level):
-        return Color(150, 220, 255);
+        #return Color(150, 220, 255);
+        return Color(0, 0, 0);
         
     def getSpellAnimationFile(self, level):
         return "BOLT"
@@ -70,10 +71,23 @@ class Bolt(SpellDefinition):
         return "BOLT"
     
     def getSpellRainAnimationName(self, level):
-        return "level"+str(level)
+        return "level1"#+str(level)
     
     def getEmitter(self, level):
-        return OrientedFlashParticleEmitter()
+        # You could create a emitter with sounds here
+        # For example, new particle plays "fall", particle end plays "blast"
+        delay = 0
+        soundTime = 0
+        if level == 1:
+            soundTime = 499
+        elif level == 2:
+            soundTime = 499
+        elif level == 3:
+            soundTime = 499
+        elif level == 4:
+            soundTime = 499
+            
+        return RandomHorizontalParticleEmitter("Thunder", None , soundTime)
         
     def getSpellRainFrequency(self, level):
         return 10

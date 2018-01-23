@@ -135,7 +135,7 @@ class Blaze(SpellDefinition):
         elif level == 4:
             soundTime = 375
             
-        return RandomHorizontalParticleEmitter(None, "BlazeExplosion", soundTime)
+        return RandomHorizontalParticleEmitter(None, "Explosion1", soundTime)
         #return RandomHorizontalParticleEmitter()
         #return RainParticleEmitter()
         
