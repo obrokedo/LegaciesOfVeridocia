@@ -119,7 +119,7 @@
 	<stopse name="Huun"/>
 	<speech text="Alright, Sharna. What's this about?<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<speech text="I heard something in the courtyard. It sounded like voices.<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
-	<speech text="No one's authorised to be out there this late besides us. We'd better check it out. Sharna, Huun, let's go.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
+	<speech text="Nobody is permitted to be out there this late besides us. We'd better check it out. Sharna, Huun, let's go.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<forcedmove name="Huun" x=624 y=420 speed=3 facing=1 movehor=true movediag=false/>
 	<forcedmove name="Sharna" x=672 y=420 speed=3 facing=1 movehor=false movediag=false/>
 	<haltingmove name="Noah" x=744 y=600 speed="2" movehor=true movediag=false/>

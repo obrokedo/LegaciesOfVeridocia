@@ -1,4 +1,4 @@
-<enemy id=0 name="Darkling Ooze" hp=9 mp=0 attack=9 defense=4 speed=5 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength=0 mindStrength=0 counterStrength=0 evadeStrength=0 doubleStrength=0 critStrength=0 level=-1 move=4 movementtype="NORMAL" animations="Darkling Ooze" gold=0 palette="">
+<enemy id=0 name="Darkling Ooze" hp=9 mp=0 attack=10 defense=4 speed=5 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength=0 mindStrength=0 counterStrength=0 evadeStrength=0 doubleStrength=0 critStrength=0 level=-1 move=4 movementtype="NORMAL" animations="Darkling Ooze" gold=0 palette="">
 </enemy>
 <enemy id=1 name="Erium Soldier" hp=11 mp=0 attack=11 defense=5 speed=4 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength=0 mindStrength=0 counterStrength=0 evadeStrength=0 doubleStrength=0 critStrength=0 level=1 move=5 movementtype="NORMAL" animations="eriumguard" gold=0 palette="">
 	<item itemid="Erium Blade" equipped=true/>

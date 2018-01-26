@@ -98,7 +98,7 @@
 	<conversation require="," exclude="," trigger=-1 heroportrait1="" enemyportrait1="" animportrait1="" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="Good evening, Noah.<pause>  That blizzard the other night was really bizarre, wasn't it?<hardstop><split>I've never seen anything like that...<pause>  It came and went in almost no time at all!<hardstop><split>And you wouldn't even know it by the weather today!<hardstop>"/>
 </text>
 <text id=1 description="child1">
-	<conversation require="," exclude="," trigger=-1 heroportrait1="" enemyportrait1="" animportrait1="" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="Do you want to catch bugs with me?<hardstop><split>Not today kiddo, I need to get to the castle and -<hardstop><split>Time for bed!<hardstop><split>Maybe next time! Bye!<hardstop>"/>
+	<conversation require="," exclude="," trigger=-1 heroportrait1="" enemyportrait1="" animportrait1="" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="Do you want to catch bugs with me?<hardstop><split>Not today kiddo, I need to get to the castle and -<hardstop><split>Time for bed!<hardstop><split>Better mind your mother.  We'll play next time! Bye!<hardstop>"/>
 </text>
 <text id=2 description="citizen2">
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="Erium has maintained peace for a long time, so we don't have to enlist unless we want to.<pause> Me, I'd rather go fishing!<hardstop>"/>
@@ -110,7 +110,7 @@
 	<conversation require="," exclude="," trigger=-1 heroportrait1="" enemyportrait1="" animportrait1="" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="Have you ever wondered what is on the other side of the mountains?<hardstop><split>The kingdom of Signus is to the east, but the passage is too treacherous for safe use.<hardstop><split>Oh that's right. It's a shame, I'd like to visit there some day.<hardstop>"/>
 </text>
 <text id=5 description="citizen5">
-	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="I do enjoy that we can all leave our doors open for anyone to drop in but I must get ready for bed. Please see your way out.<hardstop>"/>
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="I enjoy that we can all leave our doors open for anyone to drop in but I must get ready for bed. Please see your way out.<hardstop>"/>
 </text>
 <text id=6 description="Item Shop">
 	<string require="," exclude="," trigger=1 heroportrait="" enemyportrait="" animportrait="Shopkeeper1" message="We have the finest remedies in town. How can I help you?<hardstop>"/>
@@ -145,7 +145,7 @@
 	<string require="," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Tough,<pause> Thorough,<pause> Thought.<hardstop>"/>
 </text>
 <text id=16 description="Book2">
-	<string require="," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Genesis: Ancient Technology<hardstop>"/>
+	<string require="," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Genesis: Ancient Technology.<hardstop>"/>
 </text>
 <text id=17 description="Book3">
 	<string require="," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Is This The Real Life?<hardstop>"/>
@@ -160,9 +160,9 @@
 	<pausemusic/>
 	<addactor x=144 y=156 name="cam" anim="Noah" startanim="Down" visible=false init=true associatedhero="Noah"/>
 	<addactor x=96 y=108 name="Noah" anim="Noah" startanim="Down" visible=true init=true associatedhero="Noah"/>
-	<speech text="ZZZZzzzzz......<hardstop><linebreak>ZZZzzzzz.....<pause> Hnnn.... what time...<pause> is it...?<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
+	<speech text="ZZZzzz......<hardstop><linebreak>ZZZzzz.....<pause> Uhn.... what time...<pause> is it...?<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<wait time=750/>
-	<speech text="Oh no!<pause><pause><linebreak> I'm gonna be late again!!<softstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
+	<speech text="Oh no!<pause><pause><linebreak> I better not be late!<softstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<camerafollow name="cam"/>
 	<playmusic music="hq" volume=100/>
 	<fadein time=750 halting=true init=true/>
@@ -183,7 +183,7 @@
 	<wait time=125/>
 	<forcedmove name="Noah" x=96 y=132 speed=7 facing=3 movehor=false movediag=false/>
 	<wait time=125/>
-	<speech text="I need to grab my gear!!<softstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
+	<speech text="I need to grab my gear!<softstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<haltingmove name="Noah" x=168 y=120 speed="3" movehor=true movediag=false/>
 	<tremble name="Noah"/>
 	<wait time=125/>
@@ -211,7 +211,7 @@
 	<wait time=500/>
 	<shakehead name="Noah" time=350/>
 	<wait time=250/>
-	<speech text="Breakfast!!<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
+	<speech text="Something to eat!<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<haltingmove name="Noah" x=180 y=156 speed="3" movehor=true movediag=false/>
 	<wait time=100/>
 	<tremble name="Noah"/>
