@@ -218,7 +218,7 @@
 	<wait time=250/>
 	<stopse name="Mage2"/>
 	<visible name="Mage2" isvis=false/>
-	<addactor x=288 y=828 name="Dog" anim="MistalCloakedHooded" startanim="UnDown" visible=true init=false associatedhero=""/>
+	<addactor x=288 y=828 name="Dog" anim="Porcupine" startanim="UnDown" visible=true init=false associatedhero=""/>
 	<haltingmovepath name="Dog" x=216 y=864 speed="3"/>
 	<haltingmovepath name="Dog" x=216 y=1152 speed="3"/>
 </cinematic>
