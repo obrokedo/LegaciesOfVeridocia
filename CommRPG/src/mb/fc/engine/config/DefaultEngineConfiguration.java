@@ -8,6 +8,8 @@ public class DefaultEngineConfiguration implements EngineConfigurator {
 	protected HealthPanelRenderer healthPanelRenderer = new DefaultHealthPanelRenderer();
 	protected SpellMenuRenderer spellMenuRenderer = new DefaultSpellMenuRenderer();
 	protected YesNoMenuRenderer yesNoMenuRenderer = new DefaultYesNoRenderer();
+	protected CinematicActorConfiguration cinematicActorConfiguration = 
+			new DefaultCinematicActorConfiguration();
 	
 	@Override
 	public void getAttackCinematic() {
@@ -50,7 +52,7 @@ public class DefaultEngineConfiguration implements EngineConfigurator {
 	@Override
 	public CinematicActorConfiguration getCinematicActorConfiguration() {
 		// TODO Auto-generated method stub
-		return null;
+		return cinematicActorConfiguration;
 	}
 
 	@Override

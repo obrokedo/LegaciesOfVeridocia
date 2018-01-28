@@ -220,7 +220,7 @@ public class CinematicCreatorPanel implements ActionListener, ChangeListener, It
 
 		if (pt.getCurrentPC() == null)
 		{
-			pt.setSelectedListItem(cinematicIds.getSelectedIndex());
+			pt.setSelectedListItem(cinematicIds.getSelectedIndex(), null);
 			System.out.println("Set the selected index " + pt.getCurrentPC());
 		}
 
@@ -284,16 +284,16 @@ public class CinematicCreatorPanel implements ActionListener, ChangeListener, It
 
 		if (arg0.getActionCommand().equalsIgnoreCase("trigger"))
 		{
-			if (pt.setSelectedListItem(Integer.parseInt(mo.getParam("triggerid"))))
+			if (pt.setSelectedListItem(Integer.parseInt(mo.getParam("triggerid")), null))
 			{
 				plannerFrame.setSelectedTabIndex(PlannerFrame.TAB_TRIGGER);
-				pt.setSelectedListItem(Integer.parseInt(mo.getParam("triggerid")));
+				pt.setSelectedListItem(Integer.parseInt(mo.getParam("triggerid")), null);
 				LOGGER.fine("TRIGGER ID " + Integer.parseInt(mo.getParam("triggerid")));
 			}
 		}
 		else if (arg0.getActionCommand().equalsIgnoreCase("enemy"))
 		{
-			if (pt.setSelectedListItem(Integer.parseInt(mo.getParam("enemyid"))))
+			if (pt.setSelectedListItem(Integer.parseInt(mo.getParam("enemyid")), null))
 			{
 				plannerFrame.setSelectedTabIndex(PlannerFrame.TAB_ENEMY);
 				LOGGER.fine("TRIGGER ID " + Integer.parseInt(mo.getParam("enemyid")));
@@ -307,7 +307,8 @@ public class CinematicCreatorPanel implements ActionListener, ChangeListener, It
 				if (ct.cinematicTime.get(i) >= timeSlider.getValue())
 				{
 					plannerFrame.setSelectedTabIndex(PlannerFrame.TAB_CIN);
-					pt.updateAttributeList(i);
+					pt.setSelectedListItem(selectedCinIndex, i);
+					// pt.updateAttributeList(i);
 					break;
 				}
 			}
@@ -400,7 +401,7 @@ public class CinematicCreatorPanel implements ActionListener, ChangeListener, It
 		System.out.println("REMOVE ME: " + cinematicIds.getSelectedIndex());
 		if (pt.getCurrentPC() == null)
 		{
-			pt.setSelectedListItem(cinematicIds.getSelectedIndex());
+			pt.setSelectedListItem(cinematicIds.getSelectedIndex(), null);
 			System.out.println("Set the selected index " + pt.getCurrentPC());
 		}
 

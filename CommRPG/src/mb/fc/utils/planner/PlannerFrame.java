@@ -35,14 +35,11 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import org.newdawn.slick.SlickException;
-
 import com.googlecode.jfilechooserbookmarks.DefaultBookmarksPanel;
 
 import mb.fc.engine.CommRPG;
 import mb.fc.engine.log.LoggingUtils;
 import mb.fc.engine.state.MenuState;
-import mb.fc.engine.state.MenuState.LoadTypeEnum;
 import mb.fc.loading.MapParser;
 import mb.fc.loading.PlannerMap;
 import mb.fc.loading.PlannerTilesetParser;
@@ -114,6 +111,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 		JMenuBar menuBar = new JMenuBar();
 		
 		createAndAddFileMenu(menuBar);
+		createAndAddEditMenu(menuBar);
 		createAndAddOptionsMenu(menuBar);
 		createAndAddCinematicMenu(menuBar);
 		
@@ -176,6 +174,20 @@ public class PlannerFrame extends JFrame implements ActionListener,
 		menuBar.add(fileMenu);
 	}
 	
+	private void createAndAddEditMenu(JMenuBar menuBar) {
+		JMenu optionsMenu = new JMenu("Edit");
+		JMenuItem findItem = new JMenuItem( "Find");
+		findItem.addActionListener(this);
+		findItem.setActionCommand("find");
+		optionsMenu.add(findItem);
+		
+		JMenuItem findGlobalItem = new JMenuItem( "Global Find");
+		findGlobalItem.addActionListener(this);
+		findGlobalItem.setActionCommand("findglobal");
+		optionsMenu.add(findGlobalItem);
+		menuBar.add(optionsMenu);
+	}
+	
 	private void createAndAddOptionsMenu(JMenuBar menuBar) {
 		JMenu optionsMenu = new JMenu("Options");
 		JCheckBoxMenuItem showLocationItem = new JCheckBoxMenuItem( "Show Map Locations", true);
@@ -207,50 +219,50 @@ public class PlannerFrame extends JFrame implements ActionListener,
 
 		// Add triggers
 		PlannerTab tempPlannerTab = new PlannerTab("Triggers", containersByName,
-				new String[] { "trigger" }, PlannerValueDef.REFERS_TRIGGER, this);
+				new String[] { "trigger" }, PlannerValueDef.REFERS_TRIGGER, this, TAB_TRIGGER);
 		plannerTabs.add(tempPlannerTab);
 		jtp.addTab("Trigger Actions", tempPlannerTab.getUiAspect());
 
 		// Add conditions
 		tempPlannerTab = new PlannerTab("Conditions", containersByName,
-				new String[] { "condition" }, PlannerValueDef.REFERS_CONDITIONS, this);
+				new String[] { "condition" }, PlannerValueDef.REFERS_CONDITIONS, this, TAB_CONDITIONS);
 		plannerTabs.add(tempPlannerTab);
 		jtp.addTab("Condition", tempPlannerTab.getUiAspect());
 		
 		// Add cinematics
 		tempPlannerTab = new PlannerTab("Cinematics", containersByName,
 				new String[] { "cinematic" }, PlannerValueDef.REFERS_CINEMATIC,
-				this);
+				this, TAB_CIN);
 		plannerTabs.add(tempPlannerTab);
 		jtp.addTab("Cinematic", tempPlannerTab.getUiAspect());
 
 		// Add speech
 		tempPlannerTab = new PlannerTab("Speeches", containersByName,
-				new String[] { "text" }, PlannerValueDef.REFERS_TEXT, this);
+				new String[] { "text" }, PlannerValueDef.REFERS_TEXT, this, TAB_TEXT);
 		plannerTabs.add(tempPlannerTab);
 		jtp.addTab("Speech", tempPlannerTab.getUiAspect());
 		
 		// Add heroes
 		tempPlannerTab = new PlannerTab("Heroes", containersByName,
-				new String[] { "hero" }, PlannerValueDef.REFERS_HERO, this);
+				new String[] { "hero" }, PlannerValueDef.REFERS_HERO, this, TAB_HERO);
 		plannerTabs.add(tempPlannerTab);
 		jtp.addTab("Heroes", tempPlannerTab.getUiAspect());
 
 		// Add enemies
 		tempPlannerTab = new PlannerTab("Enemies", containersByName,
-				new String[] { "enemy" }, PlannerValueDef.REFERS_ENEMY, this);
+				new String[] { "enemy" }, PlannerValueDef.REFERS_ENEMY, this, TAB_ENEMY);
 		plannerTabs.add(tempPlannerTab);
 		jtp.addTab("Enemies", tempPlannerTab.getUiAspect());
 
 		// Add items
 		tempPlannerTab = new PlannerTab("Items", containersByName,
-				new String[] { "item" }, PlannerValueDef.REFERS_ITEM, this);
+				new String[] { "item" }, PlannerValueDef.REFERS_ITEM, this, TAB_ITEM);
 		plannerTabs.add(tempPlannerTab);
 		jtp.addTab("Items", tempPlannerTab.getUiAspect());
 
 		// Add quests
 		tempPlannerTab = new PlannerTab("Quests", containersByName,
-				new String[] { "quest" }, PlannerValueDef.REFERS_QUEST, this);
+				new String[] { "quest" }, PlannerValueDef.REFERS_QUEST, this, TAB_QUEST);
 		plannerTabs.add(tempPlannerTab);
 		jtp.addTab("Quests", tempPlannerTab.getUiAspect());
 
@@ -406,8 +418,124 @@ public class PlannerFrame extends JFrame implements ActionListener,
 			} else {
 				JOptionPane.showMessageDialog(this, "No cinematic has been selected yet");
 			}
+		} else if (actionCommand.equalsIgnoreCase("find") || actionCommand.equalsIgnoreCase("findglobal")) {
+			String searchString = JOptionPane.showInputDialog(this, "Search text:", 
+					(actionCommand.equalsIgnoreCase("find") ? "Find" : "Global Find"), JOptionPane.QUESTION_MESSAGE);
+			
+			if (searchString != null) {
+				List<SearchResult> results = null;
+				if (actionCommand.equalsIgnoreCase("findglobal")) 
+					results = searchGlobal(searchString);
+				else
+					results = searchLocal(searchString);
+				
+				
+				if (results.size() > 0) {
+					new PlannerSearchFrame(this, results);
+				} else
+					JOptionPane.showMessageDialog(this, "No matches were found");
+			}
 		}
 		
+	}
+
+	private List<SearchResult> searchLocal(String searchString) {
+		searchString = searchString.toLowerCase();
+		List<SearchResult> results = new ArrayList<>();
+		searchPlannerTabs(getDataInputTabs(), searchString, results, null);
+		return results;
+	}
+	
+	private List<SearchResult> searchGlobal(String searchString) {
+		
+		List<SearchResult> results = new ArrayList<>();
+		
+		// Get the non map related tab search results first and only once
+		List<PlannerTab> nonMapTabs = new ArrayList<>();
+		nonMapTabs.add(plannerTabs.get(TAB_ENEMY));
+		nonMapTabs.add(plannerTabs.get(TAB_HERO));
+		nonMapTabs.add(plannerTabs.get(TAB_ITEM));
+		nonMapTabs.add(plannerTabs.get(TAB_QUEST));
+		searchPlannerTabs(nonMapTabs, searchString, results, null);
+		
+		// Go through all of the map data files searching
+		for (File file : new File(PlannerIO.PATH_MAPDATA).listFiles())
+		{
+			ArrayList<TagArea> tagAreas = null;
+			try {
+				tagAreas = XMLParser.process(Files.readAllLines(
+					Paths.get(file.getAbsolutePath()), StandardCharsets.UTF_8));
+			} catch (IOException e) {
+				JOptionPane.showMessageDialog(this, 
+						"An error occurred while trying to parse file " + file.getPath() + " it will not be included in search results");
+				e.printStackTrace();
+				continue;
+			}
+			List<PlannerTab> tempTabs = new ArrayList<>();
+			// Add triggers
+			tempTabs.add(new PlannerTab("Triggers", containersByName,
+					new String[] { "trigger" }, PlannerValueDef.REFERS_TRIGGER, this, TAB_TRIGGER));
+
+			// Add conditions
+			tempTabs.add(new PlannerTab("Conditions", containersByName,
+					new String[] { "condition" }, PlannerValueDef.REFERS_CONDITIONS, this, TAB_CONDITIONS));
+			
+			// Add cinematics
+			tempTabs.add(new PlannerTab("Cinematics", containersByName,
+					new String[] { "cinematic" }, PlannerValueDef.REFERS_CINEMATIC,
+					this, TAB_CIN));
+
+			// Add speech
+			tempTabs.add(new PlannerTab("Speeches", containersByName,
+					new String[] { "text" }, PlannerValueDef.REFERS_TEXT, this, TAB_TEXT));
+		
+			plannerIO.parseContainer(tagAreas, tempTabs.get(0), "trigger", containersByName);
+			plannerIO.parseContainer(tagAreas, tempTabs.get(3), "text", containersByName);
+			plannerIO.parseContainer(tagAreas, tempTabs.get(2), "cinematic", containersByName);
+			plannerIO.parseContainer(tagAreas, tempTabs.get(1), "condition", containersByName);
+			
+			searchPlannerTabs(tempTabs, searchString, results, file.getName());
+		}
+		
+		return results;
+	}
+	
+	private void searchPlannerTabs(List<PlannerTab> plannerTabs, String searchString, 
+			List<SearchResult> results, String optionalFile) {
+		for (PlannerTab pt : plannerTabs) {
+			for (PlannerContainer pc : pt.getListPC()) {
+				searchPlannerLine(searchString, pt, pc, pc.getDefLine(), results, optionalFile);
+				for (PlannerLine pl : pc.getLines())
+					searchPlannerLine(searchString, pt, pc, pl, results, optionalFile);
+			}
+		}
+	}
+	
+	private void searchPlannerLine(String searchString, PlannerTab pt, 
+			PlannerContainer pc, PlannerLine pl, List<SearchResult> results, String optionalFile) {
+		for (Object o : pl.getValues()) {
+			if (o != null && o instanceof String && ((String) o).trim().length() > 0
+					&& ((String) o).toLowerCase().contains(searchString)) {
+				results.add(new SearchResult(pt, pc, pl, (String) o, optionalFile));
+			}
+		}
+	}
+	
+	class SearchResult {
+		public final PlannerTab pt; 
+		public final PlannerContainer pc; 
+		public final PlannerLine pl;
+		public final String value;
+		public final String file;
+		
+		public SearchResult(PlannerTab pt, PlannerContainer pc, PlannerLine pl, String value, String file) {
+			super();
+			this.pt = pt;
+			this.pc = pc;
+			this.pl = pl;
+			this.value = value;
+			this.file = file;
+		}
 	}
 	
 	private boolean promptAndLoadPlannerMap() 
@@ -460,6 +588,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 	}
 
 	public void openFile(File triggerFile) {
+		this.triggerFile = triggerFile;
 		openFile(triggerFile, true);
 	}
 	
@@ -597,6 +726,10 @@ public class PlannerFrame extends JFrame implements ActionListener,
 	{
 		jtp.setSelectedIndex(index);
 	}
+	
+	public void setSelectedTab(PlannerTab pt) { 
+		
+	}
 
 	public PlannerContainerDef getContainerDefByName(String name)
 	{
@@ -637,6 +770,4 @@ public class PlannerFrame extends JFrame implements ActionListener,
 	public boolean hasPlannerMap() {
 		return plannerMap != null;
 	}
-	
-	
 }

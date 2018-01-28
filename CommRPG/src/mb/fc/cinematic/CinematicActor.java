@@ -22,7 +22,6 @@ import mb.fc.game.ui.PaddedGameContainer;
 import mb.fc.utils.AnimSprite;
 import mb.fc.utils.Animation;
 import mb.fc.utils.SpriteAnims;
-import mb.jython.GlobalPythonFactory;
 
 /**
  * Defines an "Actor" in a cinematic and contains the state information
@@ -302,6 +301,12 @@ public class CinematicActor implements Comparable<CinematicActor>
 		for (AnimSprite as : anim.frames.get(0).sprites)
 		{
 			Image im = spriteAnims.getImageAtIndex(as.imageIndex).copy();
+			if (as.flipH) {
+				im = im.getFlippedCopy(true, false);
+			}
+			if (as.flipV) {
+				im = im.getFlippedCopy(false, true);
+			}
 			switch (specialEffectDirection)
 			{
 				case UP:

@@ -81,9 +81,8 @@ public class MapEditorRenderPanel extends JPanel implements MouseListener
 							continue;
 						else if (mo.getKey().equalsIgnoreCase("terrain") && !parentPanel.isDisplayTerrain())
 							continue;
-						else if (!mo.getKey().equalsIgnoreCase("enemy") &&
-								!mo.getKey().equalsIgnoreCase("battletrigger")
-								&& !mo.getKey().equalsIgnoreCase("terrain") && !mo.getKey().equalsIgnoreCase("trigger")
+						else if (!mo.getKey().equalsIgnoreCase("enemy") 
+								&& !mo.getKey().equalsIgnoreCase("terrain") 
 								&& !parentPanel.isDisplayOther())
 							continue;
 					}

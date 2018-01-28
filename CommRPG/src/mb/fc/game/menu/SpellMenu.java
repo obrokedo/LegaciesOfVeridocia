@@ -91,7 +91,8 @@ public class SpellMenu extends QuadMenu
 		}
 		else
 		{
-			stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, "menuselect", 1f, false));
+			// stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, "menuselect", 1f, false));
+			// Don't play a sound here because the "AttackableSpace" will also be playing a sound
 			choseSpell = true;
 			selectedLevel = 0;
 			spellMenuRenderer.spellLevelChanged(0);

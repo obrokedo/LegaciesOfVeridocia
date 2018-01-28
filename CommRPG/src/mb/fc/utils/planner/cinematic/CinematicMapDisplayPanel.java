@@ -436,7 +436,7 @@ public class CinematicMapDisplayPanel extends JPanel implements ActionListener, 
 		this.actorLocations.clear();
 
 		PlannerTab pt = mapPanel.getPlannerFrame().getPlannerTabAtIndex(PlannerFrame.TAB_CIN);
-		pt.setSelectedListItem(index);
+		pt.setSelectedListItem(index, null);
 		currentPC = pt.getCurrentPC();
 
 		try

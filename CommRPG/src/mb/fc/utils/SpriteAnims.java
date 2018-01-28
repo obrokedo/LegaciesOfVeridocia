@@ -56,7 +56,7 @@ public class SpriteAnims
 	}
 
 	public Animation getCharacterAnimation(String name, boolean isPromoted)
-	{
+	{	
 		Animation a = animations.get((isPromoted ? AnimationConfiguration.getPromotedPrefix() : AnimationConfiguration.getUnpromotedPrefix()) + name);
 		if (a == null)
 			throw new BadResourceException("Unable to find animation: " +

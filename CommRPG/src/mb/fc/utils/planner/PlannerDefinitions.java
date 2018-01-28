@@ -7,7 +7,6 @@ import java.util.Hashtable;
 import mb.fc.engine.CommRPG;
 import mb.fc.engine.config.EngineConfigurationValues;
 import mb.fc.game.constants.AttributeStrength;
-import mb.jython.GlobalPythonFactory;
 
 public class PlannerDefinitions {
 	private static String PATH_ANIMATIONS = "animations/animationsheets";
@@ -28,7 +27,7 @@ public class PlannerDefinitions {
 		setupItemDefinitions(listOfLists, containersByName);
 		setupQuestDefinitions(listOfLists, containersByName);
 		setupCinematicDefinitions(listOfLists, containersByName);
-		setupMapDefinitions(listOfLists, containersByName);
+		// setupMapDefinitions(listOfLists, containersByName);
 		setupMapEditorDefinitions(listOfLists, containersByName);
 	}
 
@@ -390,7 +389,7 @@ public class PlannerDefinitions {
 						"speed",
 						false,
 						"Move Speed",
-						"The amount of pixels that the actor will move every 20ms towards their destination. Normal movement is 2.4"));
+						"The amount of pixels that the actor will move every 'getMoveUpdate' milliseconds defined in the CinematicActorConfiguration. With the default value of 20ms a normal movement speed is 2.4"));
 
 		definingValues
 		.add(new PlannerValueDef(
@@ -438,7 +437,7 @@ public class PlannerDefinitions {
 						"speed",
 						false,
 						"Move Speed",
-						"The amount of pixels that the actor will move every 20ms towards their destination. Normal movement is 2.4"));
+						"The amount of pixels that the actor will move every 'getMoveUpdate' milliseconds defined in the CinematicActorConfiguration. With the default value of 20ms a normal movement speed is 2.4"));
 		allowableLines
 				.add(new PlannerLineDef(
 						"haltingmovepath",
@@ -468,7 +467,7 @@ public class PlannerDefinitions {
 						"speed",
 						false,
 						"Move Speed",
-						"The amount of pixels that the actor will move every 20ms towards their destination. Normal movement is 2.4"));
+						"The amount of pixels that the actor will move every 'getMoveUpdate' milliseconds defined in the CinematicActorConfiguration. With the default value of 20ms a normal movement speed is 2.4"));
 
 		definingValues
 		.add(new PlannerValueDef(
@@ -511,11 +510,11 @@ public class PlannerDefinitions {
 		definingValues
 				.add(new PlannerValueDef(
 						PlannerValueDef.REFERS_NONE,
-						PlannerValueDef.TYPE_INT,
+						PlannerValueDef.TYPE_STRING,
 						"speed",
 						false,
 						"Move Speed",
-						"The amount of pixels that the actor will move every 30ms towards their destination"));
+						"The amount of pixels that the actor will move every 'getMoveUpdate' milliseconds defined in the CinematicActorConfiguration. With the default value of 20ms a normal movement speed is 2.4"));
 		definingValues
 				.add(new PlannerValueDef(PlannerValueDef.REFERS_DIRECTION,
 						PlannerValueDef.TYPE_INT, "facing", false, "Facing",
@@ -566,7 +565,7 @@ public class PlannerDefinitions {
 						"speed",
 						false,
 						"Move Speed",
-						"The amount of pixels that the actor will move every 20ms towards their destination. Normal movement is 2.4"));
+						"The amount of pixels that the actor will move every 'getMoveUpdate' milliseconds defined in the CinematicActorConfiguration. With the default value of 20ms a normal movement speed is 2.4"));
 
 		allowableLines
 				.add(new PlannerLineDef(
@@ -2798,79 +2797,6 @@ public class PlannerDefinitions {
 		containersByName.put("condition", conditionContainer);
 	}
 
-	public static void setupMapDefinitions(ArrayList<ArrayList<PlannerReference>> listOfLists,
-			Hashtable<String, PlannerContainerDef> containersByName) {
-		PlannerContainerDef itemContainer;
-
-		// Setup defining line
-		ArrayList<PlannerValueDef> definingValues = new ArrayList<PlannerValueDef>();
-		PlannerLineDef definingLine = new PlannerLineDef("start", "Item", "",
-				definingValues);
-
-		// Setup available types
-		ArrayList<PlannerLineDef> allowableLines = new ArrayList<PlannerLineDef>();
-
-		// Map Start Location
-		definingValues = new ArrayList<PlannerValueDef>();
-		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
-				PlannerValueDef.TYPE_STRING, "entrance", false, "Map Entrance Name",
-				"The name of the entrance to the map."));
-		allowableLines.add(new PlannerLineDef("Map Entrance", "Map Entrance",
-				"This is used to determine where the hero starts when it enters the map. This is used in conjunction with the 'Load Map' trigger action",
-				definingValues));
-
-		// Use
-		definingValues = new ArrayList<PlannerValueDef>();
-		definingValues
-				.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
-						PlannerValueDef.TYPE_BOOLEAN, "targetsenemy", false,
-						"Targets Enemy",
-						"Whether this item can be used on enemies, otherwise it is used on allies"));
-		definingValues
-				.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
-						PlannerValueDef.TYPE_INT, "damage", false,
-						"Damage Dealt",
-						"The amount of damage this item will deal on use (positive values will heal)"));
-		definingValues
-				.add(new PlannerValueDef(
-						PlannerValueDef.REFERS_NONE,
-						PlannerValueDef.TYPE_INT,
-						"mpdamage",
-						false,
-						"MP Damage Dealt",
-						"The amount of damage this item will deal to the targets MP on use (positive values will heal)"));
-		definingValues
-				.add(new PlannerValueDef(PlannerValueDef.REFERS_ITEM_RANGE,
-						PlannerValueDef.TYPE_INT, "range", false, "Item Range",
-						"The range this can be used from"));
-		definingValues.add(new PlannerValueDef(
-				PlannerValueDef.REFERS_ITEM_AREA, PlannerValueDef.TYPE_INT,
-				"area", false, "Item Area of Effect",
-				"The area that this item can effect"));
-		definingValues
-				.add(new PlannerValueDef(
-						PlannerValueDef.REFERS_NONE,
-						PlannerValueDef.TYPE_STRING,
-						"text",
-						false,
-						"Item Use Text",
-						"The text that will be appended after the targets name in the attack cinematic. An example value would be 'is healed for 10'. "
-								+ "This would cause the battle text to become 'Noah is healed for 10'"));
-		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
-				PlannerValueDef.TYPE_BOOLEAN, "singleuse", false,
-				"Single Use Item",
-				"If true, the item will be removed after it has been used. "));
-
-		allowableLines.add(new PlannerLineDef("use", "Usuable Item",
-				"Marks this item as usuable and defines its' use",
-				definingValues));
-
-		itemContainer = new PlannerContainerDef(definingLine,
-				allowableLines, listOfLists,
-				PlannerValueDef.REFERS_MAP - 1);
-		containersByName.put("map", itemContainer);
-	}
-
 	public static void setupMapEditorDefinitions(ArrayList<ArrayList<PlannerReference>> listOfLists,
 			Hashtable<String, PlannerContainerDef> containersByName) {
 		PlannerContainerDef plannerContainer;
@@ -2882,6 +2808,12 @@ public class PlannerDefinitions {
 
 		// Setup available types
 		ArrayList<PlannerLineDef> allowableLines = new ArrayList<PlannerLineDef>();
+		
+		// empty
+		definingValues = new ArrayList<PlannerValueDef>();
+		allowableLines.add(new PlannerLineDef("", "",
+				"Unspecified location type",
+				definingValues));
 
 		// start
 		definingValues = new ArrayList<PlannerValueDef>();
@@ -3005,7 +2937,11 @@ public class PlannerDefinitions {
 		allowableLines.add(new PlannerLineDef("chest", "chest",
 				"Marks the location as a chest with the given item contained inside.", definingValues));
 
-		
+		// stairs
+		definingValues = new ArrayList<PlannerValueDef>();
+		allowableLines.add(new PlannerLineDef("stairs", "stairs",
+				"Marks a given location as 'stairs', movement along this path will ignore whether a tile is marked moveable.", definingValues));
+
 		
 		plannerContainer = new PlannerContainerDef(definingLine,
 				allowableLines, listOfLists,

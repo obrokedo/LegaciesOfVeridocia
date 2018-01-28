@@ -24,6 +24,7 @@ public class PlannerIO {
 	public static String PATH_ITEMS = "definitions/Items";
 	public static String PATH_QUESTS = "Quests";
 	public static String PATH_MAPS = "map";
+	public static String PATH_MAPDATA = "mapdata";
 	
 	/********************************************/
 	/* Export data methods 						*/

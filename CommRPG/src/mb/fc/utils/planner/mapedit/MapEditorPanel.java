@@ -65,7 +65,7 @@ public class MapEditorPanel implements ActionListener {
 		locationVisiblePanel.add(createCheckBox("Enemies", COMMAND_DISPLAY_ENEMY));
 		locationVisiblePanel.add(createCheckBox("Terrain", COMMAND_DISPLAY_TERRAIN));
 		locationVisiblePanel.add(createCheckBox("Others", COMMAND_DISPLAY_OTHER));
-		locationVisiblePanel.add(createCheckBox("Unused", COMMAND_DISPLAY_UNUSED));
+		locationVisiblePanel.add(createCheckBox("Untyped/Locations", COMMAND_DISPLAY_UNUSED));
 
 		backPanel.add(locationVisiblePanel, BorderLayout.PAGE_START);
 		this.plannerFrame = plannerFrame;

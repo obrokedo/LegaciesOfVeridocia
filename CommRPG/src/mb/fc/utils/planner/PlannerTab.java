@@ -35,13 +35,15 @@ public class PlannerTab implements ActionListener, TreeSelectionListener
 	private String name;
 	private JPanel uiAspect;
 	private boolean renamingItem = false;
+	private int tabIndex;
 
 	public PlannerTab(String name, Hashtable<String, PlannerContainerDef> containersByName,
-			String[] containers, int refersTo, PlannerFrame plannerFrame)
+			String[] containers, int refersTo, PlannerFrame plannerFrame, int tabIndex)
 	{
 		uiAspect = new JPanel(new BorderLayout());
 
 		this.name = name;
+		this.tabIndex = tabIndex;
 		listPanel = new JPanel();
 
 		listPC = new ArrayList<PlannerContainer>();
@@ -243,16 +245,30 @@ public class PlannerTab implements ActionListener, TreeSelectionListener
 		uiAspect.repaint();
 	}
 
-	public boolean setSelectedListItem(int index)
+	public boolean setSelectedListItem(int index, Integer leafIndex)
 	{
 		if (index < listPC.size())
 		{
-			this.plannerTree.setSelectedIndex(index);
+			if (leafIndex != null && leafIndex != -1) {
+				this.plannerTree.setSelectedIndex(index, leafIndex);		
+			} else {
+				this.plannerTree.setSelectedIndex(index);
+			}
+			
 			return true;
 		}
+		
 		return false;
-
-
+	}
+	
+	public boolean setSelectedListItem(PlannerContainer pc, PlannerLine pl)
+	{
+		int lineIndex = pc.getLines().indexOf(pl);
+		if (lineIndex != -1)
+			this.plannerTree.setSelectedIndex(listPC.indexOf(pc), pc.getLines().indexOf(pl));
+		else
+			this.plannerTree.setSelectedIndex(listPC.indexOf(pc));
+		return true;
 	}
 
 	public class TabAttributeTransferHandler extends TreeAttributeTransferHandler
@@ -314,5 +330,13 @@ public class PlannerTab implements ActionListener, TreeSelectionListener
 
 	public JPanel getUiAspect() {
 		return uiAspect;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public int getTabIndex() {
+		return tabIndex;
 	}
 }

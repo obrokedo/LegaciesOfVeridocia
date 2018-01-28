@@ -292,6 +292,13 @@ public class PlannerTree implements TreeModelListener
 		Object root = attributeTree.getModel().getRoot();
 		attributeTree.setSelectionPath(new TreePath(attributeTree.getModel().getChild(root, index)));
 	}
+	
+	public void setSelectedIndex(int index, int leafIndex)
+	{
+		Object root = attributeTree.getModel().getRoot();
+		attributeTree.setSelectionPath(new TreePath(
+				attributeTree.getModel().getChild(attributeTree.getModel().getChild(root, index), leafIndex)));
+	}
 
 	public Vector<String> getItemList()
 	{

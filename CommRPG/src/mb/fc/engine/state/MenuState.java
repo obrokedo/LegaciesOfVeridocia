@@ -64,6 +64,17 @@ public class MenuState extends LoadableGameState
 		this.gc = container;
 		input = new FCInput();
 	}
+	
+	
+
+	@Override
+	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
+		super.enter(container, game);
+		gc.getInput().removeAllKeyListeners();
+		gc.getInput().addKeyListener(this);
+	}
+
+
 
 	/**
 	 * Initializes this state, this only gets called when coming

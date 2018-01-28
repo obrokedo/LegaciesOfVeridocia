@@ -1,5 +1,7 @@
 package mb.fc.map;
 
+import java.awt.Point;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -23,7 +25,6 @@ import mb.fc.game.sprite.Sprite;
 import mb.fc.game.trigger.Trigger;
 import mb.fc.game.trigger.TriggerCondition;
 import mb.fc.game.trigger.TriggerCondition.HeroEntersLocation;
-import mb.jython.GlobalPythonFactory;
 
 /**
  * @author Broked
@@ -62,6 +63,7 @@ public class Map
 	private int backgroundImageIndex;
 	private EngineConfigurationValues jConfigValues;
 	private boolean disableRoofs = false;
+	private List<Stairs> stairs = new ArrayList<>();
 
 	private float tileRatio = 2f;
 
@@ -89,6 +91,7 @@ public class Map
 		roofsById.clear();
 		roofCount = -1;
 		backgroundImageIndex = -1;
+		stairs = new ArrayList<>();
 	}
 	
 	public void initializeObjects(boolean isCombat, StateInfo stateInfo)
@@ -121,6 +124,35 @@ public class Map
 			else if (mo.getKey().equalsIgnoreCase("chest")) {
 				mo.setName("Chest " + incrementingIds++);
 				stateInfo.addSprite(mo.establishChest(incrementingIds++, incrementingIds++, stateInfo.getResourceManager()));
+			} 
+			else if (mo.getKey().equalsIgnoreCase("stairs")) {
+				Point p1 = null;
+				Point p2 = null;
+				int maxX = (int) mo.getShape().getMaxX();
+				int minX = (int) mo.getShape().getMinX();
+				int maxY = (int) mo.getShape().getMaxY();
+				int minY = (int) mo.getShape().getMinY();
+				
+				for (int points = 0; points < mo.getShape().getPoints().length; points += 2) {
+					float x = mo.getShape().getPoints()[points];
+					float y = mo.getShape().getPoints()[points + 1];
+					
+					if (x == minX) {
+						if (y == minY || y == maxY)
+							p1 = new Point((int) x, (int) y);
+					} else if (x == maxX) {
+						if (y == minY || y == maxY)
+							p2 = new Point((int) x, (int) y);
+					}
+				}
+				
+				// Now we have a line segment from p1 to p2, only allow movement along this
+				// line. We'll fix x movement to the normal tile size, but y can be free floating
+				stairs.add(new Stairs(
+						new Point((int) p1.getX() / this.getTileEffectiveWidth(),
+								(int) p1.getY() / this.getTileEffectiveHeight()), 
+						new Point((int) p2.getX() / this.getTileEffectiveWidth(),
+								(int) p2.getY() / this.getTileEffectiveHeight())));
 			}
 			/*
 			else if (mo.getKey().equalsIgnoreCase("roof"))
@@ -659,5 +691,38 @@ public class Map
 
 	public float getTileRatio() {
 		return tileRatio;
+	}
+	
+	public class Stairs implements Serializable {
+		private Point leftPoint, rightPoint;
+
+		public Stairs(Point leftPoint, Point rightPoint) {
+			super();
+			this.leftPoint = leftPoint;
+			this.rightPoint = rightPoint;
+		}
+		
+		public boolean isOnRightEntry(int x, int y) {
+			return x == rightPoint.x && y == rightPoint.y;
+		}
+		
+		public boolean isOnLeftEntry(int x, int y) {
+			return x == leftPoint.x && y == leftPoint.y;
+		}
+		
+		public int getYCoordByTileX(int tileX) {
+			float slope = ((float) (leftPoint.y - rightPoint.y) * getTileEffectiveHeight()) / 
+					((float) (leftPoint.x - rightPoint.x) * getTileEffectiveWidth());
+			int tilesToTheRight = tileX - leftPoint.x;
+			return (int) ((leftPoint.y + slope * tilesToTheRight) * getTileEffectiveHeight()); 
+		}
+	}
+	
+	public Stairs isStartOfStairs(int x, int y) {
+		for (Stairs s : stairs) {
+			if (s.isOnLeftEntry(x, y) || s.isOnRightEntry(x, y))
+				return s;
+		}
+		return null;
 	}
 }

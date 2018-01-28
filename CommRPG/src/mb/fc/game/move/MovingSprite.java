@@ -9,6 +9,7 @@ import mb.fc.engine.state.StateInfo;
 import mb.fc.game.constants.Direction;
 import mb.fc.game.sprite.AnimatedSprite;
 import mb.fc.game.sprite.CombatSprite;
+import mb.fc.map.Map.Stairs;
 
 public class MovingSprite
 {
@@ -20,11 +21,36 @@ public class MovingSprite
 	private boolean isFirstMove = true;
 	private int moveRemainder = 0;
 	private Queue<Direction> nextMoveQueue = null;
+	private Stairs stairs = null;
+	private float yMovedForStairs;
 	// public static int MOVE_SPEED = 11;
 	public static int MOVE_SPEED = 220;
 	public static int STAND_ANIMATION_SPEED = 10;
 	public static int WALK_ANIMATION_SPEED = 4;
 
+	public MovingSprite(AnimatedSprite combatSprite, Direction dir, Stairs stairs, StateInfo stateInfo) {
+		super();
+		this.animatedSprite = combatSprite;
+		this.stateInfo = stateInfo;
+		combatSprite.setAnimationUpdate(WALK_ANIMATION_SPEED);
+		this.stairs = stairs;
+		this.moveIndex = 0;
+		this.direction = dir;
+		switch (direction)
+		{
+			case LEFT:
+				endX = animatedSprite.getLocX() - stateInfo.getTileWidth();
+				endY = stairs.getYCoordByTileX(combatSprite.getTileX() - 1);
+				break;
+			case RIGHT:
+				endX = animatedSprite.getLocX() + stateInfo.getTileWidth();
+				endY = stairs.getYCoordByTileX(combatSprite.getTileX() + 1);
+				break;
+		}
+		
+		yMovedForStairs = endY - combatSprite.getLocY();
+	}
+	
 	public MovingSprite(AnimatedSprite combatSprite, Direction dir, StateInfo stateInfo) {
 		super();
 		this.animatedSprite = combatSprite;
@@ -51,7 +77,6 @@ public class MovingSprite
 				endY = animatedSprite.getLocY();
 				break;
 			case RIGHT:
-				MOVE_SPEED = 220;
 				endX = animatedSprite.getLocX() + stateInfo.getTileWidth();
 				endY = animatedSprite.getLocY();
 				break;
@@ -79,6 +104,7 @@ public class MovingSprite
 			moveRemainder = moveIndex - moveSpeed;
 			moveIndex = moveSpeed;
 			animatedSprite.setLocation(endX, endY, stateInfo.getTileWidth(), stateInfo.getTileHeight());
+			animatedSprite.setFacing(direction);
 
 			if (animatedSprite == stateInfo.getCurrentSprite())
 				stateInfo.getCamera().centerOnSprite(animatedSprite, stateInfo.getCurrentMap());
@@ -94,8 +120,12 @@ public class MovingSprite
 			animatedSprite.setAnimationUpdate(STAND_ANIMATION_SPEED);
 			return true;
 		}
-
+		
+		// When we're on the stairs then we may move some y direction even when pressing right or left
+		
 		float amountMoved = ((moveSpeed - moveIndex) / (moveSpeed * 1.0f) * stateInfo.getTileHeight());
+		float yMovedOnStairs = ((moveSpeed - moveIndex) / (moveSpeed * 1.0f) * yMovedForStairs);
+		
 		switch (direction)
 		{
 			case UP:
@@ -107,10 +137,14 @@ public class MovingSprite
 						// 2 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]));
 				break;
 			case LEFT:
+				if (stairs != null)
+					animatedSprite.setLocY(endY - yMovedOnStairs, stateInfo.getTileHeight());
 				animatedSprite.setLocX(endX + amountMoved, stateInfo.getTileWidth());
 						// 2 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]));
 				break;
 			case RIGHT:
+				if (stairs != null)
+					animatedSprite.setLocY(endY - yMovedOnStairs, stateInfo.getTileHeight());
 				animatedSprite.setLocX(endX - amountMoved, stateInfo.getTileWidth());
 						// 2 * CommRPG.GLOBAL_WORLD_SCALE[CommRPG.getGameInstance()]));
 				break;
