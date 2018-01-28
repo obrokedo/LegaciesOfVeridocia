@@ -27,10 +27,10 @@
   </anim>
   <anim name="UnLeft" loops="0">
     <cell index="0" delay="1">
-      <spr name="/Unpromoted/Walk7" x="0" y="0" z="0"/>
+      <spr name="/Unpromoted/Walk4" x="0" y="0" z="0" flipH="1"/>
     </cell>
     <cell index="1" delay="1">
-      <spr name="/Unpromoted/Walk6" x="0" y="0" z="0"/>
+      <spr name="/Unpromoted/Walk5" x="0" y="0" z="0" flipH="1"/>
     </cell>
   </anim>
 </animations>
