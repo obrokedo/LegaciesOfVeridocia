@@ -131,12 +131,12 @@
  <objectgroup name="Trigger Regions">
   <object id="50" name="SecondWave" x="312" y="228" width="120" height="168">
    <properties>
-    <property name="null" value=""/>
+    <property name="" value=""/>
    </properties>
   </object>
   <object id="51" name="ThirdWave" x="432" y="228" width="96" height="168">
    <properties>
-    <property name="null" value=""/>
+    <property name="" value=""/>
    </properties>
   </object>
   <object id="53" name="FirstWave" x="240" y="312" width="24" height="24">
@@ -146,7 +146,7 @@
   </object>
   <object id="58" name="Noah Half" x="765" y="34">
    <properties>
-    <property name="null" value=""/>
+    <property name="" value=""/>
    </properties>
    <polyline points="3,14 3,86 -477,86 -477,254 -741,254 -741,14 3,14"/>
   </object>
@@ -194,17 +194,17 @@
   </object>
   <object id="56" name="NorthStairsExit" x="744" y="72" width="24" height="24">
    <properties>
-    <property name="null" value=""/>
+    <property name="" value=""/>
    </properties>
   </object>
   <object id="57" name="SouthStairsExit" x="744" y="288" width="24" height="24">
    <properties>
-    <property name="null" value=""/>
+    <property name="" value=""/>
    </properties>
   </object>
   <object id="59" name="Battle2Restart" x="576" y="216" width="24" height="24">
    <properties>
-    <property name="null" value=""/>
+    <property name="" value=""/>
    </properties>
   </object>
   <object id="60" name="JailBattleFail" x="624" y="144" width="24" height="24">

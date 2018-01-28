@@ -68,27 +68,27 @@
   </object>
   <object id="28" name="NorthWestExit1" x="240" y="0" width="24" height="24">
    <properties>
-    <property name="null" value=""/>
+    <property name="" value=""/>
    </properties>
   </object>
   <object id="29" name="NorthWestExit2" x="264" y="0" width="24" height="24">
    <properties>
-    <property name="null" value=""/>
+    <property name="" value=""/>
    </properties>
   </object>
   <object id="30" name="NorthWestExit3" x="288" y="0" width="24" height="24">
    <properties>
-    <property name="null" value=""/>
+    <property name="" value=""/>
    </properties>
   </object>
   <object id="31" name="NorthWestExit4" x="312" y="0" width="24" height="24">
    <properties>
-    <property name="null" value=""/>
+    <property name="" value=""/>
    </properties>
   </object>
   <object id="32" name="NorthWestExit5" x="336" y="0" width="24" height="24">
    <properties>
-    <property name="null" value=""/>
+    <property name="" value=""/>
    </properties>
   </object>
   <object id="35" name="NorthWestEntrance2" x="264" y="24" width="24" height="24">
@@ -118,7 +118,7 @@
   </object>
   <object id="44" name="NorthEastExit1" x="1104" y="0" width="24" height="24">
    <properties>
-    <property name="null" value=""/>
+    <property name="" value=""/>
    </properties>
   </object>
   <object id="45" name="NorthWestEntrance2" x="1128" y="24" width="24" height="24">
@@ -128,7 +128,7 @@
   </object>
   <object id="46" name="NorthEastExit2" x="1128" y="0" width="24" height="24">
    <properties>
-    <property name="null" value=""/>
+    <property name="" value=""/>
    </properties>
   </object>
   <object id="47" name="NorthWestEntrance3" x="1152" y="24" width="24" height="24">
@@ -138,7 +138,7 @@
   </object>
   <object id="48" name="NorthEastExit3" x="1152" y="0" width="24" height="24">
    <properties>
-    <property name="null" value=""/>
+    <property name="" value=""/>
    </properties>
   </object>
   <object id="49" name="NorthWestEntrance4" x="1176" y="24" width="24" height="24">
@@ -148,7 +148,7 @@
   </object>
   <object id="50" name="NorthEastExit4" x="1176" y="0" width="24" height="24">
    <properties>
-    <property name="null" value=""/>
+    <property name="" value=""/>
    </properties>
   </object>
   <object id="51" name="NorthWestEntrance5" x="1200" y="24" width="24" height="24">
@@ -158,7 +158,7 @@
   </object>
   <object id="52" name="NorthEastExit5" x="1200" y="0" width="24" height="24">
    <properties>
-    <property name="null" value=""/>
+    <property name="" value=""/>
    </properties>
   </object>
   <object id="53" name="NorthWestEntrance6" x="1224" y="24" width="24" height="24">
@@ -168,7 +168,7 @@
   </object>
   <object id="54" name="NorthEastExit6" x="1224" y="0" width="24" height="24">
    <properties>
-    <property name="null" value=""/>
+    <property name="" value=""/>
    </properties>
   </object>
   <object id="55" name="NorthWestEntrance7" x="1248" y="24" width="24" height="24">
@@ -178,7 +178,7 @@
   </object>
   <object id="56" name="NorthEastExit7" x="1248" y="0" width="24" height="24">
    <properties>
-    <property name="null" value=""/>
+    <property name="" value=""/>
    </properties>
   </object>
   <object id="64" name="SearchNoItem" x="96" y="240" width="24" height="24">
@@ -218,7 +218,7 @@
   </object>
   <object id="146" name="SouthWestExit" x="360" y="1056" width="96" height="24">
    <properties>
-    <property name="null" value=""/>
+    <property name="" value=""/>
    </properties>
   </object>
   <object id="152" name="AfterPrisionEntrance" x="1560" y="96" width="24" height="24">
@@ -335,7 +335,7 @@
   </object>
   <object id="58" name="BartenderScold" x="1728" y="360" width="24" height="24">
    <properties>
-    <property name="null" value=""/>
+    <property name="" value=""/>
    </properties>
   </object>
   <object id="94" name="SearchNoItem" x="456" y="504" width="24" height="24">
@@ -539,27 +539,27 @@
   </object>
   <object id="148" name="Guard Warning 2" x="1176" y="240" width="96" height="24">
    <properties>
-    <property name="null" value=""/>
+    <property name="" value=""/>
    </properties>
   </object>
   <object id="149" name="Guard Warning 4" x="312" y="504" width="72" height="24">
    <properties>
-    <property name="null" value=""/>
+    <property name="" value=""/>
    </properties>
   </object>
   <object id="150" name="Guard Warning 3" x="432" y="192" width="24" height="96">
    <properties>
-    <property name="null" value=""/>
+    <property name="" value=""/>
    </properties>
   </object>
   <object id="151" name="Guard Warning 1" x="1512" y="48" width="24" height="48">
    <properties>
-    <property name="null" value=""/>
+    <property name="" value=""/>
    </properties>
   </object>
   <object id="154" name="Guard Warning 5" x="312" y="528" width="24" height="144">
    <properties>
-    <property name="null" value=""/>
+    <property name="" value=""/>
    </properties>
   </object>
  </objectgroup>

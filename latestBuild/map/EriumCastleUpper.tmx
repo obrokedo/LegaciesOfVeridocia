@@ -68,12 +68,12 @@
   </object>
   <object id="24" name="KingChamberExit" x="912" y="96" width="24" height="24">
    <properties>
-    <property name="null" value=""/>
+    <property name="" value=""/>
    </properties>
   </object>
   <object id="27" name="NorthEastHallStairsExit1" x="1080" y="384" width="24" height="24">
    <properties>
-    <property name="null" value=""/>
+    <property name="" value=""/>
    </properties>
   </object>
   <object id="28" name="SouthWestHallStairsEntrance" x="456" y="984" width="24" height="24">
@@ -88,17 +88,17 @@
   </object>
   <object id="30" name="SouthWestHallStairsExit1" x="432" y="984" width="24" height="24">
    <properties>
-    <property name="null" value=""/>
+    <property name="" value=""/>
    </properties>
   </object>
   <object id="31" name="NorthWestHallStairsExit1" x="432" y="384" width="24" height="24">
    <properties>
-    <property name="null" value=""/>
+    <property name="" value=""/>
    </properties>
   </object>
   <object id="32" name="SouthEastHallStairsExit1" x="1080" y="984" width="24" height="24">
    <properties>
-    <property name="null" value=""/>
+    <property name="" value=""/>
    </properties>
   </object>
   <object id="33" name="NorthEastHallStairsEntrance" x="1056" y="384" width="24" height="24">
