@@ -18,12 +18,12 @@ public class ItemResource
 
 	public static Item getItem(int itemId, FCResourceManager fcrm)
 	{
-		return itemDefinitionsById.get(itemId).getItem(fcrm);
+		return itemDefinitionsById.get(itemId).getItem(fcrm).copyItem();
 	}
 
 	public static Item getUninitializedItem(int itemId)
 	{
-		return itemDefinitionsById.get(itemId).getUnintializedItem();
+		return itemDefinitionsById.get(itemId).getUnintializedItem().copyItem();
 	}
 	
 	public static int getItemIdByName(String itemName) {
@@ -36,10 +36,10 @@ public class ItemResource
 	public static void initializeItem(Item item, FCResourceManager fcrm)
 	{
 		itemDefinitionsById.get(item.getItemId()).initializeItem(item, fcrm);
-		// Check to see if the name is null then, if so then this item has be unserialized and
+		// Check to see if the name is null then, if so then this item has been unserialized and
 		// needs it's transient fields back into it
 		if (item.getName() == null) {
-			item.copyItem(getItem(item.getItemId(), fcrm));
+			item.initializeTransientFieldsFromItem(getItem(item.getItemId(), fcrm));
 		}
 
 		// If there is a spell use defined, initialize it so the

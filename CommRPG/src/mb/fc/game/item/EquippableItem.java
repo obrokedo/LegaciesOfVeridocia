@@ -30,7 +30,7 @@ public class EquippableItem extends Item
 			fireAffinity, elecAffinity, coldAffin, darkAffin, waterAffin, earthAffin, 
 			windAffin, lightAffin, ohko, ohkoOnCrit;
 	private Range range;
-	private boolean equipped, isCustomEffect;
+	private boolean isCustomEffect;
 	private String weaponImage, effectName, damageAffinity;
 
 	/* Old "non-extended" equipped items
@@ -92,7 +92,6 @@ public class EquippableItem extends Item
 		this.ohko = ohko;
 		this.ohkoOnCrit = ohkoOnCrit;
 		this.range = Range.convertIntToRange(range);
-		this.equipped = false;
 		this.isCustomEffect = isCustomEffect;
 		this.weaponImage = weaponImage;
 		this.effectName = effectName;
@@ -122,15 +121,7 @@ public class EquippableItem extends Item
 	public int getItemStyle() {
 		return itemStyle;
 	}
-
-	public boolean isEquipped() {
-		return equipped;
-	}
-
-	public void setEquipped(boolean equipped) {
-		this.equipped = equipped;
-	}
-
+	
 	public String getWeaponImage() {
 		return weaponImage;
 	}
@@ -229,5 +220,58 @@ public class EquippableItem extends Item
 
 	public String getDamageAffinity() {
 		return damageAffinity;
+	}
+	
+	@Override
+	public Item copyItem() {
+		return new EquippableItem(name, cost, description, itemUse, spellUse, 
+				isEquippable, useDamagesItem, isDeal, itemId, attack, defense, 
+				speed, itemType, itemStyle, increasedMinDam, increasedCrit, 
+				increasedCounter, increasedDouble, increasedEvade, minHPRegen,
+				maxHPRegen, minMPRegen, maxMPRegen, effectLevel, effectChance, 
+				fireAffinity, elecAffinity, coldAffin, darkAffin, waterAffin, 
+				earthAffin, windAffin, lightAffin, ohko, ohkoOnCrit, range, 
+				isCustomEffect, weaponImage, effectName, damageAffinity);
+	}
+
+	private EquippableItem(String name, int cost, String description, ItemUse itemUse, SpellItemUse spellUse,
+			boolean isEquippable, boolean useDamagesItem, boolean isDeal, int itemId, int attack, int defense,
+			int speed, int itemType, int itemStyle, int increasedMinDam, int increasedCrit, int increasedCounter,
+			int increasedDouble, int increasedEvade, int minHPRegen, int maxHPRegen, int minMPRegen, int maxMPRegen,
+			int effectLevel, int effectChance, int fireAffinity, int elecAffinity, int coldAffin, int darkAffin,
+			int waterAffin, int earthAffin, int windAffin, int lightAffin, int ohko, int ohkoOnCrit, Range range,
+			boolean isCustomEffect, String weaponImage, String effectName, String damageAffinity) {
+		super(name, cost, description, itemUse, spellUse, isEquippable, useDamagesItem, isDeal, itemId);
+		this.attack = attack;
+		this.defense = defense;
+		this.speed = speed;
+		this.itemType = itemType;
+		this.itemStyle = itemStyle;
+		this.increasedMinDam = increasedMinDam;
+		this.increasedCrit = increasedCrit;
+		this.increasedCounter = increasedCounter;
+		this.increasedDouble = increasedDouble;
+		this.increasedEvade = increasedEvade;
+		this.minHPRegen = minHPRegen;
+		this.maxHPRegen = maxHPRegen;
+		this.minMPRegen = minMPRegen;
+		this.maxMPRegen = maxMPRegen;
+		this.effectLevel = effectLevel;
+		this.effectChance = effectChance;
+		this.fireAffinity = fireAffinity;
+		this.elecAffinity = elecAffinity;
+		this.coldAffin = coldAffin;
+		this.darkAffin = darkAffin;
+		this.waterAffin = waterAffin;
+		this.earthAffin = earthAffin;
+		this.windAffin = windAffin;
+		this.lightAffin = lightAffin;
+		this.ohko = ohko;
+		this.ohkoOnCrit = ohkoOnCrit;
+		this.range = range;
+		this.isCustomEffect = isCustomEffect;
+		this.weaponImage = weaponImage;
+		this.effectName = effectName;
+		this.damageAffinity = damageAffinity;
 	}
 }

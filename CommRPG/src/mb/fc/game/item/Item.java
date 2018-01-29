@@ -8,18 +8,18 @@ public class Item implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 
-	private transient String name = null;
-	private transient int cost;
-	private transient String description;
-	private transient boolean isUsuable;
-	private transient boolean isEquippable;
-	private transient Image image;
-	private transient ItemUse itemUse;
-	private transient SpellItemUse spellUse;
-	private int itemId;
-	private ItemDurability durability = ItemDurability.PERFECT;
-	private boolean isDeal = false;
-	private boolean useDamagesItem = false;
+	protected transient String name = null;
+	protected transient int cost;
+	protected transient String description;
+	protected transient boolean isUsuable;
+	protected transient boolean isEquippable;
+	protected transient Image image;
+	protected transient ItemUse itemUse;
+	protected transient SpellItemUse spellUse;
+	protected int itemId;
+	protected ItemDurability durability = ItemDurability.PERFECT;
+	protected boolean isDeal = false;
+	protected boolean useDamagesItem = false;
 
 	public Item(String name, int cost, String description, ItemUse itemUse, SpellItemUse spellUse,
 			boolean isEquippable, boolean useDamagesItem, boolean isDeal, int itemId) {
@@ -142,7 +142,7 @@ public class Item implements Serializable
 		BROKEN
 	}
 
-	public void copyItem(Item item) {
+	public void initializeTransientFieldsFromItem(Item item) {
 		this.cost = item.cost;
 		this.description = item.description;
 		this.isEquippable = item.isEquippable;
@@ -151,4 +151,31 @@ public class Item implements Serializable
 		this.spellUse = item.spellUse;
 		this.name = item.name;
 	}
+	
+	public Item copyItem() {
+		return new Item(name, cost, description, isUsuable, 
+				isEquippable, image, itemUse, spellUse, itemId, durability, isDeal, useDamagesItem);
+	}
+
+	private Item(String name, int cost, String description, boolean isUsuable, boolean isEquippable, Image image,
+			ItemUse itemUse, SpellItemUse spellUse, int itemId, ItemDurability durability, boolean isDeal,
+			boolean useDamagesItem) {
+		super();
+		this.name = name;
+		this.cost = cost;
+		this.description = description;
+		this.isUsuable = isUsuable;
+		this.isEquippable = isEquippable;
+		this.image = image;
+		this.itemUse = itemUse;
+		this.spellUse = spellUse;
+		this.itemId = itemId;
+		this.durability = durability;
+		this.isDeal = isDeal;
+		this.useDamagesItem = useDamagesItem;
+	}
+	
+	
+	
+	
 }
