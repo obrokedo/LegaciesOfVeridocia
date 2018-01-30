@@ -554,5 +554,8 @@
     <cell index="3" delay="50">
       <spr name="/Unpromoted/PortraitBottom7" x="0" y="0" z="0"/>
     </cell>
+    <cell index="4" delay="50">
+      <spr name="/Unpromoted/PortraitBottom4" x="0" y="0" z="0"/>
+    </cell>
   </anim>
 </animations>
