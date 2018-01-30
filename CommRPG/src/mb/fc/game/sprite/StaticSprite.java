@@ -41,8 +41,7 @@ public class StaticSprite extends Sprite
 		if (offsetUp)
 			yPos -= tileHeight / 2;
 		
-		graphics.drawImage(image, Math.round(this.getLocX() - camera.getLocationX()),
-			Math.round(yPos));
+		graphics.drawImage(image, this.getLocX() - camera.getLocationX(), yPos);
 	}
 
 	public void setImage(Image image) {

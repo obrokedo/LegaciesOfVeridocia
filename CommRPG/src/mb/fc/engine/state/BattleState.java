@@ -2,7 +2,6 @@ package mb.fc.engine.state;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -17,6 +16,7 @@ import mb.fc.game.manager.SoundManager;
 import mb.fc.game.manager.SpriteManager;
 import mb.fc.game.manager.TurnManager;
 import mb.fc.game.menu.DebugMenu;
+import mb.fc.game.menu.Menu;
 import mb.fc.game.ui.PaddedGameContainer;
 import mb.fc.loading.FCResourceManager;
 import mb.fc.loading.LoadableGameState;
@@ -185,37 +185,7 @@ public class BattleState extends LoadableGameState
 			stateInfo.getCurrentMap().update(delta);
 			spriteManager.update(delta);
 			soundManager.update(delta);
-
-
-			if (System.currentTimeMillis() > stateInfo.getInputDelay())
-			{
-				if (container.getInput().isKeyDown(Input.KEY_ENTER))
-				{
-					stateInfo.sendMessage(MessageType.SHOW_DEBUG);
-					stateInfo.setInputDelay(System.currentTimeMillis() + 200);
-				}
-				/*
-				if (container.getInput().isKeyDown(Input.KEY_ESCAPE))
-				{
-					stateInfo.sendMessage(MessageType.SHOW_SYSTEM_MENU);
-					stateInfo.setInputDelay(System.currentTimeMillis() + 200);
-				}*/
-				else if (container.getInput().isKeyDown(Input.KEY_F7))
-				{
-					((CommRPG) game).toggleFullScreen();
-				}
-				else if (container.getInput().isKeyPressed(Input.KEY_ESCAPE))
-				{
-					game.enterState(CommRPG.STATE_GAME_MENU_DEVEL);
-				}
-			}
-
 			stateInfo.getInput().update(delta, container.getInput());
-		}
-		
-		if (stateInfo.getInput().isKeyDown(Input.KEY_F8))
-		{
-			stateInfo.sendMessage(MessageType.SAVE_BATTLE);
 		}
 	}
 
@@ -227,5 +197,17 @@ public class BattleState extends LoadableGameState
 	@Override
 	public int getID() {
 		return CommRPG.STATE_GAME_BATTLE;
+	}
+	
+	@Override
+	protected Menu getPauseMenu() {
+		stateInfo.sendMessage(MessageType.PAUSE_MUSIC);
+		return new DebugMenu(stateInfo);
+	}
+
+	@Override
+	protected void pauseMenuClosed() {
+		stateInfo.getCamera().centerOnSprite(stateInfo.getCurrentSprite(), stateInfo.getCurrentMap());
+		stateInfo.sendMessage(MessageType.RESUME_MUSIC);
 	}
 }

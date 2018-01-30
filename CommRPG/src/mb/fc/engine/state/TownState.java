@@ -20,6 +20,8 @@ import mb.fc.game.manager.PanelManager;
 import mb.fc.game.manager.SoundManager;
 import mb.fc.game.manager.SpriteManager;
 import mb.fc.game.manager.TownMoveManager;
+import mb.fc.game.menu.DebugMenu;
+import mb.fc.game.menu.Menu;
 import mb.fc.game.sprite.NPCSprite;
 import mb.fc.game.sprite.Sprite;
 import mb.fc.game.ui.PaddedGameContainer;
@@ -55,6 +57,9 @@ public class TownState extends LoadableGameState
 
 	private StateInfo stateInfo;
 	public static ParticleSystem ps = null;
+	
+	// TODO THIS IS A DEBUG TOOL
+	public static float updateSpeed = 1;
 
 	public TownState() { 
 		/*
@@ -165,8 +170,6 @@ public class TownState extends LoadableGameState
 	public void doUpdate(PaddedGameContainer container, StateBasedGame game, int delta)
 			throws SlickException
 	{
-		
-		
 		stateInfo.processMessages();
 
 		if (stateInfo.isInitialized() && !stateInfo.isWaiting())
@@ -193,11 +196,7 @@ public class TownState extends LoadableGameState
 
 			if (System.currentTimeMillis() > stateInfo.getInputDelay())
 			{
-				if (container.getInput().isKeyDown(Input.KEY_ESCAPE))
-				{
-					game.enterState(CommRPG.STATE_GAME_MENU_DEVEL);
-				}
-				else if (container.getInput().isKeyDown(KeyMapping.BUTTON_3) && !stateInfo.areMenusDisplayed())
+				if (container.getInput().isKeyDown(KeyMapping.BUTTON_3) && !stateInfo.areMenusDisplayed())
 				{
 					if (!menuManager.isBlocking() && !cinematicManager.isBlocking())
 					{
@@ -210,15 +209,6 @@ public class TownState extends LoadableGameState
 				else if (container.getInput().isKeyDown(KeyMapping.BUTTON_1) && !stateInfo.areMenusDisplayed())
 				{
 					stateInfo.sendMessage(new Message(MessageType.SHOW_HEROES));
-				}
-				else if (container.getInput().isKeyDown(Input.KEY_ENTER))
-				{
-					stateInfo.sendMessage(MessageType.SHOW_DEBUG);
-					stateInfo.setInputDelay(System.currentTimeMillis() + 200);
-				}
-				else if (container.getInput().isKeyDown(Input.KEY_F7))
-				{
-					((CommRPG) game).toggleFullScreen();
 				}
 				// Key for debugging menus
 				else if (container.getInput().isKeyDown(Input.KEY_Z))
@@ -302,5 +292,17 @@ public class TownState extends LoadableGameState
 			stateInfo.getCurrentSprite().setVisible(true);
 		container.getGraphics().resetTransform();
 		return image;
+	}
+
+	@Override
+	protected Menu getPauseMenu() {
+		stateInfo.sendMessage(MessageType.PAUSE_MUSIC);
+		return new DebugMenu(stateInfo);
+	}
+
+	@Override
+	protected void pauseMenuClosed() {
+		super.pauseMenuClosed();
+		stateInfo.sendMessage(MessageType.RESUME_MUSIC);
 	}
 }

@@ -3,7 +3,6 @@ package mb.fc.engine.state;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -13,13 +12,13 @@ import mb.fc.engine.message.MessageType;
 import mb.fc.game.manager.CinematicManager;
 import mb.fc.game.manager.MenuManager;
 import mb.fc.game.manager.SoundManager;
+import mb.fc.game.menu.Menu;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.ui.PaddedGameContainer;
 import mb.fc.loading.FCResourceManager;
 import mb.fc.loading.LoadableGameState;
 import mb.fc.renderer.MenuRenderer;
 import mb.fc.renderer.TileMapRenderer;
-import mb.fc.utils.StringUtils;
 
 /**
  * Dedicated state that renders Cinematics
@@ -119,11 +118,6 @@ public class CinematicState extends LoadableGameState
 				cinematicManager.renderPostEffects(g);
 				// cinematic.renderPostEffects(g, stateInfo.getCamera(), stateInfo.getGc(), stateInfo);
 				menuRenderer.render(g);
-				if (cinematicSpeed != 1)
-				{
-					g.setColor(Color.red);
-					StringUtils.drawString("Cinematic speed: " + cinematicSpeed, 15, 15, g);
-				}
 			}
 		}
 
@@ -142,26 +136,8 @@ public class CinematicState extends LoadableGameState
 			stateInfo.processMessages();
 			menuManager.update(delta);
 			// cinematic.update((int) (delta * cinematicSpeed), stateInfo.getCamera(), stateInfo.getInput(), stateInfo.getResourceManager().getMap(), stateInfo);
-			cinematicManager.update((int) (delta * cinematicSpeed));
+			cinematicManager.update(delta);
 			stateInfo.getCurrentMap().update(delta);
-			if (System.currentTimeMillis() > stateInfo.getInputDelay())
-			{
-				if (stateInfo.getInput().isKeyDown(Input.KEY_F11))
-				{
-					cinematicSpeed /= 2;
-					stateInfo.setInputDelay(System.currentTimeMillis() + 200);
-				}
-				else if (stateInfo.getInput().isKeyDown(Input.KEY_F12))
-				{
-					cinematicSpeed *= 2;
-					stateInfo.setInputDelay(System.currentTimeMillis() + 200);
-				}
-				else if (container.getInput().isKeyDown(Input.KEY_F7))
-				{
-					((CommRPG) game).toggleFullScreen();
-					stateInfo.setInputDelay(System.currentTimeMillis() + 200);
-				}
-			}
 		}
 		stateInfo.getInput().update(delta, container.getInput());
 	}
@@ -174,5 +150,17 @@ public class CinematicState extends LoadableGameState
 	@Override
 	public int getID() {
 		return CommRPG.STATE_GAME_CINEMATIC;
+	}
+	
+	@Override
+	protected Menu getPauseMenu() {
+		stateInfo.sendMessage(MessageType.PAUSE_MUSIC);
+		return super.getPauseMenu();
+	}
+
+	@Override
+	protected void pauseMenuClosed() {
+		super.pauseMenuClosed();
+		stateInfo.sendMessage(MessageType.RESUME_MUSIC);
 	}
 }

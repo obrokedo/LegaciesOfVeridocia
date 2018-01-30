@@ -5,6 +5,7 @@ import org.newdawn.slick.Graphics;
 
 import mb.fc.engine.CommRPG;
 import mb.fc.engine.config.YesNoMenuRenderer;
+import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.MessageType;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.input.FCInput;
@@ -79,6 +80,7 @@ public class YesNoMenu extends SpeechMenu
 			}
 			if (input.isKeyDown(KeyMapping.BUTTON_1) || input.isKeyDown(KeyMapping.BUTTON_3))
 			{
+				stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, "menuselect", 1f, false));
 				// Handle unlistened to selections
 				if (this.getMenuListener() == null && yesTrigger != null && noTrigger != null) {
 					if (yesSelected) {
@@ -94,18 +96,23 @@ public class YesNoMenu extends SpeechMenu
 					stateInfo.sendMessage(MessageType.MENU_CLOSED);
 				return MenuUpdate.MENU_CLOSE;
 			}
-			else if (input.isKeyDown(KeyMapping.BUTTON_LEFT))
+			else if (!yesSelected && input.isKeyDown(KeyMapping.BUTTON_LEFT))
 			{
 				renderer.yesPressed();
 				yesSelected = true;
+				stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, "menumove", 1f, false));
+				return MenuUpdate.MENU_ACTION_SHORT;
 			}
-			else if (input.isKeyDown(KeyMapping.BUTTON_RIGHT))
+			else if (yesSelected && input.isKeyDown(KeyMapping.BUTTON_RIGHT))
 			{
 				renderer.noPressed();
 				yesSelected = false;
+				stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, "menumove", 1f, false));
+				return MenuUpdate.MENU_ACTION_SHORT;
 			}
 			else if (input.isKeyDown(KeyMapping.BUTTON_2))
 			{
+				stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, "menuselect", 1f, false));
 				yesSelected = false;
 				if (stateInfo != null)
 					stateInfo.sendMessage(MessageType.MENU_CLOSED);

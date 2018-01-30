@@ -1,6 +1,5 @@
 package mb.fc.renderer;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 import mb.fc.engine.message.Message;

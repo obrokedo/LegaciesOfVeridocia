@@ -15,7 +15,6 @@ import mb.fc.engine.state.StateInfo;
 import mb.fc.game.menu.Menu.MenuUpdate;
 import mb.fc.game.ui.PaddedGameContainer;
 import mb.fc.loading.FCResourceManager;
-import mb.jython.GlobalPythonFactory;
 
 /**
  * A container to display information to the screen that does not generally need to be interacted with.
@@ -54,7 +53,8 @@ public abstract class Panel
 		PANEL_MAP_ENTRY,
 		PANEL_SHOP_OPTIONS,
 		PANEL_MULTI_JOIN_CHOOSE,
-		PANEL_MINI_MAP
+		PANEL_MINI_MAP,
+		PANEL_PAUSE
 	}
 
 	protected PanelType panelType;
@@ -79,7 +79,6 @@ public abstract class Panel
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	public static void intialize(FCResourceManager frm)
 	{
 		MENU_BORDER = frm.getSpriteSheet("menuborder");

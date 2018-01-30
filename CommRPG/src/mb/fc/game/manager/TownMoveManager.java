@@ -6,7 +6,6 @@ import java.util.Iterator;
 import mb.fc.engine.message.Message;
 import mb.fc.engine.message.SpriteContextMessage;
 import mb.fc.engine.message.SpriteMoveMessage;
-import mb.fc.engine.state.StateInfo;
 import mb.fc.game.constants.Direction;
 import mb.fc.game.input.KeyMapping;
 import mb.fc.game.move.MovingSprite;

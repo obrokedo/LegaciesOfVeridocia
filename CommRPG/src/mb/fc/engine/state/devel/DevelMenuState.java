@@ -209,10 +209,6 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException
 	{
-		this.isPaused(container);
-		
-		
-		
 		int x = container.getInput().getMouseX();
 		int y = container.getInput().getMouseY();
 

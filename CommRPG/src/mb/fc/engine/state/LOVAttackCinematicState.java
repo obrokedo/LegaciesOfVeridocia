@@ -33,6 +33,7 @@ import mb.fc.game.hudmenu.SpriteContextPanel;
 import mb.fc.game.input.FCInput;
 import mb.fc.game.item.EquippableItem;
 import mb.fc.game.item.Item.ItemDurability;
+import mb.fc.game.menu.Menu;
 import mb.fc.game.menu.Menu.MenuUpdate;
 import mb.fc.game.menu.SpeechMenu;
 import mb.fc.game.sprite.CombatSprite;
@@ -668,5 +669,19 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 	@Override
 	public void musicSwapped(Music music, Music newMusic) {
 
+	}
+	
+	@Override
+	protected Menu getPauseMenu() {
+		if (this.music != null)
+			this.music.pause();
+		return super.getPauseMenu();
+	}
+
+	@Override
+	protected void pauseMenuClosed() {
+		super.pauseMenuClosed();
+		if (this.music != null)
+			this.music.resume();
 	}
 }

@@ -163,7 +163,7 @@ public class CinematicActor implements Comparable<CinematicActor>
 				switch (specialEffectType)
 				{
 					case SE_NONE:
-						AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), xPos, yPos, 
+						AnimatedSprite.drawShadow(im, xPos, yPos, 
 								camera, false, stateInfo.getTileHeight());
 						graphics.drawImage(im, xPos, yPos);
 						break;

@@ -163,7 +163,7 @@ public class DebugMenu extends Menu implements ResourceSelectorListener
 	}
 	
 	@Override
-	public MenuUpdate update(long delta, StateInfo stateInfo) {
+	public MenuUpdate update(long delta, StateInfo si) {
 		if (inputTimer > 0) {
 			inputTimer -= delta;
 			return MenuUpdate.MENU_NO_ACTION;

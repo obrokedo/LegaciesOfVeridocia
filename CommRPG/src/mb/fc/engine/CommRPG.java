@@ -88,7 +88,7 @@ public class CommRPG extends StateBasedGame   {
 
 	private static int fullScreenWidth, fullScreenHeight;
 
-	public static final String VERSION = "DEV 1.370 Jan 28, 2018";
+	public static final String VERSION = "DEV 1.371 Jan 30, 2018";
 	public static final String FILE_VERSION = "LoV-Dev";
 
 	public static final String GAME_TITLE = "Legacies of Veridocia";
@@ -106,8 +106,6 @@ public class CommRPG extends StateBasedGame   {
 	public static TextParser TEXT_PARSER = new TextParser();
 	
 	public static EngineConfigurator engineConfiguratior = new DefaultEngineConfiguration();
-	
-	private boolean isFirstLoad = true;
 
 	private class DEBUG_HOLDER
 	{
@@ -200,8 +198,7 @@ public class CommRPG extends StateBasedGame   {
 					}
 					else
 						container.setDisplayMode(fullScreenWidth, fullScreenHeight, true);
-
-
+	
 					container.setShowFPS(true);
 					container.setVSync(true);
 					container.setAlwaysRender(true);

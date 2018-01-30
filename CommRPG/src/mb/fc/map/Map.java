@@ -398,7 +398,7 @@ public class Map
 	}
 
 	protected class TileSet
-	{
+	{	
 		private SpriteSheet spriteSheet;
 		protected int startIndex;
 		private int ssWidth;
@@ -427,8 +427,10 @@ public class Map
 
 			// System.out.println((index - startIndex) % ssWidth + " " + (index - startIndex) / ssWidth);
 			// System.out.println("Bounds: " + spriteSheet.getHorizontalCount() + " " + spriteSheet.getVerticalCount());
-			spriteSheet.renderInUse(Math.round(x), Math.round(y), (index - startIndex) % ssWidth, (index - startIndex) / ssWidth);
-			// spriteSheet.getSubImage((index - startIndex) % ssWidth, (index - startIndex) / ssWidth).drawEmbedded(x, y, tileWidth + .01f, tileHeight + .01f);
+			//spriteSheet.renderInUse(x, y, 
+				//	(index - startIndex) % ssWidth, (index - startIndex) / ssWidth);
+			spriteSheet.getSubImage((index - startIndex) % ssWidth, (index - startIndex) / ssWidth).
+			drawEmbedded(x, y, tileWidth + .01f, tileHeight + .01f);
 		}
 
 		public Image getSprite(int index) {
