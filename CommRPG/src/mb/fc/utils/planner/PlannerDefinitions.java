@@ -1309,6 +1309,9 @@ public class PlannerDefinitions {
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
 				PlannerValueDef.TYPE_INT, "imageindexy", false, "Y Index",
 				"The y index of the items image"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_BOOLEAN, "droppable", false, "Is Quest Item",
+				"Whether this item can be dropped or sold (used for 'quest' items)"));
 		PlannerLineDef definingLine = new PlannerLineDef("item", "Item", "",
 				definingValues);
 

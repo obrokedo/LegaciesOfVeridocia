@@ -1,5 +1,7 @@
 package mb.fc.game.item;
 
+import org.newdawn.slick.Image;
+
 import mb.fc.game.Range;
 
 
@@ -58,13 +60,13 @@ public class EquippableItem extends Item
 	 */
 	
 	public EquippableItem(String name, int cost, String description, ItemUse itemUse, SpellItemUse spellUse,
-			boolean useDamagesItem, boolean isDeal, int itemId, int attack, int defense, int speed, int itemType,
+			boolean useDamagesItem, boolean isDeal, boolean isDroppable, int itemId, int attack, int defense, int speed, int itemType,
 			int itemStyle, int increasedMinDam, int increasedCrit, int increasedCounter, int increasedDouble,
 			int increasedEvade, int minHPRegen, int maxHPRegen, int minMPRegen, int maxMPRegen, int effectLevel,
 			int effectChance, int fireAffinity, int elecAffinity, int coldAffin, int darkAffin, int waterAffin,
 			int earthAffin, int windAffin, int lightAffin, int ohko, int ohkoOnCrit, int range,
 			boolean isCustomEffect, String weaponImage, String effectName, String damageAffinity) {
-		super(name, cost, description, itemUse, spellUse, true, useDamagesItem, isDeal, itemId);
+		super(name, cost, description, itemUse, spellUse, true, useDamagesItem, isDeal, isDroppable, itemId);
 		this.attack = attack;
 		this.defense = defense;
 		this.speed = speed;
@@ -225,23 +227,23 @@ public class EquippableItem extends Item
 	@Override
 	public Item copyItem() {
 		return new EquippableItem(name, cost, description, itemUse, spellUse, 
-				isEquippable, useDamagesItem, isDeal, itemId, attack, defense, 
+				isEquippable, useDamagesItem, isDeal, isDroppable, itemId, attack, defense, 
 				speed, itemType, itemStyle, increasedMinDam, increasedCrit, 
 				increasedCounter, increasedDouble, increasedEvade, minHPRegen,
 				maxHPRegen, minMPRegen, maxMPRegen, effectLevel, effectChance, 
 				fireAffinity, elecAffinity, coldAffin, darkAffin, waterAffin, 
 				earthAffin, windAffin, lightAffin, ohko, ohkoOnCrit, range, 
-				isCustomEffect, weaponImage, effectName, damageAffinity);
+				isCustomEffect, weaponImage, effectName, damageAffinity, image);
 	}
 
 	private EquippableItem(String name, int cost, String description, ItemUse itemUse, SpellItemUse spellUse,
-			boolean isEquippable, boolean useDamagesItem, boolean isDeal, int itemId, int attack, int defense,
+			boolean isEquippable, boolean useDamagesItem, boolean isDeal, boolean isDroppable, int itemId, int attack, int defense,
 			int speed, int itemType, int itemStyle, int increasedMinDam, int increasedCrit, int increasedCounter,
 			int increasedDouble, int increasedEvade, int minHPRegen, int maxHPRegen, int minMPRegen, int maxMPRegen,
 			int effectLevel, int effectChance, int fireAffinity, int elecAffinity, int coldAffin, int darkAffin,
 			int waterAffin, int earthAffin, int windAffin, int lightAffin, int ohko, int ohkoOnCrit, Range range,
-			boolean isCustomEffect, String weaponImage, String effectName, String damageAffinity) {
-		super(name, cost, description, itemUse, spellUse, isEquippable, useDamagesItem, isDeal, itemId);
+			boolean isCustomEffect, String weaponImage, String effectName, String damageAffinity, Image image) {
+		super(name, cost, description, itemUse, spellUse, isEquippable, useDamagesItem, isDeal, isDroppable, itemId);
 		this.attack = attack;
 		this.defense = defense;
 		this.speed = speed;
@@ -273,5 +275,6 @@ public class EquippableItem extends Item
 		this.weaponImage = weaponImage;
 		this.effectName = effectName;
 		this.damageAffinity = damageAffinity;
+		this.image = image;
 	}
 }

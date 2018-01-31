@@ -201,6 +201,9 @@ public class CommRPG extends StateBasedGame   {
 	
 					container.setShowFPS(true);
 					container.setVSync(true);
+					// container.setClearEachFrame(false);
+					container.setSmoothDeltas(true);
+					
 					container.setAlwaysRender(true);
 					container.setTargetFrameRate(60);
 					container.start();
@@ -300,12 +303,10 @@ public class CommRPG extends StateBasedGame   {
 		{
 			if (fullScreenWidth != 0)
 			{
-				
 				GAME_SCREEN_SCALE = fullScreenHeight / 240;
 				((PaddedGameContainer) this.getContainer()).setDisplayPaddingX((fullScreenWidth - GAME_SCREEN_SIZE.width * GAME_SCREEN_SCALE) / 2);
 				GAME_SCREEN_PADDING = ((PaddedGameContainer) this.getContainer()).getDisplayPaddingX();
 				 ((PaddedGameContainer)this.getContainer()).setDisplayMode(fullScreenWidth, fullScreenHeight, true);
-				 ((PaddedGameContainer)this.getContainer()).setDisplayPaddingX((fullScreenWidth - 320) / 2);
 			}
 		}
 	}

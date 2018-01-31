@@ -20,9 +20,10 @@ public class Item implements Serializable
 	protected ItemDurability durability = ItemDurability.PERFECT;
 	protected boolean isDeal = false;
 	protected boolean useDamagesItem = false;
+	protected boolean isDroppable = true;
 
 	public Item(String name, int cost, String description, ItemUse itemUse, SpellItemUse spellUse,
-			boolean isEquippable, boolean useDamagesItem, boolean isDeal, int itemId) {
+			boolean isEquippable, boolean useDamagesItem, boolean isDeal, boolean isDroppable, int itemId) {
 		super();
 		this.name = name;
 		this.cost = cost;
@@ -35,6 +36,7 @@ public class Item implements Serializable
 		this.itemId = itemId;
 		this.durability = ItemDurability.PERFECT;
 		this.isDeal = isDeal;
+		this.isDroppable = isDroppable;
 	}
 
 	public String getName() {
@@ -174,8 +176,4 @@ public class Item implements Serializable
 		this.isDeal = isDeal;
 		this.useDamagesItem = useDamagesItem;
 	}
-	
-	
-	
-	
 }

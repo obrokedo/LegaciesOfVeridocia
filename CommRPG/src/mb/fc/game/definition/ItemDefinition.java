@@ -52,6 +52,7 @@ public class ItemDefinition
 					range = Integer.parseInt(childTagArea.getAttribute("range"));
 					weaponImage = childTagArea.getAttribute("weaponimage");
 					
+					
 					// Extended item statistics
 					increasedMinDam = childTagArea.getIntAttribute("incmindam");
 					increasedCrit = childTagArea.getIntAttribute("inccrit");
@@ -114,9 +115,10 @@ public class ItemDefinition
 
 			id.id = Integer.parseInt(tagArea.getAttribute("id"));
 			boolean isDeal = Boolean.parseBoolean(tagArea.getAttribute("isdeal"));
+			boolean isDroppable = Boolean.parseBoolean(tagArea.getAttribute("droppable"));
 			if (equippable)
 				id.item = new EquippableItem(tagArea.getAttribute("name"), Integer.parseInt(tagArea.getAttribute("cost")), tagArea.getAttribute("description"), 
-						itemUse, spellUse, useDamagesItem, isDeal, id.id, 
+						itemUse, spellUse, useDamagesItem, isDeal, isDroppable, id.id, 
 						attack, defense, speed, type, style, 
 						increasedMinDam, increasedCrit, increasedCounter, 
 						increasedDouble, increasedEvade, minHPRegen, maxHPRegen, 
@@ -124,9 +126,11 @@ public class ItemDefinition
 						fireAffinity, elecAffinity, coldAffin, darkAffin, waterAffin, 
 						earthAffin, windAffin, lightAffin, ohko, ohkoOnCrit, range, 
 						isCustomEffect, weaponImage, effectName, damageAffinity);
-			else
-				id.item = new Item(tagArea.getAttribute("name"), Integer.parseInt(tagArea.getAttribute("cost")), tagArea.getAttribute("description"),
-							itemUse, spellUse, false, useDamagesItem, isDeal, id.id);
+			else {
+				id.item = new Item(tagArea.getAttribute("name"), 
+						Integer.parseInt(tagArea.getAttribute("cost")), tagArea.getAttribute("description"),
+							itemUse, spellUse, false, useDamagesItem, isDeal, isDroppable, id.id);
+			}
 
 			id.imageX = Integer.parseInt(tagArea.getAttribute("imageindexx"));
 			id.imageY = Integer.parseInt(tagArea.getAttribute("imageindexy"));

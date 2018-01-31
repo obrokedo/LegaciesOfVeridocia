@@ -430,7 +430,7 @@ public class Map
 			//spriteSheet.renderInUse(x, y, 
 				//	(index - startIndex) % ssWidth, (index - startIndex) / ssWidth);
 			spriteSheet.getSubImage((index - startIndex) % ssWidth, (index - startIndex) / ssWidth).
-			drawEmbedded(x, y, tileWidth + .01f, tileHeight + .01f);
+				drawEmbedded(x, y, tileWidth, tileHeight);
 		}
 
 		public Image getSprite(int index) {
