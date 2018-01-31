@@ -423,6 +423,7 @@ public class PlannerFrame extends JFrame implements ActionListener,
 					(actionCommand.equalsIgnoreCase("find") ? "Find" : "Global Find"), JOptionPane.QUESTION_MESSAGE);
 			
 			if (searchString != null) {
+				searchString = searchString.toLowerCase();
 				List<SearchResult> results = null;
 				if (actionCommand.equalsIgnoreCase("findglobal")) 
 					results = searchGlobal(searchString);
@@ -440,7 +441,6 @@ public class PlannerFrame extends JFrame implements ActionListener,
 	}
 
 	private List<SearchResult> searchLocal(String searchString) {
-		searchString = searchString.toLowerCase();
 		List<SearchResult> results = new ArrayList<>();
 		searchPlannerTabs(getDataInputTabs(), searchString, results, null);
 		return results;
@@ -514,9 +514,22 @@ public class PlannerFrame extends JFrame implements ActionListener,
 	private void searchPlannerLine(String searchString, PlannerTab pt, 
 			PlannerContainer pc, PlannerLine pl, List<SearchResult> results, String optionalFile) {
 		for (Object o : pl.getValues()) {
-			if (o != null && o instanceof String && ((String) o).trim().length() > 0
-					&& ((String) o).toLowerCase().contains(searchString)) {
-				results.add(new SearchResult(pt, pc, pl, (String) o, optionalFile));
+			
+			
+			String searchMe = null;
+			if (o != null) {
+				if (o instanceof String && 
+						((String) o).trim().length() > 0) {
+					searchMe = ((String) o).trim();
+				}
+				else if (o instanceof PlannerReference && 
+						((PlannerReference) o).getName() != null &&
+						((PlannerReference) o).getName().trim().length() > 0)
+					searchMe = ((PlannerReference) o).getName().trim();
+			}
+			
+			if (searchMe != null && searchMe.toLowerCase().contains(searchString)) {
+				results.add(new SearchResult(pt, pc, pl, searchMe, optionalFile));
 			}
 		}
 	}
