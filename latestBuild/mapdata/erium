@@ -168,20 +168,20 @@
 	<fadein time=750 halting=true init=true/>
 	<wait time=500/>
 	<playsound sound="jump" volume=100/>
-	<forcedmove name="Noah" x=96 y=96 speed=5 facing=1 movehor=false movediag=false/>
+	<forcedmove name="Noah" x=96 y=96 speed="5" facing=1 movehor=false movediag=false/>
 	<wait time=250/>
-	<forcedmove name="Noah" x=96 y=132 speed=7 facing=1 movehor=false movediag=false/>
+	<forcedmove name="Noah" x=96 y=132 speed="7" facing=1 movehor=false movediag=false/>
 	<playsound sound="impact" volume=100/>
 	<wait time=500/>
 	<facing name="Noah" dir=3/>
 	<wait time=750/>
-	<forcedmove name="Noah" x=96 y=120 speed=7 facing=3 movehor=false movediag=false/>
+	<forcedmove name="Noah" x=96 y=120 speed="7" facing=3 movehor=false movediag=false/>
 	<wait time=125/>
-	<forcedmove name="Noah" x=96 y=132 speed=7 facing=3 movehor=false movediag=false/>
+	<forcedmove name="Noah" x=96 y=132 speed="7" facing=3 movehor=false movediag=false/>
 	<wait time=125/>
-	<forcedmove name="Noah" x=96 y=120 speed=7 facing=3 movehor=false movediag=false/>
+	<forcedmove name="Noah" x=96 y=120 speed="7" facing=3 movehor=false movediag=false/>
 	<wait time=125/>
-	<forcedmove name="Noah" x=96 y=132 speed=7 facing=3 movehor=false movediag=false/>
+	<forcedmove name="Noah" x=96 y=132 speed="7" facing=3 movehor=false movediag=false/>
 	<wait time=125/>
 	<speech text="I need to grab my gear!<softstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<haltingmove name="Noah" x=168 y=120 speed="3" movehor=true movediag=false/>
