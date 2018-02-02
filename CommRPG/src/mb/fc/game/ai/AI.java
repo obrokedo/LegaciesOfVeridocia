@@ -18,6 +18,7 @@ import mb.fc.game.turnaction.WaitAction;
 
 public abstract class AI implements Serializable
 {
+	private static final long serialVersionUID = 1L;
 	// BESERKER
 	// CASTER
 	// HEALER
@@ -36,6 +37,7 @@ public abstract class AI implements Serializable
 	private int approachType;
 	private boolean canHeal;
 	private Point targetPoint;
+	private int priority = 0;
 
 	// The target Combat sprite that has been specified by external commands
 	private CombatSprite targetCS;
@@ -574,4 +576,12 @@ public abstract class AI implements Serializable
 	}
 
 	protected abstract int getLandEffectWeight(int landEffect);
+
+	public int getPriority() {
+		return priority;
+	}
+
+	public void setPriority(int priority) {
+		this.priority = priority;
+	}
 }

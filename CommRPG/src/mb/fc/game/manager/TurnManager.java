@@ -224,6 +224,7 @@ public class TurnManager extends Manager implements KeyboardListener
 						cs.triggerOverEvent(stateInfo);
 						landEffectPanel.setLandEffect(stateInfo.getCurrentMap().getLandEffectByTile(cs.getMovementType(),
 								cs.getTileX(), cs.getTileY()));
+						stateInfo.removePanel(landEffectPanel);
 						stateInfo.addSingleInstancePanel(landEffectPanel);
 					}
 					else
@@ -434,6 +435,8 @@ public class TurnManager extends Manager implements KeyboardListener
 				stateInfo.removePanel(PanelType.PANEL_HEALTH_BAR);
 				stateInfo.removePanel(PanelType.PANEL_ENEMY_HEALTH_BAR);
 				stateInfo.removeKeyboardListeners();
+				stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, 
+						CommRPG.engineConfiguratior.getMusicConfiguration().getMenuRemovedSoundEffect(), 1f, false));
 				displayAttackable = false;
 				displayMoveable = false;
 				

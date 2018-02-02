@@ -192,17 +192,22 @@ public abstract class Panel
 
 	public void panelRemoved(StateInfo stateInfo)
 	{
-		if (makeAddAndRemoveSounds())
+		if (makeRemoveSounds())
 			stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, MUSIC_SELECTOR.getMenuRemovedSoundEffect(), 1f, false));
 	}
 
 	public void panelAdded(StateInfo stateInfo)
 	{
-		if (makeAddAndRemoveSounds())
+		if (makeAddSounds())
 			stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, MUSIC_SELECTOR.getMenuAddedSoundEffect(), 1f, false));
 	}
 
-	public boolean makeAddAndRemoveSounds()
+	public boolean makeAddSounds()
+	{
+		return false;
+	}
+	
+	public boolean makeRemoveSounds()
 	{
 		return false;
 	}

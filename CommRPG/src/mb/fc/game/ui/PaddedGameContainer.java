@@ -60,4 +60,8 @@ public class PaddedGameContainer extends AppGameContainer
 	public int getPaddedWidth() {
 		return super.getWidth() - displayPaddingX * 2;
 	}
+	
+	public int getTargetFrameRate() {
+		return super.targetFPS;
+	}
 }

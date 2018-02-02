@@ -405,7 +405,7 @@ public class MoveableSpace implements KeyboardListener, TileBasedMap
 		else if (input.isKeyDown(KeyMapping.BUTTON_2))
 		{
 			stateInfo.sendMessage(MessageType.RESET_SPRITELOC);
-			stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, "menuback", 1f, false));
+			// stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, "menuback", 1f, false));
 			return true;
 		}
 		else

@@ -336,11 +336,33 @@ public class TextParser
 					te.addTriggerable(te.new TriggerPlaySound(actionParams.get("sound"), Integer.parseInt(actionParams.get("volume"))));
 					soundToLoad.add(actionParams.get("sound"));
 				}
-				else if (tagType.equalsIgnoreCase("changeai"))
+				else if (tagType.startsWith("changeai"))
 				{
-					te.addTriggerable(te.new TriggerChangeAI(actionParams.get("aitype"),
-							actionParams.get("id"), actionParams.get("targetid"), actionParams.get("heroid"),
-							actionParams.get("x"), actionParams.get("y")));
+					String spriteId = actionParams.get("id");
+					String priority = actionParams.getOrDefault("priority", "0");
+					String approachType = null;
+					String enemyId = null;
+					String heroId = null;
+					String xLoc = null;
+					String yLoc = null;
+					
+					if (tagType.equalsIgnoreCase("changeaiapproach")) {
+						approachType = actionParams.get("aitype");
+					} else if (tagType.equalsIgnoreCase("changeaitargethero")) {
+						approachType = "target";
+						heroId = actionParams.get("heroid");
+					} else if (tagType.equalsIgnoreCase("changeaitargetenemy")) {
+						approachType = "follow";
+						enemyId = actionParams.get("targetid");
+					} else if (tagType.equalsIgnoreCase("changeaimove")) {
+						approachType = "moveto";
+						xLoc = actionParams.get("x");
+						yLoc = actionParams.get("y");
+					}
+					
+					te.addTriggerable(te.new TriggerChangeAI(approachType,
+							spriteId, enemyId, heroId,
+							xLoc, yLoc, priority));
 				}
 				else if (tagType.equalsIgnoreCase("showtext"))
 				{

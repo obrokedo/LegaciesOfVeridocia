@@ -52,7 +52,7 @@ public class Portrait
 				}
 			}
 
-			sa = stateInfo.getResourceManager().getSpriteAnimation(HeroResource.getAnimation(enemyId));
+			sa = stateInfo.getResourceManager().getSpriteAnimation(HeroResource.getAnimation(heroId));
 			return getPortrait(sa, false);
 		}
 		else if (spriteAnimName != null) {

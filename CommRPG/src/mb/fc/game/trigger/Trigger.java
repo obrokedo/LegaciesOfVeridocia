@@ -449,10 +449,13 @@ public class Trigger
 		private int targetId;
 		private int heroTargetId;
 		private Point p = null;
-
-		public TriggerChangeAI(String speed, String id, String targetId, String heroTargetId, String x, String y)
+		private int priority = 0;
+		
+		public TriggerChangeAI(String speed, String id, String targetId, 
+				String heroTargetId, String x, String y, String priority)
 		{
 			this.id = Integer.parseInt(id);
+			this.priority = Integer.parseInt(priority);
 			if (targetId != null)
 				this.targetId = Integer.parseInt(targetId);
 			if (heroTargetId != null)
@@ -479,6 +482,8 @@ public class Trigger
 					this.speed = AI.APPROACH_FOLLOW;
 				else if (speed.equalsIgnoreCase("moveto"))
 					this.speed = AI.APPROACH_MOVE_TO_POINT;
+				else if (speed.equalsIgnoreCase("target"))
+					this.speed = AI.APPROACH_TARGET;
 			}
 		}
 
@@ -489,6 +494,9 @@ public class Trigger
 			{
 				if (s.getUniqueEnemyId() == id)
 				{
+					if (s.getAi().getPriority() > priority)
+						continue;
+					
 					switch (speed)
 					{
 						case AI.APPROACH_FOLLOW:
@@ -504,25 +512,28 @@ public class Trigger
 
 							if (targetSprite != null)
 							{
+								s.getAi().setPriority(priority);
 								s.getAi().setApproachType(speed, targetSprite);
 								Log.debug("Follow sprite " + targetSprite.getName());
 							}
 
 							break;
-							// TODO MAY NEED TO COME BACK TO THIS AS THE PLANNER ALLOWS AN ARBITRARY NUMBER HERE, HOW USUABLE IS THIS?
 						case AI.APPROACH_TARGET:
 							CombatSprite target = stateInfo.getHeroById(heroTargetId);
 							if (target.getCurrentHP() > 0)
 							{
+								s.getAi().setPriority(priority);
 								s.getAi().setApproachType(speed, target);
 								Log.debug("Target sprite " + target.getName());
 							}
 							break;
 						case AI.APPROACH_MOVE_TO_POINT:
 							Log.debug("Move to point " + p);
+							s.getAi().setPriority(priority);
 							s.getAi().setApproachType(speed, new Point(p.x * stateInfo.getTileWidth(), p.y * stateInfo.getTileHeight()));
 							break;
 						default:
+							s.getAi().setPriority(priority);
 							s.getAi().setApproachType(speed);
 							break;
 					}

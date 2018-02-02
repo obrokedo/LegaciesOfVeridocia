@@ -53,6 +53,7 @@ public class MapLayer {
 			delta = 0;
 		}
 		
+		// WHAT THE FUCK IS THIS MATH
 		if (flashDelta - delta < -flashDuration)
 			flashDelta = flashDelta - delta + 2 * flashDuration;
 		else

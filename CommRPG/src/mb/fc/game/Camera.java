@@ -51,7 +51,7 @@ public class Camera
 			x = 0;
 		if (y <= 0)
 			y = 0;
-		viewport.setLocation(x, y);
+		viewport.setLocation(fixXFloatPrecision(x), y);
 		// nextX = x;
 		// nextY = y;
 	}
@@ -71,15 +71,24 @@ public class Camera
 		if (!cantMoveVert)
 			cantMoveVert = y + getViewportHeight() > stateInfo.getCurrentMap().getMapHeightInPixels() &&  // Cant move down
 				this.getLocationY() == stateInfo.getCurrentMap().getMapHeightInPixels() - getViewportHeight();
-
+			
 		boolean b = !(cantMoveVert && cantMoveHor);
 		return b;
+	}
+	
+	private float fixXFloatPrecision(float x) {
+		float fixFloatPrecision = x - (int) x - .5f;
+		if (Math.abs(fixFloatPrecision) < .002) {
+			x = x + (fixFloatPrecision > .5 ? .02f : -.02f);
+		}
+		return x;
 	}
 
 	private void setX(float x)
 	{
+		// System.out.println(x);
 		// nextX = x;
-		viewport.setX(x);
+		viewport.setX(fixXFloatPrecision(x));
 	}
 
 	private void setY(float y)

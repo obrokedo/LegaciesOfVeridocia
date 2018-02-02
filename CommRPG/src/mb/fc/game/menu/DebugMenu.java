@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.swing.JOptionPane;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -40,6 +42,8 @@ public class DebugMenu extends Menu implements ResourceSelectorListener
 	private Button levelButton = new Button(270, 85, 140, 20, "Level Up Hero");
 	private Button healButton = new Button(270, 115, 140, 20, "Heal");
 	private Button setToOneButton = new Button(270, 145, 140, 20, "Set to 1 HP");
+	
+	private Button setDisplayAttributes = new Button(15, 600, 140, 20, "Display Options");
 	
 	private Button chooseSprite = new Button(270, 55, 140, 20, "Choose Sprite");
 	private Button showQuests = new Button(270, 25, 200, 20, "Show Completed Quests");
@@ -265,6 +269,20 @@ public class DebugMenu extends Menu implements ResourceSelectorListener
 			}
 		} 
 		if (state == DebugMenuState.CHOOSE_TRIGGER) {
+			if (setDisplayAttributes.handleUserInput(x, y, leftClick)) {
+				String frame = JOptionPane.showInputDialog("Frame rate");
+				if (frame != null && frame.trim().length() > 0)
+					stateInfo.getPaddedGameContainer().setTargetFrameRate(Integer.parseInt(frame));
+				String vsync = JOptionPane.showInputDialog("VSync on? (Y or N)");
+				if (vsync != null && vsync.trim().length() > 0) {
+					if (vsync.equalsIgnoreCase("y")) {
+						stateInfo.getPaddedGameContainer().setVSync(true);
+					} else {
+						stateInfo.getPaddedGameContainer().setVSync(false);
+					}
+				}
+			}
+			
 			if (stateInfo.isCombat() && chooseSprite.handleUserInput(x, y, leftClick)) {
 				state = DebugMenuState.CHOOSE_SPRITE;
 				triggerStatus = null;
@@ -298,6 +316,8 @@ public class DebugMenu extends Menu implements ResourceSelectorListener
 		if (state == DebugMenuState.CHOOSE_TRIGGER || state == DebugMenuState.SPRITE_OPTIONS) {
 			graphics.fillRect(0, 0, gc.getWidth() / 2, gc.getHeight());
 			triggerList.render(graphics);
+			setDisplayAttributes.render(graphics);
+			graphics.drawString("Vsync: " + gc.isVSyncRequested() + " Frame Rate: " + gc.getTargetFrameRate(), 15, 625);
 		}
 		else if (state == DebugMenuState.SHOW_QUESTS) {
 			graphics.fillRect(0, 0, gc.getWidth() / 2, gc.getHeight());

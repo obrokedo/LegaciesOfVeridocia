@@ -40,8 +40,6 @@ public class PlannerDefinitions {
 		listOfLists.get(PlannerValueDef.REFERS_AI_APPROACH - 1).add(new PlannerReference("wait"));
 		listOfLists.get(PlannerValueDef.REFERS_AI_APPROACH - 1).add(new PlannerReference("fast"));
 		listOfLists.get(PlannerValueDef.REFERS_AI_APPROACH - 1).add(new PlannerReference("slow"));
-		listOfLists.get(PlannerValueDef.REFERS_AI_APPROACH - 1).add(new PlannerReference("Follow"));
-		listOfLists.get(PlannerValueDef.REFERS_AI_APPROACH - 1).add(new PlannerReference("Move to point"));
 
 		listOfLists.get(PlannerValueDef.REFERS_AI - 1).add(new PlannerReference("wizard"));
 		listOfLists.get(PlannerValueDef.REFERS_AI - 1).add(new PlannerReference("cleric"));
@@ -2390,12 +2388,24 @@ public class PlannerDefinitions {
 						"A number between 1-100 that represents the percent volume the sound should be played at"));
 		allowableLines.add(new PlannerLineDef("playsound", "Play Sound",
 				"Plays the specified sound effect", definingValues));
-
-		// Change AI
+		
+		// Change AI - Approach Type
 		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_INT, "id", false, "Unit",
+				"The unit whose AI should be changed"));
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_AI_APPROACH,
 				PlannerValueDef.TYPE_INT, "aitype", false, "AI Type",
 				"The type of AI that the specified enemy should employ"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_INT, "priority", false, "AI Priority",
+				"The priority that this AI change will have, if this change is "
+				+ "lower then the current priority of the AI, then the AI will not be changed."));
+		allowableLines.add(new PlannerLineDef("changeaiapproach", "Change AI - Approach Type",
+				"Changes the specified enemies approach AI", definingValues));
+		
+		// Change AI - Target Hero
+		definingValues = new ArrayList<PlannerValueDef>();
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
 				PlannerValueDef.TYPE_INT, "id", false, "Unit",
 				"The unit whose AI should be changed"));
@@ -2403,16 +2413,45 @@ public class PlannerDefinitions {
 				PlannerValueDef.TYPE_INT, "heroid", true, "Hero",
 				"The index of the hero that should be targeted"));
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_INT, "priority", false, "AI Priority",
+				"The priority that this AI change will have, if this change is "
+				+ "lower then the current priority of the AI, then the AI will not be changed."));
+		allowableLines.add(new PlannerLineDef("changeaitargethero", "Change AI - Target Hero",
+				"Changes the specified enemies AI to target a given hero. The target will move as quickly as possible.", definingValues));
+		
+		// Change AI - Follow Enemy
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_INT, "id", false, "Unit",
+				"The unit whose AI should be changed"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
 				PlannerValueDef.TYPE_INT, "targetid", true, "Target Unit",
 				"The target unit (enemy) that this enemy should follow"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_INT, "priority", false, "AI Priority",
+				"The priority that this AI change will have, if this change is "
+				+ "lower then the current priority of the AI, then the AI will not be changed."));
+		allowableLines.add(new PlannerLineDef("changeaitargetenemy", "Change AI - Follow Enemy",
+				"Changes the specified enemies AI to follow a given enemy. The target will move as quickly as possible.", definingValues));
+		
+
+		// Change AI - Move to location
+		definingValues = new ArrayList<PlannerValueDef>();
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_INT, "id", false, "Unit",
+				"The unit whose AI should be changed"));
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
 				PlannerValueDef.TYPE_INT, "x", true, "X Location",
 				"The x coordinate in tiles that this enemy should move to"));
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
 				PlannerValueDef.TYPE_INT, "y", true, "Y Location",
 				"The y coordinate in tiles that this enemy should move to"));
-		allowableLines.add(new PlannerLineDef("changeai", "Change AI",
-				"Changes the specified enemies approach AI", definingValues));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_NONE,
+				PlannerValueDef.TYPE_INT, "priority", false, "AI Priority",
+				"The priority that this AI change will have, if this change is "
+				+ "lower then the current priority of the AI, then the AI will not be changed."));
+		allowableLines.add(new PlannerLineDef("changeaimove", "Change AI - Move to Location",
+				"Changes the specified enemies AI to move to the target location. The target will move as quickly as possible.", definingValues));
 
 		// Show Text
 		definingValues = new ArrayList<PlannerValueDef>();

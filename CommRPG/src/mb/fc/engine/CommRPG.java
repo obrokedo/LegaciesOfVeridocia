@@ -88,7 +88,7 @@ public class CommRPG extends StateBasedGame   {
 
 	private static int fullScreenWidth, fullScreenHeight;
 
-	public static final String VERSION = "DEV 1.371 Jan 30, 2018";
+	public static final String VERSION = "DEV 1.372 Feb 2, 2018";
 	public static final String FILE_VERSION = "LoV-Dev";
 
 	public static final String GAME_TITLE = "Legacies of Veridocia";
@@ -166,44 +166,35 @@ public class CommRPG extends StateBasedGame   {
 						}
 
 						Log.debug("Fullscreen dimensions: " + fullScreenWidth + " " + fullScreenHeight);
-						GAME_SCREEN_SCALE = fullScreenHeight / 240;
-						container.setDisplayPaddingX((fullScreenWidth - GAME_SCREEN_SIZE.width * GAME_SCREEN_SCALE) / 2);
-						GAME_SCREEN_PADDING = container.getDisplayPaddingX();
-
-
 					} catch (LWJGLException e) {
 						e.printStackTrace();
 					}
 
-					fullScreenWidth = 0;
-
 					if (fullScreenWidth == 0)
 					{
 						Log.debug("Unable to enter full screen");
-						for (DisplayMode dm : Display.getAvailableDisplayModes())
-							Log.debug("Supported display modes " + dm);
-						container.setDisplayPaddingX(0);
-						
-						try
-						{
-							GAME_SCREEN_SCALE = 3;
-							container.setDisplayMode(GAME_SCREEN_SIZE.width * GAME_SCREEN_SCALE, 
-									GAME_SCREEN_SIZE.height * GAME_SCREEN_SCALE, false);
-							GAME_SCREEN_PADDING = 0;
-						}
-						catch (SlickException se)
-						{
-							container.setDisplayMode(GAME_SCREEN_SIZE.width, GAME_SCREEN_SIZE.height, false);
-						}
 					}
-					else
-						container.setDisplayMode(fullScreenWidth, fullScreenHeight, true);
+					
+					for (DisplayMode dm : Display.getAvailableDisplayModes())
+						Log.debug("Supported display modes " + dm);
+					container.setDisplayPaddingX(0);
+					
+					try
+					{
+						GAME_SCREEN_SCALE = 3;
+						// container.setDisplayMode(GAME_SCREEN_SIZE.width * GAME_SCREEN_SCALE, 
+							//	GAME_SCREEN_SIZE.height * GAME_SCREEN_SCALE, false);
+						container.setDisplayMode(GAME_SCREEN_SIZE.width * GAME_SCREEN_SCALE, 
+								GAME_SCREEN_SIZE.height * GAME_SCREEN_SCALE, false);
+						GAME_SCREEN_PADDING = 0;
+					}
+					catch (SlickException se)
+					{
+						container.setDisplayMode(GAME_SCREEN_SIZE.width, GAME_SCREEN_SIZE.height, false);
+					}
 	
 					container.setShowFPS(true);
 					container.setVSync(true);
-					// container.setClearEachFrame(false);
-					container.setSmoothDeltas(true);
-					
 					container.setAlwaysRender(true);
 					container.setTargetFrameRate(60);
 					container.start();

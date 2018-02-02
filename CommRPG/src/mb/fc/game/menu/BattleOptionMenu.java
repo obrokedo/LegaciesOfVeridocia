@@ -13,14 +13,14 @@ public class BattleOptionMenu extends QuadMenu {
 	public BattleOptionMenu(StateInfo stateInfo) {
 		super(PanelType.PANEL_BATTLE_OPTIONS, stateInfo);
 
-		icons = new Image[4];
+		icons = new Image[8];
 
-		for (int i = 0; i < icons.length; i++)
-			icons[i] = stateInfo.getResourceManager().getSpriteSheet("battleoptions").getSprite(i, 0);
+		for (int i = 0; i < icons.length; i++) {
+			icons[i] = stateInfo.getResourceManager().getSpriteSheet("battleoptions").getSprite(i % 4, i / 4);
+		}
 
 		text = new String[] {"Member", "Map", "TxtSpd", "Quit"};
 		enabled = new boolean[] {true, true, true, true};
-		paintSelectionCursor = true;
 	}
 
 	@Override

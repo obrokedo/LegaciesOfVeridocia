@@ -187,10 +187,16 @@ public class HeroStatMenu extends Menu
 			StringUtils.drawString(gold, x + 30 - StringUtils.getStringWidth(gold, PANEL_FONT) / 2, y + 167, graphics);
 		}
 	}
+	
+	@Override
+	public boolean makeAddSounds() {
+		// TODO Auto-generated method stub
+		return true;
+	}
 
 	@Override
-	public boolean makeAddAndRemoveSounds()
-	{
+	public boolean makeRemoveSounds() {
+		// TODO Auto-generated method stub
 		return true;
 	}
 }
