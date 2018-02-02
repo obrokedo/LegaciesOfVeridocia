@@ -13,11 +13,13 @@ public class SpeechBundleMessage extends Message
 
 	private int speechId;
 	private int speechIndex;
+	private boolean immediate;
 	
-	public SpeechBundleMessage(int speechId, int speechIndex) {
+	public SpeechBundleMessage(int speechId, int speechIndex, boolean immediate) {
 		super(MessageType.SPEECH);
 		this.speechId = speechId;
 		this.speechIndex = speechIndex;
+		this.immediate = immediate;
 	}
 
 	public int getSpeechId() {
@@ -26,5 +28,10 @@ public class SpeechBundleMessage extends Message
 
 	public int getSpeechIndex() {
 		return speechIndex;
+	}
+
+	@Override
+	public boolean isImmediate() {
+		return immediate;
 	}
 }

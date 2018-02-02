@@ -2604,6 +2604,9 @@ public class PlannerDefinitions {
 		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_ITEM,
 				PlannerValueDef.TYPE_STRING, "itemid", false, "Item ID",
 				"The item that should be given to the group"));
+		definingValues.add(new PlannerValueDef(PlannerValueDef.REFERS_TEXT,
+				PlannerValueDef.TYPE_INT, "failuretext", false, "No Room Text ID",
+				"The text that should be displayed if the party has no room for the item."));
 		allowableLines
 				.add(new PlannerLineDef(
 						"additem",

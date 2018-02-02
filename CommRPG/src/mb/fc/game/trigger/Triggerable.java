@@ -8,7 +8,7 @@ public interface Triggerable
 	 * Perform the triggerable action
 	 * 
 	 * @param stateInfo
-	 * @return true if this triggereable action should is non-repeatable, false if it can be repeated
+	 * @return true if this triggereable action completed successfully
 	 */
 	public boolean perform(StateInfo stateInfo);
 }

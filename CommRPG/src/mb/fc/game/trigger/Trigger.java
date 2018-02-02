@@ -3,6 +3,7 @@ package mb.fc.game.trigger;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.newdawn.slick.util.Log;
 
@@ -55,8 +56,11 @@ public class Trigger
 		EXCLUDED_QUEST_DONE,
 		NON_RETRIG,
 		TRIGGER_ONCE,
-		IS_IMMEDIATE
+		IS_IMMEDIATE,
+		COULD_NOT_TRIGGER
 	}
+	
+	public Trigger() {}
 
 	public Trigger(String name, int id, boolean retrigOnEnter, boolean nonRetrig,
 			boolean triggerOnce, boolean triggerImmediately, String[] requires, String[] excludes) {
@@ -138,39 +142,43 @@ public class Trigger
 					return TriggerStatus.NON_RETRIG;
 				}
 			}
-			else {
-				stateInfo.getClientProgress().addNonretriggerableByMap(id);
-			}
 		}
 
-		if (triggerOnce)
+		// Check if this is trigger once per map
+		if (triggerOnce && triggered)
 		{
-			if (triggered) {
-				Log.debug("Trigger will not be triggered as it has already been triggered once");
-				return TriggerStatus.TRIGGER_ONCE;
-			}
-			else
-				triggered = true;
+			Log.debug("Trigger will not be triggered as it has already been triggered once");
+			return TriggerStatus.TRIGGER_ONCE;
 		}
 
+		Log.debug("Trigger will be performed");
+		if (!performTriggerImpl(stateInfo))
+			return TriggerStatus.COULD_NOT_TRIGGER;
+		
+		if (triggerOnce)
+			triggered = true;
+		
+		if (nonRetrig)
+			stateInfo.getClientProgress().addNonretriggerableByMap(id);
+		
 		if (retrigOnEnter && !stateInfo.getClientProgress().isPreviouslyTriggered(id))
 		{
 			stateInfo.getClientProgress().addRetriggerableByMap(id);
 		}
-
-		Log.debug("Trigger will be performed");
-		performTriggerImpl(stateInfo);
+		
 		return TriggerStatus.TRIGGERED;
 	}
 
-	private void performTriggerImpl(StateInfo stateInfo)
+	private boolean performTriggerImpl(StateInfo stateInfo)
 	{
 		Iterator<Triggerable> tt = triggerables.iterator();
 
 		while (tt.hasNext())
 			// I wonder why we remove certain triggerables... (Currently just AI changes?)
-			if (tt.next().perform(stateInfo))
-				tt.remove();
+			if (!tt.next().perform(stateInfo))
+				return false;
+		return true;
+				
 	}
 
 	public class TriggerToggleQuest implements Triggerable
@@ -191,7 +199,7 @@ public class Trigger
 				stateInfo.sendMessage(new StringMessage(MessageType.COMPLETE_QUEST, questId));
 			else
 				stateInfo.sendMessage(new StringMessage(MessageType.UNCOMPLETE_QUEST, questId));
-			return false;
+			return true;
 		}
 	}
 
@@ -212,7 +220,7 @@ public class Trigger
 		public boolean perform(StateInfo stateInfo)
 		{
 			stateInfo.sendMessage(new LoadMapMessage(MessageType.LOAD_MAP, mapData, location, transDir), true);
-			return false;
+			return true;
 		}
 	}
 
@@ -233,7 +241,7 @@ public class Trigger
 		public boolean perform(StateInfo stateInfo)
 		{
 			stateInfo.sendMessage(new LoadMapMessage(MessageType.START_BATTLE, battle, entrance, battleBG), true);
-			return false;
+			return true;
 		}
 	}
 
@@ -253,7 +261,7 @@ public class Trigger
 		@Override
 		public boolean perform(StateInfo stateInfo) {
 			stateInfo.sendMessage(new BattleCondMessage(leaderIds, enemyLeaderIds, killAllLeaders), true);
-			return false;
+			return true;
 		}
 	}
 
@@ -275,7 +283,7 @@ public class Trigger
 		@Override
 		public boolean perform(StateInfo stateInfo) {
 			stateInfo.sendMessage(new ShopMessage(buyPercent, sellPercent, itemIds, anims));
-			return false;
+			return true;
 		}
 	}
 
@@ -293,7 +301,7 @@ public class Trigger
 		@Override
 		public boolean perform(StateInfo stateInfo) {
 			stateInfo.sendMessage(new StringMessage(MessageType.SHOW_PRIEST, anim));
-			return false;
+			return true;
 		}
 	}
 
@@ -309,7 +317,7 @@ public class Trigger
 		@Override
 		public boolean perform(StateInfo stateInfo) {
 			stateInfo.getPersistentStateInfo().getClientProfile().addHero(HeroResource.getHero(heroId));
-			return false;
+			return true;
 		}
 	}
 
@@ -325,7 +333,7 @@ public class Trigger
 		@Override
 		public boolean perform(StateInfo stateInfo) {
 			stateInfo.getResourceManager().getTriggerEventById(triggerId).perform(stateInfo);
-			return false;
+			return true;
 		}
 	}
 
@@ -341,7 +349,7 @@ public class Trigger
 		@Override
 		public boolean perform(StateInfo stateInfo) {
 			stateInfo.sendMessage(new AudioMessage(MessageType.PLAY_MUSIC, song, .5f, true));
-			return false;
+			return true;
 		}
 	}
 	
@@ -350,7 +358,7 @@ public class Trigger
 		@Override
 		public boolean perform(StateInfo stateInfo) {
 			stateInfo.sendMessage(MessageType.PAUSE_MUSIC);
-			return false;
+			return true;
 		}
 	}
 	
@@ -359,7 +367,7 @@ public class Trigger
 		@Override
 		public boolean perform(StateInfo stateInfo) {
 			stateInfo.sendMessage(MessageType.RESUME_MUSIC);
-			return false;
+			return true;
 		}
 	}
 
@@ -377,7 +385,7 @@ public class Trigger
 		@Override
 		public boolean perform(StateInfo stateInfo) {
 			stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, song, volume / 100.0f, false));
-			return false;
+			return true;
 		}
 	}
 
@@ -395,7 +403,7 @@ public class Trigger
 		@Override
 		public boolean perform(StateInfo stateInfo) {
 			stateInfo.sendMessage(new ShowCinMessage(cinematicId, exitTriggerId), true);
-			return false;
+			return true;
 		}
 	}
 
@@ -412,7 +420,7 @@ public class Trigger
 		@Override
 		public boolean perform(StateInfo stateInfo) {
 			stateInfo.sendMessage(new LoadMapMessage(MessageType.LOAD_CINEMATIC, mapData, cinematicId), true);
-			return false;
+			return true;
 		}
 	}
 
@@ -420,11 +428,19 @@ public class Trigger
 	{
 		private int textId;
 		private String message;
+		private boolean immediate = false;
 
 		public TriggerShowText(int textId)
 		{
 			this.textId = textId;
 			message = null;
+		}
+		
+		public TriggerShowText(int textId, boolean immediate)
+		{
+			this.textId = textId;
+			message = null;
+			this.immediate = immediate;
 		}
 		
 		public TriggerShowText(String message) {
@@ -435,10 +451,10 @@ public class Trigger
 		public boolean perform(StateInfo stateInfo)
 		{
 			if (message == null)
-				Speech.showFirstSpeechMeetsReqs(textId, stateInfo);
+				Speech.showFirstSpeechMeetsReqs(textId, stateInfo, immediate);
 			else
 				stateInfo.sendMessage(new SpeechMessage(message));
-			return false;
+			return true;
 		}
 	}
 
@@ -558,7 +574,7 @@ public class Trigger
 		@Override
 		public boolean perform(StateInfo stateInfo) {
 			stateInfo.getResourceManager().getMap().getRoofById(roofId).setVisible(show);
-			return false;
+			return true;
 		}
 	}
 	
@@ -575,7 +591,7 @@ public class Trigger
 			for (int trig : triggers) {
 				stateInfo.getResourceManager().getTriggerEventById(trig).perform(stateInfo);
 			}
-			return false;
+			return true;
 		}
 	}
 	
@@ -585,6 +601,7 @@ public class Trigger
 		private String image;
 		private int[] searchTriggers;
 		private String locationName;
+		private Sprite sprite = null;
 
 		public TriggerAddSprite(String spriteName, String image, int[] searchTriggers, String locationName) {
 			super();
@@ -593,16 +610,24 @@ public class Trigger
 			this.searchTriggers = searchTriggers;
 			this.locationName = locationName;
 		}
+		
+		public TriggerAddSprite(Sprite sprite) {
+			this.sprite = sprite;
+		}
 
 		@Override
 		public boolean perform(StateInfo stateInfo) {
-			for (MapObject mo : stateInfo.getCurrentMap().getMapObjects()) {
-				if (locationName.equalsIgnoreCase(mo.getName())) {
-					stateInfo.addSprite(mo.getSprite(spriteName, image, searchTriggers, stateInfo.getResourceManager()));
-					break;
+			if (sprite != null) {
+					stateInfo.addSprite(sprite);
+				} else {
+					for (MapObject mo : stateInfo.getCurrentMap().getMapObjects()) {
+						if (locationName.equalsIgnoreCase(mo.getName())) {
+							stateInfo.addSprite(mo.getSprite(spriteName, image, searchTriggers, stateInfo.getResourceManager()));
+							break;
+						}
+					}
 				}
-			}
-			return false;
+			return true;
 		}
 	}
 	
@@ -628,7 +653,7 @@ public class Trigger
 				}
 			}
 				
-			return false;
+			return true;
 		}
 		
 	}
@@ -664,7 +689,7 @@ public class Trigger
 					break;
 				}
 			}
-			return false;
+			return true;
 		}
 	}
 
@@ -687,10 +712,10 @@ public class Trigger
 				if (s.getName() != null && s.getName().equalsIgnoreCase(spriteName))
 				{
 					spriteIt.remove();
-					return false;
+					return true;
 				}
 			}
-			return false;
+			return true;
 		}
 	}
 
@@ -716,24 +741,32 @@ public class Trigger
 				{
 					StaticSprite ss = (StaticSprite) s;
 					ss.setImage(stateInfo.getResourceManager().getImage(newImage));
-					return false;
+					return true;
 				}
 			}
-			return false;
+			return true;
 		}
 	}
 
 	public class TriggerAddItem implements Triggerable
 	{
 		private int itemId;
+		private Triggerable onFailureTriggerable = null;
 
 		public TriggerAddItem(int itemId) {
 			super();
 			this.itemId = itemId;
 		}
+		
+		public TriggerAddItem(int itemId, Triggerable onFailureTriggerable) {
+			super();
+			this.itemId = itemId;
+			this.onFailureTriggerable = onFailureTriggerable;
+		}
 
 		@Override
 		public boolean perform(StateInfo stateInfo) {
+			boolean given = false;
 			for (CombatSprite hero : stateInfo.getAllHeroes())
 			{
 				if (hero.getItemsSize() != 4)
@@ -741,11 +774,16 @@ public class Trigger
 					Item item = ItemResource.getItem(itemId, stateInfo.getResourceManager());
 					hero.addItem(item);
 					stateInfo.sendMessage(new SpeechMessage(hero.getName() + " recieved the " + item.getName() + TextSpecialCharacters.CHAR_HARD_STOP));
+					given = true;
 					break;
 				}
 			}
+			
+			if (!given && onFailureTriggerable != null) {
+				onFailureTriggerable.perform(stateInfo);
+			}
 
-			return false;
+			return given;
 		}
 	}
 
@@ -754,7 +792,7 @@ public class Trigger
 		@Override
 		public boolean perform(StateInfo stateInfo) {
 			System.exit(0);
-			return false;
+			return true;
 		}
 
 	}
@@ -775,7 +813,7 @@ public class Trigger
 			for (CombatSprite cs : stateInfo.getAllHeroes())
 				if (spriteToRev == null || cs.getName().equalsIgnoreCase(spriteToRev))
 					cs.setCurrentHP(cs.getMaxHP());
-			return false;
+			return true;
 		}
 	}
 	
@@ -795,7 +833,7 @@ public class Trigger
 				}
 			}
 			
-			return false;
+			return true;
 		}	
 	}
 	
@@ -815,7 +853,7 @@ public class Trigger
 					((NPCSprite) s).triggerButton1Event(stateInfo);
 				}
 			}
-			return false;
+			return true;
 		}
 		
 		
@@ -836,7 +874,7 @@ public class Trigger
 		public boolean perform(StateInfo stateInfo) {
 			mapObject.getParams().put("searchtrigger", "" + searchTriggerId);
 			mapObject.establishSearchArea(stateInfo.getResourceManager());
-			return false;
+			return true;
 		}
 		
 		
@@ -850,7 +888,7 @@ public class Trigger
 				stateInfo.saveBattle();
 			else
 				stateInfo.save();;
-			return false;
+			return true;
 		}
 		
 	}

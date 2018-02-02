@@ -4,12 +4,14 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.List;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
+import mb.fc.engine.CommRPG;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.ai.AI;
 import mb.fc.game.ai.ClericAI;
@@ -28,6 +30,7 @@ import mb.fc.game.sprite.Sprite;
 import mb.fc.game.sprite.StaticSprite;
 import mb.fc.game.trigger.Trigger;
 import mb.fc.game.trigger.TriggerCondition;
+import mb.fc.game.trigger.Triggerable;
 import mb.fc.loading.FCResourceManager;
 
 public class MapObject
@@ -344,17 +347,23 @@ public class MapObject
 		Trigger searchTrigger2 = new Trigger("SearchChest" + triggerId2, triggerId2, false, 
 				true, true, false, null, null);
 		
-		StaticSprite chestSprite = new StaticSprite(x, y, name, fcrm.getImage(spriteImage), new int[] {triggerId1, triggerId2} );
+		StaticSprite chestSprite = new StaticSprite(x, y, name, fcrm.getImage(spriteImage), new int[] {triggerId2} );
 		chestSprite.setLocX(x, fcrm.getMap().getTileEffectiveWidth());
 		chestSprite.setLocY(y, fcrm.getMap().getTileEffectiveHeight());
 		chestSprite.setOffsetUp(true);
 		searchTrigger1.addTriggerable(searchTrigger1.new TriggerRemoveSprite(name));
 		searchTrigger1.addTriggerable(searchTrigger1.new TriggerAddSearchArea(this, Trigger.TRIGGER_CHEST_NO_ITEM));
 		if (item != null) {
-			searchTrigger2.addTriggerable(searchTrigger2.new TriggerAddItem(item.getItemId()));
-			searchTrigger2.addTriggerable(searchTrigger2.new TriggerShowText("There was a " + item.getName() + " inside!"  + TextSpecialCharacters.CHAR_HARD_STOP));
+			Trigger t = new Trigger();
+			
+			searchTrigger2.addTriggerable(searchTrigger2.new TriggerAddItem(item.getItemId(), 
+					t.new TriggerShowText(CommRPG.engineConfiguratior.getMenuConfiguration().getItemInChestTextNoRoom(item.getName()))));
+			searchTrigger2.addTriggerable(searchTrigger2.new TriggerShowText(
+					CommRPG.engineConfiguratior.getMenuConfiguration().getItemInChestText(item.getName())));
+			searchTrigger2.addTriggerable(searchTrigger2.new TriggerRunTriggers(new int[] {triggerId1}));
 		} else {
-			searchTrigger2.addTriggerable(searchTrigger2.new TriggerShowText("There was nothing inside..." + TextSpecialCharacters.CHAR_HARD_STOP));
+			searchTrigger2.addTriggerable(searchTrigger2.new TriggerShowText(CommRPG.engineConfiguratior.getMenuConfiguration().getNoItemInChestText()));
+			searchTrigger2.addTriggerable(searchTrigger2.new TriggerRunTriggers(new int[] {triggerId1}));
 		}
 		fcrm.addTriggerEvent(triggerId1, searchTrigger1);
 		fcrm.addTriggerEvent(triggerId2, searchTrigger2);

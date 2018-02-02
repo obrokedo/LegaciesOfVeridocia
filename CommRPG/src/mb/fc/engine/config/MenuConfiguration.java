@@ -46,4 +46,6 @@ public interface MenuConfiguration {
 	public String getShopPromptSellOldText(String itemName, String cost);
 	
 	public String getNoItemInChestText();
+	public String getItemInChestText(String itemName);
+	public String getItemInChestTextNoRoom(String itemName);
 }

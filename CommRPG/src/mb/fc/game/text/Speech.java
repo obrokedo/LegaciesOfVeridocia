@@ -2,6 +2,7 @@ package mb.fc.game.text;
 
 import java.util.ArrayList;
 
+import mb.fc.engine.message.Message;
 import mb.fc.engine.message.SpeechBundleMessage;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.menu.Portrait;
@@ -49,7 +50,7 @@ public class Speech
 		return Portrait.getPortrait(heroPortrait, enemyPortrait, spriteAnimsName, stateInfo);
 	}
 	
-	public static boolean showFirstSpeechMeetsReqs(int textId, StateInfo stateInfo) {
+	public static boolean showFirstSpeechMeetsReqs(int textId, StateInfo stateInfo, boolean immediate) {
 		ArrayList<Speech> speeches = stateInfo.getResourceManager().getSpeechesById(textId);
 		if (speeches != null) {
 			SPEECHLOOP: for (int speechIndex = 0; speechIndex < speeches.size(); speechIndex++)
@@ -77,7 +78,8 @@ public class Speech
 					}
 				}
 				
-				stateInfo.sendMessage(new SpeechBundleMessage(textId, speechIndex));
+				Message mess = new SpeechBundleMessage(textId, speechIndex, immediate);
+				stateInfo.sendMessage(mess);
 				return true;
 			}
 		}

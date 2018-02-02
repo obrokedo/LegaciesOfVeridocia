@@ -421,7 +421,10 @@ public class TextParser
 				}
 				else if (tagType.equalsIgnoreCase("additem"))
 				{
-					te.addTriggerable(te.new TriggerAddItem(ItemResource.getItemIdByName(actionParams.get("itemid"))));
+					// Holy fuck I have no idea why this TriggerShowText needs to be immediate, if it's not then
+					// it somehow displays BEFORE text that comes before it.
+					te.addTriggerable(te.new TriggerAddItem(ItemResource.getItemIdByName(actionParams.get("itemid")), 
+							te.new TriggerShowText(Integer.parseInt(actionParams.get("failuretext")), true)));
 				} 
 				else if (tagType.equalsIgnoreCase("runtriggers")) {
 					te.addTriggerable(te.new TriggerRunTriggers(parseMultiString("triggers", actionParams, s -> Integer.parseInt(s))));

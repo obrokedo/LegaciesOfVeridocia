@@ -55,7 +55,7 @@ public class NPCSprite extends AnimatedSprite
 
 	public void triggerButton1Event(StateInfo stateInfo)
 	{
-		if (Speech.showFirstSpeechMeetsReqs(speechId, stateInfo)) {
+		if (Speech.showFirstSpeechMeetsReqs(speechId, stateInfo, false)) {
 			originalFacing = this.getFacing();
 			if (turnOnTalk) {
 				if (stateInfo.getCurrentSprite().getLocX() > this.getLocX())
