@@ -45,7 +45,7 @@
 	<showtext textid=14/>
 </trigger>
 <trigger id=15 description="GiveSwordToHero" require="," exclude="," nonretrig=true retrigonenter=false triggeronce=false triggerimmediately=false>
-	<additem itemid="Erium Blade"/>
+	<additem itemid="Erium Blade" failuretext=16/>
 	<showtext textid=15/>
 </trigger>
 <trigger id=16 description="SleepingGuard" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
@@ -99,6 +99,9 @@
 </text>
 <text id=15 description="ReceiveSwordFromGuard">
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="Please take this and let me know how well it fares in your training.<hardstop>"/>
+</text>
+<text id=16 description="NoRoomForSword">
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="Oh it looks like you don't have enough room for this, come back when you've made space.<hardstop>"/>
 </text>
 <cinematic id=0 description="SharnaCutScene" camerax=72 cameray=672>
 	<assactor name="Sharna" hero="" enemyid=0 npcid="Sharna"/>

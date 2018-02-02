@@ -99,3 +99,7 @@ class MenuConfiguration(MenuConfiguration):
         return "Would you like to sell your old " + itemName + " for " + cost + " gold?]"
     def getNoItemInChestText(self):
         return "It was dark inside...<hardstop>"
+    def getItemInChestText(self, itemName):
+        return "There was a " + itemName + " inside!<hardstop>"
+    def getItemInChestTextNoRoom(self, itemName):
+        return "There was a " + itemName + " inside,<softstop> but you have no room...<hardstop>"
