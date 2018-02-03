@@ -108,7 +108,7 @@
 	<haltingmove name="Craig" x=696 y=288 speed="2.4" movehor=false movediag=false/>
 	<playmusic music="UnHero" volume=50/>
 	<camerafollow name="Craig"/>
-	<speech text="I relieve you of your duties.<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
+	<speech text="I relieve ya of your duties.<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
 	<haltingmove name="Craig" x=696 y=240 speed="2.4" movehor=true movediag=false/>
 	<haltingmove name="Craig" x=576 y=228 speed="2.4" movehor=true movediag=false/>
 	<cameramove x=576 y=228 time=100/>
@@ -120,7 +120,7 @@
 	<haltingmove name="Noah" x=576 y=228 speed="2.4" movehor=false movediag=false/>
 	<camerafollow name="Noah"/>
 	<facing name="Noah" dir=2/>
-	<speech text="Go get yer gear!<pause><pause><linebreak> It's in them crates round the corner behind ya!<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
+	<speech text="Go get yer gear!<pause><pause><linebreak> It's in the crates 'round the corner behind ya!<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
 	<nod name="Noah"/>
 	<wait time=1500/>
 	<move name="Huun" x=576 y=276 speed="2.4" movehor=true movediag=false/>
@@ -195,7 +195,7 @@
 	<facing name="Huun" dir=2/>
 	<facing name="Sharna" dir=2/>
 	<facing name="Noah" dir=2/>
-	<speech text="They'll try to pincer us.<softstop><nextcin><linebreak> We'll lock the door behind us to keep you safe from the main battalion.<softstop> We'll hold them there.<pause> You mop up the grunts, and we'll meet you upstairs.<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
+	<speech text="They'll try an' pincer us.<softstop><nextcin><linebreak> We'll lock the door behind us to keep you safe from the main battalion.<softstop> We'll hold 'em there.<pause> You mop up the grunts, and we'll meet ya upstairs.<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
 	<facing name="Craig" dir=3/>
 	<move name="Olivia" x=216 y=240 speed="2.4" movehor=true movediag=false/>
 	<facing name="Huun" dir=0/>
@@ -216,14 +216,14 @@
 	<wait time=500/>
 	<facing name="Craig" dir=3/>
 	<wait time=1000/>
-	<forcedmove name="Craig" x=216 y=300 speed=9 facing=3 movehor=false movediag=false/>
+	<forcedmove name="Craig" x=216 y=300 speed="9" facing=3 movehor=false movediag=false/>
 	<rendertop name="Craig"/>
 	<wait time=125/>
-	<forcedmove name="Craig" x=216 y=312 speed=9 facing=3 movehor=false movediag=false/>
+	<forcedmove name="Craig" x=216 y=312 speed="9" facing=3 movehor=false movediag=false/>
 	<wait time=125/>
-	<forcedmove name="Craig" x=216 y=300 speed=9 facing=3 movehor=false movediag=false/>
+	<forcedmove name="Craig" x=216 y=300 speed="9" facing=3 movehor=false movediag=false/>
 	<wait time=125/>
-	<forcedmove name="Craig" x=216 y=312 speed=9 facing=3 movehor=false movediag=false/>
+	<forcedmove name="Craig" x=216 y=312 speed="9" facing=3 movehor=false movediag=false/>
 	<wait time=1000/>
 	<speech text="C'mon, ya cowards!<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
 	<rendernormal name="Craig"/>
@@ -235,7 +235,7 @@
 	<facing name="Noah" dir=0/>
 	<speech text="Not so fast.<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
 	<speech text="I order you to stand down!<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
-	<speech text="HA!<pause> You're in no position to give orders.<hardstop><linebreak> Mistal said you wouldn't go quietly.<softstop> Surrender now!<pause> You're only making it worse for yourselves.<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
+	<speech text="HA!<pause> You're in no position to give orders.<hardstop><linebreak>  Surrender now!<pause> You're only making it worse for yourselves.<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
 	<speech text="We have to get through.<pause><linebreak> But subdue them, don't kill them.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<speech text="Confident, aren't we?<pause><linebreak> Don't expect the same courtesy from us.<hardstop><linebreak> ATTACK!!<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
 	<loadbattle mapdata="battle2" entrance="battlestart" battbg=0/>

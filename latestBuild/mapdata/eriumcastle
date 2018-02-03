@@ -122,7 +122,7 @@
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="Hey, look who decided to show up early for once! Maybe Sharna is finally rubbing off on you.<hardstop>"/>
 </text>
 <text id=3 description="Citizen 1 Garden">
-	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="This garden is beautiful during the day, but it is especially enchanting during the sunrise. <hardstop>I thought sunset would be nice too but the castle walls shorten the experience.<hardstop>"/>
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="This garden is beautiful during the day, but it is especially enchanting during the sunrise. <hardstop>I thought sunset would be nice too, but the castle walls shorten the experience.<hardstop>"/>
 </text>
 <text id=4 description="Soldier 1 weapon room">
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="I envy you. I'm stuck in here cleaning these weapons while you get to patrol the castle.<hardstop>"/>
@@ -140,7 +140,7 @@
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="There are many magical objects in this world that we do not fully understand but I plan to solve all of their mysteries!<hardstop>"/>
 </text>
 <text id=9 description="Citizen 4 library">
-	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="She's a bit of a fanatic about magic but doesn't have a single magical bone in her body. Still, I admire her determination.<hardstop>"/>
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="My sister is a bit of a fanatic about magic but doesn't have a single magical bone in her body. Still, I admire her determination.<hardstop>"/>
 </text>
 <text id=10 description="Mage 1 library">
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="Grand Mage Mistal has had us researching some interesting magic recently.<hardstop>"/>
@@ -170,7 +170,7 @@
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="I always wished I knew a bit of magic to make cooking easier, but thease old hands will just have to do!<hardstop>"/>
 </text>
 <text id=19 description="Cook 2 Kitchen">
-	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="Despite working in the kitchen, I stay thin by delivering the food upstairs.<hardstop>"/>
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="Despite working in the kitchen, I stay fit by delivering the food upstairs.<hardstop>"/>
 </text>
 <text id=20 description="Soldier near courtyard">
 	<yesno require="," exclude="," triggeryes=1 triggerno=22 heroportrait="" enemyportrait="" animportrait="" message="You're a bit early, Noah. Are you reporting for duty?"/>

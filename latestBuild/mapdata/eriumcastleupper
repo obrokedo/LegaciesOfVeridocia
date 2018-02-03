@@ -58,10 +58,10 @@
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="Zzzz...zzz<hardstop>"/>
 </text>
 <text id=2 description="Servant 1 Dining Hall">
-	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="I had better hurry up and finish cleaning before the sun sets fully. Candle light tends to hide dirt more than you'd think!<hardstop>"/>
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="I better hurry and finish cleaning before the sun sets fully. Candle light tends to hide dirt more than you'd think!<hardstop>"/>
 </text>
 <text id=3 description="Servant 2 Dining Hall">
-	<conversation require="," exclude="," trigger=-1 heroportrait1="" enemyportrait1="" animportrait1="" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="These soldiers are such slobs! Every single one of them have the manners of a toddl...<pause> Oh! Hi, Noah! I don't mean you of course!<hardstop><split>You just don't see my messes because I make them at home. Can I lend a hand?<hardstop><split>Oh, that's alright. I complain but I really do enjoy my job and the company of everyone. Besides, doesn't your shift start soon?<hardstop><split>It does but I can still help...<hardstop><split>That's okay, I'm almost finished anyway. Thank you though.<hardstop>"/>
+	<conversation require="," exclude="," trigger=-1 heroportrait1="" enemyportrait1="" animportrait1="" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="These soldiers are such slobs! Every one of them have the manners of a toddl...<pause> Oh! Hi, Noah! I don't mean you of course!<hardstop><split>You just don't see my messes because I make them at home. Can I lend a hand?<hardstop><split>Oh, that's alright. I complain but I really do enjoy my job and the company of everyone. Besides, doesn't your shift start soon?<hardstop><split>It does but I can still help...<hardstop><split>That's okay, I'm almost finished anyway. Thank you though.<hardstop>"/>
 </text>
 <text id=4 description="Soldier 1 Study">
 	<conversation require="," exclude="," trigger=15 heroportrait1="" enemyportrait1="" animportrait1="" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="I love serving King Erium but I'm studying to work for the Kingdom.<hardstop> I hope to one day be a great blacksmith but...<pause> well, you can see the quality of my work.<hardstop><split>This is a great start! We'll all be lucky to have you making our weapons one day.<hardstop><split>You really think so? That means a lot! <hardstop>"/>
@@ -71,7 +71,7 @@
 </text>
 <text id=6 description="Sharna">
 	<string require="," exclude="EriumCastleUpperSharnaTalk," trigger=1 heroportrait="Sharna" enemyportrait="" animportrait="" message="Hello, Noah. <pause>Glad to see you're here this early. I just got here, too! <hardstop>I hope Huun makes it on time tonight. It makes us all look sloppy when one of us is late.<hardstop>"/>
-	<string require="EriumCastleUpperSharnaTalk," exclude="," trigger=-1 heroportrait="Sharna" enemyportrait="" animportrait="" message="Dont be late for patrol!<hardstop>"/>
+	<string require="EriumCastleUpperSharnaTalk," exclude="," trigger=-1 heroportrait="Sharna" enemyportrait="" animportrait="" message="Don't be late for patrol!<hardstop>"/>
 </text>
 <text id=7 description="SearchNoItem">
 	<string require="," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="There doesn't seem to be anything here.<hardstop>"/>
