@@ -159,7 +159,7 @@
 	<haltingmove name="Cam" x=744 y=600 speed="1" movehor=false movediag=true/>
 	<wait time=1000/>
 	<speech text="I heard it over by the trees.<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
-	<speech text="Right. I'm going to assess the situation.<hardstop>Keep watch over by those bushes, and be ready to assist. <linebreak> Stay out of sight.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
+	<speech text="Right. I'm going to assess the situation.<hardstop> Keep watch over by those bushes, and be ready to assist. <softstop> Stay out of sight.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<facing name="Sharna" dir=2/>
 	<facing name="Huun" dir=3/>
 	<wait time=375/>

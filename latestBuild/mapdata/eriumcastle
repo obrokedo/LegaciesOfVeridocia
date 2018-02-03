@@ -140,7 +140,7 @@
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="There are many magical objects in this world that we do not fully understand but I plan to solve all of their mysteries!<hardstop>"/>
 </text>
 <text id=9 description="Citizen 4 library">
-	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="My sister is a bit of a fanatic about magic but doesn't have a single magical bone in her body. Still, I admire her determination.<hardstop>"/>
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="My sister is a fanatic about magic but doesn't have a magical bone in her body. Still, I admire her determination.<hardstop>"/>
 </text>
 <text id=10 description="Mage 1 library">
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="Grand Mage Mistal has had us researching some interesting magic recently.<hardstop>"/>
