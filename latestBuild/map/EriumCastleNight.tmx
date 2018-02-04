@@ -55,13 +55,13 @@
    H4sIAAAAAAAAC+2cQW7UMBhGs5lKsIfuywE5EhL0EEgoh6gEnIADwB4q0oUlYxLHcZLfv/O9J30aeSYLz/dkz6RJZxj+5fdtGP6QS+b5NqyC/+sG/9rBv3bwrx38awf/2sG/dvCvHfxrB//awb928K8d/GsH/9rBv3bwrx38awf/2sG/dvCvHfxrB//awb928K8d/GsH/9rBv3bwrx38awf/2sG/dq7s/+3dOWn9vvBf9r4+TvkU5UMyrk2PfSj6/zLlfZTPybg2PfaBf/wr+v855deM//j5reMe+1D1/2r6vvb67n//8fNbxz32oer/YXL2bsZ//PzWcY99qPo/4/P/TeV5o8cer+z/65RvUZ6ScW3i88rcOWX82uPNZ49X9n8W8b6S21Pi10b8u3tf+Mc//vG/lfh7Re47Rfzad/y7e1/WeOwR/3Z47BH/dnjsEf92eOwR/3Z47BH/dnjsEf92eOwR/3Z47BH/dnjsEf92eOwR/3Z47BH/dnjsEf92eOwR/3Z47BH/dnjsEf92eOwR/3Z47BH/dnjsEf92eOwR/3Z47BH/dnjsEf92eOwR/3Z47BH/dnjssaSn2v93bf27Sz+cpbXrWv/p7yi1isf103tK/Kf/R98q+Pfhf89v59SM8e/L/57fzqkZ49+X/z2/nVMzxr8v/3z+Xyf41w7+tYN/7Xj8O+kS+Md/676uFvxrB//a6cl/6XXI1p2uxdP8e/Jfeh3S8z7x7Gz+PfkvPQ9N94nWzuO53M/8Xbvlee4V/IfrheEx3Sda7gfpen/MzBv/eZb8h+uF4TE9zno/yK33MTNv/OdZ8h+uF4bHcFyL/WBuvcfrO/afzhv/eUo//8Nxa/vBGet+br3H63u8rc/f8n7Ll/n2wlb/a/vBkessrPu59R6v7xL/lvdbvsy3F7b6X9sPjlxn95Hf3Hov8W95vW0U8p/uB0eus/C9fm294/98lvyn4yN7HpPHJd8lfeN/H7X+l+47TjN3HP79UOt/6b7jNHPH5fzvnT/+91Hqf+m+4zRzx+G/H87+/D9qfvg/B/xr+w8c7R/6Av8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANATfwHs0Ud1AAABAA==
   </data>
  </layer>
- <layer name="Walkable" width="128" height="128" visible="0" opacity="0.52">
+ <layer name="Walkable" width="128" height="128" opacity="0.52">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAC+3US04DQQwE0Ky4/zW5BWsQKJPpTruMX0m1ymdsvyiPh4iIiIiIiIiIiIiI/Ld8fvRu2t1S7/rqHl1aFf4ZrQr/jFaFf0ZXve5+L/+M8ufPnz//2f7Vc6TOw3/2PPxnz8N/9jz8s+c5NT//zHn4r90lbQ/+/Pnz58+/s7/MCP/Zqf6/rP5frO6pPflnlj9//vz58+fPnz9//vnzdduTf2b58+fPnz9//vz58+d/fb472fldd5/Fnz//ff7V86bPxT9zfv57/Ff3+utzq6m+I3/+E/137bua6jvyX9t3NdV3nOr/rnvx588/17967rvzv+v39yzVd+L/+/tOpfpOp/yvvr56p1c/d8qBP/+J/lddd9+HP3/+ef67n7/6PP78+b/P//T9+fPnn+N/d9/V3xN//vzr/a/uv+s+/Pnzz/M/PTd//vz58+fPP8f/5/t234E/f/78+fPnf96/aq+7c/Dnz7+v/7Pw58+ff4p/tSt//if8U5Licuo5/L8nxeXUc6bOm75nt3t2mzd9z2737DZv+p7d7tlt3vQ9u92z27zpe3a7Z7d50/fsds9u86bv2e2e3eZN37PbPbvNm75nt3t2mzd9z2737DZv+p7d7tlt3vQ9p9yzW/nPLv/Z5T+7/Gf3dKr3Vf6qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqvpavwA1IMuPAAABAA==
   </data>
  </layer>
  <objectgroup name="Meta" visible="0"/>
- <objectgroup name="Enemies" visible="0">
+ <objectgroup name="Enemies">
   <object id="1" name="Darkling Ooze" x="840" y="600" width="24" height="24">
    <properties>
     <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Darkling Ooze unit=0"/>
@@ -72,12 +72,12 @@
     <property name="enemy" value="ai=fighter aiapproach=wait enemyid=Darkling Ooze unit=4"/>
    </properties>
   </object>
-  <object id="3" x="936" y="864" width="24" height="24">
+  <object id="3" x="912" y="816" width="24" height="24">
    <properties>
     <property name="enemy" value="ai=fighter aiapproach=wait enemyid=Darkling Ooze unit=5"/>
    </properties>
   </object>
-  <object id="4" x="864" y="912" width="24" height="24">
+  <object id="4" x="792" y="864" width="24" height="24">
    <properties>
     <property name="enemy" value="ai=fighter aiapproach=wait enemyid=Darkling Ooze unit=6"/>
    </properties>
@@ -87,12 +87,12 @@
     <property name="enemy" value="ai=fighter aiapproach=wait enemyid=Darkling Ooze unit=3"/>
    </properties>
   </object>
-  <object id="6" x="672" y="888" width="24" height="24">
+  <object id="6" x="672" y="816" width="24" height="24">
    <properties>
     <property name="enemy" value="ai=fighter aiapproach=wait enemyid=Darkling Ooze unit=2"/>
    </properties>
   </object>
-  <object id="7" x="624" y="744" width="24" height="24">
+  <object id="7" x="648" y="720" width="24" height="24">
    <properties>
     <property name="enemy" value="ai=fighter aiapproach=wait enemyid=Darkling Ooze unit=1"/>
    </properties>
@@ -103,7 +103,7 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup name="Battle Triggers" visible="0">
+ <objectgroup name="Battle Triggers">
   <object id="9" x="672" y="576" width="72" height="48">
    <properties>
     <property name="start" value="exit=battle1"/>
