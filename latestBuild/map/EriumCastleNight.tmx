@@ -67,12 +67,12 @@
     <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Darkling Ooze unit=0"/>
    </properties>
   </object>
-  <object id="2" name="Darkling Ooze" x="960" y="696" width="24" height="24">
+  <object id="2" name="Darkling Ooze" x="936" y="696" width="24" height="24">
    <properties>
     <property name="enemy" value="ai=fighter aiapproach=wait enemyid=Darkling Ooze unit=4"/>
    </properties>
   </object>
-  <object id="3" x="912" y="816" width="24" height="24">
+  <object id="3" x="888" y="792" width="24" height="24">
    <properties>
     <property name="enemy" value="ai=fighter aiapproach=wait enemyid=Darkling Ooze unit=5"/>
    </properties>
@@ -82,12 +82,12 @@
     <property name="enemy" value="ai=fighter aiapproach=wait enemyid=Darkling Ooze unit=6"/>
    </properties>
   </object>
-  <object id="5" x="744" y="960" width="24" height="24">
+  <object id="5" x="744" y="912" width="24" height="24">
    <properties>
     <property name="enemy" value="ai=fighter aiapproach=wait enemyid=Darkling Ooze unit=3"/>
    </properties>
   </object>
-  <object id="6" x="672" y="816" width="24" height="24">
+  <object id="6" x="648" y="792" width="24" height="24">
    <properties>
     <property name="enemy" value="ai=fighter aiapproach=wait enemyid=Darkling Ooze unit=2"/>
    </properties>
