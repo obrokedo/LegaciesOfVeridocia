@@ -130,25 +130,25 @@
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="Who said you were allowed up there!<hardstop>"/>
 </text>
 <text id=11 description="SearchNoItem">
-	<string require="," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="There doesn't seem to be anything here.<hardstop>"/>
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="There doesn't seem to be anything here.<hardstop>"/>
 </text>
 <text id=12 description="SearchSign">
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="Welcome to Erium<hardstop>"/>
 </text>
 <text id=13 description="SearchStatue">
-	<string require="," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="I wonder who this statue is supposed to represent.<hardstop>"/>
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="I wonder who this statue is supposed to represent.<hardstop>"/>
 </text>
 <text id=14 description="BehindCounter">
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="Shopkeeper1" message="Hey, you're not allowed back here!<hardstop>"/>
 </text>
 <text id=15 description="Book1">
-	<string require="," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Genesis: Ancient Technology.<hardstop>"/>
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Genesis: Ancient Technology.<hardstop>"/>
 </text>
 <text id=16 description="Book2">
-	<string require="," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Tough,<pause> Thorough,<pause> Thought.<hardstop>"/>
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Tough,<pause> Thorough,<pause> Thought.<hardstop>"/>
 </text>
 <text id=17 description="Book3">
-	<string require="," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Is This The Real Life?<hardstop>"/>
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Is This The Real Life?<hardstop>"/>
 </text>
 <text id=18 description="Demo2Over">
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="This is the end of Demo 2. Thank you for playing!<hardstop>"/>

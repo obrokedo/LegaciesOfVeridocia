@@ -74,28 +74,28 @@
 	<string require="EriumCastleUpperSharnaTalk," exclude="," trigger=-1 heroportrait="Sharna" enemyportrait="" animportrait="" message="Don't be late for patrol!<hardstop>"/>
 </text>
 <text id=7 description="SearchNoItem">
-	<string require="," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="There doesn't seem to be anything here.<hardstop>"/>
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="There doesn't seem to be anything here.<hardstop>"/>
 </text>
 <text id=8 description="Book1">
-	<string require="," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, The Beacon of Veridocia.<hardstop>"/>
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, The Beacon of Veridocia.<hardstop>"/>
 </text>
 <text id=9 description="Book2">
-	<string require="," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Erium Royalty: Details of the Erium Nobility and Their Exploits.<hardstop>"/>
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Erium Royalty: Details of the Erium Nobility and Their Exploits.<hardstop>"/>
 </text>
 <text id=10 description="Book3">
-	<string require="," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Atlas of the Veridocian Continent.<hardstop>"/>
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Atlas of the Veridocian Continent.<hardstop>"/>
 </text>
 <text id=11 description="Book4">
-	<string require="," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Glory and Honor: Tales of Erium's Past Military Victories.<hardstop>"/>
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Glory and Honor: Tales of Erium's Past Military Victories.<hardstop>"/>
 </text>
 <text id=12 description="Book5">
-	<string require="," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, The Adventures of Finn and Xander.<hardstop>"/>
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, The Adventures of Finn and Xander.<hardstop>"/>
 </text>
 <text id=13 description="Book6">
-	<string require="," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Ancient Erium.<hardstop>"/>
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Ancient Erium.<hardstop>"/>
 </text>
 <text id=14 description="Book7">
-	<string require="," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Castle Architecture.<hardstop>"/>
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Castle Architecture.<hardstop>"/>
 </text>
 <text id=15 description="ReceiveSwordFromGuard">
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="Please take this and let me know how well it fares in your training.<hardstop>"/>

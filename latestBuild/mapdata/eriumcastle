@@ -176,40 +176,40 @@
 	<yesno require="," exclude="," triggeryes=1 triggerno=22 heroportrait="" enemyportrait="" animportrait="" message="You're a bit early, Noah. Are you reporting for duty?"/>
 </text>
 <text id=21 description="SearchNoItem">
-	<string require="," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="There doesn't seem to be anything here.<hardstop>"/>
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="There doesn't seem to be anything here.<hardstop>"/>
 </text>
 <text id=22 description="KeepRoaming">
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="Don't be late!<hardstop>"/>
 </text>
 <text id=23 description="Book1">
-	<string require="," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Preparing Meals for an Army.<hardstop>"/>
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Preparing Meals for an Army.<hardstop>"/>
 </text>
 <text id=24 description="Book2">
-	<string require="," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Courtesy and Etiquette.<hardstop>"/>
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Courtesy and Etiquette.<hardstop>"/>
 </text>
 <text id=25 description="Book3">
-	<string require="," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, The Quartermaster's Manifest.<hardstop>"/>
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, The Quartermaster's Manifest.<hardstop>"/>
 </text>
 <text id=26 description="Book4">
-	<string require="," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Mixed Unit Strategy for Irregular Forces.<hardstop>"/>
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Mixed Unit Strategy for Irregular Forces.<hardstop>"/>
 </text>
 <text id=27 description="Book5">
-	<string require="," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, The Adventures of a Princess.<hardstop>"/>
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, The Adventures of a Princess.<hardstop>"/>
 </text>
 <text id=28 description="Book6">
-	<string require="," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Sage Advise.<hardstop>"/>
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Sage Advise.<hardstop>"/>
 </text>
 <text id=29 description="Book7">
-	<string require="," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, The Sword and the Seals.<hardstop>"/>
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, The Sword and the Seals.<hardstop>"/>
 </text>
 <text id=30 description="Book8">
-	<string require="," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Dreaming of Camelot: Tragedy and Heartbreak.<hardstop>"/>
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Dreaming of Camelot: Tragedy and Heartbreak.<hardstop>"/>
 </text>
 <text id=31 description="Book9">
-	<string require="," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Shrines of the Land.<hardstop>"/>
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Shrines of the Land.<hardstop>"/>
 </text>
 <text id=32 description="Book10">
-	<string require="," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Harnessing the Flame, Vol. 1: A Beginner's Guide to Fire Magic.<hardstop>"/>
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Harnessing the Flame, Vol. 1: A Beginner's Guide to Fire Magic.<hardstop>"/>
 </text>
 <cinematic id=0 description="Mage2RunsOff" camerax=0 cameray=0>
 	<assactor name="Mage2" hero="" enemyid=0 npcid="Mage2"/>
