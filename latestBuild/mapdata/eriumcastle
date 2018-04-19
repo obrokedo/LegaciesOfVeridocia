@@ -112,6 +112,42 @@
 	<completequest questid="PreBattle1CinimaticWatched"/>
 	<loadcin mapdata="eriumcastlenight" cinid=0/>
 </trigger>
+<trigger id=37 description="Book 11" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<showtext textid=33/>
+</trigger>
+<trigger id=38 description="Book 12" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<showtext textid=34/>
+</trigger>
+<trigger id=39 description="Book 13" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<showtext textid=35/>
+</trigger>
+<trigger id=40 description="Book 14" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<showtext textid=36/>
+</trigger>
+<trigger id=41 description="Book 15" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<showtext textid=37/>
+</trigger>
+<trigger id=42 description="Book 16" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<showtext textid=38/>
+</trigger>
+<trigger id=43 description="Book 17" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<showtext textid=39/>
+</trigger>
+<trigger id=44 description="Book 18" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<showtext textid=40/>
+</trigger>
+<trigger id=45 description="Book 19" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<showtext textid=41/>
+</trigger>
+<trigger id=46 description="Book 20" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<showtext textid=42/>
+</trigger>
+<trigger id=47 description="Book 21" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<showtext textid=43/>
+</trigger>
+<trigger id=48 description="Book 22" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<showtext textid=44/>
+</trigger>
 <text id=0 description="Entrance Guard">
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="Your shift is about to start; you had better get going!<hardstop>"/>
 </text>
@@ -210,6 +246,42 @@
 </text>
 <text id=32 description="Book10">
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Harnessing the Flame, Vol. 1: A Beginner's Guide to Fire Magic.<hardstop>"/>
+</text>
+<text id=33 description="Book 11">
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause>  But the cover is too worn to read.<hardstop>"/>
+</text>
+<text id=34 description="Book 12">
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause> The book is too damaged to be of real use.<hardstop>"/>
+</text>
+<text id=35 description="Book 13">
+	<string require="," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="There's a book here.<pause> But I can't read ancient runes!<hardstop>"/>
+</text>
+<text id=36 description="Book 14">
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="The books appear to be out of order.<hardstop>"/>
+</text>
+<text id=37 description="Book 15">
+	<string require="," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="There's a book here.<pause> If I touch any of these, they might crumble!<hardstop>"/>
+</text>
+<text id=38 description="Book 16">
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause> The cover is missing on this book.<hardstop>"/>
+</text>
+<text id=39 description="Book 17">
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="The bookshelf rattles.<hardstop>"/>
+</text>
+<text id=40 description="Book 18">
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="The books look too fragile to touch.<hardstop>"/>
+</text>
+<text id=41 description="Book 19">
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause> The book emits a dark energy.<hardstop>"/>
+</text>
+<text id=42 description="Book 20">
+	<string require="," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="I can't use these, they're practically destroyed!<hardstop>"/>
+</text>
+<text id=43 description="Book 21">
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause> A foul odor comes from the book.<hardstop>"/>
+</text>
+<text id=44 description="Book 22">
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause> The book is written in ancient runes.<hardstop>"/>
 </text>
 <cinematic id=0 description="Mage2RunsOff" camerax=0 cameray=0>
 	<assactor name="Mage2" hero="" enemyid=0 npcid="Mage2"/>
