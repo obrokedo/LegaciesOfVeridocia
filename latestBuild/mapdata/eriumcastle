@@ -148,6 +148,12 @@
 <trigger id=48 description="Book 22" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<showtext textid=44/>
 </trigger>
+<trigger id=49 description="You Got This" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<showtext textid=48/>
+</trigger>
+<trigger id=50 description="You Don't Got This" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<showtext textid=49/>
+</trigger>
 <text id=0 description="Entrance Guard">
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="Your shift is about to start; you had better get going!<hardstop>"/>
 </text>
@@ -282,6 +288,21 @@
 </text>
 <text id=44 description="Book 22">
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause> The book is written in ancient runes.<hardstop>"/>
+</text>
+<text id=45 description="Training Soldier 1">
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="I feel like all I do is train.<pause> I swear, one day my sword arm's gonna fall off!<hardstop>"/>
+</text>
+<text id=46 description="Training Soldier 2">
+	<yesno require="," exclude="," triggeryes=49 triggerno=50 heroportrait="" enemyportrait="" animportrait="" message="Hey, Noah!<pause> He's all tired out. Reckon I've won this one.<pause> Don't you?"/>
+</text>
+<text id=47 description="Training Captain">
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="Look sharp, Noah.<pause> These two are inexperienced.<pause> They might hit you by mistake.<hardstop>"/>
+</text>
+<text id=48 description="You Got This">
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="YES!<pause><linebreak> Hear that? You're goin' down!<hardstop>"/>
+</text>
+<text id=49 description="You Don't Got This">
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="W...<pause> what? Awwww.<pause>.<pause>.<hardstop>"/>
 </text>
 <cinematic id=0 description="Mage2RunsOff" camerax=0 cameray=0>
 	<assactor name="Mage2" hero="" enemyid=0 npcid="Mage2"/>
