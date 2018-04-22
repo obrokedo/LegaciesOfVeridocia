@@ -103,3 +103,5 @@ class MenuConfiguration(MenuConfiguration):
         return "There was a " + itemName + " inside!<hardstop>"
     def getItemInChestTextNoRoom(self, itemName):
         return "There was a " + itemName + " inside,<softstop> but you have no room...<hardstop>"
+    def getItemRecievedText(self, heroName, itemName):
+        return heroName + " recieved the " + itemName + ".<hardstop>"
