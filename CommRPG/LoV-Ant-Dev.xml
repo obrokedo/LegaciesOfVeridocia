@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="create_run_jar" name="Create Runnable Jar for Project CommRPG with libraries in sub-folder">
+    <!--ANT 1.7 is required                                        -->
+    <property name="dir.buildfile" value="."/>
+    <property name="dir.workspace" value="${dir.buildfile}"/>
+    <property name="dir.jarfile" value="${dir.buildfile}"/>
+    <target name="create_run_jar">
+        <jar destfile="${dir.jarfile}/LoV.jar">
+            <manifest>
+                <attribute name="Main-Class" value="mb.fc.engine.RunInJarLauncher"/>
+            	<attribute name="Launcher-Main-Class" value="mb.fc.engine.CommRPG"/>
+            	<attribute name="Launcher-VM-Args" value=""/>
+                <attribute name="Class-Path" value="."/>
+            </manifest>
+            <fileset dir="${dir.workspace}/bin"/>
+        	<fileset dir="${dir.workspace}/LoV_lib/natives"/>
+        	<zipfileset excludes="META-INF/*.SF" src="${dir.workspace}/LoV_lib/exp4j-0.3.11.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${dir.workspace}/LoV_lib/jaretutil-0.32.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${dir.workspace}/LoV_lib/jfilechooser-bookmarks-0.1.0.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${dir.workspace}/LoV_lib/jogg-0.0.7.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${dir.workspace}/LoV_lib/jorbis-0.0.15.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${dir.workspace}/LoV_lib/jython-standalone-2.7-b1.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${dir.workspace}/LoV_lib/lwjgl.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${dir.workspace}/LoV_lib/QuickAnimator.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${dir.workspace}/LoV_lib/slick.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${dir.workspace}/LoV_lib/timebars-1.49.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${dir.workspace}/LoV_lib/ZTCP.jar"/>
+        </jar>
+    </target>
+</project>
