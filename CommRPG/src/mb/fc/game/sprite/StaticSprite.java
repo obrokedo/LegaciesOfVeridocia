@@ -39,7 +39,7 @@ public class StaticSprite extends Sprite
 		float yPos = this.getLocY() - camera.getLocationY();
 		
 		if (offsetUp)
-			yPos -= tileHeight / 2;
+			yPos -= tileHeight / 3;
 		
 		graphics.drawImage(image, this.getLocX() - camera.getLocationX(), yPos);
 	}

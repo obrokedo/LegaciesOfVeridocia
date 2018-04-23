@@ -4,7 +4,6 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
-import java.util.List;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Polygon;
@@ -18,7 +17,6 @@ import mb.fc.game.ai.ClericAI;
 import mb.fc.game.ai.WarriorAI;
 import mb.fc.game.ai.WizardAI;
 import mb.fc.game.constants.Direction;
-import mb.fc.game.constants.TextSpecialCharacters;
 import mb.fc.game.item.Item;
 import mb.fc.game.resource.EnemyResource;
 import mb.fc.game.resource.ItemResource;
@@ -30,7 +28,6 @@ import mb.fc.game.sprite.Sprite;
 import mb.fc.game.sprite.StaticSprite;
 import mb.fc.game.trigger.Trigger;
 import mb.fc.game.trigger.TriggerCondition;
-import mb.fc.game.trigger.Triggerable;
 import mb.fc.loading.FCResourceManager;
 
 public class MapObject
@@ -350,7 +347,7 @@ public class MapObject
 		StaticSprite chestSprite = new StaticSprite(x, y, name, fcrm.getImage(spriteImage), new int[] {triggerId2} );
 		chestSprite.setLocX(x, fcrm.getMap().getTileEffectiveWidth());
 		chestSprite.setLocY(y, fcrm.getMap().getTileEffectiveHeight());
-		chestSprite.setOffsetUp(true);
+		chestSprite.setOffsetUp(false);
 		searchTrigger1.addTriggerable(searchTrigger1.new TriggerRemoveSprite(name));
 		searchTrigger1.addTriggerable(searchTrigger1.new TriggerAddSearchArea(this, Trigger.TRIGGER_CHEST_NO_ITEM));
 		if (item != null) {

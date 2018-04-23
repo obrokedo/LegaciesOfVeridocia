@@ -3,10 +3,10 @@ package mb.fc.game.trigger;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import org.newdawn.slick.util.Log;
 
+import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.BattleCondMessage;
 import mb.fc.engine.message.LoadMapMessage;
@@ -18,7 +18,6 @@ import mb.fc.engine.message.StringMessage;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.ai.AI;
 import mb.fc.game.constants.Direction;
-import mb.fc.game.constants.TextSpecialCharacters;
 import mb.fc.game.item.Item;
 import mb.fc.game.resource.HeroResource;
 import mb.fc.game.resource.ItemResource;
@@ -773,7 +772,8 @@ public class Trigger
 				{
 					Item item = ItemResource.getItem(itemId, stateInfo.getResourceManager());
 					hero.addItem(item);
-					stateInfo.sendMessage(new SpeechMessage(hero.getName() + " recieved the " + item.getName() + TextSpecialCharacters.CHAR_HARD_STOP));
+					stateInfo.sendMessage(new SpeechMessage(
+							CommRPG.engineConfiguratior.getMenuConfiguration().getItemRecievedText(hero.getName(), item.getName())));
 					given = true;
 					break;
 				}

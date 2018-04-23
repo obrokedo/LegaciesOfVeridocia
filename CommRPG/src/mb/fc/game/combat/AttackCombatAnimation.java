@@ -8,8 +8,6 @@ import mb.fc.utils.HeroAnimationWrapper;
 
 public class AttackCombatAnimation extends CombatAnimation
 {
-	private boolean castingSpell = false;
-
 	/**
 	 * Constructor to create a ranged attack
 	 *
@@ -44,7 +42,6 @@ public class AttackCombatAnimation extends CombatAnimation
 			else { 
 				animationWrapper.setAnimation("Attack", false);
 			}
-			castingSpell = true;
 		}
 		else if (battleResults.battleCommand.getCommand() == BattleCommand.COMMAND_ITEM)
 		{
@@ -52,8 +49,6 @@ public class AttackCombatAnimation extends CombatAnimation
 				this.animationWrapper.setAnimation("Item", false);
 			else 
 				animationWrapper.setAnimation("Attack", false);
-			if (battleResults.battleCommand.getSpell() != null)
-				castingSpell = true;
 		}
 
 		this.blocks = blockingAnimation;

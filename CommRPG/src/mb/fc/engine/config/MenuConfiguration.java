@@ -48,4 +48,6 @@ public interface MenuConfiguration {
 	public String getNoItemInChestText();
 	public String getItemInChestText(String itemName);
 	public String getItemInChestTextNoRoom(String itemName);
+	
+	public String getItemRecievedText(String heroName, String itemName);
 }

@@ -394,7 +394,7 @@ public class CombatSprite extends AnimatedSprite
 	public void render(Camera camera, Graphics graphics, GameContainer cont, int tileHeight)
 	{
 		float xPos = this.getLocX() - camera.getLocationX();
-		float yPos = this.getLocY() - camera.getLocationY() - tileHeight / 2;
+		float yPos = this.getLocY() - camera.getLocationY() - tileHeight / 3;
 		renderDirect(xPos, yPos, camera, graphics, cont, tileHeight);
 	}
 	

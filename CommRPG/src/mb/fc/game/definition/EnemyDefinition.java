@@ -2,7 +2,6 @@ package mb.fc.game.definition;
 
 import java.util.ArrayList;
 
-import mb.fc.engine.state.StateInfo;
 import mb.fc.game.battle.spell.KnownSpell;
 import mb.fc.game.item.EquippableItem;
 import mb.fc.game.item.Item;

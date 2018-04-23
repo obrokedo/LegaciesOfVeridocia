@@ -1,6 +1,7 @@
 package mb.fc.utils.planner;
 
 import java.awt.Dimension;
+import java.awt.event.MouseListener;
 
 import javax.swing.DefaultListModel;
 import javax.swing.DropMode;
@@ -16,13 +17,14 @@ public class PlannerAttributeList extends JScrollPane
 
 	private static final long serialVersionUID = 1L;
 
-	public PlannerAttributeList(ListSelectionListener lsl)
+	public PlannerAttributeList(ListSelectionListener lsl, MouseListener ml)
 	{
 		attributeListModel = new DefaultListModel<String>();
 		attributeList = new JList<String>(attributeListModel);
 		this.setViewportView(attributeList);
 		attributeList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		attributeList.addListSelectionListener(lsl);
+		attributeList.addMouseListener(ml);
 		attributeList.setDropMode(DropMode.INSERT);
 		attributeList.setDragEnabled(true);
 	}

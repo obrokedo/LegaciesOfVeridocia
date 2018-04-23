@@ -7,6 +7,7 @@ import mb.fc.game.ai.ClericAI;
 import mb.fc.game.sprite.CombatSprite;
 
 public class DevHeroAI extends ClericAI {
+	private static final long serialVersionUID = 1L;
 
 	public DevHeroAI(int approachType) {
 		super(approachType);

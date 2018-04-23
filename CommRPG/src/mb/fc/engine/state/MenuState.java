@@ -32,7 +32,7 @@ import mb.fc.utils.StringUtils;
  * State that handles the main menu
  *
  * @author Broked
- *9
+ *
  */
 public class MenuState extends LoadableGameState
 {

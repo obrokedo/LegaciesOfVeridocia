@@ -141,10 +141,21 @@ public abstract class Panel
 		graphics.setFont(PANEL_FONT);
 		graphics.setColor(color);
 
-		// renderer.render(MENU_BORDER, x, y, width, height, graphics);
+		renderer.render(MENU_BORDER, x, y, width, height, graphics);
 
 		graphics.fillRect(x, y, width, height);
-
+		
+		/*
+		int imgWidth = MENU_BORDER.getSprite(5, 0).getWidth();
+		int imgHeight = MENU_BORDER.getSprite(5, 0).getHeight();
+		graphics.drawImage(MENU_BORDER.getSprite(5, 0), 0, 10);
+		graphics.drawImage(MENU_BORDER.getSprite(5, 0), x, y + height - 2, x + width, y + height + 2, 0, 0, MENU_BORDER.getSprite(5, 0).getWidth(), MENU_BORDER.getSprite(5, 0).getHeight());
+		*/
+		
+		// graphics.drawImage(MENU_BORDER.getSprite(4, 0), x, y + height - 4, );
+		//MENU_BORDER.getSprite(6, 0).draw(x, y + 4, 4, height - 8);
+		//MENU_BORDER.getSprite(5, 0).draw(x, y, width, 4);
+		
 		MENU_BORDER.getSprite(4, 0).draw(x, y + height - 4, width, 4);
 		MENU_BORDER.getSprite(5, 0).draw(x, y, width, 4);
 		MENU_BORDER.getSprite(6, 0).draw(x, y + 4, 4, height - 8);
@@ -154,7 +165,7 @@ public abstract class Panel
 		MENU_BORDER.getSprite(1, 0).draw(x, y);
 		MENU_BORDER.getSprite(2, 0).draw(x + width - 4, y + height - 4);
 		MENU_BORDER.getSprite(3, 0).draw(x + width - 4, y);
-
+		
 		/*
 		MENU_BORDER.getSprite(4, 0).draw(x, y + height - 12, x + width, y + height, 4, 0, 5, 12);
 		MENU_BORDER.getSprite(5, 0).draw(x, y, x + width, y + 12, 4, 0, 5, 12);

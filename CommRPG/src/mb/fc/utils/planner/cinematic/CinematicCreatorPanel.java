@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -47,7 +48,7 @@ import mb.fc.utils.planner.PlannerTab;
 import mb.fc.utils.planner.PlannerTimeBarViewer.CameraLocation;
 
 public class CinematicCreatorPanel implements ActionListener, ChangeListener, ItemListener,
-	ListSelectionListener, MouseMotionListener
+	ListSelectionListener, MouseMotionListener, MouseListener
 {
 	private static final Logger LOGGER = LoggingUtils.createLogger(CinematicCreatorPanel.class);
 	private PlannerFrame plannerFrame;
@@ -171,7 +172,7 @@ public class CinematicCreatorPanel implements ActionListener, ChangeListener, It
 		this.removeButton.setEnabled(false);
 		JPanel rightPanel = new JPanel(new BorderLayout());
 		rightPanel.add(actionPanel, BorderLayout.CENTER);
-		attributeList = new PlannerAttributeList(this);
+		attributeList = new PlannerAttributeList(this, this);
 		attributeList.setPreferredSize(new Dimension(100, 400));
 		attributeList.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		rightPanel.add(attributeList, BorderLayout.PAGE_START);
@@ -817,5 +818,38 @@ public class CinematicCreatorPanel implements ActionListener, ChangeListener, It
 	
 	public int getSelectedCinematicId() {
 		return cinematicIds.getSelectedIndex();
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		System.out.println("PRESS");
+		if (e.getClickCount() == 2) {
+			editCinematicLine();
+		}
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }

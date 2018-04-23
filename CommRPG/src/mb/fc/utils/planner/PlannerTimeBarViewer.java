@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
-import mb.fc.cinematic.event.CinematicEvent;
-import mb.fc.utils.planner.cinematic.CinematicTimeline;
 import de.jaret.util.date.Interval;
 import de.jaret.util.date.IntervalImpl;
 import de.jaret.util.date.JaretDate;
@@ -23,6 +21,8 @@ import de.jaret.util.ui.timebars.swing.TimeBarViewer;
 import de.jaret.util.ui.timebars.swing.renderer.DefaultHeaderRenderer;
 import de.jaret.util.ui.timebars.swing.renderer.DefaultMarkerRenderer;
 import de.jaret.util.ui.timebars.swing.renderer.DefaultTimeBarRenderer;
+import mb.fc.cinematic.event.CinematicEvent;
+import mb.fc.utils.planner.cinematic.CinematicTimeline;
 
 public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentListener
 {
@@ -891,6 +891,8 @@ public class PlannerTimeBarViewer extends TimeBarViewer implements AdjustmentLis
 				{
 					// List<Interval> moveList =  movementRowModel.getIntervals(new JaretDate(0), new JaretDate(time));
 					ZLocationImpl zli = (ZLocationImpl) movementRowModel.getIntervals(new JaretDate(time)).get(0);
+					if (zli.getEnd().getMillis() == 0 && movementRowModel.getIntervals(new JaretDate(time)).size() > 1)
+						zli = (ZLocationImpl) movementRowModel.getIntervals(new JaretDate(time)).get(1);
 					actorPoint = new Point(zli.locX, zli.locY);
 				}
 				else

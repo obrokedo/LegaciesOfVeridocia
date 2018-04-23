@@ -45,7 +45,7 @@ public class AnimatedSprite extends Sprite
 	@Override
 	public void render(Camera camera, Graphics graphics, GameContainer cont, int tileHeight) {
 		float xPos = this.getLocX() - camera.getLocationX();
-		float yPos = this.getLocY() - camera.getLocationY() - tileHeight / 2;
+		float yPos = this.getLocY() - camera.getLocationY() - tileHeight / 3;
 		
 
 		if (currentAnim.name.equalsIgnoreCase("UnLeft") && spriteAnims.getSpriteSheet().equalsIgnoreCase("ServantFemale1"))

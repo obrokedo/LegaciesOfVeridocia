@@ -391,7 +391,7 @@ public class CinematicMapDisplayPanel extends JPanel implements ActionListener, 
 				systemPopup.show(this, m.getX(), m.getY());
 			else
 			{
-				if ((new Rectangle(actorLocations.get(selectedActor), new Dimension(plannerMap.getMapEffectiveWidth(), plannerMap.getMapEffectiveHeight()))).contains(m.getPoint()))
+				if ((new Rectangle(actorLocations.get(selectedActor), new Dimension(plannerMap.getTileEffectiveWidth(), plannerMap.getTileEffectiveHeight()))).contains(m.getPoint()))
 				{
 					popupType = 1;
 					actorPopup.show(this, m.getX(), m.getY());
