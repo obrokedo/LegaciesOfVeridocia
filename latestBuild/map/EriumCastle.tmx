@@ -1,740 +1,741 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" tiledversion="1.1.4" orientation="orthogonal" renderorder="right-down" width="128" height="128" tilewidth="12" tileheight="12" infinite="0" nextobjectid="181">
-<properties>
-<property name="shadow" value="-13"/>
-</properties>
-<tileset firstgid="1" name="overworld(day)-Master" tilewidth="12" tileheight="12" tilecount="1296" columns="36">
-<image source="../image/overworld(day)-Master.png" trans="495d47" width="432" height="432"/>
-</tileset>
-<tileset firstgid="1297" name="castletown(day)-Master" tilewidth="12" tileheight="12" tilecount="900" columns="25">
-<image source="../image/castletown(day)-Master.png" trans="495d47" width="300" height="440"/>
-</tileset>
-<tileset firstgid="2197" name="castletown(day)-Slave1" tilewidth="12" tileheight="12" tilecount="495" columns="15">
-<image source="../image/castletown(day)-Slave1.png" trans="495d47" width="180" height="400"/>
-</tileset>
-<tileset firstgid="2692" name="Shadows and Lights" tilewidth="12" tileheight="12" tilecount="200" columns="20">
-<image source="../image/Shadows and Lights.png" trans="000000" width="240" height="120"/>
-</tileset>
-<layer name="BG" width="128" height="128">
-<data encoding="base64" compression="gzip">
-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
-</data>
-</layer>
-<layer name="BG Shadow" width="128" height="128">
-<data encoding="base64" compression="gzip">
-H4sIAAAAAAAACu3BAQEAAACAkP6v7ggKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAauuOl9cAAAEA
-</data>
-</layer>
-<layer name="MG" width="128" height="128">
-<data encoding="base64" compression="gzip">
-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
-</data>
-</layer>
-<layer name="MG Shadow" width="128" height="128">
-<data encoding="base64" compression="gzip">
-H4sIAAAAAAAACu3dOwrDMAwAUE8ZfO5cIrfqNXqL0qFQiA12Kgqx3gMNXvyRN2OkUgAAAAAAAAAAAAAAAAAAAAAAAAAAAAB+99jaQQ7PrR0AAAAA37wZ5ebNCAAAAAAAAAAAAAAAAGDMXks56vg4ap6r6xBrr3PjqHmurkOs2Xvp1X5z/zmo/QYAAAAAAAAAAPfX6wWqv0MOvV6g/oUBAAAAAADA2bsexmhkNJOfO+bqs181kdpWz8/KZ4uwen5WPlsE+QEAAOAfXhjDoJgAAAEA
-</data>
-</layer>
-<layer name="FG" width="128" height="128">
-<data encoding="base64" compression="gzip">
-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
-</data>
-</layer>
-<layer name="FG Shadow" width="128" height="128">
-<data encoding="base64" compression="gzip">
-H4sIAAAAAAAACu3BAQEAAACAkP6v7ggKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAauuOl9cAAAEA
-</data>
-</layer>
-<layer name="Lighting" width="128" height="128">
-<data encoding="base64" compression="gzip">
-H4sIAAAAAAAACu3BAQEAAACAkP6v7ggKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAauuOl9cAAAEA
-</data>
-</layer>
-<layer name="Roof" width="128" height="128" visible="0">
-<data encoding="base64" compression="gzip">
-H4sIAAAAAAAACu2cQW7UMBhGs5lKsIfuywE5EhL0EEgoh6gEnIADwB4q0oUlYxLHcZLfv/O9J30aeSYLz/dkz6RJZxj+5fdtGP6QS+b5NqyC/+sG/9rBv3bwrx38awf/2sG/dvCvHfxrB//awb928K8d/GsH/9rBv3bwrx38awf/2sG/dvCvHfxrB//awb928K8d/GsH/9rBv3bwrx38awf/2sG/dq7s/+3dOWn9vvBf9r4+TvkU5UMyrk2PfSj6/zLlfZTPybg2PfaBf/wr+v855deM//j5reMe+1D1/2r6vvb67n//8fNbxz32oer/YXL2bsZ//PzWcY99qPo/4/P/TeV5o8cer+z/65RvUZ6ScW3i88rcOWX82uPNZ49X9n8W8b6S21Pi10b8u3tf+Mc//vG/lfh7Re47Rfzad/y7e1/WeOwR/3Z47BH/dnjsEf92eOwR/3Z47BH/dnjsEf92eOwR/3Z47BH/dnjsEf92eOwR/3Z47BH/dnjsEf92eOwR/3Z47BH/dnjsEf92eOwR/3Z47BH/dnjsEf92eOwR/3Z47BH/dnjsEf92eOwR/3Z47BH/dnjssaSn2v93bf27Sz+cpbXrWv/p7yi1isf103tK/Kf/R98q+Pfhf89v59SM8e/L/57fzqkZ49+X/z2/nVMzxr8v/3z+Xyf41w7+tYN/7Xj8O+kS+Md/676uFvxrB//a6cl/6XXI1p2uxdP8e/Jfeh3S8z7x7Gz+PfkvPQ9N94nWzuO53M/8Xbvlee4V/IfrheEx3Sda7gfpen/MzBv/eZb8h+uF4TE9zno/yK33MTNv/OdZ8h+uF4bHcFyL/WBuvcfrO/afzhv/eUo//8Nxa/vBGet+br3H63u8rc/f8n7Ll/n2wlb/a/vBkessrPu59R6v7xL/lvdbvsy3F7b6X9sPjlxn95Hf3Hov8W95vW0U8p/uB0eus/C9fm294/98lvyn4yN7HpPHJd8lfeN/H7X+l+47TjN3HP79UOt/6b7jNHPH5fzvnT/+91Hqf+m+4zRzx+G/H87+/D9qfvg/B/xr+w8c7R/6Av8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANATfwHs0Ud1AAABAA==
-</data>
-</layer>
-<layer name="Walkable" width="128" height="128" opacity="0.51">
-<data encoding="base64" compression="gzip">
-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
-</data>
-</layer>
-<objectgroup name="Terrain">
-<object id="92" name="NorthJailStairsExit" x="1440" y="192" width="24" height="24">
-<properties>
-<property name="" value=""/>
-</properties>
-</object>
-<object id="93" name="NorthJailStairsEntrance" x="1416" y="192" width="24" height="24">
-<properties>
-<property name="start" value="exit=NorthJailStairsEntrance"/>
-</properties>
-</object>
-<object id="94" name="SouthJailStairsEntrance" x="1416" y="432" width="24" height="24">
-<properties>
-<property name="start" value="exit=SouthJailStairsEntrance"/>
-</properties>
-</object>
-<object id="95" name="SouthJailStairsExit" x="1440" y="432" width="24" height="24">
-<properties>
-<property name="" value=""/>
-</properties>
-</object>
-</objectgroup>
-<objectgroup name="Trigger Regions">
-<object id="1" name="SouthWestExit1" x="288" y="1512" width="24" height="24">
-<properties>
-<property name="" value=""/>
-</properties>
-</object>
-<object id="6" name="SouthWestEntrance1" x="288" y="1488" width="24" height="24">
-<properties>
-<property name="start" value="exit=SouthWestEntrance1"/>
-</properties>
-</object>
-<object id="52" name="SouthWestExit2" x="312" y="1512" width="24" height="24">
-<properties>
-<property name="" value=""/>
-</properties>
-</object>
-<object id="53" name="SouthWestExit3" x="336" y="1512" width="24" height="24">
-<properties>
-<property name="" value=""/>
-</properties>
-</object>
-<object id="54" name="SouthWestExit4" x="360" y="1512" width="24" height="24">
-<properties>
-<property name="" value=""/>
-</properties>
-</object>
-<object id="55" name="SouthWestExit5" x="384" y="1512" width="24" height="24">
-<properties>
-<property name="" value=""/>
-</properties>
-</object>
-<object id="60" name="SouthWestEntrance2" x="312" y="1488" width="24" height="24">
-<properties>
-<property name="start" value="exit=SouthWestEntrance2"/>
-</properties>
-</object>
-<object id="61" name="SouthWestEntrance3" x="336" y="1488" width="24" height="24">
-<properties>
-<property name="start" value="exit=SouthWestEntrance3"/>
-</properties>
-</object>
-<object id="62" name="SouthWestEntrance4" x="360" y="1488" width="24" height="24">
-<properties>
-<property name="start" value="exit=SouthWestEntrance4"/>
-</properties>
-</object>
-<object id="63" name="SouthWestEntrance5" x="384" y="1488" width="24" height="24">
-<properties>
-<property name="start" value="exit=SouthWestEntrance5"/>
-</properties>
-</object>
-<object id="68" name="SouthEastEntrance1" x="1152" y="1488" width="24" height="24">
-<properties>
-<property name="start" value="exit=SouthEastEntrance1"/>
-</properties>
-</object>
-<object id="69" name="SouthEastExit1" x="1152" y="1512" width="24" height="24">
-<properties>
-<property name="" value=""/>
-</properties>
-</object>
-<object id="70" name="SouthEastExit2" x="1176" y="1512" width="24" height="24">
-<properties>
-<property name="" value=""/>
-</properties>
-</object>
-<object id="71" name="SouthEastEntrance2" x="1176" y="1488" width="24" height="24">
-<properties>
-<property name="start" value="exit=SouthEastEntrance2"/>
-</properties>
-</object>
-<object id="72" name="SouthEastExit3" x="1200" y="1512" width="24" height="24">
-<properties>
-<property name="" value=""/>
-</properties>
-</object>
-<object id="73" name="SouthEastEntrance3" x="1200" y="1488" width="24" height="24">
-<properties>
-<property name="start" value="exit=SouthEastEntrance3"/>
-</properties>
-</object>
-<object id="74" name="SouthEastExit4" x="1224" y="1512" width="24" height="24">
-<properties>
-<property name="" value=""/>
-</properties>
-</object>
-<object id="75" name="SouthEastEntrance4" x="1224" y="1488" width="24" height="24">
-<properties>
-<property name="start" value="exit=SouthEastEntrance4"/>
-</properties>
-</object>
-<object id="76" name="SouthEastExit5" x="1248" y="1512" width="24" height="24">
-<properties>
-<property name="" value=""/>
-</properties>
-</object>
-<object id="77" name="SouthEastEntrance5" x="1248" y="1488" width="24" height="24">
-<properties>
-<property name="start" value="exit=SouthEastEntrance5"/>
-</properties>
-</object>
-<object id="78" name="SouthEastExit6" x="1272" y="1512" width="24" height="24">
-<properties>
-<property name="" value=""/>
-</properties>
-</object>
-<object id="79" name="SouthEastEntrance6" x="1272" y="1488" width="24" height="24">
-<properties>
-<property name="start" value="exit=SouthEastEntrance6"/>
-</properties>
-</object>
-<object id="80" name="SouthEastExit7" x="1296" y="1512" width="24" height="24">
-<properties>
-<property name="" value=""/>
-</properties>
-</object>
-<object id="81" name="SouthEastEntrance7" x="1296" y="1488" width="24" height="24">
-<properties>
-<property name="start" value="exit=SouthEastEntrance7"/>
-</properties>
-</object>
-<object id="82" name="SouthEastHallStairsEntrance" x="1104" y="1032" width="24" height="24">
-<properties>
-<property name="start" value="exit=SouthEastHallStairsEntrance"/>
-</properties>
-</object>
-<object id="83" name="SouthEastHallStairsExit" x="1128" y="1032" width="24" height="24">
-<properties>
-<property name="" value=""/>
-</properties>
-</object>
-<object id="84" name="NorthEastHallStairsEntrance" x="1104" y="432" width="24" height="24">
-<properties>
-<property name="start" value="exit=NorthEastHallStairsEntrance"/>
-</properties>
-</object>
-<object id="85" name="NorthEastHallStairsExit" x="1128" y="432" width="24" height="24">
-<properties>
-<property name="" value=""/>
-</properties>
-</object>
-<object id="86" name="NorthWestHallStairsExit" x="480" y="432" width="24" height="24">
-<properties>
-<property name="" value=""/>
-</properties>
-</object>
-<object id="87" name="NorthWestHallStairsEntrance" x="504" y="432" width="24" height="24">
-<properties>
-<property name="start" value="exit=NorthWestHallStairsEntrance"/>
-</properties>
-</object>
-<object id="88" name="SouthWestHallStairsEntrance" x="504" y="1032" width="24" height="24">
-<properties>
-<property name="start" value="exit=SouthWestHallStairsEntrance"/>
-</properties>
-</object>
-<object id="89" name="SouthWestHallStairsExit" x="480" y="1032" width="24" height="24">
-<properties>
-<property name="" value=""/>
-</properties>
-</object>
-<object id="90" name="KingChamberStairsEntrance" x="960" y="168" width="24" height="24">
-<properties>
-<property name="start" value="exit=KingChamberStairsEntrance"/>
-</properties>
-</object>
-<object id="91" name="KingChamberStairsExit" x="960" y="144" width="24" height="24">
-<properties>
-<property name="" value=""/>
-</properties>
-</object>
-</objectgroup>
-<objectgroup name="Meta">
-<object id="7" name="Entrance Guard 1" x="336" y="1416" width="24" height="24">
-<properties>
-<property name="npc" value="animation=Guard1 textid=0 wander=1"/>
-</properties>
-</object>
-<object id="9" name="Entrance Guard 2" x="1224" y="1416" width="24" height="24">
-<properties>
-<property name="npc" value="animation=Guard1 textid=0 wander=1"/>
-</properties>
-</object>
-<object id="11" name="Citizen 1 Garden" x="96" y="1104" width="24" height="24">
-<properties>
-<property name="npc" value="animation=Lady1 textid=3 wander=0"/>
-</properties>
-</object>
-<object id="13" name="Soldier 2 Cobblestone" x="360" y="1152" width="24" height="24">
-<properties>
-<property name="npc" value="animation=Guard1 textid=2 wander=3"/>
-</properties>
-</object>
-<object id="14" name="Soldier 1 Cobblestone" x="1080" y="1296" width="24" height="24">
-<properties>
-<property name="npc" value="animation=Baldcaptain textid=1 wander=2"/>
-</properties>
-</object>
-<object id="15" name="Soldier 1 weapon room" x="1296" y="1104" width="24" height="24">
-<properties>
-<property name="npc" value="animation=Guard2 textid=4 wander=2"/>
-</properties>
-</object>
-<object id="16" name="Soldier 2 weapon room" x="1296" y="888" width="24" height="24">
-<properties>
-<property name="npc" value="animation=Guard1 textid=5 wander=2"/>
-</properties>
-</object>
-<object id="17" name="Citizen 2 pub" x="1248" y="528" width="24" height="24">
-<properties>
-<property name="npc" value="facing=3 animation=Man1 textid=15 wander=0"/>
-</properties>
-</object>
-<object id="19" name="Soldier 1 pub" x="1392" y="480" width="24" height="24">
-<properties>
-<property name="npc" value="animation=Baldcaptain textid=13 wander=0"/>
-</properties>
-</object>
-<object id="20" name="Soldier 2 pub" x="1368" y="552" width="24" height="24">
-<properties>
-<property name="npc" value="facing=0 animation=Guard1 textid=14 wander=0"/>
-</properties>
-</object>
-<object id="21" name="Soldier 7" x="744" y="528" width="24" height="24">
-<properties>
-<property name="npc" value="animation=Guard1 textid=20 wander=1"/>
-</properties>
-</object>
-<object id="22" name="Cook 1" x="456" y="192" width="24" height="24">
-<properties>
-<property name="npc" value="animation=ServantFemale1 textid=18 wander=2"/>
-</properties>
-</object>
-<object id="23" name="Cook 2" x="168" y="216" width="24" height="24">
-<properties>
-<property name="npc" value="animation=Servant1 textid=19 wander=3"/>
-</properties>
-</object>
-<object id="24" name="Servant" x="240" y="456" width="24" height="24">
-<properties>
-<property name="npc" value="animation=ServantFemale1 textid=16 wander=3"/>
-</properties>
-</object>
-<object id="25" name="Sleeping Mage 1" x="336" y="456" width="24" height="24">
-<properties>
-<property name="npc" value="noturn=true facing=-1 throughwall=false noanimate=true animation=Mage1 textid=17 wander=0"/>
-</properties>
-</object>
-<object id="26" name="Sleeping Soldier 1" x="408" y="384" width="24" height="24">
-<properties>
-<property name="npc" value="noturn=true facing=-1 throughwall=false noanimate=true animation=Baldcaptain textid=17 wander=0"/>
-</properties>
-</object>
-<object id="27" name="Sleeping Soldier 2" x="408" y="528" width="24" height="24">
-<properties>
-<property name="npc" value="noturn=true facing=-1 throughwall=false noanimate=true animation=Guard1 textid=17 wander=0"/>
-</properties>
-</object>
-<object id="28" name="Sleeping Soldier 3" x="168" y="384" width="24" height="24">
-<properties>
-<property name="npc" value="noturn=true facing=-1 throughwall=false noanimate=true animation=Guard2 textid=17 wander=0"/>
-</properties>
-</object>
-<object id="29" name="Sleeping Soldier 4" x="168" y="456" width="24" height="24">
-<properties>
-<property name="npc" value="noturn=true facing=-1 throughwall=false noanimate=true animation=Baldcaptain textid=17 wander=0"/>
-</properties>
-</object>
-<object id="30" name="Sleeping Soldier 5" x="96" y="456" width="24" height="24">
-<properties>
-<property name="npc" value="noturn=true facing=-1 throughwall=false noanimate=true animation=Guard2 textid=17 wander=0"/>
-</properties>
-</object>
-<object id="31" name="Sleeping Soldier 6" x="96" y="528" width="24" height="24">
-<properties>
-<property name="npc" value="noturn=true facing=-1 throughwall=false noanimate=true animation=Guard1 textid=17 wander=0"/>
-</properties>
-</object>
-<object id="32" name="Citizen 3 Library" x="120" y="696" width="24" height="24">
-<properties>
-<property name="npc" value="animation=Lady1 textid=8 wander=3"/>
-</properties>
-</object>
-<object id="33" name="Citizen 4 Library" x="360" y="696" width="24" height="24">
-<properties>
-<property name="npc" value="animation=Man1 textid=9 wander=3"/>
-</properties>
-</object>
-<object id="34" name="Citizen 2 Library" x="336" y="768" width="24" height="24">
-<properties>
-<property name="npc" value="animation=Lady1 textid=7 wander=2"/>
-</properties>
-</object>
-<object id="35" name="Citizen 1 Library" x="168" y="864" width="24" height="24">
-<properties>
-<property name="npc" value="animation=Man1 textid=6 wander=2"/>
-</properties>
-</object>
-<object id="36" name="Mage 1 Library" x="144" y="768" width="24" height="24">
-<properties>
-<property name="npc" value="animation=Mage1 textid=10 wander=2"/>
-</properties>
-</object>
-<object id="37" name="Mage 2 Library" x="288" y="840" width="24" height="24">
-<properties>
-<property name="npc" value="facing=0 name=Mage2 animation=Mage1 textid=11 wander=0"/>
-</properties>
-</object>
-<object id="38" name="Library Door 1" x="216" y="972" width="24" height="24">
-<properties>
-<property name="door" value="image=HouseDoorLeft"/>
-</properties>
-</object>
-<object id="39" name="Library Door 2" x="240" y="972" width="24" height="24">
-<properties>
-<property name="door" value="image=HouseDoorRight"/>
-</properties>
-</object>
-<object id="40" name="Quarters Door 1" x="240" y="348" width="24" height="24">
-<properties>
-<property name="door" value="image=HouseDoorRight"/>
-</properties>
-</object>
-<object id="41" name="Kitchen Door 1" x="504" y="348" width="24" height="24">
-<properties>
-<property name="door" value="image=HouseDoorLeft"/>
-</properties>
-</object>
-<object id="42" name="Throne Room Door 1" x="744" y="348" width="24" height="24">
-<properties>
-<property name="door" value="image=HouseDoorLeft"/>
-</properties>
-</object>
-<object id="44" name="Throne Room Door 2" x="768" y="348" width="24" height="24">
-<properties>
-<property name="door" value="image=HouseDoorRight"/>
-</properties>
-</object>
-<object id="46" name="Warehouse Door 1" x="1104" y="348" width="24" height="24">
-<properties>
-<property name="door" value="image=HouseDoorRight"/>
-</properties>
-</object>
-<object id="47" name="Armory 1" x="1272" y="1212" width="24" height="24">
-<properties>
-<property name="door" value="image=HouseDoorRight"/>
-</properties>
-</object>
-<object id="48" name="Courtyard Door 1" x="744" y="996" width="24" height="24">
-<properties>
-<property name="door" value="image=HouseDoorLeft"/>
-</properties>
-</object>
-<object id="49" name="Courtyard Door 2" x="768" y="996" width="24" height="24">
-<properties>
-<property name="door" value="image=HouseDoorRight"/>
-</properties>
-</object>
-<object id="50" name="Locked Door" x="936" y="636" width="24" height="24">
-<properties>
-<property name="sprite" value="image=HouseDoorRight"/>
-</properties>
-</object>
-<object id="51" name="Citizen 1 Bartender Pub" x="1272" y="408" width="24" height="24">
-<properties>
-<property name="npc" value="facing=-1 throughwall=true animation=Man1 textid=12 wander=0"/>
-</properties>
-</object>
-<object id="96" name="SearchNoItem" x="72" y="216" width="24" height="24">
-<properties>
-<property name="searcharea" value="searchtrigger=21"/>
-</properties>
-</object>
-<object id="97" name="SearchNoItem" x="72" y="240" width="24" height="24">
-<properties>
-<property name="searcharea" value="searchtrigger=21"/>
-</properties>
-</object>
-<object id="98" name="SearchNoItem" x="120" y="264" width="24" height="24">
-<properties>
-<property name="searcharea" value="searchtrigger=21"/>
-</properties>
-</object>
-<object id="99" name="SearchNoItem" x="144" y="264" width="24" height="24">
-<properties>
-<property name="searcharea" value="searchtrigger=21"/>
-</properties>
-</object>
-<object id="100" name="SearchNoItem" x="288" y="384" width="24" height="24">
-<properties>
-<property name="searcharea" value="searchtrigger=21"/>
-</properties>
-</object>
-<object id="101" name="SearchNoItem" x="312" y="456" width="24" height="24">
-<properties>
-<property name="searcharea" value="searchtrigger=21"/>
-</properties>
-</object>
-<object id="102" name="SearchNoItem" x="432" y="552" width="24" height="24">
-<properties>
-<property name="searcharea" value="searchtrigger=21"/>
-</properties>
-</object>
-<object id="103" name="SearchNoItem" x="72" y="480" width="24" height="24">
-<properties>
-<property name="searcharea" value="searchtrigger=21"/>
-</properties>
-</object>
-<object id="104" name="SearchNoItem" x="72" y="504" width="24" height="24">
-<properties>
-<property name="searcharea" value="searchtrigger=21"/>
-</properties>
-</object>
-<object id="105" name="SearchNoItem" x="1032" y="240" width="24" height="24">
-<properties>
-<property name="searcharea" value="searchtrigger=21"/>
-</properties>
-</object>
-<object id="106" name="SearchNoItem" x="1056" y="216" width="24" height="24">
-<properties>
-<property name="searcharea" value="searchtrigger=21"/>
-</properties>
-</object>
-<object id="107" name="SearchNoItem" x="1056" y="192" width="24" height="24">
-<properties>
-<property name="searcharea" value="searchtrigger=21"/>
-</properties>
-</object>
-<object id="108" name="SearchNoItem" x="1080" y="168" width="24" height="24">
-<properties>
-<property name="searcharea" value="searchtrigger=21"/>
-</properties>
-</object>
-<object id="109" name="SearchNoItem" x="1104" y="168" width="24" height="24">
-<properties>
-<property name="searcharea" value="searchtrigger=21"/>
-</properties>
-</object>
-<object id="110" name="SearchNoItem" x="1128" y="168" width="24" height="24">
-<properties>
-<property name="searcharea" value="searchtrigger=21"/>
-</properties>
-</object>
-<object id="111" name="SearchNoItem" x="1152" y="168" width="24" height="24">
-<properties>
-<property name="chest" value="spriteimage=closedchest itemid=-1"/>
-</properties>
-</object>
-<object id="112" name="SearchNoItem" x="1176" y="144" width="24" height="24">
-<properties>
-<property name="chest" value="spriteimage=closedchest itemid=-1"/>
-</properties>
-</object>
-<object id="113" name="SearchNoItem" x="1200" y="144" width="24" height="24">
-<properties>
-<property name="searcharea" value="searchtrigger=21"/>
-</properties>
-</object>
-<object id="114" name="SearchNoItem" x="1224" y="144" width="24" height="24">
-<properties>
-<property name="searcharea" value="searchtrigger=21"/>
-</properties>
-</object>
-<object id="115" name="SearchNoItem" x="1272" y="168" width="24" height="24">
-<properties>
-<property name="searcharea" value="searchtrigger=21"/>
-</properties>
-</object>
-<object id="116" name="SearchNoItem" x="1296" y="168" width="24" height="24">
-<properties>
-<property name="searcharea" value="searchtrigger=21"/>
-</properties>
-</object>
-<object id="117" name="SearchNoItem" x="1392" y="144" width="24" height="24">
-<properties>
-<property name="searcharea" value="searchtrigger=21"/>
-</properties>
-</object>
-<object id="118" name="SearchNoItem" x="1416" y="144" width="24" height="24">
-<properties>
-<property name="searcharea" value="searchtrigger=21"/>
-</properties>
-</object>
-<object id="119" name="SearchNoItem" x="1440" y="144" width="24" height="24">
-<properties>
-<property name="searcharea" value="searchtrigger=21"/>
-</properties>
-</object>
-<object id="120" name="SearchNoItem" x="1416" y="264" width="24" height="24">
-<properties>
-<property name="searcharea" value="searchtrigger=21"/>
-</properties>
-</object>
-<object id="121" name="SearchNoItem" x="1440" y="264" width="24" height="24">
-<properties>
-<property name="searcharea" value="searchtrigger=21"/>
-</properties>
-</object>
-<object id="122" name="SearchNoItem" x="1440" y="552" width="24" height="24">
-<properties>
-<property name="searcharea" value="searchtrigger=21"/>
-</properties>
-</object>
-<object id="123" name="SearchNoItem" x="1440" y="480" width="24" height="24">
-<properties>
-<property name="searcharea" value="searchtrigger=21"/>
-</properties>
-</object>
-<object id="124" name="SearchNoItem" x="1440" y="528" width="24" height="24">
-<properties>
-<property name="searcharea" value="searchtrigger=21"/>
-</properties>
-</object>
-<object id="125" name="SearchNoItem" x="1440" y="504" width="24" height="24">
-<properties>
-<property name="searcharea" value="searchtrigger=21"/>
-</properties>
-</object>
-<object id="126" name="Book1" x="288" y="144" width="24" height="24">
-<properties>
-<property name="searcharea" value="searchtrigger=24"/>
-</properties>
-</object>
-<object id="127" name="Book2" x="336" y="144" width="24" height="24">
-<properties>
-<property name="searcharea" value="searchtrigger=25"/>
-</properties>
-</object>
-<object id="128" name="Book3" x="120" y="456" width="24" height="24">
-<properties>
-<property name="searcharea" value="searchtrigger=26"/>
-</properties>
-</object>
-<object id="129" name="Book4" x="384" y="528" width="24" height="24">
-<properties>
-<property name="searcharea" value="searchtrigger=27"/>
-</properties>
-</object>
-<object id="130" name="Book5" x="192" y="648" width="24" height="24">
-<properties>
-<property name="searcharea" value="searchtrigger=28"/>
-</properties>
-</object>
-<object id="131" name="Book6" x="408" y="648" width="24" height="24">
-<properties>
-<property name="searcharea" value="searchtrigger=29"/>
-</properties>
-</object>
-<object id="132" name="Book7" x="432" y="744" width="24" height="24">
-<properties>
-<property name="searcharea" value="searchtrigger=30"/>
-</properties>
-</object>
-<object id="133" name="Book8" x="192" y="744" width="24" height="24">
-<properties>
-<property name="searcharea" value="searchtrigger=31"/>
-</properties>
-</object>
-<object id="134" name="Book9" x="192" y="816" width="24" height="24">
-<properties>
-<property name="searcharea" value="searchtrigger=32"/>
-</properties>
-</object>
-<object id="135" name="Book10" x="408" y="816" width="24" height="24">
-<properties>
-<property name="searcharea" value="searchtrigger=33"/>
-</properties>
-</object>
-<object id="141" x="72" y="816">
-<properties>
-<property name="roof" value=""/>
-</properties>
-<polyline points="0,-672 1416,-672 1416,408 1104,408 1104,336 984,336 984,360 936,360 936,384 888,384 888,408 864,408 864,432 624,432 624,408 600,396 600,384 552,384 552,360 504,360 504,336 408,336 408,168 -24,168 -24,-672"/>
-</object>
-<object id="142" name="SearchNoItem" x="1008" y="576" width="24" height="24">
-<properties>
-<property name="chest" value="spriteimage=closedchest itemid=2"/>
-</properties>
-</object>
-<object id="145" name="Book 11" x="312" y="648" width="24" height="24">
-<properties>
-<property name="searcharea" value="searchtrigger=37"/>
-</properties>
-</object>
-<object id="166" name="Book 12" x="288" y="648" width="24" height="24">
-<properties>
-<property name="searcharea" value="searchtrigger=38"/>
-</properties>
-</object>
-<object id="167" name="Book 14" x="432" y="648" width="24" height="24">
-<properties>
-<property name="searcharea" value="searchtrigger=40"/>
-</properties>
-</object>
-<object id="168" name="Book 18" x="408" y="744" width="24" height="24">
-<properties>
-<property name="searcharea" value="searchtrigger=44"/>
-</properties>
-</object>
-<object id="169" name="Book 16" x="288" y="744" width="24" height="24">
-<properties>
-<property name="searcharea" value="searchtrigger=42"/>
-</properties>
-</object>
-<object id="170" name="Book 17" x="312" y="744" width="24" height="24">
-<properties>
-<property name="searcharea" value="searchtrigger=43"/>
-</properties>
-</object>
-<object id="171" name="Book 15" x="216" y="744" width="24" height="24">
-<properties>
-<property name="searcharea" value="searchtrigger=41"/>
-</properties>
-</object>
-<object id="173" name="Book 19" x="216" y="816" width="24" height="24">
-<properties>
-<property name="searcharea" value="searchtrigger=45"/>
-</properties>
-</object>
-<object id="174" name="Book 20" x="288" y="816" width="24" height="24">
-<properties>
-<property name="searcharea" value="searchtrigger=46"/>
-</properties>
-</object>
-<object id="175" name="Book 21" x="312" y="816" width="24" height="24">
-<properties>
-<property name="searcharea" value="searchtrigger=47"/>
-</properties>
-</object>
-<object id="176" name="Book 22" x="432" y="816" width="24" height="24">
-<properties>
-<property name="searcharea" value="searchtrigger=48"/>
-</properties>
-</object>
-<object id="177" name="Book 13" x="216" y="648" width="24" height="24">
-<properties>
-<property name="searcharea" value="searchtrigger=39"/>
-</properties>
-</object>
-<object id="178" name="Training Soldier 1" x="288" y="1080" width="24" height="24">
-<properties>
-<property name="npc" value="noturn=true facing=3 throughwall=false noanimate=false animation=Guard2 textid=45 wander=0"/>
-</properties>
-</object>
-<object id="179" name="Training Soldier 2" x="336" y="1080" width="24" height="24">
-<properties>
-<property name="npc" value="noturn=true facing=2 name= throughwall=false noanimate=false animation=Guard1 textid=46 wander=0"/>
-</properties>
-</object>
-<object id="180" name="Training Captain" x="312" y="1032" width="24" height="24">
-<properties>
-<property name="npc" value="noturn=true facing=1 throughwall=false noanimate=false animation=Guard2 textid=47 wander=0"/>
-</properties>
-</object>
-</objectgroup>
-<objectgroup name="Battle"/>
+ <properties>
+  <property name="shadow" value="-13"/>
+ </properties>
+ <tileset firstgid="1" name="overworld(day)-Master" tilewidth="12" tileheight="12" tilecount="1296" columns="36">
+  <image source="../image/overworld(day)-Master.png" trans="495d47" width="432" height="432"/>
+ </tileset>
+ <tileset firstgid="1297" name="castletown(day)-Master" tilewidth="12" tileheight="12" tilecount="900" columns="25">
+  <image source="../image/castletown(day)-Master.png" trans="495d47" width="300" height="440"/>
+ </tileset>
+ <tileset firstgid="2197" name="castletown(day)-Slave1" tilewidth="12" tileheight="12" tilecount="495" columns="15">
+  <image source="../image/castletown(day)-Slave1.png" trans="495d47" width="180" height="400"/>
+ </tileset>
+ <tileset firstgid="2692" name="Shadows and Lights" tilewidth="12" tileheight="12" tilecount="200" columns="20">
+  <image source="../image/Shadows and Lights.png" trans="000000" width="240" height="120"/>
+ </tileset>
+ <layer name="BG" width="128" height="128">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3dXW/dNBgH8KgoLbtCSHuDDwASEh0b4uUeicJ6CdwD2/00Psa2i32krdDLqhraKk0H9h2AFm4GwtZi8dTYju3Y8WP7f/FX2p6cNCe/PE7iJCcvx2H4W+TyNtJTpPk/Ii+n4R2kqyh3+PcZ+Pcd+Pcd+Pcd3f8Z0lV0/32kq8C/79j8S7dLSN7Av+/4+r+xXUdC59c2vu905sbjuvzgD3/4w783f7rt+9lj+6iPA3/e8fX4UeQnzxw25P/1hWH45gL8fxH51TMvGvK/Jexvw384E/nTM3815L+1NQyvbbXv79qen4h8JMb9RORTj+HHIk9H+/7CSUX+7wj7dzvwD30f3R84TPh5uS4/+J8P3R94AX/4wx/+8Gc7//CHP/zhD3/4wx/+8Ic//OEP/zz+sdH/X6qkmK7qzz8a/+9/rI2TK7mWj29qqf/c85Gr/rl9ztj6h38bn7MV/5Drd3xyf+c//3s7aaftc33RWv61nv/X5yPk+h3uoe1N7uVd6/l/+KdJrdf/wT9Nar3+D/55lif8ywf+8Ic//OEPf/iH+9/d8b+XwxbdZOn05vLDDvxT+adYfrn7f3PPP/zhD3/4w/9VnpJ5l3mi/f5M+2xn4/n7Pem0TNkPjO/8y/l23U8Ifz//EJuL4/n7QeX9nm9GGKfwX3t5wn8Y3hd5LvJwykbkPfjDv4A/tv/r+39u8P8M/l37o/779kf99+2fuv71z1ObP5fk8Dft/9nqn/YrqD6FI/L6sfaazEnE/HPzr73+H4k8duThGF7/uyLXp+Hz6X1vibxtGMK/rP/vIn84ovv7bP/3RG5OQ+V/Q+RDw3Cpv96fmSo9+O9NdWiK9Etx/K/8PxjP1z32/8r7fzu5mPxvjWn2/5X//vS/VN3Dv7y/Wge+I/l+snc5xvqrdUDW/1X4s/C3RW5Xn0w5IY7630P91Tqg1jH48/TXjwvUNoD+7SDSf8+xHOHPw59u92VsxwPqvHyIPw38+ftvyM/6euHqO3hM3k+nvQv/ZvxdfQcqp9q00f6X9786+vvTOtfbf9/1CfXPx18e338xsw7o/qZ61+vaJ5dEvoR/cf+5dcDkH1vveu2j/4+Hv8z1SP/QfgC67Vf9/zH+a6Vlf7oO3Iz0jw3tc0b9l/e31b86L0i3+zHbe9v2P7b+4b/c36f9p+1Airqn9uo8IPzL++vtf6p+f1fdL9n+w3+5v1oHro3mc3056p/WPeq/vP81T7cU/ruj+fof+Jfzn6v7lP7qOiPUPx9/36D+4S/9fc/3t17/l0WudOaf4nyPXv+2OuLur46b4B/mr9c//Pvx33O8Bv/2/Xcdr9XqL/vDvtoOy5Fh/o/JMlgSzv4t1r/Mb68Pw4PtV0MV9Tsd0nFCr59z5aASf1da8NfXAVPUOLbramKyCVh+MffJHRn8U7VXse0XN3+bsz601f9a/rGhzxM6TDC9udTkL2Nztv2tNv/U02vNX49rXZCvr+mf4nldaz//6z7z73+e85/Lmv61B/7whz/8Ofrrx350m287JoR/O/7KN2R/cA3/szH/czn0pHjOiCnq+8Y5+tN9+jn/Nes/deT3AMh+Rle7IutUjZfbhYu/b/2vvf1PHXkfwKmHvxqvF3/f+q/dX2XOfy0XLv5qH6+0v2+/Pnf/0PMEpf3pNr2Uv4zveULu/q7vITWd54T/snaitD+dF3WfEYftXE37f7HtREx7kNrf9v1itfjXVP8p2oOl/iH1Dn9+7cFS/5B6r8W/9P5/jvYgtX9Mvfu0V3PHB77HE6bQ+5tbrX9Te+BqB2L9Vd2nbK/WykFH/q46k9cBus4ryH5603WBS+u+dDad+bvqLNf7OKdHf8Tf33XOX/8Z/vXFp/7nrv/Q+4ngX09c/rGBfz2Bf9+Bf9+Bf9/R/Zfaw7+uqOdeSP9LEX39pujfq4vwjfK/Qs4npFgH0A7UEXreEf79ZU1/rA/8wt3f59lbLSXGcMn/O2XmvzH8nvr7eLgmpj5SLB/lnus58yHnyUOug2kpsdcRpPq+opjnHeRYv3uqdy71z+nz1fR54A9/+MMf/vCHP/zhD/+a/f8FGl/lXQAAAQA=
+  </data>
+ </layer>
+ <layer name="BG Shadow" width="128" height="128">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3BAQEAAACAkP6v7ggKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAauuOl9cAAAEA
+  </data>
+ </layer>
+ <layer name="MG" width="128" height="128">
+  <data encoding="base64" compression="gzip">
+   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
+  </data>
+ </layer>
+ <layer name="MG Shadow" width="128" height="128">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3dOwrDMAwAUE8ZfO5cIrfqNXqL0qFQiA12Kgqx3gMNXvyRN2OkUgAAAAAAAAAAAAAAAAAAAAAAAAAAAAB+99jaQQ7PrR0AAAAA37wZ5ebNCAAAAAAAAAAAAAAAAGDMXks56vg4ap6r6xBrr3PjqHmurkOs2Xvp1X5z/zmo/QYAAAAAAAAAAPfX6wWqv0MOvV6g/oUBAAAAAADA2bsexmhkNJOfO+bqs181kdpWz8/KZ4uwen5WPlsE+QEAAOAfXhjDoJgAAAEA
+  </data>
+ </layer>
+ <layer name="FG" width="128" height="128">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu2dyY8VRRzHG5hu37wIbuBBFm8StqsKakRv6mE0XlQSPComZg7yD6gXE/GIFxgXeF5cbkpUZlyOHgxIUMZEg8CACBgTgURjUKvz+pep96P2pfvX/eqb/NLTXfWqf12frurqWnqyLCkpKSkpKcvW51n2YLJO2oZcz387i/MSs6daYruZPVSztSl/+Hx62JB/Ge9gS2x7A/xV+UM1/8AvU/7TLbGm+Kv8oZh/iX/iP678XZ7XqnbFuPGfddg/O5llv3B2Cu3ztjDpdg5T/vA8fifXPychjipdyB/eJ94fGX98DXUcw36Z8v+pl2U/M/s+d7M/GdPLzK4wu8rs5n6W3dK/fgvh8Ds4Lwjvi/w1ra8/k3DhDeLo+Ovyj5ps+V9keX6pt5j/Og5fsbCvufBrjGnO+C5jNtEf7i/tD48t5fhDOKgO/lPMHkf2ROI/Eg/yHe4D2Mp0hIUdRfxLzv+xbVbx/5fZEsQftiB8Hrz/AEtj0+Sov7rn+w7E9nlmu5C9gOI8rUnPN5/rlmv5p6ZbGfvnEH/V+3b5PB9wbGcV/Gc5/gdyeXthMAb8dfVuUyrL/xoBf9XzfK667mPV9mW2fQXZqyjO4VzeXphL/BtTWf7XOfK30bjzp1z/J/72suV/lrE/R5S/rv6fjcB/dsz4X2HsrxLkf5+k/Mt0zIOFy2+7wn+esf8xAv/NjN02iW2Z1P9e5i8VUfMHZMv/V8b+fAT+jzLGj0jsscQ/mlyf//AesI/Z/l68esFV1PKbmj8g1+c/vAe8z+yDXrx6wVXU8puaPyAb/nvy5ueqmdobxPyl5g/vlyl/CvPbdhPxoyvX2bb5f1T86Mp1tm3+DxU/unKdif9wPC9EHOrXmfiLDfpz9zHbj2wGxWnzdYbiL5pfNi0Jg32Q7PeyNPFxnC8u6eJjMP7/sSAfDuWj4/826doc46+Dv048X9LEynmTpj7Y8of5eK+zc+xhdhKdF46Xcaa4+Xsg2bxAUXrnuPSgvynGe7RJf77PeIGL6uovsOV/suICwvM4NzLb1B/25+9U9NtCv+HZ6r7B6cEW0ovJn6Ko8l/BWNzEzcuDeZrAfyuzbf1hf76q3x76DfE8P0gPtpAe9Dcm/s2cp+l8h3GHpv2oS4n/qGDcoWk/6lLiT9uP2KLOH7fXT6H2v61kv8PHE/9mzgPxNlfzcaBdnlVrOXB7Hb8n6MT/bmFSPs+YCn+X76GYfGcDRJU/tOuhXQ7rd3B7/UZmy/v6dEHwO3gfkM0zNvU39vdqTNaXidaHmd4HVPk3Nf8X5hfZ+Btz/NSVv+14a2y1Zf4vzC+y9bdcr1WOc75bbd/Or18HJttXhbnyN/W/XGeoWk8YSqHK/5RDm89Ftv6W8/UvMPuc2UVmn+bisR9+/xKz3yVhfP98TP7lfataTxhKruUft8uhr9e3/Q/vE2ck7xMu/JcVQ/4ThZj/PNrPWbyiGOU9XzP/0m+X9Sm2cun/X+Db/5Vc1wXi38F7BHwnAs4D9Uso/heq+qBkeoLjWo7zrGPx7iyGf8Pxb6q455n9lqvXgctsRwf4Q7se2usg13WB+Hey8YSdgfmXxyaKUf4zAv/f6g3D/qn4L2G/WVostitEbYqDkrBBB/g3LRf+ayr+azn+5bG1iP+HAv4fIf53sN+sLobpQt2AnynTkrC5xN9bof0t6/ijVTwV/6P56ByA4/ni3IXvcvm8Bj7sBwv+dalt8/9t5qtDvL2M4ZuB31lj1/91iUp/Sqz56qUGjP17vbD3gaz+X8tsnSTMpv6vS7b1KZV58TbXBfxhG0Iy/nczuycA/7L/WtRPHLpf27Y+lbVz6jKf5/8gYB0Qu/0ni+fy3hmyPm0rf+DuWwdAOrHbf7J4fLuD8vqf04r5yHz4aUk42MmqLxDScc2/UM8A+L2o/PPrB2ZQWKjyf1iST3WVJ9N0j1d9eH+Uc8AFfPnwywr+x6s4kI4vf1+p+PPrBw51lH8pUT2HhbnJwqGfVyY+ncse/KmoC/ybFBV/bduRED80f5tvfYv2qeSnqaj4a/s8gfih/Mfjoq77VPLTVFT8dW1PUPGfqj+h/PCZJ8j3u+jCm/bfV9T8CeWHT782P+8K97eY9pdghXr+h1Ysf/A8HlE49AGIwnE6vu//vvFc44NCP/9X97NsTd9/P1Y+4fc223A+Ht+P0DR/33mZ1MZbXcZTTYS5qcJN3//r5L+8yLIVhf73tqI23kptPnooP3zj3cXYr2+Yfx3jrdTaI6H8oHpdsfrbU/9f3Hgg2bi8qbrE/zVNu13VvsftelU6Z7j3iLr54/d/0/ZSKL8o81dJ177TtQ9l8ermr+sfsJUv/9DfHYv9/icb39OND4rixRj/M+Ef8rlH7XlLzZ9QfnSR/7OT4beJ/2I/i6jf3/d57+MXjgdroEJubf2pa52vSFMR7le+f1/W7x9yHTa18mbrj+ybjrtquC9c7ldqouZ/0/7A94SwXpQcb9pfX1Hzv2l/yv/bd7+As+x40/76ipr/1MajYo1XxVgDaCJ8Xl/+E6xMFMxyZisry7lykk8u2koU9zaP8hR63Und41Uh137ZCJ+3reX/QN782j+b8aryfv2C2TPE7Mvc7H2CGv/Q885j91dTuV9FZvJdJ8r85xET3b7MXNJp2/0qMpPvelDmfwJdj2xf9f90bNJJ/OMpZn7K/p+OT97Z+gvf65o23JeZbTqqfR/+q1DbvtxOoPb/RGXQ5uffA0zPg1Wud36ysLNvBekeyeVrpU3Mlj98r2vaYF9VX9mko9tvY/mnIlv+8L2uaYN9VX1lk45uP/F3V9v8dVXiL1bb/HVV4i9W2/x1VeIvVtv8dZWq/z/n2vWrqrY9KOfeCQpuu6o6bnoeqmqbv65K5V8sm3FIn3n6sWT6/b7Q885kaht/03FI13XasSWaT96k/23jbzquI6onTOqDv3pZ9rfBOPEG9izdaDDnTbZ+JNQ4p6/axt+0H9r1uw03MKY9A673sjhbDeLJ1o+E6uf2VVf543rCtT6wlUl5HyT+zjLlj+OF+o6LTiblfS7xd5Yrf1V9EKIewOtFVOXdlD+l73+0TZi/rD4IVQ/w5V5X3k3Gf+qcb1nH/xmsWzr+UB+EKmd8udeVdxP+dc5fq+P/DDYt2f0QspxBuXfhrfM3ptXxf6aalox/yHI24PIz8actyN+Q+TwXMD8T/7hS8RfNA1PNY22SPyjxd5Mon0XzwLBE81jHOR/bqsQ/KSkpKSkpKSkpKSkpKSkpKWlcdS3PsoVkY2VbuP95cnuRbBytFOXvpySLa+U4Rkz+JuOrqnHWrptN/sTIr9j8bcbJxrEe8hlH9P2+UuLfvCX+iX/T/Nsi+L4y3ib5SZSnrtuYgu8r463OF1Ofdcd5ya7X9NyUJMpT120T0vli6rPuuOicMl9MfeuSKN7bOp9c6jffOpFiPoVQzHt7r2O6Op9cfPatE7tcB8TSQFL/drUsJSXVpUOs/HzSC7ONIVV9aeJPqGuLkSYF/Q+n7u9MAAABAA==
+  </data>
+ </layer>
+ <layer name="FG Shadow" width="128" height="128">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3BAQEAAACAkP6v7ggKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAauuOl9cAAAEA
+  </data>
+ </layer>
+ <layer name="Lighting" width="128" height="128">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3BAQEAAACAkP6v7ggKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAauuOl9cAAAEA
+  </data>
+ </layer>
+ <layer name="Roof" width="128" height="128" visible="0">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu2cQW7UMBhGs5lKsIfuywE5EhL0EEgoh6gEnIADwB4q0oUlYxLHcZLfv/O9J30aeSYLz/dkz6RJZxj+5fdtGP6QS+b5NqyC/+sG/9rBv3bwrx38awf/2sG/dvCvHfxrB//awb928K8d/GsH/9rBv3bwrx38awf/2sG/dvCvHfxrB//awb928K8d/GsH/9rBv3bwrx38awf/2sG/dq7s/+3dOWn9vvBf9r4+TvkU5UMyrk2PfSj6/zLlfZTPybg2PfaBf/wr+v855deM//j5reMe+1D1/2r6vvb67n//8fNbxz32oer/YXL2bsZ//PzWcY99qPo/4/P/TeV5o8cer+z/65RvUZ6ScW3i88rcOWX82uPNZ49X9n8W8b6S21Pi10b8u3tf+Mc//vG/lfh7Re47Rfzad/y7e1/WeOwR/3Z47BH/dnjsEf92eOwR/3Z47BH/dnjsEf92eOwR/3Z47BH/dnjsEf92eOwR/3Z47BH/dnjsEf92eOwR/3Z47BH/dnjsEf92eOwR/3Z47BH/dnjsEf92eOwR/3Z47BH/dnjsEf92eOwR/3Z47BH/dnjssaSn2v93bf27Sz+cpbXrWv/p7yi1isf103tK/Kf/R98q+Pfhf89v59SM8e/L/57fzqkZ49+X/z2/nVMzxr8v/3z+Xyf41w7+tYN/7Xj8O+kS+Md/676uFvxrB//a6cl/6XXI1p2uxdP8e/Jfeh3S8z7x7Gz+PfkvPQ9N94nWzuO53M/8Xbvlee4V/IfrheEx3Sda7gfpen/MzBv/eZb8h+uF4TE9zno/yK33MTNv/OdZ8h+uF4bHcFyL/WBuvcfrO/afzhv/eUo//8Nxa/vBGet+br3H63u8rc/f8n7Ll/n2wlb/a/vBkessrPu59R6v7xL/lvdbvsy3F7b6X9sPjlxn95Hf3Hov8W95vW0U8p/uB0eus/C9fm294/98lvyn4yN7HpPHJd8lfeN/H7X+l+47TjN3HP79UOt/6b7jNHPH5fzvnT/+91Hqf+m+4zRzx+G/H87+/D9qfvg/B/xr+w8c7R/6Av8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANATfwHs0Ud1AAABAA==
+  </data>
+ </layer>
+ <layer name="Walkable" width="128" height="128" opacity="0.51">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu2XW65eIQiFz/xn0c6lHVf74gsJ4eLChW5W0pB/q4CWTzy/fn5+fv//92vsJ+2f///+jv2sZdff2OF/7PA/dvgfO/yPHf7HDv9jh/+x/fj3qotftL0lzyr+veriF21vyXOXf03W/Cgn2jrvbxb/2fHsvZK9h6x8onVuzY9yYvm14rD4R+cXPZ+osvyz+9NuXlmh+c/G09ajzq0rZ6i8skLzn42nrUed21f4R8Wx/MnxLueo5fEV/lFxLH9yvMs5annczr9X2ThRf1p+3c7tFf69ysaJ+tPy63ZuLP4tZdez+dLyY+fTjX9L2fVsvrT82PlE+feKXc/d+mu3fDRZ/HvFrudu/bVbPpq8/LPr9zbeuuYT7f9L7Pq9jbeu+WT7P7teb+WtWz7D/7fzGf6/nc/w/+18ovzLeolqd/0pv6j9ZuOyZPEv6yWq3fWn/KL2m43Lkrf/L3m/e++R7PfqPlgVz5vPrtD9f8n73XuPZL9X98GqeN58dvXK+18T+/3c9e8F73ptXhcOLB7Y7+eufy9412vzuvAv47Ly6LLvqG7nX8Zl5dFl31Gh+V/yft+t8y73EJv/03Gs/uv9vlvnXe4hNv+n43j5P80DK/5r/Fv+vfyf5oEV/zX+Lf9R/qxxVL1n/d9mUfuUquLfGkfVe9b/bRa1T6lq/nfrXItjxX/NevdpnYt1nmj+d+tci2PFf81692mdi3WeUf7ZPEhF51tC+YnGQe1z911g8c/mQSo63xLKTzQOap+774Ku/Gf7Ijvfbnlp6s5/ti+y8+2Wl6ZX+dfk9aeN74p9jtb+utXt7rtYyutPG98V+xyt/VVxh1K2rrP+ov5veb9ocaq4Qylb11l/Uf+3vF+0OCyuvYrWdXR99f12K/9dFK3r6Prq++1W/ru+Vy1O2Xmj+n+VXn//s/NG9f8qfZV/77im7Lvh1v5/Gz/WfO+4puy74fb+L3/fxr8lax6r/3fhX/6+jX9L1jxW/+/Cf7RfRnmyhOYfzW91/5fj2d9aHBR3cp01juq7Uf9ofqv7vxzP/tbisPoRq/9X79eKd1v/Z1lvHlLZcXTe0fy79n/5+zT/VnxrntfP6f6fzes0//L3af6t+NY8r5/T/T+b12n+vfUr11nj1rxsHrvv7Gh8VP8/JVT/1+Qdt+Zl89h9Z0fjo/r/KaH4Z/Wrav5PvVtO86/FZ71HUf1Xapf/U++W0/xr8b31q31nvftR7230vqryr7pHvfWrfWe9+1HvbfS+qvKvukdP9X/Nb/Q7ireq/WbzQeexy/+pOox+R/FWtd9sPug8hv+7+ddkjUf3N/xj95vNR8srOh7d36k+hO5bp3jOch/Nvypvy++pPoTuW6d4znIfzb8qb8vvEpufV/jfzf/0OS6x+XmF/938u/Aflbcf7vp9lX9tfXTcmqd9974rNXn74a7fV/nX1kfHrXnad3a/z76Ls6q6r6w4Xr6rz1GK3e+z7+Ksqu4rK46X7+pzlGLznn23ou6TqvPw7gMd9xX+Ue9ma79V5+HdBzru6/y/YrX/B03e98rr/L9itf8HTd73itc/6v07/GP5P3W/oN6/wz+W/1P3S1feuuVz+z5lnKWuvHXL5/Z9yjhLXXmrykeqa39m9X82D9X5SHXtz9P/fWLnecs+ZJyl7vxbYud5yz5knKUo/1Ld+Lotn1N5yzhLUf6luvF1Wz6n8tZ0O//s/HbjsfJcup1/dn678U7n+Vr/Z/GF8utVdL7Xz2v8n+IL5der6Hyvn9f5t7ipWtfdLr3Ov8VN1brudun0O3RsD7t0+h06toddGv6/aZeG/2/aJVkPWbHreSyG/6zY9Tw2x/8Sux7HcvhfYtfj2OF/7PA/dvgfO/yPHf7HDv9jz/BfpWw9fkUofruqWz12E5tfdD+p6lPsftltPyg/6H5S1afY/bLbflB+utX13APD/9wDw78Um9du54Ty06WeNX9ov2yL2g/Kzz/+qsiGAAABAA==
+  </data>
+ </layer>
+ <objectgroup name="Terrain">
+  <object id="92" name="NorthJailStairsExit" x="1440" y="192" width="24" height="24">
+   <properties>
+    <property name="" value=""/>
+   </properties>
+  </object>
+  <object id="93" name="NorthJailStairsEntrance" x="1416" y="192" width="24" height="24">
+   <properties>
+    <property name="start" value="exit=NorthJailStairsEntrance"/>
+   </properties>
+  </object>
+  <object id="94" name="SouthJailStairsEntrance" x="1416" y="432" width="24" height="24">
+   <properties>
+    <property name="start" value="exit=SouthJailStairsEntrance"/>
+   </properties>
+  </object>
+  <object id="95" name="SouthJailStairsExit" x="1440" y="432" width="24" height="24">
+   <properties>
+    <property name="" value=""/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="Trigger Regions">
+  <object id="1" name="SouthWestExit1" x="288" y="1512" width="24" height="24">
+   <properties>
+    <property name="" value=""/>
+   </properties>
+  </object>
+  <object id="6" name="SouthWestEntrance1" x="288" y="1488" width="24" height="24">
+   <properties>
+    <property name="start" value="exit=SouthWestEntrance1"/>
+   </properties>
+  </object>
+  <object id="52" name="SouthWestExit2" x="312" y="1512" width="24" height="24">
+   <properties>
+    <property name="" value=""/>
+   </properties>
+  </object>
+  <object id="53" name="SouthWestExit3" x="336" y="1512" width="24" height="24">
+   <properties>
+    <property name="" value=""/>
+   </properties>
+  </object>
+  <object id="54" name="SouthWestExit4" x="360" y="1512" width="24" height="24">
+   <properties>
+    <property name="" value=""/>
+   </properties>
+  </object>
+  <object id="55" name="SouthWestExit5" x="384" y="1512" width="24" height="24">
+   <properties>
+    <property name="" value=""/>
+   </properties>
+  </object>
+  <object id="60" name="SouthWestEntrance2" x="312" y="1488" width="24" height="24">
+   <properties>
+    <property name="start" value="exit=SouthWestEntrance2"/>
+   </properties>
+  </object>
+  <object id="61" name="SouthWestEntrance3" x="336" y="1488" width="24" height="24">
+   <properties>
+    <property name="start" value="exit=SouthWestEntrance3"/>
+   </properties>
+  </object>
+  <object id="62" name="SouthWestEntrance4" x="360" y="1488" width="24" height="24">
+   <properties>
+    <property name="start" value="exit=SouthWestEntrance4"/>
+   </properties>
+  </object>
+  <object id="63" name="SouthWestEntrance5" x="384" y="1488" width="24" height="24">
+   <properties>
+    <property name="start" value="exit=SouthWestEntrance5"/>
+   </properties>
+  </object>
+  <object id="68" name="SouthEastEntrance1" x="1152" y="1488" width="24" height="24">
+   <properties>
+    <property name="start" value="exit=SouthEastEntrance1"/>
+   </properties>
+  </object>
+  <object id="69" name="SouthEastExit1" x="1152" y="1512" width="24" height="24">
+   <properties>
+    <property name="" value=""/>
+   </properties>
+  </object>
+  <object id="70" name="SouthEastExit2" x="1176" y="1512" width="24" height="24">
+   <properties>
+    <property name="" value=""/>
+   </properties>
+  </object>
+  <object id="71" name="SouthEastEntrance2" x="1176" y="1488" width="24" height="24">
+   <properties>
+    <property name="start" value="exit=SouthEastEntrance2"/>
+   </properties>
+  </object>
+  <object id="72" name="SouthEastExit3" x="1200" y="1512" width="24" height="24">
+   <properties>
+    <property name="" value=""/>
+   </properties>
+  </object>
+  <object id="73" name="SouthEastEntrance3" x="1200" y="1488" width="24" height="24">
+   <properties>
+    <property name="start" value="exit=SouthEastEntrance3"/>
+   </properties>
+  </object>
+  <object id="74" name="SouthEastExit4" x="1224" y="1512" width="24" height="24">
+   <properties>
+    <property name="" value=""/>
+   </properties>
+  </object>
+  <object id="75" name="SouthEastEntrance4" x="1224" y="1488" width="24" height="24">
+   <properties>
+    <property name="start" value="exit=SouthEastEntrance4"/>
+   </properties>
+  </object>
+  <object id="76" name="SouthEastExit5" x="1248" y="1512" width="24" height="24">
+   <properties>
+    <property name="" value=""/>
+   </properties>
+  </object>
+  <object id="77" name="SouthEastEntrance5" x="1248" y="1488" width="24" height="24">
+   <properties>
+    <property name="start" value="exit=SouthEastEntrance5"/>
+   </properties>
+  </object>
+  <object id="78" name="SouthEastExit6" x="1272" y="1512" width="24" height="24">
+   <properties>
+    <property name="" value=""/>
+   </properties>
+  </object>
+  <object id="79" name="SouthEastEntrance6" x="1272" y="1488" width="24" height="24">
+   <properties>
+    <property name="start" value="exit=SouthEastEntrance6"/>
+   </properties>
+  </object>
+  <object id="80" name="SouthEastExit7" x="1296" y="1512" width="24" height="24">
+   <properties>
+    <property name="" value=""/>
+   </properties>
+  </object>
+  <object id="81" name="SouthEastEntrance7" x="1296" y="1488" width="24" height="24">
+   <properties>
+    <property name="start" value="exit=SouthEastEntrance7"/>
+   </properties>
+  </object>
+  <object id="82" name="SouthEastHallStairsEntrance" x="1104" y="1032" width="24" height="24">
+   <properties>
+    <property name="start" value="exit=SouthEastHallStairsEntrance"/>
+   </properties>
+  </object>
+  <object id="83" name="SouthEastHallStairsExit" x="1128" y="1032" width="24" height="24">
+   <properties>
+    <property name="" value=""/>
+   </properties>
+  </object>
+  <object id="84" name="NorthEastHallStairsEntrance" x="1104" y="432" width="24" height="24">
+   <properties>
+    <property name="start" value="exit=NorthEastHallStairsEntrance"/>
+   </properties>
+  </object>
+  <object id="85" name="NorthEastHallStairsExit" x="1128" y="432" width="24" height="24">
+   <properties>
+    <property name="" value=""/>
+   </properties>
+  </object>
+  <object id="86" name="NorthWestHallStairsExit" x="480" y="432" width="24" height="24">
+   <properties>
+    <property name="" value=""/>
+   </properties>
+  </object>
+  <object id="87" name="NorthWestHallStairsEntrance" x="504" y="432" width="24" height="24">
+   <properties>
+    <property name="start" value="exit=NorthWestHallStairsEntrance"/>
+   </properties>
+  </object>
+  <object id="88" name="SouthWestHallStairsEntrance" x="504" y="1032" width="24" height="24">
+   <properties>
+    <property name="start" value="exit=SouthWestHallStairsEntrance"/>
+   </properties>
+  </object>
+  <object id="89" name="SouthWestHallStairsExit" x="480" y="1032" width="24" height="24">
+   <properties>
+    <property name="" value=""/>
+   </properties>
+  </object>
+  <object id="90" name="KingChamberStairsEntrance" x="960" y="168" width="24" height="24">
+   <properties>
+    <property name="start" value="exit=KingChamberStairsEntrance"/>
+   </properties>
+  </object>
+  <object id="91" name="KingChamberStairsExit" x="960" y="144" width="24" height="24">
+   <properties>
+    <property name="" value=""/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="Meta">
+  <object id="7" name="Entrance Guard 1" x="336" y="1416" width="24" height="24">
+   <properties>
+    <property name="npc" value="animation=Guard1 textid=0 wander=1"/>
+   </properties>
+  </object>
+  <object id="9" name="Entrance Guard 2" x="1224" y="1416" width="24" height="24">
+   <properties>
+    <property name="npc" value="animation=Guard1 textid=0 wander=1"/>
+   </properties>
+  </object>
+  <object id="11" name="Citizen 1 Garden" x="96" y="1104" width="24" height="24">
+   <properties>
+    <property name="npc" value="animation=Lady1 textid=3 wander=0"/>
+   </properties>
+  </object>
+  <object id="13" name="Soldier 2 Cobblestone" x="360" y="1152" width="24" height="24">
+   <properties>
+    <property name="npc" value="animation=Guard1 textid=2 wander=3"/>
+   </properties>
+  </object>
+  <object id="14" name="Soldier 1 Cobblestone" x="1080" y="1296" width="24" height="24">
+   <properties>
+    <property name="npc" value="animation=Baldcaptain textid=1 wander=2"/>
+   </properties>
+  </object>
+  <object id="15" name="Soldier 1 weapon room" x="1296" y="1104" width="24" height="24">
+   <properties>
+    <property name="npc" value="animation=Guard2 textid=4 wander=2"/>
+   </properties>
+  </object>
+  <object id="16" name="Soldier 2 weapon room" x="1296" y="888" width="24" height="24">
+   <properties>
+    <property name="npc" value="animation=Guard1 textid=5 wander=2"/>
+   </properties>
+  </object>
+  <object id="17" name="Citizen 2 pub" x="1248" y="528" width="24" height="24">
+   <properties>
+    <property name="npc" value="facing=3 animation=Man1 textid=15 wander=0"/>
+   </properties>
+  </object>
+  <object id="19" name="Soldier 1 pub" x="1392" y="480" width="24" height="24">
+   <properties>
+    <property name="npc" value="animation=Baldcaptain textid=13 wander=0"/>
+   </properties>
+  </object>
+  <object id="20" name="Soldier 2 pub" x="1368" y="552" width="24" height="24">
+   <properties>
+    <property name="npc" value="facing=0 animation=Guard1 textid=14 wander=0"/>
+   </properties>
+  </object>
+  <object id="21" name="Soldier 7" x="744" y="528" width="24" height="24">
+   <properties>
+    <property name="npc" value="animation=Guard1 textid=20 wander=1"/>
+   </properties>
+  </object>
+  <object id="22" name="Cook 1" x="456" y="192" width="24" height="24">
+   <properties>
+    <property name="npc" value="animation=ServantFemale1 textid=18 wander=2"/>
+   </properties>
+  </object>
+  <object id="23" name="Cook 2" x="168" y="216" width="24" height="24">
+   <properties>
+    <property name="npc" value="animation=Servant1 textid=19 wander=3"/>
+   </properties>
+  </object>
+  <object id="24" name="Servant" x="240" y="456" width="24" height="24">
+   <properties>
+    <property name="npc" value="animation=ServantFemale1 textid=16 wander=3"/>
+   </properties>
+  </object>
+  <object id="25" name="Sleeping Mage 1" x="336" y="456" width="24" height="24">
+   <properties>
+    <property name="npc" value="noturn=true facing=-1 throughwall=false noanimate=true animation=Mage1 textid=17 wander=0"/>
+   </properties>
+  </object>
+  <object id="26" name="Sleeping Soldier 1" x="408" y="384" width="24" height="24">
+   <properties>
+    <property name="npc" value="noturn=true facing=-1 throughwall=false noanimate=true animation=Baldcaptain textid=17 wander=0"/>
+   </properties>
+  </object>
+  <object id="27" name="Sleeping Soldier 2" x="408" y="528" width="24" height="24">
+   <properties>
+    <property name="npc" value="noturn=true facing=-1 throughwall=false noanimate=true animation=Guard1 textid=17 wander=0"/>
+   </properties>
+  </object>
+  <object id="28" name="Sleeping Soldier 3" x="168" y="384" width="24" height="24">
+   <properties>
+    <property name="npc" value="noturn=true facing=-1 throughwall=false noanimate=true animation=Guard2 textid=17 wander=0"/>
+   </properties>
+  </object>
+  <object id="29" name="Sleeping Soldier 4" x="168" y="456" width="24" height="24">
+   <properties>
+    <property name="npc" value="noturn=true facing=-1 throughwall=false noanimate=true animation=Baldcaptain textid=17 wander=0"/>
+   </properties>
+  </object>
+  <object id="30" name="Sleeping Soldier 5" x="96" y="456" width="24" height="24">
+   <properties>
+    <property name="npc" value="noturn=true facing=-1 throughwall=false noanimate=true animation=Guard2 textid=17 wander=0"/>
+   </properties>
+  </object>
+  <object id="31" name="Sleeping Soldier 6" x="96" y="528" width="24" height="24">
+   <properties>
+    <property name="npc" value="noturn=true facing=-1 throughwall=false noanimate=true animation=Guard1 textid=17 wander=0"/>
+   </properties>
+  </object>
+  <object id="32" name="Citizen 3 Library" x="120" y="696" width="24" height="24">
+   <properties>
+    <property name="npc" value="animation=Lady1 textid=8 wander=3"/>
+   </properties>
+  </object>
+  <object id="33" name="Citizen 4 Library" x="360" y="696" width="24" height="24">
+   <properties>
+    <property name="npc" value="animation=Man1 textid=9 wander=3"/>
+   </properties>
+  </object>
+  <object id="34" name="Citizen 2 Library" x="336" y="768" width="24" height="24">
+   <properties>
+    <property name="npc" value="animation=Lady1 textid=7 wander=2"/>
+   </properties>
+  </object>
+  <object id="35" name="Citizen 1 Library" x="168" y="864" width="24" height="24">
+   <properties>
+    <property name="npc" value="animation=Man1 textid=6 wander=2"/>
+   </properties>
+  </object>
+  <object id="36" name="Mage 1 Library" x="144" y="768" width="24" height="24">
+   <properties>
+    <property name="npc" value="animation=Mage1 textid=10 wander=2"/>
+   </properties>
+  </object>
+  <object id="37" name="Mage 2 Library" x="288" y="840" width="24" height="24">
+   <properties>
+    <property name="npc" value="facing=0 name=Mage2 animation=Mage1 textid=11 wander=0"/>
+   </properties>
+  </object>
+  <object id="38" name="Library Door 1" x="216" y="972" width="24" height="24">
+   <properties>
+    <property name="door" value="image=HouseDoorLeft"/>
+   </properties>
+  </object>
+  <object id="39" name="Library Door 2" x="240" y="972" width="24" height="24">
+   <properties>
+    <property name="door" value="image=HouseDoorRight"/>
+   </properties>
+  </object>
+  <object id="40" name="Quarters Door 1" x="240" y="348" width="24" height="24">
+   <properties>
+    <property name="door" value="image=HouseDoorRight"/>
+   </properties>
+  </object>
+  <object id="41" name="Kitchen Door 1" x="504" y="348" width="24" height="24">
+   <properties>
+    <property name="door" value="image=HouseDoorLeft"/>
+   </properties>
+  </object>
+  <object id="42" name="Throne Room Door 1" x="744" y="348" width="24" height="24">
+   <properties>
+    <property name="door" value="image=HouseDoorLeft"/>
+   </properties>
+  </object>
+  <object id="44" name="Throne Room Door 2" x="768" y="348" width="24" height="24">
+   <properties>
+    <property name="door" value="image=HouseDoorRight"/>
+   </properties>
+  </object>
+  <object id="46" name="Warehouse Door 1" x="1104" y="348" width="24" height="24">
+   <properties>
+    <property name="door" value="image=HouseDoorRight"/>
+   </properties>
+  </object>
+  <object id="47" name="Armory 1" x="1272" y="1212" width="24" height="24">
+   <properties>
+    <property name="door" value="image=HouseDoorRight"/>
+   </properties>
+  </object>
+  <object id="48" name="Courtyard Door 1" x="744" y="996" width="24" height="24">
+   <properties>
+    <property name="door" value="image=HouseDoorLeft"/>
+   </properties>
+  </object>
+  <object id="49" name="Courtyard Door 2" x="768" y="996" width="24" height="24">
+   <properties>
+    <property name="door" value="image=HouseDoorRight"/>
+   </properties>
+  </object>
+  <object id="50" name="Locked Door" x="936" y="636" width="24" height="24">
+   <properties>
+    <property name="sprite" value="image=HouseDoorRight"/>
+   </properties>
+  </object>
+  <object id="51" name="Citizen 1 Bartender Pub" x="1272" y="408" width="24" height="24">
+   <properties>
+    <property name="npc" value="facing=-1 throughwall=true animation=Man1 textid=12 wander=0"/>
+   </properties>
+  </object>
+  <object id="96" name="SearchNoItem" x="72" y="216" width="24" height="24">
+   <properties>
+    <property name="searcharea" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="97" name="SearchNoItem" x="72" y="240" width="24" height="24">
+   <properties>
+    <property name="searcharea" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="98" name="SearchNoItem" x="120" y="264" width="24" height="24">
+   <properties>
+    <property name="searcharea" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="99" name="SearchNoItem" x="144" y="264" width="24" height="24">
+   <properties>
+    <property name="searcharea" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="100" name="SearchNoItem" x="288" y="384" width="24" height="24">
+   <properties>
+    <property name="searcharea" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="101" name="SearchNoItem" x="312" y="456" width="24" height="24">
+   <properties>
+    <property name="searcharea" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="102" name="SearchNoItem" x="432" y="552" width="24" height="24">
+   <properties>
+    <property name="searcharea" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="103" name="SearchNoItem" x="72" y="480" width="24" height="24">
+   <properties>
+    <property name="searcharea" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="104" name="SearchNoItem" x="72" y="504" width="24" height="24">
+   <properties>
+    <property name="searcharea" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="105" name="SearchNoItem" x="1032" y="240" width="24" height="24">
+   <properties>
+    <property name="searcharea" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="106" name="SearchNoItem" x="1056" y="216" width="24" height="24">
+   <properties>
+    <property name="searcharea" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="107" name="SearchNoItem" x="1056" y="192" width="24" height="24">
+   <properties>
+    <property name="searcharea" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="108" name="SearchNoItem" x="1080" y="168" width="24" height="24">
+   <properties>
+    <property name="searcharea" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="109" name="SearchNoItem" x="1104" y="168" width="24" height="24">
+   <properties>
+    <property name="searcharea" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="110" name="SearchNoItem" x="1128" y="168" width="24" height="24">
+   <properties>
+    <property name="searcharea" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="111" name="SearchNoItem" x="1152" y="168" width="24" height="24">
+   <properties>
+    <property name="chest" value="spriteimage=closedchest itemid=-1"/>
+   </properties>
+  </object>
+  <object id="112" name="SearchNoItem" x="1176" y="144" width="24" height="24">
+   <properties>
+    <property name="chest" value="spriteimage=closedchest itemid=-1"/>
+   </properties>
+  </object>
+  <object id="113" name="SearchNoItem" x="1200" y="144" width="24" height="24">
+   <properties>
+    <property name="searcharea" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="114" name="SearchNoItem" x="1224" y="144" width="24" height="24">
+   <properties>
+    <property name="searcharea" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="115" name="SearchNoItem" x="1272" y="168" width="24" height="24">
+   <properties>
+    <property name="searcharea" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="116" name="SearchNoItem" x="1296" y="168" width="24" height="24">
+   <properties>
+    <property name="searcharea" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="117" name="SearchNoItem" x="1392" y="144" width="24" height="24">
+   <properties>
+    <property name="searcharea" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="118" name="SearchNoItem" x="1416" y="144" width="24" height="24">
+   <properties>
+    <property name="searcharea" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="119" name="SearchNoItem" x="1440" y="144" width="24" height="24">
+   <properties>
+    <property name="searcharea" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="120" name="SearchNoItem" x="1416" y="264" width="24" height="24">
+   <properties>
+    <property name="searcharea" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="121" name="SearchNoItem" x="1440" y="264" width="24" height="24">
+   <properties>
+    <property name="searcharea" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="122" name="SearchNoItem" x="1440" y="552" width="24" height="24">
+   <properties>
+    <property name="searcharea" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="123" name="SearchNoItem" x="1440" y="480" width="24" height="24">
+   <properties>
+    <property name="searcharea" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="124" name="SearchNoItem" x="1440" y="528" width="24" height="24">
+   <properties>
+    <property name="searcharea" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="125" name="SearchNoItem" x="1440" y="504" width="24" height="24">
+   <properties>
+    <property name="searcharea" value="searchtrigger=21"/>
+   </properties>
+  </object>
+  <object id="126" name="Book1" x="288" y="144" width="24" height="24">
+   <properties>
+    <property name="searcharea" value="searchtrigger=24"/>
+   </properties>
+  </object>
+  <object id="127" name="Book2" x="336" y="144" width="24" height="24">
+   <properties>
+    <property name="searcharea" value="searchtrigger=25"/>
+   </properties>
+  </object>
+  <object id="128" name="Book3" x="120" y="456" width="24" height="24">
+   <properties>
+    <property name="searcharea" value="searchtrigger=26"/>
+   </properties>
+  </object>
+  <object id="129" name="Book4" x="384" y="528" width="24" height="24">
+   <properties>
+    <property name="searcharea" value="searchtrigger=27"/>
+   </properties>
+  </object>
+  <object id="130" name="Book5" x="192" y="648" width="24" height="24">
+   <properties>
+    <property name="searcharea" value="searchtrigger=28"/>
+   </properties>
+  </object>
+  <object id="131" name="Book6" x="408" y="648" width="24" height="24">
+   <properties>
+    <property name="searcharea" value="searchtrigger=29"/>
+   </properties>
+  </object>
+  <object id="132" name="Book7" x="432" y="744" width="24" height="24">
+   <properties>
+    <property name="searcharea" value="searchtrigger=30"/>
+   </properties>
+  </object>
+  <object id="133" name="Book8" x="192" y="744" width="24" height="24">
+   <properties>
+    <property name="searcharea" value="searchtrigger=31"/>
+   </properties>
+  </object>
+  <object id="134" name="Book9" x="192" y="816" width="24" height="24">
+   <properties>
+    <property name="searcharea" value="searchtrigger=32"/>
+   </properties>
+  </object>
+  <object id="135" name="Book10" x="408" y="816" width="24" height="24">
+   <properties>
+    <property name="searcharea" value="searchtrigger=33"/>
+   </properties>
+  </object>
+  <object id="141" x="72" y="816">
+   <properties>
+    <property name="roof" value=""/>
+   </properties>
+   <polyline points="0,-672 1416,-672 1416,408 1104,408 1104,336 984,336 984,360 936,360 936,384 888,384 888,408 864,408 864,432 624,432 624,408 600,396 600,384 552,384 552,360 504,360 504,336 408,336 408,168 -24,168 -24,-672"/>
+  </object>
+  <object id="142" name="SearchNoItem" x="1008" y="576" width="24" height="24">
+   <properties>
+    <property name="chest" value="spriteimage=closedchest itemid=2"/>
+   </properties>
+  </object>
+  <object id="145" name="Book 11" x="312" y="648" width="24" height="24">
+   <properties>
+    <property name="searcharea" value="searchtrigger=37"/>
+   </properties>
+  </object>
+  <object id="166" name="Book 12" x="288" y="648" width="24" height="24">
+   <properties>
+    <property name="searcharea" value="searchtrigger=38"/>
+   </properties>
+  </object>
+  <object id="167" name="Book 14" x="432" y="648" width="24" height="24">
+   <properties>
+    <property name="searcharea" value="searchtrigger=40"/>
+   </properties>
+  </object>
+  <object id="168" name="Book 18" x="408" y="744" width="24" height="24">
+   <properties>
+    <property name="searcharea" value="searchtrigger=44"/>
+   </properties>
+  </object>
+  <object id="169" name="Book 16" x="288" y="744" width="24" height="24">
+   <properties>
+    <property name="searcharea" value="searchtrigger=42"/>
+   </properties>
+  </object>
+  <object id="170" name="Book 17" x="312" y="744" width="24" height="24">
+   <properties>
+    <property name="searcharea" value="searchtrigger=43"/>
+   </properties>
+  </object>
+  <object id="171" name="Book 15" x="216" y="744" width="24" height="24">
+   <properties>
+    <property name="searcharea" value="searchtrigger=41"/>
+   </properties>
+  </object>
+  <object id="173" name="Book 19" x="216" y="816" width="24" height="24">
+   <properties>
+    <property name="searcharea" value="searchtrigger=45"/>
+   </properties>
+  </object>
+  <object id="174" name="Book 20" x="288" y="816" width="24" height="24">
+   <properties>
+    <property name="searcharea" value="searchtrigger=46"/>
+   </properties>
+  </object>
+  <object id="175" name="Book 21" x="312" y="816" width="24" height="24">
+   <properties>
+    <property name="searcharea" value="searchtrigger=47"/>
+   </properties>
+  </object>
+  <object id="176" name="Book 22" x="432" y="816" width="24" height="24">
+   <properties>
+    <property name="searcharea" value="searchtrigger=48"/>
+   </properties>
+  </object>
+  <object id="177" name="Book 13" x="216" y="648" width="24" height="24">
+   <properties>
+    <property name="searcharea" value="searchtrigger=39"/>
+   </properties>
+  </object>
+  <object id="178" name="Training Soldier 1" x="288" y="1080" width="24" height="24">
+   <properties>
+    <property name="npc" value="noturn=true facing=3 throughwall=false noanimate=false animation=Guard2 textid=45 wander=0"/>
+   </properties>
+  </object>
+  <object id="179" name="Training Soldier 2" x="336" y="1080" width="24" height="24">
+   <properties>
+    <property name="npc" value="noturn=true facing=2 name= throughwall=false noanimate=false animation=Guard1 textid=46 wander=0"/>
+   </properties>
+  </object>
+  <object id="180" name="Training Captain" x="312" y="1032" width="24" height="24">
+   <properties>
+    <property name="npc" value="noturn=true facing=1 throughwall=false noanimate=false animation=Guard2 textid=47 wander=0"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="Battle"/>
 </map>
