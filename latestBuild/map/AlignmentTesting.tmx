@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.1.4" orientation="orthogonal" renderorder="right-down" width="128" height="128" tilewidth="12" tileheight="12" infinite="0" nextobjectid="182">
+ <properties>
+  <property name="shadow" value="-13"/>
+ </properties>
+ <tileset firstgid="1" name="overworld(day)-Master" tilewidth="12" tileheight="12" tilecount="1296" columns="36">
+  <image source="../image/overworld(day)-Master.png" trans="495d47" width="432" height="432"/>
+ </tileset>
+ <tileset firstgid="1297" name="castletown(day)-Master" tilewidth="12" tileheight="12" tilecount="900" columns="25">
+  <image source="../image/castletown(day)-Master.png" trans="495d47" width="300" height="440"/>
+ </tileset>
+ <tileset firstgid="2197" name="castletown(day)-Slave1" tilewidth="12" tileheight="12" tilecount="495" columns="15">
+  <image source="../image/castletown(day)-Slave1.png" trans="495d47" width="180" height="400"/>
+ </tileset>
+ <tileset firstgid="2692" name="Shadows and Lights" tilewidth="12" tileheight="12" tilecount="200" columns="20">
+  <image source="../image/Shadows and Lights.png" trans="000000" width="240" height="120"/>
+ </tileset>
+ <layer name="BG" width="128" height="128">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3TMREAIAwEwTS4DDJAP+mQkCJb/KyBv1wRu5Yc6aldjrX7f9Q/9U/9U//UP/VP/VP/1D/1T/1T/9Q/9U/9U//UP/VP/VP/1D/1T/1T/9Q/9U/9U//UP/VP/bP/f9Q/9U/9U//UP/VP/VP/1D/1T/1T/9Q/9U/9U//UP/VP/VP/1D/1T/1T/9Q/9U/9U//UP/VP/bP/f9Q/9U/9U//UP/VP/VP/1D/1T/1T/9Q/9U/9U//UP/VP/VP/1D/1T/1T/9Q/9U/9U//UP/VP/bP/f9Q/9U/9U//UP/VP/VP/1D/1T/1T/9Q/9U/9U//UP/VP/VP/1D/1T/1T/9Q/9U/9U//UP78Pwwt0aAAAAQA=
+  </data>
+ </layer>
+ <layer name="BG Shadow" width="128" height="128">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3BAQEAAACAkP6v7ggKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAauuOl9cAAAEA
+  </data>
+ </layer>
+ <layer name="MG" width="128" height="128">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3RMREAIAwAsc54AAWgAPzrAgWsHZoo+LuPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD46y1itOwKssz3fvlf1n7vj/9lXByGDWUAAAEA
+  </data>
+ </layer>
+ <layer name="MG Shadow" width="128" height="128">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3BAQEAAACAkP6v7ggKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAauuOl9cAAAEA
+  </data>
+ </layer>
+ <layer name="FG" width="128" height="128">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3RMREAIBAEsatfCigA/8LAAPUXJAp2ZhMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHgblczqrqDLuu+3/984ecygqQAAAQA=
+  </data>
+ </layer>
+ <layer name="FG Shadow" width="128" height="128">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3BAQEAAACAkP6v7ggKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAauuOl9cAAAEA
+  </data>
+ </layer>
+ <layer name="Lighting" width="128" height="128" visible="0">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3BAQEAAACAkP6v7ggKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAauuOl9cAAAEA
+  </data>
+ </layer>
+ <layer name="Roof" width="128" height="128" visible="0">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu2cQW7UMBhGs5lKsIfuywE5EhL0EEgoh6gEnIADwB4q0oUlYxLHcZLfv/O9J30aeSYLz/dkz6RJZxj+5fdtGP6QS+b5NqyC/+sG/9rBv3bwrx38awf/2sG/dvCvHfxrB//awb928K8d/GsH/9rBv3bwrx38awf/2sG/dvCvHfxrB//awb928K8d/GsH/9rBv3bwrx38awf/2sG/dq7s/+3dOWn9vvBf9r4+TvkU5UMyrk2PfSj6/zLlfZTPybg2PfaBf/wr+v855deM//j5reMe+1D1/2r6vvb67n//8fNbxz32oer/YXL2bsZ//PzWcY99qPo/4/P/TeV5o8cer+z/65RvUZ6ScW3i88rcOWX82uPNZ49X9n8W8b6S21Pi10b8u3tf+Mc//vG/lfh7Re47Rfzad/y7e1/WeOwR/3Z47BH/dnjsEf92eOwR/3Z47BH/dnjsEf92eOwR/3Z47BH/dnjsEf92eOwR/3Z47BH/dnjsEf92eOwR/3Z47BH/dnjsEf92eOwR/3Z47BH/dnjsEf92eOwR/3Z47BH/dnjsEf92eOwR/3Z47BH/dnjssaSn2v93bf27Sz+cpbXrWv/p7yi1isf103tK/Kf/R98q+Pfhf89v59SM8e/L/57fzqkZ49+X/z2/nVMzxr8v/3z+Xyf41w7+tYN/7Xj8O+kS+Md/676uFvxrB//a6cl/6XXI1p2uxdP8e/Jfeh3S8z7x7Gz+PfkvPQ9N94nWzuO53M/8Xbvlee4V/IfrheEx3Sda7gfpen/MzBv/eZb8h+uF4TE9zno/yK33MTNv/OdZ8h+uF4bHcFyL/WBuvcfrO/afzhv/eUo//8Nxa/vBGet+br3H63u8rc/f8n7Ll/n2wlb/a/vBkessrPu59R6v7xL/lvdbvsy3F7b6X9sPjlxn95Hf3Hov8W95vW0U8p/uB0eus/C9fm294/98lvyn4yN7HpPHJd8lfeN/H7X+l+47TjN3HP79UOt/6b7jNHPH5fzvnT/+91Hqf+m+4zRzx+G/H87+/D9qfvg/B/xr+w8c7R/6Av8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANATfwHs0Ud1AAABAA==
+  </data>
+ </layer>
+ <layer name="Walkable" width="128" height="128" opacity="0.51">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3VsQkAIBAEwe+/C+1F69LE3EQucIRnGrjFVlV9X+OXjn2T35reH/VP/VP/1D/1T/1T/9Q/9U/9U//UP/VP/VP/1D/1T/1T/9Q/9U/9U//UP/VP/VP/1D/1T/1T/8zvj/qn/ql/6p/6p/6pf+qf+qf+qX/qn/qn/ql/6p/6p/6pf+qf+qf+qX/qn/qn/ql/6p/6p/6pf+b3R/1T/9Q/9U/9U//UP/VP/VP/1D/1T/1T/9Q/9U/9U//UP/VP/VP/1D/1T/1T/9Q/9U/9U//UP/P7o/6pf+qf+qf+qX/qn/qn/ql/6p/6p/6pf+qf+qf+qX/qn/qn/ql/6p/6p/553/956V0y0/956V3S/0//P9+6AGJ5OKAAAAEA
+  </data>
+ </layer>
+ <objectgroup name="Terrain"/>
+ <objectgroup name="Trigger Regions">
+  <object id="1" name="align" x="0" y="1512" width="24" height="24">
+   <properties>
+    <property name="start" value="exit=align"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="Meta"/>
+ <objectgroup name="Battle"/>
+</map>

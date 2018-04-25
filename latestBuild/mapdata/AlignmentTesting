@@ -1,0 +1,7 @@
+<map file="AlignmentTesting.tmx"/>
+<trigger id=0 description="MapStart" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<playmusic music="eriumcastle"/>
+</trigger>
+<condition id=0 description="MapLoaded" triggerid=0>
+	<maploaded/>
+</condition>
