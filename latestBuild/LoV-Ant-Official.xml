@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="create_run_jar" name="Create Runnable Jar for Project CommRPG with libraries in sub-folder">
+    <!--ANT 1.7 is required                                        -->
+    <property name="dir.buildfile" value="."/>
+    <property name="dir.workspace" value="${dir.buildfile}"/>
+    <property name="dir.jarfile" value="${dir.buildfile}"/>
+    <target name="create_run_jar">
+        <jar destfile="${dir.jarfile}/LoV-Official.jar">
+            <manifest>
+                <attribute name="Main-Class" value="mb.fc.engine.RunInJarLauncher"/>
+            	<attribute name="Launcher-Main-Class" value="mb.fc.engine.CommRPG"/>
+            	<attribute name="Launcher-VM-Args" value=""/>
+            	<attribute name="Launcher-Args" value="injar"/>
+                <attribute name="Class-Path" value="."/>
+            </manifest>
+        	<zipfileset dir="${dir.workspace}/">
+				<exclude name="*.*"/>
+        		<exclude name="src/"/>
+        	</zipfileset>
+        	<zipfileset src="${dir.workspace}/LoV-Dev.jar"/>
+        </jar>
+    </target>
+</project>
