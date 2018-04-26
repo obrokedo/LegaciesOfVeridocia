@@ -159,12 +159,12 @@ public class CinematicActor implements Comparable<CinematicActor>
 					im = im.getFlippedCopy(false, true);
 				}
 				float xPos = locX - camera.getLocationX();
-				float yPos = locY - camera.getLocationY();
+				float yPos = locY + stateInfo.getTileHeight() / 6 - camera.getLocationY();
 				switch (specialEffectType)
 				{
 					case SE_NONE:
 						AnimatedSprite.drawShadow(im, xPos, yPos, 
-								camera, false, stateInfo.getTileHeight());
+								camera, false, stateInfo.getTileHeight() + stateInfo.getTileHeight());
 						graphics.drawImage(im, xPos, yPos);
 						break;
 					case SE_GROW:

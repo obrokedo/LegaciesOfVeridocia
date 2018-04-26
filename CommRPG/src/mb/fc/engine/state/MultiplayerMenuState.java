@@ -42,15 +42,14 @@ public class MultiplayerMenuState extends MenuState implements PacketHandler, St
 	private ArrayList<String> players;
 	private int yStart = 100;
 
-	public MultiplayerMenuState()
+	public MultiplayerMenuState(PersistentStateInfo psi)
 	{
-
+		super(psi);
 	}
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
-		this.gameSetup(game, container);
 		this.game = game;
 		this.gc = container;
 		this.players = new ArrayList<>();

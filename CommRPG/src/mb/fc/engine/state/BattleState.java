@@ -55,12 +55,7 @@ public class BattleState extends LoadableGameState
 	private String music = null;
 	*/
 
-	public BattleState()
-	{
-
-	}
-
-	public void setPersistentStateInfo(PersistentStateInfo psi)
+	public BattleState(PersistentStateInfo psi)
 	{
 		this.stateInfo = new StateInfo(psi, true, false);
 		this.tileMapRenderer = new TileMapRenderer();
@@ -88,7 +83,6 @@ public class BattleState extends LoadableGameState
 		this.cinematicManager = new CinematicManager(false);
 		stateInfo.registerManager(cinematicManager);
 	}
-
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game)

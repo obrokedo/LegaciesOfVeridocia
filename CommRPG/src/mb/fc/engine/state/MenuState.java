@@ -55,6 +55,13 @@ public class MenuState extends LoadableGameState
 	protected PersistentStateInfo persistentStateInfo;
 	private Image bgImage;
 	private Image flor;
+	
+	public MenuState(PersistentStateInfo persistentStateInfo) {
+		super();
+		this.persistentStateInfo = persistentStateInfo;
+	}
+
+
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
@@ -82,6 +89,7 @@ public class MenuState extends LoadableGameState
 	 */
 	@Override
 	public void initAfterLoad() {
+		
 	}
 
 	@Override
@@ -172,7 +180,7 @@ public class MenuState extends LoadableGameState
 		super.keyPressed(key, c);
 		
 		if (initialized) {
-			if (key == Input.KEY_F1)
+			if (CommRPG.DEV_MODE_ENABLED && key == Input.KEY_F1)
 			{
 				((LoadingState) game.getState(CommRPG.STATE_GAME_LOADING)).setLoadingInfo("/menu/MainMenu", false, true,
 						new FCResourceManager(),
@@ -244,78 +252,17 @@ public class MenuState extends LoadableGameState
 
 	@Override
 	public void stateLoaded(FCResourceManager resourceManager) {
-		gameSetup(game, gc);
 		font = resourceManager.getFontByName("menufont");
 		bgImage = resourceManager.getImage("mainbg");
-		initialized = true;
-		
+		initialized = true;		
 	}
+	
+	
 
 	@Override
 	public int getID() {
 		return CommRPG.STATE_GAME_MENU;
 	}
 
-	public void gameSetup(StateBasedGame game, GameContainer gc)
-	{
-		ClientProgress clientProgress = null;
-		ClientProfile clientProfile = null;
-
-		File file = new File(".");
-
-
-		for (String s : file.list())
-		{
-			if (s.endsWith(ClientProfile.PROFILE_EXTENSION))
-			{
-				clientProfile = ClientProfile.deserializeFromFile(s);
-			}
-			else if (s.endsWith(ClientProgress.PROGRESS_EXTENSION))
-			{
-				clientProgress =  ClientProgress.deserializeFromFile(s);
-			}
-		}
-
-		// Check to see if a client profile has been loaded.
-		if (clientProfile == null)
-		{
-			clientProfile = new ClientProfile("Test");
-
-			// If Dev mode is enabled, check to see if Dev Params
-			// were specified, if so then apply them to the client profile.
-			// If this is "Test" mode then don't apply the dev params as
-			// it may screw up the heroes in the party
-			if (CommRPG.DEV_MODE_ENABLED && !CommRPG.TEST_MODE_ENABLED)
-			{
-				DevParams devParams = DevParams.parseDevParams();
-				if (devParams != null)
-					clientProfile.setDevParams(devParams);
-			}
-
-			Log.debug("Profile was created");
-		}
-
-		if (clientProgress == null)
-		{
-			Log.debug("Create Progress");
-			clientProgress = new ClientProgress("Test");
-			clientProgress.serializeToFile();
-		}
-
-		try {
-			persistentStateInfo =
-				new PersistentStateInfo(clientProfile, clientProgress,
-						(CommRPG) game,
-						new Camera(CommRPG.GAME_SCREEN_SIZE.width, CommRPG.GAME_SCREEN_SIZE.height), gc);
-		}
-		catch (Throwable t)
-		{
-			t.printStackTrace();
-			System.exit(0);
-		}
-
-		((BattleState) game.getState(CommRPG.STATE_GAME_BATTLE)).setPersistentStateInfo(persistentStateInfo);
-		((TownState) game.getState(CommRPG.STATE_GAME_TOWN)).setPersistentStateInfo(persistentStateInfo);
-		((CinematicState) game.getState(CommRPG.STATE_GAME_CINEMATIC)).setPersistentStateInfo(persistentStateInfo);
-	}
+	
 }

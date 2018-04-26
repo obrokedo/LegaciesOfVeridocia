@@ -1,6 +1,7 @@
 package mb.fc.engine;
 
 import java.awt.Dimension;
+import java.io.File;
 import java.util.Random;
 
 import javax.swing.JOptionPane;
@@ -14,6 +15,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.util.Log;
 
 import mb.fc.engine.config.DefaultEngineConfiguration;
+import mb.fc.engine.config.EngineConfigurationValues;
 import mb.fc.engine.config.EngineConfigurator;
 import mb.fc.engine.config.LOVEngineConfigration;
 import mb.fc.engine.log.FileLogger;
@@ -21,16 +23,23 @@ import mb.fc.engine.state.BattleState;
 import mb.fc.engine.state.CinematicState;
 import mb.fc.engine.state.LOVAttackCinematicState;
 import mb.fc.engine.state.MenuState;
+import mb.fc.engine.state.PersistentStateInfo;
 import mb.fc.engine.state.TownState;
+import mb.fc.engine.state.MenuState.LoadTypeEnum;
 import mb.fc.engine.state.devel.DevelAnimationViewState;
 import mb.fc.engine.state.devel.DevelBattleAnimViewState;
 import mb.fc.engine.state.devel.DevelMenuState;
+import mb.fc.game.Camera;
+import mb.fc.game.dev.DevParams;
+import mb.fc.game.persist.ClientProfile;
+import mb.fc.game.persist.ClientProgress;
 import mb.fc.game.ui.PaddedGameContainer;
 import mb.fc.loading.FCLoadingRenderSystem;
 import mb.fc.loading.FCResourceManager;
 import mb.fc.loading.LoadableGameState;
 import mb.fc.loading.LoadingState;
 import mb.fc.loading.TextParser;
+import mb.jython.GlobalPythonFactory;
 
 /**
  * Entry point to the CommRPG game
@@ -100,6 +109,8 @@ public class CommRPG extends StateBasedGame   {
 	public static boolean BATTLE_MODE_OPTIMIZE = false;
 	
 	public static boolean MUTE_MUSIC = false;
+	
+	private PersistentStateInfo persistentStateInfo;
 
 	private static DEBUG_HOLDER DH;
 	
@@ -131,13 +142,21 @@ public class CommRPG extends StateBasedGame   {
 	 */
 	public static void main(String args[])
 	{
+		if (args.length > 0) {
+			if (args[0].equalsIgnoreCase("injar")) {
+				System.out.println("Running in jar");
+				LoadingState.inJar = true;
+			}
+		}
+		
 		CommRPG rpg = new CommRPG();
 		rpg.engineConfiguratior = new LOVEngineConfigration();
 		rpg.setup();
 	}
 	
 	public void setup() {
-		// Setup a game container: set it's display mode and target
+		System.out.println("SETUP");
+				// Setup a game container: set it's display mode and target
 				// frame rate
 				try
 				{
@@ -192,7 +211,62 @@ public class CommRPG extends StateBasedGame   {
 					{
 						container.setDisplayMode(GAME_SCREEN_SIZE.width, GAME_SCREEN_SIZE.height, false);
 					}
-	
+					
+					ClientProgress clientProgress = null;
+					ClientProfile clientProfile = null;
+
+					File file = new File(".");
+
+					for (String s : file.list())
+					{
+						if (s.endsWith(ClientProfile.PROFILE_EXTENSION))
+						{
+							clientProfile = ClientProfile.deserializeFromFile(s);
+						}
+						else if (s.endsWith(ClientProgress.PROGRESS_EXTENSION))
+						{
+							clientProgress =  ClientProgress.deserializeFromFile(s);
+						}
+					}
+
+					// Check to see if a client profile has been loaded.
+					if (clientProfile == null)
+					{
+						clientProfile = new ClientProfile("Test");
+
+						// If Dev mode is enabled, check to see if Dev Params
+						// were specified, if so then apply them to the client profile.
+						// If this is "Test" mode then don't apply the dev params as
+						// it may screw up the heroes in the party
+						if (CommRPG.DEV_MODE_ENABLED && !CommRPG.TEST_MODE_ENABLED)
+						{
+							DevParams devParams = DevParams.parseDevParams();
+							if (devParams != null)
+								clientProfile.setDevParams(devParams);
+						}
+
+						Log.debug("Profile was created");
+					}
+
+					if (clientProgress == null)
+					{
+						Log.debug("Create Progress");
+						clientProgress = new ClientProgress("Test");
+						clientProgress.serializeToFile();
+					}
+
+					try {
+						persistentStateInfo =
+							new PersistentStateInfo(clientProfile, clientProgress,
+									this,
+									new Camera(CommRPG.GAME_SCREEN_SIZE.width, CommRPG.GAME_SCREEN_SIZE.height), container);
+					}
+					catch (Throwable t)
+					{
+						t.printStackTrace();
+						System.exit(0);
+					}
+					
 					container.setShowFPS(true);
 					container.setVSync(true);
 					container.setAlwaysRender(true);
@@ -220,16 +294,18 @@ public class CommRPG extends StateBasedGame   {
 	@Override
 	public void initStatesList(GameContainer gameContainer) throws SlickException
 	{
+		System.out.println("INIT STATE LIST");
+		GlobalPythonFactory.intialize();
 		loadingState = new LoadingState(STATE_GAME_LOADING);
-		this.addState(new MenuState());
+		this.addState(new MenuState(persistentStateInfo));
 		this.addState(new LOVAttackCinematicState());
-		this.addState(new DevelMenuState());
+		this.addState(new DevelMenuState(persistentStateInfo));
 		this.addState(new DevelAnimationViewState());
 		this.addState(loadingState);
 		this.addState(new DevelBattleAnimViewState());
-		addState(new BattleState());
-		addState(new TownState());
-		addState(new CinematicState());
+		addState(new BattleState(persistentStateInfo));
+		addState(new TownState(persistentStateInfo));
+		addState(new CinematicState(persistentStateInfo));
 
 		// this.addState(new TestState());
 
@@ -266,15 +342,28 @@ public class CommRPG extends StateBasedGame   {
 		/******************************/
 		/* Comment during multiplayer */
 		/******************************/
-
+		
+		// DEVELOPMENT MODE
 		loadingState.setLoadingInfo("/menu/MainMenu", false, true,
 				new FCResourceManager(),
 					(LoadableGameState) this.getState(STATE_GAME_MENU_DEVEL),
 						new FCLoadingRenderSystem(gameContainer));
-
-
-
-
+			
+		// RELEASE MODE
+		/*
+		loadingState.setLoadingInfo("/menu/MainMenu", false, true,
+				new FCResourceManager(),
+					(LoadableGameState) this.getState(STATE_GAME_MENU),
+						new FCLoadingRenderSystem(gameContainer));
+		*/
+		
+		// TESTER ONLY MODE
+		/*
+		EngineConfigurationValues jcv = CommRPG.engineConfiguratior.getConfigurationValues();
+		persistentStateInfo.loadCinematic(jcv.getStartingMapData(), 0);
+		*/
+		
+						
 
 		this.enterState(STATE_GAME_LOADING);
 	}

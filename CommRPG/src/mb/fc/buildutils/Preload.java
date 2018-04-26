@@ -21,13 +21,6 @@ public class Preload
 				System.out.println("animsheet," + fs.getName().replaceFirst(".png", "") + ",animations/animationsheets/" + fs.getName());
 		}
 
-		f = new File("animations/fsa");
-		for (File fs : f.listFiles())
-		{
-			if (fs.getName().endsWith(".fsa"))
-				System.out.println("fsa," + fs.getName().replaceFirst(".fsa", "") + ",animations/fsa/" + fs.getName());
-		}
-
 		f = new File("sprite");
 		for (File fs : f.listFiles())
 		{

@@ -4,16 +4,17 @@ import java.io.File;
 
 import org.newdawn.slick.GameContainer;
 
+import mb.fc.utils.DirectoryLister;
+
 public class ResourceSelector extends ListUI {
 	public ResourceSelector(String title, int drawX,
 			boolean fromLeft, String rootFolder, 
 			String suffix, GameContainer gc)
 	{
 		super(title);
-		File dir = new File(rootFolder);
 		resourceFileButtons.clear();
 
-		for (File file : dir.listFiles())
+		for (File file : DirectoryLister.listFilesInDir(rootFolder))
 		{
 			if (file.isDirectory() || file.getName().startsWith("."))
 				continue;

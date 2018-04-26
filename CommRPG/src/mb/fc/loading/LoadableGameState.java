@@ -105,7 +105,7 @@ public abstract class LoadableGameState extends BasicGameState
 				{
 					((CommRPG) game).toggleFullScreen();
 				}
-				else if (container.getInput().isKeyPressed(Input.KEY_ESCAPE))
+				else if (CommRPG.DEV_MODE_ENABLED && container.getInput().isKeyPressed(Input.KEY_ESCAPE))
 				{
 					game.enterState(CommRPG.STATE_GAME_MENU_DEVEL);
 				}

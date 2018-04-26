@@ -110,6 +110,7 @@ public class Map
 				// stateInfo.addMapTrigger(new TriggerLocation(stateInfo, mo, door));
 				Trigger event = new Trigger("Door Trigger " + door.getId(), -100, false, false, true, true, null, null);
 				event.addTriggerable(event.new TriggerRemoveSprite(door.getName()));
+				event.addTriggerable(event.new TriggerPlaySound("dooropen", 50));
 				stateInfo.getResourceManager().addTriggerEvent(door.getId(), event);
 				
 				TriggerCondition condition = new TriggerCondition(door.getId(), "Door");

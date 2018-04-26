@@ -40,10 +40,7 @@ public class CinematicState extends LoadableGameState
 
 	private StateInfo stateInfo;
 
-	public CinematicState() {}
-
-	public void setPersistentStateInfo(PersistentStateInfo psi)
-	{
+	public CinematicState(PersistentStateInfo psi) {
 		this.stateInfo = new StateInfo(psi, false, true);
 		this.tileMapRenderer = new TileMapRenderer();
 		stateInfo.registerManager(tileMapRenderer);
@@ -56,7 +53,6 @@ public class CinematicState extends LoadableGameState
 		this.cinematicManager = new CinematicManager(true);
 		stateInfo.registerManager(cinematicManager);
 	}
-
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game)

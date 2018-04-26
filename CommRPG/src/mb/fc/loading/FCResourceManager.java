@@ -42,6 +42,7 @@ import mb.fc.game.text.Speech;
 import mb.fc.game.trigger.Trigger;
 import mb.fc.game.trigger.TriggerCondition;
 import mb.fc.map.Map;
+import mb.fc.utils.DirectoryLister;
 import mb.fc.utils.SpriteAnims;
 import mb.fc.utils.XMLParser;
 import mb.fc.utils.XMLParser.TagArea;
@@ -193,7 +194,7 @@ public class FCResourceManager {
 		}
 		else if (split[0].equalsIgnoreCase("music"))
 		{
-			musicByTitle.put(split[1], new Music(new FileInputStream(new File(split[2])), split[2]));
+			musicByTitle.put(split[1], new Music(split[2]));
 		}
 		else if (split[0].equalsIgnoreCase("sound"))
 		{
@@ -267,8 +268,7 @@ public class FCResourceManager {
 		*/
 		else if (split[0].equalsIgnoreCase("animsheetdir"))
 		{
-			File dir = new File(split[1]);
-			for (File file : dir.listFiles())
+			for (File file : DirectoryLister.listFilesInDir(split[1]))
 			{
 				if (file.getName().endsWith(".png"))
 				{
@@ -277,7 +277,7 @@ public class FCResourceManager {
 				}
 			}
 			
-			for (File file : dir.listFiles())
+			for (File file : DirectoryLister.listFilesInDir(split[1]))
 			{
 				if (file.getName().endsWith(".anim")) {
 					Log.debug(file.getName());
@@ -297,8 +297,7 @@ public class FCResourceManager {
 		}
 		else if (split[0].equalsIgnoreCase("spritedir"))
 		{
-			File dir = new File(split[1]);
-			for (File file : dir.listFiles())
+			for (File file : DirectoryLister.listFilesInDir(split[1]))
 			{
 				if (file.getName().endsWith(".png"))
 				{
@@ -310,8 +309,7 @@ public class FCResourceManager {
 		}
 		else if (split[0].equalsIgnoreCase("imagedir"))
 		{
-			File dir = new File(split[1]);
-			for (File file : dir.listFiles())
+			for (File file : DirectoryLister.listFilesInDir(split[1]))
 			{
 				if (file.getName().endsWith(".png"))
 				{
@@ -473,6 +471,7 @@ public class FCResourceManager {
 		BufferedReader br = null;
 		if (LoadingState.inJar)
 		{
+			file = file.replaceAll("\\\\", "/");
 			br = new BufferedReader(new InputStreamReader(LoadingState.MY_CLASS.getResourceAsStream(file)));
 		}
 		else

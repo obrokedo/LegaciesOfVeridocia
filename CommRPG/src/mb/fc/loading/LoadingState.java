@@ -16,7 +16,6 @@ import mb.fc.engine.CommRPG;
 import mb.fc.engine.load.BulkLoader;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.resource.SpellResource;
-import mb.jython.GlobalPythonFactory;
 
 public class LoadingState extends BasicGameState
 {
@@ -35,7 +34,7 @@ public class LoadingState extends BasicGameState
 	private String errorMessage = null;
 	private Transition enterNextStateTransition;
 	private Image intermediateImage = null;
-	public static final boolean inJar = false;
+	public static boolean inJar = false;
 	public static Class<?> MY_CLASS;
 
 	public LoadingState(int stateId)

@@ -11,6 +11,7 @@ import mb.fc.engine.CommRPG;
 import mb.fc.engine.config.EngineConfigurator;
 import mb.fc.game.exception.BadResourceException;
 import mb.fc.loading.FCResourceManager;
+import mb.fc.utils.DirectoryLister;
 
 public class BulkLoader {
 	private List<String> allLines = null;
@@ -58,8 +59,7 @@ public class BulkLoader {
 			else if (split[0].equalsIgnoreCase("animsheetdir"))
 			{
 				allLines.remove(i); i--;
-				File dir = new File(split[1]);
-				for (File file : dir.listFiles())
+				for (File file : DirectoryLister.listFilesInDir(split[1]))
 				{
 					if (file.getName().endsWith(".png"))
 					{
@@ -67,7 +67,7 @@ public class BulkLoader {
 					}
 				}
 				
-				for (File file : dir.listFiles())
+				for (File file : DirectoryLister.listFilesInDir(split[1]))
 				{
 					if (file.getName().endsWith(".anim")) {
 						allLines.add("anim," + file.getName().replace(".anim", "") + "," + file.getPath());
@@ -77,8 +77,7 @@ public class BulkLoader {
 			else if (split[0].equalsIgnoreCase("spritedir") || split[0].equalsIgnoreCase("imagedir"))
 			{
 				allLines.remove(i); i--;
-				File dir = new File(split[1]);
-				for (File file : dir.listFiles())
+				for (File file : DirectoryLister.listFilesInDir(split[1]))
 				{
 					if (file.getName().endsWith(".png"))
 						allLines.add("image," + file.getName().replace(".png", "") + "," + file.getPath());
@@ -88,8 +87,7 @@ public class BulkLoader {
 	}
 
 	private void loadSoundOrMusic(String[] split, String type) {
-		File dir = new File(split[1]);
-		for (File file : dir.listFiles())
+		for (File file : DirectoryLister.listFilesInDir(split[1]))
 		{
 			if (file.getName().endsWith(".ogg"))
 				allLines.add(type + "," + file.getName().replace(".ogg", "") + "," + file.getPath());

@@ -3,7 +3,6 @@ package mb.fc.engine.state.devel;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,6 +21,7 @@ import org.newdawn.slick.util.Log;
 import mb.fc.engine.CommRPG;
 import mb.fc.engine.load.BulkLoader;
 import mb.fc.engine.state.MenuState;
+import mb.fc.engine.state.PersistentStateInfo;
 import mb.fc.game.dev.DevParams;
 import mb.fc.game.exception.BadResourceException;
 import mb.fc.game.resource.SpellResource;
@@ -54,7 +54,7 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 {
 	private ResourceSelector textSelector;
 	private ListUI entranceSelector;
-	private PlannerFrame plannerFrame = new PlannerFrame(this);
+	private PlannerFrame plannerFrame = null;
 	private GifFrame quickAnimate = new GifFrame(true);
 	private ProgressionFrame progressionFrame = new ProgressionFrame();
 	public static ParticleSystem ps;
@@ -67,6 +67,11 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 	private FCResourceManager mainGameFCRM = null;
 	protected BulkLoader mainGameBulkLoader = null;
 
+
+	public DevelMenuState(PersistentStateInfo persistentStateInfo) {
+		super(persistentStateInfo);
+	}
+	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		this.game = game;
@@ -80,6 +85,9 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 		loadTownButton.setEnabled(false);
 		loadBattleButton.setEnabled(false);
 		loadCinButton.setEnabled(false);
+		
+		if (!LoadingState.inJar)
+			 plannerFrame = new PlannerFrame(this);
 		
 		// Checks to see if any mapdata has errors
 		/*
@@ -128,7 +136,6 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 	@Override
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
 		Log.debug("Entered DevelMenuState");
-		gameSetup(game, container);
 		SpellResource.initSpells(null);
 		this.progressionFrame.init();
 		initializeBulkLoader();
@@ -423,10 +430,8 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 			ListUI parentSelector) {
 		
 		BufferedReader br;
-		try {
-			br = new BufferedReader(new FileReader(new File("mapdata/" + selectedItem)));
-			String firstLine = br.readLine();
-			br.close();
+		try {			
+			String firstLine = FCResourceManager.readAllLines("/mapdata/" + selectedItem).get(0);			
 			
 			if (firstLine.startsWith("<map")) {
 				ArrayList<TagArea> tagArea = XMLParser.process(Collections.singletonList(firstLine));
@@ -447,8 +452,7 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 		Map map = new Map();
 		ArrayList<String> entrances = new ArrayList<>();
 		try {
-			MapParser.parseMap("map/" + currentMap, map, new TilesetParser(), null);
-
+			MapParser.parseMap("/map/" + currentMap, map, new TilesetParser(), null);
 
 			for (MapObject mo : map.getMapObjects())
 				if (mo.getKey().equalsIgnoreCase("start"))

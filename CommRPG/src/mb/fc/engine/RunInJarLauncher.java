@@ -26,6 +26,7 @@ public class RunInJarLauncher
     
     String mainClass = getMainClass(file);
     String vmArgs = getVmArgs(file);
+    String args = getArgs(file);
     try
     {
       extractNatives(file, nativeDirectory);
@@ -44,6 +45,7 @@ public class RunInJarLauncher
       arguments.add(file.getAbsoluteFile().toString());
       arguments.add("-Djava.library.path=" + nativeDirectory);
       arguments.add(mainClass);
+      arguments.add(getArgs(file));
       
       ProcessBuilder processBuilder = new ProcessBuilder(arguments);
       processBuilder.redirectErrorStream(true);
@@ -161,6 +163,14 @@ public class RunInJarLauncher
     
     return attribute.getValue("Launcher-VM-Args");
   }
+  
+  public String getArgs(File file) throws Exception {
+	    JarFile jarFile = new JarFile(file);
+	    Manifest manifest = jarFile.getManifest();
+	    Attributes attribute = manifest.getMainAttributes();
+	    
+	    return attribute.getValue("Launcher-Args");
+	  }
   
   public File getCodeSourceLocation()
   {

@@ -61,21 +61,7 @@ public class TownState extends LoadableGameState
 	// TODO THIS IS A DEBUG TOOL
 	public static float updateSpeed = 1;
 
-	public TownState() { 
-		/*
-		try {
-			ps = new ParticleSystem(new Image("image/RainBig.png"));
-		} catch (SlickException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		RainEmitter rainEmitter = new RainEmitter(500, 100, true);
-		ps.addEmitter(rainEmitter);
-		*/
-	}
-
-	public void setPersistentStateInfo(PersistentStateInfo psi)
-	{
+	public TownState(PersistentStateInfo psi) {
 		this.stateInfo = new StateInfo(psi, false, false);
 		this.tileMapRenderer = new TileMapRenderer();
 		stateInfo.registerManager(tileMapRenderer);

@@ -7,6 +7,7 @@ import java.util.Hashtable;
 import mb.fc.engine.CommRPG;
 import mb.fc.engine.config.EngineConfigurationValues;
 import mb.fc.game.constants.AttributeStrength;
+import mb.fc.utils.DirectoryLister;
 
 public class PlannerDefinitions {
 	private static String PATH_ANIMATIONS = "animations/animationsheets";
@@ -91,16 +92,10 @@ public class PlannerDefinitions {
 		listOfLists.get(PlannerValueDef.REFERS_DIRECTION - 1).add(new PlannerReference("Right"));
 
 		// Animation files
-		File animations = new File(PATH_ANIMATIONS);
-		for (String f : animations.list())
-			if (f.endsWith(".anim"))
-				listOfLists.get(PlannerValueDef.REFERS_ANIMATIONS - 1).add(new PlannerReference(f.replaceFirst(".anim", "")));
+		setupRefererListFromDir(PATH_ANIMATIONS, PlannerValueDef.REFERS_ANIMATIONS, listOfLists, ".anim");
 
 		// Sprite image files
-		File spriteImages = new File(PATH_SPRITE_IMAGE);
-		for (String f : spriteImages.list())
-			if (f.endsWith(".png"))
-				listOfLists.get(PlannerValueDef.REFERS_SPRITE_IMAGE - 1).add(new PlannerReference(f.replaceFirst(".png", "")));
+		setupRefererListFromDir(PATH_SPRITE_IMAGE, PlannerValueDef.REFERS_SPRITE_IMAGE, listOfLists, ".png");
 
 		// Setup Battle Effects
 		for (String effectName : CommRPG.engineConfiguratior.getBattleEffectFactory().getBattleEffectList())
@@ -122,9 +117,7 @@ public class PlannerDefinitions {
 			listOfLists.get(PlannerValueDef.REFERS_TERRAIN - 1).add(new PlannerReference(terrainType));
 
 		// Palette files
-		File palettes = new File(PATH_PALETTE);
-		for (String f : palettes.list())
-			listOfLists.get(PlannerValueDef.REFERS_PALETTE - 1).add(new PlannerReference(f));
+		setupRefererListFromDir(PATH_PALETTE, PlannerValueDef.REFERS_PALETTE, listOfLists);
 
 		// Setup affinities
 		for (String affinity : CommRPG.engineConfiguratior.getConfigurationValues().getAffinities())
@@ -141,20 +134,32 @@ public class PlannerDefinitions {
 		
 		// Sprite image files
 		File mapDataFiles = new File(PATH_MAPDATA);
-		for (File f : mapDataFiles.listFiles())
+		for (File f : DirectoryLister.listFilesInDir(PATH_MAPDATA))
 			if (f.isFile() && !f.isHidden())
 				listOfLists.get(PlannerValueDef.REFERS_MAPDATA - 1).add(new PlannerReference(f.getName()));
 		
 		// Music files
-		File music = new File(PATH_MUSIC);
-		for (String f : music.list())
-			if (f.endsWith(".ogg") || f.endsWith(".wav"))
-				listOfLists.get(PlannerValueDef.REFERS_MUSIC - 1).add(new PlannerReference(f.replaceFirst(".ogg", "").replaceFirst(".wav", "")));
+		setupRefererListFromDir(PATH_MUSIC, PlannerValueDef.REFERS_MUSIC, listOfLists, ".ogg", ".wav");
 		// Sound files
-		File sound = new File(PATH_SOUND);
-		for (String f : sound.list())
-			if (f.endsWith(".ogg") || f.endsWith(".wav"))
-				listOfLists.get(PlannerValueDef.REFERS_SOUND - 1).add(new PlannerReference(f.replaceFirst(".ogg", "").replaceFirst(".wav", "")));
+		setupRefererListFromDir(PATH_SOUND, PlannerValueDef.REFERS_SOUND, listOfLists, ".ogg", ".wav");
+	}
+	
+	private static void setupRefererListFromDir(String path, int referIndex, ArrayList<ArrayList<PlannerReference>> listOfLists,
+			String... exten) {
+		for (File f : DirectoryLister.listFilesInDir(path)) {
+			boolean match = exten.length == 0;
+			String name = f.getName();
+			for (String ext : exten) {
+				if (f.getName().endsWith(ext)) {
+					match = true;
+					name = name.replaceFirst(ext, "");
+					break;
+				}
+			}
+			if (match) {
+				listOfLists.get(referIndex - 1).add(new PlannerReference(name));
+			}
+		}
 	}
 
 	public static void setupCinematicDefinitions(ArrayList<ArrayList<PlannerReference>> listOfLists,
