@@ -1,51 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="66" height="34" tilewidth="12" tileheight="12" nextobjectid="61">
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="66" height="34" tilewidth="12" tileheight="12" infinite="0" nextobjectid="61">
  <properties>
   <property name="background" value="1"/>
   <property name="shadow" value="-13"/>
  </properties>
- <tileset firstgid="1" name="Tiles" tilewidth="12" tileheight="12" tilecount="1296" columns="36">
-  <image source="../image/overworld(day)-Master.png" trans="495d47" width="432" height="432"/>
- </tileset>
- <tileset firstgid="1297" name="Castle Night" tilewidth="12" tileheight="12" tilecount="900" columns="25">
+ <tileset firstgid="1" name="Castle Night" tilewidth="12" tileheight="12" tilecount="900" columns="25">
   <image source="../image/castletown(night)-Master.png" trans="495d47" width="300" height="440"/>
  </tileset>
- <tileset firstgid="2197" name="Castle Night 2" tilewidth="12" tileheight="12" tilecount="495" columns="15">
+ <tileset firstgid="901" name="Castle Night 2" tilewidth="12" tileheight="12" tilecount="495" columns="15">
   <image source="../image/castletown(night)-Slave1.png" trans="495d47" width="180" height="400"/>
+ </tileset>
+ <tileset firstgid="1396" name="Shadows and Lights" tilewidth="12" tileheight="12" tilecount="200" columns="20">
+  <image source="../image/Shadows and Lights.png" trans="000000" width="240" height="120"/>
+ </tileset>
+ <tileset firstgid="1596" name="overworld(night)-Master" tilewidth="12" tileheight="12" tilecount="1296" columns="36">
+  <image source="../image/overworld(night)-Master.png" trans="495d47" width="432" height="432"/>
+ </tileset>
+ <tileset firstgid="2892" name="Castle Night" tilewidth="12" tileheight="12" tilecount="900" columns="25">
+  <image source="../../v1-31 WIP/image/castletown(night)-Master.png" trans="495d47" width="300" height="440"/>
  </tileset>
  <layer name="BG" width="66" height="34">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+1YyU4DMQztJVyGz2D5PL6OO1uPo0oUkNj6ERToFUfTSB43iydpHEvDwfJMxk0i+/nZbneyWJyCdDPX5yBn/1pFLHz6ygxSy57qZzOWx71ek/eY5PxmndgrtZZjHzrTiobY+/QFyGVFe6pr594T+PrFDO/3oB+UyNKM7ykZ4w84+1OJbEguSPKyNj/g+9XGwLUZpFPoB3y/WvG/gb1vzficH9C/SmS3x4O7XyqmHG5bevZ5hbU3wz+nlebigYPljWefL1jbIj+k+omadrH+A+dtKcdT7g3xA5dHWtgdg+Mp92LNPae1XSp/uH5I5R83T1vZ1eIHp7nntLabGz+4Z2onhQf6jc43Uvzgnlvxg6tTtob16H4rc1jLXJ3rUTxX5rAG0u+0Prr5jt7J568UHjg94C4DD1o0N8+ONV+07htTeJXyt4bYx/Aq5W8NsY/hVcrfdva8y8Afd84rxWvKzvkuZUfrIPWFnT3fM3BR2r9MxYOvdvXou68uheqgr37Z2fM74nf8PyZez51vQvvRuOXmrXQOl/YvIV3K49KcXjrvcvlhqh+l+VyaH7TigdvPluJBOz9I9TdT/de6/6vV32jnh9qazsNzFttn/AHSJkR7ECMAAA==
+   H4sIAAAAAAAACu1YWW4DMQj13KHL8Xq6/nfL5yhS01TqlkN0yyGmH7UlW6LENowdY6TpByKZIcaCxwMyGWN+rEwL16eDMSfDv9aQi5i+8NLKHustknuvN+h7Tkp+syHOop6V2Kd8bpXkPqbPLFbPh3b2WLeuvQfr49H7ubX6TomszN97Sub41cqbEtmh+0nysrY4wPu1xsCll0khHuD9WuX/yp59jfx8Wf2tRPYeD+F+VE453LaK/O7JyrPh++mluXjgYHkXOefdPvsAfqh5oqVdbv6AdVvL8Zh7U/zA5ZEedsfgeMy9UHP99Laj6ocbB6r+uHXay64VPwTN9dPbbmn8ED5jOyk84Hd4v5Hih/C5Fz+EPuV62AjutzaHvSz0uRGctTaHPRC/x/0x7Hf4TrF4UXjgzID7Ajxo0dw6O9Z+0XtupPAqFW8Nuc/hVSreGnKfw6tUvN3ueVOAP+6eV4tXyi7EjrLDfRDHwu2eLwX5qp1f5uIh1rtG8D7Wl1J9MNa/3O75mYkn/B8TPi/db1Ln4byV1q10DdfOLyldy+PSnF6773L5YW4cpflcmh+04oE7z9biQTs/SM03c+PXe/5rNd9o54fWGu/DSxY3Z/wCLbmjMRAjAAA=
+  </data>
+ </layer>
+ <layer name="BG Shadow" width="66" height="34">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3YwQ2AIAxAUS6uzDg4g0O4g2wjXk0I1FSq5b+jJKRAWwwhAMBYabGO4DvYC3jQm8fkO+APdQ2JWfJllnUCI2nXldb/K/UOwIOt0sti+b4q9jnt+bTtldiuXh8bcR9lPAvultZ8T739PmN1H3sjyRf8z/18OW8AsHcCyszdfBAjAAA=
   </data>
  </layer>
  <layer name="MG" width="66" height="34">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+2YO0/DMBDHLSFQsjJAeS2lG0iwg2DmMdGFh4QES/nQMFKQYIQZziKnWsed49pJEyf+Sac09cX2/X2O7SiVSCQS7tzk/G/Jh7v/WfZvXz+7CfVtCW1z/mvgu+7ov2hCtFgEV4JuU+j3EZTtgE2K6x7Ycf7fb7Uo3zZ8qV/beSjRYUKM04Hzu4xMBwmdx+cQyxmxC2buu/jFzi3Ec1fEdG2JzSyz+fWZAeiy0WJtnjOlXrKme9EcGP8H2Kegw2BFqQMYw0MyjpjzuE6Y68O888HF33eOmfMZGcL9Ltgo/3uvYfw2HXScnA5mOa4TTw2sk5I+PrrZ5oXW6wTqPGXq1W3R9XKJ0R+5L9lvItwY2v63IbVBMfPCB6pDbPumqqD7Ta2Dz7jFDDcvQvLB9exR5lf1GcZlvtB9ZOj+sa1aVMkXaPrd431KDNC1rA4wD/qeD68Q+zSbXX3owpmtq/kQ8k7fz2cmfT+kz0nrFp4T0EZCzrj2V3+TG8+Zd1Wtb1U/F1Kf/ib36HgmiImuzcOm8Tl/1Zk/b9CXd6M/Q4d3QyKRSCTq4xf7pLoWECMAAA==
+   H4sIAAAAAAAACu2YPW/CMBCGjRJoWjZgrKBzKelc2NqlBalSWfqn27EFCUb4H1ykWFiW7djGiR1zj3QiJCfH9/ou/iAEQRBEn49UfC3zUfnZcgft9Q3a7IHvjeM+FDwatmnqHwKvij5P4dk3Z08Cf12/kPlCHSqZQywvnC0E8en6tZklxLMqY3pXxMY+U/ldMxnochuwNj8JIb+J7174g8a/A9tLdMg6hExgDB+4cWRzfsp9F03rQcfftsbYeqYM4P8QbFTep/GrdCgQ6cDC69AkMn1sdKuqixzafBa0S9/F68DrT/nUXG+KxlB1X4XJmrYqH6rwmQ8hwetgM25tRlYXsaFbL+w6Mrb1Yx0cQNPjFa9TQmfchbVBt/730DwINR9moEHegA5/EPt/cv61IYY9W+j54IP79Gy654eyeYvuE6iNLsyZ4kzuLYK8u5TiTG6tuSdoE1iHbjHdf9U9D2+gL1umPwOH3waXNDUPIwiC+OYEYwmIOhAjAAA=
   </data>
  </layer>
  <layer name="MG Shadow" width="66" height="34">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAA/Bgz5kUWECMAAA==
+   H4sIAAAAAAAACu3UsRHAIAiFYRpXzlxmh2QHs43mPOtAPAvk/2oa3j0QAeBBTiJnWjfvxdV2ug17Weehcygz1c55RQ5YYdf/beXhf7+3Hfm+x/4zOUTJ72vPnXKgD/PIoSOHjhzwR2m9eehOeKMH9AEAAABAZBXYgUAGECMAAA==
   </data>
  </layer>
  <layer name="FG" width="66" height="34">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+1Z3S4EMRSeC8MM7pZLwtVGMm5JXIkHINyxZOMJNryAV8HiCUSCxWuQcGmfwW/iNNMmzdFOz8y23bJ7ki9Np9+c1qdzzmm3HkfROWDHES4c+7exvgXAKmAN0OY45u0J6gvMAGbRs6J3sP824mLg+XTPqvBVc4r1ibbFcc3bG9Tv8HYJsIye6d5h2AY0pH4HcTvSmPzuVxJF34l6Daq534D7nvye3zQn1sGVnYLvswr+J9Iomkzp/DHgJiX4wnzpcAu+7xz679V0OmSg6QpgnbcMiwqdM2mcYVfDC9187Yd6nMfjEG0r9aeDa/+92L4HHT4gdn8muf+D2F6dYZt36FiHFLQeT/X1gy6Pu+DhekJV3/j6LloGuOTh+oP1uxw6HebgfzhfEPczQx7R6dAvXg3WOAWY1qw1tDjZb54rHZpptfX44pm+C9sWqg6Y14sOe8T4QMmbD4B7y7xGAN8FngfnrCMO01ka83AOlMfxGOV8h3V4hprnJXGng5yzLqX1XcX6s7SKJ+dAPI7zI+V853o/vIKm3STsuppZaHHSp21Icc2VDmIfDPeDeh6T2T6fU/3JOlDyWlWI/CXuD3Um7jFtGdUf3g+63FWUl6g8lr9M94fiHlOXt9g5IeZnhZGC8wL2V1YHVe4qyksUnuBS8pfte0yqP1V8aP7B+0VhIi6XNV9xMnSzUU9uOtw/j7CWJ2k9NR4XRgmxoYwN90NuQx1yE38/y7OUc+x/hahvTPe+gwBWZ5jufQcBIf/+6tt+AKnc6KsQIwAA
+   H4sIAAAAAAAACu1Zu07DMBS16nSjUKYKUVaQmBAzYmDjpYqNDcEPsPEdQIEvQEhAgd8ACUb4Bp4T78fAjRKr5jY3vknsEEGPdGSlPn7kyvG5dmtCiG3gjCPuOO7fxvwGgGPAcWAz5HpYbqBnxQqwF/0W1wb330RaTDwe9VsafdSYan6qXAq5H5YH6LkVlsPAEfQb1cbnNHBWe24hbUur09veSyEeZPQcosa+Bu2N7BzfNCaOgytsArdStPuEd/qSfP0raN8S6BXyisMh8Mhh/1lBxaHuCTEKnAxLn0NeZ/u6Vu9zjtAVHXHroeK1y0Hi3UpeUN/j/WyDURPBflxETHluvouJiFi4/u6yYMFRHHTcwp51J4P+l4W9PMO2bsVxHN4hBh+Szh8oH3ehw/lEVH7jet3i/ISiSx3OP/zntXJAKg5V+Gb6Y/b9usFHqDj8lk7CHD1gmZhr2vVQMvgDNU7RdWm/i0VDHBpeuvnkpTN9F0nwyMhjixoHrMsSh3nm/sDxzRPgsWXdLOMdssSBuzfo42DPWg1pOktjHfZAvR7Xcc53OA7nsMYvUpzXuOPonrWr1e8J+iwdpdM9ENdjf+Sc71znD5cQ0yvprn9byDuPKgr6wCOq5fazqzioddBdD9HjmGD7fM7tT48Dx9fSUvmXuj+koO4xbYHbH14PlHfF+RJX5/uX6f5Q3WNSvuWfE55lcFZ4kvR5AfdnAnVfHedvui9xdErL8S/b95jc/qL2h0aC/KhoUPtyUuS1TxYdWfNJ7MO2cQpzOdPmI8N94YWxNyRBdz0E6MYhgHp/32c559i/SpXfmO59/wP9PMN07/sfWOT/X/PGN8dS5MkQIwAA
   </data>
  </layer>
  <layer name="FG Shadow" width="66" height="34">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3VQQqEQAxEUTcKnlXP7TUUrJ0gpO2YrsV/MLvYxj/DOE340zHr46pqPzrU3ueryv3o4I8Owv+D0KFWtIP7XK+3+2xr7twenIvul835ez5nOrTO9XJ/Pjq0zfVyf2/SQZw6RPfIOud5jUuHkeggdBA6iPt+Vdw63Lss9ed96ZD1fsu+ruc8t9/DKHQQOggdhA5CBwBRF0VrpgUQIwAA
+   H4sIAAAAAAAACu3WQQ6DMAxEURbNKdtz9Dg5K4tZR5hgzET8J3VnEfNBbbcNd/o3fVxV7UeH2nNmVe5HB390EL4fhA61oh3c564anfP95M79gnPR/bI5P+fe3t2ht9hcJscOM3NXud+fW4en0EFG+2XvfXS9HjzvaC56nbP7ZVn1fVj1nFl0EDqI+35V6CBnO2T9vrnhfRA6SNX/SXdvu98ROggdAETt+WSZQBAjAAA=
   </data>
  </layer>
  <layer name="Roof" width="66" height="34">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAA/Bgz5kUWECMAAA==
+   H4sIAAAAAAAACu3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAA/Bgz5kUWECMAAA==
   </data>
  </layer>
- <layer name="Walk" width="66" height="34" visible="0">
+ <layer name="Walk" width="66" height="34" visible="0" opacity="0.4">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+2TQQ6AMAgEe/H/r/ELvssYb6YWSkoLOpNwcosy0lIAANrsm09Z+/ees7znwIPoQbsv2lz0wsNcD5H9zLwXWT147VsW8HCj3eO3c1J+VQ4PMTxE94UHnYfefYs2nzWHhzqjPEiMyo2ex3ruax6098LL76yS/OHhXx6k78VDG22+N9f7X6z98NB+nnV/tfOMuher58nmwdvbs7/X/8KDb99shYe6B4CLEwO71k8QIwAA
+   H4sIAAAAAAAACu2XOxLDMAhESWPf/37JXdK5cITFZxFowmsohLBGLCATNU3TPPM+iD4H3lrja/dZvjPkJHqdAdYaX7vP8J0nPXBw9z/zq25/uN8rt671q24X5bGyTpbmsbBORoTX3S4E190uSOuZ2+ftD1F+aqT1zO3z9ocoPyVoPUj9snTDgtaD1C9LNwzWOVAtz+4+Yp0D1fIM6iOr3g8oP+m6uU947QyUn3RdeM5oHVT4nxj1DfW9eXWAio8635/rATYvdteDto/d8oj2075LrPG8c+0iqv/P8uLV2Wx9Eje7XlFzwP3Oya5Xb52D+kP0/aPmfPR8C79/a3zrOZV6yK7v7L4SntfqtmkGfAGx+JcCECMAAA==
   </data>
  </layer>
  <objectgroup name="Terrain" visible="0">
@@ -128,7 +139,7 @@
    <polyline points="0,0 72,0 72,-24 24,-24 24,-96 120,-96 120,-24 96,-24 96,0 168,0 168,-24 144,-24 144,-96 240,-96 240,-24 192,-24 192,0 264,0 264,48 240,48 240,72 192,72 192,24 72,24 72,72 48,72 48,48 0,48 0,0"/>
   </object>
  </objectgroup>
- <objectgroup name="Trigger Regions">
+ <objectgroup name="Trigger Regions" visible="0">
   <object id="50" name="SecondWave" x="312" y="228" width="120" height="168">
    <properties>
     <property name="" value=""/>
@@ -213,7 +224,7 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup name="Battle">
+ <objectgroup name="Battle" visible="0">
   <object id="21" name="Battle Start" type="START" x="120" y="240" width="72" height="24">
    <properties>
     <property name="start" value="exit=battlestart"/>
@@ -320,9 +331,4 @@
    </properties>
   </object>
  </objectgroup>
- <layer name="Grid Pattern" width="66" height="34" visible="0" opacity="0.18">
-  <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+XROQ3AQBDAwOPPIg+VPLCyLMZSChdTe1tr7dMxndP2U1/TPT3T+2PrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxXrDxV/SfvTARAjAAA=
-  </data>
- </layer>
 </map>
