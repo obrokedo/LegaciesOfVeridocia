@@ -1,4 +1,3 @@
-font,menufont,font/MenuFont.ttf,24
-image,mainbg,image/menuscreen.png
+imagedir,image/mainmenu
 itemdefs,/definitions/Items
 herodefs,/definitions/Heroes
