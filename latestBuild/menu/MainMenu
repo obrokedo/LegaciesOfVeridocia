@@ -1,3 +1,4 @@
 imagedir,image/mainmenu
 itemdefs,/definitions/Items
 herodefs,/definitions/Heroes
+music,lovtheme,music/lovtheme.ogg
