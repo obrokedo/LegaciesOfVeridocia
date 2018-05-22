@@ -7,7 +7,7 @@ from org.python.modules import jarray
 class ConfigurationValues(EngineConfigurationValues):
     
     def getStartingHeroIds(self):
-        return jarray.array(["Noah", "Sharna", "Huun"], String)
+        return jarray.array(["Noah"], String)
     
     def getStartingMapData(self):
         return "erium"

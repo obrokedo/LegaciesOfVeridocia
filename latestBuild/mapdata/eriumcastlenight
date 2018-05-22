@@ -5,7 +5,7 @@
 <cinematic id=0 description="scene1-1" camerax=600 cameray=0>
 	<addactor x=0 y=0 name="Cam" anim="Noah" startanim="Down" visible=false init=true associatedhero="Noah"/>
 	<addactor x=816 y=1056 name="Noah" anim="Noah" startanim="Left" visible=true init=true associatedhero="Noah"/>
-	<addactor x=816 y=1068 name="Sharna" anim="Sharna" startanim="Left" visible=true init=true associatedhero="Sharna"/>
+	<addactor x=816 y=1068 name="Sharna" anim="Sharna" startanim="UnLeft" visible=true init=true associatedhero=""/>
 	<playmusic music="castlenight" volume=30/>
 	<camerafollow name="Noah"/>
 	<fadein time=4000 halting=false init=true/>
@@ -60,7 +60,7 @@
 	<haltingmove name="Cam" x=504 y=984 speed="1" movehor=true movediag=true/>
 	<camerafollow name="Sharna"/>
 	<facing name="Noah" dir=0/>
-	<addactor x=624 y=432 name="Huun" anim="Huun" startanim="Down" visible=true init=false associatedhero="Huun"/>
+	<addactor x=624 y=432 name="Huun" anim="Huun" startanim="UnDown" visible=true init=false associatedhero=""/>
 	<stopanim name="Huun"/>
 	<haltingmove name="Sharna" x=620 y=432 speed="4" movehor=false movediag=false/>
 	<camerashake time=350 severity=3/>
@@ -331,6 +331,8 @@
 	<flashscreen time=250/>
 	<wait time=125/>
 	<removeactor name="Mistal"/>
+	<addhero heroid="Huun" init=false/>
+	<addhero heroid="Sharna" init=false/>
 	<fadeout time=1000 halting=true/>
 	<loadbattle mapdata="battle1" entrance="battle1" battbg=1/>
 </cinematic>
