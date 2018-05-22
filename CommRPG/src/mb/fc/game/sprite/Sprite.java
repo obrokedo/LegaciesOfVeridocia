@@ -8,7 +8,7 @@ import org.newdawn.slick.geom.Rectangle;
 
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.Camera;
-import mb.fc.loading.FCResourceManager;
+import mb.fc.loading.ResourceManager;
 
 public class Sprite implements Serializable
 {
@@ -31,7 +31,7 @@ public class Sprite implements Serializable
 		spriteBounds = new Rectangle(locX, locY, 24, 24);
 	}
 
-	public void initializeSprite(FCResourceManager fcrm)
+	public void initializeSprite(ResourceManager fcrm)
 	{ }
 
 	public void update(StateInfo stateInfo)

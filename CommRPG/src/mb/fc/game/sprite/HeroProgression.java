@@ -282,14 +282,14 @@ public class HeroProgression implements Serializable
 			{
 				// Add a value 0 - 1
 				// amountToGainNow += CommRPG.RANDOM.nextInt(2);
-				amountToGainNow += CommRPG.RANDOM.nextInt(2);
-				addStatChangeLog("Amount to gain after adding a value 0 or 1: " + amountToGainNow, statChanges);
+				amountToGainNow += CommRPG.RANDOM.nextFloat();
+				addStatChangeLog("Amount to gain after adding a value 0 to 1: " + amountToGainNow, statChanges);
 			}
 			// BIG LEVEL!
 			else
 			{
 				// Add a value 0 - 3
-				amountToGainNow += CommRPG.RANDOM.nextInt(4);
+				amountToGainNow += CommRPG.RANDOM.nextFloat() * 3;
 				addStatChangeLog("Amount to gain after adding a BIG LEVEL value 0-3: " + amountToGainNow, statChanges);
 			}
 	
@@ -303,7 +303,7 @@ public class HeroProgression implements Serializable
 				if (currentStat + amountToGainNowInt < averageValue)
 				{
 					amountToGainNowInt++;
-					addStatChangeLog("Added a pity value because we are below average: " + amountToGainNow, statChanges);
+					addStatChangeLog("Added a pity value because we are below average: " + (amountToGainNow + 1), statChanges);
 					// System.out.println("Pity @ " + newLevel);
 				}
 			}

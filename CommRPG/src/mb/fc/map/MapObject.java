@@ -28,7 +28,7 @@ import mb.fc.game.sprite.Sprite;
 import mb.fc.game.sprite.StaticSprite;
 import mb.fc.game.trigger.Trigger;
 import mb.fc.game.trigger.TriggerCondition;
-import mb.fc.loading.FCResourceManager;
+import mb.fc.loading.ResourceManager;
 
 public class MapObject
 {
@@ -182,7 +182,7 @@ public class MapObject
 		}
 	}
 
-	public NPCSprite getNPC(FCResourceManager fcrm)
+	public NPCSprite getNPC(ResourceManager fcrm)
 	{
 		String animation = params.get("animation");
 		Integer wander = null;
@@ -219,7 +219,7 @@ public class MapObject
 	
 	public NPCSprite getNPC(int textId, String name, String animation, Integer facing, 
 			Integer wander, Integer npcId, boolean throughWall,
-			boolean animate, boolean turnOnTalk, FCResourceManager fcrm) {
+			boolean animate, boolean turnOnTalk, ResourceManager fcrm) {
 		NPCSprite npc = NPCResource.getNPC(animation, textId, name, throughWall, animate, turnOnTalk);
 		npc.initializeSprite(fcrm);
 		
@@ -238,7 +238,7 @@ public class MapObject
 		return npc;
 	}
 
-	public CombatSprite getEnemy(FCResourceManager fcrm)
+	public CombatSprite getEnemy(ResourceManager fcrm)
 	{
 		CombatSprite enemy = EnemyResource.getEnemy(params.get("enemyid"));
 		if (params.containsKey("ai"))
@@ -280,7 +280,7 @@ public class MapObject
 		return enemy;
 	}
 
-	public Sprite getSprite(FCResourceManager fcrm)
+	public Sprite getSprite(ResourceManager fcrm)
 	{
 		String name = params.get("name");
 		String image = params.get("image");
@@ -297,7 +297,7 @@ public class MapObject
 		return getSprite(name, image, trigger, fcrm);
 	}
 	
-	public Sprite getSprite(String name, String imageName, int[] trigger, FCResourceManager fcrm)
+	public Sprite getSprite(String name, String imageName, int[] trigger, ResourceManager fcrm)
 	{
 		Image image = fcrm.getImage(imageName);
 		
@@ -308,7 +308,7 @@ public class MapObject
 		return s;
 	}
 
-	public void establishSearchArea(FCResourceManager fcrm)
+	public void establishSearchArea(ResourceManager fcrm)
 	{
 		int[] trigger = null;
 		if (params.containsKey("searchtrigger"))
@@ -324,7 +324,7 @@ public class MapObject
 		fcrm.addTriggerCondition(tc);
 	}
 	
-	public Sprite establishChest(int triggerId1, int triggerId2, FCResourceManager fcrm) {
+	public Sprite establishChest(int triggerId1, int triggerId2, ResourceManager fcrm) {
 		// parse sprite image
 		// setup chest sprite
 		// create trigger
@@ -368,7 +368,7 @@ public class MapObject
 		return chestSprite;
 	}
 
-	public Sprite getDoor(FCResourceManager fcrm, int doorId)
+	public Sprite getDoor(ResourceManager fcrm, int doorId)
 	{
 		Image image = fcrm.getImage(params.get("image"));
 

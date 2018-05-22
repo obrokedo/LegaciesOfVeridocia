@@ -17,8 +17,9 @@ import mb.fc.game.manager.SpriteManager;
 import mb.fc.game.manager.TurnManager;
 import mb.fc.game.menu.DebugMenu;
 import mb.fc.game.menu.Menu;
+import mb.fc.game.menu.PauseMenu;
 import mb.fc.game.ui.PaddedGameContainer;
-import mb.fc.loading.FCResourceManager;
+import mb.fc.loading.ResourceManager;
 import mb.fc.loading.LoadableGameState;
 import mb.fc.renderer.MenuRenderer;
 import mb.fc.renderer.PanelRenderer;
@@ -184,7 +185,7 @@ public class BattleState extends LoadableGameState
 	}
 
 	@Override
-	public void stateLoaded(FCResourceManager resourceManager) {
+	public void stateLoaded(ResourceManager resourceManager) {
 		this.stateInfo.setResourceManager(resourceManager);
 	}
 
@@ -196,7 +197,9 @@ public class BattleState extends LoadableGameState
 	@Override
 	protected Menu getPauseMenu() {
 		stateInfo.sendMessage(MessageType.PAUSE_MUSIC);
-		return new DebugMenu(stateInfo);
+		if (CommRPG.DEV_MODE_ENABLED)
+			return new DebugMenu(stateInfo);
+		return new PauseMenu(stateInfo);
 	}
 
 	@Override

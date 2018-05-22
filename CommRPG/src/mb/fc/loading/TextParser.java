@@ -40,7 +40,7 @@ public class TextParser
 {
 	public String parseText(String file, Hashtable<Integer, ArrayList<Speech>> speechesById,
 			Hashtable<Integer, Trigger> triggerEventById, Hashtable<Integer, Cinematic> cinematicById,
-			HashSet<TriggerCondition> conditions, FCResourceManager frm) throws IOException, SlickException
+			HashSet<TriggerCondition> conditions, ResourceManager frm) throws IOException, SlickException
 	{
 		HashSet<String> animToLoad = new HashSet<String>();
 		HashSet<String> soundToLoad = new HashSet<String>();
@@ -650,6 +650,8 @@ public class TextParser
 			return new CinematicEvent(CinematicEventType.MOVE_FROM_FOREFRONT, area.getAttribute("name"));
 		else if (type.equalsIgnoreCase("exit"))
 			return new CinematicEvent(CinematicEventType.EXIT_GAME);
+		else if (type.equalsIgnoreCase("showcredits"))
+			return new CinematicEvent(CinematicEventType.SHOW_CREDITS);
 		else if (type.equalsIgnoreCase("addhero"))
 		{
 			CinematicEvent ce = new CinematicEvent(CinematicEventType.ADD_HERO, 

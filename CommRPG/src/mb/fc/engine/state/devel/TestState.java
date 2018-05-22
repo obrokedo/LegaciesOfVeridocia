@@ -1,8 +1,9 @@
 package mb.fc.engine.state.devel;
 
 import mb.fc.engine.CommRPG;
+import mb.fc.game.menu.Menu;
 import mb.fc.game.ui.PaddedGameContainer;
-import mb.fc.loading.FCResourceManager;
+import mb.fc.loading.ResourceManager;
 import mb.fc.loading.LoadableGameState;
 import mb.fc.utils.AnimSprite;
 import mb.fc.utils.Animation;
@@ -17,7 +18,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class TestState extends LoadableGameState
 {
-	private FCResourceManager frm;
+	private ResourceManager frm;
 	private Image backgroundImage = null;
 	private PaddedGameContainer gc;
 	private int bgXPos;
@@ -98,7 +99,7 @@ public class TestState extends LoadableGameState
 	}
 
 	@Override
-	public void stateLoaded(FCResourceManager resourceManager) {
+	public void stateLoaded(ResourceManager resourceManager) {
 		frm = resourceManager;
 		Image bgIm = frm.getSpriteSheet("battlebg").getSprite(0,  0);
 
@@ -119,6 +120,12 @@ public class TestState extends LoadableGameState
 	@Override
 	public void initAfterLoad() {
 
+	}
+
+	@Override
+	protected Menu getPauseMenu() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

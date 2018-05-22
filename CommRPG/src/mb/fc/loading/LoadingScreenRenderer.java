@@ -1,24 +1,23 @@
 package mb.fc.loading;
 
-import mb.fc.engine.CommRPG;
-
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 
-public class FCLoadingRenderSystem
+public class LoadingScreenRenderer
 {
-	private Graphics graphics;
-	private GameContainer gc;
+	protected Graphics graphics;
+	protected GameContainer gc;
 
-	public FCLoadingRenderSystem(GameContainer container) {
+	public LoadingScreenRenderer(GameContainer container) {
 		graphics = container.getGraphics();
 		this.gc = container;
 	}
 
-	public void update(LoadingStatus loading) {
+	public void render(LoadingStatus loading) {
 		graphics.setColor(Color.white);
-		graphics.drawString(CommRPG.GAME_TITLE, 15, gc.getHeight() - 30);
+		// graphics.drawString(CommRPG.GAME_TITLE, 15, gc.getHeight() - 30);
 
 		/*
 		if (loading.maxIndex > 0)
@@ -31,6 +30,14 @@ public class FCLoadingRenderSystem
 		graphics.drawRect(gc.getWidth() - 190, gc.getHeight() - 50, 160, 15);
 		*/
 
-		graphics.drawString("LOADING: " + loading.currentIndex + " / " + loading.maxIndex, gc.getWidth() - 185, gc.getHeight() - 30);
+		// graphics.drawString("LOADING: " + loading.currentIndex + " / " + loading.maxIndex, gc.getWidth() - 185, gc.getHeight() - 30);
+	}
+	
+	public void doneLoading() {
+		
+	}
+	
+	public void initialize() throws SlickException {
+		
 	}
 }

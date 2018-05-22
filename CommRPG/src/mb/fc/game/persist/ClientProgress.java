@@ -44,12 +44,23 @@ public class ClientProgress implements Serializable
 	private transient long lastSaveTime;
 
 	public ClientProgress(String name)
-	{
+	{		
+		this.name = name;
+		initializeValues();
+	}
+	
+	public void initializeValues() {
 		questsCompleted = new HashSet<String>();
 		retriggerablesPerMapData = new Hashtable<String, ArrayList<Integer>>();
 		nonretriggerablesPerMapData = new Hashtable<String, ArrayList<Integer>>();
 		dealItems = new ArrayList<>();
-		this.name = name;
+		inTownLocation = null;
+		mapData = null;
+		timePlayed = 0;
+		isBattle = false;
+		battleEnemySprites = null;
+		battleHeroSpriteIds = null;
+		currentTurn = 0;
 		lastSaveTime = System.currentTimeMillis();
 	}
 	

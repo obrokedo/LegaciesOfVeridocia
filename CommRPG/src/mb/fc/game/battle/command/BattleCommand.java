@@ -5,7 +5,7 @@ import java.io.Serializable;
 import mb.fc.game.battle.spell.KnownSpell;
 import mb.fc.game.battle.spell.SpellDefinition;
 import mb.fc.game.item.Item;
-import mb.fc.loading.FCResourceManager;
+import mb.fc.loading.ResourceManager;
 
 public class BattleCommand implements Serializable
 {
@@ -54,7 +54,7 @@ public class BattleCommand implements Serializable
 		this.jSpell = jSpell;
 	}
 
-	public void initializeSpell(FCResourceManager fcrm) {
+	public void initializeSpell(ResourceManager fcrm) {
 		if (spell != null)
 		{
 			spell.initializeFromLoad(fcrm);

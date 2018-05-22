@@ -8,7 +8,7 @@ import mb.fc.engine.state.StateInfo;
 import mb.fc.game.battle.spell.KnownSpell;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.sprite.CombatSprite;
-import mb.fc.loading.FCResourceManager;
+import mb.fc.loading.ResourceManager;
 import mb.fc.utils.StringUtils;
 
 public class LOVSpellMenuRenderer implements SpellMenuRenderer {
@@ -17,7 +17,7 @@ public class LOVSpellMenuRenderer implements SpellMenuRenderer {
 	private int chooseMoveDelta = 0;
 	private int spellLevel = 0;
 	
-	public void render(String spellName, CombatSprite spriteCastingSpell, FCResourceManager fcrm,
+	public void render(String spellName, CombatSprite spriteCastingSpell, ResourceManager fcrm,
 			boolean spellHasBeenSelected, int selectedLevel, KnownSpell selectedSpell, 
 			StateInfo stateInfo, Graphics graphics, Color forefrontColor) {
 		

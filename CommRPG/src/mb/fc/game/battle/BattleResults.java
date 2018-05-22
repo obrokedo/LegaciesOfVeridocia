@@ -15,7 +15,7 @@ import mb.fc.game.item.Item;
 import mb.fc.game.item.ItemUse;
 import mb.fc.game.resource.EnemyResource;
 import mb.fc.game.sprite.CombatSprite;
-import mb.fc.loading.FCResourceManager;
+import mb.fc.loading.ResourceManager;
 import mb.fc.utils.StringUtils;
 
 public class BattleResults implements Serializable
@@ -47,7 +47,7 @@ public class BattleResults implements Serializable
 	// TODO Effects
 
 	public static BattleResults determineBattleResults(CombatSprite attacker,
-			List<CombatSprite> targets, BattleCommand battleCommand, FCResourceManager fcrm)
+			List<CombatSprite> targets, BattleCommand battleCommand, ResourceManager fcrm)
 	{
         BattleFunctionConfiguration jBattleFunctions = CommRPG.engineConfiguratior.getBattleFunctionConfiguration();
 
@@ -206,7 +206,7 @@ public class BattleResults implements Serializable
 	}
 
 	private static void indicateGainedExp(CombatSprite attacker, List<CombatSprite> targets, int expGained,
-			BattleResults br, FCResourceManager fcrm) {
+			BattleResults br, ResourceManager fcrm) {
 		if (attacker.isHero())
 		{
 			if (!br.attackerDeath)
@@ -389,7 +389,7 @@ public class BattleResults implements Serializable
 		commandResult.text = text;
 	}
 
-	private static void handleAttackAction(CombatSprite attacker, FCResourceManager fcrm,
+	private static void handleAttackAction(CombatSprite attacker, ResourceManager fcrm,
 			BattleFunctionConfiguration jBattleFunctions, BattleResults br, CombatSprite target, CommandResult commandResult) {
 		int damage = 0;
 		int sumDamage = 0;
@@ -479,7 +479,7 @@ public class BattleResults implements Serializable
 	}
 
 	private static String addAttack(CombatSprite attacker, CombatSprite target, BattleResults br,
-			FCResourceManager fcrm, BattleFunctionConfiguration jBattleFunctions, boolean counter)
+			ResourceManager fcrm, BattleFunctionConfiguration jBattleFunctions, boolean counter)
 	{
 		String text;
 
@@ -632,7 +632,7 @@ public class BattleResults implements Serializable
 		*/
 	}
 
-	public void initialize(FCResourceManager fcrm)
+	public void initialize(ResourceManager fcrm)
 	{
 		battleCommand.initializeSpell(fcrm);
 	}

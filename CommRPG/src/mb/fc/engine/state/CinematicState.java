@@ -13,9 +13,10 @@ import mb.fc.game.manager.CinematicManager;
 import mb.fc.game.manager.MenuManager;
 import mb.fc.game.manager.SoundManager;
 import mb.fc.game.menu.Menu;
+import mb.fc.game.menu.PauseMenu;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.ui.PaddedGameContainer;
-import mb.fc.loading.FCResourceManager;
+import mb.fc.loading.ResourceManager;
 import mb.fc.loading.LoadableGameState;
 import mb.fc.renderer.MenuRenderer;
 import mb.fc.renderer.TileMapRenderer;
@@ -139,7 +140,7 @@ public class CinematicState extends LoadableGameState
 	}
 
 	@Override
-	public void stateLoaded(FCResourceManager resourceManager) {
+	public void stateLoaded(ResourceManager resourceManager) {
 		stateInfo.setResourceManager(resourceManager);
 	}
 
@@ -151,7 +152,7 @@ public class CinematicState extends LoadableGameState
 	@Override
 	protected Menu getPauseMenu() {
 		stateInfo.sendMessage(MessageType.PAUSE_MUSIC);
-		return super.getPauseMenu();
+		return new PauseMenu(stateInfo);
 	}
 
 	@Override

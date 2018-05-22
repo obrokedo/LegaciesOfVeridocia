@@ -26,7 +26,7 @@ import mb.fc.game.dev.DevParams;
 import mb.fc.game.exception.BadResourceException;
 import mb.fc.game.resource.HeroResource;
 import mb.fc.game.sprite.CombatSprite;
-import mb.fc.loading.FCResourceManager;
+import mb.fc.loading.ResourceManager;
 import mb.jython.GlobalPythonFactory;
 
 public class ClientProfile implements Serializable
@@ -47,11 +47,15 @@ public class ClientProfile implements Serializable
 
 	public ClientProfile(String name)
 	{
+		this.name = name;
+		initializeValues();
+	}
+	
+	public void initializeValues() {
 		heroes = new ArrayList<>();
 		inBattleHeroIds = new HashSet<>();
 		networkHeroes = new ArrayList<>();
 		gold = 100;
-		this.name = name;
 	}
 
 	public void addHero(CombatSprite hero)
@@ -161,7 +165,7 @@ public class ClientProfile implements Serializable
 	    return null;
 	}
 	
-	public void initialize(FCResourceManager fcrm)
+	public void initialize(ResourceManager fcrm)
 	{
 		// Add starting heroes if they haven't been added yet
 		if (getHeroes().size() == 0)
@@ -175,7 +179,7 @@ public class ClientProfile implements Serializable
 		}
 	}
 	
-	private void applyDevParams(FCResourceManager fcrm)
+	private void applyDevParams(ResourceManager fcrm)
 	{
 		if (devParams == null)
 			return;

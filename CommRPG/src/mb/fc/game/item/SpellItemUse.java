@@ -2,7 +2,7 @@ package mb.fc.game.item;
 
 import mb.fc.game.battle.spell.SpellDefinition;
 import mb.fc.game.resource.SpellResource;
-import mb.fc.loading.FCResourceManager;
+import mb.fc.loading.ResourceManager;
 
 public class SpellItemUse {
 	private transient SpellDefinition spell;
@@ -33,7 +33,7 @@ public class SpellItemUse {
 		return singleUse;
 	}
 
-	public void initialize(FCResourceManager fcrm) {
+	public void initialize(ResourceManager fcrm) {
 		spell = SpellResource.getSpell(spellId);
 	}
 }

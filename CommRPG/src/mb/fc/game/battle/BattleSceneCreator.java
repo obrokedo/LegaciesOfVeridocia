@@ -20,7 +20,7 @@ import mb.fc.game.combat.WaitCombatAnimation;
 import mb.fc.game.constants.TextSpecialCharacters;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.ui.PaddedGameContainer;
-import mb.fc.loading.FCResourceManager;
+import mb.fc.loading.ResourceManager;
 import mb.fc.utils.AnimationWrapper;
 import mb.fc.utils.HeroAnimationWrapper;
 import mb.fc.utils.SpriteAnims;
@@ -33,11 +33,11 @@ public class BattleSceneCreator {
 	private ArrayList<String> textToDisplay;
 	private CombatSprite attacker;
 	private BattleResults battleResults;
-	private FCResourceManager frm;
+	private ResourceManager frm;
 	private int bgXPos, bgYPos;
 	private Image backgroundImage;
 	
-	public static BattleSceneCreator initializeBattleScene(CombatSprite attacker, FCResourceManager frm,
+	public static BattleSceneCreator initializeBattleScene(CombatSprite attacker, ResourceManager frm,
 			BattleResults battleResults, PaddedGameContainer gc, boolean targetsAllies,
 			int bgXPos, int bgYPos, Image backgroundImage) {
 		BattleSceneCreator bsc = new BattleSceneCreator();
@@ -45,7 +45,7 @@ public class BattleSceneCreator {
 		return bsc;
 	}
 	
-	private void setBattleInfo(CombatSprite attacker, FCResourceManager frm,
+	private void setBattleInfo(CombatSprite attacker, ResourceManager frm,
 			BattleResults battleResults, PaddedGameContainer gc, boolean targetsAllies,
 			int bgXPos, int bgYPos, Image backgroundImage)
 	{

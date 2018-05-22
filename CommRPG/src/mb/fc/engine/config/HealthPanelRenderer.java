@@ -5,7 +5,7 @@ import org.newdawn.slick.UnicodeFont;
 
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.ui.PaddedGameContainer;
-import mb.fc.loading.FCResourceManager;
+import mb.fc.loading.ResourceManager;
 
 public interface HealthPanelRenderer {
 	enum PanelLocation {
@@ -13,6 +13,6 @@ public interface HealthPanelRenderer {
 		ENEMY_HEALTH,
 		TARGET_HEALTH
 	}
-	public void displayHealthPanel(FCResourceManager fcrm, CombatSprite sprite, UnicodeFont panelFont, 
+	public void displayHealthPanel(ResourceManager fcrm, CombatSprite sprite, UnicodeFont panelFont, 
 			PaddedGameContainer gc, Graphics graphics, PanelLocation panelLocation);
 }

@@ -748,6 +748,9 @@ public class Cinematic {
 				sortedActors.add(actors.get(ce.getParam(0)));
 				forefrontActors.remove(actors.get(ce.getParam(0)));
 				break;
+			case SHOW_CREDITS:
+				stateInfo.getPersistentStateInfo().getGame().enterState(CommRPG.STATE_GAME_CREDITS);
+				break;
 			case EXIT_GAME:
 				System.exit(0);
 				break;

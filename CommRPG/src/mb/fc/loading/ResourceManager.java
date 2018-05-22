@@ -47,7 +47,7 @@ import mb.fc.utils.SpriteAnims;
 import mb.fc.utils.XMLParser;
 import mb.fc.utils.XMLParser.TagArea;
 
-public class FCResourceManager {
+public class ResourceManager {
 	public static final String ANIMATIONS_FOLDER = "animations/animationsheets";
 	public static final String ANIMATIONS_EXTENSION = ".anim";
 	public static final String ANIMATIONS_FOLDER_IDENTIFIER = "animsheetdir";
@@ -73,7 +73,7 @@ public class FCResourceManager {
 	private Hashtable<Integer, Cinematic> cinematicById = new Hashtable<Integer, Cinematic>();
 	private Map map = new Map();
 
-	private Color transparent = new Color(255, 0, 255);
+	public static final Color TRANSPARENT = new Color(255, 0, 255);
 
 	public void reinitialize()
 	{
@@ -106,7 +106,7 @@ public class FCResourceManager {
 		if (split[0].equalsIgnoreCase("image"))
 		{
 			Log.debug("Load image " + split[2]);
-			Image nImage = new Image(split[2], transparent);
+			Image nImage = new Image(split[2], TRANSPARENT);
 			nImage.setFilter(Image.FILTER_NEAREST);
 			images.put(split[1], nImage.getScaledCopy(split.length == 4 ?
 					Float.parseFloat(split[3]) : 1));
@@ -121,7 +121,7 @@ public class FCResourceManager {
 				else
 					scale *= Float.parseFloat(split[6]);
 			}
-			Image ssIm = new Image(split[2], transparent);
+			Image ssIm = new Image(split[2], TRANSPARENT);
 			ssIm.setFilter(Image.FILTER_NEAREST);
 			ssIm = ssIm.getScaledCopy(scale);
 			spriteSheets.put(split[1], new SpriteSheet(ssIm,
@@ -142,7 +142,7 @@ public class FCResourceManager {
 		}
 		else if (split[0].equalsIgnoreCase("animsheet"))
 		{
-			Image nImage = new Image(split[2], transparent);
+			Image nImage = new Image(split[2], TRANSPARENT);
 			nImage.setFilter(Image.FILTER_NEAREST);
 			images.put(split[1], nImage);
 		}
@@ -273,7 +273,7 @@ public class FCResourceManager {
 				if (file.getName().endsWith(".png"))
 				{
 					Log.debug("Anim sheet " + file.getName());
-					images.put(file.getName().replace(".png", ""), new Image(file.getPath(), transparent));
+					images.put(file.getName().replace(".png", ""), new Image(file.getPath(), TRANSPARENT));
 				}
 			}
 			
@@ -301,7 +301,7 @@ public class FCResourceManager {
 			{
 				if (file.getName().endsWith(".png"))
 				{
-					Image nIm = new Image(file.getPath(), transparent);
+					Image nIm = new Image(file.getPath(), TRANSPARENT);
 					nIm.setFilter(Image.FILTER_NEAREST);
 					images.put(file.getName().replace(".png", ""), nIm);
 				}
@@ -313,7 +313,7 @@ public class FCResourceManager {
 			{
 				if (file.getName().endsWith(".png"))
 				{
-					Image nIm = new Image(file.getPath(), transparent);
+					Image nIm = new Image(file.getPath(), TRANSPARENT);
 					nIm.setFilter(Image.FILTER_NEAREST);
 					images.put(file.getName().replace(".png", ""), nIm);
 				}

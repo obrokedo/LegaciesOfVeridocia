@@ -4,7 +4,7 @@ import java.util.Hashtable;
 
 import mb.fc.game.definition.ItemDefinition;
 import mb.fc.game.item.Item;
-import mb.fc.loading.FCResourceManager;
+import mb.fc.loading.ResourceManager;
 import mb.fc.utils.StringUtils;
 
 public class ItemResource
@@ -16,7 +16,7 @@ public class ItemResource
 		ItemResource.itemDefinitionsById = itemDefinitionsById;
 	}
 
-	public static Item getItem(int itemId, FCResourceManager fcrm)
+	public static Item getItem(int itemId, ResourceManager fcrm)
 	{
 		return itemDefinitionsById.get(itemId).getItem(fcrm).copyItem();
 	}
@@ -33,7 +33,7 @@ public class ItemResource
 		return -1;
 	}
 
-	public static void initializeItem(Item item, FCResourceManager fcrm)
+	public static void initializeItem(Item item, ResourceManager fcrm)
 	{
 		itemDefinitionsById.get(item.getItemId()).initializeItem(item, fcrm);
 		// Check to see if the name is null then, if so then this item has been unserialized and

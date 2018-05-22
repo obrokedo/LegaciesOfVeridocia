@@ -21,6 +21,7 @@ import mb.fc.game.battle.BattleResults;
 import mb.fc.game.battle.command.BattleCommand;
 import mb.fc.game.battle.spell.KnownSpell;
 import mb.fc.game.battle.spell.SpellDefinition;
+import mb.fc.game.menu.Menu;
 import mb.fc.game.resource.EnemyResource;
 import mb.fc.game.resource.HeroResource;
 import mb.fc.game.sprite.CombatSprite;
@@ -28,7 +29,7 @@ import mb.fc.game.ui.Button;
 import mb.fc.game.ui.ListUI;
 import mb.fc.game.ui.ListUI.ResourceSelectorListener;
 import mb.fc.game.ui.PaddedGameContainer;
-import mb.fc.loading.FCResourceManager;
+import mb.fc.loading.ResourceManager;
 import mb.fc.loading.LoadableGameState;
 
 public class DevelBattleAnimViewState extends LoadableGameState implements ResourceSelectorListener {
@@ -37,7 +38,7 @@ public class DevelBattleAnimViewState extends LoadableGameState implements Resou
 	private CombatSprite attacker;
 	private CombatSprite target;
 	private boolean attackerHero, targetHero;
-	private FCResourceManager fcrm;
+	private ResourceManager fcrm;
 	private StateBasedGame game;
 	private Button backButton = new Button(400, 15, 165, 25, "Previous Step");
 	private Button reloadButton = new Button(400, 50, 165, 25, "Reload Animations");
@@ -254,7 +255,7 @@ public class DevelBattleAnimViewState extends LoadableGameState implements Resou
 	}
 
 	@Override
-	public void stateLoaded(FCResourceManager resourceManager) {
+	public void stateLoaded(ResourceManager resourceManager) {
 		if (wizardIndex == null) {
 			wizardIndex = WizardStep.PICK_ATTACKER_TYPE;
 			setupStep();
@@ -304,7 +305,13 @@ public class DevelBattleAnimViewState extends LoadableGameState implements Resou
 
 	@Override
 	public void doRender(PaddedGameContainer container, StateBasedGame game, Graphics g) {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub		
 	}
+
+	@Override
+	protected Menu getPauseMenu() {
+		return null;
+	}
+	
+	
 }

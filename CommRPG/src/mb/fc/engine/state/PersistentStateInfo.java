@@ -17,8 +17,8 @@ import mb.fc.game.persist.ClientProfile;
 import mb.fc.game.persist.ClientProgress;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.ui.PaddedGameContainer;
-import mb.fc.loading.FCLoadingRenderSystem;
-import mb.fc.loading.FCResourceManager;
+import mb.fc.loading.LoadingScreenRenderer;
+import mb.fc.loading.ResourceManager;
 import mb.fc.loading.LoadableGameState;
 import mb.fc.loading.LoadingState;
 import mb.fc.network.TCPClient;
@@ -39,7 +39,7 @@ public class PersistentStateInfo implements PacketHandler
 	private PaddedGameContainer gc;
 	private ClientProfile clientProfile;
 	private ClientProgress clientProgress;
-	private FCResourceManager resourceManager;
+	private ResourceManager resourceManager;
 	private String entranceLocation = null;
 	private int cinematicID = 0;
 	private int clientId;
@@ -124,13 +124,13 @@ public class PersistentStateInfo implements PacketHandler
 	 * 			null will use the default transition
 	 */
 	private void setLoadingInfo(String text, LoadableGameState nextState,
-			FCResourceManager fcResourceManager, Image intermediateImage, Transition transition)
+			ResourceManager fcResourceManager, Image intermediateImage, Transition transition)
 	{
 		// If it's not the first load then we don't want to reload the resources
 		((LoadingState) game.getState(CommRPG.STATE_GAME_LOADING)).setLoadingInfo(text, true, isFirstLoad,
-			(fcResourceManager == null ? new FCResourceManager() : fcResourceManager),
+			(fcResourceManager == null ? new ResourceManager() : fcResourceManager),
 				nextState,
-					new FCLoadingRenderSystem(gc), intermediateImage, transition);
+					new LoadingScreenRenderer(gc), intermediateImage, transition);
 		isFirstLoad = false;
 	}
 
@@ -184,11 +184,11 @@ public class PersistentStateInfo implements PacketHandler
 		return clientProgress;
 	}
 
-	public FCResourceManager getResourceManager() {
+	public ResourceManager getResourceManager() {
 		return resourceManager;
 	}
 
-	public void setResourceManager(FCResourceManager resourceManager) {
+	public void setResourceManager(ResourceManager resourceManager) {
 		this.resourceManager = resourceManager;
 	}
 

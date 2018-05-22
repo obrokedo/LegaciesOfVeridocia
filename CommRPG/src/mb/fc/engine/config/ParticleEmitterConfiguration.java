@@ -5,11 +5,11 @@ import org.newdawn.slick.particles.Particle;
 import org.newdawn.slick.particles.ParticleEmitter;
 import org.newdawn.slick.particles.ParticleSystem;
 
-import mb.fc.loading.FCResourceManager;
+import mb.fc.loading.ResourceManager;
 
 public abstract class ParticleEmitterConfiguration implements ParticleEmitter
 {
-	protected FCResourceManager fcResourceManager;
+	protected ResourceManager fcResourceManager;
 	
 	public abstract void initialize(boolean isHero);
 
@@ -74,11 +74,11 @@ public abstract class ParticleEmitterConfiguration implements ParticleEmitter
 		// TODO Auto-generated method stub
 	}
 
-	public FCResourceManager getFcResourceManager() {
+	public ResourceManager getFcResourceManager() {
 		return fcResourceManager;
 	}
 
-	public void setFcResourceManager(FCResourceManager fcResourceManager) {
+	public void setFcResourceManager(ResourceManager fcResourceManager) {
 		this.fcResourceManager = fcResourceManager;
 	}
 }

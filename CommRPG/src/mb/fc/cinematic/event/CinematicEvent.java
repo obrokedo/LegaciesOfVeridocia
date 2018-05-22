@@ -72,6 +72,7 @@ public class CinematicEvent
 		MOVE_TO_FOREFRONT,
 		MOVE_FROM_FOREFRONT,
 		EXIT_GAME,
+		SHOW_CREDITS,
 		ADD_HERO
 	}
 

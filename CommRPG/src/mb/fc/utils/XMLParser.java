@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.Stack;
 
-import mb.fc.loading.FCResourceManager;
+import mb.fc.loading.ResourceManager;
 
 public class XMLParser
 {
@@ -365,7 +365,7 @@ public class XMLParser
 
 	public static ArrayList<TagArea> process(String file) throws IOException
 	{
-		return XMLParser.process(FCResourceManager.readAllLines(file));
+		return XMLParser.process(ResourceManager.readAllLines(file));
 	}
 
 	public static ArrayList<TagArea> process(List<String> allLines) throws IOException

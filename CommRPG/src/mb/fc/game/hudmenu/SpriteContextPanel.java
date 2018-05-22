@@ -6,16 +6,16 @@ import org.newdawn.slick.Graphics;
 import mb.fc.engine.config.HealthPanelRenderer;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.ui.PaddedGameContainer;
-import mb.fc.loading.FCResourceManager;
+import mb.fc.loading.ResourceManager;
 
 public class SpriteContextPanel extends Panel
 {
 	private CombatSprite sprite;
 	private HealthPanelRenderer healthPanelRenderer;
-	private FCResourceManager fcrm;
+	private ResourceManager fcrm;
 
 	public SpriteContextPanel(PanelType menuType, CombatSprite sprite, 
-			HealthPanelRenderer healthPanelRenderer, FCResourceManager fcrm, GameContainer gc) {
+			HealthPanelRenderer healthPanelRenderer, ResourceManager fcrm, GameContainer gc) {
 		super(menuType);
 		this.sprite = sprite;
 		this.healthPanelRenderer = healthPanelRenderer;

@@ -1244,6 +1244,12 @@ public class PlannerDefinitions {
 		allowableLines.add(new PlannerLineDef("loadcin", "Load Cinematic",
 				"Loads the specified map and text file with the same name and then runs the specified cinematic.", definingValues));
 		mapControl.add("Load Cinematic");
+		
+		// Show End Game Credits
+		definingValues = new ArrayList<PlannerValueDef>();		
+		allowableLines.add(new PlannerLineDef("showcredits", "Show Credits",
+				"Show the end game credits.", definingValues));
+		mapControl.add("Show Credits");
 
 		// Exit Game
 		definingValues = new ArrayList<PlannerValueDef>();

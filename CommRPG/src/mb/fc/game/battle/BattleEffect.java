@@ -3,7 +3,7 @@ package mb.fc.game.battle;
 import java.io.Serializable;
 
 import mb.fc.game.sprite.CombatSprite;
-import mb.fc.loading.FCResourceManager;
+import mb.fc.loading.ResourceManager;
 import mb.fc.utils.AnimationWrapper;
 
 /**
@@ -102,7 +102,7 @@ public abstract class BattleEffect implements Serializable
 		return false;
 	}
 
-	public void initializeAnimation(FCResourceManager frm)
+	public void initializeAnimation(ResourceManager frm)
 	{
 		if (getAnimationFile() != null)
 			effectAnimation = new AnimationWrapper(frm.getSpriteAnimation(getAnimationFile()), "Effect", true);

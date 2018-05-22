@@ -23,7 +23,7 @@ import org.newdawn.slick.util.Log;
 public class MapParser
 {
 	public static void parseMap(String mapFile, Map map, TilesetParser tilesetParser,
-			FCResourceManager frm) throws IOException, SlickException
+			ResourceManager frm) throws IOException, SlickException
 	{
 
 		HashSet<String> spriteToLoad = new HashSet<String>();

@@ -14,7 +14,7 @@ import mb.fc.engine.message.MessageType;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.menu.Menu.MenuUpdate;
 import mb.fc.game.ui.PaddedGameContainer;
-import mb.fc.loading.FCResourceManager;
+import mb.fc.loading.ResourceManager;
 
 /**
  * A container to display information to the screen that does not generally need to be interacted with.
@@ -79,8 +79,9 @@ public abstract class Panel
 		}
 	}
 
-	public static void intialize(FCResourceManager frm)
+	public static void intialize(ResourceManager frm)
 	{
+		System.out.println("IM INITIALIZING");
 		MENU_BORDER = frm.getSpriteSheet("menuborder");
 		PANEL_FONT = frm.getFontByName("menufont");
 		MUSIC_SELECTOR = CommRPG.engineConfiguratior.getMusicConfiguration();

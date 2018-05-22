@@ -5,20 +5,20 @@ import java.util.Hashtable;
 import mb.fc.engine.CommRPG;
 import mb.fc.game.battle.spell.SpellDefinition;
 import mb.fc.game.exception.BadResourceException;
-import mb.fc.loading.FCResourceManager;
+import mb.fc.loading.ResourceManager;
 
 public class SpellResource
 {
 	public static Hashtable<String, SpellDefinition> spells;
 
-	public static void initSpells(FCResourceManager frm)
+	public static void initSpells(ResourceManager frm)
 	{
 		spells = new Hashtable<String, SpellDefinition>();
 		for (String spell : CommRPG.engineConfiguratior.getSpellFactory().getSpellList())
 			addSpell(spell, frm);
 	}
 
-	private static void addSpell(String spellId, FCResourceManager frm)
+	private static void addSpell(String spellId, ResourceManager frm)
 	{
 		SpellDefinition s = CommRPG.engineConfiguratior.getSpellFactory().createSpell(spellId);
 		if (s != null) {

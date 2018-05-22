@@ -32,7 +32,7 @@ import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.sprite.Sprite;
 import mb.fc.game.sprite.SpriteZComparator;
 import mb.fc.game.ui.PaddedGameContainer;
-import mb.fc.loading.FCResourceManager;
+import mb.fc.loading.ResourceManager;
 import mb.fc.map.Map;
 import mb.fc.map.MapObject;
 
@@ -709,7 +709,7 @@ public class StateInfo
 		return fcInput;
 	}
 
-	public FCResourceManager getResourceManager() {
+	public ResourceManager getResourceManager() {
 		return psi.getResourceManager();
 	}
 
@@ -737,7 +737,7 @@ public class StateInfo
 		return isCombat;
 	}
 
-	public void setResourceManager(FCResourceManager resourceManager) {
+	public void setResourceManager(ResourceManager resourceManager) {
 		psi.setResourceManager(resourceManager);
 	}
 	

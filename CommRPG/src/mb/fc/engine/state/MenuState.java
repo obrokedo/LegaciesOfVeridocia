@@ -1,32 +1,31 @@
 package mb.fc.engine.state;
 
-import java.io.File;
-
 import javax.swing.JOptionPane;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
+import org.newdawn.slick.state.transition.Transition;
 import org.newdawn.slick.util.Log;
 
 import mb.fc.engine.CommRPG;
 import mb.fc.engine.config.EngineConfigurationValues;
-import mb.fc.game.Camera;
-import mb.fc.game.dev.DevParams;
 import mb.fc.game.input.FCInput;
-import mb.fc.game.persist.ClientProfile;
-import mb.fc.game.persist.ClientProgress;
+import mb.fc.game.input.KeyMapping;
+import mb.fc.game.menu.Menu;
 import mb.fc.game.ui.PaddedGameContainer;
-import mb.fc.loading.FCLoadingRenderSystem;
-import mb.fc.loading.FCResourceManager;
+import mb.fc.loading.LoadingScreenRenderer;
+import mb.fc.loading.ResourceManager;
+import mb.fc.loading.LOVFirstLoadRenderer;
 import mb.fc.loading.LoadableGameState;
 import mb.fc.loading.LoadingState;
-import mb.fc.utils.StringUtils;
 
 /**
  * State that handles the main menu
@@ -53,8 +52,11 @@ public class MenuState extends LoadableGameState
 	protected int menuIndex = 0;
 	protected int updateDelta = 0;
 	protected PersistentStateInfo persistentStateInfo;
-	private Image bgImage;
-	private Image flor;
+	private Sound menuMove;
+	private Sound menuSelect;
+	private ResourceManager fcrm;
+	private Music music;
+	private Transition transition;
 	
 	public MenuState(PersistentStateInfo persistentStateInfo) {
 		super();
@@ -98,9 +100,41 @@ public class MenuState extends LoadableGameState
 
 		if (initialized)
 		{
+			if (stateIndex == 0) {
+				g.drawImage(fcrm.getImage("title2"), 32, 15);
+				g.drawImage(fcrm.getImage("LowBanner1"), 26, 163);
+				
+				g.drawImage(fcrm.getImage("Selector"), 93, 182);
+				g.drawImage(fcrm.getImage("PressStart"), 111, 186);
+			} else {
+				g.drawImage(fcrm.getImage("Groupshot"), 26, 17);
+				g.drawImage(fcrm.getImage("LowBanner2"), 26, 168);
+				
+				if (menuIndex == 0)
+					g.drawImage(fcrm.getImage("Selector"), 29, 172);
+				g.drawImage(fcrm.getImage("NewGame"), 47, 176);
+				
+				if (menuIndex == 1)
+					g.drawImage(fcrm.getImage("Selector"), 157, 172);
+				g.drawImage(fcrm.getImage("Continue"), 175, 176);
+				
+				if (menuIndex == 2)
+					g.drawImage(fcrm.getImage("Selector"), 93, 196);
+				g.drawImage(fcrm.getImage("Quit"), 111, 200);
+			}
+			g.drawImage(fcrm.getImage("Frame"), 0, 0);		
+			
+			if (transition != null)
+				try {
+					transition.postRender(game, container, g);
+				} catch (SlickException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			// g.setColor(new Color(171, 194, 208));
 			// g.fillRect(0, 0, gc.getWidth(), gc.getHeight());
 			// g.drawImage(bgImage, 0, 0);
+			/*
 			bgImage.draw(0, 70, .62f);
 			if (stateIndex == 0)
 			{
@@ -141,6 +175,7 @@ public class MenuState extends LoadableGameState
 			g.drawString("Version: " + version, 15, container.getHeight() - 30);
 			g.setFont(font);
 			g.drawString(CommRPG.GAME_TITLE, (container.getWidth() - font.getWidth(CommRPG.GAME_TITLE)) / 2, container.getHeight() * .005f - 15);
+			*/
 		}
 	}
 	
@@ -168,73 +203,14 @@ public class MenuState extends LoadableGameState
 				persistentStateInfo.loadBattle(mapData, entrance, 0);
 			break;
 		}
+		
+		LoadingState loadingState = ((LoadingState) game.getState(CommRPG.STATE_GAME_LOADING));
+		loadingState.setLoadingRenderer(new LOVFirstLoadRenderer(gc, music));
 
 		if (gc.isFullscreen())
 			gc.setMouseGrabbed(true);
 
 		game.enterState(CommRPG.STATE_GAME_LOADING);
-	}
-	
-	@Override
-	public void keyPressed(int key, char c) {
-		super.keyPressed(key, c);
-		
-		if (initialized) {
-			if (CommRPG.DEV_MODE_ENABLED && key == Input.KEY_F1)
-			{
-				((LoadingState) game.getState(CommRPG.STATE_GAME_LOADING)).setLoadingInfo("/menu/MainMenu", false, true,
-						new FCResourceManager(),
-							(LoadableGameState) game.getState(CommRPG.STATE_GAME_MENU_DEVEL),
-								new FCLoadingRenderSystem(gc));
-
-				game.enterState(CommRPG.STATE_GAME_LOADING);
-			}
-
-			if (updateDelta != 0)
-				return;
-
-			if (key == Input.KEY_ENTER)
-			{
-				EngineConfigurationValues jcv = CommRPG.engineConfiguratior.getConfigurationValues();
-				if (menuIndex == 0 && stateIndex == 0)
-					start(LoadTypeEnum.valueOf(jcv.getStartingState()), 
-							jcv.getStartingMapData(), jcv.getStartingLocation());
-				else if (menuIndex == 0 && stateIndex == 1)
-				{
-					stateIndex = 0;
-					menuIndex = 1;
-					updateDelta = 200;
-				}
-				else if (menuIndex == 1)
-				{
-					stateIndex = 1;
-					menuIndex = 0;
-					updateDelta = 200;
-				}
-				else if (menuIndex == 2)
-					System.exit(0);
-			}
-			else if (key == Input.KEY_F7)
-			{
-				try {
-					((CommRPG) this.game).toggleFullScreen();
-				} catch (SlickException e) {
-					Log.error("Unable to toggle fullscreen mode: " + e.getMessage());
-					JOptionPane.showMessageDialog(null, "Unable to toggle fullscreen mode: " + e.getMessage());
-				}
-				updateDelta = 200;
-			}
-			else if (key == Input.KEY_UP && menuIndex > 0)
-			{
-				menuIndex--;
-				updateDelta = 200;
-			}
-			else if (key == Input.KEY_DOWN && menuIndex < 2)
-			{
-				menuIndex++;
-				updateDelta = 200;
-			}
-		}
 	}
 
 	@Override
@@ -242,18 +218,116 @@ public class MenuState extends LoadableGameState
 			throws SlickException {
 		if (initialized)
 		{
+			if (transition != null) {
+				transition.update(game, container, delta);
+				if (transition.isComplete()) {
+					if (transition instanceof FadeOutTransition) {
+						transition = new FadeInTransition();
+						music = fcrm.getMusicByName("lovtheme");
+						music.loop();
+						menuIndex = 0;
+						stateIndex = 1;			
+					}
+					else
+						transition = null;
+				}							
+			}
+			
 			if (updateDelta != 0)
 			{
 				updateDelta = Math.max(0, updateDelta - delta);
 				return;
 			}
+			
+			if (CommRPG.DEV_MODE_ENABLED && container.getInput().isKeyDown(Input.KEY_F1))
+			{
+				((LoadingState) game.getState(CommRPG.STATE_GAME_LOADING)).setLoadingInfo("/menu/MainMenu", false, true,
+						new ResourceManager(),
+							(LoadableGameState) game.getState(CommRPG.STATE_GAME_MENU_DEVEL),
+								new LoadingScreenRenderer(gc));
+
+				game.enterState(CommRPG.STATE_GAME_LOADING);
+			}
+
+			if (updateDelta != 0)
+				return;
+
+			if (container.getInput().isKeyDown(Input.KEY_ENTER) || 
+					container.getInput().isKeyDown(KeyMapping.BUTTON_1) || 
+					container.getInput().isKeyDown(KeyMapping.BUTTON_3))
+			{
+				EngineConfigurationValues jcv = CommRPG.engineConfiguratior.getConfigurationValues();
+				menuSelect.play();
+				if (stateIndex == 1) {
+					// music.fade(500, 0f, true);
+					if (menuIndex == 0) {
+						// Clobber existing save data...
+						persistentStateInfo.getClientProfile().initializeValues();
+						persistentStateInfo.getClientProgress().initializeValues();
+						// persistentStateInfo.getClientProfile().serializeToFile();
+						// persistentStateInfo.getClientProgress().serializeToFile();
+						start(LoadTypeEnum.valueOf(jcv.getStartingState()), 
+								jcv.getStartingMapData(), jcv.getStartingLocation());
+					}
+					else if (menuIndex == 1)
+					{
+						LoadTypeEnum loadType = LoadTypeEnum.TOWN;
+						if (persistentStateInfo.getClientProgress().isBattle())
+							loadType = LoadTypeEnum.BATTLE;
+						start(loadType, persistentStateInfo.getClientProgress().getMapData(), null);
+					}
+					else if (menuIndex == 2)
+					{
+						System.exit(0);
+					}
+				}
+				else if (stateIndex == 0) {
+					transition = new FadeOutTransition();
+					menuSelect.play();
+					updateDelta = 1500;
+					
+				}
+			}
+			
+			if (stateIndex == 1) { 
+				if (menuIndex != 0 && (container.getInput().isKeyDown(Input.KEY_UP) || 
+						container.getInput().isKeyDown(Input.KEY_LEFT)))
+				{
+					menuIndex = 0;
+					updateDelta = 200;
+					menuMove.play();
+				}
+				else if (menuIndex != 2 && container.getInput().isKeyDown(Input.KEY_DOWN))
+				{
+					menuIndex = 2;
+					updateDelta = 200;
+					menuMove.play();
+				}
+				else if (menuIndex != 1 && container.getInput().isKeyDown(Input.KEY_RIGHT))
+				{
+					menuIndex = 1;
+					updateDelta = 200;
+					menuMove.play();
+				}
+			}
 		}
 	}
+	
+	
+
+	// Override this so that the state doesn't try to pause
+	@Override
+	public boolean isPaused(GameContainer gc) {
+		return false;
+	}
+
+
 
 	@Override
-	public void stateLoaded(FCResourceManager resourceManager) {
-		font = resourceManager.getFontByName("menufont");
-		bgImage = resourceManager.getImage("mainbg");
+	public void stateLoaded(ResourceManager resourceManager) {
+		fcrm = resourceManager;
+		menuMove = fcrm.getSoundByName("menumove");
+		menuSelect = fcrm.getSoundByName("menuselect");
 		initialized = true;		
 	}
 	
@@ -262,6 +336,14 @@ public class MenuState extends LoadableGameState
 	@Override
 	public int getID() {
 		return CommRPG.STATE_GAME_MENU;
+	}
+
+
+
+	@Override
+	protected Menu getPauseMenu() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

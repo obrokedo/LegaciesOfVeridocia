@@ -34,11 +34,12 @@ import mb.fc.game.input.FCInput;
 import mb.fc.game.item.EquippableItem;
 import mb.fc.game.item.Item.ItemDurability;
 import mb.fc.game.menu.Menu;
+import mb.fc.game.menu.PauseMenu;
 import mb.fc.game.menu.Menu.MenuUpdate;
 import mb.fc.game.menu.SpeechMenu;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.ui.PaddedGameContainer;
-import mb.fc.loading.FCResourceManager;
+import mb.fc.loading.ResourceManager;
 import mb.fc.loading.LoadableGameState;
 import mb.fc.particle.AnimatedParticleSystem;
 import mb.fc.utils.AnimationWrapper;
@@ -66,7 +67,7 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 	private Image backgroundImage;
 	private BattleResults battleResults;
 	private CombatSprite attacker;
-	private FCResourceManager frm;
+	private ResourceManager frm;
 
 	// Spell stuff
 	private boolean spellStarted = false;
@@ -91,13 +92,13 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 	public static final int SPELL_FLASH_DURATION = 480;
 	public static Image FLOOR_IMAGE;
 	
-	public void setBattleInfo(CombatSprite attacker, FCResourceManager frm,
+	public void setBattleInfo(CombatSprite attacker, ResourceManager frm,
 			BattleResults battleResults, PaddedGameContainer gc, int exitState) {
 		setBattleInfo(attacker, frm, battleResults, gc);
 		this.exitState = exitState;
 	}
 
-	public void setBattleInfo(CombatSprite attacker, FCResourceManager frm,
+	public void setBattleInfo(CombatSprite attacker, ResourceManager frm,
 			BattleResults battleResults, PaddedGameContainer gc)
 	{
 		this.exitState = CommRPG.STATE_GAME_BATTLE;
@@ -651,7 +652,7 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 	}
 
 	@Override
-	public void stateLoaded(FCResourceManager resourceManager) {
+	public void stateLoaded(ResourceManager resourceManager) {
 
 	}
 
@@ -675,7 +676,7 @@ public class LOVAttackCinematicState extends LoadableGameState implements MusicL
 	protected Menu getPauseMenu() {
 		if (this.music != null)
 			this.music.pause();
-		return super.getPauseMenu();
+		return new PauseMenu(null);
 	}
 
 	@Override

@@ -5,7 +5,7 @@ import org.newdawn.slick.Graphics;
 import mb.fc.game.exception.BadResourceException;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.ui.PaddedGameContainer;
-import mb.fc.loading.FCResourceManager;
+import mb.fc.loading.ResourceManager;
 import mb.fc.utils.AnimationWrapper;
 import mb.fc.utils.HeroAnimationWrapper;
 
@@ -15,7 +15,7 @@ public class DodgeCombatAnimation extends CombatAnimation
 	private int timeToStartSecondAnimation = 0;
 	private boolean animationSwapped = false;
 	
-	public DodgeCombatAnimation(CombatSprite parentSprite, FCResourceManager fcrm, Integer minimumTimePassed)
+	public DodgeCombatAnimation(CombatSprite parentSprite, ResourceManager fcrm, Integer minimumTimePassed)
 	{
 		super(new HeroAnimationWrapper(parentSprite, getAnimationName(parentSprite)), parentSprite, false);
 		if (minimumTimePassed == null)

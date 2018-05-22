@@ -30,8 +30,8 @@ import mb.fc.game.ui.ListUI;
 import mb.fc.game.ui.ListUI.ResourceSelectorListener;
 import mb.fc.game.ui.PaddedGameContainer;
 import mb.fc.game.ui.ResourceSelector;
-import mb.fc.loading.FCLoadingRenderSystem;
-import mb.fc.loading.FCResourceManager;
+import mb.fc.loading.LoadingScreenRenderer;
+import mb.fc.loading.ResourceManager;
 import mb.fc.loading.LoadableGameState;
 import mb.fc.loading.LoadingState;
 import mb.fc.loading.MapParser;
@@ -64,7 +64,7 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 	private Button loadBattleButton = new Button(0, 610, 150, 25, "Load Battle");
 	
 	protected int totalResources = 0;
-	private FCResourceManager mainGameFCRM = null;
+	private ResourceManager mainGameFCRM = null;
 	protected BulkLoader mainGameBulkLoader = null;
 
 
@@ -145,7 +145,7 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 
 	protected void initializeBulkLoader() {
 		if (mainGameBulkLoader == null) {
-			mainGameFCRM = new FCResourceManager();
+			mainGameFCRM = new ResourceManager();
 			mainGameBulkLoader = new BulkLoader(mainGameFCRM);
 			
 			try {
@@ -250,9 +250,9 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 			if (key == Input.KEY_F1)
 			{
 				((LoadingState) game.getState(CommRPG.STATE_GAME_LOADING)).setLoadingInfo("/menu/MainMenu", false, true,
-						new FCResourceManager(),
+						new ResourceManager(),
 							(LoadableGameState) game.getState(CommRPG.STATE_GAME_MENU),
-								new FCLoadingRenderSystem(this.gc));
+								new LoadingScreenRenderer(this.gc));
 	
 				game.enterState(CommRPG.STATE_GAME_LOADING);
 			}
@@ -286,9 +286,9 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 			if (key == Input.KEY_F6)
 			{
 				((LoadingState) game.getState(CommRPG.STATE_GAME_LOADING)).setLoadingInfo("eriumjail", true, true,
-						new FCResourceManager(),
+						new ResourceManager(),
 							(LoadableGameState) game.getState(CommRPG.STATE_GAME_BATTLE_ANIM_VIEW),
-								new FCLoadingRenderSystem(gc));
+								new LoadingScreenRenderer(gc));
 	
 				game.enterState(CommRPG.STATE_GAME_LOADING);
 			}
@@ -416,7 +416,7 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 
 
 	@Override
-	public void stateLoaded(FCResourceManager resourceManager) {
+	public void stateLoaded(ResourceManager resourceManager) {
 		this.initialized = true;
 	}
 
@@ -431,7 +431,7 @@ public class DevelMenuState extends MenuState implements ResourceSelectorListene
 		
 		BufferedReader br;
 		try {			
-			String firstLine = FCResourceManager.readAllLines("/mapdata/" + selectedItem).get(0);			
+			String firstLine = ResourceManager.readAllLines("/mapdata/" + selectedItem).get(0);			
 			
 			if (firstLine.startsWith("<map")) {
 				ArrayList<TagArea> tagArea = XMLParser.process(Collections.singletonList(firstLine));

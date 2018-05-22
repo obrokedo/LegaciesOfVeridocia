@@ -11,6 +11,7 @@
             	<attribute name="Launcher-Main-Class" value="mb.fc.engine.CommRPG"/>
             	<attribute name="Launcher-VM-Args" value=""/>
                 <attribute name="Class-Path" value="."/>
+            	<attribute name="Launcher-Args" value=""/>
             </manifest>
             <fileset dir="${dir.workspace}/bin"/>
         	<fileset dir="${dir.workspace}/LoV_lib/natives"/>

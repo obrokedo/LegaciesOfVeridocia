@@ -4,6 +4,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -22,8 +23,8 @@ public class LoadingState extends BasicGameState
 	private String mapName;
 	private String textName;
 	private LoadableGameState nextState;
-	private FCLoadingRenderSystem loadingRenderer;
-	private FCResourceManager resourceManager;
+	private LoadingScreenRenderer loadingRenderer;
+	private ResourceManager resourceManager;
 	private boolean loadResources;
 	private BulkLoader bulkLoader;
 	private LoadingStatus loadingStatus;
@@ -33,7 +34,7 @@ public class LoadingState extends BasicGameState
 	private boolean loadingMap;
 	private String errorMessage = null;
 	private Transition enterNextStateTransition;
-	private Image intermediateImage = null;
+	private Image intermediateImage = null;	
 	public static boolean inJar = false;
 	public static Class<?> MY_CLASS;
 
@@ -54,10 +55,11 @@ public class LoadingState extends BasicGameState
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
+		container.setShowFPS(false);
 		if (intermediateImage != null)
 			g.drawImage(intermediateImage, 0, 0);
 		else 
-			loadingRenderer.update(loadingStatus);
+			loadingRenderer.render(loadingStatus);
 		if (errorMessage != null)
 		{
 			g.setColor(Color.white);
@@ -65,6 +67,8 @@ public class LoadingState extends BasicGameState
 			g.drawString(errorMessage, (container.getWidth() - strWidth) / 2, container.getHeight() / 2);
 		}
 	}
+	
+	
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
@@ -77,6 +81,8 @@ public class LoadingState extends BasicGameState
 		// intialize the list of resources that need to be loaded
 		if (loadIndex == -1)
 		{
+			if (intermediateImage == null)
+				loadingRenderer.initialize();
 			try
 			{
 				if (loadingMap)
@@ -137,7 +143,7 @@ public class LoadingState extends BasicGameState
 		
 		if (errorMessage != null && bulkLoader.getErrorMessage() != null)
 			errorMessage = bulkLoader.getErrorMessage();
-
+		
 		if (bulkLoader.isDone())
 		{
 			bulkLoader = null;
@@ -157,23 +163,26 @@ public class LoadingState extends BasicGameState
 			if (loadResources)	
 				nextState.stateLoaded(resourceManager);
 			nextState.initAfterLoad();
+			
+			loadingRenderer.doneLoading();
+			
 			if (enterNextStateTransition == null)
 				game.enterState(nextState.getID(), new EmptyTransition(), new FadeInTransition(Color.black, 500));
 			else
 				game.enterState(nextState.getID(), new EmptyTransition(), enterNextStateTransition);
 		}
-
+		
 	}
 	
 	public void setLoadingInfo(String textName, boolean loadMap, boolean loadResources,
-			FCResourceManager resourceManager, LoadableGameState nextState,
-				FCLoadingRenderSystem loadingRenderer) {
+			ResourceManager resourceManager, LoadableGameState nextState,
+				LoadingScreenRenderer loadingRenderer) {
 		setLoadingInfo(textName, loadMap, loadResources, resourceManager, nextState, loadingRenderer, null, null);
 	}
 
 	public void setLoadingInfo(String textName, boolean loadMap, boolean loadResources,
-			FCResourceManager resourceManager, LoadableGameState nextState,
-				FCLoadingRenderSystem loadingRenderer, Image intermediateImage, Transition transition)
+			ResourceManager resourceManager, LoadableGameState nextState,
+				LoadingScreenRenderer loadingRenderer, Image intermediateImage, Transition transition)
 	{
 		this.errorMessage = null;
 		this.textName = textName;
@@ -190,6 +199,10 @@ public class LoadingState extends BasicGameState
 		loadingStatus = new LoadingStatus();
 	}
 	
+	public void setLoadingRenderer(LoadingScreenRenderer loadingRenderer) {
+		this.loadingRenderer = loadingRenderer;
+	}
+
 	public void setBulkLoader(BulkLoader bulkLoader) {
 		this.bulkLoader = bulkLoader;
 	}

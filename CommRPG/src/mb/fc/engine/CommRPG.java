@@ -15,17 +15,16 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.util.Log;
 
 import mb.fc.engine.config.DefaultEngineConfiguration;
-import mb.fc.engine.config.EngineConfigurationValues;
 import mb.fc.engine.config.EngineConfigurator;
 import mb.fc.engine.config.LOVEngineConfigration;
 import mb.fc.engine.log.FileLogger;
 import mb.fc.engine.state.BattleState;
 import mb.fc.engine.state.CinematicState;
+import mb.fc.engine.state.CreditsState;
 import mb.fc.engine.state.LOVAttackCinematicState;
 import mb.fc.engine.state.MenuState;
 import mb.fc.engine.state.PersistentStateInfo;
 import mb.fc.engine.state.TownState;
-import mb.fc.engine.state.MenuState.LoadTypeEnum;
 import mb.fc.engine.state.devel.DevelAnimationViewState;
 import mb.fc.engine.state.devel.DevelBattleAnimViewState;
 import mb.fc.engine.state.devel.DevelMenuState;
@@ -34,10 +33,10 @@ import mb.fc.game.dev.DevParams;
 import mb.fc.game.persist.ClientProfile;
 import mb.fc.game.persist.ClientProgress;
 import mb.fc.game.ui.PaddedGameContainer;
-import mb.fc.loading.FCLoadingRenderSystem;
-import mb.fc.loading.FCResourceManager;
 import mb.fc.loading.LoadableGameState;
+import mb.fc.loading.LoadingScreenRenderer;
 import mb.fc.loading.LoadingState;
+import mb.fc.loading.ResourceManager;
 import mb.fc.loading.TextParser;
 import mb.jython.GlobalPythonFactory;
 
@@ -79,6 +78,7 @@ public class CommRPG extends StateBasedGame   {
 	public static final int STATE_GAME_TOWN = 10;
 	
 	public static final int STATE_GAME_BATTLE_ANIM_VIEW = 11;
+	public static final int STATE_GAME_CREDITS = 12;
 
 	public static final Dimension GAME_SCREEN_SIZE = new Dimension(320, 240);
 	// public static final Dimension GAME_SCREEN_SIZE = new Dimension(256, 192);
@@ -97,7 +97,7 @@ public class CommRPG extends StateBasedGame   {
 
 	private static int fullScreenWidth, fullScreenHeight;
 
-	public static final String VERSION = "DEV 1.372 Feb 2, 2018";
+	public static final String VERSION = "DEV 1.373 May 22, 2018";
 	public static final String FILE_VERSION = "LoV-Dev";
 
 	public static final String GAME_TITLE = "Legacies of Veridocia";
@@ -232,7 +232,8 @@ public class CommRPG extends StateBasedGame   {
 					// Check to see if a client profile has been loaded.
 					if (clientProfile == null)
 					{
-						clientProfile = new ClientProfile("Test");
+						clientProfile = new ClientProfile("Default");
+						clientProfile.serializeToFile();
 
 						// If Dev mode is enabled, check to see if Dev Params
 						// were specified, if so then apply them to the client profile.
@@ -306,6 +307,7 @@ public class CommRPG extends StateBasedGame   {
 		addState(new BattleState(persistentStateInfo));
 		addState(new TownState(persistentStateInfo));
 		addState(new CinematicState(persistentStateInfo));
+		addState(new CreditsState());
 
 		// this.addState(new TestState());
 
@@ -344,18 +346,17 @@ public class CommRPG extends StateBasedGame   {
 		/******************************/
 		
 		// DEVELOPMENT MODE
-		loadingState.setLoadingInfo("/menu/MainMenu", false, true,
-				new FCResourceManager(),
+		if (DEV_MODE_ENABLED)
+			loadingState.setLoadingInfo("/menu/MainMenu", false, true,
+				new ResourceManager(),
 					(LoadableGameState) this.getState(STATE_GAME_MENU_DEVEL),
-						new FCLoadingRenderSystem(gameContainer));
-			
+						new LoadingScreenRenderer(gameContainer));
 		// RELEASE MODE
-		/*
+		else
 		loadingState.setLoadingInfo("/menu/MainMenu", false, true,
-				new FCResourceManager(),
+				new ResourceManager(),
 					(LoadableGameState) this.getState(STATE_GAME_MENU),
-						new FCLoadingRenderSystem(gameContainer));
-		*/
+						new LoadingScreenRenderer(gameContainer));
 		
 		// TESTER ONLY MODE
 		/*
@@ -387,6 +388,7 @@ public class CommRPG extends StateBasedGame   {
 				((PaddedGameContainer) this.getContainer()).setDisplayPaddingX((fullScreenWidth - GAME_SCREEN_SIZE.width * GAME_SCREEN_SCALE) / 2);
 				GAME_SCREEN_PADDING = ((PaddedGameContainer) this.getContainer()).getDisplayPaddingX();
 				 ((PaddedGameContainer)this.getContainer()).setDisplayMode(fullScreenWidth, fullScreenHeight, true);
+				 this.getContainer().setMouseGrabbed(true);
 			}
 		}
 	}

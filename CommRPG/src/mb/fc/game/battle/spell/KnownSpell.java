@@ -3,7 +3,7 @@ package mb.fc.game.battle.spell;
 import java.io.Serializable;
 
 import mb.fc.game.resource.SpellResource;
-import mb.fc.loading.FCResourceManager;
+import mb.fc.loading.ResourceManager;
 
 public class KnownSpell implements Serializable
 {
@@ -72,7 +72,7 @@ public class KnownSpell implements Serializable
 		return spell;
 	}
 
-	public void initializeFromLoad(FCResourceManager fcrm)
+	public void initializeFromLoad(ResourceManager fcrm)
 	{
 		this.spell = SpellResource.getSpell(spellId);
 	}

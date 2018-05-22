@@ -22,10 +22,11 @@ import mb.fc.game.manager.SpriteManager;
 import mb.fc.game.manager.TownMoveManager;
 import mb.fc.game.menu.DebugMenu;
 import mb.fc.game.menu.Menu;
+import mb.fc.game.menu.PauseMenu;
 import mb.fc.game.sprite.NPCSprite;
 import mb.fc.game.sprite.Sprite;
 import mb.fc.game.ui.PaddedGameContainer;
-import mb.fc.loading.FCResourceManager;
+import mb.fc.loading.ResourceManager;
 import mb.fc.loading.LoadableGameState;
 import mb.fc.map.MapObject;
 import mb.fc.renderer.MenuRenderer;
@@ -259,7 +260,7 @@ public class TownState extends LoadableGameState
 	}
 
 	@Override
-	public void stateLoaded(FCResourceManager resourceManager) {
+	public void stateLoaded(ResourceManager resourceManager) {
 		this.stateInfo.setResourceManager(resourceManager);
 	}
 
@@ -283,7 +284,9 @@ public class TownState extends LoadableGameState
 	@Override
 	protected Menu getPauseMenu() {
 		stateInfo.sendMessage(MessageType.PAUSE_MUSIC);
-		return new DebugMenu(stateInfo);
+		if (CommRPG.DEV_MODE_ENABLED)
+			return new DebugMenu(stateInfo);
+		return new PauseMenu(stateInfo);
 	}
 
 	@Override

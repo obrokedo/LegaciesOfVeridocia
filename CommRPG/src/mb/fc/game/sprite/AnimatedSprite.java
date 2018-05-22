@@ -10,7 +10,7 @@ import mb.fc.game.Camera;
 import mb.fc.game.constants.Direction;
 import mb.fc.game.exception.BadResourceException;
 import mb.fc.game.move.MovingSprite;
-import mb.fc.loading.FCResourceManager;
+import mb.fc.loading.ResourceManager;
 import mb.fc.utils.AnimSprite;
 import mb.fc.utils.Animation;
 import mb.fc.utils.SpriteAnims;
@@ -72,7 +72,7 @@ public class AnimatedSprite extends Sprite
 	}
 
 	@Override
-	public void initializeSprite(FCResourceManager fcrm) {
+	public void initializeSprite(ResourceManager fcrm) {
 		super.initializeSprite(fcrm);
 
 		imageIndex = 0;

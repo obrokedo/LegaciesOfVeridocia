@@ -17,6 +17,8 @@ public class SoundManager extends Manager implements MusicListener
 	private String playingMusicName;
 	private float playingMusicPosition;
 	private float musicPosition = 0f;
+	
+	public static float GLOBAL_VOLUME = 1.0f; 
 
 	public void update(int delta)
 	{
@@ -39,7 +41,7 @@ public class SoundManager extends Manager implements MusicListener
 			return;
 		Sound sound = stateInfo.getResourceManager().getSoundByName(name);
 		if (sound != null)
-			sound.play(1f, volume);
+			sound.play(1f, volume * GLOBAL_VOLUME);
 	}
 
 	public void playMusicByName(String name, float volume, float position)
@@ -49,11 +51,10 @@ public class SoundManager extends Manager implements MusicListener
 		}
 		
 		Music playingMusic = stateInfo.getResourceManager().getMusicByName(name);
-		musicPosition = 0;
 		playingMusic.stop();
 		playingMusic.setPosition(position);
 		playingMusic.loop(1, 0);
-		playingMusic.fade(2000, volume, false);
+		playingMusic.fade(2000, volume * GLOBAL_VOLUME, false);
 		this.playingMusicName = name;
 		this.playingVolume = volume;
 		this.playingMusic = playingMusic;

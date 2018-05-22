@@ -4,7 +4,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.particles.Particle;
 import org.newdawn.slick.particles.ParticleSystem;
 
-import mb.fc.loading.FCResourceManager;
+import mb.fc.loading.ResourceManager;
 import mb.fc.utils.AnimationWrapper;
 import mb.fc.utils.SpriteAnims;
 
@@ -15,7 +15,7 @@ public class AnimatedParticleSystem extends ParticleSystem
 	private float scale;
 	
 	public AnimatedParticleSystem(String spriteAnimsName, 
-			String animationName, FCResourceManager frm, float scale) {
+			String animationName, ResourceManager frm, float scale) {
 		// Kind of a kludge but we really don't want to load a default image here
 		super(new Image() 
 		{

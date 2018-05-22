@@ -10,16 +10,16 @@ import org.newdawn.slick.util.Log;
 import mb.fc.engine.CommRPG;
 import mb.fc.engine.config.EngineConfigurator;
 import mb.fc.game.exception.BadResourceException;
-import mb.fc.loading.FCResourceManager;
+import mb.fc.loading.ResourceManager;
 import mb.fc.utils.DirectoryLister;
 
 public class BulkLoader {
 	private List<String> allLines = null;
 	private boolean hasStarted = false;
 	private String errorMessage = null;
-	private FCResourceManager resourceManager;
+	private ResourceManager resourceManager;
 	
-	public BulkLoader(FCResourceManager resourceManager) {
+	public BulkLoader(ResourceManager resourceManager) {
 		super();
 		this.resourceManager = resourceManager;
 		this.allLines = new ArrayList<>();
@@ -30,7 +30,7 @@ public class BulkLoader {
 	}
 	
 	public void start(String resourceFile) throws IOException {
-		allLines = FCResourceManager.readAllLines(resourceFile);
+		allLines = ResourceManager.readAllLines(resourceFile);
 		expandLoadingDirs();
 		hasStarted = true;
 	}
@@ -81,6 +81,8 @@ public class BulkLoader {
 				{
 					if (file.getName().endsWith(".png"))
 						allLines.add("image," + file.getName().replace(".png", "") + "," + file.getPath());
+					if (file.getName().endsWith(".gif"))
+						allLines.add("image," + file.getName().replace(".gif", "") + "," + file.getPath());
 				}
 			}
 		}

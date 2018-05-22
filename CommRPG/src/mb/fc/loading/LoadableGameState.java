@@ -23,12 +23,12 @@ public abstract class LoadableGameState extends BasicGameState
 	
 	protected UIDebugMenu uiDebugMenu = new UIDebugMenu();
 	
-	protected Menu defaultPauseMenu = new PauseMenu();
+	protected Menu defaultPauseMenu;
 	protected Menu pauseMenu = null;
 	
 	protected float updateSpeed = 1.0f;
 
-	public abstract void stateLoaded(FCResourceManager resourceManager);
+	public abstract void stateLoaded(ResourceManager resourceManager);
 
 	public abstract void initAfterLoad();
 	
@@ -39,15 +39,19 @@ public abstract class LoadableGameState extends BasicGameState
 	private int inputTimer = 0;
 	
 	public boolean isPaused(GameContainer gc) {
-		if (gc.getInput().isKeyPressed(Input.KEY_ENTER))
+		if (gc.getInput().isKeyDown(Input.KEY_ENTER))
 		{
-			paused = !paused;
-			if (!paused) {
+			
+			if (paused) {
 				pauseMenuClosed();
 			}
 			else {
 				pauseMenu = getPauseMenu();
+				if (pauseMenu == null)
+					return false;
 			}
+			paused = !paused;
+			inputTimer = 500;
 		}
 		return paused;
 	}
@@ -89,8 +93,11 @@ public abstract class LoadableGameState extends BasicGameState
 		if (inputTimer > 0)
 			inputTimer -= delta;
 		
-		if (!isPaused(container)) {
-			if (inputTimer <= 0) {
+		if (inputTimer <= 0)
+			isPaused(container);
+		
+		if (!paused) {
+			if (inputTimer <= 0) {				
 				if (CommRPG.DEV_MODE_ENABLED && container.getInput().isKeyDown(Input.KEY_F11))
 				{
 					updateSpeed /= 2;
@@ -118,9 +125,7 @@ public abstract class LoadableGameState extends BasicGameState
 		}
 	}
 	
-	protected Menu getPauseMenu() {
-		return defaultPauseMenu;
-	}
+	protected abstract Menu getPauseMenu();
 	
 	protected void pauseMenuClosed() {
 		

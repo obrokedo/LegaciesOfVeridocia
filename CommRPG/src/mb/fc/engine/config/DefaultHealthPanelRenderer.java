@@ -8,11 +8,11 @@ import mb.fc.engine.CommRPG;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.ui.PaddedGameContainer;
-import mb.fc.loading.FCResourceManager;
+import mb.fc.loading.ResourceManager;
 import mb.fc.utils.StringUtils;
 
 public class DefaultHealthPanelRenderer implements HealthPanelRenderer {
-	public void displayHealthPanel(FCResourceManager fcrm, CombatSprite sprite, UnicodeFont panelFont, 
+	public void displayHealthPanel(ResourceManager fcrm, CombatSprite sprite, UnicodeFont panelFont, 
 			PaddedGameContainer gc, Graphics graphics, PanelLocation position)
 	{
 		// Determine panel width by max hp of entity

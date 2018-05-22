@@ -9,11 +9,11 @@ import mb.fc.engine.CommRPG;
 import mb.fc.game.hudmenu.Panel;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.ui.PaddedGameContainer;
-import mb.fc.loading.FCResourceManager;
+import mb.fc.loading.ResourceManager;
 import mb.fc.utils.StringUtils;
 
 public class LOVHealthPanelRenderer implements HealthPanelRenderer {
-	public void displayHealthPanel(FCResourceManager fcrm, CombatSprite sprite, UnicodeFont panelFont, 
+	public void displayHealthPanel(ResourceManager fcrm, CombatSprite sprite, UnicodeFont panelFont, 
 			PaddedGameContainer gc, Graphics graphics, PanelLocation position)
 	{
 		// Determine panel width by max hp of entity
@@ -71,9 +71,9 @@ public class LOVHealthPanelRenderer implements HealthPanelRenderer {
 	}
 	
 	private void drawStatBar(String statName, int currStat, int maxStat, int maxDigits,int barWidth, 
-			int xValueCoord, int xCoord, int yCoord, Graphics graphics, boolean isHero, FCResourceManager fcrm)
+			int xValueCoord, int xCoord, int yCoord, Graphics graphics, boolean isHero, ResourceManager fcrm)
 	{
-		SpriteSheet healthBar = fcrm.getSpriteSheet("healthbar");
+		
 		graphics.setColor(Color.white);
 		StringUtils.drawString(statName, xCoord, yCoord, graphics);
 		String currStatStr = "" + currStat;
@@ -91,6 +91,13 @@ public class LOVHealthPanelRenderer implements HealthPanelRenderer {
 		StringUtils.drawString(currStatStr + "/" + maxStatStr,
 				xValueCoord + 3, yCoord, graphics);
 		
+		SpriteSheet healthBar = fcrm.getSpriteSheet("healthbar");
+		renderBar(currStat, barWidth, xCoord, yCoord, graphics, healthBar);
+	}
+
+	// TODO Don't do this
+	public static void renderBar(int currStat, int barWidth, int xCoord, int yCoord, Graphics graphics,
+			SpriteSheet healthBar) {
 		graphics.drawImage(healthBar.getSprite(3, 0).getScaledCopy(barWidth - 2, 8), xCoord + 18, yCoord + 10);
 		
 		int barIndex = 0;

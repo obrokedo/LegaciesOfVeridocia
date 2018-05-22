@@ -26,7 +26,7 @@ import mb.fc.game.hudmenu.SpriteContextPanel;
 import mb.fc.game.item.EquippableItem;
 import mb.fc.game.item.Item;
 import mb.fc.game.resource.ItemResource;
-import mb.fc.loading.FCResourceManager;
+import mb.fc.loading.ResourceManager;
 import mb.fc.utils.AnimSprite;
 import mb.fc.utils.Animation;
 
@@ -285,7 +285,7 @@ public class CombatSprite extends AnimatedSprite
 
 	//TODO Need to have a way to init a sprite without resetting stats
 	@Override
-	public void initializeSprite(FCResourceManager fcrm)
+	public void initializeSprite(ResourceManager fcrm)
 	{
 		super.initializeSprite(fcrm);
 
@@ -952,7 +952,7 @@ public class CombatSprite extends AnimatedSprite
 		this.attackEffectLevel = attackEffectLevel;
 	}
 
-	public void initializeBattleAttributes(FCResourceManager frm)
+	public void initializeBattleAttributes(ResourceManager frm)
 	{
 		for (BattleEffect be : this.battleEffects)
 			be.initializeAnimation(frm);

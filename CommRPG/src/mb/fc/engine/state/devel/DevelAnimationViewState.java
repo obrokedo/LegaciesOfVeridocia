@@ -21,14 +21,14 @@ import mb.fc.game.battle.spell.SpellDefinition;
 import mb.fc.game.ui.ListUI;
 import mb.fc.game.ui.ListUI.ResourceSelectorListener;
 import mb.fc.game.ui.ResourceSelector;
-import mb.fc.loading.FCResourceManager;
+import mb.fc.loading.ResourceManager;
 import mb.fc.utils.AnimationWrapper;
 
 public class DevelAnimationViewState extends BasicGameState implements ResourceSelectorListener
 {
 	private ResourceSelector animationFileSelector, weaponSelector; //, spellSelector;
 	private ListUI animationSelector;
-	private FCResourceManager frm;
+	private ResourceManager frm;
 	private int updateDelta;
 	private AnimationWrapper currentAnimation;
 	private Rectangle playRect = new Rectangle(350, 675, 100, 30);
@@ -42,9 +42,9 @@ public class DevelAnimationViewState extends BasicGameState implements ResourceS
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
-		animationFileSelector = new ResourceSelector("Animations", 0, true, FCResourceManager.ANIMATIONS_FOLDER, FCResourceManager.ANIMATIONS_EXTENSION, container);
+		animationFileSelector = new ResourceSelector("Animations", 0, true, ResourceManager.ANIMATIONS_FOLDER, ResourceManager.ANIMATIONS_EXTENSION, container);
 		animationFileSelector.setListener(this);
-		weaponSelector = new ResourceSelector("Weapons", 300, true, FCResourceManager.WEAPONS_FOLDER, FCResourceManager.WEAPONS_EXTENSION, container);
+		weaponSelector = new ResourceSelector("Weapons", 300, true, ResourceManager.WEAPONS_FOLDER, ResourceManager.WEAPONS_EXTENSION, container);
 		weaponSelector.setListener(this);
 		//spellSelector = new ResourceSelector("Spells",  0,  false, "scripts/Spellz", ".py", container);
 		//spellSelector.setListener(this);
@@ -55,10 +55,10 @@ public class DevelAnimationViewState extends BasicGameState implements ResourceS
 			throws SlickException {
 		super.enter(container, game);
 		commRPG = (CommRPG) game;
-		frm = new FCResourceManager();
+		frm = new ResourceManager();
 		try {
-			frm.addResource(FCResourceManager.ANIMATIONS_FOLDER_IDENTIFIER + "," + FCResourceManager.ANIMATIONS_FOLDER, CommRPG.engineConfiguratior);
-			frm.addResource(FCResourceManager.IMAGES_FOLDER_IDENTIFIER + "," + FCResourceManager.WEAPONS_FOLDER, CommRPG.engineConfiguratior);
+			frm.addResource(ResourceManager.ANIMATIONS_FOLDER_IDENTIFIER + "," + ResourceManager.ANIMATIONS_FOLDER, CommRPG.engineConfiguratior);
+			frm.addResource(ResourceManager.IMAGES_FOLDER_IDENTIFIER + "," + ResourceManager.WEAPONS_FOLDER, CommRPG.engineConfiguratior);
 			frm.addResource("spritedir,sprite", CommRPG.engineConfiguratior);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -159,7 +159,7 @@ public class DevelAnimationViewState extends BasicGameState implements ResourceS
 		if (parentSelector == animationFileSelector)
 		{
 			try {
-				frm.addResource(FCResourceManager.ANIMATION_IDENTIFIER + "," + selectedItem + "," + FCResourceManager.ANIMATIONS_FOLDER + "/" + selectedItem, 
+				frm.addResource(ResourceManager.ANIMATION_IDENTIFIER + "," + selectedItem + "," + ResourceManager.ANIMATIONS_FOLDER + "/" + selectedItem, 
 						CommRPG.engineConfiguratior);
 				currentAnimation = new AnimationWrapper(frm.getSpriteAnimation(selectedItem));
 				ArrayList<String> animNames = new ArrayList<>(currentAnimation.getAnimations());
@@ -193,7 +193,7 @@ public class DevelAnimationViewState extends BasicGameState implements ResourceS
 		{
 			if (currentAnimation != null)
 			{
-				currentAnimation.setWeapon(frm.getImage(selectedItem.replace(FCResourceManager.WEAPONS_EXTENSION, "")));
+				currentAnimation.setWeapon(frm.getImage(selectedItem.replace(ResourceManager.WEAPONS_EXTENSION, "")));
 			}
 		}
 		/*
