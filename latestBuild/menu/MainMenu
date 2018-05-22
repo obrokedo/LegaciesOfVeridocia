@@ -2,3 +2,5 @@ imagedir,image/mainmenu
 itemdefs,/definitions/Items
 herodefs,/definitions/Heroes
 music,lovtheme,music/lovtheme.ogg
+sound,menumove,sound/menumove.wav
+sound,menuselect,sound/menuselect.wav

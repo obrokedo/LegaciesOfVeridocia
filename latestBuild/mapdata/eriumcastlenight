@@ -503,7 +503,7 @@
 	<forcedmove name="Olivia" x=1080 y=240 speed="2" facing=2 movehor=false movediag=false/>
 	<forcedmove name="Craig" x=1080 y=240 speed="2" facing=2 movehor=false movediag=false/>
 	<fadeout time=1000 halting=true/>
-	<loadmap mapdata="erium" enter="AfterPrisionEntrance"/>
+	<showcredits/>
 </cinematic>
 <condition id=0 description="MapLoad" triggerid=0>
 	<maploaded/>
