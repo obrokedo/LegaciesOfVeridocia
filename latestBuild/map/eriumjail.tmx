@@ -16,7 +16,7 @@
  <tileset firstgid="1596" name="overworld(night)-Master" tilewidth="12" tileheight="12" tilecount="1296" columns="36">
   <image source="../image/overworld(night)-Master.png" trans="495d47" width="432" height="432"/>
  </tileset>
- <tileset firstgid="2892" name="Castle Night" tilewidth="12" tileheight="12" tilecount="900" columns="25">
+ <tileset firstgid="2892" name="Castle Night" tilewidth="12" tileheight="12" tilecount="0" columns="25">
   <image source="../../../Dropbox/LoV Staff Resources/image/castletown(night)-Master.png" trans="495d47" width="300" height="440"/>
  </tileset>
  <layer name="BG" width="66" height="34">
@@ -26,7 +26,7 @@
  </layer>
  <layer name="BG Shadow" width="66" height="34">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACu3OoQEAAAQAMMXLznGrBxRNWFhfZUQBAAAc9YMDAAAAAABsBrCQn+oQIwAA
+   H4sIAAAAAAAACu3YwQ2DMAxA0VyyMkPADmGJQleg7QoUVsGo4tJDWpygEvc/KTccKXZkrDgHAOXovXNXvz/uIjGdIu6s7nKWh+I8g8TcDOUBgH3W+rcW/RsAkKryr5X63bf7YJ81p03GvI6y15M6/b3tHnAfgDjte6M1n94b6wNz1BaU/20WSvlvv/fl4OMzVmD+KsZa20nW/IN65Z4nAcCKBSalOawQIwAA
   </data>
  </layer>
  <layer name="MG" width="66" height="34">
@@ -46,7 +46,12 @@
  </layer>
  <layer name="FG Shadow" width="66" height="34">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACu2X3QkCMRCE98G0dRXYgRYipyX4czWohbovBxEkzmy4I5r5IASW2WHJQyYxEyhjMjv6OqVyjfVhPHJttC8698zVe26+plSusT6MR66N9kXnnrl7z8PXM5VrrA/jkWujfdG5hdmw4fRbUv8LHNL7/k2HaIUQ7VHzbliCHXiforo9qKt5N/wTS70blA9CiE+wdwOSWTV/6ajP2iCZVfOXjvqsDZJZNX/pqE/PnP18LjojIWiYfEOyqeUMK8HkG5JNLWdYCSbfkGxShvWDclgIIUSPvACw3nP1ECMAAA==
+   H4sIAAAAAAAACu3OoQEAAAQAMMXLznGrBxRNWFhfZUQBAAAc9YMDAAAAAABsBrCQn+oQIwAA
+  </data>
+ </layer>
+ <layer name="Lights" width="66" height="34">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu1ZS27CMBCdjc8QcYuKWwCnaE+BWo4AtF2065ay6gKuyKDI0tT1ZzxOHCfxk0Yo4c1keHLyPKEBgA+MdU/x2XP9LvpbYDxgLMGPZwXwgrFT/nM20PpmDreGyZXmvVuuqfvj6HDEnFeMN+U/Z8MKY+PI4dYwudK8X8s1Y3Q4Yc4Pxln5z4Vg5sTUoFxpnu04Rocpo+rQwqfDVv39dIF+7+I20D6PS0Wu9VD6esupwyN0t8/omvcEZa2HvnmuPUdp90XfPNeeY246uPYcqTqEvMTVT6m8uayHEK/qUJZvXjEuHfP0fBfqT6oD99lArxOak6WzdEod2l+u+yI0J0tn6ZQ6tL9cOoTm5JRZWlqH9lfKczIX9qjPgWg0Vx2+UIPvqsM/UB04viYNrn8NBdt64HiO5nC8KdbDhoBNB47naA7Hm2I9bAjYdOB4juZwvEnyTjs36nvaFqk6mD48VqTqYPrwWFHvixb699//f+TMsVON0vc3FRVD4gbhhkcuECMAAA==
   </data>
  </layer>
  <layer name="Roof" width="66" height="34">
