@@ -182,7 +182,7 @@
 	<facing name="Olivia" dir=1/>
 	<speech text="Good.<pause> You've finally rescued them.<softstop> You know I can't maintain this spell indefinitely, Craig.<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait=""/>
 	<speech text="Um,<pause> excuse me,<pause> but who are you?<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
-	<speech text="Oh, forgive us dear, we're<pause>.<pause>.<pause>.<nextcin><nextcin><softstop> no good, there it goes.<pause> We must make haste!<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait=""/>
+	<speech text="Oh, forgive us dear, we're<pause>.<pause>.<pause>.<nextcin><nextcin><nextcin><nextcin><nextcin><nextcin><nextcin><nextcin><nextcin><softstop> no good, there it goes.<pause> We must make haste!<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait=""/>
 	<removeactor name="Fire1"/>
 	<removeactor name="Fire2"/>
 	<removeactor name="Fire3"/>
