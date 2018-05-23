@@ -1,4 +1,4 @@
-<map file="EriumNEW.tmx"/>
+<map file="Erium.tmx"/>
 <trigger id=0 description="MapStart" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<playmusic music="erium"/>
 </trigger>
@@ -160,7 +160,7 @@
 	<string require="Battle2," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="I see guards up ahead. We should avoid getting seen.<hardstop>"/>
 </text>
 <text id=20 description="Codger1">
-	<string require="Codger1spokento," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="Have you been through his house yet?<softstop> HEEHEEHEEHAHAHAHA!!!"/>
+	<string require="Codger1spokento," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="Have you been through his house yet?<softstop> HEEHEEHEEHAHAHAHA!!!<hardstop>"/>
 	<conversation require="," exclude="," trigger=30 heroportrait1="" enemyportrait1="" animportrait1="" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="This house was built before the cave connecting us to Signus was overrun by goblins.<softstop> The owner finally had to settle here since he couldn't get back through!<hardstop><split>I remember that!<pause> I was just a boy when they built it.<hardstop><split>Yeah, well it messed up the whole flow of the town!<softstop> I've been telling him to cut this darn tree down so people can get 'round, but he won't budge!<hardstop><split>It is kind of annoying,<pause> now that you mention it.<hardstop><split>Not to worry, sonny.<pause> I've been telling everyone to go through his house until he cuts it down.<softstop><linebreak> Reckon that'll teach him!<pause><linebreak> HEEHEEHEEHEEHAHAHAHA!<hardstop>"/>
 </text>
 <text id=21 description="Codger2">
