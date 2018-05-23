@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="66" height="34" tilewidth="12" tileheight="12" infinite="0" nextobjectid="61">
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="66" height="34" tilewidth="12" tileheight="12" infinite="0" nextobjectid="62">
  <properties>
   <property name="background" value="1"/>
   <property name="shadow" value="13"/>
@@ -144,7 +144,7 @@
    <polyline points="0,0 72,0 72,-24 24,-24 24,-96 120,-96 120,-24 96,-24 96,0 168,0 168,-24 144,-24 144,-96 240,-96 240,-24 192,-24 192,0 264,0 264,48 240,48 240,72 192,72 192,24 72,24 72,72 48,72 48,48 0,48 0,0"/>
   </object>
  </objectgroup>
- <objectgroup name="Trigger Regions" visible="0">
+ <objectgroup name="Trigger Regions">
   <object id="50" name="SecondWave" x="312" y="228" width="120" height="168">
    <properties>
     <property name="" value=""/>
@@ -165,6 +165,9 @@
     <property name="" value=""/>
    </properties>
    <polyline points="3,14 3,86 -477,86 -477,254 -741,254 -741,14 3,14"/>
+  </object>
+  <object id="61" name="Bottom Half" x="24" y="288">
+   <polyline points="0,0 288,0 288,-60 648,-60 648,-168 744,-168 744,72 744,108 0,108 0,0"/>
   </object>
  </objectgroup>
  <objectgroup name="Meta" visible="0">

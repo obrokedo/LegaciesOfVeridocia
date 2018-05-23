@@ -3,52 +3,34 @@
 	<playmusic music="battle1"/>
 </trigger>
 <trigger id=1 description="Trigger Second Wave" require="," exclude="," nonretrig=true retrigonenter=false triggeronce=false triggerimmediately=false>
-	<changeaiapproach aitype=1 id=8/>
-	<changeaiapproach aitype=1 id=9/>
-	<changeaiapproach aitype=1 id=10/>
-	<changeaiapproach aitype=1 id=11/>
+	<changeaiapproach id=8 aitype=1 priority=0/>
+	<changeaiapproach id=9 aitype=1 priority=0/>
+	<changeaiapproach id=10 aitype=1 priority=0/>
+	<changeaiapproach id=11 aitype=1 priority=0/>
 </trigger>
 <trigger id=2 description="Trigger Third Wave" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<changeaiapproach aitype=1 id=12/>
-	<changeaiapproach aitype=0 id=13/>
-	<changeaiapproach aitype=0 id=14/>
-	<changeaiapproach aitype=1 id=15/>
-	<changeaimove id=17 x=30 y=13/>
-	<changeaimove id=16 x=30 y=11/>
+	<changeaiapproach id=12 aitype=1 priority=0/>
+	<changeaiapproach id=13 aitype=0 priority=0/>
+	<changeaiapproach id=14 aitype=0 priority=0/>
+	<changeaiapproach id=15 aitype=1 priority=0/>
+	<changeaimove id=17 x=30 y=13 priority=0/>
+	<changeaimove id=16 x=30 y=11 priority=0/>
 </trigger>
-<trigger id=3 description="Capitan Killed" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=true triggerimmediately=false>
-	<killenemies unitid=4/>
-	<killenemies unitid=5/>
-	<killenemies unitid=6/>
-	<killenemies unitid=7/>
-	<killenemies unitid=8/>
-	<killenemies unitid=9/>
-	<killenemies unitid=10/>
-	<killenemies unitid=11/>
-	<killenemies unitid=12/>
-	<killenemies unitid=13/>
-	<killenemies unitid=14/>
-	<killenemies unitid=15/>
-	<killenemies unitid=16/>
-	<killenemies unitid=17/>
-	<killenemies unitid=18/>
-</trigger>
-<trigger id=4 description="Noah Exit" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=true triggerimmediately=false>
+<trigger id=3 description="Noah Exit" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=true triggerimmediately=false>
 	<showcin cinid=1 exittrigid=-1/>
 </trigger>
-<trigger id=5 description="Noah First" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=true triggerimmediately=false>
+<trigger id=4 description="Noah First" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=true triggerimmediately=false>
 	<completequest questid="Battle2"/>
 	<loadcin mapdata="eriumcastlenight" cinid=3/>
 </trigger>
-<trigger id=6 description="Craig First" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=true triggerimmediately=false>
+<trigger id=5 description="Craig First" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=true triggerimmediately=false>
 	<completequest questid="Battle2"/>
 	<loadcin mapdata="eriumcastlenight" cinid=2/>
 </trigger>
-<trigger id=7 description="Craig And Olivia scene" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=true triggerimmediately=false>
-	<runtriggers triggers=3,/>
+<trigger id=6 description="Craig And Olivia scene" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=true triggerimmediately=false>
 	<showcin cinid=0 exittrigid=-1/>
 </trigger>
-<trigger id=8 description="Fail Result" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=true triggerimmediately=false>
+<trigger id=7 description="Fail Result" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=true triggerimmediately=false>
 	<reviveheroes hero="Craig"/>
 	<reviveheroes hero="Noah"/>
 	<loadmap mapdata="eriumjail" enter="JailBattleFail" transdir=""/>
@@ -100,32 +82,28 @@
 <condition id=1 description="EnterBottomRight" triggerid=2>
 	<enterloc location="ThirdWave" immediate=false/>
 </condition>
-<condition id=2 description="Capitan Killed Noah Alive" triggerid=7>
-	<enemydeath unitid=18/>
+<condition id=2 description="Bottom Half Killed Noah Alive" triggerid=6>
 	<heroinbat id="Noah"/>
+	<loccontains location="Bottom Half" enemy=true operator="Equals" amount=0/>
 </condition>
-<condition id=3 description="Top Half Killed Craig Alive" triggerid=4>
+<condition id=3 description="Top Half Killed Craig Alive" triggerid=3>
 	<loccontains location="Noah Half" enemy=true operator="Equals" amount=0/>
 	<heroinbat id="Craig"/>
 </condition>
-<condition id=4 description="Noah Die" triggerid=8>
+<condition id=4 description="Noah Die" triggerid=7>
 	<herodeath unitid="Noah"/>
 </condition>
-<condition id=5 description="Craig Die" triggerid=8>
+<condition id=5 description="Craig Die" triggerid=7>
 	<herodeath unitid="Craig"/>
 </condition>
 <condition id=6 description="MapLoad" triggerid=0>
 	<maploaded/>
 </condition>
-<condition id=7 description="Captain Killed Noah Gone" triggerid=3>
-	<loccontains location="Noah Half" enemy=true operator="Equals" amount=0/>
-	<enemydeath unitid=7/>
-</condition>
-<condition id=8 description="Battle Won Noah First" triggerid=5>
+<condition id=7 description="Battle Won Noah First" triggerid=4>
 	<enemremain operator="Equals" amount=0/>
 	<heroinbat id="Craig"/>
 </condition>
-<condition id=9 description="Battle Won Craig First" triggerid=6>
+<condition id=8 description="Battle Won Craig First" triggerid=5>
 	<enemremain operator="Equals" amount=0/>
 	<heroinbat id="Noah"/>
 </condition>
