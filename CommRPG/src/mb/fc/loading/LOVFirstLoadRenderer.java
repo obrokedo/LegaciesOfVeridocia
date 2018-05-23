@@ -11,6 +11,8 @@ import mb.fc.game.ui.PaddedGameContainer;
 
 public class LOVFirstLoadRenderer extends LOVLoadRenderer {
 	private Music loadingMusic;
+	private int waitTime = 1500;
+	private boolean doneLoading = false;
 	
 	public LOVFirstLoadRenderer(GameContainer container, Music loadingMusic) {
 		super(container);
@@ -25,10 +27,18 @@ public class LOVFirstLoadRenderer extends LOVLoadRenderer {
 
 	@Override
 	public void doneLoading() {
-		if (loadingMusic != null) {
-			loadingMusic.fade(500, 0f, true);
-			loadingMusic = null;
+		if (!doneLoading) {
+			if (loadingMusic != null) {
+				loadingMusic.fade(1500, 0f, true);
+				loadingMusic = null;
+			}
+			doneLoading = true;
 		}
+	}
+
+	@Override
+	public boolean canTransition(int delta) {
+		return (waitTime -= delta) < 0;
 	}
 
 	private void drawCredits(Graphics g) {

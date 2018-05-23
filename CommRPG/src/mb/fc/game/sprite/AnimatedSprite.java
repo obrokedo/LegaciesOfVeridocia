@@ -19,7 +19,8 @@ public class AnimatedSprite extends Sprite
 {
 	private static final long serialVersionUID = 1L;
 
-	public final transient static Color SHADOW_COLOR = new Color(0, 0, 0, 120);
+	public final transient static Color DEFAULT_SHADOW_COLOR = new Color(0, 0, 0, 120);
+	public static Color SHADOW_COLOR = new Color(0, 0, 0, 120);
 	public static int SHADOW_OFFSET = 13;
 	public static final int DEFAULT_SHADOW_OFFSET = 13;
 

@@ -33,6 +33,8 @@ import mb.fc.game.dev.DevParams;
 import mb.fc.game.persist.ClientProfile;
 import mb.fc.game.persist.ClientProgress;
 import mb.fc.game.ui.PaddedGameContainer;
+import mb.fc.loading.LOVLoadRenderer;
+import mb.fc.loading.LOVLogoLoadRenderer;
 import mb.fc.loading.LoadableGameState;
 import mb.fc.loading.LoadingScreenRenderer;
 import mb.fc.loading.LoadingState;
@@ -268,6 +270,8 @@ public class CommRPG extends StateBasedGame   {
 						System.exit(0);
 					}
 					
+					container.setIcons(new String[] {"image/engine/SomeIcon16.png", "image/engine/SomeIcon32.png"});
+					
 					container.setShowFPS(true);
 					container.setVSync(true);
 					container.setAlwaysRender(true);
@@ -295,7 +299,6 @@ public class CommRPG extends StateBasedGame   {
 	@Override
 	public void initStatesList(GameContainer gameContainer) throws SlickException
 	{
-		System.out.println("INIT STATE LIST");
 		GlobalPythonFactory.intialize();
 		loadingState = new LoadingState(STATE_GAME_LOADING);
 		this.addState(new MenuState(persistentStateInfo));
@@ -356,7 +359,7 @@ public class CommRPG extends StateBasedGame   {
 		loadingState.setLoadingInfo("/menu/MainMenu", false, true,
 				new ResourceManager(),
 					(LoadableGameState) this.getState(STATE_GAME_MENU),
-						new LoadingScreenRenderer(gameContainer));
+						new LOVLogoLoadRenderer(gameContainer));
 		
 		// TESTER ONLY MODE
 		/*

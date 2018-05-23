@@ -5,6 +5,8 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
 import mb.fc.engine.CommRPG;
+import mb.fc.engine.message.AudioMessage;
+import mb.fc.engine.message.MessageType;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.Timer;
 import mb.fc.game.battle.spell.KnownSpell;
@@ -55,8 +57,10 @@ public class HeroStatMenu extends Menu
 
 	@Override
 	public MenuUpdate handleUserInput(FCInput input, StateInfo stateInfo) {
-		if (input.isKeyDown(KeyMapping.BUTTON_2))
+		if (input.isKeyDown(KeyMapping.BUTTON_2)) {
+			stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, "menuback", 1f, false));
 			return MenuUpdate.MENU_CLOSE;
+		}
 		return MenuUpdate.MENU_NO_ACTION;
 	}
 

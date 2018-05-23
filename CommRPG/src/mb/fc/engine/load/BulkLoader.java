@@ -63,14 +63,14 @@ public class BulkLoader {
 				{
 					if (file.getName().endsWith(".png"))
 					{
-						allLines.add("image," + file.getName().replace(".png", "") + "," + file.getPath());
+						allLines.add("image," + file.getName().replace(".png", "") + "," + file.getPath().replaceAll("\\\\", "/"));
 					}
 				}
 				
 				for (File file : DirectoryLister.listFilesInDir(split[1]))
 				{
 					if (file.getName().endsWith(".anim")) {
-						allLines.add("anim," + file.getName().replace(".anim", "") + "," + file.getPath());
+						allLines.add("anim," + file.getName().replace(".anim", "") + "," + "/" + file.getPath().replaceAll("\\\\", "/"));
 					}
 				}
 			}
@@ -80,12 +80,18 @@ public class BulkLoader {
 				for (File file : DirectoryLister.listFilesInDir(split[1]))
 				{
 					if (file.getName().endsWith(".png"))
-						allLines.add("image," + file.getName().replace(".png", "") + "," + file.getPath());
+						allLines.add("image," + file.getName().replace(".png", "") + "," + file.getPath().replaceAll("\\\\", "/"));
 					if (file.getName().endsWith(".gif"))
-						allLines.add("image," + file.getName().replace(".gif", "") + "," + file.getPath());
+						allLines.add("image," + file.getName().replace(".gif", "") + "," + file.getPath().replaceAll("\\\\", "/"));
 				}
 			}
 		}
+	}
+	
+	public static void main(String args[]) {
+		File f = new File("Apple/Man/Dog/Frame");
+		System.out.println(f.getAbsolutePath().replaceAll("\\\\", "/"));
+		System.out.println(f.getAbsolutePath());
 	}
 
 	private void loadSoundOrMusic(String[] split, String type) {

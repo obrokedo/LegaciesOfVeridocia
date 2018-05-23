@@ -6,6 +6,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 import mb.fc.engine.CommRPG;
+import mb.fc.engine.message.AudioMessage;
 import mb.fc.engine.message.MessageType;
 import mb.fc.engine.message.SpriteContextMessage;
 import mb.fc.engine.state.StateInfo;
@@ -16,6 +17,7 @@ import mb.fc.game.item.Item.ItemDurability;
 import mb.fc.game.listener.MenuListener;
 import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.ui.PaddedGameContainer;
+import mb.fc.network.message.PlayerListMessage;
 import mb.fc.utils.StringUtils;
 
 public class HeroesStatMenu extends Menu
@@ -232,26 +234,31 @@ public class HeroesStatMenu extends Menu
 	{
 		if (input.isKeyDown(KeyMapping.BUTTON_UP))
 		{
+			stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, "menumove", 1f, false));
 			return onUp(stateInfo);
 		}
 		else if (input.isKeyDown(KeyMapping.BUTTON_DOWN))
 		{
+			stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, "menumove", 1f, false));
 			return onDown(stateInfo);
 		}
 		else if (input.isKeyDown(KeyMapping.BUTTON_LEFT))
 		{
+			stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, "menumove", 1f, false));
 			return onLeft(stateInfo);
 		}
 		else if (input.isKeyDown(KeyMapping.BUTTON_RIGHT))
 		{
+			stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, "menumove", 1f, false));
 			return onRight(stateInfo);
 		}
 		else if (input.isKeyDown(KeyMapping.BUTTON_2))
 		{
+			stateInfo.sendMessage(new AudioMessage(MessageType.SOUND_EFFECT, "menuback", 1f, false));
 			return onBack(stateInfo);
 		}
 		else if (input.isKeyDown(KeyMapping.BUTTON_1) || input.isKeyDown(KeyMapping.BUTTON_3))
-		{
+		{			
 			return onConfirm(stateInfo);
 		}
 
@@ -327,5 +334,19 @@ public class HeroesStatMenu extends Menu
 	@Override
 	public boolean displayWhenNotTop() {
 		return false;
+	}
+	
+
+
+	@Override
+	public boolean makeAddSounds() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean makeRemoveSounds() {
+		// TODO Auto-generated method stub
+		return true;
 	}
 }

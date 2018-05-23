@@ -398,7 +398,7 @@ public class CombatSprite extends AnimatedSprite
 		renderDirect(xPos, yPos, camera, graphics, cont, tileHeight);
 	}
 	
-	public void renderDirect(float xPos, float yPos, Camera camera, Graphics graphics, GameContainer cont, int tileHeight) {
+	public void renderDirect(float xPos, float yPos, Camera camera, Graphics graphics, GameContainer cont, int tileHeight) {		
 		for (AnimSprite as : currentAnim.frames.get(imageIndex).sprites)
 		{
 			Image im = spriteAnims.getImageAtIndex(as.imageIndex);

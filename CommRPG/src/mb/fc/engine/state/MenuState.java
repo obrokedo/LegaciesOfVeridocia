@@ -24,6 +24,7 @@ import mb.fc.game.ui.PaddedGameContainer;
 import mb.fc.loading.LoadingScreenRenderer;
 import mb.fc.loading.ResourceManager;
 import mb.fc.loading.LOVFirstLoadRenderer;
+import mb.fc.loading.LOVLoadRenderer;
 import mb.fc.loading.LoadableGameState;
 import mb.fc.loading.LoadingState;
 
@@ -244,7 +245,7 @@ public class MenuState extends LoadableGameState
 				((LoadingState) game.getState(CommRPG.STATE_GAME_LOADING)).setLoadingInfo("/menu/MainMenu", false, true,
 						new ResourceManager(),
 							(LoadableGameState) game.getState(CommRPG.STATE_GAME_MENU_DEVEL),
-								new LoadingScreenRenderer(gc));
+								new LOVLoadRenderer(gc));
 
 				game.enterState(CommRPG.STATE_GAME_LOADING);
 			}
@@ -272,9 +273,19 @@ public class MenuState extends LoadableGameState
 					else if (menuIndex == 1)
 					{
 						LoadTypeEnum loadType = LoadTypeEnum.TOWN;
-						if (persistentStateInfo.getClientProgress().isBattle())
-							loadType = LoadTypeEnum.BATTLE;
-						start(loadType, persistentStateInfo.getClientProgress().getMapData(), null);
+						if (persistentStateInfo.getClientProfile().getHeroes().size() > 0) {
+							if (persistentStateInfo.getClientProgress().isBattle())
+								loadType = LoadTypeEnum.BATTLE;
+							start(loadType, persistentStateInfo.getClientProgress().getMapData(), null);
+						} else {
+							// Clobber existing save data...
+							persistentStateInfo.getClientProfile().initializeValues();
+							persistentStateInfo.getClientProgress().initializeValues();
+							// persistentStateInfo.getClientProfile().serializeToFile();
+							// persistentStateInfo.getClientProgress().serializeToFile();
+							start(LoadTypeEnum.valueOf(jcv.getStartingState()), 
+									jcv.getStartingMapData(), jcv.getStartingLocation());
+						}
 					}
 					else if (menuIndex == 2)
 					{

@@ -40,4 +40,9 @@ public class LoadingScreenRenderer
 	public void initialize() throws SlickException {
 		
 	}
+	
+	public boolean canTransition(int delta) 
+	{
+		return true;
+	}
 }

@@ -19,6 +19,7 @@ import mb.fc.game.sprite.CombatSprite;
 import mb.fc.game.ui.PaddedGameContainer;
 import mb.fc.loading.LoadingScreenRenderer;
 import mb.fc.loading.ResourceManager;
+import mb.fc.loading.LOVLoadRenderer;
 import mb.fc.loading.LoadableGameState;
 import mb.fc.loading.LoadingState;
 import mb.fc.network.TCPClient;

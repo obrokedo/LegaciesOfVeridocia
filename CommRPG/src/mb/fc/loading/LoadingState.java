@@ -4,7 +4,6 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -133,7 +132,7 @@ public class LoadingState extends BasicGameState
 			bulkLoader.update();
 		}
 
-		loadIndex++;
+		
 		
 		if (loadingStatus != null)
 		{
@@ -146,32 +145,38 @@ public class LoadingState extends BasicGameState
 		
 		if (bulkLoader.isDone())
 		{
-			bulkLoader = null;
-			
-			// This is the entry point into the actual game. Initialize static variables here
-			if (loadingMap && loadResources)
-			{
-				CommRPG.engineConfiguratior.initialize();
-				Panel.intialize(resourceManager);
-				SpellResource.initSpells(resourceManager);
-
-				loadIndex = loadAmount;
-			}
-
-			// Only alert the loadable state if resources are being loaded. If they are not being loaded
-			// then map data will be updated in the current resource manager
-			if (loadResources)	
-				nextState.stateLoaded(resourceManager);
-			nextState.initAfterLoad();
-			
 			loadingRenderer.doneLoading();
 			
-			if (enterNextStateTransition == null)
-				game.enterState(nextState.getID(), new EmptyTransition(), new FadeInTransition(Color.black, 500));
-			else
-				game.enterState(nextState.getID(), new EmptyTransition(), enterNextStateTransition);
+			if (intermediateImage != null || loadingRenderer.canTransition(delta)) {
+				bulkLoader = null;
+				
+				// This is the entry point into the actual game. Initialize static variables here
+				if (loadingMap && loadResources)
+				{
+					CommRPG.engineConfiguratior.initialize();
+					Panel.intialize(resourceManager);
+					SpellResource.initSpells(resourceManager);
+	
+					loadIndex = loadAmount;
+				}
+	
+				// Only alert the loadable state if resources are being loaded. If they are not being loaded
+				// then map data will be updated in the current resource manager
+				if (loadResources)	
+					nextState.stateLoaded(resourceManager);
+				nextState.initAfterLoad();
+				
+				loadingRenderer.doneLoading();
+				
+				if (enterNextStateTransition == null)
+					game.enterState(nextState.getID(), new EmptyTransition(), new FadeInTransition(Color.black, 500));
+				else
+					game.enterState(nextState.getID(), new EmptyTransition(), enterNextStateTransition);
+			}
 		}
-		
+		else {
+			loadIndex++;
+		}		
 	}
 	
 	public void setLoadingInfo(String textName, boolean loadMap, boolean loadResources,

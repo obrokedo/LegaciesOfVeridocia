@@ -39,7 +39,7 @@ public class DirectoryLister {
 		    	if (listedUri.toString() != null && !listedUri.toString().endsWith(dir)) {
 		    		String uriS = listedUri.toString();		    		
 		    		int index = uriS.indexOf("!");
-		    		files.add(new File(uriS.substring(index + 1).replaceAll("%20", " ")));
+		    		files.add(new File(uriS.substring(index + 2).replaceAll("%20", " ")));
 		    	}
 		    		
 		    }

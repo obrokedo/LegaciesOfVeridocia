@@ -59,6 +59,7 @@ public class MapParser
 		String tileSet = null;
 		// This is kind of a kludge...
 		AnimatedSprite.SHADOW_OFFSET = AnimatedSprite.DEFAULT_SHADOW_OFFSET;
+		AnimatedSprite.SHADOW_COLOR = AnimatedSprite.DEFAULT_SHADOW_COLOR;
 
 
 		if (map instanceof PlannerMap)
@@ -231,6 +232,18 @@ public class MapParser
 						try
 						{
 							AnimatedSprite.SHADOW_OFFSET = Integer.parseInt(prop.getAttribute("value"));
+						}
+						catch (Throwable t)
+						{
+							throw new BadMapException("The map " + mapFile + " had a non-integer value specified for the shadow property. Value was: " + prop.getAttribute("value"));
+						}
+					}
+					
+					else if (propName.equalsIgnoreCase("shadow-opacity"))
+					{
+						try
+						{
+							AnimatedSprite.SHADOW_COLOR = new Color(0, 0, 0, Integer.parseInt(prop.getAttribute("value")));
 						}
 						catch (Throwable t)
 						{

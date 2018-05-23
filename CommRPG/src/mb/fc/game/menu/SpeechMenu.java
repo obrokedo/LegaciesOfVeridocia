@@ -317,7 +317,8 @@ public class SpeechMenu extends Menu
 							if (portrait != null)
 								if (nextLetter.equalsIgnoreCase(".") || 
 										nextLetter.equalsIgnoreCase("!") || nextLetter.equalsIgnoreCase("?")) {
-									portrait.stopTalkingAfterAnimationComplete();
+									if (portrait.isTalking())
+										portrait.stopTalkingAfterAnimationComplete();
 								} else {
 									portrait.setTalking(true);
 								}
@@ -334,7 +335,11 @@ public class SpeechMenu extends Menu
 			if (waitUntil != -1 && waitUntil <= System.currentTimeMillis())
 			{
 				textMoving = true;
-				if (portrait != null)
+				String nextLetter = "";
+				if (panelText.get(textIndex).length() > textMovingIndex + 1) 
+					nextLetter = panelText.get(textIndex).substring(textMovingIndex, textMovingIndex + 1);
+				if (portrait != null && !nextLetter.equalsIgnoreCase(".") && 
+						!nextLetter.equalsIgnoreCase("!") && !nextLetter.equalsIgnoreCase("?"))
 					portrait.setTalking(true);
 				waitUntil = -1;
 				linesSincePause = 0;
