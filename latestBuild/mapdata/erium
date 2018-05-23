@@ -1,4 +1,4 @@
-<map file="Erium.tmx"/>
+<map file="EriumNEW.tmx"/>
 <trigger id=0 description="MapStart" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<playmusic music="erium"/>
 </trigger>
@@ -94,6 +94,9 @@
 	<showtext textid=19/>
 	<showcin cinid=6 exittrigid=-1/>
 </trigger>
+<trigger id=30 description="Codger1Spokento" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<completequest questid="Codger1spokento"/>
+</trigger>
 <text id=0 description="citizen1">
 	<conversation require="," exclude="," trigger=-1 heroportrait1="" enemyportrait1="" animportrait1="" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="Good evening, Noah.<pause>  That blizzard the other night was really bizarre, wasn't it?<hardstop><split>I've never seen anything like that...<pause>  It came and went in almost no time at all!<hardstop><split>And you wouldn't even know it by the weather today!<hardstop>"/>
 </text>
@@ -155,6 +158,14 @@
 </text>
 <text id=19 description="GuardWarning">
 	<string require="Battle2," exclude="," trigger=-1 heroportrait="Noah" enemyportrait="" animportrait="" message="I see guards up ahead. We should avoid getting seen.<hardstop>"/>
+</text>
+<text id=20 description="Codger1">
+	<string require="Codger1spokento," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="Have you been through his house yet?<softstop> HEEHEEHEEHAHAHAHA!!!"/>
+	<conversation require="," exclude="," trigger=30 heroportrait1="" enemyportrait1="" animportrait1="" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="This house was built before the cave connecting us to Signus was overrun by goblins.<softstop> The owner finally had to settle here since he couldn't get back through!<hardstop><split>I remember that!<pause> I was just a boy when they built it.<hardstop><split>Yeah, well it messed up the whole flow of the town!<softstop> I've been telling him to cut this darn tree down so people can get 'round, but he won't budge!<hardstop><split>It is kind of annoying,<pause> now that you mention it.<hardstop><split>Not to worry, sonny.<pause> I've been telling everyone to go through his house until he cuts it down.<softstop><linebreak> Reckon that'll teach him!<pause><linebreak> HEEHEEHEEHEEHAHAHAHA!<hardstop>"/>
+</text>
+<text id=21 description="Codger2">
+	<string require="Codger1spokento," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="Who's that laughing outside?<softstop> That old goat!<pause> I should have known!<hardstop><linebreak> He's the one sending you all through my house!!<softstop> It is not a damned thoroughfare!<hardstop>"/>
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="Of course!<pause> By all means walk on through my home!<softstop> Everyone else does!<hardstop>"/>
 </text>
 <cinematic id=0 description="NoahGettingReady" camerax=0 cameray=0>
 	<pausemusic/>
