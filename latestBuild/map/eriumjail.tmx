@@ -4,10 +4,10 @@
   <property name="background" value="1"/>
   <property name="shadow" value="13"/>
  </properties>
- <tileset firstgid="1" name="Castle Night" tilewidth="12" tileheight="12" tilecount="900" columns="25">
+ <tileset firstgid="1" name="castletown(night)-Master" tilewidth="12" tileheight="12" tilecount="900" columns="25">
   <image source="../image/castletown(night)-Master.png" trans="495d47" width="300" height="440"/>
  </tileset>
- <tileset firstgid="901" name="Castle Night 2" tilewidth="12" tileheight="12" tilecount="495" columns="15">
+ <tileset firstgid="901" name="castletown(night)-Slave" tilewidth="12" tileheight="12" tilecount="495" columns="15">
   <image source="../image/castletown(night)-Slave1.png" trans="495d47" width="180" height="400"/>
  </tileset>
  <tileset firstgid="1396" name="Shadows and Lights" tilewidth="12" tileheight="12" tilecount="200" columns="20">
@@ -15,9 +15,6 @@
  </tileset>
  <tileset firstgid="1596" name="overworld(night)-Master" tilewidth="12" tileheight="12" tilecount="1296" columns="36">
   <image source="../image/overworld(night)-Master.png" trans="495d47" width="432" height="432"/>
- </tileset>
- <tileset firstgid="2892" name="Castle Night" tilewidth="12" tileheight="12" tilecount="0" columns="25">
-  <image source="../../../Dropbox/LoV Staff Resources/image/castletown(night)-Master.png" trans="495d47" width="300" height="440"/>
  </tileset>
  <layer name="BG" width="66" height="34">
   <data encoding="base64" compression="gzip">
@@ -31,7 +28,7 @@
  </layer>
  <layer name="MG" width="66" height="34">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACu2YPU/DMBCGjZJAC1vIiApzA2EGNlj4kCrRpX+ajm2RYIT/wUXEimXZju04sZPcI52aJifn/Pou/iAEQRBEn5dYfC3zUfnZcgrtnRm0eQy+J45jsGEZQAymPCpizuHZhrNrgb+uX8igDv+8K+K9h2d3nD0I/HX9hswr9Oet6tOzom/sM5XflJmBLvOAtfmICNlGvqPwB+3/F9i3RIfZESGXMIZX3DiyOZ9z30XTetDxt60xtp4pKfw/B8uq+7T/Kh1KRDqw8Dr0iUwfG92a6qKANm8F7dJ38Trw+lNWmutN0Riq7qswWdM25UMTPvMhJHgdbMZtyMjqYmzo1gu7jhzb+rELfkDT3wmvU0JnkcDaIOn+PTQPQs2HG9Cg6EGHHfR9H9W/NoxhzxZ6PvjgIq5N9/xQNm/RfQK1rGXOlGdRTyPIu7aUZ1FrzT3BkMA6dIvp/qvrefgAsXwy8aQOvw0u6WseRhAE8c0fwph7WhAjAAA=
+   H4sIAAAAAAAACu2YS07DMBCGjdKUALu2SwSsKZQ1Zddu+pCQ6KbX4SLcgKPAkocES7gHf1GtWpbt2M7DTjqfNGobT5zx75nYLmMEQRD2zDvq7zofk58vx+jvxKHPLnwPS47Bh8sIYnDl0RDzEG1rya4U/rZ+MfNEOvzzbIh3jLZbye4U/rZ+TWaB8Sy3Y5oZxia2mfz2mQy6HEWszUvC2GsSOopw8PF/wb41OmQHjJ1jDi+keRRzfii9F13rwcbft8bEeub08LsPG2yv8/GbdNig0kFE1qFOdPr46JZXFyP0eaPolz9L1kHWn3Nvud9UzaHpugmXPW1ePuQRMh9iQtbBZ96ajK4u2oZtvYj7yLbtH6vgB5r+7vE+JXbOUuwN0uqfw/Mg1ny4hgajGnR4w9jfk92nD204s8WeDyE47ezM9v9D3brFzwncBgVzZoL7py3Iu6I8QIOV5ZmgSVAdlovr+avqdfgDsXwK8fRKfDeUSV3rMEEQRGj+AAQVTasQIwAA
   </data>
  </layer>
  <layer name="MG Shadow" width="66" height="34">
@@ -41,7 +38,7 @@
  </layer>
  <layer name="FG" width="66" height="34">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACu1Zu07DMBS16mSjUKYKUVaQmBAzPwAV6spWwQ+wMfMJQIGNDSEBAX4DJBjhG3hOvB8DN0qsWrd2fJPYIaI90lGU+sR2rhyfe906Y2wHuOCIu477tzG/MeAMcBbYibkRXzfRvWAVOIx+S3oG999BWkw8nu63LHrVmGJ+4tqOeRhfj9B9EF8ngVPoN90zIeeBTek+QNpAapOffeSMPXH1HFRj34L2jveObxoTx8EVtoDbGZ77hnf64XT9O2g/UugFiorDMfDEYf95oYtDw2NsGnHC632eqisz1r3k9VD1utdxzbtVvKh9SNLOKbR1Fu3HZcSeIQ424br/PAgKiMM97FkPPOp/mdnLM2zrVhzH4RNi8MX1+YPOx13ocD6hym+K+i7aBrrU4fwjvF/zI+riUINvZjRh32+k9AdqnF3pOMzRA/qauWZdDxXJHyj46zhQdVm/iyVDHFpetvkUpTN9F2nwTMhjyxoHrMsTh0Xi/kDxzTPgqWVdk/AOeeJA3RvkcbBnrcY01dJYhz1QbsdtlPoOx+ES1vhVhnqNOo7sWftS+wHT19IqneyBuB37I6W+c50/XENMb7i7/m2hX+uLEfCImt+9dxUHsQ4G60E9jgm263Nqf3IcKL6WlcK/xPmhDuIc0xao/eH1oPOuJF+i6kL/Mp0finNMnW+FdcIrj2qFF66vF3B/JujOq5P8TfYlik5oKf5l+xyT2p9qf2ilyI/KBrEvp0VR+2TZkTefxD5sG+cwlwtpPjzeF94Ie0MaDNZDhEEcIoj3D32WUsf+V4r8xnTu2w8M8wzTuW8/sMz/vxaNXwJVtwwQIwAA
+   H4sIAAAAAAAACu1ZS07DMBC16nRHoawqRNmCxAqx5gJQoW7ZVXABdpwDKHAChAQUuAZIsIQz8F1B+S+YyLFqTe14ktgh0D7pKUr9YjsjZ57HrTHGdoFLnrjnuX8X85sAzgHnge2Im9F1C91LVoCj6Le4Z3D/baTFxOOZfkuj140p5yevrYiH0fUI3Xei6zRwBv1meibkIrCh3HeQtqO0qc8+csaeuH4OurFvQXvH+8e3jYnj4AvbwJ0Uz33BO31zuv4NtO8J9BJ5xeEYeOKx/6wwxaEeMDaLOBX0P0/VFR1x66ES9K6ThncrBaJ9RNEuaLQ1JvJxUZHXd+G7/6zwHYd7yFkPXPS/ytztM1zr1jzH4QNi8MnN+weTj/vQ4f2Ebn+T13fRstCnDu8/wvuNsqApDlXIdeMxeb+e0B+ocfal4zDHAFg2zDXteigp/kDBb8eBqkv7XaxY4tAM0s0nL53tu0iCZ8I+tqhxwLoscVgm5geKb54BTx3rGoR3yBIHam5Qx8GetR7RVktjHfZAtR23Ueo7HIdLWONXKeo16jiqZ+0r7QfMXEvrdKoH4nbsj5T6zvf+4RpiesP99e8Kg1pfjIFHVMu9e19xkOtguB7049jguj6n9qfGgeJraSn9S54fmiDPMV2B2h9eDybvivMlqi70L9v5oTzHNPlWWCd0uagVXri5XsD92WA6r47zN9WXKDqppfiX63NMan+6/ND8g+eLEjIvJ0VeebLoyLqfxD7sGucwlwtlPjzKC6+E3JAEw/UgMIyDgHz/0Gcpdex/pdzf2M59B4HhPsN27jsILPL/r3njB/cBumAQIwAA
   </data>
  </layer>
  <layer name="FG Shadow" width="66" height="34">
