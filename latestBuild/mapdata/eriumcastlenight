@@ -257,14 +257,14 @@
 	<wait time=300/>
 	<addactor x=672 y=696 name="Mistal" anim="MistalCloaked" startanim="UnUp" visible=true init=false associatedhero=""/>
 	<flash name="Mistal" time=1500 speed=100/>
-	<addactor x=840 y=588 name="ooze0" anim="Darkling Ooze" startanim="UnDown" visible=false init=false associatedhero=""/>
-	<addactor x=960 y=684 name="ooze1" anim="Darkling Ooze" startanim="UnDown" visible=false init=false associatedhero=""/>
-	<addactor x=936 y=852 name="ooze2" anim="Darkling Ooze" startanim="UnDown" visible=false init=false associatedhero=""/>
-	<addactor x=876 y=900 name="ooze3" anim="Darkling Ooze" startanim="UnDown" visible=false init=false associatedhero=""/>
-	<addactor x=744 y=948 name="ooze4" anim="Darkling Ooze" startanim="UnDown" visible=false init=false associatedhero=""/>
-	<addactor x=672 y=876 name="ooze5" anim="Darkling Ooze" startanim="UnDown" visible=false init=false associatedhero=""/>
-	<addactor x=624 y=744 name="ooze6" anim="Darkling Ooze" startanim="UnDown" visible=false init=false associatedhero=""/>
-	<addactor x=816 y=756 name="ooze7" anim="Darkling Ooze" startanim="UnDown" visible=false init=false associatedhero=""/>
+	<addactor x=840 y=600 name="ooze0" anim="Darkling Ooze" startanim="UnDown" visible=false init=false associatedhero=""/>
+	<addactor x=936 y=696 name="ooze1" anim="Darkling Ooze" startanim="UnDown" visible=false init=false associatedhero=""/>
+	<addactor x=888 y=792 name="ooze2" anim="Darkling Ooze" startanim="UnDown" visible=false init=false associatedhero=""/>
+	<addactor x=792 y=864 name="ooze3" anim="Darkling Ooze" startanim="UnDown" visible=false init=false associatedhero=""/>
+	<addactor x=816 y=768 name="ooze4" anim="Darkling Ooze" startanim="UnDown" visible=false init=false associatedhero=""/>
+	<addactor x=648 y=792 name="ooze5" anim="Darkling Ooze" startanim="UnDown" visible=false init=false associatedhero=""/>
+	<addactor x=648 y=720 name="ooze6" anim="Darkling Ooze" startanim="UnDown" visible=false init=false associatedhero=""/>
+	<addactor x=744 y=912 name="ooze7" anim="Darkling Ooze" startanim="UnDown" visible=false init=false associatedhero=""/>
 	<wait time=2000/>
 	<speech text="What...Grand Mage Mistal?!<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
 	<quiver name="Mistal"/>
