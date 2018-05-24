@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="128" height="128" tilewidth="12" tileheight="12" infinite="0" nextobjectid="27">
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="128" height="128" tilewidth="12" tileheight="12" infinite="0" nextobjectid="28">
  <properties>
   <property name="shadow" value="13"/>
  </properties>
@@ -67,7 +67,7 @@
   </data>
  </layer>
  <objectgroup name="Meta" visible="0"/>
- <objectgroup name="Enemies">
+ <objectgroup name="Enemies" visible="0">
   <object id="1" name="Darkling Ooze" x="840" y="600" width="24" height="24">
    <properties>
     <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Darkling Ooze unit=0"/>
@@ -109,13 +109,13 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup name="Battle Triggers" visible="0">
-  <object id="9" x="672" y="576" width="72" height="48">
+ <objectgroup name="Battle Triggers">
+  <object id="9" name="Battle Start" x="672" y="648" width="24" height="24">
    <properties>
     <property name="start" value="exit=battle1"/>
    </properties>
   </object>
-  <object id="10" name="Top Left BT" x="624" y="648" width="96" height="144">
+  <object id="10" name="Top Left BT" x="624" y="672" width="96" height="120">
    <properties>
     <property name="battletrigger" value="triggerid=2"/>
    </properties>
@@ -143,6 +143,11 @@
   <object id="15" x="600" y="576" width="432" height="432">
    <properties>
     <property name="battleregion" value=""/>
+   </properties>
+  </object>
+  <object id="27" name="Battle Start" x="672" y="600" width="48" height="24">
+   <properties>
+    <property name="start" value="exit=battle1"/>
    </properties>
   </object>
  </objectgroup>
