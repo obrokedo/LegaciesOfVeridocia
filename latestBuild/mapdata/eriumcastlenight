@@ -282,7 +282,7 @@
 	<playsound sound="casting" volume=75/>
 	<wait time=250/>
 	<playsound sound="dark" volume=75/>
-	<haltingmove name="Cam" x=840 y=600 speed="2.5" movehor=false movediag=true/>
+	<haltingmove name="Cam" x=888 y=648 speed="2.5" movehor=false movediag=true/>
 	<playsound sound="dark" volume=75/>
 	<grow name="ooze0" time=1500/>
 	<grow name="ooze1" time=1500/>
@@ -292,7 +292,7 @@
 	<visible name="ooze0" isvis=true/>
 	<visible name="ooze1" isvis=true/>
 	<wait time=2000/>
-	<haltingmove name="Cam" x=648 y=816 speed="2.5" movehor=false movediag=true/>
+	<haltingmove name="Cam" x=648 y=768 speed="2.5" movehor=false movediag=true/>
 	<playsound sound="dark" volume=75/>
 	<grow name="ooze6" time=1500/>
 	<spin name="ooze6" speed=100 time=1500/>
@@ -304,7 +304,7 @@
 	<wait time=1/>
 	<visible name="ooze5" isvis=true/>
 	<wait time=2000/>
-	<haltingmove name="Cam" x=840 y=864 speed="2.5" movehor=false movediag=true/>
+	<haltingmove name="Cam" x=816 y=840 speed="2.5" movehor=false movediag=true/>
 	<playsound sound="dark" volume=75/>
 	<grow name="ooze4" time=1500/>
 	<grow name="ooze2" time=1500/>
