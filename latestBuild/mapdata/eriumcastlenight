@@ -194,7 +194,7 @@
 	<wait time=750/>
 	<haltingmove name="Noah" x=696 y=768 speed=".5" movehor=false movediag=true/>
 	<wait time=750/>
-	<haltingmove name="Noah" x=684 y=780 speed=".5" movehor=false movediag=true/>
+	<haltingmove name="Noah" x=684 y=774 speed=".5" movehor=false movediag=true/>
 	<speech text="... Crap!<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<facing name="Mistal" dir=0/>
 	<wait time=500/>
