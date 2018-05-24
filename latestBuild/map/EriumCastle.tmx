@@ -260,7 +260,7 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup name="Meta" visible="0">
+ <objectgroup name="Meta">
   <object id="7" name="Entrance Guard 1" x="336" y="1416" width="24" height="24">
    <properties>
     <property name="npc" value="animation=Guard1 textid=0 wander=1"/>
@@ -311,7 +311,7 @@
     <property name="npc" value="facing=0 animation=Guard1 textid=14 wander=0"/>
    </properties>
   </object>
-  <object id="21" name="Soldier 7" x="744" y="552" width="24" height="24">
+  <object id="21" name="Soldier 7" x="744" y="576" width="24" height="24">
    <properties>
     <property name="npc" value="animation=Guard1 textid=20 wander=1"/>
    </properties>
