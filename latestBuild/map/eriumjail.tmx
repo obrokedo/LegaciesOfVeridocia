@@ -23,7 +23,7 @@
  </layer>
  <layer name="BG Shadow" width="66" height="34">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACu3YwQ2DMAxA0VyyMkPADmGJQleg7QoUVsGo4tJDWpygEvc/KTccKXZkrDgHAOXovXNXvz/uIjGdIu6s7nKWh+I8g8TcDOUBgH3W+rcW/RsAkKryr5X63bf7YJ81p03GvI6y15M6/b3tHnAfgDjte6M1n94b6wNz1BaU/20WSvlvv/fl4OMzVmD+KsZa20nW/IN65Z4nAcCKBSalOawQIwAA
+   H4sIAAAAAAAACu3Yyw3DIAyAYS6szBDpDnSJpF0hbVfIY5W4qrj0QMqjD9z/k7jFSGBwLIwBgHacrDFnmx7XS8yQEferrrKWW8Z6Rom5KNoHAPppq9+5qN+ALl7u84E7jQ9z9jFKv3t1HqRxlevCJHPN5OnvhXPAeQDict8btdl7b+zeuEfHhvY/9EIl/+3nuuxtvMfy9F/NuOd2kbF+IV+1+0kA0GIDj3mq4xAjAAA=
   </data>
  </layer>
  <layer name="MG" width="66" height="34">
