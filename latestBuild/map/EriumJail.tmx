@@ -3,6 +3,7 @@
  <properties>
   <property name="background" value="1"/>
   <property name="shadow" value="13"/>
+  <property name="shadow-opacity" value="25"/>
  </properties>
  <tileset firstgid="1" name="castletown(night)-Master" tilewidth="12" tileheight="12" tilecount="900" columns="25">
   <image source="../image/castletown(night)-Master.png" trans="495d47" width="300" height="440"/>
