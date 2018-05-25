@@ -110,7 +110,7 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup name="Battle Triggers">
+ <objectgroup name="Battle Triggers" visible="0">
   <object id="9" name="Battle Start" x="672" y="648" width="24" height="24">
    <properties>
     <property name="start" value="exit=battle1"/>
@@ -157,7 +157,7 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup name="Terrain" visible="0">
+ <objectgroup name="Terrain">
   <object id="16" x="600" y="576">
    <properties>
     <property name="terrain" value="type=GRASS"/>
@@ -168,7 +168,7 @@
    <properties>
     <property name="terrain" value="type=ROAD"/>
    </properties>
-   <polyline points="0,0 48,0 48,168 96,168 96,192 192,192 192,96 216,96 216,216 96,216 96,240 48,240 48,288 24,288 24,360 48,360 48,432 0,432 0,264 24,264 24,240 -24,240 -24,216 -48,216 -48,192 -24,192 -24,168 24,168 24,216 48,216 48,192 24,192 24,144 0,144 0,120 -96,120 -96,96 0,96 0,0"/>
+   <polyline points="0,0 48,0 48,168 96,168 96,192 192,192 192,96 216,96 216,216 96,216 96,240 48,240 48,288 24,288 24,360 48,360 48,432 0,432 0,264 24,264 24,240 -24,240 -24,216 -48,216 -48,192 -24,192 -24,168 24,168 24,216 48,216 48,192 24,192 24,144 -24,144 -24,120 -96,120 -96,96 0,96 0,0"/>
   </object>
   <object id="18" x="648" y="696">
    <properties>
