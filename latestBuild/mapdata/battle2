@@ -62,8 +62,8 @@
 	<cameramovetoactor actor="Noah" time=1000/>
 	<wait time=10/>
 	<camerafollow name="Noah"/>
-	<move name="Huun" x=696 y=48 speed="3" movehor=false movediag=false/>
-	<move name="Sharna" x=720 y=96 speed="3" movehor=false movediag=false/>
+	<movepath name="Huun" x=696 y=48 speed="3"/>
+	<movepath name="Sharna" x=720 y=96 speed="3"/>
 	<haltingmovepath name="Noah" x=672 y=72 speed="2.4"/>
 	<facing name="Noah" dir=1/>
 	<wait time=1500/>
