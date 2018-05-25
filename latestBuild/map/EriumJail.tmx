@@ -62,7 +62,7 @@
    H4sIAAAAAAAACu2XOxLDMAhESWPf/37JXdK5cITFZxFowmsohLBGLCATNU3TPPM+iD4H3lrja/dZvjPkJHqdAdYaX7vP8J0nPXBw9z/zq25/uN8rt671q24X5bGyTpbmsbBORoTX3S4E190uSOuZ2+ftD1F+aqT1zO3z9ocoPyVoPUj9snTDgtaD1C9LNwzWOVAtz+4+Yp0D1fIM6iOr3g8oP+m6uU947QyUn3RdeM5oHVT4nxj1DfW9eXWAio8635/rATYvdteDto/d8oj2075LrPG8c+0iqv/P8uLV2Wx9Eje7XlFzwP3Oya5Xb52D+kP0/aPmfPR8C79/a3zrOZV6yK7v7L4SntfqtmkGfAGx+JcCECMAAA==
   </data>
  </layer>
- <objectgroup name="Terrain" visible="0">
+ <objectgroup name="Terrain">
   <object id="1" name="Rug" x="480" y="264">
    <properties>
     <property name="terrain" value="type=GRASS"/>
@@ -91,7 +91,7 @@
    <properties>
     <property name="terrain" value="type=ROAD"/>
    </properties>
-   <polyline points="0,0 48,0 48,24 72,24 72,96 96,96 96,144 -24,144 -24,72 0,72 0,0"/>
+   <polyline points="0,0 48,0 48,24 72,24 72,72 96,72 96,144 -24,144 -24,72 0,72 0,0"/>
   </object>
   <object id="6" name="Floor" x="648" y="384">
    <properties>
@@ -142,7 +142,7 @@
    <polyline points="0,0 72,0 72,-24 24,-24 24,-96 120,-96 120,-24 96,-24 96,0 168,0 168,-24 144,-24 144,-96 240,-96 240,-24 192,-24 192,0 264,0 264,48 240,48 240,72 192,72 192,24 72,24 72,72 48,72 48,48 0,48 0,0"/>
   </object>
  </objectgroup>
- <objectgroup name="Trigger Regions">
+ <objectgroup name="Trigger Regions" visible="0">
   <object id="50" name="SecondWave" x="312" y="228" width="120" height="168">
    <properties>
     <property name="" value=""/>
