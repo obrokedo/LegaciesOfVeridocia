@@ -33,6 +33,9 @@
 <trigger id=7 description="Fail Result" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=true triggerimmediately=false>
 	<reviveheroes hero="Craig"/>
 	<reviveheroes hero="Noah"/>
+	<reviveheroes hero="Sharna"/>
+	<reviveheroes hero="Huun"/>
+	<reviveheroes hero="Olivia"/>
 	<loadmap mapdata="eriumjail" enter="JailBattleFail" transdir=""/>
 </trigger>
 <cinematic id=0 description="Craig Olivia Exit" camerax=0 cameray=0>
