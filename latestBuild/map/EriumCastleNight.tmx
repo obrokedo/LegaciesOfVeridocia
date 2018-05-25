@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="128" height="128" tilewidth="12" tileheight="12" infinite="0" nextobjectid="28">
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="128" height="128" tilewidth="12" tileheight="12" infinite="0" nextobjectid="29">
  <properties>
   <property name="shadow" value="13"/>
  </properties>
@@ -146,6 +146,11 @@
    </properties>
   </object>
   <object id="27" name="Battle Start" x="672" y="600" width="48" height="24">
+   <properties>
+    <property name="start" value="exit=battle1"/>
+   </properties>
+  </object>
+  <object id="28" name="Battle Start" x="600" y="576" width="48" height="24">
    <properties>
     <property name="start" value="exit=battle1"/>
    </properties>
