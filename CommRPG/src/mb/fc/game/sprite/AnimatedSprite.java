@@ -48,10 +48,6 @@ public class AnimatedSprite extends Sprite
 		float xPos = this.getLocX() - camera.getLocationX();
 		float yPos = this.getLocY() - camera.getLocationY() - tileHeight / 3;
 		
-
-		if (currentAnim.name.equalsIgnoreCase("UnLeft") && spriteAnims.getSpriteSheet().equalsIgnoreCase("ServantFemale1"))
-			System.out.println(name);
-		
 		for (AnimSprite as : currentAnim.frames.get(imageIndex).sprites)
 		{
 			AnimatedSprite.drawShadow(spriteAnims.getImageAtIndex(as.imageIndex), xPos, yPos, camera, true, tileHeight);
@@ -181,7 +177,7 @@ public class AnimatedSprite extends Sprite
 		return currentAnim;
 	}
 
-	public void doneMoving() {
+	public void doneMoving(StateInfo stateInfo) {
 
 	}
 }

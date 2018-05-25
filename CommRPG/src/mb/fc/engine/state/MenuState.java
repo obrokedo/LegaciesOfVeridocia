@@ -1,7 +1,5 @@
 package mb.fc.engine.state;
 
-import javax.swing.JOptionPane;
-
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -13,7 +11,6 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 import org.newdawn.slick.state.transition.Transition;
-import org.newdawn.slick.util.Log;
 
 import mb.fc.engine.CommRPG;
 import mb.fc.engine.config.EngineConfigurationValues;
@@ -21,12 +18,11 @@ import mb.fc.game.input.FCInput;
 import mb.fc.game.input.KeyMapping;
 import mb.fc.game.menu.Menu;
 import mb.fc.game.ui.PaddedGameContainer;
-import mb.fc.loading.LoadingScreenRenderer;
-import mb.fc.loading.ResourceManager;
 import mb.fc.loading.LOVFirstLoadRenderer;
 import mb.fc.loading.LOVLoadRenderer;
 import mb.fc.loading.LoadableGameState;
 import mb.fc.loading.LoadingState;
+import mb.fc.loading.ResourceManager;
 
 /**
  * State that handles the main menu
@@ -191,7 +187,8 @@ public class MenuState extends LoadableGameState
 	}
 
 	public void start(LoadTypeEnum loadType, String mapData, String entrance)
-	{		
+	{			
+		persistentStateInfo.isFirstLoad = true;
 		switch (loadType)
 		{
 			case CINEMATIC:

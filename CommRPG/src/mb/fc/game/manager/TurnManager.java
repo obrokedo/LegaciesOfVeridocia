@@ -190,7 +190,7 @@ public class TurnManager extends Manager implements KeyboardListener
 		if (turnActions.size() == 0)
 			return;
 		TurnAction a = turnActions.get(0);
-		switch (a.action)
+		outer: switch (a.action)
 		{
 			case TurnAction.ACTION_MANUAL_MOVE_CURSOR:
 
@@ -395,7 +395,12 @@ public class TurnManager extends Manager implements KeyboardListener
 			case TurnAction.ACTION_CHECK_DEATH:
 				if (battleResults.death)
 				{
-					turnActions.add(new WaitAction(SPIN_TIME / UPDATE_TIME));
+					for (CombatSprite cs : stateInfo.getCombatSprites()) {
+						if (cs.getCurrentHP() <= 0) {							
+							turnActions.add(0, new WaitAction(0));
+							break outer;
+						}
+					}
 				}
 				turnActions.add(new TurnAction(TurnAction.ACTION_END_TURN));
 				turnActions.remove(0);
@@ -840,7 +845,9 @@ public class TurnManager extends Manager implements KeyboardListener
 				battleResults.targets = transposedTargets;
 				stateInfo.sendMessage(MessageType.PAUSE_MUSIC);
 
-				turnActions.add(new PerformAttackAction(battleResults));
+				turnActions.add(new PerformAttackAction(battleResults));				
+				break;
+			case RETURN_FROM_ATTACK_CIN:
 				turnActions.add(new TurnAction(TurnAction.ACTION_CHECK_DEATH));
 				break;
 			case PLAYER_END_TURN:

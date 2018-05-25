@@ -115,6 +115,7 @@ public class BattleState extends LoadableGameState
 			this.stateInfo.setInputDelay(System.currentTimeMillis() + 200);
 			stateInfo.setShowAttackCinematic(false);
 			stateInfo.sendMessage(MessageType.RESUME_MUSIC);
+			stateInfo.sendMessage(MessageType.RETURN_FROM_ATTACK_CIN);
 		}
 	}
 
@@ -162,7 +163,6 @@ public class BattleState extends LoadableGameState
 		if (stateInfo.getTopMenu() == null || !(stateInfo.getTopMenu() instanceof DebugMenu)) {
 			stateInfo.processMessages();
 		}
-		
 		
 		if (stateInfo.isInitialized() && !stateInfo.isWaiting())
 		{

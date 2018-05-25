@@ -81,7 +81,6 @@ public abstract class Panel
 
 	public static void intialize(ResourceManager frm)
 	{
-		System.out.println("IM INITIALIZING");
 		MENU_BORDER = frm.getSpriteSheet("menuborder");
 		PANEL_FONT = frm.getFontByName("menufont");
 		MUSIC_SELECTOR = CommRPG.engineConfiguratior.getMusicConfiguration();

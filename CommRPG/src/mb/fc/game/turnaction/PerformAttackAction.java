@@ -5,6 +5,7 @@ import org.newdawn.slick.state.transition.EmptyTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import mb.fc.engine.CommRPG;
+import mb.fc.engine.message.MessageType;
 import mb.fc.engine.state.LOVAttackCinematicState;
 import mb.fc.engine.state.StateInfo;
 import mb.fc.game.battle.BattleEffect;
@@ -43,7 +44,7 @@ public class PerformAttackAction extends TurnAction
 						be.effectStarted(turnManager.getCurrentSprite(), t);
 					}
 			}
-			
+			stateInfo.sendMessage(MessageType.RETURN_FROM_ATTACK_CIN);
 			return true;
 		}
 		

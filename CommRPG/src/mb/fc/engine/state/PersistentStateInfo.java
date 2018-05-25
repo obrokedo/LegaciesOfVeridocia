@@ -47,7 +47,7 @@ public class PersistentStateInfo implements PacketHandler
 	private TCPServer server = null;
 	private TCPClient client = null;
 	private StateInfo currentStateInfo;
-	private transient boolean isFirstLoad = true;
+	public transient boolean isFirstLoad = true;
 
 	public PersistentStateInfo(ClientProfile clientProfile, ClientProgress clientProgress, 
 			CommRPG game, Camera camera, GameContainer gc)

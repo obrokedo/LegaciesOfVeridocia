@@ -58,17 +58,21 @@ public class NPCSprite extends AnimatedSprite
 		if (Speech.showFirstSpeechMeetsReqs(speechId, stateInfo, false)) {
 			originalFacing = this.getFacing();
 			if (turnOnTalk) {
-				if (stateInfo.getCurrentSprite().getLocX() > this.getLocX())
-					this.setFacing(Direction.RIGHT);
-				else if (stateInfo.getCurrentSprite().getLocX() < this.getLocX())
-					this.setFacing(Direction.LEFT);
-				else if (stateInfo.getCurrentSprite().getLocY() > this.getLocY())
-					this.setFacing(Direction.DOWN);
-				else if (stateInfo.getCurrentSprite().getLocY() < this.getLocY())
-					this.setFacing(Direction.UP);
+				turnTowardsHero(stateInfo);
 			}
 			waitingForSpeechToEnd = true;
 		}
+	}
+
+	private void turnTowardsHero(StateInfo stateInfo) {
+		if (stateInfo.getCurrentSprite().getLocX() > this.getLocX())
+			this.setFacing(Direction.RIGHT);
+		else if (stateInfo.getCurrentSprite().getLocX() < this.getLocX())
+			this.setFacing(Direction.LEFT);
+		else if (stateInfo.getCurrentSprite().getLocY() > this.getLocY())
+			this.setFacing(Direction.DOWN);
+		else if (stateInfo.getCurrentSprite().getLocY() < this.getLocY())
+			this.setFacing(Direction.UP);
 	}
 
 	boolean moving = false;
@@ -135,8 +139,7 @@ public class NPCSprite extends AnimatedSprite
 
 	@Override
 	public void setFacing(Direction dir) {
-		if (!waitingForSpeechToEnd)
-			super.setFacing(dir);
+		super.setFacing(dir);
 	}
 
 	public int getUniqueNPCId() {
@@ -148,9 +151,12 @@ public class NPCSprite extends AnimatedSprite
 	}
 
 	@Override
-	public void doneMoving() {
-		super.doneMoving();
+	public void doneMoving(StateInfo stateInfo) {
+		super.doneMoving(stateInfo);
 		moving = false;
+		if (waitingForSpeechToEnd && turnOnTalk) {
+			turnTowardsHero(stateInfo);
+		}
 	}
 
 	public boolean isThroughWall() {

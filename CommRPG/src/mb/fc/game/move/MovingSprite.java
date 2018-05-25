@@ -84,8 +84,7 @@ public class MovingSprite
 	}
 
 	public boolean update(int delta, boolean fastMove)
-	{
-		
+	{		
 		int moveSpeed = MOVE_SPEED;
 		if (stateInfo.isCombat() && (!((CombatSprite) animatedSprite).isHero() || fastMove))
 			moveSpeed /= 2;

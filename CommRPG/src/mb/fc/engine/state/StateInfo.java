@@ -617,6 +617,10 @@ public class StateInfo
 				return s;
 		return null;
 	}
+	
+	public boolean areMessagesWaiting() {
+		return messagesToProcess.size() > 0 || newMessages.size() > 0;
+	}
 
 	/****************************/
 	/* General Mutator Methods	*/

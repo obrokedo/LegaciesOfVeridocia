@@ -234,7 +234,6 @@ public class HeroProgression implements Serializable
 		if (val > max)
 		{
 			max = val;
-			System.out.println("MAX " + max);
 		}
 
 	}

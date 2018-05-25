@@ -22,6 +22,6 @@ public class AIConfidence {
 	@Override
 	public String toString()
 	{
-		return confidence + " " + willKill + " " + willHeal + " " + foundHero + " " + attackPoint + " " + (potentialAttackSpriteAction == null ? "NO ACTION" : potentialAttackSpriteAction.action);
+		return confidence + " " + willKill + " " + willHeal + " " + foundHero + " " + attackPoint + " " + target + " " + (potentialAttackSpriteAction == null ? "NO ACTION" : potentialAttackSpriteAction.action);
 	}
 }

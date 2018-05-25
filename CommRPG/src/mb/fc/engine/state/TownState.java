@@ -164,16 +164,19 @@ public class TownState extends LoadableGameState
 		{
 			menuManager.update(delta);
 			cinematicManager.update(delta);
-			if (!menuManager.isBlocking() && !cinematicManager.isBlocking())
-			{
-				panelManager.update(delta);
-				townMoveManager.update(delta);
-				
-				if (CommRPG.TEST_MODE_ENABLED) {
-					if (TEST_NPCS_STACK.size() > 0) {
-						TEST_NPCS_STACK.remove(0).triggerButton1Event(stateInfo);
+			if (!cinematicManager.isBlocking()) {
+				if (!menuManager.isBlocking())
+				{
+					panelManager.update(delta);
+					
+					
+					if (CommRPG.TEST_MODE_ENABLED) {
+						if (TEST_NPCS_STACK.size() > 0) {
+							TEST_NPCS_STACK.remove(0).triggerButton1Event(stateInfo);
+						}
 					}
 				}
+				townMoveManager.update(delta);
 			}
 			stateInfo.getCurrentMap().update(delta);
 			spriteManager.update(delta);

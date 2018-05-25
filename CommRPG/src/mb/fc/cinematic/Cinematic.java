@@ -407,6 +407,25 @@ public class Cinematic {
 					haltedMovers++;
 				}
 				break;
+			case MOVE_PATHFIND:
+				ca = getCinematicActorByName((String) ce.getParam(3), ce.getType());
+				
+				 path = stateInfo.getCurrentMap().findPixelPathWithPixels
+						((int) ca.getLocX(), (int) ca.getLocY() + 
+								(!this.inCinematicState ? stateInfo.getCurrentMap().getTileEffectiveHeight() / 2 : 0), 
+								(int) ce.getParam(0), (int) ce.getParam(1), stateInfo, true);
+				
+				if (path == null) {
+					path = stateInfo.getCurrentMap().findPixelPathWithPixels
+							((int) ca.getLocX(), (int) ca.getLocY() + 
+									(!this.inCinematicState ? stateInfo.getCurrentMap().getTileEffectiveHeight() / 2 : 0), 
+									(int) ce.getParam(0), (int) ce.getParam(1), stateInfo, false);
+				}
+				
+				if (path != null) {
+					ca.moveAlongPath(path, (float) ce.getParam(2), false, stateInfo);
+				}
+				break;
 			case MOVE:
 				ca = getCinematicActorByName((String) ce.getParam(3), ce.getType());
 				moveActorToLocation(ca, (int) ce.getParam(0),

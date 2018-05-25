@@ -167,6 +167,8 @@ public class SpriteManager extends Manager
 							csIt.remove();
 					}
 				}
+				if (CommRPG.BATTLE_MODE_OPTIMIZE)
+					battleOptimizer.startBattle();
 			// Since the enemies already exist in the combat sprite list
 			// we don't need to add them, but they do need to be "initialized"s
 			} else {
@@ -216,6 +218,10 @@ public class SpriteManager extends Manager
 				if (s.getSpriteType() == Sprite.TYPE_COMBAT)
 				{
 					CombatSprite cs = (CombatSprite) s;
+					if (cs.getCurrentHP() <= 0) {
+						cs.setFadeAmount(cs.getCurrentHP() - delta);
+					}
+					
 					if (cs.getCurrentHP() < -255)
 					{
 						// Add dropped items to deals

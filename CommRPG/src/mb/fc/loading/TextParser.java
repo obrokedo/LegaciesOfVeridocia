@@ -532,6 +532,10 @@ public class TextParser
 			return new CinematicEvent(CinematicEventType.HALTING_MOVE, Integer.parseInt(area.getAttribute("x")),
 					Integer.parseInt(area.getAttribute("y")), Float.parseFloat(area.getAttribute("speed")), area.getAttribute("name"),
 					Boolean.parseBoolean(area.getAttribute("movehor")), Boolean.parseBoolean(area.getAttribute("movediag")));
+		else if (type.equalsIgnoreCase("movepath"))
+			return new CinematicEvent(CinematicEventType.MOVE_PATHFIND, Integer.parseInt(area.getAttribute("x")),
+					Integer.parseInt(area.getAttribute("y")), Float.parseFloat(area.getAttribute("speed")), area.getAttribute("name"),
+					false, false);
 		else if (type.equalsIgnoreCase("haltingmovepath"))
 			return new CinematicEvent(CinematicEventType.HALTING_MOVE_PATHFIND, Integer.parseInt(area.getAttribute("x")),
 					Integer.parseInt(area.getAttribute("y")), Float.parseFloat(area.getAttribute("speed")), area.getAttribute("name"),

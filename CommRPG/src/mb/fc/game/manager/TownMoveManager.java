@@ -48,7 +48,7 @@ public class TownMoveManager extends Manager
 			if (ms.update(delta))
 			{
 				movers.remove(i);
-				ms.getAnimatedSprite().doneMoving();
+				ms.getAnimatedSprite().doneMoving(stateInfo);
 				i--;
 
 				if (ms.getAnimatedSprite().getSpriteType() == Sprite.TYPE_COMBAT) {
@@ -96,7 +96,7 @@ public class TownMoveManager extends Manager
 		CombatSprite current = stateInfo.getCurrentSprite();
 
 		// Check to see if we are done moving
-		if (!moving)
+		if (!moving && !stateInfo.areMenusDisplayed())
 		{
 			int sx = current.getTileX();
 			int sy = current.getTileY();
@@ -239,7 +239,7 @@ public class TownMoveManager extends Manager
 				if (nowMoving)
 					movers.add(new MovingSprite(sprite, dir, stateInfo));
 				else
-					sprite.doneMoving();
+					sprite.doneMoving(stateInfo);
 				break;
 			case INTIIALIZE:
 				stateInfo.getCurrentMap().checkRoofs(

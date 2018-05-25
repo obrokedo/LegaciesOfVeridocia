@@ -5,20 +5,26 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
+
 import mb.fc.game.sprite.CombatSprite;
 
 public class BattleOptimizer 
 {
-	private int plusAll = 1;
-	private int wonAtPlus;
-	private int lostAtPlus;
-	private float threshold = .5f;
-	private int checkPermutation = -1;
-	private final static int BATTLES_PER = 10;
-	private int bestPermutation = 0;
-	private float bestPermutationResult = 1f;
+	private static int plusAll = 0;
+	private static int wonAtPlus;
+	private static int lostAtPlus;
+	private static float threshold = .5f;
+	private static int checkPermutation = 0;
+	private final static int BATTLES_PER = 5;
+	private static int bestPermutation = 0;
+	private static float bestPermutationResult = 2f;
+	private static int bestPermPlusAll = -1;
+	private static boolean battleDone = false;
 	
 	private int[][] permutations = {
+			{0, 0, 0, 0},
 			{1, 0, 0, 0},
 			{0, 1, 0, 0},
 			{0, 0, 1, 0},
@@ -33,6 +39,10 @@ public class BattleOptimizer
 			{1, 0, 1, 1},
 			{1, 1, 0, 1},
 			{0, 1, 1, 1}}; 
+	
+	public void startBattle() {
+		battleDone = false;
+	}
 	
 	public void modifyStats(CombatSprite cs)
 	{
@@ -50,14 +60,27 @@ public class BattleOptimizer
 		}
 	}
 	
+	public static void render(Graphics g) {
+		g.setColor(Color.red);
+		g.drawString("Permutation: " + checkPermutation , 100, 50);
+		g.drawString("W " + wonAtPlus + " L " + lostAtPlus , 100, 70);
+		g.drawString("Plus All: " + plusAll, 100, 90);
+		g.drawString("Best " + bestPermPlusAll + " " + bestPermutationResult, 100, 110);
+	}
 	public void lostBattle()
 	{
+		if (battleDone)
+			return;
+		battleDone = true;
 		this.lostAtPlus++;
 		this.endBattle();
 	}
 	
 	public void wonBattle()
 	{
+		if (battleDone)
+			return;
+		battleDone = true;
 		this.wonAtPlus++;
 		this.endBattle();
 	}
@@ -69,64 +92,40 @@ public class BattleOptimizer
 			try
 			{
 				PrintWriter pw;
-				float winRate = (1.0f * wonAtPlus / 10.0f);
-				pw = new PrintWriter(new FileWriter("/home/user/Results", true));
-				if (checkPermutation == -1)
-				{	
-					pw.write("Results for adding " + plusAll + " to all stats: " + winRate);
-					if (winRate > threshold)
-					{
-						plusAll++;
-					}
-					else if (plusAll > 0)
-					{
-						plusAll--;
-						checkPermutation = 0;
-					}
-					else 
-					{
-						pw.write("Win rate for BASE STATS: " + winRate + " are likely to high");
-						pw.flush();
-						pw.close();
-						System.exit(0);
-					}
-				}
-				else
+				float winRate = (1.0f * wonAtPlus / BATTLES_PER);
+				pw = new PrintWriter(new FileWriter("Results", true));
+				
+				
+				
+				pw.write("Result was plus all: " + plusAll + " permutation " + checkPermutation + " with win percent " + winRate + "\n");
+				
+				if (winRate >= threshold)
 				{
-					String s = "";
-					for (int i : permutations[checkPermutation])
-						s = s + " " + i;
-					pw.write("Results for adding permutation" + s + ": " + winRate);
-					
-					if (permutations.length > checkPermutation + 1)
+					if (winRate < bestPermutationResult)
 					{
-						if (winRate > threshold)
-						{
-							if (winRate < bestPermutationResult)
-							{
-								bestPermutation = checkPermutation;
-								bestPermutationResult = winRate;
-							}
-						}
-						
-						checkPermutation++;
-					}
-					else
-					{
-						s = "";
-						for (int i : permutations[bestPermutation])
-							s = s + " " + permutations[bestPermutation][i];
-						pw.write("Best result with win rate: " + bestPermutationResult + " plus to all: " + plusAll + " and permutation:" + s);
-						pw.flush();
-						pw.close();
-						System.exit(0);
+						bestPermutation = checkPermutation;
+						bestPermutationResult = winRate;
+						bestPermPlusAll = plusAll;
 					}
 				}
+				
+				checkPermutation++;		
 				wonAtPlus = 0;
 				lostAtPlus = 0;
-				pw.write("\n");
+				
+				if (checkPermutation == permutations.length) {
+					if (bestPermPlusAll == plusAll) {
+						pw.write("A better permutation was found at this plus level, increasing plus\n");
+						plusAll++;						
+						checkPermutation = 0;
+					} else {
+						pw.write("Best result was plus all: " + bestPermPlusAll + " permutation " + bestPermutation + " with win percent " + bestPermutationResult + "\n");
+						pw.flush();
+						pw.close();
+						System.exit(0);
+					}
+				}
 				pw.flush();
-				pw.close();
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

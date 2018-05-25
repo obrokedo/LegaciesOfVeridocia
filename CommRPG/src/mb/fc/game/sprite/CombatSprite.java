@@ -384,9 +384,7 @@ public class CombatSprite extends AnimatedSprite
 			else if (this.getFacing() == Direction.UP)
 				this.setFacing(Direction.LEFT);
 			else if (this.getFacing() == Direction.LEFT)
-				this.setFacing(Direction.DOWN);
-			currentHP -= 25;
-			fadeColor.a = (255 + currentHP) / 255.0f;
+				this.setFacing(Direction.DOWN);			
 		}
 	}
 
@@ -602,6 +600,11 @@ public class CombatSprite extends AnimatedSprite
 	/*******************************************/
 	/* MUTATOR AND ACCESSOR METHODS START HERE */
 	/*******************************************/
+	public void setFadeAmount(int amt) {
+		currentHP = amt;
+		fadeColor.a = (255 + currentHP) / 255.0f;
+	}
+	
 	@Override
 	public void setFacing(Direction dir)
 	{

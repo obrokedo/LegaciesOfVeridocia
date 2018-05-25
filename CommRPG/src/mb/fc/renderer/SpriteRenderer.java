@@ -1,6 +1,8 @@
 package mb.fc.renderer;
 
+import mb.fc.engine.CommRPG;
 import mb.fc.engine.message.Message;
+import mb.fc.game.dev.BattleOptimizer;
 import mb.fc.game.manager.Manager;
 import mb.fc.game.sprite.Sprite;
 
@@ -10,6 +12,8 @@ public class SpriteRenderer extends Manager
 {
 	public void render(Graphics g)
 	{
+		if (CommRPG.BATTLE_MODE_OPTIMIZE)
+			BattleOptimizer.render(g);
 		for (Sprite s : stateInfo.getSprites())
 		{
 			if (s.isVisible())

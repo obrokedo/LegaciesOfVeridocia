@@ -44,6 +44,10 @@ public abstract class CasterAI extends AI
 			CombatSprite targetSprite, int tileWidth, int tileHeight,
 			Point attackPoint, int distance, StateInfo stateInfo)
 	{
+		bestSpell = null;
+		mostConfident = 0;
+		bestKnownSpell = null;
+		
 		boolean couldAttackTarget = false;
 		int baseConfidence = determineBaseConfidence(currentSprite, targetSprite, tileWidth, tileHeight, attackPoint, stateInfo);
 		Log.debug("Base Caster confidence " + baseConfidence + " name " + targetSprite.getName());
@@ -121,7 +125,7 @@ public abstract class CasterAI extends AI
 							(spell.isTargetsEnemy() || currentSprite != targetSprite))
 						continue;
 
-
+					Log.debug(sd.getSpellId() + " level " + i + " can be cast, checking it now.");
 					handleSpell(spell, sd, i, tileWidth, tileHeight, currentSprite,
 							targetSprite, stateInfo, baseConfidence, cost, attackPoint, distance);
 				}
@@ -134,6 +138,9 @@ public abstract class CasterAI extends AI
 	{
 		if (confidence > mostConfident)
 		{
+			Log.debug("Spell " + (currentSpell == null ? "NONE" : currentSpell.getName() + " level " + level) + " has a higher confidence then " + 
+					(bestSpell == null ? "NONE" : bestSpell.getName() + " level " + this.spellLevel) + 
+						confidence + " vs " + mostConfident);
 			bestSpell = currentSpell;
 			bestKnownSpell = currentKnownSpell;
 			this.spellLevel = level;

@@ -33,7 +33,6 @@ import mb.fc.game.dev.DevParams;
 import mb.fc.game.persist.ClientProfile;
 import mb.fc.game.persist.ClientProgress;
 import mb.fc.game.ui.PaddedGameContainer;
-import mb.fc.loading.LOVLoadRenderer;
 import mb.fc.loading.LOVLogoLoadRenderer;
 import mb.fc.loading.LoadableGameState;
 import mb.fc.loading.LoadingScreenRenderer;
@@ -99,7 +98,7 @@ public class CommRPG extends StateBasedGame   {
 
 	private static int fullScreenWidth, fullScreenHeight;
 
-	public static final String VERSION = "DEV 1.373 May 22, 2018";
+	public static final String VERSION = "DEV 1.373 May 24, 2018";
 	public static final String FILE_VERSION = "LoV-Dev";
 
 	public static final String GAME_TITLE = "Legacies of Veridocia";
@@ -157,7 +156,6 @@ public class CommRPG extends StateBasedGame   {
 	}
 	
 	public void setup() {
-		System.out.println("SETUP");
 				// Setup a game container: set it's display mode and target
 				// frame rate
 				try
@@ -398,7 +396,7 @@ public class CommRPG extends StateBasedGame   {
 	
 	public static int getTestMultiplier()
 	{
-		return 15;
+		return 1000;
 	}
 
 	public void setEngineConfiguratior(EngineConfigurator engineConfiguratior) {

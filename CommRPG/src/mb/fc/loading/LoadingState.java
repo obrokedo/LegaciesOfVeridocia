@@ -109,6 +109,7 @@ public class LoadingState extends BasicGameState
 					{
 						while (!bulkLoader.isDone())
 							bulkLoader.update();
+						loadIndex = 0;
 					}
 
 				}

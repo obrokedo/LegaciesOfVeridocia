@@ -100,9 +100,7 @@ public abstract class AI implements Serializable
 					int distance = as.getDistances().get(i);
 					AIConfidence currentConfidence = getConfidence(currentSprite, as.getCombatSprite(), tileWidth, tileHeight,
 							attackPoint, distance, stateInfo);
-
-					Log.debug("Target " + as.getCombatSprite().getName() + " Confidence: " + currentConfidence);
-
+					
 					if (currentConfidence.confidence > 0)
 					{
 						currentConfidence.confidence += this.getLandEffectConfidence(attackPoint, currentSprite, stateInfo);
@@ -129,6 +127,8 @@ public abstract class AI implements Serializable
 							Log.debug("Switched action randomly");
 						}
 					}
+					
+					Log.debug("Target " + as.getCombatSprite().getName() + " Confidence: " + currentConfidence + " Distance: " + distance);
 				}
 			}
 		}
