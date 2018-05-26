@@ -45,6 +45,8 @@ public class PauseMenu extends Menu {
 			} else if (SoundManager.GLOBAL_VOLUME < 1 && stateInfo.getInput().isKeyDown(Input.KEY_RIGHT)) {
 				SoundManager.GLOBAL_VOLUME += .01f;
 			}
+			if (stateInfo.getInput().isKeyDown(Input.KEY_ESCAPE))
+				System.exit(0);
 		}
 		return super.update(delta, stateInfo);
 	}
@@ -72,6 +74,9 @@ public class PauseMenu extends Menu {
 			int volume = (int) (SoundManager.GLOBAL_VOLUME * 100);
 			graphics.drawString("- Volume " + volume +" -", (CommRPG.GAME_SCREEN_SIZE.width 
 					- subMenuFont.getWidth("- Volume " + volume +" -")) / 2, CommRPG.GAME_SCREEN_SIZE.height / 3 + 50);
+			graphics.drawString("Press Escape to Exit Game",
+					(CommRPG.GAME_SCREEN_SIZE.width - subMenuFont.getWidth("Press Escape to Exit Game")) / 2,
+					CommRPG.GAME_SCREEN_SIZE.height / 3 + 70);
 		}
 	}
 
