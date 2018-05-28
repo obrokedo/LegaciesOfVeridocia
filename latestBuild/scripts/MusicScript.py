@@ -13,7 +13,7 @@ class MusicScript(MusicConfiguration):
         elif attacker.isLeader():
             return "Boss"
         elif attacker.getName() == "Erium Captain":
-            return "Boss"
+            return "Enemy"
         else:
             return "Enemy"
         
