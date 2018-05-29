@@ -1,4 +1,4 @@
-<map file="eriumjail.tmx"/>
+<map file="EriumJail.tmx"/>
 <trigger id=0 description="Map Start" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<playmusic music="castlenight"/>
 </trigger>

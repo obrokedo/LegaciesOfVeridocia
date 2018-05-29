@@ -21,7 +21,7 @@ class RandomHorizontalParticleEmitter(ParticleEmitterConfiguration):
     def initialize(self, isHero):
         # Resolution is interpreted as 320x240
         if isHero:
-            self.drawX = 160
+            self.drawX = 110
         else:
             self.drawX = 0
         self.timer = 0
