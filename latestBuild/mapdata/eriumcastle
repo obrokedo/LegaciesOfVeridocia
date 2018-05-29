@@ -158,7 +158,7 @@
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="Your shift is about to start; you had better get going!<hardstop>"/>
 </text>
 <text id=1 description="Soldier 1 cobblestone">
-	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="It's a beautiful night tonight, don't you think?<hardstop>"/>
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="It's a beautiful evening, don't you think?<hardstop>"/>
 </text>
 <text id=2 description="Soldier 2 cobblestone">
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="Hey, look who decided to show up early for once! Maybe Sharna is finally rubbing off on you.<hardstop>"/>
