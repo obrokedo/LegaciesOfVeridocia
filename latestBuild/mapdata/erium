@@ -97,6 +97,9 @@
 <trigger id=30 description="Codger1Spokento" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<completequest questid="Codger1spokento"/>
 </trigger>
+<trigger id=31 description="SearchSign2" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<showtext textid=22/>
+</trigger>
 <text id=0 description="citizen1">
 	<conversation require="," exclude="," trigger=-1 heroportrait1="" enemyportrait1="" animportrait1="" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="Good evening, Noah.<pause>  That blizzard the other night was really bizarre, wasn't it?<hardstop><split>I've never seen anything like that...<pause>  It came and went in almost no time at all!<hardstop><split>And you wouldn't even know it by the weather today!<hardstop>"/>
 </text>
@@ -166,6 +169,9 @@
 <text id=21 description="Codger2">
 	<string require="Codger1spokento," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="Who's that laughing outside?<softstop> That old goat!<pause> I should have known!<hardstop><linebreak> He's the one sending you all through my house!!<softstop> It is not a damned thoroughfare!<hardstop>"/>
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="Of course!<pause> By all means walk on through my home!<softstop> Everyone else does!<hardstop>"/>
+</text>
+<text id=22 description="SearchSign2">
+	<string require="," exclude="," trigger=31 heroportrait="" enemyportrait="" animportrait="" message="No Entrance!"/>
 </text>
 <cinematic id=0 description="NoahGettingReady" camerax=0 cameray=0>
 	<pausemusic/>

@@ -239,7 +239,7 @@
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, The Adventures of a Princess.<hardstop>"/>
 </text>
 <text id=28 description="Book6">
-	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Sage Advise.<hardstop>"/>
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Sage Advice.<hardstop>"/>
 </text>
 <text id=29 description="Book7">
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, The Sword and the Seals.<hardstop>"/>

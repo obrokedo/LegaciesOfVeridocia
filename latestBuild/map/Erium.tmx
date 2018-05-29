@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.2" orientation="orthogonal" renderorder="right-down" width="160" height="90" tilewidth="12" tileheight="12" infinite="0" nextobjectid="159">
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="160" height="90" tilewidth="12" tileheight="12" infinite="0" nextobjectid="168">
  <properties>
   <property name="shadow" value="-13"/>
  </properties>
@@ -15,7 +15,7 @@
  <tileset firstgid="2692" name="Shadows and Lights" tilewidth="12" tileheight="12" tilecount="200" columns="20">
   <image source="../image/Shadows and Lights.png" trans="000000" width="240" height="120"/>
  </tileset>
- <tileset firstgid="2892" name="Overlays" tilewidth="12" tileheight="12" tilecount="0" columns="15">
+ <tileset firstgid="2892" name="Overlays" tilewidth="12" tileheight="12" tilecount="15" columns="15">
   <image source="../image/Overlays.png" trans="000000" width="180" height="12"/>
  </tileset>
  <layer name="BG" width="160" height="90">
@@ -53,7 +53,7 @@
    H4sIAAAAAAAACu3IoREAAAgEoM9O7tiuYDB5EEkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPioa3cAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwYymKjLgDhAAA=
   </data>
  </layer>
- <layer name="Roof" width="160" height="90">
+ <layer name="Roof" width="160" height="90" visible="0">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACu2d244VRRSGOyQz3CjgA2BiBAZ8AL0yKGbkeAuoTDbiSwwDOj6DuuUdON3BCzAML8HpIUDxktXJ7tApu7rWquPq6v9L/hAmMNnV9fXuqurqXk0DgJuPDzbNIcrhSDlC+eRg6VaBqXCCXNmg/BjoYevdT5RTlC/gH2DS+bfh6WHfu1PwDwgx/WtzjXKGkY8oJw33avPPd3yCcQgP07/WvW8Y+Xr172v3Tzo+wThERt8/qXs+/m2uN833lLPMnKOcX893PEy445OpjkOk/RG7v7rj6+Oej38L+mzXKX842t2240/KDcovivzrcoE+08VVLq1P9zrA7Q+Odz79dSLAvfb/bXn6d93S7n47bni0JzY2/36lz/TbKrsV+GfrD4l3Pv11mo7Rt4wMudd5aToo8a/fbrMdWv0bmp9Jz0Mt2Pqj//1uS/u9/3Om/nKNE7cC/fuLspyAf2PXCsl5qAVbf/S/323ZLeAf5/hL/Wvdu7nKkINa/OOMU7jnoRZs/XGLmVz9xR0nbgn967tnc1CDf9wxMvc81AKnP1zJ0V/ccWKb75j+jbV1mbg9XCTzM8l5qAVuf0gcLNlfLhaCti4VtEdy3knOQy1I+mMK/eViIWzrUnl7po60P6beX9v02XaEua24PbG5S229R7nvmQeUh4Lj5dMf6K96eUJ9t0f5R+hh692/lH3KM/Q/8KTzb4/pYd+7ffgHAjH9s3k45B38A6HY/OvyN+UO5anFPfgHQhjz7x3l1Sr/wT/VhM4jY80vpdj8a917YcTm4JT9yz3/T4XvPJI7zk/9uV3ujTk4Zf9qmf9L55GS+WVO/8bcszmo4fj7Usv8nzuPlHqX0z+Oe0MOajj+vtQy/3fNI20eurzL5Z/EPdNBDcffF06/ufpHQ/td7ehiPscxtq6Ryz8f9/oOajj+vnD6zdU3GtrP9c98jqO0f8/pd78MzGsFx9+XOfnXX0/jrKvl8G/uzMU/6ZoG/MvDHPzzWdOAf3mo3T/fNQ34l4ea/QtZ04B/eajVv9A1DfiXhxr9C3HP5iBIQ23+xXBvyEGQBs66hWtuqMW/mO6ZDoI0cNcttO9/fJ7AvS5Tvr+gnbnvfwRlmfv+R1CWue9/BGWZ+/5HUJa5738EZZn7/seO0LpkqP/hx9z3P3b41iVD/Y8wPl9rmmOBOb5WuhXhSOuSTbX+hzZM/z4b8Mv8mfn3Gv2zeTjkHfzzJ/X3n/T59lLPs9v863to8w7++ZPaP+7z7aWfZ3f5t+FwD/7pxPV8u5bn2eFfnYw9367peXb4Vydj+2tsz97CPxAL+AdKIvXvDeVtgflxaf821+PU5S1dP1kbXP843qWcH5f2L7Qur5b6ydpw+SfxLuX12eWfrfZxbP+kdXm11U824d5XT3X/fMy/9t3av1tyZ8C7Uv6N1T5O5Z/LwyHvNPrnuq+e+v752P5+811A3HcD5fTPVfs4tX+mh2PeafbPvJ+Z6/556HsJcu33t9U959aeTu2fq2b3VPzrcjLy8bMR470EOfb7S+qep6h/7vLPVbO7lH+u8d1lyhWGf1cpP1iuzyHjwljvJUi9319a9zx2/fMx/zg1u0v5x903aXrY+TfmXYxxYcz3EqTc7+9T9zxm/XObf9ya3aX94+6b7Dw8xvAuxnkd+70Eqfb7+9Y9j1X/fMg/Sc1uLf5xPeR4F8O/GPv7c+z3D6l7HqP+uemftGa3Nv+6jK2x9dfahuYjc76v+ehA0zw+8OHPo2tN8+na/38ei4Wne0MOavGvvZ6cYSbVuupUMT37ktz7KoN/Pu6ZDmrwL2QcDf/c6wqx7xctAt3rO1jav9BxNPz7cFyHxi/deCXmcdmm37kTKbcL+hfiXop11anSzYfHxitzPC4mvuumudZVpwpnPhwy362FkHXTHOuqoG5C101Tr6uCuomxborrDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADIzXs2eD29AOEAAA==
   </data>
@@ -241,7 +241,7 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup name="Meta" visible="0">
+ <objectgroup name="Meta">
   <object id="4" name="Citizen1" x="192" y="456" width="24" height="24">
    <properties>
     <property name="npc" value="animation=Man1 textid=0 wander=3"/>
@@ -584,6 +584,26 @@
   <object id="158" name="Door 13" x="528" y="480" width="24" height="24">
    <properties>
     <property name="door" value="image=HouseDoorRight"/>
+   </properties>
+  </object>
+  <object id="160" x="1656" y="912" width="24" height="24">
+   <properties>
+    <property name="searcharea" value="searchtrigger=31"/>
+   </properties>
+  </object>
+  <object id="161" x="24" y="24">
+   <properties>
+    <property name="null" value=""/>
+   </properties>
+  </object>
+  <object id="166" x="192" y="168" width="24" height="24">
+   <properties>
+    <property name="null" value=""/>
+   </properties>
+  </object>
+  <object id="167" x="96" y="240" width="24" height="24">
+   <properties>
+    <property name="null" value=""/>
    </properties>
   </object>
  </objectgroup>

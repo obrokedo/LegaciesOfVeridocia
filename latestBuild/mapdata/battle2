@@ -48,7 +48,7 @@
 	<haltingmovepath name="Olivia" x=720 y=312 speed="2.4"/>
 	<facing name="Craig" dir=2/>
 	<wait time=100/>
-	<speech text="I think we're done here, meet us up stairs when you've finished up.<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
+	<speech text="I think we're done here, meet us upstairs when you've finished up.<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
 	<haltingmove name="Craig" x=744 y=288 speed="2.4" movehor=false movediag=false/>
 	<removeactor name="Craig"/>
 	<haltingmove name="Olivia" x=720 y=288 speed="2.4" movehor=false movediag=false/>
