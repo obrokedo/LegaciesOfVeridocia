@@ -1,5 +1,6 @@
 <map file="EriumJail.tmx"/>
-<trigger id=0 description="Map Start" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+<trigger id=0 description="Map Start" require="PreBattle1CinimaticWatched,," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<playmusic music="eriumcastle"/>
 	<playmusic music="castlenight"/>
 </trigger>
 <trigger id=1 description="SouthStairsExit" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
