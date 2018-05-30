@@ -171,7 +171,7 @@
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="Of course!<pause> By all means walk on through my home!<softstop> Everyone else does!<hardstop>"/>
 </text>
 <text id=22 description="SearchSign2">
-	<string require="," exclude="," trigger=31 heroportrait="" enemyportrait="" animportrait="" message="No Entrance!<hardstop>"/>
+	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="No Entrance!<hardstop>"/>
 </text>
 <cinematic id=0 description="NoahGettingReady" camerax=0 cameray=0>
 	<pausemusic/>
