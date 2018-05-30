@@ -159,12 +159,6 @@
     <cell index="13" delay="1000">
       <spr name="/Unpromoted/Frame18" x="105" y="-50" z="0"/>
     </cell>
-    <cell index="14" delay="30">
-      <spr name="/Unpromoted/Frame19" x="105" y="-50" z="0"/>
-    </cell>
-    <cell index="15" delay="50">
-      <spr name="/Unpromoted/Frame20" x="105" y="-50" z="0"/>
-    </cell>
   </anim>
   <anim name="UnSpecial" loops="0">
     <cell index="0" delay="30">
