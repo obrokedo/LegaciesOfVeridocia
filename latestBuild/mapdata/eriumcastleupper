@@ -71,7 +71,7 @@
 </text>
 <text id=6 description="Sharna">
 	<string require="," exclude="EriumCastleUpperSharnaTalk," trigger=1 heroportrait="Sharna" enemyportrait="" animportrait="" message="Hello, Noah. <pause>Glad to see you're here this early. I just got here, too! <hardstop>I hope Huun makes it on time tonight. It makes us all look sloppy when one of us is late.<hardstop>"/>
-	<string require="EriumCastleUpperSharnaTalk," exclude="," trigger=-1 heroportrait="Sharna" enemyportrait="" animportrait="" message="Don't be late for patrol!<hardstop>"/>
+	<string require="EriumCastleUpperSharnaTalk," exclude="," trigger=-1 heroportrait="Sharna" enemyportrait="" animportrait="" message="Check with the captain to see if he's ready for us to begin our patrol.<hardstop>  I saw him in the courtyard eariler."/>
 </text>
 <text id=7 description="SearchNoItem">
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="There doesn't seem to be anything here.<hardstop>"/>
@@ -117,7 +117,7 @@
 	<facing name="Sharna" dir=3/>
 	<speech text="He may be late again but at least he was here early today. Small steps, I suppose.<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
 	<haltingmove name="Noah" x=96 y=672 speed="2.4" movehor=false movediag=false/>
-	<speech text="I'll see if I can find him. We're early anyway, he's got plenty of time.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
+	<speech text="He might still be back before our patrol. We're early anyway, he's got plenty of time.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<speech text="We'll see...<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
 </cinematic>
 <condition id=0 description="NorthWestStairsExit1" triggerid=2>

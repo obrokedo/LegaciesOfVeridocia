@@ -85,7 +85,7 @@
 	<camerafollow name="Guard"/>
 	<haltingmove name="Guard" x=576 y=228 speed="1.2" movehor=true movediag=false/>
 	<facing name="Guard" dir=0/>
-	<speech text="You're not going anywhere, Noah.<pause><linebreak> Lady Mistal said you'd say that.<softstop><linebreak> Her alibi checks out,<pause> and the evidence points right at you.<softstop><linebreak> Your treachery is apparent, and you will pay for it tomorrow.<hardstop><linebreak> It's regrettable.<softstop><nextcin> I kinda liked you.<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
+	<speech text="You're not going anywhere, Noah.<pause><linebreak> Lady Mistal told us you'd say that.<softstop><linebreak> Her alibi checks out,<pause> and the evidence points right at you.<softstop><linebreak> Your treachery is apparent, and you will pay for it tomorrow.<hardstop><linebreak> It's regrettable.<softstop><nextcin> I kinda liked you.<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
 	<haltingmove name="Guard" x=696 y=288 speed="1.2" movehor=true movediag=false/>
 	<speech text="We're being framed!<pause><pause> She's got you all fooled!<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<facing name="Guard" dir=0/>
