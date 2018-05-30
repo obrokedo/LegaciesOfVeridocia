@@ -91,28 +91,22 @@
     </cell>
   </anim>
   <anim name="UnDodge" loops="0">
-    <cell index="0" delay="80">
-      <spr name="/Unpromoted/Frame17" x="74" y="-54" z="0"/>
-    </cell>
-    <cell index="1" delay="50">
-      <spr name="/Unpromoted/Frame18" x="74" y="-54" z="0"/>
-    </cell>
-    <cell index="2" delay="100">
+    <cell index="0" delay="250">
       <spr name="/Unpromoted/Frame19" x="74" y="-54" z="0"/>
     </cell>
-    <cell index="3" delay="60">
+    <cell index="1" delay="60">
       <spr name="/Unpromoted/Frame20" x="74" y="-54" z="0"/>
     </cell>
-    <cell index="4" delay="30">
+    <cell index="2" delay="30">
       <spr name="/Unpromoted/Frame21" x="74" y="-54" z="0"/>
     </cell>
-    <cell index="5" delay="100">
+    <cell index="3" delay="100">
       <spr name="/Unpromoted/Frame22" x="74" y="-54" z="0"/>
     </cell>
-    <cell index="6" delay="100">
+    <cell index="4" delay="100">
       <spr name="/Unpromoted/Frame23" x="74" y="-54" z="0"/>
     </cell>
-    <cell index="7" delay="50">
+    <cell index="5" delay="50">
       <spr name="/Unpromoted/Frame24" x="74" y="-54" z="0"/>
     </cell>
   </anim>
