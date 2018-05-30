@@ -80,7 +80,7 @@ class Heal(SpellDefinition):
             
     # This is at 30% opacity    
     def getSpellOverlayColor(self, level):
-        return Color(0, 0, 0);
+        return Color(200, 220, 250);
         
     def getSpellAnimationFile(self, level):
         return "Heal"

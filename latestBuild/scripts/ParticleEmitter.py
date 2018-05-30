@@ -44,7 +44,7 @@ class RandomHorizontalParticleEmitter(ParticleEmitterConfiguration):
             # You can scale animations size with setScale(float)
             # p.setScale(.3)
             if self.isHero:
-                p.setPosition(rand + self.drawX, 93)
+                p.setPosition(rand + self.drawX, 125)
             else:
                 p.setPosition(rand + self.drawX, 113)
             
