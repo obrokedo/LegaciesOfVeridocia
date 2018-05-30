@@ -211,4 +211,15 @@
       <spr name="/Unpromoted/Frame33" x="105" y="-50" z="0"/>
     </cell>
   </anim>
+  <anim name="UnSpellWinddown" loops="0">
+    <cell index="0" delay="100">
+      <spr name="/Unpromoted/Frame18" x="105" y="-50" z="0"/>
+    </cell>
+    <cell index="1" delay="30">
+      <spr name="/Unpromoted/Frame19" x="105" y="-50" z="0"/>
+    </cell>
+    <cell index="2" delay="50">
+      <spr name="/Unpromoted/Frame20" x="105" y="-50" z="0"/>
+    </cell>
+  </anim>
 </animations>

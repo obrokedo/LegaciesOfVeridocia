@@ -97,7 +97,7 @@
     <cell index="1" delay="50">
       <spr name="/Unpromoted/Frame18" x="74" y="-54" z="0"/>
     </cell>
-    <cell index="2" delay="750">
+    <cell index="2" delay="100">
       <spr name="/Unpromoted/Frame19" x="74" y="-54" z="0"/>
     </cell>
     <cell index="3" delay="60">
