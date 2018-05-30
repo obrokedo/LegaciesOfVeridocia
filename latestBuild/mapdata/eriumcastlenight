@@ -27,13 +27,13 @@
 	<wait time=300/>
 	<shakehead name="Sharna" time=300/>
 	<wait time=300/>
-	<speech text="Of course it matters!!<pause><linebreak> You still have to be awake to use your ears!<softstop><linebreak> Besides, not everyone walks these halls in full armor.<pause> Eyes are better than ears for catching sneaks.<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
+	<speech text="Of course it matters!!<pause><linebreak> You still have to be awake to use your ears!<hardstop><linebreak> Besides, not everyone walks these halls in full armor.<pause> Eyes are better than ears for catching sneaks.<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
 	<move name="Noah" x=552 y=1008 speed="1.5" movehor=false movediag=false/>
 	<wait time=1200/>
 	<forcedmove name="Noah" x=559 y=1008 speed="1" facing=2 movehor=true movediag=false/>
 	<wait time=200/>
 	<stopanim name="Noah"/>
-	<speech text="I think you should ease up on him.<pause>  Huun does things a little differently sometimes;<softstop> it could be a cover,<pause> but it could also be a legitimate explanation.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
+	<speech text="I think you should ease up on him.<pause>  Huun does things a little differently sometimes;<hardstop> it could be a cover,<pause> but it could also be a legitimate explanation.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<quiver name="Sharna"/>
 	<wait time=750/>
 	<stopse name="Sharna"/>
