@@ -1,5 +1,5 @@
 <map file="EriumJail.tmx"/>
-<trigger id=0 description="Map Start" require="PreBattle1CinimaticWatched,," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+<trigger id=0 description="Map Start" require="PreBattle1CinimaticWatched," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<playmusic music="eriumcastle"/>
 	<playmusic music="castlenight"/>
 </trigger>
@@ -42,7 +42,7 @@
 	<addactor x=96 y=192 name="Fire6" anim="SpriteFire" startanim="UnUp" visible=true init=false associatedhero=""/>
 	<addactor x=72 y=192 name="Fire7" anim="SpriteFire" startanim="UnUp" visible=true init=false associatedhero=""/>
 	<addactor x=48 y=192 name="Fire8" anim="SpriteFire" startanim="UnUp" visible=true init=false associatedhero=""/>
-	<playmusic music="castlenight" volume=50/>
+	<playmusic music="castlenight" volume=100/>
 	<fadein time=2000 halting=false init=true/>
 	<speech text="... But we can't prove that.<hardstop>" heroportrait="Huun" enemyportrait="" animportrait=""/>
 	<speech text="Noah only fell on her.<pause><pause> Are you suggesting that she just attacks any person that mistakenly runs into her?<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
