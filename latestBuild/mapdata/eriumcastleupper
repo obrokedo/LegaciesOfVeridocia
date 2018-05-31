@@ -71,7 +71,7 @@
 </text>
 <text id=6 description="Sharna">
 	<string require="," exclude="EriumCastleUpperSharnaTalk," trigger=1 heroportrait="Sharna" enemyportrait="" animportrait="" message="Hello, Noah. <pause>Glad to see you're here this early. I just got here, too! <hardstop>I hope Huun makes it on time tonight. It makes us all look sloppy when one of us is late.<hardstop>"/>
-	<string require="EriumCastleUpperSharnaTalk," exclude="," trigger=-1 heroportrait="Sharna" enemyportrait="" animportrait="" message="Check with the captain to see if he's ready for us to begin our patrol.<hardstop>  I saw him in the courtyard eariler."/>
+	<string require="EriumCastleUpperSharnaTalk," exclude="," trigger=-1 heroportrait="Sharna" enemyportrait="" animportrait="" message="Check with the captain to see if he's ready for us to begin our patrol.<hardstop>  I saw him in the courtyard eariler.<hardstop>"/>
 </text>
 <text id=7 description="SearchNoItem">
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="There doesn't seem to be anything here.<hardstop>"/>
