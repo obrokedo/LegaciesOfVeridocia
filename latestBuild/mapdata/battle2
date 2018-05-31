@@ -1,6 +1,6 @@
 <map file="EriumJail.tmx"/>
 <trigger id=0 description="Battle Initialize" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<playmusic music="battle1"/>
+	<playmusic music="battle1" volume=100/>
 </trigger>
 <trigger id=1 description="Trigger Second Wave" require="," exclude="," nonretrig=true retrigonenter=false triggeronce=false triggerimmediately=false>
 	<changeaiapproach id=8 aitype=1 priority=0/>

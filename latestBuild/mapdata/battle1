@@ -1,6 +1,6 @@
 <map file="EriumCastleNight.tmx"/>
 <trigger id=0 description="Battle1 Initialise" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<playmusic music="battle1"/>
+	<playmusic music="battle1" volume=100/>
 </trigger>
 <trigger id=1 description="Victory Results" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<completequest questid="Battle1"/>

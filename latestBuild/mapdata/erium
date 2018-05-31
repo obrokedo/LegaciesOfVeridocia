@@ -1,6 +1,6 @@
 <map file="Erium.tmx"/>
 <trigger id=0 description="MapStart" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<playmusic music="erium"/>
+	<playmusic music="erium" volume=100/>
 </trigger>
 <trigger id=1 description="OpenItemShop" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<showshop buypercent="1.2" sellpercent="0.8" itemssold="Medical Herb," portrait="Shopkeeper1"/>

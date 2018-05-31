@@ -1,6 +1,6 @@
 <map file="EriumCastle.tmx"/>
 <trigger id=0 description="MapStart" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<playmusic music="eriumcastle"/>
+	<playmusic music="eriumcastle" volume=100/>
 </trigger>
 <trigger id=1 description="ContinueStory" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<runtriggers triggers=36,/>
