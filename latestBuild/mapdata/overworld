@@ -1,0 +1,13 @@
+<map file="Overworld.tmx"/>
+<trigger id=0 description="ExitToEriumTown" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="erium" enter="NorthWestEntrance1" transdir=""/>
+</trigger>
+<trigger id=1 description="ExitToEriumWoods" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="eriumwoods" enter="EriumWoodsEntrance" transdir=""/>
+</trigger>
+<condition id=0 description="ExitToEriumTown" triggerid=0>
+	<enterloc location="EriumExit" immediate=false/>
+</condition>
+<condition id=1 description="ExitToEriumWoods" triggerid=1>
+	<enterloc location="EriumWoodsExit" immediate=false/>
+</condition>
