@@ -14,3 +14,6 @@
 <condition id=1 description="ExitToEriumWoods" triggerid=2>
 	<enterloc location="EriumWoodsExit" immediate=false/>
 </condition>
+<condition id=2 description="MapStart" triggerid=0>
+	<maploaded/>
+</condition>

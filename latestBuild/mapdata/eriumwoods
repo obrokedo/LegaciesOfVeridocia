@@ -8,3 +8,6 @@
 <condition id=0 description="ExitToOverworld" triggerid=1>
 	<enterloc location="EriumWoodsExit" immediate=false/>
 </condition>
+<condition id=1 description="MapStart" triggerid=0>
+	<maploaded/>
+</condition>
