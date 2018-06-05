@@ -1,7 +1,10 @@
 <map file="EriumWoods.tmx"/>
-<trigger id=0 description="ExitToOverworld" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+<trigger id=0 description="MapStart" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<playmusic music="battle3" volume=100/>
+</trigger>
+<trigger id=1 description="ExitToOverworld" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<loadmap mapdata="overworld" enter="EriumWoodsEntrance" transdir=""/>
 </trigger>
-<condition id=0 description="ExitToOverworld" triggerid=0>
+<condition id=0 description="ExitToOverworld" triggerid=1>
 	<enterloc location="EriumWoodsExit" immediate=false/>
 </condition>
