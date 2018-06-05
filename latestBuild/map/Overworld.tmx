@@ -91,12 +91,12 @@
     <property name="start" value="exit=EriumWoodsEntrance"/>
    </properties>
   </object>
-  <object id="220" name="EriumWoodsExit" x="612" y="5568" width="24" height="24">
+  <object id="220" name="EriumWoodsExit" x="612" y="5616" width="24" height="24">
    <properties>
     <property name=" " value=""/>
    </properties>
   </object>
-  <object id="221" name="EriumExit" x="708" y="5772" width="24" height="24">
+  <object id="221" name="EriumExit" x="708" y="5820" width="24" height="24">
    <properties>
     <property name=" " value=""/>
    </properties>

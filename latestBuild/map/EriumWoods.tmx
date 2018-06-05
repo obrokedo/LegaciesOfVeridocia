@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="60" height="60" tilewidth="12" tileheight="12" infinite="0" nextobjectid="3">
+ <properties>
+  <property name="shadow" value="-13"/>
+ </properties>
  <tileset firstgid="1" name="overworld(day)-Master" tilewidth="12" tileheight="12" tilecount="1296" columns="36">
   <image source="../image/overworld(day)-Master.png" trans="495d47" width="432" height="432"/>
  </tileset>
@@ -80,12 +83,12 @@
  <objectgroup name="Terrain"/>
  <objectgroup name="Trigger Regions" visible="0"/>
  <objectgroup name="Meta">
-  <object id="1" name="EriumWoodsEntrance" x="432" y="24" width="24" height="24">
+  <object id="1" name="EriumWoodsEntrance" x="360" y="672" width="24" height="24">
    <properties>
     <property name="start" value="exit=EriumWoodsEntrance"/>
    </properties>
   </object>
-  <object id="2" name="EriumWoodsExit" x="432" y="0" width="24" height="24"/>
+  <object id="2" name="EriumWoodsExit" x="360" y="696" width="24" height="24"/>
  </objectgroup>
  <objectgroup name="Battle" visible="0"/>
  <layer name="Overlay" width="60" height="60" visible="0">
