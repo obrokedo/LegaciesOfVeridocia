@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="60" height="60" tilewidth="12" tileheight="12" infinite="0" nextobjectid="3">
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="60" height="60" tilewidth="12" tileheight="12" infinite="0" nextobjectid="36">
  <properties>
   <property name="shadow" value="-13"/>
  </properties>
@@ -47,7 +47,7 @@
  </layer>
  <layer name="MG" width="60" height="60">
   <data encoding="base64" compression="gzip">
-   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
+   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
   </data>
  </layer>
  <layer name="MG Shadow" width="60" height="60">
@@ -57,7 +57,7 @@
  </layer>
  <layer name="FG" width="60" height="60">
   <data encoding="base64" compression="gzip">
-   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
+   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
   </data>
  </layer>
  <layer name="FG Shadow" width="60" height="60">
@@ -65,9 +65,9 @@
    H4sIAAAAAAAACu3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAAAAAAAADwZkvEChtAOAAA
   </data>
  </layer>
- <layer name="Walk" width="60" height="60" opacity="0.29">
+ <layer name="Walk" width="60" height="60" opacity="0.46">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACu3RMQ3AMBRDwc+fRcqlxdVgyGLJucF6u2/NzLO3Lum7913U9N98+fLly5cv3/6m/+bLly9fvnz59jf9N1++fPny5cu3v+m/+fLly5cvX779Tf/Nly9fvnz58u1v+m++fPny5cuXb3/Tf/Ply/e8P+wqX2RAOAAA
+   H4sIAAAAAAAACtWWW64CMQxD2f8uLnuBdV1+5sdSlJedtEdCCKZJq3jq5PXS8vf7vEnfN/D5fb6k7w2w7t46L/50fbHu3jovfktf5j17i/IyYd6zrygvE7Ve3fjuvohar258d1/kFr1YOt+iF0vn7fqr+wOyXX91f0CqPrdN1E+Qqs9tE/UTC5W+1bys/uDB1rf63rD6QxdWn47mY52jCqtPR/OxzoFMz1PRvNnzdudo77l6rs6etztfZddP6+vlQbL1OU1fLw/C8lkL9ntTXf/A8lkL9ntTXV9luv9283aZ7r/dvIh6PpnWl+3PWab1Vfszq69W83vxiKqeqr6O6714JFs/L149Z1f3teqC/1u/rXj1nF3dN1qn6LpT9UXY9/c0fZFqfaPxLB/f0jcbz/LxaX2rnDK3PWzPV6q8nj/j720fZufFOnh1m/Zhdl5WPVl51O8Nq56sPOr35iGrl/dcpYtFNj6rl/dcpUv0/F78bf5qnd/aH7nNX63zW/sj2TpO3eMo3f5rMX2Po6jnw9PnLIzvcvqchfFqtuepqg9U2Z6n2Pe3irru2zoj6rpXdZ7qk6cw1SdPY9tXp+/jtq+e6rsPU3PWKUzNWVX+ARqWOcFAOAAA
   </data>
  </layer>
  <layer name="Lighting" width="60" height="60">
@@ -80,9 +80,63 @@
    H4sIAAAAAAAACu3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAAAAAAAADwZkvEChtAOAAA
   </data>
  </layer>
- <objectgroup name="Terrain"/>
+ <objectgroup name="Terrain">
+  <object id="14" x="312" y="192" width="72" height="120">
+   <properties>
+    <property name="terrain" value="type=GRASS"/>
+   </properties>
+  </object>
+  <object id="19" x="144" y="168">
+   <properties>
+    <property name="terrain" value="type=ROAD"/>
+   </properties>
+   <polygon points="0,0 408,0 408,264 240,264 240,24 168,24 168,264 0,264"/>
+  </object>
+  <object id="20" x="312" y="432">
+   <properties>
+    <property name="terrain" value="type=ROAD"/>
+   </properties>
+   <polygon points="0,0 72,0 72,144 96,144 96,192 72,192 72,168 48,168 48,144 24,144 24,96 0,96 0,72 24,72 24,48 0,48"/>
+  </object>
+  <object id="21" x="384" y="528">
+   <properties>
+    <property name="terrain" value="type=ROAD"/>
+   </properties>
+   <polygon points="0,0 0,-24 48,-24 48,-48 72,-48 72,-12 72,0 24,0 24,24 0,24"/>
+  </object>
+  <object id="22" x="480" y="504">
+   <properties>
+    <property name="terrain" value="type=ROAD"/>
+   </properties>
+   <polygon points="0,0 0,-24 48,-24 72,-24 72,0 24,0"/>
+  </object>
+  <object id="32" x="120" y="480">
+   <properties>
+    <property name="terrain" value="type=THICK-GRASS"/>
+   </properties>
+   <polyline points="0,0 48,0 48,72 0,72 0,0"/>
+  </object>
+  <object id="33" x="432" y="528">
+   <properties>
+    <property name="terrain" value="type=THICK-GRASS"/>
+   </properties>
+   <polyline points="0,0 48,0 48,24 24,24 24,48 0,48 0,0"/>
+  </object>
+  <object id="34" x="120" y="456">
+   <properties>
+    <property name="terrain" value="type=GRASS"/>
+   </properties>
+   <polyline points="0,0 192,0 192,24 216,24 216,48 192,48 192,72 216,72 216,120 240,120 240,144 264,144 264,168 144,168 144,144 48,144 48,120 24,120 24,96 48,96 48,24 0,24 0,0"/>
+  </object>
+  <object id="35" x="384" y="456">
+   <properties>
+    <property name="terrain" value="type=GRASS"/>
+   </properties>
+   <polyline points="0,0 192,0 192,168 24,168 24,120 0,120 0,96 24,96 24,72 48,72 48,120 72,120 72,96 96,96 96,72 72,72 72,24 96,24 96,48 168,48 168,24 48,24 48,48 0,48 0,0"/>
+  </object>
+ </objectgroup>
  <objectgroup name="Trigger Regions" visible="0"/>
- <objectgroup name="Meta">
+ <objectgroup name="Meta" visible="0">
   <object id="1" name="EriumWoodsEntrance" x="360" y="672" width="24" height="24">
    <properties>
     <property name="start" value="exit=EriumWoodsEntrance"/>
@@ -90,7 +144,65 @@
   </object>
   <object id="2" name="EriumWoodsExit" x="360" y="696" width="24" height="24"/>
  </objectgroup>
- <objectgroup name="Battle" visible="0"/>
+ <objectgroup name="Battle" visible="0">
+  <object id="3" name="Soldier" type="NPC" x="288" y="456" width="24" height="24">
+   <properties>
+    <property name="enemy" value="ai=fighter aiapproach=wait enemyid=Erium Soldier unit=0"/>
+   </properties>
+  </object>
+  <object id="4" name="Soldier" type="NPC" x="336" y="432" width="24" height="24">
+   <properties>
+    <property name="enemy" value="ai=fighter aiapproach=wait enemyid=Erium Soldier unit=1"/>
+   </properties>
+  </object>
+  <object id="5" name="Erium Archer" type="NPC" x="408" y="360" width="24" height="24">
+   <properties>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Erium Archer unit=2"/>
+   </properties>
+  </object>
+  <object id="6" name="battlestart" type="START" x="360" y="600">
+   <properties>
+    <property name="start" value="exit=battlestart"/>
+   </properties>
+   <polyline points="0,0 48,0 48,-48 24,-48 24,-24 0,-24 0,0"/>
+  </object>
+  <object id="7" name="Soldier" type="NPC" x="312" y="336" width="24" height="24">
+   <properties>
+    <property name="enemy" value="ai=fighter aiapproach=wait enemyid=Erium Soldier unit=3"/>
+   </properties>
+  </object>
+  <object id="8" name="Erium Mage" type="NPC" x="336" y="240" width="24" height="24">
+   <properties>
+    <property name="enemy" value="ai=wizard aiapproach=wait enemyid=Erium Mage unit=4"/>
+   </properties>
+  </object>
+  <object id="9" name="Soldier" type="NPC" x="288" y="216" width="24" height="24">
+   <properties>
+    <property name="enemy" value="ai=fighter aiapproach=wait enemyid=Erium Soldier unit=5"/>
+   </properties>
+  </object>
+  <object id="10" name="Erium Archer" type="NPC" x="264" y="192" width="24" height="24">
+   <properties>
+    <property name="enemy" value="ai=fighter aiapproach=wait enemyid=Erium Archer unit=6"/>
+   </properties>
+  </object>
+  <object id="11" name="Erium Captain" type="NPC" x="192" y="216" width="24" height="24">
+   <properties>
+    <property name="enemy" value="ai=fighter aiapproach=wait enemyid=Erium Captain unit=7"/>
+   </properties>
+  </object>
+  <object id="12" name="Eddie" x="168" y="216" width="24" height="24">
+   <properties>
+    <property name="door" value="image=eddiedownNPC"/>
+   </properties>
+  </object>
+  <object id="13" x="264" y="624">
+   <properties>
+    <property name="battleregion" value=""/>
+   </properties>
+   <polyline points="0,0 312,0 312,-456 -144,-456 -144,0 0,0"/>
+  </object>
+ </objectgroup>
  <layer name="Overlay" width="60" height="60" visible="0">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACu3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAAAAAAAADwZkvEChtAOAAA
