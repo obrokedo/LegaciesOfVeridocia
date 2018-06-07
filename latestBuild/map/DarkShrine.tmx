@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="32" height="54" tilewidth="12" tileheight="12" infinite="0" nextobjectid="1">
+ <tileset firstgid="1" name="castletown(night)-Master" tilewidth="12" tileheight="12" tilecount="900" columns="25">
+  <image source="../image/castletown(night)-Master.png" trans="495d47" width="300" height="440"/>
+ </tileset>
+ <tileset firstgid="901" name="castletown(night)-Slave1" tilewidth="12" tileheight="12" tilecount="495" columns="15">
+  <image source="../image/castletown(night)-Slave1.png" trans="495d47" width="180" height="400"/>
+ </tileset>
+ <tileset firstgid="1396" name="overworld(day)-Master" tilewidth="12" tileheight="12" tilecount="1296" columns="36">
+  <image source="../image/overworld(day)-Master.png" trans="495d47" width="432" height="432"/>
+ </tileset>
+ <layer name="BG" width="32" height="54">
+  <data encoding="base64" compression="zlib">
+   eJztmLtuE0EUhmdJgIZcaIhScKm4VARKklCDbIsCmTRILsCWINwegEBC8gBRcJNAHiBa8hIInPSAInHLCyA6SBoQZ5Q58r+/Z9YbZ3Hl4pfX3jPnmzO3M8fzxpj5njJrRHQxoNEu8MdEd0TXSHdFl7sQ54zjvCTZfj3NcVxCcVoVRBXS9YBtp+My5totUZyLorqHv+TeoW0d/HTKj4lzW7Tunr+Kvrnn2L1D2/Uc+d9F28D/LPol+i36Any1y5Nvfe6IdoF/LDJmUDQkGoiafLXb7pD/QfSR+DsePs8/83eJb31+ysD/IZol/nDUyh8C9rCHfzxK8udEP9uwI8df9sy/7YP1qfzzwL8AfLXj+Z91/D5Qv2MecnoeiD+0/n3jH1r/y47/TFQSFUUn3bygfPG/B711fm+RYvcObX3xM2/OveNPbff4gEK+j7Pi4uVPbXdFJmgcdE9+ux/QtEnaTkTJ8fdxbD/6xO4I6Ci0uynPk6AXJrx+F0zStgx+DhOjP2rGb+eF891MjnzOizYf6jrTfenLd4Uc+JwXNR/qPlsBPuf1eg58zp9jwOf47e92374xzf17UH5MPpHvi5/Pj7z4FQ/fFz+eH40c+O/IZ7v4db//kee/5G+//Cnww+dBKH6N94RoJGrlvxKb1wGtevqLfspR+/h5vPMU89Pi7wa/F38v/l78TX6ofsW8fTXF/5Mo/f8BvFdkyf+ary854fjgPWzaJONT+5C/tPnHOlbrVx8f88BCgI/186JJ1sMaP9/3bL5cM838i/eXQgY+22v+XTPJ+7jeB0+LzhB/y+zdF6z9KWejdu34bB87X1vEVzuuUzBfN1x/BkSDJnkfCfHZnv1xXbVJfLzvTzh/Z0Xn9sFHe/aHfMveID7uf76/NDLwQ/a8/2PH5vHn82ecNJnCn0qx9/Ernnl5IDYPo/RzJsRPO5esz0dR6zqzdXDNJM+/Uc84HIRfhnNRz7+q2avDa066b/V8ypuP52vBsW+4fli+nlNZ81AnfK2v6o6p/0PUYD38b76u9yrMQZH4WfIg87PmPeUXIXaMP/Q/LtfFzM/aDvkl+NT9wPWqT3UPP2s73e869jgHJZOsFzdNsnbU77b/WAetmuR57muDcddAuA+rxN8gX3he8hqL27TBdacsjbkK4nrVp4aHn7Vdkcb+H/mwufg=
+  </data>
+ </layer>
+ <layer name="MG" width="32" height="54">
+  <data encoding="base64" compression="zlib">
+   eJztlr1OwzAUhS05E51hKhtdaDdYaIeuiEpZeaIi1DlV1Tn92ZuKZ4AngIcoT0CHnghHiSxb4Di2U+l+0pEVy74n9r12whhBEARBEG1mHDHWhW41uo5+x7jyjqE+9KzRQIxx8Q6xiNkXPg+Siv7qWBdUff7T3zRDeIwUPrp+wg6bWraZe+CMfXO7Ws7nXkJXNWL8wPvI63sX3MC7V8P/AnM6DdTzHWLc07kwwsX9bRIzr9snaFKZIz/r0M1z+U1wQdPrJ5pDVcuu/rtUqGr53OqbaCfv+OZ/8LJVYVr/jwa1+QnPL162qvh/1b/NWdSt2+R8qcbq7uEZvF4qfvK6XTGFxxZaQnMPfjIJPN+gFFoF8F/D8xXaQVkA/z08N1LufZKK9YfIfU6+7wuR+2mgfUhF7pNA+5Dysl0F2IMdL9vM0x7ocu3rHpBzfQKZYD7E
+  </data>
+ </layer>
+ <layer name="MG Shadow" width="32" height="54">
+  <data encoding="base64" compression="zlib">
+   eJztwQENAAAAwqD3T20PBxQAAAAAAAD8GBsAAAE=
+  </data>
+ </layer>
+ <layer name="FG" width="32" height="54">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUkAI4GYenXaNgFIyCoQEcWBgY/FkGzm5ixEbB0ANL0fBgM28U0BbQKp6INXcfFFMbkGoutdxBK/+MglEwHMEHGprNQURfSh8PliTCDnECZhACHmg4BYgNodiIgF6Q/wyQ1CdjMY9UgGweIfvJUU8IeDIg3O5NA/WjYBSQAnCVT8SULYMRTGEeOLunDqDdowA/wFeHkYOJBcjlN7UxMfXBJCCeTCM8hYRwwAe6gbgHDfdSaCap5cBA9+v3oWFyAQCabz5s
+  </data>
+ </layer>
+ <layer name="FG Shadow" width="32" height="54">
+  <data encoding="base64" compression="zlib">
+   eJztwQENAAAAwqD3T20PBxQAAAAAAAD8GBsAAAE=
+  </data>
+ </layer>
+ <layer name="Walkable" width="32" height="54" visible="0" opacity="0.5">
+  <data encoding="base64" compression="zlib">
+   eJztlksOgCAMBVlxAr2L3v9iumFhE9IfLSpvNiRESObRtJYCAAAAAPBkq6XsNe8c5bjvOA33WM9Rmgf10e5baR7UR7tvhfpoVy/UR7uOItubkuXN1bM1B2kuXD1bc5Dm4vX11oXXd1RdZHtH5zDL+2vvv7q/lOh+zxHlxZE99yhZ79tjdf+G1DsqH6n3qDnQ29d+5/XT/u+8ZQ5qmd334b+2vzafbGb1/cZf/C9GbF3f
+  </data>
+ </layer>
+</map>
