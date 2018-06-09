@@ -1,0 +1,6 @@
+<map file="EriumOutskirts.tmx"/>
+<cinematic id=0 description="Scene1" camerax=0 cameray=0>
+	<fadein time=1000 halting=true init=false/>
+	<speech text="They complain about how disgusting the sewer was, <hardstop>they discover the ruins of a church? from an old faith maybe(world building?) <hardstop>if not its a decrepid guard house. They decide to lay low and hide there for the night.<hardstop> At this point noah can walk around and explore. Olivia will block the way back to the cave, <hardstop>craig will wait by the house(talk to craig to sleep for the night) with a yes no. If player tries to leave north or east, have craige yell at you and <hardstop>say where you running off to, we didnt save your hide so you could run away. Your in this for good now. or somthing.<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
+	<loadmap mapdata="overworld" enter="Erium"/>
+</cinematic>

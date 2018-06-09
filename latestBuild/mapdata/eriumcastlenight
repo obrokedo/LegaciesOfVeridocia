@@ -493,19 +493,21 @@
 	<stopse name="Craig"/>
 	<speech text="No reason to waste time chattin' here, either. Make it quick!<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
 	<facing name="Craig" dir=0/>
-	<speech text="Alright, alright. The three of you saw Mistal meeting with a stranger last night, right?<hardstop> Craig and I have been watching Mistal for some time and were on our way to confront the pair,<hardstop> but you got to them first.<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait=""/>
+	<speech text="Alright, alright. The three of you saw Mistal meeting with a stranger last night, right?<hardstop> Craig and I, are high court guards and have been asked to watch Mistal for some time. Tonight was the night we were going to confront the pair,<hardstop> but you got to them first.<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait=""/>
 	<speech text="Woulda helped ya there but not with the whole castle coming to see what was happenin'.<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
 	<haltingmove name="Olivia" x=1392 y=240 speed="2.4" movehor=false movediag=false/>
 	<facing name="Olivia" dir=0/>
 	<speech text="So, we still don't know who Mistal was meeting with, but we couldn't let you be executed either.<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait=""/>
 	<speech text="Now, instead of finding out something useful, we tip our hand by breaking you out.<hardstop> Now Mistal will be wise to us. Want to yap about it some more, or are ya happy? Let's get moving!<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
+	<speech text="I dont think where gonna make it our the front door with all the commotion.<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
+	<speech text="Now where was it....<hardstop> (le moves box).<hardstop> There it is, I hope you like small, dark, stinky, wet places.<hardstop> This is our ticket out of here.<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
 	<forcedmove name="Noah" x=1080 y=192 speed="2" facing=2 movehor=false movediag=false/>
 	<forcedmove name="Sharna" x=1080 y=216 speed="2" facing=2 movehor=false movediag=false/>
 	<forcedmove name="Huun" x=1080 y=192 speed="2" facing=2 movehor=false movediag=false/>
 	<forcedmove name="Olivia" x=1080 y=240 speed="2" facing=2 movehor=false movediag=false/>
 	<forcedmove name="Craig" x=1080 y=240 speed="2" facing=2 movehor=false movediag=false/>
 	<fadeout time=1000 halting=true/>
-	<showcredits/>
+	<loadcin mapdata="eriumoutskirts" cinid=0/>
 </cinematic>
 <condition id=0 description="MapLoad" triggerid=0>
 	<maploaded/>
