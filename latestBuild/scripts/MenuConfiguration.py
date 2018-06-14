@@ -1,4 +1,4 @@
-from mb.fc.engine.config import MenuConfiguration
+from tactical.engine.config import MenuConfiguration
 
 class MenuConfiguration(MenuConfiguration):
     # Resurrect methods

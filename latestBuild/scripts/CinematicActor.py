@@ -1,4 +1,4 @@
-from mb.fc.engine.config import CinematicActorConfiguration
+from tactical.engine.config import CinematicActorConfiguration
 
 # Building object that subclasses a Java interface
 class CinematicActor(CinematicActorConfiguration):

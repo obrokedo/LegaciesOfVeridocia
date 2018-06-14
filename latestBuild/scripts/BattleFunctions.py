@@ -1,5 +1,5 @@
 from java.lang import Math
-from mb.fc.engine.config import BattleFunctionConfiguration
+from tactical.engine.config import BattleFunctionConfiguration
 
 class BattleFunctions(BattleFunctionConfiguration):
     

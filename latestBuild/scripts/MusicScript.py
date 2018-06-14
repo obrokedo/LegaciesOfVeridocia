@@ -1,5 +1,5 @@
-from mb.fc.engine.config import MusicConfiguration
-from mb.fc.game.item import EquippableItem
+from tactical.engine.config import MusicConfiguration
+from tactical.game.item import EquippableItem
 
 class MusicScript(MusicConfiguration):
     # Get the name of the music that should be played during a BattleCinematic
@@ -13,7 +13,7 @@ class MusicScript(MusicConfiguration):
         elif attacker.isLeader():
             return "Boss"
         elif attacker.getName() == "Erium Captain":
-            return "Enemy"
+            return "Boss"
         else:
             return "Enemy"
         

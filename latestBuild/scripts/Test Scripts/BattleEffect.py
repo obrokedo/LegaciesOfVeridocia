@@ -3,7 +3,7 @@ from org.python.modules import jarray
 from java.lang import Math
 from java.lang import String
 from java.util import ArrayList;
-from mb.fc.game.sprite import CombatSprite
+from tactical.game.sprite import CombatSprite
 import random
 from Effects.Petrify import Petrify
 

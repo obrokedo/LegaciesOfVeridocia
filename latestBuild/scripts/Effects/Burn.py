@@ -1,9 +1,9 @@
-from mb.fc.game.battle import BattleEffect
+from tactical.game.battle import BattleEffect
 from org.python.modules import jarray
 from java.lang import Math
 from java.lang import String
 from java.util import ArrayList;
-from mb.fc.game.sprite import CombatSprite
+from tactical.game.sprite import CombatSprite
 import random
 
 class Burn(BattleEffect):

@@ -1,8 +1,8 @@
-from mb.fc.engine.config import LevelProgressionConfiguration
+from tactical.engine.config import LevelProgressionConfiguration
 from org.python.modules import jarray
 from java.lang import String
-from mb.fc.game.constants import AttributeStrength
-from mb.fc.game.sprite import CombatSprite
+from tactical.game.constants import AttributeStrength
+from tactical.game.sprite import CombatSprite
 
 class LevelProgression(LevelProgressionConfiguration):
     # Gets a list of progression types that will be passed in for "progressionType"
@@ -18,9 +18,9 @@ class LevelProgression(LevelProgressionConfiguration):
     # Gets the base value for a battle stat (crit, dodge, counter, double) not including weapon modifiers
     # or values based on other stats (derived values) 
     #
-    # @param attributeStrength -> mb.fc.game.constants.AttributeStrength -> The strength of the attribute to
+    # @param attributeStrength -> tactical.game.constants.AttributeStrength -> The strength of the attribute to
     #                                                                        be set
-    # @param heroSprite -> mb.fc.game.sprite.CombatSprite -> The sprite whose attribute will be set
+    # @param heroSprite -> tactical.game.sprite.CombatSprite -> The sprite whose attribute will be set
     # @return an integer indicating the base statistic for this battle stat
     def getBaseBattleStat(self, attributeStrength, heroSprite):
         # For promoted we use 5/8/11
@@ -45,9 +45,9 @@ class LevelProgression(LevelProgressionConfiguration):
     # Gets the base value for either the body or mind stat, not including weapon modifiers
     # or values based on other stats (derived values) 
     #
-    # @param attributeStrength -> mb.fc.game.constants.AttributeStrength -> The strength of the attribute to
+    # @param attributeStrength -> tactical.game.constants.AttributeStrength -> The strength of the attribute to
     #                                                                        be set
-    # @param heroSprite -> mb.fc.game.sprite.CombatSprite -> The sprite whose body or mind will be set
+    # @param heroSprite -> tactical.game.sprite.CombatSprite -> The sprite whose body or mind will be set
     # @return an integer indicating the base statistic for body or mind
     def getBaseBodyMindStat(self, attributeStrength, heroSprite):        
         baseStat = 0
@@ -64,9 +64,9 @@ class LevelProgression(LevelProgressionConfiguration):
     # Gets the amount that a battle stat (crit, dodge, counter, double) should increase upon reaching 
     # a new level or being promoted. This method shall be called every time a hero is promoted or levels up. 
     #
-    # @param attributeStrength -> mb.fc.game.constants.AttributeStrength -> The strength of the attribute to
+    # @param attributeStrength -> tactical.game.constants.AttributeStrength -> The strength of the attribute to
     #                                                                        be modified
-    # @param heroSprite -> mb.fc.game.sprite.CombatSprite -> The sprite that just leveled up or was promoted
+    # @param heroSprite -> tactical.game.sprite.CombatSprite -> The sprite that just leveled up or was promoted
     # @param newLevel -> integer -> The level that the sprite has just attained. If this value is 1 and 
     #                                "promoted" is true; then the sprite was just promoted
     # @param promoted -> integer -> False (0) or True (1) indicator of whether this sprite is currently promoted
@@ -93,7 +93,7 @@ class LevelProgression(LevelProgressionConfiguration):
     # a new level or being promoted. This method shall be called every time a hero is promoted or levels up. 
     #
     # @param progressionType -> String -> The name of the progression type that should be used to modify the given stat
-    # @param heroSprite -> mb.fc.game.sprite.CombatSprite -> The sprite that just leveled up or was promoted
+    # @param heroSprite -> tactical.game.sprite.CombatSprite -> The sprite that just leveled up or was promoted
     # @param newLevel -> integer -> The level that the sprite has just attained. If this value is 1 and 
     #                                "promoted" is true; then the sprite was just promoted
     # @param promoted -> integer -> False (0) or True (1) indicator of whether this sprite is currently promoted

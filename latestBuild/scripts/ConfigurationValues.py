@@ -1,5 +1,5 @@
 from java.lang import String
-from mb.fc.engine.config import EngineConfigurationValues
+from tactical.engine.config import EngineConfigurationValues
 import sys
 
 from org.python.modules import jarray
@@ -253,11 +253,6 @@ class ConfigurationValues(EngineConfigurationValues):
     # promoted at
     def getHeroPromotionLevel(self):
         return 10
-    
-    # Return an integer between 0-100 indicating the volume that 
-    # music in battle should be played
-    def getBattleMusicVolume(self):
-        return 100
     
     def clearPythonModules(self):
         sys.modules.clear()

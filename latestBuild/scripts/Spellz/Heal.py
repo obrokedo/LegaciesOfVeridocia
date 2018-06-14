@@ -1,7 +1,7 @@
-from mb.fc.game.battle.spell import SpellDefinition
+from tactical.game.battle.spell import SpellDefinition
 from org.python.modules import jarray
 from java.lang import Math
-from mb.fc.game import Range
+from tactical.game import Range
 from org.newdawn.slick import Color
 from java.lang import String
 from BattleEffect import BattleEffect
@@ -80,7 +80,7 @@ class Heal(SpellDefinition):
             
     # This is at 30% opacity    
     def getSpellOverlayColor(self, level):
-        return Color(200, 220, 250);
+        return Color(0, 0, 0);
         
     def getSpellAnimationFile(self, level):
         return "Heal"

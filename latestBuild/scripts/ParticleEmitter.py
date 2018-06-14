@@ -1,4 +1,4 @@
-from mb.fc.engine.config import ParticleEmitterConfiguration
+from tactical.engine.config import ParticleEmitterConfiguration
 from org.newdawn.slick import Image
 import random
 from java.lang import Math
@@ -12,7 +12,6 @@ class RandomHorizontalParticleEmitter(ParticleEmitterConfiguration):
     onEndSound = None
     soundPlayed = False;
     soundTime = 0
-    isHero = False
     
     def __init__(self, createSound=None, endSound=None, soundTime=0):
         self.onCreateSound = createSound
@@ -22,11 +21,10 @@ class RandomHorizontalParticleEmitter(ParticleEmitterConfiguration):
     def initialize(self, isHero):
         # Resolution is interpreted as 320x240
         if isHero:
-            self.drawX = 110
+            self.drawX = 160
         else:
             self.drawX = 0
         self.timer = 0
-        self.isHero = isHero
     
     def update(self, particleSystem, delta):
         self.timer = self.timer - delta
@@ -43,10 +41,7 @@ class RandomHorizontalParticleEmitter(ParticleEmitterConfiguration):
             p.setSize(20)
             # You can scale animations size with setScale(float)
             # p.setScale(.3)
-            if self.isHero:
-                p.setPosition(rand + self.drawX, 125)
-            else:
-                p.setPosition(rand + self.drawX, 113)
+            p.setPosition(rand + self.drawX, 113)
             
     def updateParticle(self, particle, delta):
         # Detect when this particle is about to die. This would be the place to play an 'on end' sound
