@@ -71,14 +71,14 @@
 <trigger id=23 description="SouthWestExit" require="Battle2," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<showtext textid=18/>
 </trigger>
-<trigger id=28 description="OpenWeaponShop" require="Battle2," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+<trigger id=24 description="OpenWeaponShop" require="Battle2," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<showshop buypercent="1.2" sellpercent="0.8" itemssold="Erium Blade,Erium Cane,Erium Arrow," portrait="Shopkeeper1"/>
 </trigger>
-<trigger id=30 description="Codger1Spokento" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+<trigger id=25 description="Codger1Spokento" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<completequest questid="Codger1spokento"/>
 </trigger>
-<trigger id=31 description="SearchSign2" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<showtext textid=22/>
+<trigger id=26 description="SearchSign2" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<showtext textid=21/>
 </trigger>
 <text id=0 description="citizen1">
 	<conversation require="," exclude="," trigger=-1 heroportrait1="" enemyportrait1="" animportrait1="" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="Good evening, Noah.<pause>  That blizzard the other night was really bizarre, wasn't it?<hardstop><split>I've never seen anything like that...<pause>  It came and went in almost no time at all!<hardstop><split>And you wouldn't even know it by the weather today!<hardstop>"/>
@@ -104,7 +104,7 @@
 <text id=7 description="Weapon Shop">
 	<string require="EriumWeaponShopInitialTalk," exclude="Battle2," trigger=-1 heroportrait="" enemyportrait="" animportrait="Shopkeeper1" message="See you again.<hardstop>"/>
 	<conversation require="," exclude="EriumWeaponShopInitialTalk,Battle2," trigger=2 heroportrait1="" enemyportrait1="" animportrait1="Shopkeeper1" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="Sorry, I'm out of stock right now.<hardstop><split>Out of stock? You're never out of stock!<hardstop><split>Grand Mage Mistal cleaned me out. I guess she's going to start a new training plan?<hardstop><split>She's not exactly in charge of training. Maybe it was a special request from King Erium.<hardstop><split>I'm not sure. I'm expecting a new shipment any day now though. The trade caravan should be here this week.<hardstop><split>I'll check another day then. Thank you.<hardstop>"/>
-	<string require="Battle2," exclude="," trigger=28 heroportrait="" enemyportrait="" animportrait="" message="Looking for some sharp new weapon?<hardstop>"/>
+	<string require="Battle2," exclude="," trigger=24 heroportrait="" enemyportrait="" animportrait="" message="Looking for some sharp new weapon?<hardstop>"/>
 </text>
 <text id=8 description="Priestess">
 	<string require="," exclude="," trigger=3 heroportrait="" enemyportrait="" animportrait="Priestess1" message="Welcome, my lamb.  How may I be of service to you?<hardstop>"/>
@@ -139,15 +139,15 @@
 <text id=18 description="Demo2Over">
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="This is the end of Demo 2. Thank you for playing!<hardstop>"/>
 </text>
-<text id=20 description="Codger1">
+<text id=19 description="Codger1">
 	<string require="Codger1spokento," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="Have you been through his house yet?<softstop> HEEHEEHAHAHA!!!<hardstop>"/>
-	<conversation require="," exclude="," trigger=30 heroportrait1="" enemyportrait1="" animportrait1="" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="This house was built before the cave connecting us to Signus was overrun by goblins.<hardstop> The owner finally had to settle here since he couldn't get back through!<hardstop><split>I remember that!<pause> I was just a boy when they built it.<hardstop><split>Yeah, well it messed up the whole flow of the town!<hardstop> I've been telling him to cut this darn tree down so people can get 'round, but he won't budge!<hardstop><split>It is kind of annoying,<pause> now that you mention it.<hardstop><split>Not to worry, sonny.<pause> I've been telling everyone to go through his house until he cuts it down.<hardstop><linebreak> Reckon that'll teach him!<pause><linebreak> HEEHEEHAHAHA!<hardstop>"/>
+	<conversation require="," exclude="," trigger=25 heroportrait1="" enemyportrait1="" animportrait1="" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="This house was built before the cave connecting us to Signus was overrun by goblins.<hardstop> The owner finally had to settle here since he couldn't get back through!<hardstop><split>I remember that!<pause> I was just a boy when they built it.<hardstop><split>Yeah, well it messed up the whole flow of the town!<hardstop> I've been telling him to cut this darn tree down so people can get 'round, but he won't budge!<hardstop><split>It is kind of annoying,<pause> now that you mention it.<hardstop><split>Not to worry, sonny.<pause> I've been telling everyone to go through his house until he cuts it down.<hardstop><linebreak> Reckon that'll teach him!<pause><linebreak> HEEHEEHAHAHA!<hardstop>"/>
 </text>
-<text id=21 description="Codger2">
+<text id=20 description="Codger2">
 	<string require="Codger1spokento," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="Who's that laughing outside?<softstop> That old goat!<pause> I should have known!<hardstop><linebreak> He's the one sending you all through my house!!<softstop> It is not a damned thoroughfare!<hardstop>"/>
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="Of course!<pause> By all means walk on through my home!<softstop> Everyone else does!<hardstop>"/>
 </text>
-<text id=22 description="SearchSign2">
+<text id=21 description="SearchSign2">
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="No Entrance!<hardstop>"/>
 </text>
 <cinematic id=0 description="NoahGettingReady" camerax=0 cameray=0>
@@ -276,6 +276,6 @@
 <condition id=13 description="SouthWestExit" triggerid=23>
 	<enterloc location="SouthWestExit" immediate=false/>
 </condition>
-<condition id=19 description="MapLoad" triggerid=0>
+<condition id=14 description="MapLoad" triggerid=0>
 	<maploaded/>
 </condition>
