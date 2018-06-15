@@ -30,17 +30,9 @@
             </manifest>
             <fileset dir="${dir.workspace}/bin"/>
         	<fileset dir="${dir.workspace}/lib/natives"/>
-        	<zipfileset excludes="META-INF/*.SF" src="${dir.workspace}/lib/exp4j-0.3.11.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="${dir.workspace}/lib/jaretutil-0.32.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="${dir.workspace}/lib/jfilechooser-bookmarks-0.1.0.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="${dir.workspace}/lib/jogg-0.0.7.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="${dir.workspace}/lib/jorbis-0.0.15.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="${dir.workspace}/lib/jython-standalone-2.7-b1.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="${dir.workspace}/lib/lwjgl.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="${dir.workspace}/lib/QuickAnimator.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="${dir.workspace}/lib/slick.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="${dir.workspace}/lib/timebars-1.49.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="${dir.workspace}/lib/ZTCP.jar"/>
         	<zipfileset excludes="META-INF/*.SF" src="${dir.workspace}/lib/Tactical.jar"/>
         </jar>
     </target>
