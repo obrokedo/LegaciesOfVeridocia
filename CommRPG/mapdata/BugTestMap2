@@ -1,9 +1,0 @@
-<map file="BugTestMap2.tmx"/>
-<trigger id=0 description="Map Start" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-</trigger>
-<trigger id=1 description="SouthExitTrigger" require=-1, exclude=-1, nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="BugTestMap1" enter="EntranceNorth"/>
-</trigger>
-<condition id=0 description="SouthExit" triggerid=1>
-	<enterloc location="Exit" immediate=false/>
-</condition>

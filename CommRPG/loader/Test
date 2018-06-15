@@ -1,5 +1,0 @@
-ss,battlebg,image/BattleBackgrounds.png,256,96,2
-// Load all animation sheets
-animsheetdir,animations/animationsheets
-// Load all fsa animation files
-animfsadir,animations/fsa
