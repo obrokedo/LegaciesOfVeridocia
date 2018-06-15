@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="create_run_jar" name="Create Runnable Jar for Project LoV with libraries in sub-folder">
+    <!--ANT 1.7 is required                                        -->
+    <property name="dir.buildfile" value="."/>
+    <property name="dir.workspace" value="${dir.buildfile}"/>
+    <property name="dir.jarfile" value="${dir.buildfile}"/>
+	<property name="lib.dir"     value="lib"/>
+	
+	<path id="classpath">
+        <fileset dir="${lib.dir}" includes="**/*.jar"/>
+    </path>
+	
+	<target name="clean">
+		<delete dir="bin"/>
+    </target>
+
+    <target name="compile">
+        <mkdir dir="bin"/>
+        <javac srcdir="src" destdir="bin" classpathref="classpath"/>
+    </target>	
+	
+    <target name="create_run_jar">
+        <jar destfile="${dir.jarfile}/LoV-Dev.jar">
+            <manifest>
+                <attribute name="Main-Class" value="tactical.engine.RunInJarLauncher"/>
+            	<attribute name="Launcher-Main-Class" value="lov.engine.LoVGame"/>
+            	<attribute name="Launcher-VM-Args" value=""/>
+                <attribute name="Class-Path" value="."/>
+            	<attribute name="Launcher-Args" value=""/>
+            </manifest>
+            <fileset dir="${dir.workspace}/bin"/>
+        	<fileset dir="${dir.workspace}/lib/natives"/>
+        	<zipfileset excludes="META-INF/*.SF" src="${dir.workspace}/lib/exp4j-0.3.11.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${dir.workspace}/lib/jaretutil-0.32.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${dir.workspace}/lib/jfilechooser-bookmarks-0.1.0.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${dir.workspace}/lib/jogg-0.0.7.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${dir.workspace}/lib/jorbis-0.0.15.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${dir.workspace}/lib/jython-standalone-2.7-b1.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${dir.workspace}/lib/lwjgl.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${dir.workspace}/lib/QuickAnimator.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${dir.workspace}/lib/slick.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${dir.workspace}/lib/timebars-1.49.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${dir.workspace}/lib/ZTCP.jar"/>
+        	<zipfileset excludes="META-INF/*.SF" src="${dir.workspace}/lib/Tactical.jar"/>
+        </jar>
+    </target>
+</project>
