@@ -254,5 +254,11 @@ class ConfigurationValues(EngineConfigurationValues):
     def getHeroPromotionLevel(self):
         return 10
     
+    # Return an integer between 0-100 indicating the volume that 
+    # music in battle should be played
+    def getBattleMusicVolume(self):
+        return 100
+    
+    
     def clearPythonModules(self):
         sys.modules.clear()
