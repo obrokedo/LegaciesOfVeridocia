@@ -67,22 +67,22 @@
  <objectgroup name="Terrain" visible="0"/>
  <objectgroup name="Trigger Regions" visible="0"/>
  <objectgroup name="Meta">
-  <object id="218" name="Erium" x="696" y="5832" width="24" height="24">
+  <object id="218" name="FromErium" x="696" y="5832" width="24" height="24">
    <properties>
-    <property name="start" value="exit=erium"/>
+    <property name="start" value="exit=FromErium"/>
    </properties>
   </object>
-  <object id="219" name="EriumWoodsEntrance" x="600" y="5640" width="24" height="24">
+  <object id="219" name="FromCabin" x="600" y="5640" width="24" height="24">
    <properties>
-    <property name="start" value="exit=EriumWoodsEntrance"/>
+    <property name="start" value="exit=FromCabin"/>
    </properties>
   </object>
-  <object id="220" name="EriumWoodsExit" x="600" y="5616" width="24" height="24">
+  <object id="220" name="ToCabin" x="600" y="5616" width="24" height="24">
    <properties>
     <property name=" " value=""/>
    </properties>
   </object>
-  <object id="221" name="EriumExit" x="696" y="5808" width="24" height="24">
+  <object id="221" name="ToErium" x="696" y="5808" width="24" height="24">
    <properties>
     <property name=" " value=""/>
    </properties>
