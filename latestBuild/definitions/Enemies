@@ -1,40 +1,98 @@
-<enemy id=0 name="Darkling Ooze" hp=9 mp=0 attack=10 defense=4 speed=5 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength=0 mindStrength=0 counterStrength=0 evadeStrength=0 doubleStrength=0 critStrength=0 level=-1 move=4 movementtype="NORMAL" animations="Darkling Ooze" gold=0 palette="">
+<enemy id=0 name="Darkling Ooze" hp=9 mp=0 attack=10 defense=4 speed=5 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength=0 mindStrength=0 counterStrength=0 evadeStrength=0 doubleStrength=0 critStrength=0 level=-1 move=4 movementtype="NORMAL" animations="Darkling Ooze" gold=7 palette="">
 </enemy>
-<enemy id=1 name="Erium Soldier" hp=11 mp=0 attack=12 defense=5 speed=4 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength=0 mindStrength=0 counterStrength=0 evadeStrength=0 doubleStrength=0 critStrength=0 level=1 move=5 movementtype="NORMAL" animations="eriumguard" gold=0 palette="">
+<enemy id=1 name="Erium Soldier" hp=11 mp=0 attack=12 defense=5 speed=4 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength=0 mindStrength=0 counterStrength=0 evadeStrength=0 doubleStrength=0 critStrength=0 level=1 move=5 movementtype="NORMAL" animations="eriumguard" gold=6 palette="">
 	<item itemid="Erium Blade" equipped=true/>
 </enemy>
-<enemy id=2 name="Erium Archer" hp=10 mp=0 attack=13 defense=4 speed=7 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength=0 mindStrength=0 counterStrength=0 evadeStrength=0 doubleStrength=0 critStrength=0 level=1 move=5 movementtype="NORMAL" animations="eriumarcher" gold=0 palette="">
+<enemy id=2 name="Erium Archer" hp=10 mp=0 attack=13 defense=4 speed=7 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength=0 mindStrength=0 counterStrength=0 evadeStrength=0 doubleStrength=0 critStrength=0 level=1 move=5 movementtype="NORMAL" animations="eriumarcher" gold=6 palette="">
 	<item itemid="Erium Arrow" equipped=true/>
 </enemy>
-<enemy id=3 name="Erium Mage" hp=8 mp=4 attack=8 defense=4 speed=6 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength=0 mindStrength=0 counterStrength=0 evadeStrength=0 doubleStrength=0 critStrength=0 level=1 move=5 movementtype="NORMAL" animations="eriummage" gold=0 palette="">
+<enemy id=3 name="Erium Mage" hp=8 mp=4 attack=8 defense=4 speed=6 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength=0 mindStrength=0 counterStrength=0 evadeStrength=0 doubleStrength=0 critStrength=0 level=1 move=5 movementtype="NORMAL" animations="eriummage" gold=5 palette="">
 	<spell spellid="BLAZE" level=1/>
+	<item itemid="Erium Cane" equipped=true/>
 </enemy>
-<enemy id=4 name="Erium Captain" hp=15 mp=0 attack=13 defense=6 speed=7 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength=0 mindStrength=0 counterStrength=0 evadeStrength=0 doubleStrength=0 critStrength=0 level=2 move=6 movementtype="NORMAL" animations="guardcaptain" gold=0 palette="">
+<enemy id=4 name="Erium Captain" hp=15 mp=0 attack=13 defense=6 speed=7 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength=0 mindStrength=0 counterStrength=0 evadeStrength=0 doubleStrength=0 critStrength=0 level=2 move=6 movementtype="NORMAL" animations="guardcaptain" gold=16 palette="">
+	<item itemid="Erium Blade" equipped=true/>
 </enemy>
 <enemy id=5 name="Sellsword" hp=15 mp=0 attack=15 defense=9 speed=6 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength=15 mindStrength=5 counterStrength=7 evadeStrength=8 doubleStrength=15 critStrength=5 level=4 move=5 movementtype="NORMAL" animations="blank" gold=36 palette="">
 	<item itemid="Iron Mace" equipped=true/>
 </enemy>
 <enemy id=6 name="Bounty Hunter" hp=14 mp=0 attack=16 defense=7 speed=10 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength=10 mindStrength=10 counterStrength=9 evadeStrength=5 doubleStrength=5 critStrength=15 level=4 move=5 movementtype="FAST" animations="blank" gold=38 palette="">
-	<item itemid="Steel Arrow" equipped=true/>
+	<item itemid="Iron Arrow" equipped=true/>
 </enemy>
 <enemy id=7 name="Erium Cavalry" hp=18 mp=0 attack=14 defense=8 speed=7 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength=10 mindStrength=5 counterStrength=7 evadeStrength=6 doubleStrength=10 critStrength=5 level=4 move=7 movementtype="SLOW" animations="blank" gold=38 palette="">
 	<item itemid="Short Spear" equipped=true/>
 </enemy>
 <enemy id=8 name="Reyval Medic" hp=12 mp=9 attack=13 defense=6 speed=8 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=-10 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=10 bodyStrength=5 mindStrength=10 counterStrength=7 evadeStrength=5 doubleStrength=5 critStrength=5 level=4 move=5 movementtype="NORMAL" animations="blank" gold=32 palette="">
 	<spell spellid="HEAL" level=1/>
-	<item itemid="Power Staff" equipped=true/>
+	<item itemid="Oaken Staff" equipped=true/>
 </enemy>
 <enemy id=9 name="Merc. Captain" hp=17 mp=0 attack=18 defense=8 speed=8 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength=15 mindStrength=10 counterStrength=9 evadeStrength=7 doubleStrength=10 critStrength=10 level=5 move=6 movementtype="NORMAL" animations="blank" gold=51 palette="">
-	<item itemid="Iron Blade" equipped=true/>
+	<item itemid="Short Blade" equipped=true/>
 </enemy>
 <enemy id=10 name="Acrid Ooze" hp=17 mp=0 attack=22 defense=8 speed=9 fireAffin=-20 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=20 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength=10 mindStrength=100 counterStrength=5 evadeStrength=5 doubleStrength=5 critStrength=5 level=6 move=4 movementtype="NORMAL" animations="blank" gold=67 palette="">
 	<spell spellid="BILE" level=1/>
 </enemy>
 <enemy id=11 name="Huge Hornet" hp=19 mp=0 attack=18 defense=9 speed=15 fireAffin=-10 elecAffin=0 coldAffin=10 darkAffin=0 waterAffin=10 earthAffin=0 windAffin=0 lightAffin=-10 bodyStrength=5 mindStrength=5 counterStrength=10 evadeStrength=10 doubleStrength=15 critStrength=15 level=6 move=6 movementtype="FLIGHT" animations="blank" gold=73 palette="">
+	<attackeffect effectid="Bleed" effectchance=20 effectlevel=1/>
 </enemy>
 <enemy id=12 name="Goblin" hp=16 mp=0 attack=19 defense=11 speed=10 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=10 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=-10 bodyStrength=15 mindStrength=5 counterStrength=7 evadeStrength=7 doubleStrength=10 critStrength=10 level=6 move=5 movementtype="NORMAL" animations="blank" gold=67 palette="">
-	<item itemid="Hand Axe" equipped=true/>
+	<item itemid="Short Axe" equipped=true/>
 </enemy>
 <enemy id=13 name="Newt" hp=20 mp=0 attack=20 defense=8 speed=25 fireAffin=-10 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=10 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength=5 mindStrength=5 counterStrength=12 evadeStrength=11 doubleStrength=15 critStrength=15 level=7 move=5 movementtype="BEAST" animations="blank" gold=102 palette="">
 	<item itemid="Short Spear" equipped=true/>
+</enemy>
+<enemy id=14 name="Witch" hp=15 mp=6 attack=17 defense=9 speed=12 fireAffin=0 elecAffin=10 coldAffin=10 darkAffin=0 waterAffin=0 earthAffin=-10 windAffin=-10 lightAffin=0 bodyStrength=5 mindStrength=15 counterStrength=6 evadeStrength=7 doubleStrength=5 critStrength=5 level=7 move=5 movementtype="NORMAL" animations="blank" gold=69 palette="">
+	<item itemid="Oaken Staff" equipped=true/>
+	<spell spellid="FREEZE" level=1/>
+	<spell spellid="BOLT" level=1/>
+</enemy>
+<enemy id=15 name="Hobgoblin" hp=18 mp=0 attack=22 defense=12 speed=10 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength=15 mindStrength=5 counterStrength=9 evadeStrength=5 doubleStrength=5 critStrength=15 level=7 move=5 movementtype="NORMAL" animations="blank" gold=87 palette="">
+	<item itemid="Long Sword" equipped=true/>
+</enemy>
+<enemy id=16 name="Killer Hornet" hp=22 mp=0 attack=21 defense=12 speed=18 fireAffin=-10 elecAffin=0 coldAffin=10 darkAffin=0 waterAffin=10 earthAffin=0 windAffin=-10 lightAffin=0 bodyStrength=5 mindStrength=5 counterStrength=11 evadeStrength=10 doubleStrength=15 critStrength=15 level=8 move=6 movementtype="FLIGHT" animations="blank" gold=117 palette="">
+	<attackeffect effectid="Bleed" effectchance=20 effectlevel=2/>
+</enemy>
+<enemy id=17 name="Huntsman" hp=30 mp=0 attack=25 defense=14 speed=20 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength=10 mindStrength=10 counterStrength=7 evadeStrength=9 doubleStrength=10 critStrength=15 level=9 move=5 movementtype="FAST" animations="blank" gold=160 palette="">
+	<item itemid="Hotshot" equipped=true/>
+</enemy>
+<enemy id=18 name="Signus Soldier" hp=24 mp=0 attack=25 defense=16 speed=13 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength=15 mindStrength=5 counterStrength=8 evadeStrength=8 doubleStrength=10 critStrength=10 level=9 move=5 movementtype="NORMAL" animations="blank" gold=140 palette="">
+	<item itemid="Hand Axe" equipped=true/>
+</enemy>
+<enemy id=19 name="Signus Archer" hp=22 mp=0 attack=26 defense=13 speed=19 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength=10 mindStrength=10 counterStrength=9 evadeStrength=11 doubleStrength=10 critStrength=15 level=9 move=5 movementtype="FAST" animations="blank" gold=144 palette="">
+	<item itemid="Steel Arrow" equipped=true/>
+</enemy>
+<enemy id=20 name="Signus Mage" hp=20 mp=14 attack=21 defense=11 speed=16 fireAffin=15 elecAffin=0 coldAffin=15 darkAffin=0 waterAffin=-13 earthAffin=0 windAffin=-13 lightAffin=0 bodyStrength=5 mindStrength=15 counterStrength=6 evadeStrength=8 doubleStrength=5 critStrength=5 level=9 move=5 movementtype="NORMAL" animations="blank" gold=123 palette="">
+	<item itemid="Power Staff" equipped=true/>
+	<spell spellid="BLAZE" level=2/>
+	<spell spellid="FREEZE" level=2/>
+</enemy>
+<enemy id=21 name="Signus Knight" hp=28 mp=0 attack=24 defense=14 speed=15 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength=10 mindStrength=5 counterStrength=10 evadeStrength=6 doubleStrength=10 critStrength=5 level=9 move=7 movementtype="SLOW" animations="blank" gold=146 palette="">
+	<item itemid="Bronze Lance" equipped=true/>
+</enemy>
+<enemy id=22 name="Signus Curate" hp=22 mp=16 attack=22 defense=12 speed=14 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=-13 waterAffin=10 earthAffin=0 windAffin=0 lightAffin=15 bodyStrength=5 mindStrength=10 counterStrength=8 evadeStrength=8 doubleStrength=5 critStrength=5 level=9 move=5 movementtype="NORMAL" animations="blank" gold=129 palette="">
+	<item itemid="Frost Wand" equipped=true/>
+	<spell spellid="HEAL" level=2/>
+	<spell spellid="TORRENT" level=1/>
+</enemy>
+<enemy id=23 name="Signus Captain" hp=32 mp=8 attack=27 defense=15 speed=17 fireAffin=0 elecAffin=10 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=-10 windAffin=0 lightAffin=0 bodyStrength=15 mindStrength=10 counterStrength=11 evadeStrength=8 doubleStrength=10 critStrength=10 level=10 move=6 movementtype="NORMAL" animations="blank" gold=165 palette="">
+	<item itemid="Hand Axe" equipped=true/>
+	<spell spellid="BOLT" level=1/>
+</enemy>
+<enemy id=24 name="Pyroclastic Ooze" hp=28 mp=0 attack=30 defense=15 speed=15 fireAffin=30 elecAffin=5 coldAffin=5 darkAffin=5 waterAffin=-30 earthAffin=5 windAffin=5 lightAffin=5 bodyStrength=20 mindStrength=100 counterStrength=9 evadeStrength=8 doubleStrength=10 critStrength=10 level=11 move=4 movementtype="NORMAL" animations="blank" gold=194 palette="">
+	<spell spellid="ERUPT" level=1/>
+</enemy>
+<enemy id=25 name="Gargoyle" hp=30 mp=0 attack=29 defense=17 speed=19 fireAffin=5 elecAffin=-20 coldAffin=5 darkAffin=5 waterAffin=5 earthAffin=20 windAffin=5 lightAffin=5 bodyStrength=25 mindStrength=20 counterStrength=15 evadeStrength=12 doubleStrength=20 critStrength=10 level=11 move=6 movementtype="HOVERING" animations="blank" gold=209 palette="">
+</enemy>
+<enemy id=26 name="Mad Mage" hp=26 mp=25 attack=26 defense=15 speed=22 fireAffin=5 elecAffin=5 coldAffin=5 darkAffin=-20 waterAffin=5 earthAffin=5 windAffin=5 lightAffin=20 bodyStrength=10 mindStrength=25 counterStrength=10 evadeStrength=12 doubleStrength=10 critStrength=10 level=11 move=5 movementtype="NORMAL" animations="blank" gold=209 palette="">
+	<item itemid="Water Wand" equipped=true/>
+	<attackeffect effectid="Confusion" effectchance=20 effectlevel=1/>
+	<spell spellid="BURST" level=1/>
+	<spell spellid="DELIRIUM" level=1/>
+	<spell spellid="POWER" level=1/>
+</enemy>
+<enemy id=27 name="Darkling Servant" hp=27 mp=27 attack=28 defense=16 speed=20 fireAffin=5 elecAffin=5 coldAffin=-20 darkAffin=-20 waterAffin=5 earthAffin=5 windAffin=20 lightAffin=20 bodyStrength=10 mindStrength=15 counterStrength=12 evadeStrength=12 doubleStrength=10 critStrength=10 level=11 move=5 movementtype="NORMAL" animations="blank" gold=216 palette="">
+	<item itemid="Iron Staff" equipped=true/>
+	<spell spellid="AURA" level=1/>
+	<spell spellid="GUST" level=2/>
+	<spell spellid="DETOX" level=1/>
 </enemy>

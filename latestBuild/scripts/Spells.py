@@ -19,7 +19,7 @@ class Spells(SpellFactory):
                              "DESOUL", "SLEEP", "EGRESS", "BLAZE", "FREEZE", "BOLT", "BLAST",
                              "POWER", "TORRENT", "GUARD", "BOULDER", "INFERNO", "SPIRIT", "MOMENTUM",
                              "BURST", "DELIRIUM", "GUST", "FLOOD", "CYCLONE", "FIRE BREATH", "HP&MP DRAIN", 
-                             "LIGHTNING", "ION BLAST", "QUAKE", "FLARE", "BILE"], String)
+                             "LIGHTNING", "ION BLAST", "QUAKE", "FLARE", "BILE", "ERUPT"], String)
     # This is where you set up all of the parameters for each of the spells    
     def createSpell(self, id):
         # This value should appear in the array returned from the spell list above
