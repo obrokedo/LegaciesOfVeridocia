@@ -8,12 +8,12 @@ import lov.engine.config.loading.LOVLogoLoadRenderer;
 import tactical.engine.config.BattleEffectFactory;
 import tactical.engine.config.BattleFunctionConfiguration;
 import tactical.engine.config.CinematicActorConfiguration;
-import tactical.engine.config.DefaultEngineConfiguration;
 import tactical.engine.config.EngineConfigurationValues;
 import tactical.engine.config.LevelProgressionConfiguration;
 import tactical.engine.config.MenuConfiguration;
 import tactical.engine.config.MusicConfiguration;
 import tactical.engine.config.SpellFactory;
+import tactical.engine.config.provided.DefaultEngineConfiguration;
 import tactical.loading.LoadingScreenRenderer;
 
 public class LOVEngineConfigration extends DefaultEngineConfiguration {
@@ -22,6 +22,7 @@ public class LOVEngineConfigration extends DefaultEngineConfiguration {
 		spellMenuRenderer = new LOVSpellMenuRenderer();
 		yesNoMenuRenderer = new LOVYesNoMenuRenderer();
 		panelRenderer = new LOVPanelRenderer();
+		battleStatsConfig = new LOVBattleStatisticsConfiguration();
 	}
 	
 	@Override
