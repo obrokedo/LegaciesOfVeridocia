@@ -1,4 +1,4 @@
-<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="60" height="37" tilewidth="12" tileheight="12" nextobjectid="3">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="60" height="37" tilewidth="12" tileheight="12" nextobjectid="5">
 <properties>
 <property name="shadow" value="-13"/>
 </properties>
@@ -64,9 +64,9 @@ H4sIAAAAAAAAC+1ZMU5DMQzNwK9+JUbYYUIcAVgQtwAuwIVgAYYK6AkQA0IwcgeY4Qqs+ItGtVwnjpuk
 H4sIAAAAAAAAC+3BMQEAAADCoPVPbQsvoAAAAAAAAAAA4GeCPlUIsCIAAA==
 </data>
 </layer>
-<layer name="Walk" width="60" height="37" visible="0" opacity="0.29">
+<layer name="Walk" width="60" height="37" opacity="0.53">
 <data encoding="base64" compression="gzip">
-H4sIAAAAAAAAC+3RQQ0AMAgEQfy7oF5aXcUFCczjsv+bjIhTyyW9tbeo3X/z5cuXL1++fOe3+2++fPny5cuX7/x2/82XL1++fPnynd/uv/ny5cuXL9+Nvh/SkyZTsCIAAA==
+H4sIAAAAAAAAC92W6w3DIAyE2X+LZJd2ruaPpeoEwucXkJMiqzFywV9sc7XW7ue5jBY1eo9+Nm5z7lPs53m+DosavUc/G7c59ynWm6+ZsuKyyuKLio7nUSbfDK6eeNl8M74XT7xZ/WJevP16d76YF2+/XtWXcR8j9fJtyWcE34i5O1MvH5Z87mJF0bzY9VVWy0G77hS+I7H9dubPrj/2HCi238782Xy052A4iU7my3ASreTrnbtMPTLK4svy1vbnnp9RNl92HyJrv0VVzU/t/+E6PD9bL6jq+ZldvyNV92frd4Dnt9bLbv25t7/e+bX5RFXNYXa//79Fd+Pziaqaw7O46B+tt+Z1pqr7ldYv1prXmaruz1q/lm9V/62yWffXXW1W/azmGMUXteq+lc03ek7vzjd6Tp/KN6r+T+EbVf9v46utf9SpfLX1j3obX2vf1/YJ9P8Am2n5AbAiAAA=
 </data>
 </layer>
 <layer name="Lighting" width="60" height="37" visible="0">
@@ -80,8 +80,40 @@ H4sIAAAAAAAAC+2UTQ7BUBRGX0LFBjBhIXQdtmEtOsYCdCxmzCUae6iasAQivpd3GzcdMTB413eSk3fb
 </data>
 </layer>
 <objectgroup name="Terrain" visible="0"/>
-<objectgroup name="Trigger Regions" visible="0"/>
-<objectgroup name="Meta" visible="0"/>
+<objectgroup name="Trigger Regions" visible="0">
+<object id="3" name="start" x="0" y="0">
+<properties>
+<property name="start" value="exit=start"/>
+</properties>
+<polyline points="504,336 504,360 528,360 528,336 504,336"/>
+</object>
+</objectgroup>
+<objectgroup name="Meta" visible="0">
+<object id="4" name="craig npc2" x="0" y="0">
+<properties>
+<property name="npc" value="noturn=false facing=1 name=Craig throughwall=false noanimate=false animation=Craig textid=0 wander=0"/>
+</properties>
+<polyline points="552,336 576,336 576,312 552,312 552,336"/>
+</object>
+<object name="NPC Olivia" x="0" y="0">
+<properties>
+<property name="npc" value="noturn=false facing=3 name=Olivia throughwall=false noanimate=false animation=Olivia textid=3 wander=0"/>
+</properties>
+<polyline points="240,312 264,312 264,336 240,336 240,312"/>
+</object>
+<object name="NPC Sharna" x="0" y="0">
+<properties>
+<property name="npc" value="noturn=false facing=1 name=Sharna throughwall=false noanimate=false animation=Sharna textid=2 wander=0"/>
+</properties>
+<polyline points="552,216 576,216 576,240 552,240 552,216"/>
+</object>
+<object name="NPC Huun" x="0" y="0">
+<properties>
+<property name="npc" value="noturn=false facing=1 name=Huun throughwall=false noanimate=false animation=Huun textid=1 wander=2"/>
+</properties>
+<polyline points="312,168 336,168 336,192 312,192 312,168"/>
+</object>
+</objectgroup>
 <objectgroup name="Battle" visible="0"/>
 <layer name="Overlay" width="60" height="37" visible="0">
 <data encoding="base64" compression="gzip">

@@ -467,6 +467,7 @@
 </cinematic>
 <cinematic id=4 description="Battle 2 Core" camerax=1176 cameray=120>
 	<playmusic music="UnHero" volume=100/>
+	<addstatic x=1296 y=144 spriteid="Crate" spriteim="Crate(night)"/>
 	<addactor x=1368 y=240 name="Olivia" anim="Olivia" startanim="UnUp" visible=true init=true associatedhero=""/>
 	<addactor x=1344 y=240 name="Craig" anim="Craig" startanim="UnUp" visible=true init=true associatedhero=""/>
 	<addactor x=1344 y=192 name="Noah" anim="Noah" startanim="UnDown" visible=true init=true associatedhero=""/>
@@ -499,13 +500,27 @@
 	<facing name="Olivia" dir=0/>
 	<speech text="So, we still don't know who Mistal was meeting with, but we couldn't let you be executed either.<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait=""/>
 	<speech text="Now, instead of finding out something useful, we tip our hand by breaking you out.<hardstop> Now Mistal will be wise to us. Want to yap about it some more, or are ya happy? Let's get moving!<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
+	<haltingmove name="Craig" x=1200 y=240 speed="2.4" movehor=true movediag=false/>
+	<shakehead name="Craig" time=1000/>
 	<speech text="I dont think where gonna make it our the front door with all the commotion.<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
-	<speech text="Now where was it....<hardstop> (le moves box).<hardstop> There it is, I hope you like small, dark, stinky, wet places.<hardstop> This is our ticket out of here.<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
-	<forcedmove name="Noah" x=1080 y=192 speed="2" facing=2 movehor=false movediag=false/>
-	<forcedmove name="Sharna" x=1080 y=216 speed="2" facing=2 movehor=false movediag=false/>
-	<forcedmove name="Huun" x=1080 y=192 speed="2" facing=2 movehor=false movediag=false/>
-	<forcedmove name="Olivia" x=1080 y=240 speed="2" facing=2 movehor=false movediag=false/>
-	<forcedmove name="Craig" x=1080 y=240 speed="2" facing=2 movehor=false movediag=false/>
+	<haltingmovepath name="Craig" x=1296 y=168 speed="2.4"/>
+	<speech text="Now where was it....<hardstop> " heroportrait="Craig" enemyportrait="" animportrait=""/>
+	<facing name="Craig" dir=0/>
+	<wait time=250/>
+	<facing name="Craig" dir=2/>
+	<wait time=250/>
+	<facing name="Craig" dir=0/>
+	<wait time=250/>
+	<facing name="Craig" dir=3/>
+	<wait time=250/>
+	<facing name="Craig" dir=0/>
+	<speech text="AHA... There it is, I hope you like small, dark, places.<hardstop> " heroportrait="Craig" enemyportrait="" animportrait=""/>
+	<speech text="This is our ticket out of here.<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
+	<forcedmove name="Noah" x=1296 y=168 speed="1" facing=2 movehor=true movediag=false/>
+	<forcedmove name="Sharna" x=1296 y=168 speed="1" facing=2 movehor=true movediag=false/>
+	<forcedmove name="Huun" x=1296 y=168 speed="1" facing=2 movehor=true movediag=false/>
+	<forcedmove name="Olivia" x=1296 y=168 speed="1" facing=2 movehor=true movediag=false/>
+	<forcedmove name="Craig" x=1296 y=168 speed="1" facing=0 movehor=true movediag=false/>
 	<fadeout time=1000 halting=true/>
 	<loadcin mapdata="eriumoutskirts" cinid=0/>
 </cinematic>
