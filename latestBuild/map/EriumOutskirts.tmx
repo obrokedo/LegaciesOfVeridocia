@@ -1,123 +1,129 @@
-<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="60" height="37" tilewidth="12" tileheight="12" nextobjectid="5">
-<properties>
-<property name="shadow" value="-13"/>
-</properties>
-<tileset firstgid="1" name="overworld(day)-Master" tilewidth="12" tileheight="12" tilecount="1296" columns="36">
-<image source="../image/overworld(day)-Master.png" trans="495d47" width="432" height="432"/>
-</tileset>
-<tileset firstgid="1297" name="castletown(night)-Master" tilewidth="12" tileheight="12" tilecount="900" columns="25">
-<image source="../image/castletown(night)-Master.png" trans="495d47" width="300" height="440"/>
-</tileset>
-<tileset firstgid="2197" name="castletown(night)-Slave1" tilewidth="12" tileheight="12" tilecount="495" columns="15">
-<image source="../image/castletown(night)-Slave1.png" trans="495d47" width="180" height="400"/>
-</tileset>
-<tileset firstgid="2692" name="castletown(day)-Master" tilewidth="12" tileheight="12" tilecount="900" columns="25">
-<image source="../image/castletown(day)-Master.png" trans="495d47" width="300" height="440"/>
-<terraintypes>
-<terrain name="Neues Terrain erzeugen" tile="-1"/>
-</terraintypes>
-<tile id="665" terrain="0,0,0,0"/>
-<tile id="666" terrain="0,0,0,0"/>
-<tile id="667" terrain="0,0,0,0"/>
-<tile id="668" terrain="0,0,0,0"/>
-<tile id="690" terrain="0,0,0,0"/>
-<tile id="691" terrain="0,0,0,0"/>
-<tile id="692" terrain="0,0,0,0"/>
-<tile id="693" terrain="0,0,0,0"/>
-</tileset>
-<tileset firstgid="3592" name="castletown(day)-Slave1" tilewidth="12" tileheight="12" tilecount="495" columns="15">
-<image source="../image/castletown(day)-Slave1.png" trans="495d47" width="180" height="400"/>
-</tileset>
-<tileset firstgid="4087" name="Shadows and Lights" tilewidth="12" tileheight="12" tilecount="200" columns="20">
-<image source="../image/Shadows and Lights.png" trans="000000" width="240" height="120"/>
-</tileset>
-<tileset firstgid="4287" name="Overlays" tilewidth="12" tileheight="12" tilecount="15" columns="15">
-<image source="../image/Overlays.png" trans="000000" width="180" height="12"/>
-</tileset>
-<layer name="BG" width="60" height="37">
-<data encoding="base64" compression="gzip">
-H4sIAAAAAAAAC82ZO1MUQRSFt0pnZonWKlhQy0cKVfLQLR+BggmsSGgJmihgLuCvQP0JagChQGYZaBUmSmYZmqL+AVM08XbRp/bs3e6e6WERglM9TO/M9Dfn9u3bw0xSqcxYzYsWrBZFT6gP+pRWKpey1t+/0s7f5OmWXDMumhDdjrh+T/22yHi1emXsfVa9qsVxL50zrJMFeeuiftGA6DSdn5Vr1kTroocRvNtp/Hi31f3Hsn0NW5Yx2w7T8RgdG9bfdI961s7CGhGdEZ0VXabzS3L9B9FH0bMI3u9p/HjNNcz8KNvXYys+5r/RMquJ7RE5dyVxMzeJ967yF7wx/vbIs6atpuy7n7btFB1P07HhNcJcqFvFzkHM46bldTGP2PMNNbeWSvLifkWEeOrJ2nnLCKyIbf0M9rehvDW5aoXmb0w8NyN4+ZmGuSyvZm2o57DHyJ/wFqzG1znRC9HLiHHgfotKC45jnat37XNc+e5EtVI5KUpEadWdn8GqebXHrLJ5uRuCv658d04Yz4suiC5W3fmZGUMes3x5mdetfpJexw4i+Kvzr2mvCuM10XXRjWp7H7M2kjiPfXk5lIdC8VLGX9d4G4mfxXce647OT9pfV54K5SHfvcr66xq7ZiuSD8E7mvjrujx/zbXINzE1Yqy/PoairPz7kB++fAV/uxW7LOQG+MvvUrehPt9vQ3746gz4exi8uPdB6o2yms2Zv6HYuJmWE+69ewS8nK+WaS84n+TPVYz/lFWNjrVqxIsaBf6G1rlur4Gr8swHBWuOTVn7tkRvRRtZa/xDlmnQHvN5aJDO437wN7TOdXsNjK2dd+w++3PWycUe19Q7GHLw7v1nXmb17Y3g6VbWeT3GXyMusGrumoN3W/G6ckXRNV/XgwMkzAUzd+dUPBt/TbxuEqPxdCfAizkK5kGHv654NnvCvqw7vNNJq97QLWJj1eaolbR9b/Ql25fr/XHe0PNXewpe8Lt4Jw/IW7esuj5pEO8d5bGO400HK+7J84j9hYfc1tKwvz22/g/VCXk1BLO6/NUeo54M5SneO/B7Zn+ZkX3l85o3by725/Qxq8tfV40Jf01c+77HmvpgNOlcj9lfcL6S86+t3iStPpe/PvFeJdSnhTEiJrjexLhX7bwNrcHznnhy+fsuafn5PmnvK8o7H+DlPs2Yt4/ZoHk6S7l62eOz1n3pv6f0NWnxfUs6+58W4OU5lDe/Qusy8tAm1QzoW6JczfUlYnycNJHTrtC1+vqi/79oBng5povsxfVag7h+rmIbNcia5+91T5/vPI7XLbuPux6IZ+7L+1ZVVMzu4kerOdY8nFp537k5XkN93a6tXfxF21Af3p9vDYzNzzHfl3g949qzW/uv0PvzfefGXnQxp6/I9wzNatbsH/Lcn+nhxshRi2vEP8L6Ny0fI8ddusa+Qh7HxshxFe8PmRX1CTz2XY/3cdQcReX7f0HRuM17H8dNvjr7OMzTf3LbM/qwIgAA
-</data>
-</layer>
-<layer name="BG Shadow" width="60" height="37" visible="0">
-<data encoding="base64" compression="gzip">
-H4sIAAAAAAAAC+3BMQEAAADCoPVPbQsvoAAAAAAAAAAA4GeCPlUIsCIAAA==
-</data>
-</layer>
-<layer name="MG" width="60" height="37">
-<data encoding="base64" compression="gzip">
-H4sIAAAAAAAAC9VZS07EMAwtrFqJz3AFYA8ngEuAxB5OAEeDA/BZsOSzYMVnkNjw1wjYIlxpLJnIcerWTdInWTNNnY6fX+x02qKww2dZFBOwm6lNyHH9OVu1u1b9+VUaBtoCh/D7R04Mv4RjbY9gI+C4ALYIttSCL3LW5MqH87n2c08hhjOH7zzhNlLyc+Hq+5RY375wBbyuwWaq/zVhtZ7puuTWKI5x5/rA2NHVun7puuTWKI5x5xBuTrS5eQbfl6n/mOGq7XVcbJZwcyLlJgS3brHnte0FXWKh8GnaNZ+/jr6p9yGET9Ou+bTs8RYI6Rqrr8VCSFereukLof2Ijku+Q9E3tB/Rccl3KPoiNPo00Tt3aPRponcq3EIMd0Icmj6bU2/egn1qm+xV+/D9oArz1fTZHHrzN1z/B2wXuO0RvsjzFexNEUPXOo6FZeC6MrXVSs8T0bWOc4dl/cbAGmi5TtbxjvJ+07J+Y2AD+G0KHLG+Q9BoZqHzMfidRMoRF5dGMwudL8DvMhJfGhd3jxRL4xTg7pFiaRwb9fPYB0GjoWimwYeg0RA004Kr3/tS1t2dR49zXwtc/b6Xsu7uPHqc+1rwaVmjy/OOXOHTskbb5x0550HTm5v6hnKWMgea3qzxlf5v5FDjvjrGcQ5ST0ZO9JzLM6XOvjrGcQ6a+zAuNyl07qN+Obi5afoe1hdvUz6hOKzqN4Sm72GledJ1fX5/eiQnN7AiAAA=
-</data>
-</layer>
-<layer name="MG Shadow" width="60" height="37" visible="0">
-<data encoding="base64" compression="gzip">
-H4sIAAAAAAAAC+3BMQEAAADCoPVPbQsvoAAAAAAAAAAA4GeCPlUIsCIAAA==
-</data>
-</layer>
-<layer name="FG" width="60" height="37">
-<data encoding="base64" compression="gzip">
-H4sIAAAAAAAAC+1ZMU5DMQzNwK9+JUbYYUIcAVgQtwAuwIVgAYYK6AkQA0IwcgeY4Qqs+ItGtVwnjpuk37/iSdavEqex/WL/uHVuOdy3zj20Sy7+x8pwCRxdtYuf6Tw3N0Tgc8mdUT8WO780JpZiU8MWGhNtbn+A7mel+JSqMyFOLXFbEiFOrdXt98289RKvFvnN8Vni1Rq/FNL7CI/HdC3ziyG9j/B4THco/Hpo+EnhuzT2GogjyBmRaWR8vwl/n4afFL5L4xhsPwG5QzJp5uMTMufHKTR1ts/a7O0/HDn3Mns+w/MU5Lz5+4znQv5q6myftTlkv+cT42Ic1qfIzeNa8PZ/wT7faK+Oy05C+hJy87gWqP0bwOEWyA/suz2W9T1K5m9NpPIl6ZfM35rw9u8Al7sMnyH9EDSc9VmfJfj8xvqcXRrOLNXnFH1sF3dHssix5K/nleMXg7sjWeS4u1e8MvfGkLzN7iEchtDTHozm71ov1+DPzUxum8X5I+a93GEIPS3n7yPi7ynRX01Pu+79b4zndex/c37vsA5NTyvpWo6Dpjan6kox6zMGmtqs0Y31G5ZyvFT/633Cc9RPC2e9dP9L/Y75vwrUyF8ONDap/8OG7E31R7KjVP5KSP0fNrYu9r05Z0fDMbdGu0+tZyo0HHNrtPvUenb4Ba1s21ywIgAA
-</data>
-</layer>
-<layer name="FG Shadow" width="60" height="37" visible="0">
-<data encoding="base64" compression="gzip">
-H4sIAAAAAAAAC+3BMQEAAADCoPVPbQsvoAAAAAAAAAAA4GeCPlUIsCIAAA==
-</data>
-</layer>
-<layer name="Walk" width="60" height="37" opacity="0.53">
-<data encoding="base64" compression="gzip">
-H4sIAAAAAAAAC92W6w3DIAyE2X+LZJd2ruaPpeoEwucXkJMiqzFywV9sc7XW7ue5jBY1eo9+Nm5z7lPs53m+DosavUc/G7c59ynWm6+ZsuKyyuKLio7nUSbfDK6eeNl8M74XT7xZ/WJevP16d76YF2+/XtWXcR8j9fJtyWcE34i5O1MvH5Z87mJF0bzY9VVWy0G77hS+I7H9dubPrj/2HCi238782Xy052A4iU7my3ASreTrnbtMPTLK4svy1vbnnp9RNl92HyJrv0VVzU/t/+E6PD9bL6jq+ZldvyNV92frd4Dnt9bLbv25t7/e+bX5RFXNYXa//79Fd+Pziaqaw7O46B+tt+Z1pqr7ldYv1prXmaruz1q/lm9V/62yWffXXW1W/azmGMUXteq+lc03ek7vzjd6Tp/KN6r+T+EbVf9v46utf9SpfLX1j3obX2vf1/YJ9P8Am2n5AbAiAAA=
-</data>
-</layer>
-<layer name="Lighting" width="60" height="37" visible="0">
-<data encoding="base64" compression="gzip">
-H4sIAAAAAAAAC+3BMQEAAADCoPVPbQsvoAAAAAAAAAAA4GeCPlUIsCIAAA==
-</data>
-</layer>
-<layer name="Roof" width="60" height="37" visible="0">
-<data encoding="base64" compression="gzip">
-H4sIAAAAAAAAC+2UTQ7BUBRGX0LFBjBhIXQdtmEtOsYCdCxmzCUae6iasAQivpd3GzcdMTB413eSk3fb18npn3OEEEIIIYQ4d06ClXgRraDbvA8xE59i1bgHseLb5qqv1wn2xYGYNe5BrPjetWoZo22BdSmuYGqwNxd97wbrruvcHm6lN1fXxN6r3+cp2gqsR7QW8IR5Zvj55uq4ed7C89X/pk/1/69Y8d/r5EtTA71XvKO3JMyH5N1Wz3rfQm8LtmUuVW89630LvUM4kvmueutZ71vo/ZfvlxBCCCGEEEJ+zQuplfopsCIAAA==
-</data>
-</layer>
-<objectgroup name="Terrain" visible="0"/>
-<objectgroup name="Trigger Regions" visible="0">
-<object id="3" name="start" x="0" y="0">
-<properties>
-<property name="start" value="exit=start"/>
-</properties>
-<polyline points="504,336 504,360 528,360 528,336 504,336"/>
-</object>
-</objectgroup>
-<objectgroup name="Meta" visible="0">
-<object id="4" name="craig npc2" x="0" y="0">
-<properties>
-<property name="npc" value="noturn=false facing=1 name=Craig throughwall=false noanimate=false animation=Craig textid=0 wander=0"/>
-</properties>
-<polyline points="552,336 576,336 576,312 552,312 552,336"/>
-</object>
-<object name="NPC Olivia" x="0" y="0">
-<properties>
-<property name="npc" value="noturn=false facing=3 name=Olivia throughwall=false noanimate=false animation=Olivia textid=3 wander=0"/>
-</properties>
-<polyline points="240,312 264,312 264,336 240,336 240,312"/>
-</object>
-<object name="NPC Sharna" x="0" y="0">
-<properties>
-<property name="npc" value="noturn=false facing=1 name=Sharna throughwall=false noanimate=false animation=Sharna textid=2 wander=0"/>
-</properties>
-<polyline points="552,216 576,216 576,240 552,240 552,216"/>
-</object>
-<object name="NPC Huun" x="0" y="0">
-<properties>
-<property name="npc" value="noturn=false facing=1 name=Huun throughwall=false noanimate=false animation=Huun textid=1 wander=2"/>
-</properties>
-<polyline points="312,168 336,168 336,192 312,192 312,168"/>
-</object>
-</objectgroup>
-<objectgroup name="Battle" visible="0"/>
-<layer name="Overlay" width="60" height="37" visible="0">
-<data encoding="base64" compression="gzip">
-H4sIAAAAAAAAC+3BMQEAAADCoPVPbQsvoAAAAAAAAAAA4GeCPlUIsCIAAA==
-</data>
-</layer>
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="60" height="37" tilewidth="12" tileheight="12" nextobjectid="9">
+ <properties>
+  <property name="shadow" value="-13"/>
+ </properties>
+ <tileset firstgid="1" name="overworld(day)-Master" tilewidth="12" tileheight="12" tilecount="1296" columns="36">
+  <image source="../image/overworld(day)-Master.png" trans="495d47" width="432" height="432"/>
+ </tileset>
+ <tileset firstgid="1297" name="castletown(night)-Master" tilewidth="12" tileheight="12" tilecount="900" columns="25">
+  <image source="../image/castletown(night)-Master.png" trans="495d47" width="300" height="440"/>
+ </tileset>
+ <tileset firstgid="2197" name="castletown(night)-Slave1" tilewidth="12" tileheight="12" tilecount="495" columns="15">
+  <image source="../image/castletown(night)-Slave1.png" trans="495d47" width="180" height="400"/>
+ </tileset>
+ <tileset firstgid="2692" name="castletown(day)-Master" tilewidth="12" tileheight="12" tilecount="900" columns="25">
+  <image source="../image/castletown(day)-Master.png" trans="495d47" width="300" height="440"/>
+  <terraintypes>
+   <terrain name="Neues Terrain erzeugen" tile="-1"/>
+  </terraintypes>
+  <tile id="665" terrain="0,0,0,0"/>
+  <tile id="666" terrain="0,0,0,0"/>
+  <tile id="667" terrain="0,0,0,0"/>
+  <tile id="668" terrain="0,0,0,0"/>
+  <tile id="690" terrain="0,0,0,0"/>
+  <tile id="691" terrain="0,0,0,0"/>
+  <tile id="692" terrain="0,0,0,0"/>
+  <tile id="693" terrain="0,0,0,0"/>
+ </tileset>
+ <tileset firstgid="3592" name="castletown(day)-Slave1" tilewidth="12" tileheight="12" tilecount="495" columns="15">
+  <image source="../image/castletown(day)-Slave1.png" trans="495d47" width="180" height="400"/>
+ </tileset>
+ <tileset firstgid="4087" name="Shadows and Lights" tilewidth="12" tileheight="12" tilecount="200" columns="20">
+  <image source="../image/Shadows and Lights.png" trans="000000" width="240" height="120"/>
+ </tileset>
+ <tileset firstgid="4287" name="Overlays" tilewidth="12" tileheight="12" tilecount="15" columns="15">
+  <image source="../image/Overlays.png" trans="000000" width="180" height="12"/>
+ </tileset>
+ <layer name="BG" width="60" height="37">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC9WZO28TQRSFLcHuOpWREoeHeLSJRB5g8SggoUmMSYlIoAEn9CThVwT4CUCRlMTpEAVIoYF0iJI2wB+gDTTcUebIx9czsw8bkhRHs97xrufbc+fOnfVcVCrNWTVFi1ZLosfUB32MS6WLSfvzz7j7O2m6KddMiaZFt3Jcv6e+m2W8WoMy9iGrQdXieJDOGdaZjLxV0bDopOgUnZ+Xa9ZFG6IHOXi34/zj3Vb3n0z2NWZZJm07RseTdGxYf9E9qkknC2tcdFp0RnSJzi/L9e9FH0RPc/B+i/OP11zDzA+TfT2y4mP+jJZZTWyPy7nLkZu5Trx3lL/gzePvgPxWw2rWPvuGbWfpuEHHhtcIc6FqlXcOYh7XLa+Ledyer6m5tVyQF/fLIsTTQNLJW0RgRWzr32B/a8pbk6tWaf7mied6Dl7+TcNclFez1tTvsMfIn/AWrMbXBdFz0Ysc48D9lpQWHcc6V+/a33Hlu2PlUum4KBLFZXd+Bqvm1R6ziublfgj+uvLdWWE8JzovulB252dmDHnM8uVlXreGSXod60XwV+df014Rxquia6Lr5c4+Zq1F+Tz25eVQHgrFSxF/XeOtRX4W33msOzo/aX9deSqUh3z3Kuqva+yaLUs+BO9E5K/r0vw11yLf5KkR8/rrY8jKyt8P+eHLV/C3X7HLQm6Av/wsdRvq83035IevzoC//4IX9+6l3iiq+ZT5G4qNG3Ex4d67B8DL+WqF9oLNKH2uYvwnrCp0rFUhXtQo8De0zvV7DVyT37yfseZoydq3JXoj2kza4x+1TCP2mM9DI3Qe94O/oXWu32tg3tp5x+6zPyXdXOxxRT2DUQfv3n/mZVbf3giebiXd12P8FeICq+auOHi3Fa8rV2Rd83U9eJKEuWDm7oKKZ+OvidcWMRpPdwK8mKNgHnH464pnsyccSvrD24ja9YZuERtrNketxp17o8/JvlzPj/OGnr/aU/CC38U70yNv1bLq+qRGvLeVxzqOWw5W3JPnEfsLD7mtxGF/B2z9H6oT0moIZnX5qz1GPRnKU7x34OfM/jIj+8rnNW/aXBxO6WNWl7+uGhP+mrj2vY819cFE1L0es7/gfCnnX1m9jtp9Ln994r1KqE8LY0RMcL2Jca/ZeRtag5ueeHL5+zZq+/ku6uzLytsM8HKfZkzbx2zSPJ2nXL3i8VnrnvTfVfoStfm+Rt39TzLw8hxKm1+hdRl5qEU1A/qWKVdzfYkYnyJNp7SrdK2+Puv/F/UAL8d0lr24XmsQ189UbKMGWfd83vD0+c7jeMOy+7irgXjmvrR3VVnF7C5+tJpj3cOplfaem+M11Nfv2trFn7UN9eH5+dbAvPk5z/ulIv9j9Ov5+d5zYy+6lNKX5X2GZm0cAO9BiGvE7/Kcf8T+GDrq0jX2b2H9Y2PLFUNHUbw/ZFbUJ/DYdW2o77DK938Bcht7rBXqO6zy1dn9+q+gF/0FiNfOC7AiAAA=
+  </data>
+ </layer>
+ <layer name="BG Shadow" width="60" height="37" visible="0">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3BMQEAAADCoPVPbQsvoAAAAAAAAAAA4GeCPlUIsCIAAA==
+  </data>
+ </layer>
+ <layer name="MG" width="60" height="37">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC9VYS07EMAwtrDoSA8MVgD2cAC4BEns4AZwFLgIH4LNgyWfBit9IbPiORsB2hCNNhGU5H+czY55ktU2cNK/Pdto2TTkM2qYZgt2ObYiuzXG2kzaXOX61BReagCO4/zFZwwhxNNYH6wHHebAFsMUEvpaz5Fm5cDGXPvYM1nBO+JbUhM71PGV9OXSRlj2hnhQDxNXESc5cGDguuRi1bVxf7LwSXMOYG7CZTplYpuvAccnFqG3j+rg57bnPH+MFfF6R3xPRVZr3FLHrSJ0zd36ct31FOUvjPDV+KXCN18SXxrk95vIeKdpzDVy6SvPWhW7ifl0LLl1L6Vsbof0It/t8S+lbGzG1lduTqK92nhSSOhujt3bEvFf4fLXoewdruPesI1RvU31rYxNq9xaq33twvt8J8w3VW6lvbe7fMPcP2A5w20V8Lc8QX4rcPJ5UXC8B1+WxrYC9wT3f279jLHLzuDZWgdtage+lnPzFfbWxDlw3EN9tIfcS+Yv7YnmfgM9phedj8zsESc31+cbG9iX4XE1x/4rRN8VXC3w5mKOx1vcsXw7maKxZa/M/9tGjkXbNUvDp0eg/aCYFl78PrV93Og5fa48FLn8/Wr/udBy+1h4LLi0Ncv53aIVLS4PU/x2an4OkNsf6avwPYCGpzRJf3/eGq3+ScOWxbefgq8nc94Mm3V15bNs5SN7DtNS4GvnLgfsvb8+5MYfQdiBop/0uv1r5G0JoTGgvdCH07H8BXimowrAiAAA=
+  </data>
+ </layer>
+ <layer name="MG Shadow" width="60" height="37" visible="0">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3OQQ0AMAgEsHvi38oQyAsNS0iroAkAAAAAAAAAAKsrefV7cdsAGwv6d7AiAAA=
+  </data>
+ </layer>
+ <layer name="FG" width="60" height="37">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+1YsU7EMAztQE93EiPsMCE+AVgQfwH8AD8ECzCcgPsCxIAQjPwDzPALrLjirIt8Thw3ceuBJ1mtYre18+wkbtP0w/20aR6mPR/+x2C4BI6upuv3VM/pct87JqgfYV5yOYpjqfzl5sxLvlv4wc1Z7jc+wO7TwbxIoHnuJX+tQPMcr97ift8sez7Gq7e6DVESc4xXr/xSSPtROJ6y9cxvCGk/CsdTtt7jpNCsszl818ZeC/MJckZkkRjfb+PvyzlXpGyt+T0G309A7gKZt6vxOdHhOIW03mptrThG/w8nTfOyvD7D9RTkvP27D3WxeKX1Vmtrldcx/5HPEBezuD1FaR1b5TX6/wXv/g7e33HZScxeQmkdW4H6vwEcboH8wHe3Z7I9okb9hjoroP87ENsuE1/MnqJG/Ya6oeu3r72m30nZWtevBKxvyT6H3z62tVDKb6oGSzgeK5+R1xi/qRos4diK6+5c8cqcG2PytjyHcJC48tDjHUxWey3KNcRzs5Tbdl1/xOzLHSSuPPQ+XLyPAX9PmfHm9LSa/tdDLqSQ09Nq+l8PuZADzZlpjPNVbWh6WsnW8zxo1uZc2yH/A2ihWZs1tql+I6YfA6X9L4LrHzzyXrv/pXGPzbFF/XLg/svj/ZAxW9Wv9rsU0l4YQ41zj4bjXL8kX0Puc8apnrPLhYZj7hntd6yuHX4B+Bm0UbAiAAA=
+  </data>
+ </layer>
+ <layer name="FG Shadow" width="60" height="37" visible="0">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3OwQkAMAgEsHu6P9R5ncFXEZIJkgAAAAAAAAAAG13Jq98LuGsAeEDleLAiAAA=
+  </data>
+ </layer>
+ <layer name="Walk" width="60" height="37" opacity="0.53">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+2Xyw2EMAwF6b+LpRe2LrjkEslax/F7/rAjoRyIgmHsEB8Hl89znYqxC9dzfRVjVbQ+u/jV+nyL33medZ0seaL1+Mtr9jzx8mFdh+3Zy4d1Hbbnv98cflHv7+XF2y8qv728ZK/faI/s+o322MXvbjwosvnJ/v/dPWdLcaBB+V311aV+UfmwCqt+UflgZfX7e82X4kCz+v295ktxoEHvz9p6zeJ3d3/W1mt1v9JztHGgYJ2vtPeres7aJw2i+6LqfVJWv9Ee2X5nor2y6ncQ7ZXtV6KrX4m3+R1Y+6ZqfgfWvqmqXxY3AFlElLAiAAA=
+  </data>
+ </layer>
+ <layer name="Lighting" width="60" height="37" visible="0">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3BMQEAAADCoPVPbQsvoAAAAAAAAAAA4GeCPlUIsCIAAA==
+  </data>
+ </layer>
+ <layer name="Roof" width="60" height="37" visible="0">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+2UTQ7BUBRGX0LFBjBhIXQdtmEtOsYCdCxmzCUae6iasAQivpd3GzcdMTB413eSk3fb18npn3OEEEIIIYQ4d06ClXgRraDbvA8xE59i1bgHseLb5qqv1wn2xYGYNe5BrPjetWoZo22BdSmuYGqwNxd97wbrruvcHm6lN1fXxN6r3+cp2gqsR7QW8IR5Zvj55uq4ed7C89X/pk/1/69Y8d/r5EtTA71XvKO3JMyH5N1Wz3rfQm8LtmUuVW89630LvUM4kvmueutZ71vo/ZfvlxBCCCGEEEJ+zQuplfopsCIAAA==
+  </data>
+ </layer>
+ <objectgroup name="Terrain" visible="0"/>
+ <objectgroup name="Trigger Regions" visible="0">
+  <object id="3" name="start" x="0" y="0">
+   <properties>
+    <property name="start" value="exit=start"/>
+   </properties>
+   <polyline points="504,336 504,360 528,360 528,336 504,336"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="Meta">
+  <object id="4" name="craig npc2" x="0" y="0">
+   <properties>
+    <property name="npc" value="noturn=false facing=1 name=Craig throughwall=false noanimate=false animation=Craig textid=0 wander=0"/>
+   </properties>
+   <polyline points="552,336 576,336 576,312 552,312 552,336"/>
+  </object>
+  <object id="5" name="NPC Olivia" x="24" y="0">
+   <properties>
+    <property name="npc" value="noturn=false facing=3 name=Olivia throughwall=false noanimate=false animation=Olivia textid=3 wander=0"/>
+   </properties>
+   <polyline points="240,312 264,312 264,336 240,336 240,312"/>
+  </object>
+  <object id="6" name="NPC Sharna" x="0" y="0">
+   <properties>
+    <property name="npc" value="noturn=false facing=1 name=Sharna throughwall=false noanimate=false animation=Sharna textid=2 wander=0"/>
+   </properties>
+   <polyline points="552,216 576,216 576,240 552,240 552,216"/>
+  </object>
+  <object id="7" name="NPC Huun" x="0" y="0">
+   <properties>
+    <property name="npc" value="noturn=false facing=1 name=Huun throughwall=false noanimate=false animation=Huun textid=1 wander=2"/>
+   </properties>
+   <polyline points="312,168 336,168 336,192 312,192 312,168"/>
+  </object>
+  <object id="8" x="504" y="168" width="168" height="120">
+   <properties>
+    <property name="roof" value=""/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="Battle" visible="0"/>
+ <layer name="Overlay" width="60" height="37" visible="0">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3BMQEAAADCoPVPbQsvoAAAAAAAAAAA4GeCPlUIsCIAAA==
+  </data>
+ </layer>
 </map>
