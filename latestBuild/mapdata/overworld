@@ -2,17 +2,17 @@
 <trigger id=0 description="MapStart" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<playmusic music="overworld" volume=100/>
 </trigger>
-<trigger id=1 description="ExitToEriumTown" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="erium" enter="NorthWestEntrance1" transdir=""/>
+<trigger id=1 description="ToErium" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="erium" enter="FromOverworld" transdir=""/>
 </trigger>
-<trigger id=2 description="ExitToEriumWoods" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="eriumwoods" enter="EriumWoodsEntrance" transdir=""/>
+<trigger id=2 description="ToCabin" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="eriumwoods" enter="FromOverworld" transdir=""/>
 </trigger>
-<condition id=0 description="ExitToEriumTown" triggerid=1>
-	<enterloc location="EriumExit" immediate=false/>
+<condition id=0 description="ToErium" triggerid=1>
+	<enterloc location="ToErium" immediate=false/>
 </condition>
-<condition id=1 description="ExitToEriumWoods" triggerid=2>
-	<enterloc location="EriumWoodsExit" immediate=false/>
+<condition id=1 description="ToCabin" triggerid=2>
+	<enterloc location="ToCabin" immediate=false/>
 </condition>
 <condition id=2 description="MapStart" triggerid=0>
 	<maploaded/>

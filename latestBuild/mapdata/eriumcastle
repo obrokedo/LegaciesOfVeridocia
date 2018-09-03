@@ -6,41 +6,41 @@
 	<runtriggers triggers=36,/>
 	<runtriggers triggers=35,/>
 </trigger>
-<trigger id=2 description="SouthWestExit1" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="erium" enter="NorthWestEntrance1" transdir=""/>
+<trigger id=2 description="ToEriumWest1" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="erium" enter="FromEriumCastleWest1" transdir=""/>
 </trigger>
-<trigger id=3 description="SouthWestExit2" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="erium" enter="NorthWestEntrance2" transdir=""/>
+<trigger id=3 description="ToEriumWest2" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="erium" enter="FromEriumCastleWest2" transdir=""/>
 </trigger>
-<trigger id=4 description="SouthWestExit3" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="erium" enter="NorthWestEntrance3" transdir=""/>
+<trigger id=4 description="ToEriumWest3" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="erium" enter="FromEriumCastleWest3" transdir=""/>
 </trigger>
-<trigger id=5 description="SouthWestExit4" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="erium" enter="NorthWestEntrance4" transdir=""/>
+<trigger id=5 description="ToEriumWest4" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="erium" enter="FromEriumCastleWest4" transdir=""/>
 </trigger>
-<trigger id=6 description="SouthWestExit5" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="erium" enter="NorthWestEntrance5" transdir=""/>
+<trigger id=6 description="ToEriumWest5" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="erium" enter="FromEriumCastleWest5" transdir=""/>
 </trigger>
-<trigger id=7 description="SouthEastExit1" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="erium" enter="NorthEastEntrance1" transdir=""/>
+<trigger id=7 description="ToEriumEast1" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="erium" enter="FromEriumCastleEast1" transdir=""/>
 </trigger>
-<trigger id=8 description="SouthEastExit2" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="erium" enter="NorthEastEntrance2" transdir=""/>
+<trigger id=8 description="ToEriumEast2" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="erium" enter="FromEriumCastleEast2" transdir=""/>
 </trigger>
-<trigger id=9 description="SouthEastExit3" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="erium" enter="NorthEastEntrance3" transdir=""/>
+<trigger id=9 description="ToEriumEast3" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="erium" enter="FromEriumCastleEast3" transdir=""/>
 </trigger>
-<trigger id=10 description="SouthEastExit4" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="erium" enter="NorthEastEntrance4" transdir=""/>
+<trigger id=10 description="ToEriumEast4" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="erium" enter="FromEriumCastleEast4" transdir=""/>
 </trigger>
-<trigger id=11 description="SouthEastExit5" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="erium" enter="NorthEastEntrance5" transdir=""/>
+<trigger id=11 description="ToEriumEast5" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="erium" enter="FromEriumCastleEast5" transdir=""/>
 </trigger>
-<trigger id=12 description="SouthEastExit6" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="erium" enter="NorthEastEntrance6" transdir=""/>
+<trigger id=12 description="ToEriumEast6" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="erium" enter="FromEriumCastleEast6" transdir=""/>
 </trigger>
-<trigger id=13 description="SouthEastExit7" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="erium" enter="NorthEastEntrance7" transdir=""/>
+<trigger id=13 description="ToEriumEast7" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="erium" enter="FromEriumCastleEast7" transdir=""/>
 </trigger>
 <trigger id=14 description="NorthWestStairsExit" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<loadmap mapdata="eriumcastleupper" enter="NorthWestHallStairsEntrance" transdir=""/>
@@ -316,41 +316,41 @@
 	<haltingmovepath name="Dog" x=216 y=900 speed="3"/>
 	<haltingmovepath name="Dog" x=216 y=1152 speed="3"/>
 </cinematic>
-<condition id=0 description="SouthWestExit1" triggerid=2>
-	<enterloc location="SouthWestExit1" immediate=false/>
+<condition id=0 description="ToEriumWest1" triggerid=2>
+	<enterloc location="ToEriumWest1" immediate=false/>
 </condition>
-<condition id=1 description="SouthWestExit2" triggerid=3>
-	<enterloc location="SouthWestExit2" immediate=false/>
+<condition id=1 description="ToEriumWest2" triggerid=3>
+	<enterloc location="ToEriumWest2" immediate=false/>
 </condition>
-<condition id=2 description="SouthWestExit3" triggerid=4>
-	<enterloc location="SouthWestExit3" immediate=false/>
+<condition id=2 description="ToEriumWest3" triggerid=4>
+	<enterloc location="ToEriumWest3" immediate=false/>
 </condition>
-<condition id=3 description="SouthWestExit4" triggerid=5>
-	<enterloc location="SouthWestExit4" immediate=false/>
+<condition id=3 description="ToEriumWest4" triggerid=5>
+	<enterloc location="ToEriumWest4" immediate=false/>
 </condition>
-<condition id=4 description="SouthWestExit5" triggerid=6>
-	<enterloc location="SouthWestExit5" immediate=false/>
+<condition id=4 description="ToEriumWest5" triggerid=6>
+	<enterloc location="ToEriumWest5" immediate=false/>
 </condition>
-<condition id=5 description="SouthEastExit1" triggerid=7>
-	<enterloc location="SouthEastExit1" immediate=false/>
+<condition id=5 description="ToEriumEast1" triggerid=7>
+	<enterloc location="ToEriumEast1" immediate=false/>
 </condition>
-<condition id=6 description="SouthEastExit2" triggerid=8>
-	<enterloc location="SouthEastExit2" immediate=false/>
+<condition id=6 description="ToEriumEast2" triggerid=8>
+	<enterloc location="ToEriumEast2" immediate=false/>
 </condition>
-<condition id=7 description="SouthEastExit3" triggerid=9>
-	<enterloc location="SouthEastExit3" immediate=false/>
+<condition id=7 description="ToEriumEast3" triggerid=9>
+	<enterloc location="ToEriumEast3" immediate=false/>
 </condition>
-<condition id=8 description="SouthEastExit4" triggerid=10>
-	<enterloc location="SouthEastExit4" immediate=false/>
+<condition id=8 description="ToEriumEast4" triggerid=10>
+	<enterloc location="ToEriumEast4" immediate=false/>
 </condition>
-<condition id=9 description="SouthEastExit5" triggerid=11>
-	<enterloc location="SouthEastExit5" immediate=false/>
+<condition id=9 description="ToEriumEast5" triggerid=11>
+	<enterloc location="ToEriumEast5" immediate=false/>
 </condition>
-<condition id=10 description="SouthEastExit6" triggerid=12>
-	<enterloc location="SouthEastExit6" immediate=false/>
+<condition id=10 description="ToEriumEast6" triggerid=12>
+	<enterloc location="ToEriumEast6" immediate=false/>
 </condition>
-<condition id=11 description="SouthEastExit7" triggerid=13>
-	<enterloc location="SouthEastExit7" immediate=false/>
+<condition id=11 description="ToEriumEast7" triggerid=13>
+	<enterloc location="ToEriumEast7" immediate=false/>
 </condition>
 <condition id=12 description="NorthWestStairsExit" triggerid=14>
 	<enterloc location="NorthWestHallStairsExit" immediate=false/>

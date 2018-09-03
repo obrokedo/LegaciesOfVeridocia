@@ -1,5 +1,5 @@
 <map file="EriumCastleNight.tmx"/>
-<trigger id=0 description="MapStart" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+<trigger id=0 description="MapStart" require="" exclude="" nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<playmusic music="castlenight" volume=100/>
 </trigger>
 <cinematic id=0 description="scene1-1" camerax=600 cameray=0>
@@ -429,39 +429,46 @@
 </cinematic>
 <cinematic id=3 description="Battle 2 Noah First" camerax=1176 cameray=120>
 	<playmusic music="UnHero" volume=100/>
-	<addactor x=1104 y=504 name="Olivia" anim="Olivia" startanim="UnUp" visible=true init=true associatedhero=""/>
+	<addactor x=1104 y=528 name="Olivia" anim="Olivia" startanim="UnUp" visible=true init=true associatedhero=""/>
 	<addactor x=1104 y=504 name="Craig" anim="Craig" startanim="UnUp" visible=true init=true associatedhero=""/>
-	<addactor x=1440 y=192 name="Noah" anim="Noah" startanim="UnDown" visible=true init=true associatedhero=""/>
-	<haltingmove name="Noah" x=1416 y=192 speed="2.4" movehor=false movediag=false/>
-	<addactor x=1440 y=192 name="Sharna" anim="Sharna" startanim="UnDown" visible=true init=false associatedhero=""/>
+	<addactor x=1440 y=192 name="Noah" anim="Noah" startanim="UnLeft" visible=true init=true associatedhero=""/>
 	<move name="Noah" x=1392 y=192 speed="2.4" movehor=false movediag=false/>
 	<wait time=200/>
+	<addactor x=1440 y=192 name="Sharna" anim="Sharna" startanim="UnLeft" visible=true init=false associatedhero=""/>
 	<move name="Sharna" x=1416 y=192 speed="2.4" movehor=false movediag=false/>
 	<wait time=200/>
-	<addactor x=1440 y=192 name="Huun" anim="Huun" startanim="UnDown" visible=true init=false associatedhero=""/>
-	<wait time=200/>
+	<addactor x=1440 y=192 name="Huun" anim="Huun" startanim="UnLeft" visible=true init=false associatedhero=""/>
 	<move name="Noah" x=1104 y=360 speed="2.4" movehor=true movediag=false/>
-	<wait time=200/>
 	<move name="Sharna" x=1104 y=336 speed="2.4" movehor=true movediag=false/>
-	<wait time=200/>
 	<move name="Huun" x=1104 y=312 speed="2.4" movehor=true movediag=false/>
 	<cameramove x=1104 y=360 time=5000/>
-	<wait time=4600/>
+	<wait time=750/>
+	<cameramove x=1104 y=384 time=1000/>
 	<move name="Craig" x=1104 y=384 speed="2.4" movehor=false movediag=false/>
-	<wait time=300/>
-	<move name="Olivia" x=1104 y=408 speed="2.4" movehor=false movediag=false/>
-	<wait time=1000/>
-	<speech text="I'm relived to see that you made it out in once peice.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
+	<haltingmove name="Olivia" x=1104 y=408 speed="2.4" movehor=false movediag=false/>
+	<wait time=200/>
+	<speech text="I'm relived to see that you made it out in once piece.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
+	<wait time=200/>
+	<nod name="Craig"/>
+	<wait time=1500/>
 	<playsound sound="hit2" volume=100/>
-	<speech text="Someone is coming, hide!<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait=""/>
+	<camerashake time=250 severity=2/>
+	<wait time=200/>
+	<facing name="Olivia" dir=1/>
+	<facing name="Craig" dir=1/>
+	<wait time=500/>
+	<tremble name="Olivia"/>
+	<wait time=750/>
+	<stopse name="Olivia"/>
+	<wait time=350/>
+	<speech text="Someone is coming! hide!<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait=""/>
 	<move name="Huun" x=1392 y=192 speed="2.4" movehor=false movediag=false/>
 	<move name="Sharna" x=1368 y=192 speed="2.4" movehor=false movediag=false/>
 	<move name="Noah" x=1344 y=192 speed="2.4" movehor=false movediag=false/>
 	<move name="Craig" x=1344 y=240 speed="2.4" movehor=false movediag=false/>
 	<move name="Olivia" x=1368 y=264 speed="2.4" movehor=false movediag=false/>
 	<cameramove x=1336 y=240 time=4350/>
-	<wait time=4200/>
-	<move name="Olivia" x=1368 y=240 speed="2.4" movehor=false movediag=false/>
+	<haltingmove name="Olivia" x=1368 y=240 speed="2.4" movehor=true movediag=false/>
 	<wait time=250/>
 	<loadcin mapdata="eriumcastlenight" cinid=4/>
 </cinematic>
@@ -524,6 +531,6 @@
 	<fadeout time=1000 halting=true/>
 	<loadcin mapdata="eriumoutskirts" cinid=0/>
 </cinematic>
-<condition id=0 description="MapLoad" triggerid=0>
+<condition id=0 description="MapLoad" triggerid=0,>
 	<maploaded/>
 </condition>

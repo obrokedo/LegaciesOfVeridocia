@@ -11,41 +11,41 @@
 <trigger id=3 description="OpenPriestess" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<showpriest portrait="Priestess1"/>
 </trigger>
-<trigger id=4 description="NorthWestExit1" require="," exclude="Battle2," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="eriumcastle" enter="SouthWestEntrance1" transdir=""/>
+<trigger id=4 description="ToEriumCastleWest1" require="," exclude="Battle2," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="eriumcastle" enter="FromEriumWest1" transdir=""/>
 </trigger>
-<trigger id=5 description="NorthWestExit2" require="," exclude="Battle2," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="eriumcastle" enter="SouthWestEntrance2" transdir=""/>
+<trigger id=5 description="ToEriumCastleWest2" require="," exclude="Battle2," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="eriumcastle" enter="FromEriumWest2" transdir=""/>
 </trigger>
-<trigger id=6 description="NorthWestExit3" require="," exclude="Battle2," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="eriumcastle" enter="SouthWestEntrance3" transdir=""/>
+<trigger id=6 description="ToEriumCastleWest3" require="," exclude="Battle2," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="eriumcastle" enter="FromEriumWest3" transdir=""/>
 </trigger>
-<trigger id=7 description="NorthWestExit4" require="," exclude="Battle2," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="eriumcastle" enter="SouthWestEntrance4" transdir=""/>
+<trigger id=7 description="ToEriumCastleWest4" require="," exclude="Battle2," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="eriumcastle" enter="FromEriumWest4" transdir=""/>
 </trigger>
-<trigger id=8 description="NorthWestExit5" require="," exclude="Battle2," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="eriumcastle" enter="SouthWestEntrance5" transdir=""/>
+<trigger id=8 description="ToEriumCastleWest5" require="," exclude="Battle2," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="eriumcastle" enter="FromEriumWest5" transdir=""/>
 </trigger>
-<trigger id=9 description="NorthEastExit1" require="," exclude="Battle2," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="eriumcastle" enter="SouthEastEntrance1" transdir=""/>
+<trigger id=9 description="ToEriumCastleEast1" require="," exclude="Battle2," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="eriumcastle" enter="FromEriumEast1" transdir=""/>
 </trigger>
-<trigger id=10 description="NorthEastExit2" require="," exclude="Battle2," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="eriumcastle" enter="SouthEastEntrance2" transdir=""/>
+<trigger id=10 description="ToEriumCastleEast2" require="," exclude="Battle2," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="eriumcastle" enter="FromEriumEast2" transdir=""/>
 </trigger>
-<trigger id=11 description="NorthEastExit3" require="," exclude="Battle2," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="eriumcastle" enter="SouthEastEntrance3" transdir=""/>
+<trigger id=11 description="ToEriumCastleEast3" require="," exclude="Battle2," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="eriumcastle" enter="FromEriumEast3" transdir=""/>
 </trigger>
-<trigger id=12 description="NorthEastExit4" require="," exclude="Battle2," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="eriumcastle" enter="SouthEastEntrance4" transdir=""/>
+<trigger id=12 description="ToEriumCastleEast4" require="," exclude="Battle2," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="eriumcastle" enter="FromEriumEast4" transdir=""/>
 </trigger>
-<trigger id=13 description="NorthEastExit5" require="," exclude="Battle2," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="eriumcastle" enter="SouthEastEntrance5" transdir=""/>
+<trigger id=13 description="ToEriumCastleEast5" require="," exclude="Battle2," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="eriumcastle" enter="FromEriumEast5" transdir=""/>
 </trigger>
-<trigger id=14 description="NorthEastExit6" require="," exclude="Battle2," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="eriumcastle" enter="SouthEastEntrance6" transdir=""/>
+<trigger id=14 description="ToEriumCastleEast6" require="," exclude="Battle2," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="eriumcastle" enter="FromEriumEast6" transdir=""/>
 </trigger>
-<trigger id=15 description="NorthEastExit7" require="," exclude="Battle2," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="eriumcastle" enter="SouthEastEntrance7" transdir=""/>
+<trigger id=15 description="ToEriumCastleEast7" require="," exclude="Battle2," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="eriumcastle" enter="FromEriumEast7" transdir=""/>
 </trigger>
 <trigger id=16 description="BartenderScolds" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<showcin cinid=1 exittrigid=-1/>
@@ -68,8 +68,8 @@
 <trigger id=22 description="Book3" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<showtext textid=17/>
 </trigger>
-<trigger id=23 description="SouthWestExit" require="Battle2," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<showtext textid=18/>
+<trigger id=23 description="ToOverworld" require="Battle2," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="overworld" enter="FromErium" transdir=""/>
 </trigger>
 <trigger id=24 description="OpenWeaponShop" require="Battle2," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<showshop buypercent="1.2" sellpercent="0.8" itemssold="Erium Blade,Erium Cane,Erium Arrow," portrait="Shopkeeper1"/>
@@ -79,6 +79,13 @@
 </trigger>
 <trigger id=26 description="SearchSign2" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<showtext textid=21/>
+</trigger>
+<trigger id=27 description="Can'tLeave" require="," exclude="Battle2," nonretrig=false retrigonenter=true triggeronce=false triggerimmediately=false>
+	<showcin cinid=2 exittrigid=28/>
+</trigger>
+<trigger id=28 description="CanLeave" require="" exclude="" nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<completequest questid="Battle2"/>
+	<showtext textid=22/>
 </trigger>
 <text id=0 description="citizen1">
 	<conversation require="," exclude="," trigger=-1 heroportrait1="" enemyportrait1="" animportrait1="" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="Good evening, Noah.<pause>  That blizzard the other night was really bizarre, wasn't it?<hardstop><split>I've never seen anything like that...<pause>  It came and went in almost no time at all!<hardstop><split>And you wouldn't even know it by the weather today!<hardstop>"/>
@@ -104,7 +111,7 @@
 <text id=7 description="Weapon Shop">
 	<string require="EriumWeaponShopInitialTalk," exclude="Battle2," trigger=-1 heroportrait="" enemyportrait="" animportrait="Shopkeeper1" message="See you again.<hardstop>"/>
 	<conversation require="," exclude="EriumWeaponShopInitialTalk,Battle2," trigger=2 heroportrait1="" enemyportrait1="" animportrait1="Shopkeeper1" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="Sorry, I'm out of stock right now.<hardstop><split>Out of stock? You're never out of stock!<hardstop><split>Grand Mage Mistal cleaned me out. I guess she's going to start a new training plan?<hardstop><split>She's not exactly in charge of training. Maybe it was a special request from King Erium.<hardstop><split>I'm not sure. I'm expecting a new shipment any day now though. The trade caravan should be here this week.<hardstop><split>I'll check another day then. Thank you.<hardstop>"/>
-	<string require="Battle2," exclude="," trigger=24 heroportrait="" enemyportrait="" animportrait="" message="Looking for some sharp new weapon?<hardstop>"/>
+	<string require="Battle2," exclude="," trigger=24 heroportrait="" enemyportrait="" animportrait="" message="Looking for some sharp new weapons?<hardstop>"/>
 </text>
 <text id=8 description="Priestess">
 	<string require="," exclude="," trigger=3 heroportrait="" enemyportrait="" animportrait="Priestess1" message="Welcome, my lamb.  How may I be of service to you?<hardstop>"/>
@@ -150,7 +157,10 @@
 <text id=21 description="SearchSign2">
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="No Entrance!<hardstop>"/>
 </text>
-<cinematic id=0 description="NoahGettingReady" camerax=0 cameray=0>
+<text id=22 description="LeavingSoSoon?">
+	<string require="" exclude="Battle2," trigger=23 heroportrait="Noah" enemyportrait="" animportrait="" message="(Battle2 Quest Completed for testing. Delete in Final Version.)<hardstop>"/>
+</text>
+<cinematic id=0 description="NoahGettingReady" camerax=0 cameray=1056>
 	<pausemusic/>
 	<addactor x=144 y=156 name="cam" anim="Noah" startanim="Down" visible=false init=true associatedhero="Noah"/>
 	<addactor x=96 y=108 name="Noah" anim="Noah" startanim="Down" visible=true init=true associatedhero="Noah"/>
@@ -234,48 +244,54 @@
 	<haltingmove name="Noah" x=1752 y=384 speed="2" movehor=false movediag=false/>
 	<facing name="Noah" dir=1/>
 </cinematic>
-<condition id=0 description="NorthWestExit1" triggerid=4>
-	<enterloc location="NorthWestExit1" immediate=false/>
+<cinematic id=2 description="Can'tLeave" camerax=384 cameray=1056>
+	<assactor name="Noah" hero="Noah" enemyid=0 npcid=""/>
+	<camerafollow name="Noah"/>
+	<speech text="As nice as the view is,<pause> I must report for duty.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
+	<haltingmovepath name="Noah" x=384 y=984 speed="2.4"/>
+</cinematic>
+<condition id=0 description="ToEriumCastleWest1" triggerid=4,>
+	<enterloc location="ToEriumCastleWest1" immediate=false/>
 </condition>
-<condition id=1 description="NorthWestExit2" triggerid=5>
-	<enterloc location="NorthWestExit2" immediate=false/>
+<condition id=1 description="ToEriumCastleEast1" triggerid=9,>
+	<enterloc location="FromEriumCastleEast1" immediate=false/>
 </condition>
-<condition id=2 description="NorthWestExit3" triggerid=6>
-	<enterloc location="NorthWestExit3" immediate=false/>
+<condition id=2 description="ToEriumCastleEast2" triggerid=10,>
+	<enterloc location="ToEriumCastleEast2" immediate=false/>
 </condition>
-<condition id=3 description="NorthWestExit4" triggerid=7>
-	<enterloc location="NorthWestExit4" immediate=false/>
+<condition id=3 description="ToEriumCastleEast3" triggerid=11,>
+	<enterloc location="ToEriumCastleEast3" immediate=false/>
 </condition>
-<condition id=4 description="NorthWestExit5" triggerid=8>
-	<enterloc location="NorthWestExit5" immediate=false/>
+<condition id=4 description="ToEriumCastleEast4" triggerid=12,>
+	<enterloc location="ToEriumCastleEast4" immediate=false/>
 </condition>
-<condition id=5 description="NorthEastExit1" triggerid=9>
-	<enterloc location="NorthEastExit1" immediate=false/>
+<condition id=5 description="ToEriumCastleEast5" triggerid=13,>
+	<enterloc location="ToEriumCastleEast5" immediate=false/>
 </condition>
-<condition id=6 description="NorthEastExit2" triggerid=10>
-	<enterloc location="NorthEastExit2" immediate=false/>
+<condition id=6 description="ToEriumCastleEast6" triggerid=14,>
+	<enterloc location="ToEriumCastleEast6" immediate=false/>
 </condition>
-<condition id=7 description="NorthEastExit3" triggerid=11>
-	<enterloc location="NorthEastExit3" immediate=false/>
+<condition id=7 description="ToEriumCastleEast7" triggerid=15,>
+	<enterloc location="ToEriumCastleEast7" immediate=false/>
 </condition>
-<condition id=8 description="NorthEastExit4" triggerid=12>
-	<enterloc location="NorthEastExit4" immediate=false/>
-</condition>
-<condition id=9 description="NorthEastExit5" triggerid=13>
-	<enterloc location="NorthEastExit5" immediate=false/>
-</condition>
-<condition id=10 description="NorthEastExit6" triggerid=14>
-	<enterloc location="NorthEastExit6" immediate=false/>
-</condition>
-<condition id=11 description="NorthEastExit7" triggerid=15>
-	<enterloc location="NorthEastExit7" immediate=false/>
-</condition>
-<condition id=12 description="BartenderScolds" triggerid=16>
+<condition id=8 description="BartenderScolds" triggerid=16,>
 	<enterloc location="BartenderScold" immediate=false/>
 </condition>
-<condition id=13 description="SouthWestExit" triggerid=23>
-	<enterloc location="SouthWestExit" immediate=false/>
+<condition id=9 description="ToOverworld" triggerid=23,27,>
+	<enterloc location="ToOverworld" immediate=false/>
 </condition>
-<condition id=14 description="MapLoad" triggerid=0>
+<condition id=10 description="MapLoad" triggerid=0,>
 	<maploaded/>
+</condition>
+<condition id=11 description="ToEriumCastleWest2" triggerid=5,>
+	<enterloc location="ToEriumCastleWest2" immediate=false/>
+</condition>
+<condition id=12 description="ToEriumCastleWest3" triggerid=6,>
+	<enterloc location="ToEriumCastleWest3" immediate=false/>
+</condition>
+<condition id=13 description="ToEriumCastleWest4" triggerid=7,>
+	<enterloc location="ToEriumCastleWest4" immediate=false/>
+</condition>
+<condition id=14 description="ToEriumCastleWest5" triggerid=8,>
+	<enterloc location="ToEriumCastleWest5" immediate=false/>
 </condition>
