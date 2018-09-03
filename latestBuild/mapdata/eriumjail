@@ -23,9 +23,8 @@
 	<addactor x=624 y=144 name="Sharna" anim="Sharna" startanim="Up" visible=true init=true associatedhero="Sharna"/>
 	<addactor x=552 y=168 name="Huun" anim="Huun" startanim="Down" visible=true init=true associatedhero="Huun"/>
 	<addactor x=96 y=216 name="Olivia" anim="Olivia" startanim="Up" visible=true init=true associatedhero="Olivia"/>
-	<addactor x=216 y=120 name="Guard2" anim="eriumguard" startanim="UnDown" visible=true init=true associatedhero=""/>
-	<addactor x=240 y=120 name="Guard3" anim="eriumguard" startanim="UnDown" visible=true init=true associatedhero=""/>
-	<addactor x=120 y=144 name="Guard4" anim="eriumguard" startanim="UnDown" visible=true init=true associatedhero=""/>
+	<addactor x=240 y=60 name="Guard3" anim="eriumguard" startanim="UnDown" visible=true init=true associatedhero=""/>
+	<addactor x=144 y=108 name="Guard4" anim="eriumguard" startanim="UnDown" visible=true init=true associatedhero=""/>
 	<camerafollow name="Noah"/>
 	<facing name="Sharna" dir=2/>
 	<layonback name="Noah" dir=0/>
@@ -241,15 +240,15 @@
 	<speech text="Confident, aren't we?<pause><linebreak> Don't expect the same courtesy from us.<hardstop><linebreak> ATTACK!!<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
 	<loadbattle mapdata="battle2" entrance="battlestart" battbg=0/>
 </cinematic>
-<condition id=0 description="SouthStairsExit" triggerid=1>
+<condition id=0 description="SouthStairsExit" triggerid=1,>
 	<enterloc location="SouthStairsExit" immediate=false/>
 </condition>
-<condition id=1 description="NorthStairsExit" triggerid=2>
+<condition id=1 description="NorthStairsExit" triggerid=2,>
 	<enterloc location="NorthStairsExit" immediate=false/>
 </condition>
-<condition id=2 description="ReStart Battle2" triggerid=3>
+<condition id=2 description="ReStart Battle2" triggerid=3,>
 	<enterloc location="Battle2Restart" immediate=false/>
 </condition>
-<condition id=3 description="MapLoad" triggerid=0>
+<condition id=3 description="MapLoad" triggerid=0,>
 	<maploaded/>
 </condition>
