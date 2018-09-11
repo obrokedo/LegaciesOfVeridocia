@@ -8,7 +8,7 @@ class BattleFunctions(BattleFunctionConfiguration):
     def getDodgePercent(self, attacker, target):        
         # OLD VALUES
         # return Math.max(5, 5 + (target.getCurrentSpeed() - attacker.getCurrentSpeed()) / 5);
-        return attacker.getModifiedEvade();
+        return target.getModifiedEvade();
     
     # Gets the percent chance that the given attacker will get a critical hit against the target
     # this value should be between 0-100
