@@ -1,16 +1,16 @@
 <enemy id=0 name="Darkling Ooze" hp=9 mp=0 attack=10 defense=4 speed=5 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength=0 mindStrength=0 counterStrength=0 evadeStrength=0 doubleStrength=0 critStrength=0 level=-1 move=4 movementtype="NORMAL" animations="Darkling Ooze" gold=7 palette="">
 </enemy>
-<enemy id=1 name="Erium Soldier" hp=11 mp=0 attack=12 defense=5 speed=4 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength=0 mindStrength=0 counterStrength=0 evadeStrength=0 doubleStrength=0 critStrength=0 level=1 move=5 movementtype="NORMAL" animations="eriumguard" gold=6 palette="">
+<enemy id=1 name="Erium Soldier" hp=11 mp=0 attack=13 defense=5 speed=4 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength=0 mindStrength=0 counterStrength=0 evadeStrength=0 doubleStrength=0 critStrength=0 level=1 move=5 movementtype="NORMAL" animations="eriumguard" gold=6 palette="">
 	<item itemid="Erium Blade" equipped=true/>
 </enemy>
-<enemy id=2 name="Erium Archer" hp=10 mp=0 attack=13 defense=4 speed=7 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength=0 mindStrength=0 counterStrength=0 evadeStrength=0 doubleStrength=0 critStrength=0 level=1 move=5 movementtype="NORMAL" animations="eriumarcher" gold=6 palette="">
+<enemy id=2 name="Erium Archer" hp=10 mp=0 attack=14 defense=4 speed=7 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength=0 mindStrength=0 counterStrength=0 evadeStrength=0 doubleStrength=0 critStrength=0 level=1 move=5 movementtype="NORMAL" animations="eriumarcher" gold=6 palette="">
 	<item itemid="Erium Arrow" equipped=true/>
 </enemy>
-<enemy id=3 name="Erium Mage" hp=8 mp=4 attack=8 defense=4 speed=6 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength=0 mindStrength=0 counterStrength=0 evadeStrength=0 doubleStrength=0 critStrength=0 level=1 move=5 movementtype="NORMAL" animations="eriummage" gold=5 palette="">
+<enemy id=3 name="Erium Mage" hp=8 mp=4 attack=10 defense=4 speed=6 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength=0 mindStrength=0 counterStrength=0 evadeStrength=0 doubleStrength=0 critStrength=0 level=1 move=5 movementtype="NORMAL" animations="eriummage" gold=5 palette="">
 	<spell spellid="BLAZE" level=1/>
 	<item itemid="Erium Cane" equipped=true/>
 </enemy>
-<enemy id=4 name="Erium Captain" hp=15 mp=0 attack=13 defense=6 speed=7 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength=0 mindStrength=0 counterStrength=0 evadeStrength=0 doubleStrength=0 critStrength=0 level=2 move=6 movementtype="NORMAL" animations="guardcaptain" gold=16 palette="">
+<enemy id=4 name="Erium Captain" hp=15 mp=0 attack=15 defense=6 speed=7 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength=0 mindStrength=0 counterStrength=0 evadeStrength=0 doubleStrength=0 critStrength=0 level=2 move=6 movementtype="NORMAL" animations="guardcaptain" gold=16 palette="">
 	<item itemid="Erium Blade" equipped=true/>
 </enemy>
 <enemy id=5 name="Sellsword" hp=15 mp=0 attack=15 defense=9 speed=6 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength=15 mindStrength=5 counterStrength=7 evadeStrength=8 doubleStrength=15 critStrength=5 level=4 move=5 movementtype="NORMAL" animations="blank" gold=36 palette="">
