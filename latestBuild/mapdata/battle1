@@ -1,6 +1,6 @@
 <map file="EriumCastleNight.tmx"/>
-<trigger id=0 description="Battle1 Initialise" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<playmusic music="battle1" volume=100/>
+<trigger id=0 description="Battle1 Initialise" require="" exclude="" nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<playmusic music="battle1" volume=75/>
 </trigger>
 <trigger id=1 description="Victory Results" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<completequest questid="Battle1"/>
@@ -52,27 +52,27 @@
 <text id=3 description="Defcon 4">
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="Defcon 4 Activated!!<hardstop>"/>
 </text>
-<condition id=0 description="TLEnter" triggerid=2>
+<condition id=0 description="TLEnter" triggerid=2,>
 	<enterloc location="Top Left BT" immediate=false/>
 </condition>
-<condition id=1 description="BLEnter" triggerid=3>
+<condition id=1 description="BLEnter" triggerid=3,>
 	<enterloc location="Bottom Left BT" immediate=false/>
 </condition>
-<condition id=2 description="MidEnter" triggerid=4>
+<condition id=2 description="MidEnter" triggerid=4,>
 	<enterloc location="Kill Box BT" immediate=false/>
 </condition>
-<condition id=3 description="TREnter" triggerid=5>
+<condition id=3 description="TREnter" triggerid=5,>
 	<enterloc location="Top Right BT" immediate=false/>
 </condition>
-<condition id=4 description="BREnter" triggerid=6>
+<condition id=4 description="BREnter" triggerid=6,>
 	<enterloc location="Bottom Right BT" immediate=false/>
 </condition>
-<condition id=5 description="Noah Dies" triggerid=7>
+<condition id=5 description="Noah Dies" triggerid=7,>
 	<herodeath unitid="Noah"/>
 </condition>
-<condition id=6 description="MapLoad" triggerid=0>
+<condition id=6 description="MapLoad" triggerid=0,>
 	<maploaded/>
 </condition>
-<condition id=7 description="AllEnemiesKilled" triggerid=1>
+<condition id=7 description="AllEnemiesKilled" triggerid=1,>
 	<enemremain operator="Equals" amount=0/>
 </condition>

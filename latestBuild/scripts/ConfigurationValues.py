@@ -257,7 +257,7 @@ class ConfigurationValues(EngineConfigurationValues):
     # Return an integer between 0-100 indicating the volume that 
     # music in battle should be played
     def getBattleMusicVolume(self):
-        return 50
+        return 75
     
     
     def clearPythonModules(self):

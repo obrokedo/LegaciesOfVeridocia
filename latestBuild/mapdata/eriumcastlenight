@@ -1,6 +1,6 @@
 <map file="EriumCastleNight.tmx"/>
 <trigger id=0 description="MapStart" require="" exclude="" nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<playmusic music="castlenight" volume=100/>
+	<playmusic music="castlenight" volume=75/>
 </trigger>
 <cinematic id=0 description="scene1-1" camerax=600 cameray=0>
 	<addactor x=0 y=0 name="Cam" anim="Noah" startanim="Down" visible=false init=true associatedhero="Noah"/>

@@ -1,6 +1,6 @@
 <map file="Erium.tmx"/>
-<trigger id=0 description="MapStart" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<playmusic music="erium" volume=100/>
+<trigger id=0 description="MapStart" require="" exclude="" nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<playmusic music="erium" volume=75/>
 </trigger>
 <trigger id=1 description="OpenItemShop" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<showshop buypercent="1.2" sellpercent="0.8" itemssold="Medical Herb," portrait="Shopkeeper1"/>
@@ -83,7 +83,7 @@
 <trigger id=27 description="Can'tLeave" require="," exclude="Battle2," nonretrig=false retrigonenter=true triggeronce=false triggerimmediately=false>
 	<showcin cinid=2 exittrigid=28/>
 </trigger>
-<trigger id=28 description="CanLeave" require="" exclude="" nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+<trigger id=28 description="CanLeave" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<completequest questid="Battle2"/>
 	<showtext textid=22/>
 </trigger>
@@ -158,7 +158,7 @@
 	<string require="," exclude="," trigger=-1 heroportrait="" enemyportrait="" animportrait="" message="No Entrance!<hardstop>"/>
 </text>
 <text id=22 description="LeavingSoSoon?">
-	<string require="" exclude="Battle2," trigger=23 heroportrait="Noah" enemyportrait="" animportrait="" message="(Battle2 Quest Completed for testing. Delete in Final Version.)<hardstop>"/>
+	<string require="," exclude="Battle2," trigger=23 heroportrait="Noah" enemyportrait="" animportrait="" message="(Battle2 Quest Completed for testing. Delete in Final Version.)<hardstop>"/>
 </text>
 <cinematic id=0 description="NoahGettingReady" camerax=0 cameray=1056>
 	<pausemusic/>

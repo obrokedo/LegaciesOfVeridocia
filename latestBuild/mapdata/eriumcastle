@@ -1,6 +1,6 @@
 <map file="EriumCastle.tmx"/>
-<trigger id=0 description="MapStart" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<playmusic music="eriumcastle" volume=100/>
+<trigger id=0 description="MapStart" require="" exclude="" nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<playmusic music="eriumcastle" volume=75/>
 </trigger>
 <trigger id=1 description="ContinueStory" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<runtriggers triggers=36,/>
@@ -316,63 +316,63 @@
 	<haltingmovepath name="Dog" x=216 y=900 speed="3"/>
 	<haltingmovepath name="Dog" x=216 y=1152 speed="3"/>
 </cinematic>
-<condition id=0 description="ToEriumWest1" triggerid=2>
+<condition id=0 description="ToEriumWest1" triggerid=2,>
 	<enterloc location="ToEriumWest1" immediate=false/>
 </condition>
-<condition id=1 description="ToEriumWest2" triggerid=3>
+<condition id=1 description="ToEriumWest2" triggerid=3,>
 	<enterloc location="ToEriumWest2" immediate=false/>
 </condition>
-<condition id=2 description="ToEriumWest3" triggerid=4>
+<condition id=2 description="ToEriumWest3" triggerid=4,>
 	<enterloc location="ToEriumWest3" immediate=false/>
 </condition>
-<condition id=3 description="ToEriumWest4" triggerid=5>
+<condition id=3 description="ToEriumWest4" triggerid=5,>
 	<enterloc location="ToEriumWest4" immediate=false/>
 </condition>
-<condition id=4 description="ToEriumWest5" triggerid=6>
+<condition id=4 description="ToEriumWest5" triggerid=6,>
 	<enterloc location="ToEriumWest5" immediate=false/>
 </condition>
-<condition id=5 description="ToEriumEast1" triggerid=7>
+<condition id=5 description="ToEriumEast1" triggerid=7,>
 	<enterloc location="ToEriumEast1" immediate=false/>
 </condition>
-<condition id=6 description="ToEriumEast2" triggerid=8>
+<condition id=6 description="ToEriumEast2" triggerid=8,>
 	<enterloc location="ToEriumEast2" immediate=false/>
 </condition>
-<condition id=7 description="ToEriumEast3" triggerid=9>
+<condition id=7 description="ToEriumEast3" triggerid=9,>
 	<enterloc location="ToEriumEast3" immediate=false/>
 </condition>
-<condition id=8 description="ToEriumEast4" triggerid=10>
+<condition id=8 description="ToEriumEast4" triggerid=10,>
 	<enterloc location="ToEriumEast4" immediate=false/>
 </condition>
-<condition id=9 description="ToEriumEast5" triggerid=11>
+<condition id=9 description="ToEriumEast5" triggerid=11,>
 	<enterloc location="ToEriumEast5" immediate=false/>
 </condition>
-<condition id=10 description="ToEriumEast6" triggerid=12>
+<condition id=10 description="ToEriumEast6" triggerid=12,>
 	<enterloc location="ToEriumEast6" immediate=false/>
 </condition>
-<condition id=11 description="ToEriumEast7" triggerid=13>
+<condition id=11 description="ToEriumEast7" triggerid=13,>
 	<enterloc location="ToEriumEast7" immediate=false/>
 </condition>
-<condition id=12 description="NorthWestStairsExit" triggerid=14>
+<condition id=12 description="NorthWestStairsExit" triggerid=14,>
 	<enterloc location="NorthWestHallStairsExit" immediate=false/>
 </condition>
-<condition id=13 description="NorthEastStairsExit" triggerid=15>
+<condition id=13 description="NorthEastStairsExit" triggerid=15,>
 	<enterloc location="NorthEastHallStairsExit" immediate=false/>
 </condition>
-<condition id=14 description="SouthWestStairsExit" triggerid=16>
+<condition id=14 description="SouthWestStairsExit" triggerid=16,>
 	<enterloc location="SouthWestHallStairsExit" immediate=false/>
 </condition>
-<condition id=15 description="SouthEastStairsExit" triggerid=17>
+<condition id=15 description="SouthEastStairsExit" triggerid=17,>
 	<enterloc location="SouthEastHallStairsExit" immediate=false/>
 </condition>
-<condition id=16 description="KingChamberStairsExit" triggerid=18>
+<condition id=16 description="KingChamberStairsExit" triggerid=18,>
 	<enterloc location="KingChamberStairsExit" immediate=false/>
 </condition>
-<condition id=17 description="SouthJailStairsExit" triggerid=19>
+<condition id=17 description="SouthJailStairsExit" triggerid=19,>
 	<enterloc location="SouthJailStairsExit" immediate=false/>
 </condition>
-<condition id=18 description="NorthJailStairsExit" triggerid=20>
+<condition id=18 description="NorthJailStairsExit" triggerid=20,>
 	<enterloc location="NorthJailStairsExit" immediate=false/>
 </condition>
-<condition id=19 description="MapLoad" triggerid=0>
+<condition id=19 description="MapLoad" triggerid=0,>
 	<maploaded/>
 </condition>
