@@ -2,8 +2,11 @@
 <trigger id=0 description="To WorldMap Erium" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<loadmap mapdata="overworld" enter="FromErium" transdir=""/>
 </trigger>
+<trigger id=1 description="MapStart" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<playmusic music="hq" volume=75/>
+</trigger>
 <text id=0 description="speach trigger">
-	<yesno require="" exclude="" triggeryes=0 triggerno=-1 heroportrait="Craig" enemyportrait="" animportrait="" message="Ahoy mateeey, ready to hit the sack?"/>
+	<yesno require="," exclude="," triggeryes=0 triggerno=-1 heroportrait="Craig" enemyportrait="" animportrait="" message="Ahoy mateeey, ready to hit the sack?"/>
 </text>
 <text id=1 description="huun speech">
 	<string require="," exclude="," trigger=-1 heroportrait="Huun" enemyportrait="" animportrait="" message="I cant beilve you just left me in there.<hardstop> I though I was gonna die alone.<hardstop>"/>
@@ -15,6 +18,7 @@
 	<string require="," exclude="," trigger=-1 heroportrait="Olivia" enemyportrait="" animportrait="" message="I'm standing watch, <hardstop> just incase one of those guards is crazy enough to follow us through there.<hardstop>"/>
 </text>
 <cinematic id=0 description="Scene1" camerax=0 cameray=0>
+	<playmusic music="castlenight" volume=75/>
 	<fadein time=1000 halting=true init=false/>
 	<addactor x=72 y=96 name="Craig" anim="Craig" startanim="UnDown" visible=true init=false associatedhero=""/>
 	<speech text="I think were at a safe distance now.<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
@@ -38,6 +42,10 @@
 	<speech text="It looks like we've come out near an old guard post in the outskirts of erium. <hardstop> " heroportrait="" enemyportrait="" animportrait=""/>
 	<speech text="WHAT!?!?, More guards, so your telling me I went through that disgusting sewer, to escape and we ran right into a guard post!<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
 	<speech text="Quit your whining, its an old abandond guard house. <pause> I think we should take shelter there for the night, <pause> We could all use some rest<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
+	<fademusic duration=1000/>
+	<fadeout time=1000 halting=true/>
 	<loadmap mapdata="eriumoutskirts" enter="start"/>
 	<speech text="They complain about how disgusting the sewer was, <hardstop>they discover the ruins of a church? from an old faith maybe(world building?) <hardstop>if not its a decrepid guard house. They decide to lay low and hide there for the night.<hardstop> At this point noah can walk around and explore. Olivia will block the way back to the cave, <hardstop>craig will wait by the house(talk to craig to sleep for the night) with a yes no. If player tries to leave north or east, have craige yell at you and <hardstop>say where you running off to, we didnt save your hide so you could run away. Your in this for good now. or somthing.<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
 </cinematic>
+<condition id=0 description="MapLoad" triggerid=1,>
+</condition>

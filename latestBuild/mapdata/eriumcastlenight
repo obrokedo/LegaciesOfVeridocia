@@ -1,12 +1,12 @@
 <map file="EriumCastleNight.tmx"/>
-<trigger id=0 description="MapStart" require="" exclude="" nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+<trigger id=0 description="MapStart" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<playmusic music="castlenight" volume=75/>
 </trigger>
 <cinematic id=0 description="scene1-1" camerax=600 cameray=0>
 	<addactor x=0 y=0 name="Cam" anim="Noah" startanim="Down" visible=false init=true associatedhero="Noah"/>
 	<addactor x=816 y=1056 name="Noah" anim="Noah" startanim="Left" visible=true init=true associatedhero="Noah"/>
 	<addactor x=816 y=1068 name="Sharna" anim="Sharna" startanim="UnLeft" visible=true init=true associatedhero=""/>
-	<playmusic music="castlenight" volume=100/>
+	<playmusic music="castlenight" volume=75/>
 	<camerafollow name="Noah"/>
 	<fadein time=4000 halting=false init=true/>
 	<move name="Noah" x=600 y=1056 speed="1" movehor=true movediag=false/>
@@ -206,7 +206,7 @@
 	<layonsideright name="Mistal" dir=2/>
 	<fallonface name="Noah" dir=2/>
 	<camerafollow name="Noah"/>
-	<playmusic music="battle1" volume=100/>
+	<playmusic music="battle1" volume=75/>
 	<forcedmove name="Lexus" x=624 y=804 speed="4" facing=3 movehor=false movediag=false/>
 	<wait time=3000/>
 	<flash name="Lexus" time=1000 speed=250/>
@@ -337,7 +337,7 @@
 	<loadbattle mapdata="battle1" entrance="battle1" battbg=1/>
 </cinematic>
 <cinematic id=1 description="Battle1 Aftermath" camerax=600 cameray=960>
-	<playmusic music="battle1" volume=100/>
+	<playmusic music="battle1" volume=75/>
 	<addactor x=816 y=840 name="Huun" anim="Huun" startanim="UnDown" visible=true init=true associatedhero=""/>
 	<addactor x=864 y=864 name="Noah" anim="Noah" startanim="UnDown" visible=true init=true associatedhero=""/>
 	<addactor x=888 y=816 name="Sharna" anim="Sharna" startanim="UnDown" visible=true init=true associatedhero=""/>
@@ -402,7 +402,7 @@
 	<loadcin mapdata="eriumjail" cinid=0/>
 </cinematic>
 <cinematic id=2 description="Battle 2 Craig First" camerax=1176 cameray=120>
-	<playmusic music="UnHero" volume=100/>
+	<playmusic music="UnHero" volume=75/>
 	<addactor x=1368 y=240 name="Olivia" anim="Olivia" startanim="UnUp" visible=true init=true associatedhero=""/>
 	<addactor x=1344 y=240 name="Craig" anim="Craig" startanim="UnUp" visible=true init=true associatedhero=""/>
 	<addactor x=1440 y=192 name="Noah" anim="Noah" startanim="UnDown" visible=true init=true associatedhero=""/>
@@ -428,7 +428,7 @@
 	<loadcin mapdata="eriumcastlenight" cinid=4/>
 </cinematic>
 <cinematic id=3 description="Battle 2 Noah First" camerax=1176 cameray=120>
-	<playmusic music="UnHero" volume=100/>
+	<playmusic music="UnHero" volume=75/>
 	<addactor x=1104 y=528 name="Olivia" anim="Olivia" startanim="UnUp" visible=true init=true associatedhero=""/>
 	<addactor x=1104 y=504 name="Craig" anim="Craig" startanim="UnUp" visible=true init=true associatedhero=""/>
 	<addactor x=1440 y=192 name="Noah" anim="Noah" startanim="UnLeft" visible=true init=true associatedhero=""/>
@@ -473,7 +473,7 @@
 	<loadcin mapdata="eriumcastlenight" cinid=4/>
 </cinematic>
 <cinematic id=4 description="Battle 2 Core" camerax=1176 cameray=120>
-	<playmusic music="UnHero" volume=100/>
+	<playmusic music="UnHero" volume=75/>
 	<addstatic x=1296 y=144 spriteid="Crate" spriteim="Crate(night)"/>
 	<addactor x=1368 y=240 name="Olivia" anim="Olivia" startanim="UnUp" visible=true init=true associatedhero=""/>
 	<addactor x=1344 y=240 name="Craig" anim="Craig" startanim="UnUp" visible=true init=true associatedhero=""/>
@@ -528,6 +528,7 @@
 	<forcedmove name="Huun" x=1296 y=168 speed="1" facing=2 movehor=true movediag=false/>
 	<forcedmove name="Olivia" x=1296 y=168 speed="1" facing=2 movehor=true movediag=false/>
 	<forcedmove name="Craig" x=1296 y=168 speed="1" facing=0 movehor=true movediag=false/>
+	<fademusic duration=1000/>
 	<fadeout time=1000 halting=true/>
 	<loadcin mapdata="eriumoutskirts" cinid=0/>
 </cinematic>

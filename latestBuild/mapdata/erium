@@ -1,5 +1,5 @@
 <map file="Erium.tmx"/>
-<trigger id=0 description="MapStart" require="" exclude="" nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+<trigger id=0 description="MapStart" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<playmusic music="erium" volume=75/>
 </trigger>
 <trigger id=1 description="OpenItemShop" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
@@ -168,7 +168,7 @@
 	<wait time=750/>
 	<speech text="Oh no!<pause><pause><linebreak> I better not be late!<softstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<camerafollow name="cam"/>
-	<playmusic music="hq" volume=100/>
+	<playmusic music="hq" volume=75/>
 	<fadein time=750 halting=true init=true/>
 	<wait time=500/>
 	<playsound sound="jump" volume=100/>
