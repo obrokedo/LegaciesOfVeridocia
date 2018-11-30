@@ -69,7 +69,7 @@
 <enemy id=21 name="Signus Knight" hp=28 mp=0 attack=24 defense=14 speed=15 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength=10 mindStrength=5 counterStrength=10 evadeStrength=6 doubleStrength=10 critStrength=5 level=9 move=7 movementtype="SLOW" animations="blank" gold=146 palette="">
 	<item itemid="Bronze Lance" equipped=true/>
 </enemy>
-<enemy id=22 name="Signus Curate" hp=22 mp=16 attack=22 defense=12 speed=14 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=-13 waterAffin=10 earthAffin=0 windAffin=0 lightAffin=15 bodyStrength=5 mindStrength=10 counterStrength=8 evadeStrength=8 doubleStrength=5 critStrength=5 level=9 move=5 movementtype="NORMAL" animations="blank" gold=129 palette="">
+<enemy id=22 name="Signus Curate" hp=22 mp=16 attack=22 defense=12 speed=14 fireAffin=6 elecAffin=6 coldAffin=10 darkAffin=-7 waterAffin=16 earthAffin=6 windAffin=4 lightAffin=21 bodyStrength=5 mindStrength=10 counterStrength=8 evadeStrength=8 doubleStrength=5 critStrength=5 level=9 move=5 movementtype="NORMAL" animations="blank" gold=129 palette="">
 	<item itemid="Frost Wand" equipped=true/>
 	<spell spellid="HEAL" level=2/>
 	<spell spellid="TORRENT" level=1/>
@@ -83,7 +83,7 @@
 </enemy>
 <enemy id=25 name="Gargoyle" hp=30 mp=0 attack=29 defense=17 speed=19 fireAffin=5 elecAffin=-20 coldAffin=5 darkAffin=5 waterAffin=5 earthAffin=20 windAffin=5 lightAffin=5 bodyStrength=25 mindStrength=20 counterStrength=15 evadeStrength=12 doubleStrength=20 critStrength=10 level=11 move=6 movementtype="HOVERING" animations="blank" gold=209 palette="">
 </enemy>
-<enemy id=26 name="Mad Mage" hp=26 mp=25 attack=26 defense=15 speed=22 fireAffin=5 elecAffin=5 coldAffin=5 darkAffin=-20 waterAffin=5 earthAffin=5 windAffin=5 lightAffin=20 bodyStrength=10 mindStrength=25 counterStrength=10 evadeStrength=12 doubleStrength=10 critStrength=10 level=11 move=5 movementtype="NORMAL" animations="blank" gold=209 palette="">
+<enemy id=26 name="Mad Mage" hp=26 mp=25 attack=26 defense=15 speed=22 fireAffin=0 elecAffin=13 coldAffin=13 darkAffin=-12 waterAffin=17 earthAffin=13 windAffin=13 lightAffin=28 bodyStrength=10 mindStrength=25 counterStrength=10 evadeStrength=12 doubleStrength=10 critStrength=10 level=11 move=5 movementtype="NORMAL" animations="blank" gold=209 palette="">
 	<item itemid="Water Wand" equipped=true/>
 	<attackeffect effectid="Confusion" effectchance=20 effectlevel=1/>
 	<spell spellid="BURST" level=1/>
