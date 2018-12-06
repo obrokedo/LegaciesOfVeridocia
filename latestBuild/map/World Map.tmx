@@ -172,14 +172,29 @@
   </object>
  </objectgroup>
  <objectgroup id="10" name="Trigger Regions">
-  <object id="223" x="540" y="4284" width="600" height="720">
-   <properties>
-    <property name="battleregion" value=""/>
-   </properties>
-  </object>
   <object id="236" name="Battle Start" x="540" y="4776" width="48" height="72">
    <properties>
     <property name="start" value="exit=battle4"/>
+   </properties>
+  </object>
+  <object id="218" name="FromErium" x="684" y="5340" width="24" height="24">
+   <properties>
+    <property name="start" value="exit=FromErium"/>
+   </properties>
+  </object>
+  <object id="219" name="FromCabin" x="588" y="5148" width="24" height="24">
+   <properties>
+    <property name="start" value="exit=FromCabin"/>
+   </properties>
+  </object>
+  <object id="220" name="ToCabin" x="588" y="5124" width="24" height="24">
+   <properties>
+    <property name=" " value=""/>
+   </properties>
+  </object>
+  <object id="221" name="ToErium" x="684" y="5316" width="24" height="24">
+   <properties>
+    <property name=" " value=""/>
    </properties>
   </object>
  </objectgroup>
@@ -245,29 +260,74 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup id="12" name="Meta" visible="0">
-  <object id="218" name="FromErium" x="696" y="5832" width="24" height="24">
+ <objectgroup id="12" name="Meta" visible="0"/>
+ <objectgroup id="13" name="Battle" visible="0">
+  <object id="223" x="540" y="4284" width="600" height="720">
    <properties>
-    <property name="start" value="exit=FromErium"/>
+    <property name="battleregion" value=""/>
    </properties>
   </object>
-  <object id="219" name="FromCabin" x="600" y="5640" width="24" height="24">
+  <object id="224" name="Darkling Ooze" x="732" y="4800" width="24" height="24">
    <properties>
-    <property name="start" value="exit=FromCabin"/>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Darkling Ooze unit=0"/>
    </properties>
   </object>
-  <object id="220" name="ToCabin" x="600" y="5616" width="24" height="24">
+  <object id="225" name="Darkling Ooze" x="756" y="4728" width="24" height="24">
    <properties>
-    <property name=" " value=""/>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Darkling Ooze unit=0"/>
    </properties>
   </object>
-  <object id="221" name="ToErium" x="696" y="5808" width="24" height="24">
+  <object id="226" name="Darkling Ooze" x="708" y="4680" width="24" height="24">
    <properties>
-    <property name=" " value=""/>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Darkling Ooze unit=0"/>
+   </properties>
+  </object>
+  <object id="227" name="Darkling Ooze" x="900" y="4752" width="24" height="24">
+   <properties>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Darkling Ooze unit=0"/>
+   </properties>
+  </object>
+  <object id="228" name="Darkling Ooze" x="900" y="4632" width="24" height="24">
+   <properties>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Darkling Ooze unit=0"/>
+   </properties>
+  </object>
+  <object id="229" name="Darkling Ooze" x="924" y="4608" width="24" height="24">
+   <properties>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Darkling Ooze unit=0"/>
+   </properties>
+  </object>
+  <object id="230" name="Darkling Ooze" x="996" y="4536" width="24" height="24">
+   <properties>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Darkling Ooze unit=0"/>
+   </properties>
+  </object>
+  <object id="231" name="Darkling Ooze" x="828" y="4536" width="24" height="24">
+   <properties>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Darkling Ooze unit=0"/>
+   </properties>
+  </object>
+  <object id="232" name="Darkling Ooze" x="852" y="4392" width="24" height="24">
+   <properties>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Darkling Ooze unit=0"/>
+   </properties>
+  </object>
+  <object id="233" name="Darkling Ooze" x="804" y="4368" width="24" height="24">
+   <properties>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Darkling Ooze unit=0"/>
+   </properties>
+  </object>
+  <object id="234" name="Darkling Ooze" x="900" y="4320" width="24" height="24">
+   <properties>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Darkling Ooze unit=0"/>
+   </properties>
+  </object>
+  <object id="235" name="Darkling Ooze" x="948" y="4344" width="24" height="24">
+   <properties>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Darkling Ooze unit=0"/>
    </properties>
   </object>
  </objectgroup>
- <objectgroup id="13" name="Battle" visible="0"/>
  <layer id="32" name="Overlay" width="576" height="576" visible="0">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACu3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwZvw+D08AQBQA
