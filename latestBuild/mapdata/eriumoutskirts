@@ -1,5 +1,5 @@
 <map file="EriumOutskirts.tmx"/>
-<trigger id=0 description="To WorldMap Erium" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+<trigger id=0 description="To WorldMap Erium" require="" exclude="" nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<loadmap mapdata="overworld" enter="FromErium" transdir=""/>
 </trigger>
 <trigger id=1 description="MapStart" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
@@ -28,20 +28,20 @@
 	<haltingmove name="Craig" x=72 y=144 speed="2.4" movehor=false movediag=false/>
 	<haltingmove name="Noah" x=72 y=120 speed="2.4" movehor=false movediag=false/>
 	<addactor x=72 y=96 name="Sharna" anim="Sharna" startanim="UnDown" visible=true init=false associatedhero=""/>
-	<speech text="I would rather die then ever have to go through that again<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
+	<speech text="I would rather die than ever have to go through that again.<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
 	<haltingmove name="Craig" x=96 y=144 speed="2.4" movehor=false movediag=false/>
 	<haltingmove name="Noah" x=72 y=144 speed="2.4" movehor=false movediag=false/>
 	<haltingmove name="Sharna" x=72 y=120 speed="2.4" movehor=false movediag=false/>
 	<addactor x=72 y=96 name="Olivia" anim="Olivia" startanim="UnDown" visible=true init=false associatedhero=""/>
-	<speech text="Ehhh, I'v never been in such a disgusting place in my life. I'm going to have nightmares for years, after that.<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
-	<speech text="You guys wait here and lay low, while i scout the area out. <hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
+	<speech text="I've never been in such a disgusting place in my life! I'm going to have nightmares for years, after that.<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait=""/>
+	<speech text="You guys wait here and lay low, while I scout the area out. <hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
 	<haltingmove name="Craig" x=96 y=264 speed="2.4" movehor=false movediag=false/>
-	<speech text="Has anyone seen Hunn? <hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
-	<speech text="I'm not going back in there for that clown, I'm sure he can find his way out. <hardstop>" heroportrait="Olivia" enemyportrait="" animportrait=""/>
+	<speech text="Has anyone seen Hunn? <hardstop>" heroportrait="Olivia" enemyportrait="" animportrait=""/>
+	<speech text="I'm not going back in there for that bum, I'm sure he can find his way out. <hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
 	<haltingmove name="Craig" x=96 y=192 speed="2.4" movehor=false movediag=false/>
-	<speech text="It looks like we've come out near an old guard post in the outskirts of erium. <hardstop> " heroportrait="" enemyportrait="" animportrait=""/>
-	<speech text="WHAT!?!?, More guards, so your telling me I went through that disgusting sewer, to escape and we ran right into a guard post!<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
-	<speech text="Quit your whining, its an old abandond guard house. <pause> I think we should take shelter there for the night, <pause> We could all use some rest<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
+	<speech text="It looks like we've come out near an old guard post in the outskirts of Erium. <hardstop> " heroportrait="Craig" enemyportrait="" animportrait=""/>
+	<speech text="WHAT!?!? More guards, so your telling me I went through that disgusting sewer to escape and we ran right into a guard post!<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
+	<speech text="Quit your whining, its an old abandond guard house. <pause> I think we should take shelter there for the night. <pause> We could all use some rest.<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
 	<fademusic duration=1000/>
 	<fadeout time=1000 halting=true/>
 	<loadmap mapdata="eriumoutskirts" enter="start"/>
