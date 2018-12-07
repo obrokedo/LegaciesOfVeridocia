@@ -26,7 +26,10 @@ ss,yesnoselect,image/yesnoselector.png,6,34
 image,battlecursor,image/battlecursor.gif
 image,smallflor,image/smflor.png
 image,largeflor,image/lgflor.png
-image,attackplatform,image/CastleFloor.png
+image,attackplatform,image/PLTCastleFloor.png
+image,dirtfloor,image/PLTDirtFloor.png
+image,woodbeamfloor,image/PLTWoodbeamFloor.png
+image,grassfloor,image/PLTGrassFloor.png
 image,selectside,image/selectside.png
 image,selecttop,image/selecttop.png
 image,yesnoflor,image/yesnoflourish.gif
