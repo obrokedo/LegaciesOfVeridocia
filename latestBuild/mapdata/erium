@@ -68,8 +68,8 @@
 <trigger id=22 description="Book3" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<showtext textid=17/>
 </trigger>
-<trigger id=23 description="ToOverworld" require="Battle2," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="overworld" enter="FromErium" transdir=""/>
+<trigger id=23 description="ToWorldMap" require="Battle2," exclude="" nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+	<loadmap mapdata="worldmap" enter="FromErium" transdir=""/>
 </trigger>
 <trigger id=24 description="OpenWeaponShop" require="Battle2," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<showshop buypercent="1.2" sellpercent="0.8" itemssold="Erium Blade,Erium Cane,Erium Arrow," portrait="Shopkeeper1"/>
