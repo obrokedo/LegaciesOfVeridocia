@@ -22,7 +22,7 @@
 <enemy id=7 name="Erium Cavalry" hp=18 mp=0 attack=14 defense=8 speed=7 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength=10 mindStrength=5 counterStrength=7 evadeStrength=6 doubleStrength=10 critStrength=5 level=4 move=7 movementtype="SLOW" animations="blank" gold=38 palette="">
 	<item itemid="Short Spear" equipped=true/>
 </enemy>
-<enemy id=8 name="Reyval Medic" hp=12 mp=9 attack=13 defense=6 speed=8 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=-10 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=10 bodyStrength=5 mindStrength=10 counterStrength=7 evadeStrength=5 doubleStrength=5 critStrength=5 level=4 move=5 movementtype="NORMAL" animations="blank" gold=32 palette="">
+<enemy id=8 name="Reyval Medic" hp=12 mp=9 attack=13 defense=6 speed=8 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=-10 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=10 bodyStrength=5 mindStrength=10 counterStrength=7 evadeStrength=5 doubleStrength=5 critStrength=5 level=4 move=5 movementtype="NORMAL" animations="ReyvalMedic" gold=32 palette="">
 	<spell spellid="HEAL" level=1/>
 	<item itemid="Oaken Staff" equipped=true/>
 </enemy>
