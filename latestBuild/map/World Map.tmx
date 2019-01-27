@@ -184,24 +184,24 @@
   </object>
  </objectgroup>
  <objectgroup name="Enemies">
-  <object id="224" name="Darkling Ooze" x="744" y="4800" width="24" height="24">
+  <object id="224" name="Bounty Hunter" x="744" y="4800" width="24" height="24">
    <properties>
-    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Darkling Ooze unit=11"/>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Bounty Hunter unit=11"/>
    </properties>
   </object>
-  <object id="225" name="Darkling Ooze" x="768" y="4728" width="24" height="24">
+  <object id="225" name="Erium Cavalry" x="768" y="4728" width="24" height="24">
    <properties>
-    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Darkling Ooze unit=9"/>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Erium Cavalry unit=9"/>
    </properties>
   </object>
-  <object id="226" name="Darkling Ooze" x="720" y="4680" width="24" height="24">
+  <object id="226" name="Sellsword" x="720" y="4680" width="24" height="24">
    <properties>
-    <property name="enemy" value="ai=fighter aiapproach=wait enemyid=Darkling Ooze unit=8"/>
+    <property name="enemy" value="ai=fighter aiapproach=wait enemyid=Sellsword unit=8"/>
    </properties>
   </object>
-  <object id="227" name="Darkling Ooze" x="912" y="4752" width="24" height="24">
+  <object id="227" name="Erium Cavalry" x="912" y="4752" width="24" height="24">
    <properties>
-    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Darkling Ooze unit=10"/>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Erium Cavalry unit=10"/>
    </properties>
   </object>
   <object id="228" name="Reyval Medic" x="912" y="4632" width="24" height="24">
@@ -209,29 +209,29 @@
     <property name="enemy" value="ai=cleric aiapproach=slow enemyid=Reyval Medic unit=7"/>
    </properties>
   </object>
-  <object id="229" name="Darkling Ooze" x="936" y="4608" width="24" height="24">
+  <object id="229" name="Sellsword" x="936" y="4608" width="24" height="24">
    <properties>
-    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Darkling Ooze unit=6"/>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Sellsword unit=6"/>
    </properties>
   </object>
-  <object id="230" name="Darkling Ooze" x="1008" y="4536" width="24" height="24">
+  <object id="230" name="Erium Cavalry" x="1008" y="4536" width="24" height="24">
    <properties>
-    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Darkling Ooze unit=5"/>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Erium Cavalry unit=5"/>
    </properties>
   </object>
-  <object id="231" name="Darkling Ooze" x="840" y="4536" width="24" height="24">
+  <object id="231" name="Bounty Hunter" x="840" y="4536" width="24" height="24">
    <properties>
-    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Darkling Ooze unit=4"/>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Bounty Hunter unit=4"/>
    </properties>
   </object>
-  <object id="232" name="Darkling Ooze" x="864" y="4392" width="24" height="24">
+  <object id="232" name="Erium Cavalry" x="864" y="4392" width="24" height="24">
    <properties>
-    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Darkling Ooze unit=3"/>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Erium Cavalry unit=3"/>
    </properties>
   </object>
-  <object id="233" name="Darkling Ooze" x="816" y="4368" width="24" height="24">
+  <object id="233" name="Sellsword" x="816" y="4368" width="24" height="24">
    <properties>
-    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Darkling Ooze unit=2"/>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Sellsword unit=2"/>
    </properties>
   </object>
   <object id="234" name="Darkling Ooze" x="912" y="4320" width="24" height="24">

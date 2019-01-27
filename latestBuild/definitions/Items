@@ -38,13 +38,13 @@
 	<equippable attack=8 defense=0 speed=0 type=0 style=2 range=1 weaponimage="" incmindam=0 inccrit=0 inccounter=4 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=0 effchc=0 csteff=false dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
 </item>
 <item id=13 name="Iron Arrow" description="" cost=90 isdeal=false imageindexx=0 imageindexy=0 droppable=false>
-	<equippable attack=8 defense=0 speed=0 type=0 style=4 range=4 weaponimage="" incmindam=0 inccrit=4 inccounter=0 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=0 effchc=0 csteff=false dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
+	<equippable attack=8 defense=0 speed=0 type=0 style=4 range=4 weaponimage="EriumArrow" incmindam=0 inccrit=4 inccounter=0 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=0 effchc=0 csteff=false dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
 </item>
 <item id=14 name="Padded Glove" description="" cost=80 isdeal=false imageindexx=0 imageindexy=0 droppable=false>
 	<equippable attack=7 defense=0 speed=0 type=0 style=9 range=1 weaponimage="" incmindam=0 inccrit=0 inccounter=6 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=0 effchc=0 csteff=false dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
 </item>
 <item id=15 name="Oaken Staff" description="" cost=80 isdeal=false imageindexx=0 imageindexy=0 droppable=false>
-	<equippable attack=7 defense=2 speed=0 type=0 style=3 range=1 weaponimage="" incmindam=0 inccrit=0 inccounter=0 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=0 effchc=0 csteff=false dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
+	<equippable attack=7 defense=2 speed=0 type=0 style=3 range=1 weaponimage="EriumCane" incmindam=0 inccrit=0 inccounter=0 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=0 effchc=0 csteff=false dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
 </item>
 <item id=16 name="Wind Wand" description="" cost=60 isdeal=false imageindexx=0 imageindexy=0 droppable=false>
 	<equippable attack=5 defense=0 speed=0 type=0 style=8 range=1 weaponimage="" incmindam=0 inccrit=0 inccounter=0 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=0 effchc=0 csteff=false dmgaff="WIND" fireAffin=4 elecAffin=4 coldAffin=-4 darkAffin=4 waterAffin=4 earthAffin=4 windAffin=8 lightAffin=4 ohko=0 ohkooc=0/>
@@ -63,7 +63,7 @@
 	<equippable attack=11 defense=0 speed=0 type=0 style=4 range=4 weaponimage="" incmindam=0 inccrit=5 inccounter=0 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=0 effchc=0 csteff=false dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
 </item>
 <item id=21 name="Iron Mace" description="" cost=130 isdeal=false imageindexx=0 imageindexy=0 droppable=false>
-	<equippable attack=12 defense=0 speed=0 type=0 style=13 range=1 weaponimage="" incmindam=0 inccrit=0 inccounter=0 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="Shock" efflvl=1 effchc=28 csteff=true dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
+	<equippable attack=12 defense=0 speed=0 type=0 style=13 range=1 weaponimage="EriumBlade" incmindam=0 inccrit=0 inccounter=0 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="Shock" efflvl=1 effchc=28 csteff=true dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
 </item>
 <item id=22 name="Foil" description="" cost=100 isdeal=false imageindexx=0 imageindexy=0 droppable=false>
 	<equippable attack=9 defense=0 speed=0 type=0 style=10 range=1 weaponimage="" incmindam=0 inccrit=6 inccounter=0 incdouble=6 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=0 effchc=0 csteff=false dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
@@ -75,7 +75,7 @@
 	<equippable attack=12 defense=1 speed=0 type=0 style=11 range=1 weaponimage="" incmindam=7 inccrit=0 inccounter=0 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=0 effchc=0 csteff=false dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
 </item>
 <item id=25 name="Short Spear" description="" cost=110 isdeal=false imageindexx=0 imageindexy=0 droppable=false>
-	<equippable attack=10 defense=0 speed=0 type=0 style=0 range=2 weaponimage="" incmindam=0 inccrit=0 inccounter=0 incdouble=0 incevade=5 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=0 effchc=0 csteff=false dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
+	<equippable attack=10 defense=0 speed=0 type=0 style=0 range=2 weaponimage="EriumBlade" incmindam=0 inccrit=0 inccounter=0 incdouble=0 incevade=5 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=0 effchc=0 csteff=false dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
 </item>
 <item id=26 name="Serrated Claw" description="" cost=120 isdeal=false imageindexx=0 imageindexy=0 droppable=false>
 	<equippable attack=11 defense=0 speed=0 type=0 style=7 range=1 weaponimage="" incmindam=0 inccrit=7 inccounter=0 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=0 effchc=0 csteff=false dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
