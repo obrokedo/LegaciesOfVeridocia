@@ -234,9 +234,9 @@
     <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Sellsword unit=2"/>
    </properties>
   </object>
-  <object id="234" name="Darkling Ooze" x="912" y="4320" width="24" height="24">
+  <object id="234" name="Merc. Captain" x="912" y="4320" width="24" height="24">
    <properties>
-    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Darkling Ooze unit=0"/>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Merc. Captain unit=0"/>
    </properties>
   </object>
   <object id="235" name="Reyval Medic" x="960" y="4344" width="24" height="24">
