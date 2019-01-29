@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="50" height="60" tilewidth="12" tileheight="12" nextobjectid="25">
+ <tileset firstgid="1" name="overworld(day)-Master" tilewidth="12" tileheight="12" tilecount="1296" columns="36">
+  <image source="../image/overworld(day)-Master.png" trans="495d47" width="432" height="432"/>
+ </tileset>
+ <tileset firstgid="1297" name="castletown(day)-Master" tilewidth="12" tileheight="12" tilecount="900" columns="25">
+  <image source="../image/castletown(day)-Master.png" trans="495d47" width="300" height="440"/>
+ </tileset>
+ <tileset firstgid="2197" name="castletown(day)-Slave1" tilewidth="12" tileheight="12" tilecount="495" columns="15">
+  <image source="../image/castletown(day)-Slave1.png" trans="495d47" width="180" height="400"/>
+ </tileset>
+ <tileset firstgid="2692" name="castletown(night)-Slave1" tilewidth="12" tileheight="12" tilecount="495" columns="15">
+  <image source="../image/castletown(night)-Slave1.png" trans="495d47" width="180" height="400"/>
+ </tileset>
+ <tileset firstgid="3187" name="castletown(night)-Master" tilewidth="12" tileheight="12" tilecount="900" columns="25">
+  <image source="../image/castletown(night)-Master.png" trans="495d47" width="300" height="440"/>
+ </tileset>
+ <layer name="BG" width="50" height="60">
+  <data encoding="base64" compression="gzip">
+   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
+  </data>
+ </layer>
+ <layer name="BG Shadow" width="50" height="60">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3BMQEAAADCoPVPbQwfoAAAAAAAAAAAAAAA4G+ekqdq4C4AAA==
+  </data>
+ </layer>
+ <layer name="MG" width="50" height="60">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+1YyU7DMBB1ObWVyv51fAR8AfwGyxGkFo7sHFkkOEKRuLQIOHBpERzgB5ioHRFZccYzsWOH9kmjVknszPZmMlbKDc7rSl3UHW0G2Ia9dhzuZ4tbeOedw/fuw14Hgv2OYc2JJ/vbTaU6TdnaXVi3x1h7DTbceLLjFPQ4E9pxCOuOBGsxL6n4uOaDa2BeUvFxzQdbcPMf4xKqbpjAzX+Mi7Ru+ALXr7HFAcH1a2xxCI1eQ6n+WJ4b/PV670Ge++x3WRiA7sOxfAjs0HsP8lza77Bf+PYDt39z44P9wmffT8Dt36b4vMD/1wrwm/L/J9z7EtixCD5c0mQ5w6+2z1H6u8qLUN9Xuv5F+1yo7ysdtn1O54uJP2XllTQPdL5I+eMKseQBhbzZsYwe7iqv8mbHrBqFtpnyzcSD2PoL2mbKNxMPQvMjQdnfiL6Qzq/Yzwlsgfmk90NT/qPdeD82P+j90JT/aDfej62OxzqHU9DnjqrO4dy58BKeuSowP67U/iR9vWzcwzsfBO818acsXsVSh7qgw1OOHshrk76x1KE30OE9Rw/kdVF9fde5b9j7pwR/+q5zXDuk31y2PMLnqPglfHhM7jdGUgOZYZzbSc8dbPMSn6Pi1wKdZ0HmxjIPsiA4f9RB+duWH67rHzd/KH/b8sN1/fN9nhkK/3GmmiJ+VHUu0VHVuYQL33ViFXrgmoM+SMF3nVgHGzYYdoSuv1K/63qHrr9cvyPy9N6E61v10a9tjKi6VjTekvVteL5TH/3axoiqa0XjzV3vmic92KufsV83NWNQkjefm+CaJwPYa5ixXys1Y1BSZP6g4lKVPk/FZVL6fFXiRWFS4jVFPn4BR+3W2uAuAAA=
+  </data>
+ </layer>
+ <layer name="MG Shadow" width="50" height="60">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3BMQEAAADCoPVPbQwfoAAAAAAAAAAAAAAA4G+ekqdq4C4AAA==
+  </data>
+ </layer>
+ <layer name="FG" width="50" height="60">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+1aO07EMBA1TgNsAzXcgAIK4AbQIEEBBVDAHUACDgAnAHYXRMmn5V/wl4AbIMENOAKUjLU7ymSU3bUTOzHgJz058lr2PD/HziQrRAO73UJUu4V3aBUX1l8Br8nvh3B95KGOVnFh/QvwtU3cvvqDQB+4Hxy++oPziz508kMXa1KIdUvckMm+JyoNTlbiOpxfXT90sQ9jDwMfc3IEeCA7j4ew7cd+c/w7YA1YzVDuybgfXbjwg+qYBs6wOL+A3yx+2u4+gw7XfqwAV5mOgUiIwSipg7Yz0cHPDdt+KIzKJBVmeuK26pq3URwz0MHPjax+8HMFx59P4TLEvUR0qGtVx9stEB2bvUJs9erHg36Ynnf8XKE6VDx9TfbLpAaqRaFfJon9bIOGHQMd6Efe847roGvFhKb3ue3nDT4+XSsmNL3PbT9vmM5j3n5cPS8VrcMVgg43/ZQ9vk4/LnOiInWk3eO2tJW9rmztX2XocLG+ytDh4gzB8YeifPRhv5qV+XPzuQw6bK6vB5k/N0c+Geqwub7qsnP+nZbXtsrTdaG8qAHrljyh7xdOWal4K+O89obEfcpKzG91obw4Bp5Y8uSOxPZGylbzW09pm8WPIvHcJcQ442/EJ8Q9FcVc/AU6aLyUAf8Tvn/n0IWv3zn+OsL68RvBn4CAgE7Q3Sd8309094mi9hPX83UBOcelg7yDx+16vt5Bw4cDHe3iRo02PcrrR5ZYUKNNj/L6YRoLfR9kE2eg4bzAvJy+D/oLsPV/jbJh6/8zAQEBAQHp+AGqOKff4C4AAA==
+  </data>
+ </layer>
+ <layer name="FG Shadow" width="50" height="60">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3BMQEAAADCoPVPbQwfoAAAAAAAAAAAAAAA4G+ekqdq4C4AAA==
+  </data>
+ </layer>
+ <layer name="Lighting" width="50" height="60">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3BMQEAAADCoPVPbQwfoAAAAAAAAAAAAAAA4G+ekqdq4C4AAA==
+  </data>
+ </layer>
+ <layer name="Roof" width="50" height="60" visible="0">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3PXQ6CMBBF4b7xpOgmRNyEGlYhuP91OCSYNKS2/JleknOS+zzzOUdE/+pQOHe0lSt3sp2LfI6L3a5sr4We/v/WVttuAo5qpsf/vxZ0pDyh/5UdY0/s/z04vrsmDDhw4MCBYztHZ3vv3NEbHsNSFlWHb5hiUXSEDCmLmiNmiFmUHFMMvywqjjmGkEXBscQwtuR2rDH4lpyOu91+brQmo4OIiIiIiIiIiIiIiIgo1geavtu94C4AAA==
+  </data>
+ </layer>
+ <layer name="Walkable" width="50" height="60" visible="0" opacity="0.3">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC9VZ243DMAzL/luk11Xau7EuP/kRIIiSSNkpYAio4QdEi6Tj8ziO19XOZvy52pswj53PRq//c7UvIf5e7U8wn41evyqfXt5Y4z082Pn08sYa7+GRzd/dz/6h9RfVB5q/u5/9i9a79x3hUcVFzXd2/yhfZXFR810XjyrPV6MKjyrPVyO6HxQP9rmu1hmK49S5rtYZiiNLV9W6j+LV1VW17qN4VfM7rR8ebl09mNYPD7dVPpbFe12+6vpYFu+hfBXx02o8vPpAdXR1fdh+dR7Z+lHFY5qvUJ2w/VX9XFUfkQ/O6ueq+vD+360+sno+5XfVem7vVVlfuUrPvf2g5716j1PVR4RHl/ezOlC9L0Z4dHk/qwNT9/Pud1n1fFV/1T3v7Pk8f6X67t7Nf/X7bpd/2Pyl+n41/V7SrQ+1jqO+NlpPxR9RflFdQddT8UeUX1RXqnxV9TtTfjh7H2S9e0zdF1XvFaif6q5n/RX7vQL1U931rN99Kh6Wr56KR5evdovTeq2Kan+l9gtT/krtF7r+ipVXFl7qOmD5gmgc6jen850dj/rN6Xxnx2fvCd08sv1ChIeqLth+wdMP9Xmf0nP1ed9Nz3fDa1ovnoLHLvXx1PgP3DfGweAuAAA=
+  </data>
+ </layer>
+ <objectgroup name="Terrain">
+  <object id="23" name="Thick Grass" x="-48" y="1" width="24" height="24">
+   <properties>
+    <property name="terrain" value="type=THICK-GRASS"/>
+   </properties>
+  </object>
+  <object id="24" name="Inside" x="336" y="144">
+   <properties>
+    <property name="terrain" value="type=THICK-GRASS"/>
+   </properties>
+   <polyline points="0,0 24,0 24,-24 72,-24 72,24 0,24 0,48 72,48 72,72 0,72 0,120 72,120 72,144 0,144 0,216 -48,216 -48,144 -120,144 -120,120 -48,120 -48,72 -120,72 -120,48 -48,48 -48,24 -120,24 -120,-24 -72,-24 -72,0 0,0"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="Trigger Regions" visible="0">
+  <object id="1" name="Battle Start" type="START" x="288" y="144" width="48" height="24">
+   <properties>
+    <property name="start" value="exit=battlestart"/>
+   </properties>
+  </object>
+  <object id="3" name="Battle Start" type="START" x="552" y="624" width="48" height="48">
+   <properties>
+    <property name="start" value="exit=battlestart"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="Meta" visible="0">
+  <object id="8" name="Merc. Captain" type="NPC" x="72" y="144" width="24" height="24">
+   <properties>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Merc. Captain unit=0"/>
+   </properties>
+  </object>
+  <object id="9" name="Reyval Medic" type="NPC" x="96" y="192" width="24" height="24">
+   <properties>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Reyval Medic unit=1"/>
+   </properties>
+  </object>
+  <object id="10" name="Sellsword" type="NPC" x="144" y="192" width="24" height="24">
+   <properties>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Sellsword unit=2"/>
+   </properties>
+  </object>
+  <object id="11" name="Erium Cavalry" type="NPC" x="24" y="264" width="24" height="24">
+   <properties>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Erium Cavalry unit=3"/>
+   </properties>
+  </object>
+  <object id="12" name="Sellsword" type="NPC" x="96" y="312" width="24" height="24">
+   <properties>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Sellsword unit=4"/>
+   </properties>
+  </object>
+  <object id="13" name="Sellsword" type="NPC" x="288" y="336" width="24" height="24">
+   <properties>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Sellsword unit=5"/>
+   </properties>
+  </object>
+  <object id="14" name="Erium Cavalry" type="NPC" x="312" y="384" width="24" height="24">
+   <properties>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Erium Cavalry unit=6"/>
+   </properties>
+  </object>
+  <object id="15" name="Erium Cavalry" type="NPC" x="432" y="288" width="24" height="24">
+   <properties>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Erium Cavalry unit=7"/>
+   </properties>
+  </object>
+  <object id="16" name="Bounty Hunter" type="NPC" x="312" y="456" width="24" height="24">
+   <properties>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Bounty Hunter unit=8"/>
+   </properties>
+  </object>
+  <object id="17" name="Erium Cavalry" type="NPC" x="528" y="408" width="24" height="24">
+   <properties>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Erium Cavalry unit=9"/>
+   </properties>
+  </object>
+  <object id="18" name="Erium Cavalry" type="NPC" x="120" y="552" width="24" height="24">
+   <properties>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Erium Cavalry unit=10"/>
+   </properties>
+  </object>
+  <object id="19" name="Reyval Medic" type="NPC" x="72" y="624" width="24" height="24">
+   <properties>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Reyval Medic unit=11"/>
+   </properties>
+  </object>
+  <object id="20" name="Sellsword" type="NPC" x="120" y="672" width="24" height="24">
+   <properties>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Sellsword unit=12"/>
+   </properties>
+  </object>
+  <object id="21" name="Sellsword" type="NPC" x="384" y="672" width="24" height="24">
+   <properties>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Sellsword unit=13"/>
+   </properties>
+  </object>
+  <object id="22" name="Bounty Hunter" type="NPC" x="432" y="600" width="24" height="24">
+   <properties>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Bounty Hunter unit=14"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="Battle" visible="0">
+  <object id="6" x="0" y="0" width="600" height="720">
+   <properties>
+    <property name="battleregion" value=""/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

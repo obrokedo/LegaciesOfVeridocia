@@ -29,19 +29,19 @@
 <enemy id=9 name="Merc. Captain" hp=17 mp=0 attack=18 defense=8 speed=8 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength=15 mindStrength=10 counterStrength=9 evadeStrength=7 doubleStrength=10 critStrength=10 level=5 move=6 movementtype="NORMAL" animations="placeholder" gold=51 palette="">
 	<item itemid="Short Blade" equipped=true/>
 </enemy>
-<enemy id=10 name="Acrid Ooze" hp=17 mp=0 attack=22 defense=8 speed=9 fireAffin=-20 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=20 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength=10 mindStrength=100 counterStrength=5 evadeStrength=5 doubleStrength=5 critStrength=5 level=6 move=4 movementtype="NORMAL" animations="blank" gold=67 palette="">
+<enemy id=10 name="Acrid Ooze" hp=17 mp=0 attack=22 defense=8 speed=9 fireAffin=-20 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=20 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength=10 mindStrength=100 counterStrength=5 evadeStrength=5 doubleStrength=5 critStrength=5 level=6 move=4 movementtype="NORMAL" animations="placeholder" gold=67 palette="">
 	<spell spellid="BILE" level=1/>
 </enemy>
-<enemy id=11 name="Huge Hornet" hp=19 mp=0 attack=18 defense=9 speed=15 fireAffin=-10 elecAffin=0 coldAffin=10 darkAffin=0 waterAffin=10 earthAffin=0 windAffin=0 lightAffin=-10 bodyStrength=5 mindStrength=5 counterStrength=10 evadeStrength=10 doubleStrength=15 critStrength=15 level=6 move=6 movementtype="FLIGHT" animations="blank" gold=73 palette="">
+<enemy id=11 name="Huge Hornet" hp=19 mp=0 attack=18 defense=9 speed=15 fireAffin=-10 elecAffin=0 coldAffin=10 darkAffin=0 waterAffin=10 earthAffin=0 windAffin=0 lightAffin=-10 bodyStrength=5 mindStrength=5 counterStrength=10 evadeStrength=10 doubleStrength=15 critStrength=15 level=6 move=6 movementtype="FLIGHT" animations="placeholder" gold=73 palette="">
 	<attackeffect effectid="Bleed" effectchance=20 effectlevel=1/>
 </enemy>
-<enemy id=12 name="Goblin" hp=16 mp=0 attack=19 defense=11 speed=10 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=10 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=-10 bodyStrength=15 mindStrength=5 counterStrength=7 evadeStrength=7 doubleStrength=10 critStrength=10 level=6 move=5 movementtype="NORMAL" animations="blank" gold=67 palette="">
+<enemy id=12 name="Goblin" hp=16 mp=0 attack=19 defense=11 speed=10 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=10 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=-10 bodyStrength=15 mindStrength=5 counterStrength=7 evadeStrength=7 doubleStrength=10 critStrength=10 level=6 move=5 movementtype="NORMAL" animations="placeholder" gold=67 palette="">
 	<item itemid="Short Axe" equipped=true/>
 </enemy>
-<enemy id=13 name="Newt" hp=20 mp=0 attack=20 defense=8 speed=25 fireAffin=-10 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=10 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength=5 mindStrength=5 counterStrength=12 evadeStrength=11 doubleStrength=15 critStrength=15 level=7 move=5 movementtype="BEAST" animations="blank" gold=102 palette="">
+<enemy id=13 name="Newt" hp=20 mp=0 attack=20 defense=8 speed=25 fireAffin=-10 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=10 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength=5 mindStrength=5 counterStrength=12 evadeStrength=11 doubleStrength=15 critStrength=15 level=7 move=5 movementtype="BEAST" animations="placeholder" gold=102 palette="">
 	<item itemid="Short Spear" equipped=true/>
 </enemy>
-<enemy id=14 name="Witch" hp=15 mp=6 attack=17 defense=9 speed=12 fireAffin=0 elecAffin=10 coldAffin=10 darkAffin=0 waterAffin=0 earthAffin=-10 windAffin=-10 lightAffin=0 bodyStrength=5 mindStrength=15 counterStrength=6 evadeStrength=7 doubleStrength=5 critStrength=5 level=7 move=5 movementtype="NORMAL" animations="blank" gold=69 palette="">
+<enemy id=14 name="Witch" hp=15 mp=6 attack=17 defense=9 speed=12 fireAffin=0 elecAffin=10 coldAffin=10 darkAffin=0 waterAffin=0 earthAffin=-10 windAffin=-10 lightAffin=0 bodyStrength=5 mindStrength=15 counterStrength=6 evadeStrength=7 doubleStrength=5 critStrength=5 level=7 move=5 movementtype="NORMAL" animations="placeholder" gold=69 palette="">
 	<item itemid="Oaken Staff" equipped=true/>
 	<spell spellid="FREEZE" level=1/>
 	<spell spellid="BOLT" level=1/>

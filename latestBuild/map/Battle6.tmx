@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="60" height="30" tilewidth="12" tileheight="12" nextobjectid="15">
+ <tileset firstgid="1" name="overworld(day)-Master" tilewidth="12" tileheight="12" tilecount="1296" columns="36">
+  <image source="../image/overworld(day)-Master.png" trans="495d47" width="432" height="432"/>
+ </tileset>
+ <layer name="BG" width="60" height="30">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC81YyW4UMRB1u/MLSHAhmWHCP2QBDlEW8gccgCQcQoBfQApKmCBFXOALkFiycCAX+ALgFG45sOUr4MTqUvsxr2vK0z1kWA5P1XZ7bL96VXb1jGbOnQ4YTdgp59yzgGnX/X459O0FZOHZBxyG548E9HNfM7Q/uM4818LzZrCzrhoybs7YB9vluN8Uzocx81naTtHYhjFe3t+N3ITPYXxmH6CNPnDGPML5egVveSdjbrje+z1fwTnlp+HwbsQYP6KA/ruuzNcTdPt7GDNnrAveAPjX0dXS+Wof+lbFhQbHNccv4lo4zsj+s4JrVVyx7nV1TfFg3r381A/nA9KXuTHHfvQZtAWXfv2jIe9W4jz96ve37XKFvlY+MFb6+P0gLPbeDOu2jHzGM0PP8z/4nS249Grj/OLfMd95gp7/X+VTys5EPqdcAXnWbTmz+byG9qzv/H+ub1Pxqao7+LwGeumLOGnUvNfehnHvAt67cn00CNtUPFFbpHDDlfd1KtgWceP52Y+CVN0Ei/m4lpD66DDyHoS+fM8iN+v8jvfWMt43iSfzBWftd8zHdbE8c630oWZ81Dl35yN31s+yzBN1asvQVfiN5c6NR0zk5fpI+2c64Icrz/vR4K7r4T9pwRX7kdoGdz6f3+C66J1bCtgI2Pbl2qFh+JU5Hxq8We+j6DycWN/Slbly3aa57gd+twPaEZ+z7hrY8itzZt76++Ao+SzfWdM1zhF8b+g6TufqxbzQU7AT0fbd9WEjkY/CeVbxBk9Yl5Xzp1XzHB+usf63uCY0Td3bwK2o772A+5HrcYOvlcdshTfqZM2d7wSs36qR11OGz/W4RvSryzr3ba9z+FHg+zjgeeD4InL9lNnfAA1DlzNh/Flf7mfuWdbxO9+n4Nwrb609jKh9bLriG1t/Z1lcLUh8L+T2WgfKv5O+OOfu+Hp1kq6RLJ1T/yek/l/Af0rQU9ebVZD4Xjf47hn5sxbPuac+rVNVPcg6pzStA+F+sibHsXjnjtO9dHOod/6Ktnyun/PpuldDc0bdpPO1X1h8hdtkXjxfCvay6OmLGN6m/Z9QnA+Uvmu+fK7L70WnXnpiPc0b3zlfB8gXPDfi3iZIyy3iuxj3zzpb9y/zxb0NP1pxyzXNBPlc43c4vwp7fD3U4TgWecqedn2Rn7ukJfqg75KqP4SzzssnvhwP7egzi+e4ip2NuB5463z+UlPrB2FfD4fKtSHsbtQN+qJu5D7o26Z3beP8Re5qfdfzbq7bvoyduJfVuIfVI/B+OVTkIusGy8/QF37R+u4o3QRXxCcR28RXj5ugmNJc5TdvlM9hZd/H8k6OIzbRhpaIXWlfyItcZN1g+RlrcHyxvktK318x6Ls5sL4cq9Y41hc+h92K83NsVrVv5uW+XbKWvnp91kvrhj1Zmmm/LCT4Vum75cuxWdWGvqwbrKUv+0qfz1X67vtOTGu/HEVfHqNjdV21oS//BtbSN3U+S99PmC6OUyAcAAA=
+  </data>
+ </layer>
+ <layer name="BG Shadow" width="60" height="30">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3BAQEAAACCIP+vbkhAAQAAAAAAAC8GEkQVBiAcAAA=
+  </data>
+ </layer>
+ <layer name="MG" width="60" height="30">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3PSQ0AMAzAsEpDUP5kR2Gv9ZCNIIkAAAAAAKCrPNUFf235ff3Y8gvMcgGdlMFjIBwAAA==
+  </data>
+ </layer>
+ <layer name="MG Shadow" width="60" height="30">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3BAQEAAACCIP+vbkhAAQAAAAAAAC8GEkQVBiAcAAA=
+  </data>
+ </layer>
+ <layer name="FG" width="60" height="30">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3BAQEAAACCIP+vbkhAAQAAAAAAAC8GEkQVBiAcAAA=
+  </data>
+ </layer>
+ <layer name="FG Shadow" width="60" height="30">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3BAQEAAACCIP+vbkhAAQAAAAAAAC8GEkQVBiAcAAA=
+  </data>
+ </layer>
+ <layer name="Lighting" width="60" height="30">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3BAQEAAACCIP+vbkhAAQAAAAAAAC8GEkQVBiAcAAA=
+  </data>
+ </layer>
+ <layer name="Roof" width="60" height="30">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3BAQEAAACCIP+vbkhAAQAAAAAAAC8GEkQVBiAcAAA=
+  </data>
+ </layer>
+ <layer name="Walkable" width="60" height="30" visible="0" opacity="0.3">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3USQ6AIBBEUe5/C4erOBxLlqaSFtoApVALUjFx9V/SUwhhjm8aZLf49oGW3Vu+8pWvfOUrX/n2v+ze8i27S3zrbdm9a+8R33lbdv9Wrr37ousovvjNdqjti99ve/1tvb7Y62+b64v3je3kvcfe+4z3je3kvce4KTer01Nv/LelX2pTblanp974b0u/XF/LLcfX25jhir6WW46vtzHD1fLtfUv3+/qye8u37l7Ax9c6IBwAAA==
+  </data>
+ </layer>
+ <objectgroup name="Terrain" visible="0">
+  <object id="3" name="Thick Grass" x="0" y="0" width="720" height="360">
+   <properties>
+    <property name="terrain" value="type=THICK-GRASS"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="Trigger Regions" visible="0">
+  <object id="2" name="Battle Start" type="START" x="0" y="0" width="72" height="72">
+   <properties>
+    <property name="start" value="exit=battlestart"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="Meta">
+  <object id="4" name="Acrid Ooze" type="NPC" x="0" y="192" width="24" height="24">
+   <properties>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Acrid Ooze unit=9"/>
+   </properties>
+  </object>
+  <object id="5" name="Huge Hornet" type="NPC" x="72" y="264" width="24" height="24">
+   <properties>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Huge Hornet unit=10"/>
+   </properties>
+  </object>
+  <object id="6" name="Acrid Ooze" type="NPC" x="96" y="168" width="24" height="24">
+   <properties>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Acrid Ooze unit=8"/>
+   </properties>
+  </object>
+  <object id="7" name="Goblin" type="NPC" x="192" y="144" width="24" height="24">
+   <properties>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Goblin unit=7"/>
+   </properties>
+  </object>
+  <object id="8" name="Huge Hornet" type="NPC" x="240" y="24" width="24" height="24">
+   <properties>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Huge Hornet unit=0"/>
+   </properties>
+  </object>
+  <object id="9" name="Acrid Ooze" type="NPC" x="336" y="72" width="24" height="24">
+   <properties>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Acrid Ooze unit=1"/>
+   </properties>
+  </object>
+  <object id="10" name="Witch" type="NPC" x="312" y="168" width="24" height="24">
+   <properties>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Witch unit=6"/>
+   </properties>
+  </object>
+  <object id="11" name="Huge Hornet" type="NPC" x="504" y="72" width="24" height="24">
+   <properties>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Huge Hornet unit=2"/>
+   </properties>
+  </object>
+  <object id="12" name="Newt" type="NPC" x="408" y="264" width="24" height="24">
+   <properties>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Newt unit=5"/>
+   </properties>
+  </object>
+  <object id="13" name="Witch" type="NPC" x="600" y="144" width="24" height="24">
+   <properties>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Witch unit=3"/>
+   </properties>
+  </object>
+  <object id="14" name="Newt" type="NPC" x="552" y="216" width="24" height="24">
+   <properties>
+    <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Newt unit=4"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="Battle" visible="0">
+  <object id="1" x="0" y="0" width="720" height="360">
+   <properties>
+    <property name="battleregion" value=""/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>
