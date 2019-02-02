@@ -1,10 +1,10 @@
 <animations spriteSheet="ReyvalCavalry.sprites" ver="1.2">
 <anim name="UnUp" loops="0">
 <cell index="0" delay="1">
-<spr name="/Unpromoted/Walk4" x="0" y="0" z="0"/>
+<spr name="/Unpromoted/Walk2" x="0" y="0" z="0"/>
 </cell>
 <cell index="1" delay="1">
-<spr name="/Unpromoted/Walk5" x="0" y="0" z="0"/>
+<spr name="/Unpromoted/Walk3" x="0" y="0" z="0"/>
 </cell>
 </anim>
 <anim name="UnDown" loops="0">
@@ -17,235 +17,219 @@
 </anim>
 <anim name="UnLeft" loops="0">
 <cell index="0" delay="1">
-<spr name="/Unpromoted/Walk2" x="0" y="0" z="0" flipH="1"/>
+<spr name="/Unpromoted/Walk4" x="0" y="0" z="0" flipH="1"/>
 </cell>
 <cell index="1" delay="1">
-<spr name="/Unpromoted/Walk3" x="0" y="0" z="0" flipH="1"/>
+<spr name="/Unpromoted/Walk5" x="0" y="0" z="0" flipH="1"/>
 </cell>
 </anim>
 <anim name="UnRight" loops="0">
 <cell index="0" delay="1">
-<spr name="/Unpromoted/Walk2" x="0" y="0" z="0"/>
+<spr name="/Unpromoted/Walk4" x="0" y="0" z="0"/>
 </cell>
 <cell index="1" delay="1">
-<spr name="/Unpromoted/Walk3" x="0" y="0" z="0"/>
+<spr name="/Unpromoted/Walk5" x="0" y="0" z="0"/>
 </cell>
 </anim>
 <anim name="UnStand" loops="0">
 <cell index="0" delay="250">
-<spr name="/Unpromoted/Frame0" x="70" y="-56" z="0"/>
+<spr name="/Unpromoted/Frame0" x="102" y="-52" z="0"/>
 </cell>
 <cell index="1" delay="30">
-<spr name="/Unpromoted/Frame1" x="70" y="-56" z="0"/>
+<spr name="/Unpromoted/Frame1" x="102" y="-52" z="0"/>
 </cell>
 <cell index="2" delay="30">
-<spr name="/Unpromoted/Frame2" x="70" y="-56" z="0"/>
+<spr name="/Unpromoted/Frame2" x="102" y="-52" z="0"/>
 </cell>
 <cell index="3" delay="30">
-<spr name="/Unpromoted/Frame3" x="70" y="-56" z="0"/>
+<spr name="/Unpromoted/Frame3" x="102" y="-52" z="0"/>
 </cell>
 <cell index="4" delay="80">
-<spr name="/Unpromoted/Frame4" x="70" y="-56" z="0"/>
+<spr name="/Unpromoted/Frame4" x="102" y="-52" z="0"/>
 </cell>
 <cell index="5" delay="80">
-<spr name="/Unpromoted/Frame5" x="70" y="-56" z="0"/>
+<spr name="/Unpromoted/Frame5" x="102" y="-52" z="0"/>
 </cell>
 <cell index="6" delay="150">
-<spr name="/Unpromoted/Frame6" x="70" y="-56" z="0"/>
+<spr name="/Unpromoted/Frame6" x="102" y="-52" z="0"/>
 </cell>
 <cell index="7" delay="60">
-<spr name="/Unpromoted/Frame7" x="70" y="-56" z="0"/>
+<spr name="/Unpromoted/Frame7" x="102" y="-52" z="0"/>
 </cell>
 <cell index="8" delay="30">
-<spr name="/Unpromoted/Frame8" x="70" y="-56" z="0"/>
+<spr name="/Unpromoted/Frame8" x="102" y="-52" z="0"/>
 </cell>
 <cell index="9" delay="50">
-<spr name="/Unpromoted/Frame9" x="70" y="-56" z="0"/>
+<spr name="/Unpromoted/Frame9" x="102" y="-52" z="0"/>
 </cell>
 <cell index="10" delay="50">
-<spr name="/Unpromoted/Frame10" x="70" y="-56" z="0"/>
+<spr name="/Unpromoted/Frame10" x="102" y="-52" z="0"/>
 </cell>
 <cell index="11" delay="30">
-<spr name="/Unpromoted/Frame11" x="70" y="-56" z="0"/>
+<spr name="/Unpromoted/Frame11" x="102" y="-52" z="0"/>
 </cell>
 <cell index="12" delay="50">
-<spr name="/Unpromoted/Frame12" x="70" y="-56" z="0"/>
+<spr name="/Unpromoted/Frame12" x="102" y="-52" z="0"/>
 </cell>
 <cell index="13" delay="50">
-<spr name="/Unpromoted/Frame13" x="70" y="-56" z="0"/>
+<spr name="/Unpromoted/Frame13" x="102" y="-52" z="0"/>
 </cell>
 <cell index="14" delay="50">
-<spr name="/Unpromoted/Frame14" x="70" y="-56" z="0"/>
+<spr name="/Unpromoted/Frame14" x="102" y="-52" z="0"/>
 </cell>
 <cell index="15" delay="50">
-<spr name="/Unpromoted/Frame15" x="70" y="-56" z="0"/>
+<spr name="/Unpromoted/Frame15" x="102" y="-52" z="0"/>
 </cell>
 <cell index="16" delay="50">
-<spr name="/Unpromoted/Frame16" x="70" y="-56" z="0"/>
+<spr name="/Unpromoted/Frame16" x="102" y="-52" z="0"/>
 </cell>
 </anim>
 <anim name="UnAttack" loops="0">
 <cell index="0" delay="410">
-<spr name="/Unpromoted/Frame17" x="70" y="-56" z="0"/>
+<spr name="/Unpromoted/Frame17" x="102" y="-52" z="0"/>
 </cell>
 <cell index="1" delay="50">
-<spr name="/Unpromoted/Frame18" x="70" y="-56" z="0"/>
+<spr name="/Unpromoted/Frame18" x="102" y="-52" z="0"/>
 </cell>
 <cell index="2" delay="30">
-<spr name="/Unpromoted/Frame19" x="70" y="-56" z="0"/>
+<spr name="/Unpromoted/Frame19" x="102" y="-52" z="0"/>
 </cell>
 <cell index="3" delay="50">
-<spr name="/Unpromoted/Frame20" x="70" y="-56" z="0"/>
+<spr name="/Unpromoted/Frame20" x="102" y="-52" z="0"/>
 </cell>
 <cell index="4" delay="50">
-<spr name="/Unpromoted/Frame21" x="70" y="-56" z="0"/>
+<spr name="/Unpromoted/Frame21" x="102" y="-52" z="0"/>
 </cell>
 <cell index="5" delay="50">
-<spr name="/Unpromoted/Frame22" x="70" y="-56" z="0"/>
+<spr name="/Unpromoted/Frame22" x="102" y="-52" z="0"/>
 </cell>
 <cell index="6" delay="50">
-<spr name="/Unpromoted/Frame23" x="70" y="-56" z="0"/>
+<spr name="/Unpromoted/Frame23" x="102" y="-52" z="0"/>
 </cell>
 <cell index="7" delay="50">
-<spr name="/Unpromoted/Frame24" x="70" y="-56" z="0"/>
+<spr name="/Unpromoted/Frame24" x="102" y="-52" z="0"/>
 </cell>
 <cell index="8" delay="50">
-<spr name="/Unpromoted/Frame25" x="70" y="-56" z="0"/>
+<spr name="/Unpromoted/Frame25" x="102" y="-52" z="0"/>
 </cell>
 <cell index="9" delay="30">
-<spr name="/Unpromoted/Frame26" x="70" y="-56" z="0"/>
+<spr name="/Unpromoted/Frame26" x="102" y="-52" z="0"/>
 </cell>
 <cell index="10" delay="50">
-<spr name="/Unpromoted/Frame27" x="70" y="-56" z="0"/>
+<spr name="/Unpromoted/Frame27" x="102" y="-52" z="0"/>
 </cell>
 <cell index="11" delay="50">
-<spr name="/Unpromoted/Frame28" x="70" y="-56" z="0"/>
+<spr name="/Unpromoted/Frame28" x="102" y="-52" z="0"/>
 </cell>
 <cell index="12" delay="50">
-<spr name="/Unpromoted/Frame29" x="70" y="-56" z="0"/>
+<spr name="/Unpromoted/Frame29" x="102" y="-52" z="0"/>
 </cell>
-<cell index="13" delay="50">
-<spr name="/Unpromoted/Frame30" x="70" y="-56" z="0"/>
+</anim>
+<anim name="UnWinddown" loops="0">
+<cell index="0" delay="50">
+<spr name="/Unpromoted/Frame30" x="102" y="-52" z="0"/>
 </cell>
-<cell index="14" delay="60">
-<spr name="/Unpromoted/Frame31" x="70" y="-56" z="0"/>
+<cell index="1" delay="60">
+<spr name="/Unpromoted/Frame31" x="102" y="-52" z="0"/>
 </cell>
-<cell index="15" delay="160">
-<spr name="/Unpromoted/Frame32" x="70" y="-56" z="0"/>
+<cell index="2" delay="160">
+<spr name="/Unpromoted/Frame32" x="102" y="-52" z="0"/>
 </cell>
-<cell index="16" delay="50">
-<spr name="/Unpromoted/Frame33" x="70" y="-56" z="0"/>
+<cell index="3" delay="50">
+<spr name="/Unpromoted/Frame33" x="102" y="-52" z="0"/>
 </cell>
-<cell index="17" delay="50">
-<spr name="/Unpromoted/Frame34" x="70" y="-56" z="0"/>
+<cell index="4" delay="50">
+<spr name="/Unpromoted/Frame34" x="102" y="-52" z="0"/>
 </cell>
-<cell index="18" delay="50">
-<spr name="/Unpromoted/Frame35" x="70" y="-56" z="0"/>
+<cell index="5" delay="50">
+<spr name="/Unpromoted/Frame35" x="102" y="-52" z="0"/>
 </cell>
-<cell index="19" delay="50">
-<spr name="/Unpromoted/Frame36" x="70" y="-56" z="0"/>
+<cell index="6" delay="50">
+<spr name="/Unpromoted/Frame36" x="102" y="-52" z="0"/>
 </cell>
-<cell index="20" delay="50">
-<spr name="/Unpromoted/Frame37" x="70" y="-56" z="0"/>
+<cell index="7" delay="50">
+<spr name="/Unpromoted/Frame37" x="102" y="-52" z="0"/>
 </cell>
 </anim>
 <anim name="UnRanged" loops="0">
 <cell index="0" delay="410">
-<spr name="/Unpromoted/Frame17" x="70" y="-56" z="0"/>
+<spr name="/Unpromoted/Frame17" x="102" y="-52" z="0"/>
 </cell>
 <cell index="1" delay="50">
-<spr name="/Unpromoted/Frame18" x="70" y="-56" z="0"/>
+<spr name="/Unpromoted/Frame18" x="102" y="-52" z="0"/>
 </cell>
 <cell index="2" delay="30">
-<spr name="/Unpromoted/Frame19" x="70" y="-56" z="0"/>
+<spr name="/Unpromoted/Frame19" x="102" y="-52" z="0"/>
 </cell>
 <cell index="3" delay="50">
-<spr name="/Unpromoted/Frame20" x="70" y="-56" z="0"/>
+<spr name="/Unpromoted/Frame20" x="102" y="-52" z="0"/>
 </cell>
 <cell index="4" delay="50">
-<spr name="/Unpromoted/Frame21" x="70" y="-56" z="0"/>
+<spr name="/Unpromoted/Frame21" x="102" y="-52" z="0"/>
 </cell>
 <cell index="5" delay="50">
-<spr name="/Unpromoted/Frame22" x="70" y="-56" z="0"/>
+<spr name="/Unpromoted/Frame22" x="102" y="-52" z="0"/>
 </cell>
 <cell index="6" delay="50">
-<spr name="/Unpromoted/Frame23" x="70" y="-56" z="0"/>
+<spr name="/Unpromoted/Frame23" x="102" y="-52" z="0"/>
 </cell>
 <cell index="7" delay="50">
-<spr name="/Unpromoted/Frame24" x="70" y="-56" z="0"/>
+<spr name="/Unpromoted/Frame24" x="102" y="-52" z="0"/>
 </cell>
 <cell index="8" delay="50">
-<spr name="/Unpromoted/Frame25" x="70" y="-56" z="0"/>
+<spr name="/Unpromoted/Frame25" x="102" y="-52" z="0"/>
 </cell>
 <cell index="9" delay="30">
-<spr name="/Unpromoted/Frame26" x="70" y="-56" z="0"/>
+<spr name="/Unpromoted/Frame26" x="102" y="-52" z="0"/>
 </cell>
 <cell index="10" delay="50">
-<spr name="/Unpromoted/Frame27" x="70" y="-56" z="0"/>
+<spr name="/Unpromoted/Frame27" x="102" y="-52" z="0"/>
 </cell>
 <cell index="11" delay="50">
-<spr name="/Unpromoted/Frame28" x="70" y="-56" z="0"/>
+<spr name="/Unpromoted/Frame28" x="102" y="-52" z="0"/>
 </cell>
 <cell index="12" delay="50">
-<spr name="/Unpromoted/Frame29" x="70" y="-56" z="0"/>
-</cell>
-<cell index="13" delay="50">
-<spr name="/Unpromoted/Frame30" x="70" y="-56" z="0"/>
-</cell>
-<cell index="14" delay="60">
-<spr name="/Unpromoted/Frame31" x="70" y="-56" z="0"/>
-</cell>
-<cell index="15" delay="160">
-<spr name="/Unpromoted/Frame32" x="70" y="-56" z="0"/>
-</cell>
-<cell index="16" delay="50">
-<spr name="/Unpromoted/Frame33" x="70" y="-56" z="0"/>
-</cell>
-<cell index="17" delay="50">
-<spr name="/Unpromoted/Frame34" x="70" y="-56" z="0"/>
-</cell>
-<cell index="18" delay="50">
-<spr name="/Unpromoted/Frame35" x="70" y="-56" z="0"/>
-</cell>
-<cell index="19" delay="50">
-<spr name="/Unpromoted/Frame36" x="70" y="-56" z="0"/>
-</cell>
-<cell index="20" delay="50">
-<spr name="/Unpromoted/Frame37" x="70" y="-56" z="0"/>
+<spr name="/Unpromoted/Frame29" x="102" y="-52" z="0"/>
 </cell>
 </anim>
 <anim name="UnDodge" loops="0">
 <cell index="0" delay="410">
-<spr name="/Unpromoted/Frame38" x="70" y="-56" z="0"/>
+<spr name="/Unpromoted/Frame38" x="102" y="-52" z="0"/>
 </cell>
 <cell index="1" delay="50">
-<spr name="/Unpromoted/Frame39" x="70" y="-56" z="0"/>
+<spr name="/Unpromoted/Frame39" x="102" y="-52" z="0"/>
 </cell>
 <cell index="2" delay="50">
-<spr name="/Unpromoted/Frame40" x="70" y="-56" z="0"/>
+<spr name="/Unpromoted/Frame40" x="102" y="-52" z="0"/>
 </cell>
 <cell index="3" delay="50">
-<spr name="/Unpromoted/Frame41" x="70" y="-56" z="0"/>
+<spr name="/Unpromoted/Frame41" x="102" y="-52" z="0"/>
 </cell>
 <cell index="4" delay="50">
-<spr name="/Unpromoted/Frame42" x="70" y="-56" z="0"/>
-</cell>
-<cell index="5" delay="50">
-<spr name="/Unpromoted/Frame43" x="70" y="-56" z="0"/>
-</cell>
-<cell index="6" delay="410">
-<spr name="/Unpromoted/Frame44" x="70" y="-56" z="0"/>
-</cell>
-<cell index="7" delay="50">
-<spr name="/Unpromoted/Frame45" x="70" y="-56" z="0"/>
-</cell>
-<cell index="8" delay="50">
-<spr name="/Unpromoted/Frame46" x="70" y="-56" z="0"/>
+<spr name="/Unpromoted/Frame42" x="102" y="-52" z="0"/>
 </cell>
 </anim>
 <anim name="UnDodgeWinddown" loops="0">
-<cell index="0" delay="410">
-<spr name="/Unpromoted/Frame38" x="70" y="-56" z="0"/>
+<cell index="0" delay="50">
+<spr name="/Unpromoted/Frame43" x="102" y="-52" z="0"/>
+</cell>
+<cell index="1" delay="410">
+<spr name="/Unpromoted/Frame44" x="102" y="-52" z="0"/>
+</cell>
+<cell index="2" delay="50">
+<spr name="/Unpromoted/Frame45" x="102" y="-52" z="0"/>
+</cell>
+<cell index="3" delay="50">
+<spr name="/Unpromoted/Frame46" x="102" y="-52" z="0"/>
 </cell>
 </anim>
 </animations>
+
+
+
+
+
+
+
+
+
