@@ -11,6 +11,8 @@ from Spellz.Bolt import Bolt
 from Spellz.Heal import Heal
 from Spellz.Lightning import Lightning
 from Spellz.Spirit import Spirit
+from Spellz.Bile import Bile
+from Spellz.Freeze import Freeze
 
 class Spells(SpellFactory):    
     # This defines the id for each spell in the game.
@@ -37,6 +39,10 @@ class Spells(SpellFactory):
             spell = Spirit()
         elif "DETOX" == id:
             spell = Heal()
+        elif "BILE" == id:
+        	spell = Bile()
+        elif "FREEZE" == id:
+            spell = Freeze()
         else:
             spell = None
             print "BAD SPELL " + id

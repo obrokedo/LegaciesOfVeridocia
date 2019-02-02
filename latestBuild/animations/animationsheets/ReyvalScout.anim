@@ -171,23 +171,23 @@
     </cell>
     <cell index="11" delay="80">
       <spr name="/Unpromoted/Frame21" x="94" y="-48" z="0"/>
-      <spr name="/Weapon" x="72" y="-49" z="0"/>
+      <spr name="/Weapon" x="72" y="-45" z="0"/>
     </cell>
     <cell index="12" delay="50">
       <spr name="/Unpromoted/Frame22" x="94" y="-48" z="0"/>
-      <spr name="/Weapon" x="102" y="-49" z="0"/>
+      <spr name="/Weapon" x="102" y="-45" z="0"/>
     </cell>
     <cell index="13" delay="50">
       <spr name="/Unpromoted/Frame23" x="94" y="-48" z="0"/>
-      <spr name="/Weapon" x="194" y="-48" z="0"/>
+      <spr name="/Weapon" x="194" y="-45" z="0"/>
     </cell>
     <cell index="14" delay="50">
       <spr name="/Unpromoted/Frame24" x="94" y="-48" z="0"/>
-      <spr name="/Weapon" x="216" y="-48" z="0"/>
+      <spr name="/Weapon" x="216" y="-45" z="0"/>
     </cell>
     <cell index="15" delay="50">
       <spr name="/Unpromoted/Frame25" x="94" y="-48" z="0"/>
-      <spr name="/Weapon" x="258" y="-48" z="0"/>
+      <spr name="/Weapon" x="258" y="-45" z="0"/>
     </cell>
     <cell index="16" delay="410">
       <spr name="/Unpromoted/Frame26" x="94" y="-48" z="0"/>

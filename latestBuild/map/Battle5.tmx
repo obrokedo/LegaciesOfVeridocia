@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="50" height="60" tilewidth="12" tileheight="12" nextobjectid="25">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="50" height="60" tilewidth="12" tileheight="12" nextobjectid="46">
  <tileset firstgid="1" name="overworld(day)-Master" tilewidth="12" tileheight="12" tilecount="1296" columns="36">
   <image source="../image/overworld(day)-Master.png" trans="495d47" width="432" height="432"/>
  </tileset>
@@ -61,16 +61,125 @@
   </data>
  </layer>
  <objectgroup name="Terrain">
-  <object id="23" name="Thick Grass" x="-48" y="1" width="24" height="24">
-   <properties>
-    <property name="terrain" value="type=THICK-GRASS"/>
-   </properties>
-  </object>
   <object id="24" name="Inside" x="336" y="144">
    <properties>
     <property name="terrain" value="type=THICK-GRASS"/>
    </properties>
    <polyline points="0,0 24,0 24,-24 72,-24 72,24 0,24 0,48 72,48 72,72 0,72 0,120 72,120 72,144 0,144 0,216 -48,216 -48,144 -120,144 -120,120 -48,120 -48,72 -120,72 -120,48 -48,48 -48,24 -120,24 -120,-24 -72,-24 -72,0 0,0"/>
+  </object>
+  <object id="25" name="Road" x="240" y="720">
+   <properties>
+    <property name="terrain" value="type=THICK-GRASS"/>
+   </properties>
+   <polyline points="0,0 0,-48 360,-48 360,-72 24,-72 24,-120 48,-120 48,-288 96,-288 96,-360 48,-360 48,-336 -144,-336 -144,-360 -168,-360 -168,-312 -48,-312 -48,-120 -24,-120 -24,0 0,0"/>
+  </object>
+  <object id="26" name="Grass" x="312" y="480">
+   <properties>
+    <property name="terrain" value="type=THICK-GRASS"/>
+   </properties>
+   <polyline points="0,0 0,-24 24,-24 24,-48 48,-48 48,-24 168,-24 168,-96 144,-96 144,-120 120,-120 120,-216 144,-216 144,-240 120,-240 120,-312 144,-312 144,-336 120,-336 120,-432 12,-432 12,-456 -12,-456 -12,-432 -120,-432 -120,-480 -96,-480 -96,-456 -72,-456 -72,-480 144,-480 144,-456 168,-456 168,-432 192,-432 192,0 0,0"/>
+  </object>
+  <object id="27" name="Grass" x="372" y="624">
+   <properties>
+    <property name="terrain" value="type=THICK-GRASS"/>
+   </properties>
+   <polyline points="-12,0 -60,0 -60,-72 -84,-72 -84,-96 156,-96 156,-144 180,-144 180,-168 156,-168 156,-240 180,-240 180,-216 228,-216 228,-144 204,-144 204,-120 228,-120 228,24 108,24 108,0 132,0 132,-24 204,-24 204,-48 180,-48 180,-24 108,-24 108,-72 12,-72 12,-48 -12,-48 -12,0"/>
+  </object>
+  <object id="28" name="Grass" x="480" y="600">
+   <properties>
+    <property name="terrain" value="type=THICK-GRASS"/>
+   </properties>
+   <polyline points="0,0 -72,0 -72,24 0,24 0,0"/>
+  </object>
+  <object id="30" name="Grass" x="264" y="672">
+   <properties>
+    <property name="terrain" value="type=THICK-GRASS"/>
+   </properties>
+   <polyline points="0,0 0,48 96,48 96,24 144,24 144,0 0,0"/>
+  </object>
+  <object id="32" name="Grass" x="0" y="528">
+   <properties>
+    <property name="terrain" value="type=THICK-GRASS"/>
+   </properties>
+   <polyline points="0,0 0,48 24,48 24,72 168,72 168,144 96,144 96,96 72,96 72,144 48,144 48,120 24,120 24,72 0,72 0,192 192,192 192,48 168,48 168,24 192,24 192,0 96,0 96,24 72,24 72,0 0,0"/>
+  </object>
+  <object id="33" name="Dirt" x="96" y="600">
+   <properties>
+    <property name="terrain" value="type=THICK-GRASS"/>
+   </properties>
+   <polyline points="0,0 72,0 72,48 48,48 48,72 0,72 0,0"/>
+  </object>
+  <object id="34" name="Dirt" x="192" y="624">
+   <properties>
+    <property name="terrain" value="type=THICK-GRASS"/>
+   </properties>
+   <polyline points="0,0 24,0 24,96 0,96 0,0"/>
+  </object>
+  <object id="35" name="Dirt" x="288" y="624">
+   <properties>
+    <property name="terrain" value="type=THICK-GRASS"/>
+   </properties>
+   <polyline points="0,0 48,0 48,24 0,24 0,0 -24,0 -24,-24 0,-24 0,0"/>
+  </object>
+  <object id="36" name="Thick Grass" x="408" y="672">
+   <properties>
+    <property name="terrain" value="type=THICK-GRASS"/>
+   </properties>
+   <polyline points="0,0 192,0 192,48 -48,48 -48,24 0,24 0,0"/>
+  </object>
+  <object id="37" name="Dirt" x="360" y="576">
+   <properties>
+    <property name="terrain" value="type=THICK-GRASS"/>
+   </properties>
+   <polyline points="0,0 24,0 24,24 48,24 48,48 0,48 0,0"/>
+  </object>
+  <object id="38" name="Dirt" x="384" y="552">
+   <properties>
+    <property name="terrain" value="type=THICK-GRASS"/>
+   </properties>
+   <polyline points="0,0 72,0 72,24 96,24 96,48 24,48 24,24 0,24 0,0"/>
+  </object>
+  <object id="39" name="Dirt" x="240" y="696">
+   <properties>
+    <property name="terrain" value="type=THICK-GRASS"/>
+   </properties>
+   <polyline points="0,0 24,0 24,24 0,24 0,0"/>
+  </object>
+  <object id="40" name="Thick Grass" x="408" y="456">
+   <properties>
+    <property name="terrain" value="type=THICK-GRASS"/>
+   </properties>
+   <polyline points="0,0 0,-24 24,-24 24,-48 48,-48 48,-96 -48,-96 -48,-72 -72,-72 -72,-24 -48,-24 -48,0 0,0"/>
+  </object>
+  <object id="41" name="Thick Grass" x="528" y="384">
+   <properties>
+    <property name="terrain" value="type=THICK-GRASS"/>
+   </properties>
+   <polyline points="0,0 72,0 72,-24 24,-24 24,-72 0,-72 0,0"/>
+  </object>
+  <object id="42" name="Grass" x="168" y="336">
+   <properties>
+    <property name="terrain" value="type=THICK-GRASS"/>
+   </properties>
+   <polyline points="0,0 24,0 24,24 96,24 96,48 0,48 0,0"/>
+  </object>
+  <object id="43" name="Thick Grass" x="192" y="48">
+   <properties>
+    <property name="terrain" value="type=THICK-GRASS"/>
+   </properties>
+   <polyline points="0,0 -24,0 -24,24 -24,48 -72,48 -96,48 -96,72 -72,72 -72,24 -96,24 -96,0 -144,0 -144,-24 -168,-24 -168,0 -144,0 -144,24 -120,24 -120,72 -168,72 -168,48 -192,48 -192,-48 0,-48 0,0"/>
+  </object>
+  <object id="44" name="Dirt" x="48" y="192">
+   <properties>
+    <property name="terrain" value="type=THICK-GRASS"/>
+   </properties>
+   <polyline points="0,0 24,0 24,24 48,24 48,48 120,48 120,72 96,72 96,96 120,96 120,120 72,120 72,144 120,144 120,192 72,192 72,168 24,168 24,192 0,192 0,144 24,144 24,96 48,96 48,72 24,72 0,72 0,48 -24,48 -24,24 0,24 0,0"/>
+  </object>
+  <object id="45" name="Grass" x="168" y="72">
+   <properties>
+    <property name="terrain" value="type=THICK-GRASS"/>
+   </properties>
+   <polyline points="0,0 24,0 24,120 0,120 0,144 -24,144 -24,168 -48,168 -48,96 0,96 0,72 -48,72 -48,144 -96,144 -96,96 -120,96 -120,144 -144,144 -144,168 -120,168 -120,192 -96,192 -96,240 -120,240 -120,336 0,336 0,408 -72,408 -72,384 -96,384 -96,408 -168,408 -168,384 -144,384 -144,360 -168,360 -168,288 -144,288 -144,240 -168,240 -168,216 -144,216 -144,192 -168,192 -168,108 -144,108 -144,84 -168,84 -168,24 -144,24 -144,48 -48,48 -48,24 0,24 0,0"/>
   </object>
  </objectgroup>
  <objectgroup name="Trigger Regions" visible="0">
