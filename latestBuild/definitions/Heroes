@@ -31,3 +31,21 @@
 	<item itemid="Flaming Wand" equipped=true/>
 	<item itemid="Medical Herb" equipped=false/>
 </hero>
+<hero id=5 name="Eddie" promoted=false level=1 animations="Eddie" leader=false>
+	<progression promoted=false specialpromoted=false specialpromoteitem="" move=6 movementtype="NORMAL" attack="Linear" attackstart=6 attackend=10 defense="Early" defensestart=6 defenseend=17 speed="Linear" speedstart=5 speedend=12 hp="Linear" hpstart=12 hpend=24 mp="Late" mpstart=8 mpend=12 fireAffin=0 elecAffin=15 coldAffin=0 darkAffin=5 waterAffin=0 earthAffin=-1 windAffin=0 lightAffin=10 bodyStrength="MEDIUM" bodyProgress="Mid" mindStrength="MEDIUM" mindProgress="Late" counterStrength="MEDIUM" evadeStrength="MEDIUM" doubleStrength="MEDIUM" critStrength="MEDIUM" usuableitems=1,13, class="Swordsman"/>
+	<item itemid="Short Axe" equipped=true/>
+	<item itemid="Medical Herb" equipped=false/>
+</hero>
+<hero id=6 name="Liza" promoted=false level=1 animations="Liza" leader=false>
+	<progression promoted=false specialpromoted=false specialpromoteitem="" move=5 movementtype="NORMAL" attack="Early" attackstart=5 attackend=7 defense="Late" defensestart=5 defenseend=14 speed="Linear" speedstart=6 speedend=13 hp="Linear" hpstart=9 hpend=14 mp="Early" mpstart=10 mpend=22 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength="STRONG" bodyProgress="Late" mindStrength="STRONG" mindProgress="Late" counterStrength="STRONG" evadeStrength="STRONG" doubleStrength="STRONG" critStrength="STRONG" usuableitems=3, class="Curate"/>
+	<progression promoted=true specialpromoted=false specialpromoteitem="" move=5 movementtype="NORMAL" attack="Early" attackstart=0 attackend=0 defense="Early" defensestart=0 defenseend=0 speed="Early" speedstart=0 speedend=0 hp="Early" hpstart=0 hpend=0 mp="Late" mpstart=0 mpend=0 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength="WEAK" bodyProgress="Early" mindStrength="WEAK" mindProgress="Early" counterStrength="WEAK" evadeStrength="WEAK" doubleStrength="WEAK" critStrength="WEAK" usuableitems=2, class="Healer"/>
+	<spellprogression spellid="HEAL" promotedprog=false specialpromoted=false gained="1,5"/>
+	<spellprogression spellid="CYCLONE" promotedprog=false specialpromoted=false gained="8"/>
+	<item itemid="Erium Cane" equipped=true/>
+	<spellprogression spellid="HEAL" promotedprog=true specialpromoted=false gained="16,30"/>
+</hero>
+<hero id=7 name="Tyson" promoted=false level=1 animations="Tyson" leader=false>
+	<progression promoted=false specialpromoted=false specialpromoteitem="" move=6 movementtype="NORMAL" attack="Linear" attackstart=6 attackend=10 defense="Early" defensestart=6 defenseend=17 speed="Linear" speedstart=5 speedend=12 hp="Linear" hpstart=12 hpend=24 mp="Late" mpstart=8 mpend=12 fireAffin=0 elecAffin=15 coldAffin=0 darkAffin=5 waterAffin=0 earthAffin=-1 windAffin=0 lightAffin=10 bodyStrength="MEDIUM" bodyProgress="Mid" mindStrength="MEDIUM" mindProgress="Late" counterStrength="MEDIUM" evadeStrength="MEDIUM" doubleStrength="MEDIUM" critStrength="MEDIUM" usuableitems=1,13, class="Swordsman"/>
+	<item itemid="Short Axe" equipped=true/>
+	<item itemid="Medical Herb" equipped=false/>
+</hero>
