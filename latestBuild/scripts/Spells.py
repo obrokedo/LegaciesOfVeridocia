@@ -13,6 +13,7 @@ from Spellz.Lightning import Lightning
 from Spellz.Spirit import Spirit
 from Spellz.Bile import Bile
 from Spellz.Freeze import Freeze
+from Spellz.Guard import Guard
 
 class Spells(SpellFactory):    
     # This defines the id for each spell in the game.
@@ -43,6 +44,8 @@ class Spells(SpellFactory):
         	spell = Bile()
         elif "FREEZE" == id:
             spell = Freeze()
+        elif "GUARD" == id:
+            spell = Guard()
         else:
             spell = None
             print "BAD SPELL " + id

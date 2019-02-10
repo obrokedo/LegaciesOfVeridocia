@@ -104,7 +104,7 @@
 	<equippable attack=14 defense=4 speed=0 type=0 style=12 range=1 weaponimage="" incmindam=0 inccrit=0 inccounter=0 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=0 effchc=0 csteff=false dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
 </item>
 <item id=34 name="Studded Glove" description="" cost=150 isdeal=false imageindexx=0 imageindexy=0 droppable=false>
-	<equippable attack=14 defense=0 speed=0 type=0 style=9 range=1 weaponimage="" incmindam=0 inccrit=0 inccounter=8 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=0 effchc=0 csteff=false dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
+	<equippable attack=14 defense=0 speed=0 type=0 style=9 range=1 weaponimage="EriumBlade" incmindam=0 inccrit=0 inccounter=8 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=0 effchc=0 csteff=false dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
 </item>
 <item id=35 name="Iron Staff" description="" cost=140 isdeal=false imageindexx=0 imageindexy=0 droppable=false>
 	<equippable attack=13 defense=4 speed=0 type=0 style=3 range=1 weaponimage="" incmindam=0 inccrit=4 inccounter=0 incdouble=0 incevade=0 maxhpreg=0 minhpreg=0 maxmpreg=0 minmpreg=0 effect="" efflvl=0 effchc=0 csteff=false dmgaff="NORMAL" fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 ohko=0 ohkooc=0/>
