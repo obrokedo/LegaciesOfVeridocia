@@ -6,25 +6,25 @@
       <spr name="/Weapon" x="271" y="-40" z="0" flipH="1"/>
     </cell>
     <cell index="1" delay="30">
-      <spr name="/Weapon" x="247" y="-40" z="0" flipH="1"/>
+      <spr name="/Weapon" x="247" y="-40" z="0" angle="315.0" flipH="1"/>
     </cell>
     <cell index="2" delay="30">
-      <spr name="/Weapon" x="223" y="-40" z="0" flipH="1"/>
+      <spr name="/Weapon" x="223" y="-40" z="0" angle="270.0" flipH="1"/>
     </cell>
     <cell index="3" delay="30">
-      <spr name="/Weapon" x="199" y="-40" z="0" flipH="1"/>
+      <spr name="/Weapon" x="199" y="-40" z="0" angle="225.0" flipH="1"/>
     </cell>
     <cell index="4" delay="30">
-      <spr name="/Weapon" x="175" y="-40" z="0" flipH="1"/>
+      <spr name="/Weapon" x="175" y="-40" z="0" angle="180.0" flipH="1"/>
     </cell>
     <cell index="5" delay="30">
-      <spr name="/Weapon" x="151" y="-40" z="0" flipH="1"/>
+      <spr name="/Weapon" x="151" y="-40" z="0" angle="135.0" flipH="1"/>
     </cell>
     <cell index="6" delay="30">
-      <spr name="/Weapon" x="127" y="-40" z="0" flipH="1"/>
+      <spr name="/Weapon" x="127" y="-40" z="0" angle="90.0" flipH="1"/>
     </cell>
     <cell index="7" delay="30">
-      <spr name="/Weapon" x="103" y="-40" z="0" flipH="1"/>
+      <spr name="/Weapon" x="103" y="-40" z="0" angle="45.0" flipH="1"/>
     </cell>
     <cell index="8" delay="30">
       <spr name="/Weapon" x="79" y="-40" z="0" flipH="1"/>
