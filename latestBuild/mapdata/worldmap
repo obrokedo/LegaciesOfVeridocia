@@ -8,6 +8,24 @@
 <trigger id=2 description="ToCabin" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<loadmap mapdata="eriumwoods" enter="FromOverworld" transdir=""/>
 </trigger>
-<trigger id=3 description="CabinNotVisited" require="" exclude="Battle 3," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+<trigger id=3 description="CabinNotVisited" require="," exclude="Battle 3," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<showcin cinid=0 exittrigid=-1/>
 </trigger>
+<cinematic id=0 description="WarnPastCabin" camerax=0 cameray=0>
+	<speech text="Hold up Noah,<pause> I think the cabin was back that way...<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
+	<assactor name="Noah" hero="Noah" enemyid=0 npcid=""/>
+	<camerafollow name="Noah"/>
+	<haltingmovepath name="Noah" x=576 y=5160 speed="2.4"/>
+</cinematic>
+<condition id=0 description="ToErium" triggerid=1,>
+	<enterloc location="ToErium" immediate=false/>
+</condition>
+<condition id=1 description="ToCabin" triggerid=2,>
+	<enterloc location="ToCabin" immediate=false/>
+</condition>
+<condition id=2 description="MapStart" triggerid=0,>
+	<maploaded/>
+</condition>
+<condition id=3 description="WarnTooFar" triggerid=3,>
+	<enterloc location="CabinNotVisited" immediate=false/>
+</condition>
