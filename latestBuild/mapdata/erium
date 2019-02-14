@@ -68,7 +68,7 @@
 <trigger id=22 description="Book3" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<showtext textid=17/>
 </trigger>
-<trigger id=23 description="ToWorldMap" require="Battle2," exclude="" nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+<trigger id=23 description="ToWorldMap" require="Battle2," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<loadmap mapdata="worldmap" enter="FromErium" transdir=""/>
 </trigger>
 <trigger id=24 description="OpenWeaponShop" require="Battle2," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
@@ -227,7 +227,7 @@
 	<facing name="Noah" dir=1/>
 	<wait time=500/>
 	<nod name="Noah"/>
-	<speech text="All set.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
+	<speech text="All set.  Hopefully the captain isn't in the courtyard yet!  <hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<fadeout time=1000 halting=false/>
 	<haltingmove name="Noah" x=144 y=180 speed="1.2" movehor=false movediag=false/>
 	<loadmap mapdata="erium" enter="NoahHouse"/>
