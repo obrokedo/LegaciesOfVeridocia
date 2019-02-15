@@ -1,9 +1,9 @@
 <map file="EriumWoods.tmx"/>
-<trigger id=0 description="MapStart" require="" exclude="Battle 3," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+<trigger id=0 description="MapStart" require="," exclude="Battle 3," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<playmusic music="overworld" volume=75/>
-	<startbattle battletriggers="battle3" entrance="battlestart" battbg=2/>
 	<removehero heroid="Craig"/>
 	<removehero heroid="Olivia"/>
+	<startbattle battletriggers="battle3" entrance="battlestart" battbg=2/>
 </trigger>
 <trigger id=1 description="ToWorldMap" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<loadmap mapdata="worldmap" enter="FromCabin" transdir=""/>
