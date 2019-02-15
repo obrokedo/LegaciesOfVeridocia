@@ -6,16 +6,16 @@
 	<playmusic music="hq" volume=75/>
 </trigger>
 <text id=0 description="Speech Trigger">
-	<yesno require="," exclude="," triggeryes=0 triggerno=-1 heroportrait="Craig" enemyportrait="" animportrait="" message="Ready to hit the sack?"/>
+	<yesno require="," exclude="," triggeryes=0 triggerno=-1 heroportrait="Craig" enemyportrait="" animportrait="Craig" message="Ready to hit the sack?"/>
 </text>
 <text id=1 description="Huun Speech">
-	<string require="" exclude="" trigger=-1 heroportrait="Huun" enemyportrait="" animportrait="" message="I can't believe you just left me in there.<hardstop> I thought I was gonna die alone.<hardstop>"/>
+	<string require="," exclude="," trigger=-1 heroportrait="Huun" enemyportrait="" animportrait="" message="I can't believe you just left me in there.<hardstop> I thought I'd die alone.<hardstop>"/>
 </text>
 <text id=2 description="Sharna Inside Tower">
 	<string require="," exclude="," trigger=-1 heroportrait="Sharna" enemyportrait="" animportrait="" message="Looks like no one has been here in a long time. <hardstop> I wonder why they would abandon this place to begin with? <hardstop>"/>
 </text>
 <text id=3 description="Olivia Speech">
-	<string require="," exclude="," trigger=-1 heroportrait="Olivia" enemyportrait="" animportrait="" message="I'm standing watch, <hardstop> just incase one of those guards is crazy enough to follow us through there.<hardstop>"/>
+	<string require="" exclude="" trigger=-1 heroportrait="Olivia" enemyportrait="" animportrait="" message="I'm standing watch, <pause> just incase one of those guards is crazy enough to follow us through there.<hardstop>"/>
 </text>
 <cinematic id=0 description="Scene1" camerax=0 cameray=0>
 	<playmusic music="castlenight" volume=75/>

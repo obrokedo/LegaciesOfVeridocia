@@ -447,7 +447,7 @@
 	<move name="Craig" x=1104 y=384 speed="2.4" movehor=false movediag=false/>
 	<haltingmove name="Olivia" x=1104 y=408 speed="2.4" movehor=false movediag=false/>
 	<wait time=200/>
-	<speech text="I'm relived to see that you made it out in once piece.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
+	<speech text="I'm relieved to see that you made it out in one piece.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<wait time=200/>
 	<nod name="Craig"/>
 	<wait time=1500/>
@@ -501,15 +501,15 @@
 	<stopse name="Craig"/>
 	<speech text="No reason to waste time chattin' here, either. Make it quick!<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
 	<facing name="Craig" dir=0/>
-	<speech text="Alright, alright. The three of you saw Mistal meeting with a stranger last night, right?<hardstop> Craig and I, are high court guards and have been asked to watch Mistal for some time. Tonight was the night we were going to confront the pair,<hardstop> but you got to them first.<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait=""/>
+	<speech text="Alright, alright. The three of you saw Mistal meeting with a stranger last night, right?<hardstop> Craig and I are high court guards and have been watching Mistal for some time. Tonight was the night we were going to confront the pair,<hardstop> but you got to them first.<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait=""/>
 	<speech text="Woulda helped ya there but not with the whole castle coming to see what was happenin'.<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
 	<haltingmove name="Olivia" x=1392 y=240 speed="2.4" movehor=false movediag=false/>
 	<facing name="Olivia" dir=0/>
-	<speech text="So, we still don't know who Mistal was meeting with, but we couldn't let you be executed either.<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait=""/>
+	<speech text="We still don't know who Mistal was meeting with, but we couldn't let you be executed either.<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait=""/>
 	<speech text="Now, instead of finding out something useful, we tip our hand by breaking you out.<hardstop> Now Mistal will be wise to us. Want to yap about it some more, or are ya happy? Let's get moving!<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
 	<haltingmove name="Craig" x=1200 y=240 speed="2.4" movehor=true movediag=false/>
 	<shakehead name="Craig" time=1000/>
-	<speech text="I dont think where gonna make it our the front door with all the commotion.<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
+	<speech text="I don't think we're gonna make it our the front door with all the commotion.<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
 	<haltingmovepath name="Craig" x=1296 y=168 speed="2.4"/>
 	<speech text="Now where was it....<hardstop> " heroportrait="Craig" enemyportrait="" animportrait=""/>
 	<facing name="Craig" dir=0/>
