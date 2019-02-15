@@ -461,7 +461,7 @@
 	<wait time=750/>
 	<stopse name="Olivia"/>
 	<wait time=350/>
-	<speech text="Someone is coming! hide!<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait=""/>
+	<speech text="Someone is coming! Hide!<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait=""/>
 	<move name="Huun" x=1392 y=192 speed="2.4" movehor=false movediag=false/>
 	<move name="Sharna" x=1368 y=192 speed="2.4" movehor=false movediag=false/>
 	<move name="Noah" x=1344 y=192 speed="2.4" movehor=false movediag=false/>
