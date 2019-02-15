@@ -1,4 +1,4 @@
-<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="60" height="60" tilewidth="12" tileheight="12" infinite="0" nextlayerid="15" nextobjectid="55">
+<map version="1.2" tiledversion="1.2.2" orientation="orthogonal" renderorder="right-down" width="60" height="60" tilewidth="12" tileheight="12" infinite="0" nextlayerid="15" nextobjectid="55">
 <properties>
 <property name="background" value="2"/>
 <property name="shadow" value="-13"/>
@@ -100,18 +100,18 @@ H4sIAAAAAAAACu3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAAAAAAAADwZkvEChtAOAAA
 <polygon points="0,0 72,0 72,120 0,120"/>
 </object>
 </objectgroup>
-<objectgroup id="11" name="Trigger Regions" visible="0">
+<objectgroup id="11" name="Trigger Regions">
 <object id="36" name="Shuffle" x="312" y="144" width="168" height="144">
 <properties>
 <property name="null" value=""/>
 </properties>
 </object>
-<object id="1" name="FromOverworld" x="360" y="672" width="24" height="24">
+<object id="1" name="FromWorldmap" x="360" y="672" width="24" height="24">
 <properties>
-<property name="start" value="exit=FromOverworld"/>
+<property name="start" value="exit=FromWorldmap"/>
 </properties>
 </object>
-<object id="2" name="ToOverworld" x="360" y="696" width="24" height="24">
+<object id="2" name="ToWorldmap" x="360" y="696" width="24" height="24">
 <properties>
 <property name="" value=""/>
 </properties>

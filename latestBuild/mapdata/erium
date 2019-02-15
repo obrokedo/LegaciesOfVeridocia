@@ -277,8 +277,8 @@
 <condition id=8 description="BartenderScolds" triggerid=16,>
 	<enterloc location="BartenderScold" immediate=false/>
 </condition>
-<condition id=9 description="ToOverworld" triggerid=23,27,>
-	<enterloc location="ToOverworld" immediate=false/>
+<condition id=9 description="ToWorldmap" triggerid=23,27,>
+	<enterloc location="ToWorldmap" immediate=false/>
 </condition>
 <condition id=10 description="MapLoad" triggerid=0,>
 	<maploaded/>

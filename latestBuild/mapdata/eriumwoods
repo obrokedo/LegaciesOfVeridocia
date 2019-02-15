@@ -1,12 +1,13 @@
 <map file="EriumWoods.tmx"/>
-<trigger id=0 description="MapStart" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+<trigger id=0 description="MapStart" require="" exclude="Battle 3," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<playmusic music="overworld" volume=75/>
+	<startbattle battletriggers="battle3" entrance="battlestart" battbg=2/>
 </trigger>
-<trigger id=1 description="ToWorldMap" require="" exclude="" nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+<trigger id=1 description="ToWorldMap" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<loadmap mapdata="worldmap" enter="FromCabin" transdir=""/>
 </trigger>
-<condition id=0 description="ToOverworld" triggerid=1,>
-	<enterloc location="ToOverworld" immediate=false/>
+<condition id=0 description="ToWorldmap" triggerid=1,>
+	<enterloc location="ToWorldmap" immediate=false/>
 </condition>
 <condition id=1 description="MapStart" triggerid=0,>
 	<maploaded/>
