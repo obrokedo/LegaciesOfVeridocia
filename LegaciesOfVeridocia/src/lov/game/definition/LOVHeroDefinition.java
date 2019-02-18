@@ -1,8 +1,11 @@
 package lov.game.definition;
 
+import lov.game.sprite.LOVCombatSprite;
 import lov.game.sprite.progression.LOVProgression;
 import tactical.game.constants.AttributeStrength;
 import tactical.game.definition.HeroDefinition;
+import tactical.game.sprite.CombatSprite;
+import tactical.game.sprite.HeroProgression;
 import tactical.game.sprite.Progression;
 import tactical.utils.XMLParser.TagArea;
 
@@ -84,5 +87,10 @@ public class LOVHeroDefinition extends HeroDefinition {
 				maxCounter[index], maxEvade[index], maxDouble[index], maxCrit[index], maxBody[index], maxMind[index],
 				bodyProgression[index], mindProgression[index], spellIds.get(index), spellsPerLevel.get(index),
 				specialPromotionItemId[index], className[index]);
+	}
+	
+	protected CombatSprite createNewCombatSprite(HeroProgression heroProgression) {
+		return new LOVCombatSprite(leader, name, animations, heroProgression,
+				level, 0, startsPromoted, id);
 	}
 }
