@@ -7,8 +7,8 @@
     <target name="create_run_jar">
         <jar destfile="${dir.jarfile}/LoV-Official.jar">
             <manifest>
-                <attribute name="Main-Class" value="mb.fc.engine.RunInJarLauncher"/>
-            	<attribute name="Launcher-Main-Class" value="mb.fc.engine.CommRPG"/>
+                <attribute name="Main-Class" value="tactical.engine.RunInJarLauncher"/>
+            	<attribute name="Launcher-Main-Class" value="lov.engine.LoVGame"/>
             	<attribute name="Launcher-VM-Args" value=""/>
             	<attribute name="Launcher-Args" value="injar"/>
                 <attribute name="Class-Path" value="."/>
