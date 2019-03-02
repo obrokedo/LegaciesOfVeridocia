@@ -3,12 +3,12 @@
 	<playmusic music="overworld" volume=75/>
 </trigger>
 <trigger id=1 description="ToErium" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<loadmap mapdata="erium" enter="FromWorldmap" transdir=""/>
+	<showcin cinid=1 exittrigid=-1/>
 </trigger>
 <trigger id=2 description="ToCabin" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<loadmap mapdata="eriumwoods" enter="FromWorldmap" transdir=""/>
 </trigger>
-<trigger id=3 description="CabinNotVisited" require="" exclude="Battle 3," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+<trigger id=3 description="CabinNotVisited" require="," exclude="Battle 3," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<showcin cinid=0 exittrigid=-1/>
 </trigger>
 <cinematic id=0 description="WarnPastCabin" camerax=0 cameray=0>
@@ -18,6 +18,12 @@
 	<haltingmovepath name="Noah" x=600 y=5136 speed="2.4"/>
 	<fadeout time=500 halting=true/>
 	<loadmap mapdata="eriumwoods" enter="FromWorldmap"/>
+</cinematic>
+<cinematic id=1 description="NoGoingBack" camerax=0 cameray=0>
+	<speech text="Oi. Are you mad!?<pause><linebreak> We can't go back!<pause> They'll catch you for sure!!<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
+	<assactor name="Noah" hero="Noah" enemyid=0 npcid=""/>
+	<camerafollow name="Noah"/>
+	<haltingmove name="Noah" x=696 y=5352 speed="2.4" movehor=false movediag=false/>
 </cinematic>
 <condition id=0 description="ToErium" triggerid=1,>
 	<enterloc location="ToErium" immediate=false/>
