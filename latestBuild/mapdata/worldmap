@@ -1,4 +1,4 @@
-<map file="world map.tmx"/>
+<map file="World Map.tmx"/>
 <trigger id=0 description="MapStart" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
 	<playmusic music="overworld" volume=75/>
 </trigger>
