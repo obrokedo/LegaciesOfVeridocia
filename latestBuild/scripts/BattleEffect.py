@@ -11,12 +11,13 @@ from Effects.Detox import Detox
 from Effects.Heal import Heal
 from Effects.Poison import Poison
 from Effects.Shock import Shock
+from Effects.DefenceUp import DefenceUp
 
 class BattleEffect(BattleEffectFactory):
     def getBattleEffectList(self):
         return jarray.array(["Poison", "Bleed", "Shock", "Burn", "Confusion",
                              "Frozen", "Sleep", "Petrify", "HP Drain", "Daze", 
-                             "Dispel", "Blind", "Addled", "Detox", "Heal"], String)
+                             "Dispel", "Blind", "Addled", "Detox", "Heal", "DefenceUp"], String)
     # Intialize the BattleEffects, generally this includes
     # setting duration
     def createEffect(self, id, level):
@@ -36,6 +37,8 @@ class BattleEffect(BattleEffectFactory):
             battleEffect = Heal()
         elif "Detox" == id:
             battleEffect = Detox()
+        elif "DefenceUp" == id:
+            battleEffect = DefenceUp()
         else:
             initChild = False
             battleEffect = BattleEffect()

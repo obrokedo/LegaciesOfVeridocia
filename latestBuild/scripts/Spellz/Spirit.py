@@ -27,7 +27,7 @@ class Spirit(SpellDefinition):
         return int(baseDamage)
     
     def getBattleText(self, target, damage, mpDamage, attackerHPDamage, attackerMPDamage):
-        return None
+        return "Spirit washes all over "
         
     def getExpGained(self, level, attacker, target):
         if self.name == "Heal":
@@ -43,6 +43,7 @@ class Spirit(SpellDefinition):
             
     # This is at 30% opacity    
     def getSpellOverlayColor(self, level):
-        
         return Color(0, 0, 0);
-        
+
+    def getSpellAnimationFile(self, level):
+        return "Blaze"

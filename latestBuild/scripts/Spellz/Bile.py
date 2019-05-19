@@ -29,12 +29,12 @@ class Bile(SpellDefinition):
         #    TWO_NO_ONE,
         #    THREE_NO_ONE,
         #    THREE_NO_ONE_OR_TWO;
-        self.setCosts(jarray.array([2, 5, 8, 12], 'i'))
+        self.setCosts(jarray.array([1, 1, 1, 1], 'i'))
         # This is the amount of damage each level of the spell will do, negative values are DEALING damage,
         # positive values HEAL for this much
-        self.setDamage(jarray.array([-6, -8, -15, -40], 'i'))
+        self.setDamage(jarray.array([-6, -1, -1, -1], 'i'))
         # See above for range: Describes the range of the spell for each spell level.             
-        self.setRange(jarray.array([Range.TWO_AND_LESS, Range.TWO_AND_LESS, Range.TWO_AND_LESS, Range.TWO_AND_LESS], Range))
+        self.setRange(jarray.array([Range.ONE_ONLY, Range.ONE_ONLY, Range.ONE_ONLY, Range.ONE_ONLY], Range))
         # Sets the area of the spell per spell level
         # 1 = X X X
         #     X O X
@@ -45,7 +45,7 @@ class Bile(SpellDefinition):
         #     X O X
         # 3... etc
         # 0 = All targets on the battlefield 
-        self.setArea(jarray.array([1, 2, 2, 1], 'i'))
+        self.setArea(jarray.array([1, 1, 1, 1], 'i'))
         # Whether this spell targets the casters enemies or allies
         # 0 = Targets allies (this means the CASTERS allies)
         # 1 = Targets enemies (this means the CASTERS enemies)

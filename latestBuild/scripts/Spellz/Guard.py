@@ -5,8 +5,6 @@ from tactical.game import Range
 from org.newdawn.slick import Color
 from java.lang import String
 from BattleEffect import BattleEffect
-from ParticleEmitter import RainParticleEmitter
-from ParticleEmitter import RandomHorizontalParticleEmitter
 
 import CommonFunctions
 
@@ -29,12 +27,12 @@ class Guard(SpellDefinition):
         #    TWO_NO_ONE,
         #    THREE_NO_ONE,
         #    THREE_NO_ONE_OR_TWO;
-        self.setCosts(jarray.array([2, 5, 8, 12], 'i'))
+        self.setCosts(jarray.array([3, 6, 20, 20], 'i'))
         # This is the amount of damage each level of the spell will do, negative values are DEALING damage,
         # positive values HEAL for this much
         self.setDamage(jarray.array([-6, -8, -15, -40], 'i'))
         # See above for range: Describes the range of the spell for each spell level.             
-        self.setRange(jarray.array([Range.TWO_AND_LESS, Range.TWO_AND_LESS, Range.TWO_AND_LESS, Range.TWO_AND_LESS], Range))
+        self.setRange(jarray.array([Range.TWO_AND_LESS, Range.TWO_AND_LESS, Range.THREE_AND_LESS, Range.SELF_ONLY], Range))
         # Sets the area of the spell per spell level
         # 1 = X X X
         #     X O X
@@ -45,12 +43,12 @@ class Guard(SpellDefinition):
         #     X O X
         # 3... etc
         # 0 = All targets on the battlefield 
-        self.setArea(jarray.array([1, 2, 2, 1], 'i'))
+        self.setArea(jarray.array([1, 1, 2, 3], 'i'))
         # Whether this spell targets the casters enemies or allies
         # 0 = Targets allies (this means the CASTERS allies)
         # 1 = Targets enemies (this means the CASTERS enemies)
         # 2 = Targets anyone       
-        self.setTargetsEnemy(1)
+        self.setTargetsEnemy(0)
         # The maximum level of spell that can be learned
         self.setMaxLevel(4)
         # Indicates whether the spells animation should loop     
@@ -63,10 +61,10 @@ class Guard(SpellDefinition):
         # No effects = []
         # 1 effect = ["Effect"]
         # Many effects = ["Effect1", "Effect2"...]
-        self.setEffects(jarray.array(["Burn"], String), 1) # Level 1 battle effects
-        self.setEffects(jarray.array(["Burn"], String), 2) # Level 2 battle effects
-        self.setEffects(jarray.array(["Burn"], String), 3) # Level 3 battle effects
-        self.setEffects(jarray.array(["Burn"], String), 4) # Level 4 battle effects
+        self.setEffects(jarray.array(["DefenceUp"], String), 1) # Level 1 battle effects
+        self.setEffects(jarray.array(["DefenceUp"], String), 2) # Level 2 battle effects
+        self.setEffects(jarray.array(["DefenceUp"], String), 3) # Level 3 battle effects
+        self.setEffects(jarray.array(["DefenceUp"], String), 4) # Level 4 battle effects
         
         # Set the effect level for each of the effects specified
         # For effects that don't have levels a value of 1 should be specified
@@ -89,15 +87,10 @@ class Guard(SpellDefinition):
     # getCurrentWindAffin()
     # getCurrentLightAffin()
     def getEffectiveDamage(self, attacker, target, spellLevel):
-        baseDamage = self.getDamage()[spellLevel]
-        # Keep in mind that damaging spells will have a negative base damage value. 
-        # The damage should never be above -1
-        return int(Math.min(-1, baseDamage 
-            + (baseDamage * attacker.getCurrentFireAffin() / 100.0) # Subtract the casters Affin (which adds damage)
-            - (baseDamage * target.getCurrentFireAffin() / 100.0))) # Add the targets Affin (which reduces damage)
+        return 0
     
     def getBattleText(self, target, damage, mpDamage, attackerHPDamage, attackerMPDamage):
-        return "Flame engulfs " + target.getName() + "'s body dealing " + `damage * -1` + " damage!"
+        return "Guard spell was cast"
         
     def getExpGained(self, level, attacker, target):
         # Call the common method
@@ -108,37 +101,8 @@ class Guard(SpellDefinition):
         return Color(255, 0, 0)
     
     def getSpellAnimationFile(self, level):
-        return "Blaze"
+        return "GuardUp"
     
-    # To turn OFF rain animation just return None here
-    # return None
-    def getSpellRainAnimationFile(self, level):
-        # return "Flame"
-        return "Blaze"
-    
-    def getSpellRainAnimationName(self, level):
-        return "level"+str(level)
-        
-    def getSpellRainFrequency(self, level):
-        return 100*level
-    
-    def getEmitter(self, level):
-        # You could create a emitter with sounds here
-        # For example, new particle plays "fall", particle end plays "blast"
-        soundTime = 0
-        if level == 1:
-            soundTime = 240
-        elif level == 2:
-            soundTime = 300
-        elif level == 3:
-            soundTime = 375
-        elif level == 4:
-            soundTime = 375
-            
-        return RandomHorizontalParticleEmitter(None, "Explosion1", soundTime)
-        #return RandomHorizontalParticleEmitter()
-        #return RainParticleEmitter()
-        
     def getEffectChance(self, caster, level):
         # Return the base chance for an effect to take place
         # Likely useful values...
@@ -152,4 +116,4 @@ class Guard(SpellDefinition):
         # caster.getCurrentWindAffin()
         # caster.getCurrentEarthAffin()
         # caster.getCurrentLightAffin()
-        return level * (6 - self.getArea()[level]) + caster.getCurrentMind() + caster.getCurrentFireAffin()
+        return 100 #level * (6 - self.getArea()[level]) + caster.getCurrentMind()

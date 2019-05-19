@@ -6,6 +6,8 @@ from org.newdawn.slick import Color
 from java.lang import String
 from BattleEffect import BattleEffect
 
+import CommonFunctions
+
 class Lightning(SpellDefinition):    
     # This is where you set up all of the parameters for each of the spells    
     def __init__(self):
@@ -26,12 +28,14 @@ class Lightning(SpellDefinition):
         return int(baseDamage)
     
     def getBattleText(self, target, damage, mpDamage, attackerHPDamage, attackerMPDamage):
-        return None
+        return "Lightning thigns happened"
         
     def getExpGained(self, level, attacker, target):
-        return -1
+        return CommonFunctions.defaultSpellExpGained(self, level, attacker, target)
             
     # This is at 30% opacity    
     def getSpellOverlayColor(self, level):
         return Color(0, 0, 0);
-        
+
+    def getSpellAnimationFile(self, level):
+        return "Blaze"
