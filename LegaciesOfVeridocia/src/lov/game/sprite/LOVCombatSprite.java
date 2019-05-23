@@ -265,12 +265,20 @@ public class LOVCombatSprite extends CombatSprite
 		return currentFireAffin;
 	}
 
+	public void setCurrentFireAffin(int value) {
+		this.currentFireAffin = value;
+	}
+
 	public int getMaxFireAffin() {
 		return maxFireAffin;
 	}
 
 	public int getCurrentElecAffin() {
 		return currentElecAffin;
+	}
+
+	public void setCurrentElecAffin(int value) {
+		this.currentElecAffin = value;
 	}
 
 	public int getMaxElecAffin() {
@@ -281,12 +289,20 @@ public class LOVCombatSprite extends CombatSprite
 		return currentColdAffin;
 	}
 
+	public void setCurrentColdAffin(int value) {
+		this.currentColdAffin = value;
+	}
+
 	public int getMaxColdAffin() {
 		return maxColdAffin;
 	}
 
 	public int getCurrentDarkAffin() {
 		return currentDarkAffin;
+	}
+
+	public void setCurrentDarkAffin(int value) {
+		this.currentDarkAffin = value;
 	}
 
 	public int getMaxDarkAffin() {
@@ -297,12 +313,20 @@ public class LOVCombatSprite extends CombatSprite
 		return currentWaterAffin;
 	}
 
+	public void setCurrentWaterAffin(int value) {
+		this.currentWaterAffin = value;
+	}
+
 	public int getMaxWaterAffin() {
 		return maxWaterAffin;
 	}
 
 	public int getCurrentEarthAffin() {
 		return currentEarthAffin;
+	}
+
+	public void setCurrentEarthAffin(int value) {
+		this.currentEarthAffin = value;
 	}
 
 	public int getMaxEarthAffin() {
@@ -313,12 +337,20 @@ public class LOVCombatSprite extends CombatSprite
 		return currentWindAffin;
 	}
 
+	public void setCurrentWindAffin(int value) {
+		this.currentWindAffin = value;
+	}
+
 	public int getMaxWindAffin() {
 		return maxWindAffin;
 	}
 
 	public int getCurrentLightAffin() {
 		return currentLightAffin;
+	}
+
+	public void setCurrentLightAffin(int value) {
+		this.currentLightAffin = value;
 	}
 
 	public int getMaxLightAffin() {
@@ -329,12 +361,20 @@ public class LOVCombatSprite extends CombatSprite
 		return currentBody;
 	}
 
+	public void setCurrentBody(int value) {
+		this.currentBody = value;
+	}
+
 	public int getMaxBody() {
 		return maxBody;
 	}
 
 	public int getCurrentMind() {
 		return currentMind;
+	}
+
+	public void setCurrentMind(int value) {
+		this.currentMind = value;
 	}
 
 	public int getMaxMind() {
