@@ -14,6 +14,9 @@ from Spellz.Spirit import Spirit
 from Spellz.Bile import Bile
 from Spellz.Freeze import Freeze
 from Spellz.Guard import Guard
+from Spellz.Power import Power
+from Spellz.Momentum import Momentum
+from Spellz.Delirium import Delirium
 
 class Spells(SpellFactory):    
     # This defines the id for each spell in the game.
@@ -46,6 +49,12 @@ class Spells(SpellFactory):
             spell = Freeze()
         elif "GUARD" == id:
             spell = Guard()
+        elif "POWER" == id:
+            spell = Power()
+        elif "MOMENTUM" == id:
+            spell = Momentum();
+        elif "DELIRIUM" == id:
+            spell = Delirium();
         else:
             spell = None
             print "BAD SPELL " + id

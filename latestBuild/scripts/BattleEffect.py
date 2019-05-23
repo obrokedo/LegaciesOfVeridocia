@@ -12,12 +12,24 @@ from Effects.Heal import Heal
 from Effects.Poison import Poison
 from Effects.Shock import Shock
 from Effects.DefenceUp import DefenceUp
+from Effects.BodyUp import BodyUp
+from Effects.ResistanceUp import ResistanceUp
+from Effects.MindUp import MindUp
+from Effects.AttackUp import AttackUp
+from Effects.StrikeUp import StrikeUp
+from Effects.SpeedUp import SpeedUp
+from Effects.MovementUp import MovementUp
+from Effects.Addled import Addled
+from Effects.Dispel import Dispel
+from Effects.Confusion import Confusion
 
 class BattleEffect(BattleEffectFactory):
     def getBattleEffectList(self):
         return jarray.array(["Poison", "Bleed", "Shock", "Burn", "Confusion",
                              "Frozen", "Sleep", "Petrify", "HP Drain", "Daze", 
-                             "Dispel", "Blind", "Addled", "Detox", "Heal", "DefenceUp"], String)
+                             "Dispel", "Blind", "Addled", "Detox", "Heal", 
+                             "DefenceUp", "BodyUp", "ResistanceUp", "MindUp",
+                             "AttackUp", "StrikeUp"], String)
     # Intialize the BattleEffects, generally this includes
     # setting duration
     def createEffect(self, id, level):
@@ -39,6 +51,26 @@ class BattleEffect(BattleEffectFactory):
             battleEffect = Detox()
         elif "DefenceUp" == id:
             battleEffect = DefenceUp()
+        elif "BodyUp" == id:
+            battleEffect = BodyUp()
+        elif "ResistanceUp" == id:
+            battleEffect = ResistanceUp()
+        elif "MindUp" == id:
+            battleEffect = MindUp()
+        elif "AttackUp" == id:
+            battleEffect = AttackUp()
+        elif "StrikeUp" == id:
+            battleEffect = StrikeUp()
+        elif "MovementUp" == id:
+            battleEffect = MovementUp()
+        elif "SpeedUp" == id:
+            battleEffect = SpeedUp()
+        elif "Addled" == id:
+            battleEffect = Addled()
+        elif "Confusion" == id:
+            battleEffect = Confusion()
+        elif "Dispel" == id:
+            battleEffect = Dispel()
         else:
             initChild = False
             battleEffect = BattleEffect()

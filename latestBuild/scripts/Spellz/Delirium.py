@@ -8,11 +8,11 @@ from BattleEffect import BattleEffect
 
 import CommonFunctions
 
-class Guard(SpellDefinition):    
+class Delirium(SpellDefinition):    
     # This is where you set up all of the parameters for each of the spells    
     def __init__(self):
         # The spell name as it should appear to players
-        self.setName("Guard")
+        self.setName("Delirium")
         # The cost in MP per level of the spell, where the first index is in the array is for first level
         # second index is for second level, etc. The final attribute outside of the brackets describes the
         # type of values contained within the array. In this case 'i' = integer
@@ -27,12 +27,12 @@ class Guard(SpellDefinition):
         #    TWO_NO_ONE,
         #    THREE_NO_ONE,
         #    THREE_NO_ONE_OR_TWO;
-        self.setCosts(jarray.array([3, 6, 20, 20], 'i'))
+        self.setCosts(jarray.array([4, 8, 15, 30], 'i'))
         # This is the amount of damage each level of the spell will do, negative values are DEALING damage,
         # positive values HEAL for this much
         self.setDamage(jarray.array([0, 0, 0, 0], 'i'))
         # See above for range: Describes the range of the spell for each spell level.             
-        self.setRange(jarray.array([Range.TWO_AND_LESS, Range.TWO_AND_LESS, Range.THREE_AND_LESS, Range.SELF_ONLY], Range))
+        self.setRange(jarray.array([Range.TWO_AND_LESS, Range.TWO_AND_LESS, Range.TWO_AND_LESS, Range.THREE_AND_LESS], Range))
         # Sets the area of the spell per spell level
         # 1 = X X X
         #     X O X
@@ -61,20 +61,20 @@ class Guard(SpellDefinition):
         # No effects = []
         # 1 effect = ["Effect"]
         # Many effects = ["Effect1", "Effect2"...]
-        self.setEffects(jarray.array(["DefenceUp", "BodyUp"], String), 1) # Level 1 battle effects
-        self.setEffects(jarray.array(["DefenceUp", "BodyUp"], String), 2) # Level 2 battle effects
-        self.setEffects(jarray.array(["DefenceUp", "BodyUp"], String), 3) # Level 3 battle effects
-        self.setEffects(jarray.array(["DefenceUp", "BodyUp"], String), 4) # Level 4 battle effects
+        self.setEffects(jarray.array(["Addled"], String), 1) # Level 1 battle effects
+        self.setEffects(jarray.array(["Addled", "Dispel"], String), 2) # Level 2 battle effects
+        self.setEffects(jarray.array(["Addled", "Confusion"], String), 3) # Level 3 battle effects
+        self.setEffects(jarray.array(["Addled", "Dispel", "Confusion"], String), 4) # Level 4 battle effects
         
         # Set the effect level for each of the effects specified
         # For effects that don't have levels a value of 1 should be specified
         # No effects = []
         # 1 effect = [1]
         # Many effects = [1, 2...]
-        self.setEffectLevel(jarray.array([1,1], 'i'), 1) # Level 1 battle effects
+        self.setEffectLevel(jarray.array([1], 'i'), 1) # Level 1 battle effects
         self.setEffectLevel(jarray.array([2,2], 'i'), 2) # Level 2 battle effects
         self.setEffectLevel(jarray.array([3,3], 'i'), 3) # Level 3 battle effects
-        self.setEffectLevel(jarray.array([4,4], 'i'), 4) # Level 4 battle effects
+        self.setEffectLevel(jarray.array([4,4,4], 'i'), 4) # Level 4 battle effects
     
     # Affin methods are
     #----------------------
@@ -90,7 +90,7 @@ class Guard(SpellDefinition):
         return 0
     
     def getBattleText(self, target, damage, mpDamage, attackerHPDamage, attackerMPDamage):
-        return "Guard spell was cast"
+        return "Delirium spell was cast"
         
     def getExpGained(self, level, attacker, target):
         # Call the common method

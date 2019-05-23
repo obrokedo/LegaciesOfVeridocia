@@ -6,14 +6,14 @@ from java.util import ArrayList;
 from tactical.game.sprite import CombatSprite
 import random
 
-class DefenceUp(BattleEffect):
+class AttackUp(BattleEffect):
 
     effectValue = 0
     def __init__(self, level = 0):
         return None
         
     def getName(self):
-        return "DefenceUp"
+        return "AttackUp"
     
     # This action is performed on each subsequent turn after the effect is applied
     # This should return a string that will be displayed to the user each time the
@@ -30,26 +30,26 @@ class DefenceUp(BattleEffect):
         #self.moveReduction =  effectLevel - 1
         #target.setCurrentMove(target.getCurrentMove() - self.moveReduction)
         if effectLevel == 1:
-            self.effectValue = int(target.getCurrentDefense() * 0.25)
+            self.effectValue = int(target.getCurrentAttack() * 0.25)
         elif effectLevel == 2:
-            self.effectValue = int(target.getCurrentDefense() * 0.30)
+            self.effectValue = int(target.getCurrentAttack() * 0.30)
         elif effectLevel == 3:
-            self.effectValue = int(target.getCurrentDefense() * 0.35)
+            self.effectValue = int(target.getCurrentAttack() * 0.35)
         elif effectLevel == 4:
-            self.effectValue = int(target.getCurrentDefense() * 0.40)
+            self.effectValue = int(target.getCurrentAttack() * 0.40)
 
-        target.setCurrentDefense(target.getCurrentDefense() + self.effectValue)
+        target.setCurrentAttack(target.getCurrentAttack() + self.effectValue)
          
         return None;
     
     # This is the text indicating what effect has been applied
     def effectStartedText(self, attacker, target):
-        return target.getName() + " defence was raised."
+        return target.getName() + " attack was raised."
         
     # Returns what should be displayed when the effects ends. Additonally
     # this should reset any stats that have been changed as a result of this effect
     def effectEnded(self, target):
-        target.setCurrentDefense(target.getCurrentDefense() - self.effectValue)
+        target.setCurrentAttack(target.getCurrentAttack() - self.effectValue)
         return target.getName() + " has returned back to normal."
     
     # target is the target of the effect
