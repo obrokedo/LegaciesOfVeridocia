@@ -17,6 +17,8 @@ from Spellz.Guard import Guard
 from Spellz.Power import Power
 from Spellz.Momentum import Momentum
 from Spellz.Delirium import Delirium
+from Spellz.Inferno import Inferno
+from Spellz.Blizzard import Blizzard
 
 class Spells(SpellFactory):    
     # This defines the id for each spell in the game.
@@ -25,7 +27,7 @@ class Spells(SpellFactory):
                              "DESOUL", "SLEEP", "EGRESS", "BLAZE", "FREEZE", "BOLT", "BLAST",
                              "POWER", "TORRENT", "GUARD", "BOULDER", "INFERNO", "SPIRIT", "MOMENTUM",
                              "BURST", "DELIRIUM", "GUST", "FLOOD", "CYCLONE", "FIRE BREATH", "HP&MP DRAIN", 
-                             "LIGHTNING", "ION BLAST", "QUAKE", "FLARE", "BILE", "ERUPT"], String)
+                             "LIGHTNING", "ION BLAST", "QUAKE", "FLARE", "BILE", "ERUPT", "BLIZZARD"], String)
     # This is where you set up all of the parameters for each of the spells    
     def createSpell(self, id):
         # This value should appear in the array returned from the spell list above
@@ -55,6 +57,10 @@ class Spells(SpellFactory):
             spell = Momentum();
         elif "DELIRIUM" == id:
             spell = Delirium();
+        elif "INFERNO" == id:
+            spell = Inferno();
+        elif "BLIZZARD" == id:
+            spell = Blizzard();
         else:
             spell = None
             print "BAD SPELL " + id

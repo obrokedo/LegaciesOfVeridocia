@@ -10,11 +10,11 @@ from ParticleEmitter import RandomHorizontalParticleEmitter
 
 import CommonFunctions
 
-class Freeze(SpellDefinition):    
+class Blizzard(SpellDefinition):    
     # This is where you set up all of the parameters for each of the spells    
     def __init__(self):
         # The spell name as it should appear to players
-        self.setName("Freeze")
+        self.setName("Blizzard")
         # The cost in MP per level of the spell, where the first index is in the array is for first level
         # second index is for second level, etc. The final attribute outside of the brackets describes the
         # type of values contained within the array. In this case 'i' = integer
@@ -29,12 +29,12 @@ class Freeze(SpellDefinition):
         #    TWO_NO_ONE,
         #    THREE_NO_ONE,
         #    THREE_NO_ONE_OR_TWO;
-        self.setCosts(jarray.array([3, 5, 17, 17], 'i'))
+        self.setCosts(jarray.array([13, 20, 30, 30], 'i'))
         # This is the amount of damage each level of the spell will do, negative values are DEALING damage,
         # positive values HEAL for this much
-        self.setDamage(jarray.array([-10, -15, -25, -50], 'i'))
+        self.setDamage(jarray.array([-20, -30, -34, -45], 'i'))
         # See above for range: Describes the range of the spell for each spell level.             
-        self.setRange(jarray.array([Range.TWO_AND_LESS, Range.THREE_AND_LESS, Range.THREE_AND_LESS, Range.THREE_AND_LESS], Range))
+        self.setRange(jarray.array([Range.THREE_AND_LESS, Range.THREE_AND_LESS, Range.THREE_AND_LESS, Range.THREE_AND_LESS], Range))
         # Sets the area of the spell per spell level
         # 1 = X X X
         #     X O X
@@ -45,7 +45,7 @@ class Freeze(SpellDefinition):
         #     X O X
         # 3... etc
         # 0 = All targets on the battlefield 
-        self.setArea(jarray.array([1, 1, 2, 1], 'i'))
+        self.setArea(jarray.array([2, 2, 3, 2], 'i'))
         # Whether this spell targets the casters enemies or allies
         # 0 = Targets allies (this means the CASTERS allies)
         # 1 = Targets enemies (this means the CASTERS enemies)

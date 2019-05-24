@@ -22,6 +22,7 @@ from Effects.MovementUp import MovementUp
 from Effects.Addled import Addled
 from Effects.Dispel import Dispel
 from Effects.Confusion import Confusion
+from Effects.Frozen import Frozen
 
 class BattleEffect(BattleEffectFactory):
     def getBattleEffectList(self):
@@ -71,6 +72,8 @@ class BattleEffect(BattleEffectFactory):
             battleEffect = Confusion()
         elif "Dispel" == id:
             battleEffect = Dispel()
+        elif "Frozen" == id:
+            battleEffect = Frozen()
         else:
             initChild = False
             battleEffect = BattleEffect()

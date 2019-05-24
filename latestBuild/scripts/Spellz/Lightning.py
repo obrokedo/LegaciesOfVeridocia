@@ -22,6 +22,15 @@ class Lightning(SpellDefinition):
         self.setLoops(1)   
         # The number specified here is an index into the SpellIcons image file starting from 0
         self.setSpellIconIndex(4)
+
+        self.setEffects(jarray.array(["Shock"], String), 1) # Level 1 battle effects
+        self.setEffects(jarray.array(["Shock"], String), 2) # Level 2 battle effects
+        self.setEffects(jarray.array(["Shock"], String), 3) # Level 3 battle effects
+        self.setEffects(jarray.array(["Shock"], String), 4) # Level 4 battle effects
+        self.setEffectLevel(jarray.array([1], 'i'), 1) # Level 1 battle effects
+        self.setEffectLevel(jarray.array([2], 'i'), 2) # Level 2 battle effects
+        self.setEffectLevel(jarray.array([3], 'i'), 3) # Level 3 battle effects
+        self.setEffectLevel(jarray.array([4], 'i'), 4) # Level 4 battle effects
     
     def getEffectiveDamage(self, attacker, target, spellLevel):
         baseDamage = self.getDamage()[spellLevel]
