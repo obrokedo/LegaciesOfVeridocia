@@ -19,6 +19,16 @@ from Spellz.Momentum import Momentum
 from Spellz.Delirium import Delirium
 from Spellz.Inferno import Inferno
 from Spellz.Blizzard import Blizzard
+from Spellz.Desoul import Desoul
+from Spellz.Plague import Plague
+from Spellz.Boulder import Boulder
+from Spellz.Quake import Quake
+from Spellz.Torrent import Torrent
+from Spellz.Flood import Flood
+from Spellz.Gust import Gust
+from Spellz.Cyclone import Cyclone
+from Spellz.Burst import Burst
+from Spellz.Flare import Flare
 
 class Spells(SpellFactory):    
     # This defines the id for each spell in the game.
@@ -27,7 +37,8 @@ class Spells(SpellFactory):
                              "DESOUL", "SLEEP", "EGRESS", "BLAZE", "FREEZE", "BOLT", "BLAST",
                              "POWER", "TORRENT", "GUARD", "BOULDER", "INFERNO", "SPIRIT", "MOMENTUM",
                              "BURST", "DELIRIUM", "GUST", "FLOOD", "CYCLONE", "FIRE BREATH", "HP&MP DRAIN", 
-                             "LIGHTNING", "ION BLAST", "QUAKE", "FLARE", "BILE", "ERUPT", "BLIZZARD"], String)
+                             "LIGHTNING", "ION BLAST", "QUAKE", "FLARE", "BILE", "ERUPT", "BLIZZARD",
+                             "PLAGUE"], String)
     # This is where you set up all of the parameters for each of the spells    
     def createSpell(self, id):
         # This value should appear in the array returned from the spell list above
@@ -61,6 +72,26 @@ class Spells(SpellFactory):
             spell = Inferno();
         elif "BLIZZARD" == id:
             spell = Blizzard();
+        elif "DESOUL" == id:
+            spell = Desoul();
+        elif "PLAGUE" == id:
+            spell = Plague();
+        elif "BOULDER" == id:
+            spell = Boulder();
+        elif "QUAKE" == id:
+            spell = Quake();
+        elif "TORRENT" == id:
+            spell = Torrent();
+        elif "FLOOD" == id:
+            spell = Flood();
+        elif "GUST" == id:
+            spell = Gust();
+        elif "CYCLONE" == id:
+            spell = Cyclone();
+        elif "BURST" == id:
+            spell = Burst();
+        elif "FLARE" == id:
+            spell = Flare();
         else:
             spell = None
             print "BAD SPELL " + id
