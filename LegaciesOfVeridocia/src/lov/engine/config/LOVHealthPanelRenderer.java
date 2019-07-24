@@ -19,8 +19,8 @@ public class LOVHealthPanelRenderer implements HealthPanelRenderer {
 	{
 		// Determine panel width by max hp of entity
 		int width = 75;
-		int healthWidth = (int) (Math.min(100, sprite.getMaxHP()) * 1.49);
-		int mpWidth = (int) (Math.min(100, sprite.getMaxMP()) * 1.49);
+		int healthWidth = (int) (Math.min(100, sprite.getMaxHP()) * 1.45);
+		int mpWidth = (int) (Math.min(100, sprite.getMaxMP()) * 1.45);
 		width = Math.max(width, 22 + healthWidth + StringUtils.getStringWidth(sprite.getMaxHP() + " / " + sprite.getMaxHP(), panelFont));
 		width = Math.max(width, 22 + mpWidth + StringUtils.getStringWidth(sprite.getMaxMP() + " / " + sprite.getMaxMP(), panelFont));
 		if (sprite.isHero())
@@ -31,7 +31,7 @@ public class LOVHealthPanelRenderer implements HealthPanelRenderer {
 		else
 			width = Math.max(width, StringUtils.getStringWidth(sprite.getName(), panelFont) + 15);
 		
-		int height = 25 + (sprite.getMaxMP() != 0 ? 10 : 0);
+		int height = 30 + (sprite.getMaxMP() != 0 ? 9 : 0);
 		int x = 0;
 		int y = 0;
 
@@ -54,10 +54,10 @@ public class LOVHealthPanelRenderer implements HealthPanelRenderer {
 		graphics.setColor(Panel.COLOR_FOREFRONT);
 		if (sprite.isHero()) {
 			StringUtils.drawString(sprite.getName() + " Lv " +
-				sprite.getLevel(), x + 7, y - 5, graphics);
+				sprite.getLevel(), x + 7, y - 4, graphics);
 		}
 		else
-			StringUtils.drawString(sprite.getName(), x + 7, y - 5, graphics);
+			StringUtils.drawString(sprite.getName(), x + 7, y - 4, graphics);
 		
 		// Draw health bars
 		int largestBarWidth = Math.max(healthWidth, mpWidth) + x + 23;
@@ -65,10 +65,10 @@ public class LOVHealthPanelRenderer implements HealthPanelRenderer {
 		int maxStatDigits = Math.max(("" + sprite.getMaxHP()).length(), ("" + sprite.getMaxMP()).length());
 		
 		drawStatBar("HP", Math.max(0, sprite.getCurrentHP()), sprite.getMaxHP(), 
-				maxStatDigits, healthWidth, largestBarWidth, x + 7, y + 3, graphics, sprite.isHero(), fcrm);
+				maxStatDigits, healthWidth, largestBarWidth, x + 7, y + 5, graphics, sprite.isHero(), fcrm);
 		if (sprite.getMaxMP() != 0)
 			drawStatBar("MP", sprite.getCurrentMP(), sprite.getMaxMP(), 
-					maxStatDigits, mpWidth, largestBarWidth, x + 7, y + 12, graphics, sprite.isHero(), fcrm);
+					maxStatDigits, mpWidth, largestBarWidth, x + 7, y + 14, graphics, sprite.isHero(), fcrm);
 	}
 	
 	private void drawStatBar(String statName, int currStat, int maxStat, int maxDigits,int barWidth, 
