@@ -1,0 +1,10 @@
+<animations spriteSheet="LNC-11-MoonLance.sprites" ver="1.2">
+<anim name="attack" loops="1">
+<cell index="0" delay="50">
+<spr name="/weapon/Frame0" x="0" y="0" z="0"/>
+</cell>
+<cell index="0" delay="50">
+<spr name="/weapon/Frame1" x="0" y="0" z="0"/>
+</cell>
+</anim>
+</animations>

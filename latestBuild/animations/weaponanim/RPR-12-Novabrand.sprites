@@ -1,0 +1,54 @@
+<img name="RPR-12-Novabrand.png" w="2128" h="24">
+
+	<definitions>
+
+		<dir name="/">
+
+			<dir name="weapon">
+
+				<spr name="Frame0" x="0" y="0" w="112" h="24"/>
+
+				<spr name="Frame1" x="112" y="0" w="112" h="24"/>
+
+				<spr name="Frame2" x="224" y="0" w="112" h="24"/>
+
+				<spr name="Frame3" x="336" y="0" w="112" h="24"/>
+
+				<spr name="Frame4" x="448" y="0" w="112" h="24"/>
+
+				<spr name="Frame5" x="560" y="0" w="112" h="24"/>
+
+				<spr name="Frame6" x="672" y="0" w="112" h="24"/>
+
+				<spr name="Frame7" x="784" y="0" w="112" h="24"/>
+
+				<spr name="Frame8" x="896" y="0" w="112" h="24"/>
+
+				<spr name="Frame9" x="1008" y="0" w="112" h="24"/>
+
+				<spr name="Frame10" x="1120" y="0" w="112" h="24"/>
+
+				<spr name="Frame11" x="1232" y="0" w="112" h="24"/>
+
+				<spr name="Frame12" x="1344" y="0" w="112" h="24"/>
+
+				<spr name="Frame13" x="1456" y="0" w="112" h="24"/>
+
+				<spr name="Frame14" x="1568" y="0" w="112" h="24"/>
+
+				<spr name="Frame15" x="1680" y="0" w="112" h="24"/>
+
+				<spr name="Frame16" x="1792" y="0" w="112" h="24"/>
+
+				<spr name="Frame17" x="1904" y="0" w="112" h="24"/>
+
+				<spr name="Frame18" x="2016" y="0" w="112" h="24"/>
+
+			</dir>
+
+		</dir>
+
+	</definitions>
+
+</img>
+

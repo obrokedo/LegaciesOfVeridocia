@@ -1,0 +1,20 @@
+<img name="LNC-11-MoonLance.png" w="224" h="24">
+
+	<definitions>
+
+		<dir name="/">
+
+			<dir name="weapon">
+
+				<spr name="Frame0" x="0" y="0" w="112" h="24"/>
+
+				<spr name="Frame1" x="112" y="0" w="112" h="24"/>
+
+			</dir>
+
+		</dir>
+
+	</definitions>
+
+</img>
+

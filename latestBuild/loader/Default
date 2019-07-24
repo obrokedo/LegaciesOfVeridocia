@@ -4,6 +4,8 @@ musicdir,music
 sounddir,sound
 // Load all animation sheets
 animsheetdir,animations/animationsheets
+// Load all animation sheets
+animsheetdir,animations/weaponanim
 // Load all of the static sprites
 spritedir,sprite
 // Load all weapons

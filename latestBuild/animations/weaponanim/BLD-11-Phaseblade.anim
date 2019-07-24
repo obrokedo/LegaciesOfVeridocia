@@ -1,0 +1,34 @@
+<animations spriteSheet="BLD-11-Phaseblade.sprites" ver="1.2">
+<anim name="attack" loops="1">
+<cell index="0" delay="30">
+<spr name="/weapon/Frame0" x="0" y="0" z="0"/>
+</cell>
+<cell index="0" delay="30">
+<spr name="/weapon/Frame1" x="0" y="0" z="0"/>
+</cell>
+<cell index="0" delay="30">
+<spr name="/weapon/Frame2" x="0" y="0" z="0"/>
+</cell>
+<cell index="0" delay="30">
+<spr name="/weapon/Frame3" x="0" y="0" z="0"/>
+</cell>
+<cell index="0" delay="30">
+<spr name="/weapon/Frame4" x="0" y="0" z="0"/>
+</cell>
+<cell index="0" delay="30">
+<spr name="/weapon/Frame5" x="0" y="0" z="0"/>
+</cell>
+<cell index="0" delay="30">
+<spr name="/weapon/Frame6" x="0" y="0" z="0"/>
+</cell>
+<cell index="0" delay="30">
+<spr name="/weapon/Frame7" x="0" y="0" z="0"/>
+</cell>
+<cell index="0" delay="30">
+<spr name="/weapon/Frame8" x="0" y="0" z="0"/>
+</cell>
+<cell index="0" delay="30">
+<spr name="/weapon/Frame9" x="0" y="0" z="0"/>
+</cell>
+</anim>
+</animations>
