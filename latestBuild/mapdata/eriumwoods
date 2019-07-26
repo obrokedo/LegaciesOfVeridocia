@@ -1,29 +1,31 @@
+<area>
 <map file="EriumWoods.tmx"/>
-<trigger id=0 description="MapStart" require="," exclude="Battle 3," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<playmusic music="overworld" volume=75/>
-	<runtriggers triggers=4,/>
+<trigger id="0" description="MapStart" require="," exclude="Battle 3," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<playmusic music="overworld" volume="75"/>
+	<runtriggers triggers="4,"/>
 </trigger>
-<trigger id=1 description="ToWorldMap" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+<trigger id="1" description="ToWorldMap" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<loadmap mapdata="worldmap" enter="FromCabin" transdir=""/>
 </trigger>
-<trigger id=2 description="Battle Prep" require="" exclude="" nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<showtext textid=0/>
+<trigger id="2" description="Battle Prep" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<showtext textid="0"/>
 </trigger>
-<trigger id=3 description="Start Battle 3" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<startbattle battletriggers="battle3" entrance="battlestart" battbg=2/>
+<trigger id="3" description="Start Battle 3" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<startbattle battletriggers="battle3" entrance="battlestart" battbg="2"/>
 </trigger>
-<trigger id=4 description="Remove Craig + Olivia" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+<trigger id="4" description="Remove Craig + Olivia" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<removehero heroid="Olivia"/>
 	<removehero heroid="Craig"/>
-	<playsound sound="step" volume=75/>
-	<runtriggers triggers=2,/>
+	<playsound sound="step" volume="75"/>
+	<runtriggers triggers="2,"/>
 </trigger>
-<text id=0 description="Pre Battle3 Scene Placeholder">
-	<string require="" exclude="" trigger=3 heroportrait="" enemyportrait="" animportrait="" message="Cinematics Placeholder<pause> Battle 3 Commencing.<hardstop>"/>
+<text id="0" description="Pre Battle3 Scene Placeholder">
+	<string require="," exclude="," trigger="3" heroportrait="" enemyportrait="" animportrait="" message="Cinematics Placeholder<pause> Battle 3 Commencing.<hardstop>"/>
 </text>
-<condition id=0 description="ToWorldmap" triggerid=1,>
-	<enterloc location="ToWorldmap" immediate=false/>
+<condition id="0" description="ToWorldmap" triggerid="1,">
+	<enterloc location="ToWorldmap" immediate="false"/>
 </condition>
-<condition id=1 description="MapStart" triggerid=0,>
+<condition id="1" description="MapStart" triggerid="0,">
 	<maploaded/>
 </condition>
+</area>

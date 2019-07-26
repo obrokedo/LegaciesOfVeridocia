@@ -1,50 +1,52 @@
+<area>
 <map file="EriumOutskirts.tmx"/>
-<trigger id=0 description="To WorldMap Erium" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+<trigger id="0" description="To WorldMap Erium" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<loadmap mapdata="worldmap" enter="FromErium" transdir=""/>
 </trigger>
-<trigger id=1 description="MapStart" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<playmusic music="hq" volume=75/>
+<trigger id="1" description="MapStart" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<playmusic music="hq" volume="75"/>
 </trigger>
-<text id=0 description="Speech Trigger">
-	<yesno require="," exclude="," triggeryes=0 triggerno=-1 heroportrait="Craig" enemyportrait="" animportrait="Craig" message="Ready to hit the sack?"/>
+<text id="0" description="Speech Trigger">
+	<yesno require="," exclude="," triggeryes="0" triggerno="-1" heroportrait="Craig" enemyportrait="" animportrait="Craig" message="Ready to hit the sack?"/>
 </text>
-<text id=1 description="Huun Speech">
-	<string require="," exclude="," trigger=-1 heroportrait="Huun" enemyportrait="" animportrait="" message="I can't believe you just left me in there.<hardstop> I thought I'd die alone.<hardstop>"/>
+<text id="1" description="Huun Speech">
+	<string require="," exclude="," trigger="-1" heroportrait="Huun" enemyportrait="" animportrait="" message="I can't believe you just left me in there.<hardstop> I thought I'd die alone.<hardstop>"/>
 </text>
-<text id=2 description="Sharna Inside Tower">
-	<string require="," exclude="," trigger=-1 heroportrait="Sharna" enemyportrait="" animportrait="" message="Looks like no one has been here in a long time. <hardstop> I wonder why they would abandon this place to begin with? <hardstop>"/>
+<text id="2" description="Sharna Inside Tower">
+	<string require="," exclude="," trigger="-1" heroportrait="Sharna" enemyportrait="" animportrait="" message="Looks like no one has been here in a long time. <hardstop> I wonder why they would abandon this place to begin with? <hardstop>"/>
 </text>
-<text id=3 description="Olivia Speech">
-	<string require="" exclude="" trigger=-1 heroportrait="Olivia" enemyportrait="" animportrait="" message="I'm standing watch, <pause> just incase one of those guards is crazy enough to follow us through there.<hardstop>"/>
+<text id="3" description="Olivia Speech">
+	<string require="," exclude="," trigger="-1" heroportrait="Olivia" enemyportrait="" animportrait="" message="I'm standing watch, <pause> just incase one of those guards is crazy enough to follow us through there.<hardstop>"/>
 </text>
-<cinematic id=0 description="Scene1" camerax=0 cameray=0>
-	<playmusic music="castlenight" volume=75/>
-	<fadein time=1000 halting=true init=false/>
-	<addactor x=72 y=96 name="Craig" anim="Craig" startanim="UnDown" visible=true init=false associatedhero=""/>
+<cinematic id="0" description="Scene1" camerax="0" cameray="0">
+	<playmusic music="castlenight" volume="75"/>
+	<fadein time="1000" halting="true" init="false"/>
+	<addactor x="72" y="96" name="Craig" anim="Craig" startanim="UnDown" visible="true" init="false" associatedhero=""/>
 	<speech text="I think we're at a safe distance now.<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
-	<haltingmove name="Craig" x=72 y=120 speed="2.4" movehor=false movediag=false/>
-	<addactor x=72 y=96 name="Noah" anim="Noah" startanim="UnDown" visible=true init=false associatedhero=""/>
+	<haltingmove name="Craig" x="72" y="120" speed="2.4" movehor="false" movediag="false"/>
+	<addactor x="72" y="96" name="Noah" anim="Noah" startanim="UnDown" visible="true" init="false" associatedhero=""/>
 	<speech text="I don't think anyone is crazy enough to follow us through there!<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
-	<haltingmove name="Craig" x=72 y=144 speed="2.4" movehor=false movediag=false/>
-	<haltingmove name="Noah" x=72 y=120 speed="2.4" movehor=false movediag=false/>
-	<addactor x=72 y=96 name="Sharna" anim="Sharna" startanim="UnDown" visible=true init=false associatedhero=""/>
+	<haltingmove name="Craig" x="72" y="144" speed="2.4" movehor="false" movediag="false"/>
+	<haltingmove name="Noah" x="72" y="120" speed="2.4" movehor="false" movediag="false"/>
+	<addactor x="72" y="96" name="Sharna" anim="Sharna" startanim="UnDown" visible="true" init="false" associatedhero=""/>
 	<speech text="I would rather die than ever have to go through that again.<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
-	<haltingmove name="Craig" x=96 y=144 speed="2.4" movehor=false movediag=false/>
-	<haltingmove name="Noah" x=72 y=144 speed="2.4" movehor=false movediag=false/>
-	<haltingmove name="Sharna" x=72 y=120 speed="2.4" movehor=false movediag=false/>
-	<addactor x=72 y=96 name="Olivia" anim="Olivia" startanim="UnDown" visible=true init=false associatedhero=""/>
+	<haltingmove name="Craig" x="96" y="144" speed="2.4" movehor="false" movediag="false"/>
+	<haltingmove name="Noah" x="72" y="144" speed="2.4" movehor="false" movediag="false"/>
+	<haltingmove name="Sharna" x="72" y="120" speed="2.4" movehor="false" movediag="false"/>
+	<addactor x="72" y="96" name="Olivia" anim="Olivia" startanim="UnDown" visible="true" init="false" associatedhero=""/>
 	<speech text="I've never been in such a disgusting place in my life! I'm going to have nightmares for years. Thanks, Craig.<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait=""/>
 	<speech text="You guys wait here and lay low while I scout the area out. <hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
-	<haltingmove name="Craig" x=96 y=264 speed="2.4" movehor=false movediag=false/>
+	<haltingmove name="Craig" x="96" y="264" speed="2.4" movehor="false" movediag="false"/>
 	<speech text="Has anyone seen Hunn? <hardstop>" heroportrait="Olivia" enemyportrait="" animportrait=""/>
 	<speech text="I'm not going back in there for that bum.  I'm sure he can find his way out. <hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
-	<haltingmove name="Craig" x=96 y=192 speed="2.4" movehor=false movediag=false/>
+	<haltingmove name="Craig" x="96" y="192" speed="2.4" movehor="false" movediag="false"/>
 	<speech text="It looks like we've come out near an old guard post in the outskirts of Erium. <hardstop> " heroportrait="Craig" enemyportrait="" animportrait=""/>
 	<speech text="WHAT, more guards?! You're saying that I went through that disgusting sewer to escape, just to run into a guard post?!<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
 	<speech text="Quit your whining, it's an old abandond guard house. <hardstop> I think we should take shelter there for the night. <softstop> We could all use some rest.<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
-	<fademusic duration=1000/>
-	<fadeout time=1000 halting=true/>
+	<fademusic duration="1000"/>
+	<fadeout time="1000" halting="true"/>
 	<loadmap mapdata="eriumoutskirts" enter="start"/>
 </cinematic>
-<condition id=0 description="MapLoad" triggerid=1,>
+<condition id="0" description="MapLoad" triggerid="1,">
 </condition>
+</area>

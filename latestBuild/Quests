@@ -1,14 +1,16 @@
-<quest id=0 description="EriumWeaponShopInitialTalk" extradescription="null">
+<quests>
+<quest id="0" description="EriumWeaponShopInitialTalk" extradescription="">
 </quest>
-<quest id=1 description="EriumCastleUpperSharnaTalk" extradescription="null">
+<quest id="1" description="EriumCastleUpperSharnaTalk" extradescription="">
 </quest>
-<quest id=2 description="Battle2" extradescription="null">
+<quest id="2" description="Battle2" extradescription="">
 </quest>
-<quest id=3 description="Battle1" extradescription="null">
+<quest id="3" description="Battle1" extradescription="">
 </quest>
-<quest id=4 description="PreBattle1CinimaticWatched" extradescription="null">
+<quest id="4" description="PreBattle1CinimaticWatched" extradescription="">
 </quest>
-<quest id=5 description="Codger1spokento" extradescription="">
+<quest id="5" description="Codger1spokento" extradescription="">
 </quest>
-<quest id=6 description="Battle 3" extradescription="">
+<quest id="6" description="Battle 3" extradescription="">
 </quest>
+</quests>

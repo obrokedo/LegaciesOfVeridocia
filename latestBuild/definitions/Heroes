@@ -1,49 +1,51 @@
-<hero id=0 name="Noah" promoted=false level=1 animations="Noah" leader=true>
-	<progression promoted=false specialpromoted=false specialpromoteitem="" move=6 movementtype="NORMAL" attack="Linear" attackstart=6 attackend=10 defense="Early" defensestart=6 defenseend=17 speed="Linear" speedstart=5 speedend=12 hp="Linear" hpstart=12 hpend=24 mp="Late" mpstart=8 mpend=12 fireAffin=0 elecAffin=15 coldAffin=0 darkAffin=5 waterAffin=0 earthAffin=-1 windAffin=0 lightAffin=10 bodyStrength="MEDIUM" bodyProgress="Mid" mindStrength="MEDIUM" mindProgress="Late" counterStrength="MEDIUM" evadeStrength="MEDIUM" doubleStrength="MEDIUM" critStrength="MEDIUM" usuableitems=2,5, class="Swordsman"/>
-	<progression promoted=true specialpromoted=false specialpromoteitem="" move=6 movementtype="NORMAL" attack="Early-Late" attackstart=14 attackend=48 defense="3-Wave" defensestart=24 defenseend=83 speed="Start-Stop" speedstart=19 speedend=70 hp="Linear" hpstart=34 hpend=109 mp="Step-Up" mpstart=18 mpend=37 fireAffin=5 elecAffin=20 coldAffin=0 darkAffin=10 waterAffin=0 earthAffin=-1 windAffin=5 lightAffin=10 bodyStrength="MEDIUM" bodyProgress="Mid" mindStrength="MEDIUM" mindProgress="Late" counterStrength="MEDIUM" evadeStrength="MEDIUM" doubleStrength="MEDIUM" critStrength="MEDIUM" usuableitems=2,5, class="Hero"/>
-	<item itemid="Erium Blade" equipped=true/>
-	<item itemid="Medical Herb" equipped=false/>
+<heroes>
+<hero id="0" name="Noah" promoted="false" level="1" animations="Noah" leader="true">
+	<progression promoted="false" specialpromoted="false" specialpromoteitem="" move="6" movementtype="NORMAL" attack="Linear" attackstart="6" attackend="10" defense="Early" defensestart="6" defenseend="17" speed="Linear" speedstart="5" speedend="12" hp="Linear" hpstart="12" hpend="24" mp="Late" mpstart="8" mpend="12" fireAffin="0" elecAffin="15" coldAffin="0" darkAffin="5" waterAffin="0" earthAffin="-1" windAffin="0" lightAffin="10" bodyStrength="MEDIUM" bodyProgress="Mid" mindStrength="MEDIUM" mindProgress="Late" counterStrength="MEDIUM" evadeStrength="MEDIUM" doubleStrength="MEDIUM" critStrength="MEDIUM" usuableitems="2,5," class="Swordsman"/>
+	<progression promoted="true" specialpromoted="false" specialpromoteitem="" move="6" movementtype="NORMAL" attack="Early-Late" attackstart="14" attackend="48" defense="3-Wave" defensestart="24" defenseend="83" speed="Start-Stop" speedstart="19" speedend="70" hp="Linear" hpstart="34" hpend="109" mp="Step-Up" mpstart="18" mpend="37" fireAffin="5" elecAffin="20" coldAffin="0" darkAffin="10" waterAffin="0" earthAffin="-1" windAffin="5" lightAffin="10" bodyStrength="MEDIUM" bodyProgress="Mid" mindStrength="MEDIUM" mindProgress="Late" counterStrength="MEDIUM" evadeStrength="MEDIUM" doubleStrength="MEDIUM" critStrength="MEDIUM" usuableitems="2,5," class="Hero"/>
+	<item itemid="Erium Blade" equipped="true"/>
+	<item itemid="Medical Herb" equipped="false"/>
 </hero>
-<hero id=1 name="Sharna" promoted=false level=1 animations="Sharna" leader=false>
-	<progression promoted=false specialpromoted=false specialpromoteitem="" move=5 movementtype="NORMAL" attack="Early" attackstart=5 attackend=7 defense="Late" defensestart=5 defenseend=14 speed="Linear" speedstart=6 speedend=13 hp="Linear" hpstart=9 hpend=14 mp="Early" mpstart=10 mpend=22 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength="STRONG" bodyProgress="Late" mindStrength="STRONG" mindProgress="Late" counterStrength="STRONG" evadeStrength="STRONG" doubleStrength="STRONG" critStrength="STRONG" usuableitems=3, class="Curate"/>
-	<progression promoted=true specialpromoted=false specialpromoteitem="" move=5 movementtype="NORMAL" attack="Early" attackstart=0 attackend=0 defense="Early" defensestart=0 defenseend=0 speed="Early" speedstart=0 speedend=0 hp="Early" hpstart=0 hpend=0 mp="Late" mpstart=0 mpend=0 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength="WEAK" bodyProgress="Early" mindStrength="WEAK" mindProgress="Early" counterStrength="WEAK" evadeStrength="WEAK" doubleStrength="WEAK" critStrength="WEAK" usuableitems=2, class="Healer"/>
-	<spellprogression spellid="HEAL" promotedprog=false specialpromoted=false gained="1,5"/>
-	<spellprogression spellid="CYCLONE" promotedprog=false specialpromoted=false gained="8"/>
-	<item itemid="Erium Cane" equipped=true/>
-	<spellprogression spellid="HEAL" promotedprog=true specialpromoted=false gained="16,30"/>
+<hero id="1" name="Sharna" promoted="false" level="1" animations="Sharna" leader="false">
+	<progression promoted="false" specialpromoted="false" specialpromoteitem="" move="5" movementtype="NORMAL" attack="Early" attackstart="5" attackend="7" defense="Late" defensestart="5" defenseend="14" speed="Linear" speedstart="6" speedend="13" hp="Linear" hpstart="9" hpend="14" mp="Early" mpstart="10" mpend="22" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="STRONG" bodyProgress="Late" mindStrength="STRONG" mindProgress="Late" counterStrength="STRONG" evadeStrength="STRONG" doubleStrength="STRONG" critStrength="STRONG" usuableitems="3," class="Curate"/>
+	<progression promoted="true" specialpromoted="false" specialpromoteitem="" move="5" movementtype="NORMAL" attack="Early" attackstart="0" attackend="0" defense="Early" defensestart="0" defenseend="0" speed="Early" speedstart="0" speedend="0" hp="Early" hpstart="0" hpend="0" mp="Late" mpstart="0" mpend="0" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="WEAK" bodyProgress="Early" mindStrength="WEAK" mindProgress="Early" counterStrength="WEAK" evadeStrength="WEAK" doubleStrength="WEAK" critStrength="WEAK" usuableitems="2," class="Healer"/>
+	<spellprogression spellid="HEAL" promotedprog="false" specialpromoted="false" gained="1,5"/>
+	<spellprogression spellid="CYCLONE" promotedprog="false" specialpromoted="false" gained="8"/>
+	<item itemid="Erium Cane" equipped="true"/>
+	<spellprogression spellid="HEAL" promotedprog="true" specialpromoted="false" gained="16,30"/>
 </hero>
-<hero id=2 name="Huun" promoted=false level=1 animations="Huun" leader=false>
-	<progression promoted=false specialpromoted=false specialpromoteitem="" move=5 movementtype="NORMAL" attack="Early" attackstart=7 attackend=11 defense="Linear" defensestart=5 defenseend=12 speed="Linear" speedstart=7 speedend=14 hp="Linear" hpstart=10 hpend=18 mp="None" mpstart=0 mpend=0 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength="WEAK" bodyProgress="Early" mindStrength="WEAK" mindProgress="Early" counterStrength="WEAK" evadeStrength="WEAK" doubleStrength="WEAK" critStrength="WEAK" usuableitems=4, class="Archer"/>
-	<progression promoted=true specialpromoted=false specialpromoteitem="" move=7 movementtype="NORMAL" attack="Late" attackstart=0 attackend=0 defense="Middle" defensestart=0 defenseend=0 speed="Late" speedstart=0 speedend=0 hp="Early" hpstart=0 hpend=0 mp="None" mpstart=0 mpend=0 fireAffin=0 elecAffin=0 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=0 windAffin=0 lightAffin=0 bodyStrength="MEDIUM" bodyProgress="Mid" mindStrength="MEDIUM" mindProgress="Mid" counterStrength="MEDIUM" evadeStrength="MEDIUM" doubleStrength="MEDIUM" critStrength="MEDIUM" usuableitems=4, class="Better Archer"/>
-	<item itemid="Erium Arrow" equipped=true/>
+<hero id="2" name="Huun" promoted="false" level="1" animations="Huun" leader="false">
+	<progression promoted="false" specialpromoted="false" specialpromoteitem="" move="5" movementtype="NORMAL" attack="Early" attackstart="7" attackend="11" defense="Linear" defensestart="5" defenseend="12" speed="Linear" speedstart="7" speedend="14" hp="Linear" hpstart="10" hpend="18" mp="None" mpstart="0" mpend="0" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="WEAK" bodyProgress="Early" mindStrength="WEAK" mindProgress="Early" counterStrength="WEAK" evadeStrength="WEAK" doubleStrength="WEAK" critStrength="WEAK" usuableitems="4," class="Archer"/>
+	<progression promoted="true" specialpromoted="false" specialpromoteitem="" move="7" movementtype="NORMAL" attack="Late" attackstart="0" attackend="0" defense="Middle" defensestart="0" defenseend="0" speed="Late" speedstart="0" speedend="0" hp="Early" hpstart="0" hpend="0" mp="None" mpstart="0" mpend="0" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="MEDIUM" bodyProgress="Mid" mindStrength="MEDIUM" mindProgress="Mid" counterStrength="MEDIUM" evadeStrength="MEDIUM" doubleStrength="MEDIUM" critStrength="MEDIUM" usuableitems="4," class="Better Archer"/>
+	<item itemid="Erium Arrow" equipped="true"/>
 </hero>
-<hero id=3 name="Craig" promoted=true level=7 animations="Craig" leader=false>
-	<progression promoted=true specialpromoted=false specialpromoteitem="" move=5 movementtype="NORMAL" attack="Late" attackstart=24 attackend=51 defense="3-Wave" defensestart=41 defenseend=80 speed="Step-Up" speedstart=22 speedend=48 hp="Early" hpstart=30 hpend=95 mp="None" mpstart=0 mpend=0 fireAffin=5 elecAffin=10 coldAffin=20 darkAffin=0 waterAffin=0 earthAffin=15 windAffin=-1 lightAffin=0 bodyStrength="STRONG" bodyProgress="Strong" mindStrength="WEAK" mindProgress="Late" counterStrength="STRONG" evadeStrength="WEAK" doubleStrength="MEDIUM" critStrength="STRONG" usuableitems=1,13, class="Gladiator"/>
-	<item itemid="Battle Axe" equipped=true/>
-	<item itemid="Medical Herb" equipped=false/>
+<hero id="3" name="Craig" promoted="true" level="7" animations="Craig" leader="false">
+	<progression promoted="true" specialpromoted="false" specialpromoteitem="" move="5" movementtype="NORMAL" attack="Late" attackstart="24" attackend="51" defense="3-Wave" defensestart="41" defenseend="80" speed="Step-Up" speedstart="22" speedend="48" hp="Early" hpstart="30" hpend="95" mp="None" mpstart="0" mpend="0" fireAffin="5" elecAffin="10" coldAffin="20" darkAffin="0" waterAffin="0" earthAffin="15" windAffin="-1" lightAffin="0" bodyStrength="STRONG" bodyProgress="Strong" mindStrength="WEAK" mindProgress="Late" counterStrength="STRONG" evadeStrength="WEAK" doubleStrength="MEDIUM" critStrength="STRONG" usuableitems="1,13," class="Gladiator"/>
+	<item itemid="Battle Axe" equipped="true"/>
+	<item itemid="Medical Herb" equipped="false"/>
 </hero>
-<hero id=4 name="Olivia" promoted=true level=7 animations="Olivia" leader=false>
-	<progression promoted=true specialpromoted=false specialpromoteitem="" move=5 movementtype="NORMAL" attack="Early-Late" attackstart=14 attackend=18 defense="Linear" defensestart=32 defenseend=53 speed="Late" speedstart=32 speedend=66 hp="Linear" hpstart=36 hpend=73 mp="Step-Up" mpstart=43 mpend=108 fireAffin=15 elecAffin=20 coldAffin=5 darkAffin=0 waterAffin=5 earthAffin=-1 windAffin=0 lightAffin=0 bodyStrength="WEAK" bodyProgress="Late" mindStrength="STRONG" mindProgress="Strong" counterStrength="MEDIUM" evadeStrength="STRONG" doubleStrength="WEAK" critStrength="WEAK" usuableitems=3,8, class="Wizard"/>
-	<spellprogression spellid="BLAZE" promotedprog=true specialpromoted=false gained="1,1,1"/>
-	<spellprogression spellid="BOLT" promotedprog=true specialpromoted=false gained="1,1,23,34"/>
-	<spellprogression spellid="LIGHTNING" promotedprog=true specialpromoted=false gained="19,27,32,38"/>
-	<spellprogression spellid="SPIRIT" promotedprog=true specialpromoted=false gained="21,25,30,36"/>
-	<item itemid="Flaming Wand" equipped=true/>
-	<item itemid="Medical Herb" equipped=false/>
+<hero id="4" name="Olivia" promoted="true" level="7" animations="Olivia" leader="false">
+	<progression promoted="true" specialpromoted="false" specialpromoteitem="" move="5" movementtype="NORMAL" attack="Early-Late" attackstart="14" attackend="18" defense="Linear" defensestart="32" defenseend="53" speed="Late" speedstart="32" speedend="66" hp="Linear" hpstart="36" hpend="73" mp="Step-Up" mpstart="43" mpend="108" fireAffin="15" elecAffin="20" coldAffin="5" darkAffin="0" waterAffin="5" earthAffin="-1" windAffin="0" lightAffin="0" bodyStrength="WEAK" bodyProgress="Late" mindStrength="STRONG" mindProgress="Strong" counterStrength="MEDIUM" evadeStrength="STRONG" doubleStrength="WEAK" critStrength="WEAK" usuableitems="3,8," class="Wizard"/>
+	<spellprogression spellid="BLAZE" promotedprog="true" specialpromoted="false" gained="1,1,1"/>
+	<spellprogression spellid="BOLT" promotedprog="true" specialpromoted="false" gained="1,1,23,34"/>
+	<spellprogression spellid="LIGHTNING" promotedprog="true" specialpromoted="false" gained="19,27,32,38"/>
+	<spellprogression spellid="SPIRIT" promotedprog="true" specialpromoted="false" gained="21,25,30,36"/>
+	<item itemid="Flaming Wand" equipped="true"/>
+	<item itemid="Medical Herb" equipped="false"/>
 </hero>
-<hero id=5 name="Eddie" promoted=false level=1 animations="Eddie" leader=false>
-	<progression promoted=false specialpromoted=false specialpromoteitem="" move=6 movementtype="NORMAL" attack="Linear" attackstart=5 attackend=24 defense="Middle" defensestart=8 defenseend=34 speed="Linear" speedstart=4 speedend=23 hp="Early-Late" hpstart=10 hpend=31 mp="None" mpstart=0 mpend=0 fireAffin=15 elecAffin=0 coldAffin=5 darkAffin=0 waterAffin=-10 earthAffin=10 windAffin=0 lightAffin=0 bodyStrength="STRONG" bodyProgress="Mid" mindStrength="WEAK" mindProgress="Mid" counterStrength="MEDIUM" evadeStrength="WEAK" doubleStrength="MEDIUM" critStrength="STRONG" usuableitems=1,13, class="Warrior"/>
-	<item itemid="Short Axe" equipped=true/>
-	<item itemid="Medical Herb" equipped=false/>
+<hero id="5" name="Eddie" promoted="false" level="1" animations="Eddie" leader="false">
+	<progression promoted="false" specialpromoted="false" specialpromoteitem="" move="6" movementtype="NORMAL" attack="Linear" attackstart="5" attackend="24" defense="Middle" defensestart="8" defenseend="34" speed="Linear" speedstart="4" speedend="23" hp="Early-Late" hpstart="10" hpend="31" mp="None" mpstart="0" mpend="0" fireAffin="15" elecAffin="0" coldAffin="5" darkAffin="0" waterAffin="-10" earthAffin="10" windAffin="0" lightAffin="0" bodyStrength="STRONG" bodyProgress="Mid" mindStrength="WEAK" mindProgress="Mid" counterStrength="MEDIUM" evadeStrength="WEAK" doubleStrength="MEDIUM" critStrength="STRONG" usuableitems="1,13," class="Warrior"/>
+	<item itemid="Short Axe" equipped="true"/>
+	<item itemid="Medical Herb" equipped="false"/>
 </hero>
-<hero id=6 name="Liza" promoted=false level=1 animations="Liza" leader=false>
-	<progression promoted=false specialpromoted=false specialpromoteitem="" move=5 movementtype="NORMAL" attack="Linear" attackstart=1 attackend=13 defense="Late" defensestart=5 defenseend=21 speed="Linear" speedstart=6 speedend=25 hp="Linear" hpstart=8 hpend=29 mp="Middle" mpstart=12 mpend=37 fireAffin=15 elecAffin=0 coldAffin=10 darkAffin=0 waterAffin=-10 earthAffin=0 windAffin=5 lightAffin=0 bodyStrength="WEAK" bodyProgress="Late" mindStrength="MEDIUM" mindProgress="Early" counterStrength="WEAK" evadeStrength="MEDIUM" doubleStrength="WEAK" critStrength="WEAK" usuableitems=3, class="Mage"/>
-	<item itemid="Erium Cane" equipped=true/>
-	<spellprogression spellid="BLAZE" promotedprog=false specialpromoted=false gained="6"/>
+<hero id="6" name="Liza" promoted="false" level="1" animations="Liza" leader="false">
+	<progression promoted="false" specialpromoted="false" specialpromoteitem="" move="5" movementtype="NORMAL" attack="Linear" attackstart="1" attackend="13" defense="Late" defensestart="5" defenseend="21" speed="Linear" speedstart="6" speedend="25" hp="Linear" hpstart="8" hpend="29" mp="Middle" mpstart="12" mpend="37" fireAffin="15" elecAffin="0" coldAffin="10" darkAffin="0" waterAffin="-10" earthAffin="0" windAffin="5" lightAffin="0" bodyStrength="WEAK" bodyProgress="Late" mindStrength="MEDIUM" mindProgress="Early" counterStrength="WEAK" evadeStrength="MEDIUM" doubleStrength="WEAK" critStrength="WEAK" usuableitems="3," class="Mage"/>
+	<item itemid="Erium Cane" equipped="true"/>
+	<spellprogression spellid="BLAZE" promotedprog="false" specialpromoted="false" gained="6"/>
 </hero>
-<hero id=7 name="Tyson" promoted=false level=1 animations="Tyson" leader=false>
-	<progression promoted=false specialpromoted=false specialpromoteitem="" move=6 movementtype="NORMAL" attack="Late" attackstart=5 attackend=22 defense="Linear" defensestart=6 defenseend=27 speed="Linear" speedstart=6 speedend=25 hp="Linear" hpstart=10 hpend=32 mp="Early" mpstart=6 mpend=26 fireAffin=10 elecAffin=-10 coldAffin=0 darkAffin=0 waterAffin=0 earthAffin=15 windAffin=0 lightAffin=5 bodyStrength="MEDIUM" bodyProgress="Mid" mindStrength="MEDIUM" mindProgress="Mid" counterStrength="WEAK" evadeStrength="MEDIUM" doubleStrength="STRONG" critStrength="WEAK" usuableitems=9,13, class="Monk"/>
-	<item itemid="Studded Glove" equipped=true/>
-	<spellprogression spellid="HEAL" promotedprog=false specialpromoted=false gained="6"/>
-	<spellprogression spellid="GUARD" promotedprog=false specialpromoted=false gained="10"/>
+<hero id="7" name="Tyson" promoted="false" level="1" animations="Tyson" leader="false">
+	<progression promoted="false" specialpromoted="false" specialpromoteitem="" move="6" movementtype="NORMAL" attack="Late" attackstart="5" attackend="22" defense="Linear" defensestart="6" defenseend="27" speed="Linear" speedstart="6" speedend="25" hp="Linear" hpstart="10" hpend="32" mp="Early" mpstart="6" mpend="26" fireAffin="10" elecAffin="-10" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="15" windAffin="0" lightAffin="5" bodyStrength="MEDIUM" bodyProgress="Mid" mindStrength="MEDIUM" mindProgress="Mid" counterStrength="WEAK" evadeStrength="MEDIUM" doubleStrength="STRONG" critStrength="WEAK" usuableitems="9,13," class="Monk"/>
+	<item itemid="Studded Glove" equipped="true"/>
+	<spellprogression spellid="HEAL" promotedprog="false" specialpromoted="false" gained="6"/>
+	<spellprogression spellid="GUARD" promotedprog="false" specialpromoted="false" gained="10"/>
 </hero>
+</heroes>

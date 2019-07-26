@@ -100,35 +100,6 @@ H4sIAAAAAAAACu3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAAAAAAAADwZkvEChtAOAAA
 <polygon points="0,0 72,0 72,120 0,120"/>
 </object>
 </objectgroup>
-<objectgroup id="11" name="Battle Triggers">
-<object id="36" name="Shuffle" x="312" y="144" width="168" height="144">
-<properties>
-<property name="null" value=""/>
-</properties>
-</object>
-<object id="1" name="FromWorldmap" x="360" y="672" width="24" height="24">
-<properties>
-<property name="start" value="exit=FromWorldmap"/>
-</properties>
-</object>
-<object id="2" name="ToWorldmap" x="360" y="696" width="24" height="24">
-<properties>
-<property name="" value=""/>
-</properties>
-</object>
-<object id="6" name="battlestart" type="START" x="456" y="456">
-<properties>
-<property name="start" value="exit=battlestart"/>
-</properties>
-<polyline points="0,0 72,0 72,-24 0,-24 0,0"/>
-</object>
-<object id="55" x="264" y="624">
-<properties>
-<property name="battleregion" value=""/>
-</properties>
-<polyline points="312,-168 312,-456 -144,-456 -144,-168"/>
-</object>
-</objectgroup>
 <objectgroup id="12" name="Meta" visible="0">
 <object id="12" name="Eddie" x="168" y="384" width="24" height="24">
 <properties>
@@ -136,7 +107,18 @@ H4sIAAAAAAAACu3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAAAAAAAADwZkvEChtAOAAA
 </properties>
 </object>
 </objectgroup>
-<objectgroup id="13" name="Enemies">
+<layer id="14" name="Overlay" width="60" height="60" visible="0">
+<data encoding="base64" compression="gzip">
+H4sIAAAAAAAACu3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAAAAAAAADwZkvEChtAOAAA
+</data>
+</layer>
+<objectgroup name="Battle" visible="1">
+<object id="55" x="264" y="624">
+<properties>
+<property name="battleregion" value=""/>
+</properties>
+<polyline points="312,-168 312,-456 -144,-456 -144,-168"/>
+</object>
 <object id="3" name="Soldier" type="NPC" x="504" y="264" width="24" height="24">
 <properties>
 <property name="enemy" value="ai=fighter aiapproach=wait enemyid=Erium Soldier unit=0"/>
@@ -177,18 +159,34 @@ H4sIAAAAAAAACu3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAAAAAAAADwZkvEChtAOAAA
 <property name="enemy" value="ai=fighter aiapproach=wait enemyid=Erium Captain unit=7"/>
 </properties>
 </object>
-</objectgroup>
-<layer id="14" name="Overlay" width="60" height="60" visible="0">
-<data encoding="base64" compression="gzip">
-H4sIAAAAAAAACu3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAAAAAAAADwZkvEChtAOAAA
-</data>
-</layer>
-<objectgroup name="Battle" visible="1">
 <object id="55" x="264" y="624">
 <properties>
 <property name="battleregion" value=""/>
 </properties>
 <polyline points="312,-168 312,-456 -144,-456 -144,-168"/>
+</object>
+</objectgroup>
+<objectgroup name="Trigger Region" visible="1">
+<object id="36" name="Shuffle" x="312" y="144" width="168" height="144">
+<properties>
+<property name="" value=""/>
+</properties>
+</object>
+<object id="1" name="FromWorldmap" x="360" y="672" width="24" height="24">
+<properties>
+<property name="start" value="exit=FromWorldmap"/>
+</properties>
+</object>
+<object id="2" name="ToWorldmap" x="360" y="696" width="24" height="24">
+<properties>
+<property name="" value=""/>
+</properties>
+</object>
+<object id="6" name="battlestart" type="START" x="456" y="456">
+<properties>
+<property name="start" value="exit=battlestart"/>
+</properties>
+<polyline points="0,0 72,0 72,-24 0,-24 0,0"/>
 </object>
 </objectgroup>
 </map>
