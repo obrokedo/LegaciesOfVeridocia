@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="640" height="440" tilewidth="12" tileheight="12" infinite="0" nextlayerid="53" nextobjectid="5">
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="640" height="440" tilewidth="12" tileheight="12" infinite="0" nextlayerid="53" nextobjectid="6">
  <tileset firstgid="1" name="overworld(day)-Master" tilewidth="12" tileheight="12" tilecount="1296" columns="36">
   <image source="../image/overworld(day)-Master.png" trans="495d47" width="432" height="432"/>
  </tileset>
@@ -44,7 +44,13 @@
   </data>
  </layer>
  <objectgroup id="47" name="Terrain"/>
- <objectgroup id="48" name="Trigger Regions"/>
+ <objectgroup id="48" name="Trigger Regions">
+  <object id="5" name="FromErium" x="1344" y="3936" width="24" height="24">
+   <properties>
+    <property name="start" value="exit=FromErium"/>
+   </properties>
+  </object>
+ </objectgroup>
  <objectgroup id="49" name="Enemies"/>
  <objectgroup id="50" name="Meta"/>
  <objectgroup id="51" name="Battle"/>
