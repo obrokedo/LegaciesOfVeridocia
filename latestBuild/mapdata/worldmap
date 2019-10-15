@@ -1,41 +1,43 @@
 <area>
 <map file="World Map.tmx"/>
-<trigger id=0 description="MapStart" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<playmusic music="overworld" volume=75/>
+<trigger id="0" description="MapStart" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<playmusic music="overworld" volume="75"/>
 </trigger>
-<trigger id=1 description="ToErium" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<showcin cinid=1 exittrigid=-1/>
+<trigger id="1" description="ToErium" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<showcin cinid="1" exittrigid="-1"/>
 </trigger>
-<trigger id=2 description="ToCabin" require="," exclude="," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
+<trigger id="2" description="ToCabin" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<loadmap mapdata="eriumwoods" enter="FromWorldmap" transdir=""/>
 </trigger>
-<trigger id=3 description="CabinNotVisited" require="," exclude="Battle 3," nonretrig=false retrigonenter=false triggeronce=false triggerimmediately=false>
-	<showcin cinid=0 exittrigid=-1/>
+<trigger id="3" description="CabinNotVisited" require="," exclude="Battle 3," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<showcin cinid="0" exittrigid="-1"/>
 </trigger>
-<cinematic id=0 description="WarnPastCabin" camerax=0 cameray=0>
+<cinematic id="0" description="WarnPastCabin" camerax="0" cameray="0">
 	<speech text="Oi. Where d'ya think you're goin', genius?<pause><linebreak> The cabin was back that way!<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
-	<assactor name="Noah" hero="Noah" enemyid=0 npcid=""/>
+	<assactor name="Noah" hero="Noah" enemyid="0" npcid=""/>
+	<cameramovetoactor actor="Noah" time="400"/>
 	<camerafollow name="Noah"/>
-	<haltingmovepath name="Noah" x=600 y=5136 speed="2.4"/>
-	<fadeout time=500 halting=true/>
+	<haltingmovepath name="Noah" x="1032" y="4008" speed="2.4"/>
+	<fadeout time="500" halting="true"/>
 	<loadmap mapdata="eriumwoods" enter="FromWorldmap"/>
 </cinematic>
-<cinematic id=1 description="NoGoingBack" camerax=0 cameray=0>
+<cinematic id="1" description="NoGoingBack" camerax="0" cameray="0">
 	<speech text="Oi. Are you mad!?<pause><linebreak> We can't go back!<pause> They'll catch you for sure!!<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
-	<assactor name="Noah" hero="Noah" enemyid=0 npcid=""/>
+	<assactor name="Noah" hero="Noah" enemyid="0" npcid=""/>
+	<cameramovetoactor actor="Noah" time="400"/>
 	<camerafollow name="Noah"/>
-	<haltingmove name="Noah" x=696 y=5352 speed="2.4" movehor=false movediag=false/>
+	<haltingmove name="Noah" x="1200" y="4152" speed="2.4" movehor="false" movediag="false"/>
 </cinematic>
-<condition id=0 description="ToErium" triggerid=1,>
-	<enterloc location="ToErium" immediate=false/>
+<condition id="0" description="ToErium" triggerid="1,">
+	<enterloc location="ToErium" immediate="false"/>
 </condition>
-<condition id=1 description="ToCabin" triggerid=2,>
-	<enterloc location="ToCabin" immediate=false/>
+<condition id="1" description="ToCabin" triggerid="2,">
+	<enterloc location="ToCabin" immediate="false"/>
 </condition>
-<condition id=2 description="MapStart" triggerid=0,>
+<condition id="2" description="MapStart" triggerid="0,">
 	<maploaded/>
 </condition>
-<condition id=3 description="WarnTooFar" triggerid=3,>
-	<enterloc location="CabinNotVisited" immediate=false/>
+<condition id="3" description="WarnTooFar" triggerid="3,">
+	<enterloc location="CabinNotVisited" immediate="false"/>
 </condition>
 </area>
