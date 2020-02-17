@@ -108,16 +108,16 @@ class Freeze(SpellDefinition):
         return Color(255, 0, 0)
     
     def getSpellAnimationFile(self, level):
-        return "Blaze"
+        return "Freeze"
     
     # To turn OFF rain animation just return None here
     # return None
     def getSpellRainAnimationFile(self, level):
         # return "Flame"
-        return "Blaze"
+        return "Freeze"
     
     def getSpellRainAnimationName(self, level):
-        return "level"+str(level)
+        return str(level)
         
     def getSpellRainFrequency(self, level):
         return 100*level

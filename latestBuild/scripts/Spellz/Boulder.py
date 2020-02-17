@@ -52,7 +52,7 @@ class Boulder(SpellDefinition):
             - (baseDamage * target.getCurrentElecAffin() / 100.0))) # Add the targets Affin (which reduces damage)
     
     def getBattleText(self, target, damage, mpDamage, attackerHPDamage, attackerMPDamage):
-        return "Boulter thrown at " + target.getName() + ", dealing " + `damage * -1` + " damage! "
+        return "Boulder thrown at " + target.getName() + ", dealing " + `damage * -1` + " damage! "
         
     # Probably should move this algorithm to a central location
     def getExpGained(self, level, attacker, target):
@@ -64,14 +64,14 @@ class Boulder(SpellDefinition):
         return Color(0, 0, 0);
         
     def getSpellAnimationFile(self, level):
-        return "BOLT"
+        return "Boulder"
     
     def getSpellRainAnimationFile(self, level):
         # return "lightning"
-        return "BOLT"
+        return "Boulder"
     
     def getSpellRainAnimationName(self, level):
-        return "level1"#+str(level)
+        return str(level)
     
     def getEmitter(self, level):
         # You could create a emitter with sounds here

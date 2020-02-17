@@ -47,4 +47,4 @@ class Lightning(SpellDefinition):
         return Color(0, 0, 0);
 
     def getSpellAnimationFile(self, level):
-        return "Blaze"
+        return "Lightning"

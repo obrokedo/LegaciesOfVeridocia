@@ -108,13 +108,13 @@ class Inferno(SpellDefinition):
         return Color(255, 0, 0)
     
     def getSpellAnimationFile(self, level):
-        return "Blaze"
+        return "Inferno"
     
     # To turn OFF rain animation just return None here
     # return None
     def getSpellRainAnimationFile(self, level):
         # return "Flame"
-        return "Blaze"
+        return "Inferno"
     
     def getSpellRainAnimationName(self, level):
         return "level"+str(level)

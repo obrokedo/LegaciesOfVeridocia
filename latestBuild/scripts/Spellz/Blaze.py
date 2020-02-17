@@ -117,7 +117,7 @@ class Blaze(SpellDefinition):
         return "Blaze"
     
     def getSpellRainAnimationName(self, level):
-        return "level"+str(level)
+        return str(level)
         
     def getSpellRainFrequency(self, level):
         return 100*level
