@@ -75,7 +75,7 @@ class Aura(SpellDefinition):
         return Color(0, 0, 0);
     
     def getSpellAnimationFile(self, level):
-        return "Heal"
+        return "Aura"
     
     def getSpellRainAnimationFile(self, level):
         return None

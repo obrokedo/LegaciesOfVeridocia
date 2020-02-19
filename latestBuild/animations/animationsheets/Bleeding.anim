@@ -1,0 +1,40 @@
+<animations spriteSheet="Bleeding.sprites" ver="1.2">
+<anim name="1" loops="0">
+<cell index="0" delay="50">
+<spr name="/Unpromoted/Frame0" x="0" y="0" z="0"/>
+</cell>
+<cell index="1" delay="50">
+<spr name="/Unpromoted/Frame1" x="0" y="0" z="0"/>
+</cell>
+<cell index="2" delay="50">
+<spr name="/Unpromoted/Frame2" x="0" y="0" z="0"/>
+</cell>
+<cell index="3" delay="50">
+<spr name="/Unpromoted/Frame3" x="0" y="0" z="0"/>
+</cell>
+<cell index="4" delay="50">
+<spr name="/Unpromoted/Frame4" x="0" y="0" z="0"/>
+</cell>
+<cell index="5" delay="50">
+<spr name="/Unpromoted/Frame5" x="0" y="0" z="0"/>
+</cell>
+<cell index="6" delay="50">
+<spr name="/Unpromoted/Frame6" x="0" y="0" z="0"/>
+</cell>
+<cell index="7" delay="50">
+<spr name="/Unpromoted/Frame7" x="0" y="0" z="0"/>
+</cell>
+<cell index="8" delay="50">
+<spr name="/Unpromoted/Frame8" x="0" y="0" z="0"/>
+</cell>
+<cell index="9" delay="50">
+<spr name="/Unpromoted/Frame9" x="0" y="0" z="0"/>
+</cell>
+<cell index="10" delay="50">
+<spr name="/Unpromoted/Frame10" x="0" y="0" z="0"/>
+</cell>
+<cell index="11" delay="50">
+<spr name="/Unpromoted/Frame11" x="0" y="0" z="0"/>
+</cell>
+</anim>
+</animations>

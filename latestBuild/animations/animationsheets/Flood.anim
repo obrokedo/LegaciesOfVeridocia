@@ -1,0 +1,214 @@
+<animations spriteSheet="Flood.sprites" ver="1.2">
+<anim name="1" loops="0">
+<cell index="0" delay="50">
+<spr name="/Unpromoted/Frame0" x="0" y="0" z="0"/>
+</cell>
+<cell index="1" delay="50">
+<spr name="/Unpromoted/Frame1" x="0" y="0" z="0"/>
+</cell>
+<cell index="2" delay="50">
+<spr name="/Unpromoted/Frame2" x="0" y="0" z="0"/>
+</cell>
+<cell index="3" delay="50">
+<spr name="/Unpromoted/Frame3" x="0" y="0" z="0"/>
+</cell>
+<cell index="4" delay="50">
+<spr name="/Unpromoted/Frame4" x="0" y="0" z="0"/>
+</cell>
+<cell index="5" delay="50">
+<spr name="/Unpromoted/Frame5" x="0" y="0" z="0"/>
+</cell>
+<cell index="6" delay="50">
+<spr name="/Unpromoted/Frame6" x="0" y="0" z="0"/>
+</cell>
+<cell index="7" delay="50">
+<spr name="/Unpromoted/Frame7" x="0" y="0" z="0"/>
+</cell>
+<cell index="8" delay="50">
+<spr name="/Unpromoted/Frame8" x="0" y="0" z="0"/>
+</cell>
+<cell index="9" delay="50">
+<spr name="/Unpromoted/Frame9" x="0" y="0" z="0"/>
+</cell>
+<cell index="10" delay="50">
+<spr name="/Unpromoted/Frame10" x="0" y="0" z="0"/>
+</cell>
+<cell index="11" delay="50">
+<spr name="/Unpromoted/Frame11" x="0" y="0" z="0"/>
+</cell>
+<cell index="12" delay="50">
+<spr name="/Unpromoted/Frame12" x="0" y="0" z="0"/>
+</cell>
+<cell index="13" delay="50">
+<spr name="/Unpromoted/Frame13" x="0" y="0" z="0"/>
+</cell>
+<cell index="14" delay="50">
+<spr name="/Unpromoted/Frame14" x="0" y="0" z="0"/>
+</cell>
+<cell index="15" delay="50">
+<spr name="/Unpromoted/Frame15" x="0" y="0" z="0"/>
+</cell>
+<cell index="16" delay="50">
+<spr name="/Unpromoted/Frame16" x="0" y="0" z="0"/>
+</cell>
+</anim>
+<anim name="2" loops="0">
+<cell index="0" delay="50">
+<spr name="/Unpromoted/Frame34" x="0" y="0" z="0"/>
+</cell>
+<cell index="1" delay="50">
+<spr name="/Unpromoted/Frame35" x="0" y="0" z="0"/>
+</cell>
+<cell index="2" delay="50">
+<spr name="/Unpromoted/Frame36" x="0" y="0" z="0"/>
+</cell>
+<cell index="3" delay="50">
+<spr name="/Unpromoted/Frame37" x="0" y="0" z="0"/>
+</cell>
+<cell index="4" delay="50">
+<spr name="/Unpromoted/Frame38" x="0" y="0" z="0"/>
+</cell>
+<cell index="5" delay="50">
+<spr name="/Unpromoted/Frame39" x="0" y="0" z="0"/>
+</cell>
+<cell index="6" delay="50">
+<spr name="/Unpromoted/Frame40" x="0" y="0" z="0"/>
+</cell>
+<cell index="7" delay="50">
+<spr name="/Unpromoted/Frame41" x="0" y="0" z="0"/>
+</cell>
+<cell index="8" delay="50">
+<spr name="/Unpromoted/Frame42" x="0" y="0" z="0"/>
+</cell>
+<cell index="9" delay="50">
+<spr name="/Unpromoted/Frame43" x="0" y="0" z="0"/>
+</cell>
+<cell index="10" delay="50">
+<spr name="/Unpromoted/Frame44" x="0" y="0" z="0"/>
+</cell>
+<cell index="11" delay="50">
+<spr name="/Unpromoted/Frame45" x="0" y="0" z="0"/>
+</cell>
+<cell index="12" delay="50">
+<spr name="/Unpromoted/Frame46" x="0" y="0" z="0"/>
+</cell>
+<cell index="13" delay="50">
+<spr name="/Unpromoted/Frame47" x="0" y="0" z="0"/>
+</cell>
+<cell index="14" delay="50">
+<spr name="/Unpromoted/Frame48" x="0" y="0" z="0"/>
+</cell>
+<cell index="15" delay="50">
+<spr name="/Unpromoted/Frame49" x="0" y="0" z="0"/>
+</cell>
+<cell index="16" delay="50">
+<spr name="/Unpromoted/Frame50" x="0" y="0" z="0"/>
+</cell>
+</anim>
+<anim name="3" loops="0">
+<cell index="0" delay="50">
+<spr name="/Unpromoted/Frame17" x="0" y="0" z="0"/>
+</cell>
+<cell index="1" delay="50">
+<spr name="/Unpromoted/Frame18" x="0" y="0" z="0"/>
+</cell>
+<cell index="2" delay="50">
+<spr name="/Unpromoted/Frame19" x="0" y="0" z="0"/>
+</cell>
+<cell index="3" delay="50">
+<spr name="/Unpromoted/Frame20" x="0" y="0" z="0"/>
+</cell>
+<cell index="4" delay="50">
+<spr name="/Unpromoted/Frame21" x="0" y="0" z="0"/>
+</cell>
+<cell index="5" delay="50">
+<spr name="/Unpromoted/Frame22" x="0" y="0" z="0"/>
+</cell>
+<cell index="6" delay="50">
+<spr name="/Unpromoted/Frame23" x="0" y="0" z="0"/>
+</cell>
+<cell index="7" delay="50">
+<spr name="/Unpromoted/Frame24" x="0" y="0" z="0"/>
+</cell>
+<cell index="8" delay="50">
+<spr name="/Unpromoted/Frame25" x="0" y="0" z="0"/>
+</cell>
+<cell index="9" delay="50">
+<spr name="/Unpromoted/Frame26" x="0" y="0" z="0"/>
+</cell>
+<cell index="10" delay="50">
+<spr name="/Unpromoted/Frame27" x="0" y="0" z="0"/>
+</cell>
+<cell index="11" delay="50">
+<spr name="/Unpromoted/Frame28" x="0" y="0" z="0"/>
+</cell>
+<cell index="12" delay="50">
+<spr name="/Unpromoted/Frame29" x="0" y="0" z="0"/>
+</cell>
+<cell index="13" delay="50">
+<spr name="/Unpromoted/Frame30" x="0" y="0" z="0"/>
+</cell>
+<cell index="14" delay="50">
+<spr name="/Unpromoted/Frame31" x="0" y="0" z="0"/>
+</cell>
+<cell index="15" delay="50">
+<spr name="/Unpromoted/Frame32" x="0" y="0" z="0"/>
+</cell>
+<cell index="16" delay="50">
+<spr name="/Unpromoted/Frame33" x="0" y="0" z="0"/>
+</cell>
+</anim>
+<anim name="4" loops="0">
+<cell index="0" delay="50">
+<spr name="/Unpromoted/Frame51" x="0" y="0" z="0"/>
+</cell>
+<cell index="1" delay="50">
+<spr name="/Unpromoted/Frame52" x="0" y="0" z="0"/>
+</cell>
+<cell index="2" delay="50">
+<spr name="/Unpromoted/Frame53" x="0" y="0" z="0"/>
+</cell>
+<cell index="3" delay="50">
+<spr name="/Unpromoted/Frame54" x="0" y="0" z="0"/>
+</cell>
+<cell index="4" delay="50">
+<spr name="/Unpromoted/Frame55" x="0" y="0" z="0"/>
+</cell>
+<cell index="5" delay="50">
+<spr name="/Unpromoted/Frame56" x="0" y="0" z="0"/>
+</cell>
+<cell index="6" delay="50">
+<spr name="/Unpromoted/Frame57" x="0" y="0" z="0"/>
+</cell>
+<cell index="7" delay="50">
+<spr name="/Unpromoted/Frame58" x="0" y="0" z="0"/>
+</cell>
+<cell index="8" delay="50">
+<spr name="/Unpromoted/Frame59" x="0" y="0" z="0"/>
+</cell>
+<cell index="9" delay="50">
+<spr name="/Unpromoted/Frame60" x="0" y="0" z="0"/>
+</cell>
+<cell index="10" delay="50">
+<spr name="/Unpromoted/Frame61" x="0" y="0" z="0"/>
+</cell>
+<cell index="11" delay="50">
+<spr name="/Unpromoted/Frame62" x="0" y="0" z="0"/>
+</cell>
+<cell index="12" delay="50">
+<spr name="/Unpromoted/Frame63" x="0" y="0" z="0"/>
+</cell>
+<cell index="13" delay="50">
+<spr name="/Unpromoted/Frame64" x="0" y="0" z="0"/>
+</cell>
+<cell index="14" delay="50">
+<spr name="/Unpromoted/Frame65" x="0" y="0" z="0"/>
+</cell>
+<cell index="15" delay="50">
+<spr name="/Unpromoted/Frame66" x="0" y="0" z="0"/>
+</cell>
+<cell index="16" delay="50">
+<spr name="/Unpromoted/Frame67" x="0" y="0" z="0"/>
+</cell>
+</anim>
+</animations>

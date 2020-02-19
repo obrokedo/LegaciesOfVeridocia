@@ -65,7 +65,7 @@ class Burn(BattleEffect):
         return False;
             
     def getAnimationFile(self):
-        return None;
+        return "Burning";
     
     def isNegativeEffect(self):
         return True

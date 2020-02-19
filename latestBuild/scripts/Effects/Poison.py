@@ -60,7 +60,7 @@ class Poison(BattleEffect):
         # Poisoned
         if "Poison" == self.getBattleEffectId():
             return "Blaze";
-        return "No animation file";
+        return "Poisoned";
     
     
     def isNegativeEffect(self):

@@ -60,14 +60,14 @@ class Burst(SpellDefinition):
         return Color(0, 0, 0);
         
     def getSpellAnimationFile(self, level):
-        return "BOLT"
+        return "Burst"
     
     def getSpellRainAnimationFile(self, level):
         # return "lightning"
-        return "BOLT"
+        return "Burst"
     
     def getSpellRainAnimationName(self, level):
-        return "level1"#+str(level)
+        return str(level)
     
     def getEmitter(self, level):
         # You could create a emitter with sounds here

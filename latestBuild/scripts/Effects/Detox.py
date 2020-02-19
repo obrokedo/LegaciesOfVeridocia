@@ -9,8 +9,8 @@ import random
 class Detox(BattleEffect):
     def __init__(self, level = 0):
         # Set the duration to 0 as this is an instantaneous effect
-        self.setDuration(0);
-        self.setNegativeEffect(False);
+        #self.setNegativeEffect(False);
+        return None;
         
     def getName(self):
         return "Detox"    
@@ -57,7 +57,7 @@ class Detox(BattleEffect):
     def getAnimationFile(self):
         effectLevel = self.getEffectLevel()
 
-        return "No animation file";
+        return None;
         
     def preventsMovement(self):
         return False;

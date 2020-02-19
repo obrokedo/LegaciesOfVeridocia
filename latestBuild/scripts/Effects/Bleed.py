@@ -63,7 +63,7 @@ class Bleed(BattleEffect):
             
     def getAnimationFile(self):
         effectLevel = self.getEffectLevel()
-        return None
+        return "Bleeding"
     
     def isNegativeEffect(self):
         return True

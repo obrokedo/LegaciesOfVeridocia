@@ -29,6 +29,7 @@ from Spellz.Gust import Gust
 from Spellz.Cyclone import Cyclone
 from Spellz.Burst import Burst
 from Spellz.Flare import Flare
+from Spellz.Detox import Detox
 
 class Spells(SpellFactory):    
     # This defines the id for each spell in the game.
@@ -55,7 +56,7 @@ class Spells(SpellFactory):
         elif "SPIRIT" == id:
             spell = Spirit()
         elif "DETOX" == id:
-            spell = Heal()
+            spell = Detox()
         elif "BILE" == id:
         	spell = Bile()
         elif "FREEZE" == id:
