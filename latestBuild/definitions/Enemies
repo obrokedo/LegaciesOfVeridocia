@@ -1,20 +1,20 @@
 <enemies>
-<enemy id="0" name="Darkling Ooze" hp="9" mp="0" attack="10" defense="4" speed="5" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="0" mindStrength="0" counterStrength="0" evadeStrength="0" doubleStrength="0" critStrength="0" level="-1" move="4" movementtype="NORMAL" animations="Darkling Ooze" gold="7" palette="">
+<enemy id="0" name="Darkling Ooze" hp="9" mp="0" attack="9" defense="4" speed="4" fireAffin="-10" elecAffin="0" coldAffin="0" darkAffin="10" waterAffin="10" earthAffin="0" windAffin="0" lightAffin="-10" bodyStrength="5" mindStrength="100" counterStrength="4" evadeStrength="4" doubleStrength="5" critStrength="5" level="1" move="4" movementtype="NORMAL" animations="Darkling Ooze" gold="7" palette="">
 </enemy>
-<enemy id="1" name="Erium Soldier" hp="11" mp="0" attack="13" defense="5" speed="4" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="0" mindStrength="0" counterStrength="0" evadeStrength="0" doubleStrength="0" critStrength="0" level="0" move="5" movementtype="NORMAL" animations="eriumguard" gold="6" palette="">
+<enemy id="1" name="Erium Soldier" hp="11" mp="0" attack="10" defense="5" speed="4" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="15" mindStrength="5" counterStrength="6" evadeStrength="6" doubleStrength="10" critStrength="10" level="1" move="5" movementtype="NORMAL" animations="eriumguard" gold="6" palette="">
 	<item itemid="Erium Blade" equipped="true"/>
 </enemy>
-<enemy id="2" name="Erium Archer" hp="10" mp="0" attack="14" defense="4" speed="7" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="0" mindStrength="0" counterStrength="0" evadeStrength="0" doubleStrength="0" critStrength="0" level="1" move="5" movementtype="NORMAL" animations="eriumarcher" gold="6" palette="">
+<enemy id="2" name="Erium Archer" hp="10" mp="0" attack="11" defense="4" speed="7" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="10" mindStrength="10" counterStrength="7" evadeStrength="8" doubleStrength="10" critStrength="15" level="1" move="5" movementtype="FAST" animations="eriumarcher" gold="6" palette="">
 	<item itemid="Erium Arrow" equipped="true"/>
 </enemy>
-<enemy id="3" name="Erium Mage" hp="8" mp="4" attack="10" defense="4" speed="6" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="0" mindStrength="0" counterStrength="0" evadeStrength="0" doubleStrength="0" critStrength="0" level="1" move="5" movementtype="NORMAL" animations="eriummage" gold="5" palette="">
+<enemy id="3" name="Erium Mage" hp="8" mp="4" attack="8" defense="4" speed="6" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="5" mindStrength="15" counterStrength="4" evadeStrength="6" doubleStrength="5" critStrength="5" level="1" move="5" movementtype="NORMAL" animations="eriummage" gold="5" palette="">
 	<spell spellid="BLAZE" level="1"/>
 	<item itemid="Erium Cane" equipped="true"/>
 </enemy>
-<enemy id="4" name="Erium Captain" hp="15" mp="0" attack="15" defense="6" speed="7" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="0" mindStrength="0" counterStrength="0" evadeStrength="0" doubleStrength="0" critStrength="0" level="2" move="6" movementtype="NORMAL" animations="guardcaptain" gold="16" palette="">
+<enemy id="4" name="Erium Captain" hp="15" mp="0" attack="13" defense="6" speed="7" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="15" mindStrength="10" counterStrength="9" evadeStrength="6" doubleStrength="10" critStrength="10" level="2" move="6" movementtype="NORMAL" animations="guardcaptain" gold="16" palette="">
 	<item itemid="Erium Blade" equipped="true"/>
 </enemy>
-<enemy id="5" name="Sellsword" hp="15" mp="0" attack="15" defense="9" speed="6" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="15" mindStrength="5" counterStrength="7" evadeStrength="8" doubleStrength="15" critStrength="5" level="4" move="5" movementtype="NORMAL" animations="ReyvalTrapper" gold="36" palette="">
+<enemy id="5" name="Sellsword" hp="15" mp="0" attack="16" defense="9" speed="6" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="15" mindStrength="5" counterStrength="7" evadeStrength="8" doubleStrength="15" critStrength="5" level="4" move="5" movementtype="NORMAL" animations="ReyvalTrapper" gold="36" palette="">
 	<item itemid="Iron Mace" equipped="true"/>
 </enemy>
 <enemy id="6" name="Bounty Hunter" hp="14" mp="0" attack="16" defense="7" speed="10" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="10" mindStrength="10" counterStrength="9" evadeStrength="5" doubleStrength="5" critStrength="15" level="4" move="5" movementtype="FAST" animations="ReyvalScout" gold="38" palette="">
@@ -47,54 +47,219 @@
 	<spell spellid="FREEZE" level="1"/>
 	<spell spellid="BOLT" level="1"/>
 </enemy>
-<enemy id="15" name="Hobgoblin" hp="18" mp="0" attack="22" defense="12" speed="10" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="15" mindStrength="5" counterStrength="9" evadeStrength="5" doubleStrength="5" critStrength="15" level="7" move="5" movementtype="NORMAL" animations="blank" gold="87" palette="">
+<enemy id="15" name="Hobgoblin" hp="18" mp="0" attack="22" defense="12" speed="10" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="15" mindStrength="5" counterStrength="9" evadeStrength="5" doubleStrength="5" critStrength="15" level="7" move="5" movementtype="NORMAL" animations="placeholder" gold="87" palette="">
 	<item itemid="Long Sword" equipped="true"/>
 </enemy>
-<enemy id="16" name="Killer Hornet" hp="22" mp="0" attack="21" defense="12" speed="18" fireAffin="-10" elecAffin="0" coldAffin="10" darkAffin="0" waterAffin="10" earthAffin="0" windAffin="-10" lightAffin="0" bodyStrength="5" mindStrength="5" counterStrength="11" evadeStrength="10" doubleStrength="15" critStrength="15" level="8" move="6" movementtype="FLIGHT" animations="blank" gold="117" palette="">
+<enemy id="16" name="Killer Hornet" hp="22" mp="0" attack="21" defense="12" speed="18" fireAffin="-10" elecAffin="0" coldAffin="10" darkAffin="0" waterAffin="10" earthAffin="0" windAffin="-10" lightAffin="0" bodyStrength="5" mindStrength="5" counterStrength="11" evadeStrength="10" doubleStrength="15" critStrength="15" level="8" move="6" movementtype="FLIGHT" animations="placeholder" gold="117" palette="">
 	<attackeffect effectid="Bleed" effectchance="20" effectlevel="2"/>
 </enemy>
-<enemy id="17" name="Huntsman" hp="30" mp="0" attack="25" defense="14" speed="20" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="10" mindStrength="10" counterStrength="7" evadeStrength="9" doubleStrength="10" critStrength="15" level="9" move="5" movementtype="FAST" animations="blank" gold="160" palette="">
+<enemy id="17" name="Huntsman" hp="30" mp="0" attack="25" defense="14" speed="20" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="10" mindStrength="10" counterStrength="7" evadeStrength="9" doubleStrength="10" critStrength="15" level="9" move="5" movementtype="FAST" animations="placeholder" gold="160" palette="">
 	<item itemid="Hotshot" equipped="true"/>
 </enemy>
-<enemy id="18" name="Signus Soldier" hp="24" mp="0" attack="25" defense="16" speed="13" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="15" mindStrength="5" counterStrength="8" evadeStrength="8" doubleStrength="10" critStrength="10" level="9" move="5" movementtype="NORMAL" animations="blank" gold="140" palette="">
+<enemy id="18" name="Signus Soldier" hp="24" mp="0" attack="25" defense="16" speed="13" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="15" mindStrength="5" counterStrength="8" evadeStrength="8" doubleStrength="10" critStrength="10" level="9" move="5" movementtype="NORMAL" animations="placeholder" gold="140" palette="">
 	<item itemid="Hand Axe" equipped="true"/>
 </enemy>
-<enemy id="19" name="Signus Archer" hp="22" mp="0" attack="26" defense="13" speed="19" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="10" mindStrength="10" counterStrength="9" evadeStrength="11" doubleStrength="10" critStrength="15" level="9" move="5" movementtype="FAST" animations="blank" gold="144" palette="">
+<enemy id="19" name="Signus Archer" hp="22" mp="0" attack="26" defense="13" speed="19" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="10" mindStrength="10" counterStrength="9" evadeStrength="11" doubleStrength="10" critStrength="15" level="9" move="5" movementtype="FAST" animations="placeholder" gold="144" palette="">
 	<item itemid="Steel Arrow" equipped="true"/>
 </enemy>
-<enemy id="20" name="Signus Mage" hp="20" mp="14" attack="21" defense="11" speed="16" fireAffin="15" elecAffin="0" coldAffin="15" darkAffin="0" waterAffin="-13" earthAffin="0" windAffin="-13" lightAffin="0" bodyStrength="5" mindStrength="15" counterStrength="6" evadeStrength="8" doubleStrength="5" critStrength="5" level="9" move="5" movementtype="NORMAL" animations="blank" gold="123" palette="">
+<enemy id="20" name="Signus Mage" hp="20" mp="14" attack="21" defense="11" speed="16" fireAffin="15" elecAffin="0" coldAffin="15" darkAffin="0" waterAffin="-13" earthAffin="0" windAffin="-13" lightAffin="0" bodyStrength="5" mindStrength="15" counterStrength="6" evadeStrength="8" doubleStrength="5" critStrength="5" level="9" move="5" movementtype="NORMAL" animations="placeholder" gold="123" palette="">
 	<item itemid="Power Staff" equipped="true"/>
 	<spell spellid="BLAZE" level="2"/>
 	<spell spellid="FREEZE" level="2"/>
 </enemy>
-<enemy id="21" name="Signus Knight" hp="28" mp="0" attack="24" defense="14" speed="15" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="10" mindStrength="5" counterStrength="10" evadeStrength="6" doubleStrength="10" critStrength="5" level="9" move="7" movementtype="SLOW" animations="blank" gold="146" palette="">
+<enemy id="21" name="Signus Knight" hp="28" mp="0" attack="24" defense="14" speed="15" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="10" mindStrength="5" counterStrength="10" evadeStrength="6" doubleStrength="10" critStrength="5" level="9" move="7" movementtype="SLOW" animations="placeholder" gold="146" palette="">
 	<item itemid="Bronze Lance" equipped="true"/>
 </enemy>
-<enemy id="22" name="Signus Curate" hp="22" mp="16" attack="22" defense="12" speed="14" fireAffin="6" elecAffin="6" coldAffin="10" darkAffin="-7" waterAffin="16" earthAffin="6" windAffin="4" lightAffin="21" bodyStrength="5" mindStrength="10" counterStrength="8" evadeStrength="8" doubleStrength="5" critStrength="5" level="9" move="5" movementtype="NORMAL" animations="blank" gold="129" palette="">
+<enemy id="22" name="Signus Curate" hp="22" mp="16" attack="22" defense="12" speed="14" fireAffin="6" elecAffin="6" coldAffin="10" darkAffin="-7" waterAffin="16" earthAffin="6" windAffin="4" lightAffin="21" bodyStrength="5" mindStrength="10" counterStrength="8" evadeStrength="8" doubleStrength="5" critStrength="5" level="9" move="5" movementtype="NORMAL" animations="placeholder" gold="129" palette="">
 	<item itemid="Frost Wand" equipped="true"/>
 	<spell spellid="HEAL" level="2"/>
 	<spell spellid="TORRENT" level="1"/>
 </enemy>
-<enemy id="23" name="Signus Captain" hp="32" mp="8" attack="27" defense="15" speed="17" fireAffin="0" elecAffin="10" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="-10" windAffin="0" lightAffin="0" bodyStrength="15" mindStrength="10" counterStrength="11" evadeStrength="8" doubleStrength="10" critStrength="10" level="10" move="6" movementtype="NORMAL" animations="blank" gold="165" palette="">
+<enemy id="23" name="Signus Captain" hp="32" mp="8" attack="27" defense="15" speed="17" fireAffin="0" elecAffin="10" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="-10" windAffin="0" lightAffin="0" bodyStrength="15" mindStrength="10" counterStrength="11" evadeStrength="8" doubleStrength="10" critStrength="10" level="10" move="6" movementtype="NORMAL" animations="placeholder" gold="165" palette="">
 	<item itemid="Hand Axe" equipped="true"/>
 	<spell spellid="BOLT" level="1"/>
 </enemy>
-<enemy id="24" name="Pyroclastic Ooze" hp="28" mp="0" attack="30" defense="15" speed="15" fireAffin="30" elecAffin="5" coldAffin="5" darkAffin="5" waterAffin="-30" earthAffin="5" windAffin="5" lightAffin="5" bodyStrength="20" mindStrength="100" counterStrength="9" evadeStrength="8" doubleStrength="10" critStrength="10" level="11" move="4" movementtype="NORMAL" animations="blank" gold="194" palette="">
+<enemy id="24" name="Pyroclastic Ooze" hp="28" mp="0" attack="30" defense="15" speed="15" fireAffin="30" elecAffin="5" coldAffin="5" darkAffin="5" waterAffin="-30" earthAffin="5" windAffin="5" lightAffin="5" bodyStrength="20" mindStrength="100" counterStrength="9" evadeStrength="8" doubleStrength="10" critStrength="10" level="11" move="4" movementtype="NORMAL" animations="placeholder" gold="194" palette="">
 	<spell spellid="ERUPT" level="1"/>
 </enemy>
-<enemy id="25" name="Gargoyle" hp="30" mp="0" attack="29" defense="17" speed="19" fireAffin="5" elecAffin="-20" coldAffin="5" darkAffin="5" waterAffin="5" earthAffin="20" windAffin="5" lightAffin="5" bodyStrength="25" mindStrength="20" counterStrength="15" evadeStrength="12" doubleStrength="20" critStrength="10" level="11" move="6" movementtype="HOVERING" animations="blank" gold="209" palette="">
+<enemy id="25" name="Gargoyle" hp="30" mp="0" attack="29" defense="17" speed="19" fireAffin="5" elecAffin="-20" coldAffin="5" darkAffin="5" waterAffin="5" earthAffin="20" windAffin="5" lightAffin="5" bodyStrength="25" mindStrength="20" counterStrength="15" evadeStrength="12" doubleStrength="20" critStrength="10" level="11" move="6" movementtype="HOVERING" animations="placeholder" gold="209" palette="">
 </enemy>
-<enemy id="26" name="Mad Mage" hp="26" mp="25" attack="26" defense="15" speed="22" fireAffin="0" elecAffin="13" coldAffin="13" darkAffin="-12" waterAffin="17" earthAffin="13" windAffin="13" lightAffin="28" bodyStrength="10" mindStrength="25" counterStrength="10" evadeStrength="12" doubleStrength="10" critStrength="10" level="11" move="5" movementtype="NORMAL" animations="blank" gold="209" palette="">
+<enemy id="26" name="Mad Mage" hp="26" mp="25" attack="26" defense="15" speed="22" fireAffin="0" elecAffin="13" coldAffin="13" darkAffin="-12" waterAffin="17" earthAffin="13" windAffin="13" lightAffin="28" bodyStrength="10" mindStrength="25" counterStrength="10" evadeStrength="12" doubleStrength="10" critStrength="10" level="11" move="5" movementtype="NORMAL" animations="placeholder" gold="209" palette="">
 	<item itemid="Water Wand" equipped="true"/>
 	<attackeffect effectid="Confusion" effectchance="20" effectlevel="1"/>
 	<spell spellid="BURST" level="1"/>
 	<spell spellid="DELIRIUM" level="1"/>
 	<spell spellid="POWER" level="1"/>
 </enemy>
-<enemy id="27" name="Darkling Servant" hp="27" mp="27" attack="28" defense="16" speed="20" fireAffin="5" elecAffin="5" coldAffin="-20" darkAffin="-20" waterAffin="5" earthAffin="5" windAffin="20" lightAffin="20" bodyStrength="10" mindStrength="15" counterStrength="12" evadeStrength="12" doubleStrength="10" critStrength="10" level="11" move="5" movementtype="NORMAL" animations="blank" gold="216" palette="">
+<enemy id="27" name="Darkling Servant" hp="27" mp="27" attack="28" defense="16" speed="20" fireAffin="5" elecAffin="5" coldAffin="-20" darkAffin="-20" waterAffin="5" earthAffin="5" windAffin="20" lightAffin="20" bodyStrength="10" mindStrength="15" counterStrength="12" evadeStrength="12" doubleStrength="10" critStrength="10" level="11" move="5" movementtype="NORMAL" animations="placeholder" gold="216" palette="">
 	<item itemid="Iron Staff" equipped="true"/>
 	<spell spellid="AURA" level="1"/>
 	<spell spellid="GUST" level="2"/>
 	<spell spellid="DETOX" level="1"/>
+</enemy>
+<enemy id="28" name="Stone 1" hp="40" mp="0" attack="34" defense="18" speed="14" fireAffin="5" elecAffin="-40" coldAffin="5" darkAffin="5" waterAffin="5" earthAffin="40" windAffin="5" lightAffin="5" bodyStrength="30" mindStrength="10" counterStrength="15" evadeStrength="8" doubleStrength="15" critStrength="15" level="15" move="5" movementtype="NORMAL" animations="placeholder" gold="318" palette="">
+	<item itemid="Battle Axe" equipped="true"/>
+</enemy>
+<enemy id="29" name="Black Adder" hp="25" mp="0" attack="31" defense="16" speed="21" fireAffin="-20" elecAffin="5" coldAffin="5" darkAffin="5" waterAffin="20" earthAffin="5" windAffin="5" lightAffin="5" bodyStrength="15" mindStrength="15" counterStrength="16" evadeStrength="15" doubleStrength="15" critStrength="15" level="11" move="6" movementtype="BEAST" animations="placeholder" gold="205" palette="">
+	<attackeffect effectid="Poison" effectchance="20" effectlevel="2"/>
+</enemy>
+<enemy id="30" name="Sky Rider" hp="28" mp="0" attack="37" defense="18" speed="25" fireAffin="5" elecAffin="-10" coldAffin="10" darkAffin="5" waterAffin="5" earthAffin="10" windAffin="-10" lightAffin="5" bodyStrength="20" mindStrength="20" counterStrength="10" evadeStrength="16" doubleStrength="15" critStrength="15" level="13" move="7" movementtype="FLIGHT" animations="placeholder" gold="281" palette="">
+	<item itemid="Elven Arrow" equipped="true"/>
+</enemy>
+<enemy id="31" name="Reid" hp="50" mp="0" attack="37" defense="21" speed="20" fireAffin="5" elecAffin="5" coldAffin="5" darkAffin="5" waterAffin="5" earthAffin="5" windAffin="5" lightAffin="5" bodyStrength="25" mindStrength="30" counterStrength="16" evadeStrength="9" doubleStrength="20" critStrength="10" level="18" move="6" movementtype="NORMAL" animations="placeholder" gold="461" palette="">
+	<item itemid="Steel Blade" equipped="true"/>
+</enemy>
+<enemy id="32" name="Half-Giant" hp="33" mp="0" attack="38" defense="24" speed="20" fireAffin="5" elecAffin="5" coldAffin="-20" darkAffin="5" waterAffin="5" earthAffin="5" windAffin="20" lightAffin="5" bodyStrength="20" mindStrength="15" counterStrength="13" evadeStrength="9" doubleStrength="20" critStrength="15" level="13" move="5" movementtype="NORMAL" animations="placeholder" gold="299" palette="">
+</enemy>
+<enemy id="33" name="Golem" hp="26" mp="0" attack="36" defense="28" speed="12" fireAffin="5" elecAffin="-20" coldAffin="-20" darkAffin="5" waterAffin="5" earthAffin="20" windAffin="20" lightAffin="5" bodyStrength="20" mindStrength="100" counterStrength="8" evadeStrength="8" doubleStrength="10" critStrength="10" level="13" move="4" movementtype="TANK" animations="placeholder" gold="265" palette="">
+</enemy>
+<enemy id="34" name="Raltis 1" hp="46" mp="50" attack="35" defense="22" speed="27" fireAffin="-9" elecAffin="-23" coldAffin="22" darkAffin="19" waterAffin="67" earthAffin="61" windAffin="22" lightAffin="27" bodyStrength="25" mindStrength="45" counterStrength="14" evadeStrength="16" doubleStrength="15" critStrength="15" level="20" move="5" movementtype="NORMAL" animations="placeholder" gold="600" palette="">
+	<item itemid="Tremor Wand" equipped="true"/>
+</enemy>
+<enemy id="35" name="Swashbuckler" hp="36" mp="0" attack="41" defense="30" speed="28" fireAffin="-20" elecAffin="5" coldAffin="5" darkAffin="5" waterAffin="20" earthAffin="5" windAffin="5" lightAffin="5" bodyStrength="20" mindStrength="15" counterStrength="17" evadeStrength="14" doubleStrength="15" critStrength="10" level="14" move="6" movementtype="NORMAL" animations="placeholder" gold="378" palette="">
+	<item itemid="Infantry Sabre" equipped="true"/>
+</enemy>
+<enemy id="36" name="Buccaneer" hp="32" mp="0" attack="43" defense="28" speed="30" fireAffin="-20" elecAffin="5" coldAffin="5" darkAffin="5" waterAffin="20" earthAffin="5" windAffin="5" lightAffin="5" bodyStrength="15" mindStrength="15" counterStrength="12" evadeStrength="11" doubleStrength="10" critStrength="20" level="14" move="5" movementtype="NORMAL" animations="placeholder" gold="372" palette="">
+	<item itemid="Amp Shot" equipped="true"/>
+</enemy>
+<enemy id="37" name="Storm Wizard" hp="35" mp="40" attack="32" defense="27" speed="32" fireAffin="5" elecAffin="25" coldAffin="20" darkAffin="5" waterAffin="5" earthAffin="-23" windAffin="-20" lightAffin="5" bodyStrength="15" mindStrength="25" counterStrength="11" evadeStrength="11" doubleStrength="10" critStrength="10" level="15" move="5" movementtype="NORMAL" animations="placeholder" gold="415" palette="">
+	<item itemid="Battle Staff" equipped="true"/>
+</enemy>
+<enemy id="38" name="Ogre" hp="40" mp="0" attack="46" defense="32" speed="24" fireAffin="5" elecAffin="5" coldAffin="-20" darkAffin="5" waterAffin="5" earthAffin="5" windAffin="20" lightAffin="5" bodyStrength="25" mindStrength="15" counterStrength="14" evadeStrength="10" doubleStrength="20" critStrength="15" level="16" move="5" movementtype="NORMAL" animations="placeholder" gold="454" palette="">
+</enemy>
+<enemy id="39" name="Ninja" hp="38" mp="18" attack="48" defense="28" speed="42" fireAffin="5" elecAffin="5" coldAffin="-23" darkAffin="5" waterAffin="5" earthAffin="5" windAffin="25" lightAffin="5" bodyStrength="15" mindStrength="20" counterStrength="20" evadeStrength="19" doubleStrength="10" critStrength="20" level="17" move="5" movementtype="FAST" animations="placeholder" gold="493" palette="">
+	<item itemid="Kodachi" equipped="true"/>
+</enemy>
+<enemy id="40" name="Marksman" hp="36" mp="0" attack="50" defense="24" speed="37" fireAffin="5" elecAffin="5" coldAffin="5" darkAffin="5" waterAffin="5" earthAffin="5" windAffin="5" lightAffin="5" bodyStrength="20" mindStrength="20" counterStrength="13" evadeStrength="18" doubleStrength="15" critStrength="15" level="17" move="5" movementtype="FAST" animations="placeholder" gold="500" palette="">
+	<item itemid="Sniper's Arrow" equipped="true"/>
+</enemy>
+<enemy id="41" name="Masked Monk" hp="40" mp="25" attack="43" defense="30" speed="35" fireAffin="5" elecAffin="-23" coldAffin="5" darkAffin="-23" waterAffin="5" earthAffin="25" windAffin="5" lightAffin="25" bodyStrength="25" mindStrength="20" counterStrength="18" evadeStrength="15" doubleStrength="20" critStrength="10" level="17" move="6" movementtype="NORMAL" animations="placeholder" gold="490" palette="">
+	<item itemid="Steel Gauntlet" equipped="true"/>
+</enemy>
+<enemy id="42" name="Hound" hp="42" mp="0" attack="49" defense="29" speed="40" fireAffin="5" elecAffin="5" coldAffin="5" darkAffin="5" waterAffin="5" earthAffin="5" windAffin="5" lightAffin="5" bodyStrength="20" mindStrength="15" counterStrength="16" evadeStrength="19" doubleStrength="15" critStrength="10" level="18" move="7" movementtype="BEAST" animations="placeholder" gold="576" palette="">
+</enemy>
+<enemy id="43" name="Nokajiku 1" hp="50" mp="32" attack="55" defense="30" speed="50" fireAffin="40" elecAffin="5" coldAffin="-23" darkAffin="5" waterAffin="-20" earthAffin="5" windAffin="45" lightAffin="5" bodyStrength="25" mindStrength="30" counterStrength="21" evadeStrength="20" doubleStrength="10" critStrength="20" level="25" move="6" movementtype="FAST" animations="placeholder" gold="904" palette="">
+	<item itemid="Wakizashi" equipped="true"/>
+</enemy>
+<enemy id="44" name="Gulwin 1" hp="75" mp="30" attack="49" defense="38" speed="32" fireAffin="5" elecAffin="5" coldAffin="5" darkAffin="-23" waterAffin="5" earthAffin="5" windAffin="5" lightAffin="45" bodyStrength="45" mindStrength="60" counterStrength="18" evadeStrength="12" doubleStrength="20" critStrength="10" level="30" move="6" movementtype="NORMAL" animations="placeholder" gold="1120" palette="">
+	<item itemid="Buster Sword" equipped="true"/>
+	<item itemid="Flaming Wand"/>
+</enemy>
+<enemy id="45" name="Grotesque" hp="46" mp="0" attack="50" defense="35" speed="35" fireAffin="5" elecAffin="-20" coldAffin="5" darkAffin="5" waterAffin="5" earthAffin="20" windAffin="5" lightAffin="5" bodyStrength="25" mindStrength="25" counterStrength="19" evadeStrength="15" doubleStrength="20" critStrength="10" level="19" move="6" movementtype="HOVER" animations="placeholder" gold="631" palette="">
+</enemy>
+<enemy id="46" name="Radiant Monk" hp="47" mp="35" attack="52" defense="29" speed="39" fireAffin="5" elecAffin="5" coldAffin="5" darkAffin="-26" waterAffin="5" earthAffin="5" windAffin="5" lightAffin="30" bodyStrength="35" mindStrength="30" counterStrength="19" evadeStrength="15" doubleStrength="20" critStrength="10" level="20" move="6" movementtype="NORMAL" animations="placeholder" gold="673" palette="">
+	<item itemid="Spectral Claw" equipped="true"/>
+</enemy>
+<enemy id="47" name="Wyrmling" hp="55" mp="0" attack="55" defense="36" speed="33" fireAffin="5" elecAffin="5" coldAffin="5" darkAffin="5" waterAffin="5" earthAffin="5" windAffin="5" lightAffin="5" bodyStrength="25" mindStrength="25" counterStrength="12" evadeStrength="12" doubleStrength="10" critStrength="10" level="21" move="5" movementtype="BEAST" animations="placeholder" gold="752" palette="">
+</enemy>
+<enemy id="48" name="Hell Hound" hp="48" mp="0" attack="57" defense="34" speed="47" fireAffin="20" elecAffin="5" coldAffin="5" darkAffin="5" waterAffin="-20" earthAffin="5" windAffin="5" lightAffin="5" bodyStrength="30" mindStrength="25" counterStrength="18" evadeStrength="20" doubleStrength="15" critStrength="10" level="21" move="7" movementtype="BEAST" animations="placeholder" gold="781" palette="">
+</enemy>
+<enemy id="49" name="Salamander" hp="70" mp="0" attack="60" defense="26" speed="40" fireAffin="20" elecAffin="5" coldAffin="5" darkAffin="5" waterAffin="-20" earthAffin="5" windAffin="5" lightAffin="5" bodyStrength="35" mindStrength="25" counterStrength="17" evadeStrength="18" doubleStrength="10" critStrength="15" level="21" move="6" movementtype="BEAST" animations="placeholder" gold="823" palette="">
+	<item itemid="Infernus" equipped="true"/>
+</enemy>
+<enemy id="50" name="Dragonman" hp="70" mp="0" attack="60" defense="26" speed="40" fireAffin="5" elecAffin="5" coldAffin="-20" darkAffin="5" waterAffin="5" earthAffin="5" windAffin="20" lightAffin="5" bodyStrength="35" mindStrength="30" counterStrength="18" evadeStrength="12" doubleStrength="15" critStrength="15" level="21" move="6" movementtype="HOVER" animations="placeholder" gold="710" palette="">
+	<item itemid="Flanged Mace" equipped="true"/>
+</enemy>
+<enemy id="51" name="Pyromancer" hp="47" mp="56" attack="41" defense="35" speed="45" fireAffin="20" elecAffin="5" coldAffin="5" darkAffin="5" waterAffin="-20" earthAffin="5" windAffin="5" lightAffin="5" bodyStrength="25" mindStrength="35" counterStrength="14" evadeStrength="14" doubleStrength="10" critStrength="10" level="22" move="6" movementtype="NORMAL" animations="placeholder" gold="821" palette="">
+	<item itemid="Spirit Staff" equipped="true"/>
+</enemy>
+<enemy id="52" name="Sage" hp="50" mp="65" attack="43" defense="38" speed="42" fireAffin="-3" elecAffin="25" coldAffin="30" darkAffin="-16" waterAffin="45" earthAffin="25" windAffin="22" lightAffin="60" bodyStrength="25" mindStrength="35" counterStrength="13" evadeStrength="13" doubleStrength="10" critStrength="10" level="22" move="5" movementtype="NORMAL" animations="placeholder" gold="873" palette="">
+	<item itemid="Sun Rod" equipped="true"/>
+</enemy>
+<enemy id="53" name="Stone 2" hp="81" mp="0" attack="64" defense="53" speed="30" fireAffin="5" elecAffin="-20" coldAffin="5" darkAffin="5" waterAffin="5" earthAffin="30" windAffin="5" lightAffin="5" bodyStrength="60" mindStrength="35" counterStrength="18" evadeStrength="12" doubleStrength="15" critStrength="15" level="30" move="5" movementtype="NORMAL" animations="placeholder" gold="1368" palette="">
+	<item itemid="Amber Axe" equipped="true"/>
+</enemy>
+<enemy id="54" name="Gulwin 2" hp="90" mp="32" attack="62" defense="50" speed="38" fireAffin="15" elecAffin="5" coldAffin="5" darkAffin="35" waterAffin="5" earthAffin="5" windAffin="5" lightAffin="-23" bodyStrength="45" mindStrength="60" counterStrength="20" evadeStrength="13" doubleStrength="20" critStrength="10" level="35" move="6" movementtype="NORMAL" animations="placeholder" gold="1587" palette="">
+	<item itemid="Sunstone Sword" equipped="true"/>
+	<item itemid="Flaming Wand"/>
+</enemy>
+<enemy id="55" name="Raltis 2" hp="75" mp="68" attack="54" defense="45" speed="45" fireAffin="-1" elecAffin="2" coldAffin="30" darkAffin="34" waterAffin="65" earthAffin="60" windAffin="30" lightAffin="30" bodyStrength="35" mindStrength="60" counterStrength="17" evadeStrength="20" doubleStrength="15" critStrength="15" level="30" move="5" movementtype="NORMAL" animations="placeholder" gold="1435" palette="">
+	<item itemid="Wither Wand" equipped="true"/>
+</enemy>
+<enemy id="56" name="Nokajiku 2" hp="70" mp="45" attack="71" defense="42" speed="64" fireAffin="35" elecAffin="5" coldAffin="-23" darkAffin="5" waterAffin="-23" earthAffin="5" windAffin="35" lightAffin="5" bodyStrength="35" mindStrength="40" counterStrength="24" evadeStrength="23" doubleStrength="10" critStrength="20" level="31" move="6" movementtype="FAST" animations="placeholder" gold="1509" palette="">
+	<item itemid="Sapphire Star" equipped="true"/>
+</enemy>
+<enemy id="57" name="Mistal 1" hp="80" mp="80" attack="60" defense="48" speed="60" fireAffin="5" elecAffin="5" coldAffin="40" darkAffin="30" waterAffin="5" earthAffin="5" windAffin="-26" lightAffin="-20" bodyStrength="35" mindStrength="60" counterStrength="17" evadeStrength="17" doubleStrength="10" critStrength="10" level="40" move="5" movementtype="NORMAL" animations="placeholder" gold="2187" palette="">
+	<item itemid="Goddess Staff" equipped="true"/>
+</enemy>
+<enemy id="58" name="Minotaur" hp="60" mp="0" attack="62" defense="50" speed="50" fireAffin="5" elecAffin="5" coldAffin="5" darkAffin="5" waterAffin="5" earthAffin="5" windAffin="5" lightAffin="5" bodyStrength="35" mindStrength="25" counterStrength="18" evadeStrength="15" doubleStrength="20" critStrength="15" level="25" move="5" movementtype="BEAST" animations="placeholder" gold="1110" palette="">
+	<item itemid="Moonstone Maul" equipped="true"/>
+</enemy>
+<enemy id="59" name="Shinobi" hp="52" mp="30" attack="66" defense="40" speed="65" fireAffin="25" elecAffin="5" coldAffin="5" darkAffin="5" waterAffin="-23" earthAffin="5" windAffin="5" lightAffin="5" bodyStrength="30" mindStrength="30" counterStrength="24" evadeStrength="23" doubleStrength="10" critStrength="20" level="25" move="6" movementtype="FAST" animations="placeholder" gold="1054" palette="">
+	<item itemid="Sapphire Star" equipped="true"/>
+</enemy>
+<enemy id="60" name="Frost Dragon" hp="85" mp="0" attack="70" defense="40" speed="56" fireAffin="5" elecAffin="5" coldAffin="20" darkAffin="5" waterAffin="5" earthAffin="5" windAffin="-20" lightAffin="5" bodyStrength="35" mindStrength="35" counterStrength="20" evadeStrength="19" doubleStrength="15" critStrength="15" level="25" move="7" movementtype="FLIGHT" animations="placeholder" gold="1255" palette="">
+</enemy>
+<enemy id="61" name="Wraith" hp="20" mp="0" attack="20" defense="80" speed="4" fireAffin="80" elecAffin="80" coldAffin="80" darkAffin="100" waterAffin="80" earthAffin="80" windAffin="80" lightAffin="80" bodyStrength="100" mindStrength="100" counterStrength="0" evadeStrength="0" doubleStrength="0" critStrength="0" level="26" move="7" movementtype="FLIGHT" animations="placeholder" gold="645" palette="">
+</enemy>
+<enemy id="62" name="Fenris" hp="70" mp="0" attack="69" defense="46" speed="65" fireAffin="20" elecAffin="5" coldAffin="5" darkAffin="5" waterAffin="-20" earthAffin="5" windAffin="5" lightAffin="5" bodyStrength="30" mindStrength="25" counterStrength="21" evadeStrength="23" doubleStrength="15" critStrength="10" level="26" move="7" movementtype="BEAST" animations="placeholder" gold="1300" palette="">
+</enemy>
+<enemy id="63" name="Shadow Sniper" hp="81" mp="0" attack="80" defense="43" speed="76" fireAffin="5" elecAffin="5" coldAffin="5" darkAffin="5" waterAffin="5" earthAffin="5" windAffin="5" lightAffin="5" bodyStrength="30" mindStrength="30" counterStrength="20" evadeStrength="25" doubleStrength="15" critStrength="15" level="27" move="5" movementtype="FAST" animations="placeholder" gold="1512" palette="">
+	<item itemid="Amethyst Arrow" equipped="true"/>
+</enemy>
+<enemy id="64" name="Blade Golem" hp="70" mp="0" attack="85" defense="55" speed="42" fireAffin="5" elecAffin="-20" coldAffin="-20" darkAffin="5" waterAffin="5" earthAffin="20" windAffin="20" lightAffin="5" bodyStrength="30" mindStrength="100" counterStrength="15" evadeStrength="14" doubleStrength="10" critStrength="10" level="27" move="4" movementtype="TANK" animations="placeholder" gold="1361" palette="">
+</enemy>
+<enemy id="65" name="Crypt Keeper" hp="66" mp="0" attack="87" defense="48" speed="54" fireAffin="20" elecAffin="20" coldAffin="20" darkAffin="20" waterAffin="20" earthAffin="20" windAffin="20" lightAffin="20" bodyStrength="100" mindStrength="100" counterStrength="23" evadeStrength="22" doubleStrength="20" critStrength="20" level="27" move="5" movementtype="NORMAL" animations="placeholder" gold="1377" palette="">
+	<item itemid="Bloodstone Blade" equipped="true"/>
+</enemy>
+<enemy id="66" name="Shadow Monk" hp="73" mp="50" attack="77" defense="50" speed="61" fireAffin="5" elecAffin="-29" coldAffin="5" darkAffin="14" waterAffin="25" earthAffin="35" windAffin="5" lightAffin="-10" bodyStrength="35" mindStrength="30" counterStrength="24" evadeStrength="20" doubleStrength="20" critStrength="10" level="27" move="6" movementtype="NORMAL" animations="placeholder" gold="1400" palette="">
+	<item itemid="Coral Claw" equipped="true"/>
+</enemy>
+<enemy id="67" name="Storm Sage" hp="62" mp="90" attack="62" defense="40" speed="58" fireAffin="-6" elecAffin="45" coldAffin="30" darkAffin="31" waterAffin="50" earthAffin="-3" windAffin="30" lightAffin="35" bodyStrength="25" mindStrength="35" counterStrength="17" evadeStrength="16" doubleStrength="10" critStrength="10" level="28" move="5" movementtype="NORMAL" animations="placeholder" gold="1456" palette="">
+	<item itemid="Wither Wand" equipped="true"/>
+</enemy>
+<enemy id="68" name="Doom Knight" hp="90" mp="0" attack="91" defense="53" speed="65" fireAffin="5" elecAffin="5" coldAffin="5" darkAffin="40" waterAffin="5" earthAffin="5" windAffin="5" lightAffin="-20" bodyStrength="35" mindStrength="30" counterStrength="25" evadeStrength="18" doubleStrength="15" critStrength="15" level="29" move="7" movementtype="SLOW" animations="placeholder" gold="1734" palette="">
+	<item itemid="Moon Lance" equipped="true"/>
+</enemy>
+<enemy id="69" name="Sentinel" hp="100" mp="0" attack="86" defense="60" speed="47" fireAffin="25" elecAffin="-20" coldAffin="-20" darkAffin="5" waterAffin="5" earthAffin="40" windAffin="20" lightAffin="5" bodyStrength="35" mindStrength="100" counterStrength="19" evadeStrength="15" doubleStrength="15" critStrength="15" level="29" move="5" movementtype="TANK" animations="placeholder" gold="1699" palette="">
+</enemy>
+<enemy id="70" name="Dragonlord" hp="88" mp="0" attack="94" defense="57" speed="60" fireAffin="5" elecAffin="5" coldAffin="-20" darkAffin="5" waterAffin="5" earthAffin="5" windAffin="20" lightAffin="5" bodyStrength="35" mindStrength="30" counterStrength="24" evadeStrength="17" doubleStrength="15" critStrength="15" level="30" move="6" movementtype="HOVER" animations="placeholder" gold="1794" palette="">
+	<item itemid="Gravity Mace" equipped="true"/>
+</enemy>
+<enemy id="71" name="Death Dragon" hp="110" mp="10" attack="102" defense="51" speed="65" fireAffin="20" elecAffin="20" coldAffin="20" darkAffin="30" waterAffin="20" earthAffin="20" windAffin="20" lightAffin="-30" bodyStrength="100" mindStrength="100" counterStrength="22" evadeStrength="20" doubleStrength="15" critStrength="15" level="31" move="6" movementtype="BEAST" animations="placeholder" gold="1746" palette="">
+</enemy>
+<enemy id="72" name="Blood Golem" hp="150" mp="0" attack="105" defense="56" speed="51" fireAffin="5" elecAffin="5" coldAffin="5" darkAffin="5" waterAffin="5" earthAffin="5" windAffin="5" lightAffin="5" bodyStrength="45" mindStrength="100" counterStrength="20" evadeStrength="18" doubleStrength="10" critStrength="20" level="32" move="5" movementtype="TANK" animations="placeholder" gold="2317" palette="">
+</enemy>
+<enemy id="73" name="Phantasm" hp="40" mp="15" attack="1" defense="87" speed="80" fireAffin="80" elecAffin="80" coldAffin="80" darkAffin="80" waterAffin="80" earthAffin="80" windAffin="80" lightAffin="80" bodyStrength="100" mindStrength="100" counterStrength="0" evadeStrength="0" doubleStrength="0" critStrength="0" level="33" move="4" movementtype="FLIGHT" animations="placeholder" gold="1227" palette="">
+</enemy>
+<enemy id="74" name="Master Sage" hp="80" mp="120" attack="86" defense="53" speed="70" fireAffin="70" elecAffin="45" coldAffin="45" darkAffin="36" waterAffin="65" earthAffin="45" windAffin="45" lightAffin="60" bodyStrength="35" mindStrength="45" counterStrength="20" evadeStrength="18" doubleStrength="10" critStrength="10" level="33" move="5" movementtype="NORMAL" animations="placeholder" gold="2250" palette="">
+	<item itemid="Elixir Wand" equipped="true"/>
+</enemy>
+<enemy id="75" name="Possessed Hauron" hp="117" mp="0" attack="110" defense="77" speed="75" fireAffin="5" elecAffin="-20" coldAffin="5" darkAffin="15" waterAffin="0" earthAffin="5" windAffin="15" lightAffin="5" bodyStrength="40" mindStrength="40" counterStrength="29" evadeStrength="28" doubleStrength="10" critStrength="15" level="35" move="7" movementtype="FLIGHT" animations="placeholder" gold="2653" palette="">
+	<item itemid="Warp Javelin" equipped="true"/>
+</enemy>
+<enemy id="76" name="Possessed Sampson" hp="124" mp="0" attack="93" defense="73" speed="89" fireAffin="5" elecAffin="-10" coldAffin="0" darkAffin="10" waterAffin="20" earthAffin="5" windAffin="5" lightAffin="5" bodyStrength="35" mindStrength="40" counterStrength="21" evadeStrength="23" doubleStrength="10" critStrength="10" level="35" move="7" movementtype="FLIGHT" animations="placeholder" gold="2653" palette="">
+	<item itemid="Warp Javelin" equipped="true"/>
+</enemy>
+<enemy id="77" name="Chimera" hp="105" mp="0" attack="110" defense="59" speed="100" fireAffin="100" elecAffin="5" coldAffin="5" darkAffin="5" waterAffin="-50" earthAffin="5" windAffin="5" lightAffin="5" bodyStrength="45" mindStrength="90" counterStrength="31" evadeStrength="29" doubleStrength="20" critStrength="20" level="34" move="6" movementtype="SLOW" animations="placeholder" gold="2543" palette="">
+</enemy>
+<enemy id="78" name="Manticore" hp="101" mp="0" attack="103" defense="63" speed="107" fireAffin="5" elecAffin="5" coldAffin="5" darkAffin="5" waterAffin="5" earthAffin="5" windAffin="5" lightAffin="5" bodyStrength="45" mindStrength="35" counterStrength="29" evadeStrength="31" doubleStrength="15" critStrength="20" level="34" move="6" movementtype="FLIGHT" animations="placeholder" gold="2543" palette="">
+</enemy>
+<enemy id="79" name="Undead Stone" hp="140" mp="0" attack="117" defense="65" speed="45" fireAffin="5" elecAffin="-20" coldAffin="5" darkAffin="20" waterAffin="5" earthAffin="30" windAffin="5" lightAffin="-10" bodyStrength="100" mindStrength="100" counterStrength="23" evadeStrength="20" doubleStrength="15" critStrength="15" level="40" move="5" movementtype="NORMAL" animations="placeholder" gold="2936" palette="">
+	<item itemid="Phantom Axe" equipped="true"/>
+</enemy>
+<enemy id="80" name="Undead Gulwin" hp="190" mp="60" attack="111" defense="64" speed="70" fireAffin="5" elecAffin="5" coldAffin="5" darkAffin="-11" waterAffin="5" earthAffin="5" windAffin="5" lightAffin="25" bodyStrength="100" mindStrength="100" counterStrength="27" evadeStrength="19" doubleStrength="20" critStrength="10" level="40" move="6" movementtype="NORMAL" animations="placeholder" gold="3300" palette="">
+	<item itemid="Tsunami Sword" equipped="true"/>
+	<item itemid="Flaming Wand" equipped="true"/>
+</enemy>
+<enemy id="81" name="Undead Raltis" hp="135" mp="130" attack="99" defense="53" speed="78" fireAffin="1" elecAffin="1" coldAffin="35" darkAffin="41" waterAffin="75" earthAffin="75" windAffin="35" lightAffin="35" bodyStrength="100" mindStrength="100" counterStrength="24" evadeStrength="26" doubleStrength="15" critStrength="15" level="40" move="5" movementtype="NORMAL" animations="placeholder" gold="3300" palette="">
+	<item itemid="Elixir Wand" equipped="true"/>
+</enemy>
+<enemy id="82" name="Undead Nokajiku" hp="126" mp="80" attack="120" defense="50" speed="119" fireAffin="65" elecAffin="5" coldAffin="-26" darkAffin="20" waterAffin="-26" earthAffin="5" windAffin="40" lightAffin="-10" bodyStrength="100" mindStrength="100" counterStrength="35" evadeStrength="32" doubleStrength="10" critStrength="20" level="40" move="6" movementtype="FAST" animations="placeholder" gold="3300" palette="">
+	<item itemid="Kechibi Shuriken" equipped="true"/>
+</enemy>
+<enemy id="83" name="Surge Dragon" hp="200" mp="0" attack="112" defense="58" speed="83" fireAffin="5" elecAffin="20" coldAffin="5" darkAffin="5" waterAffin="5" earthAffin="-20" windAffin="5" lightAffin="5" bodyStrength="45" mindStrength="45" counterStrength="26" evadeStrength="24" doubleStrength="15" critStrength="15" level="35" move="7" movementtype="FLIGHT" animations="placeholder" gold="3171" palette="">
+</enemy>
+<enemy id="84" name="Dracolich" hp="175" mp="45" attack="105" defense="65" speed="85" fireAffin="5" elecAffin="20" coldAffin="5" darkAffin="5" waterAffin="5" earthAffin="-20" windAffin="5" lightAffin="5" bodyStrength="45" mindStrength="45" counterStrength="26" evadeStrength="24" doubleStrength="15" critStrength="15" level="35" move="7" movementtype="FLIGHT" animations="placeholder" gold="2771" palette="">
+</enemy>
+<enemy id="85" name="Mistal 2" hp="200" mp="300" attack="101" defense="56" speed="90" fireAffin="60" elecAffin="60" coldAffin="80" darkAffin="70" waterAffin="60" earthAffin="60" windAffin="30" lightAffin="30" bodyStrength="40" mindStrength="85" counterStrength="23" evadeStrength="22" doubleStrength="10" critStrength="10" level="45" move="5" movementtype="NORMAL" animations="placeholder" gold="5603" palette="">
+	<item itemid="Pandora's Wand" equipped="true"/>
+</enemy>
+<enemy id="86" name="Lexus" hp="300" mp="150" attack="125" defense="60" speed="84" fireAffin="40" elecAffin="60" coldAffin="30" darkAffin="30" waterAffin="30" earthAffin="30" windAffin="30" lightAffin="40" bodyStrength="80" mindStrength="80" counterStrength="26" evadeStrength="21" doubleStrength="20" critStrength="20" level="50" move="6" movementtype="NORMAL" animations="placeholder" gold="5992" palette="">
+	<item itemid="Novabrand" equipped="true"/>
+</enemy>
+<enemy id="87" name="Basilisk" hp="225" mp="0" attack="115" defense="65" speed="75" fireAffin="20" elecAffin="-50" coldAffin="20" darkAffin="20" waterAffin="20" earthAffin="100" windAffin="20" lightAffin="20" bodyStrength="75" mindStrength="65" counterStrength="28" evadeStrength="26" doubleStrength="15" critStrength="15" level="35" move="6" movementtype="BEAST" animations="placeholder" gold="3360" palette="">
+</enemy>
+<enemy id="88" name="Nazalem" hp="666" mp="999" attack="150" defense="75" speed="65" fireAffin="20" elecAffin="20" coldAffin="20" darkAffin="40" waterAffin="20" earthAffin="20" windAffin="20" lightAffin="20" bodyStrength="80" mindStrength="100" counterStrength="24" evadeStrength="21" doubleStrength="10" critStrength="10" level="100" move="0" movementtype="HOVER" animations="placeholder" gold="0" palette="">
 </enemy>
 </enemies>
