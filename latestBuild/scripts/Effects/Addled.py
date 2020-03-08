@@ -63,7 +63,7 @@ class Addled(BattleEffect):
             
     def getAnimationFile(self):
         effectLevel = self.getEffectLevel()
-        return "Addled"
+        return None#"Addled"
     
     def isNegativeEffect(self):
         return True

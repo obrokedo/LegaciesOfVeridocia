@@ -101,7 +101,7 @@ class Delirium(SpellDefinition):
         return Color(255, 0, 0)
     
     def getSpellAnimationFile(self, level):
-        return "GuardUp"
+        return "Delirium"
     
     def getEffectChance(self, caster, level):
         # Return the base chance for an effect to take place

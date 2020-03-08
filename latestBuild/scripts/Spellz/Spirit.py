@@ -63,7 +63,7 @@ class Spirit(SpellDefinition):
         return Color(0, 0, 0);
 
     def getSpellAnimationFile(self, level):
-        return "GuardUp"
+        return "Spirit"
     
     def getEffectChance(self, caster, level):
         # Return the base chance for an effect to take place

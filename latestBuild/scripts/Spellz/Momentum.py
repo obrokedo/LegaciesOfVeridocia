@@ -101,7 +101,7 @@ class Momentum(SpellDefinition):
         return Color(255, 0, 0)
     
     def getSpellAnimationFile(self, level):
-        return "GuardUp"
+        return "Momentum"
     
     def getEffectChance(self, caster, level):
         # Return the base chance for an effect to take place
