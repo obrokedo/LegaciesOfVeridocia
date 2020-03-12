@@ -1,5 +1,5 @@
 <animations spriteSheet="Addled.sprites" ver="1.2">
-<anim name="1" loops="0">
+<anim name="Effect" loops="0">
 <cell index="0" delay="50">
 <spr name="/Unpromoted/Frame0" x="0" y="0" z="0"/>
 </cell>
