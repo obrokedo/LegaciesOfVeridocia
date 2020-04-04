@@ -39,7 +39,7 @@ class Heal(SpellDefinition):
         # A value of 0 means it does not loop. 1 means it does loop
         self.setLoops(1)
         # The number specified here is an index into the SpellIcons image file starting from 0   
-        self.setSpellIconIndex(0)
+        self.setSpellIconIndex(9)
     
     def getEffectiveDamage(self, attacker, target, spellLevel):
         bleeding = False

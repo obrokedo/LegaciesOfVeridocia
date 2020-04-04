@@ -22,7 +22,7 @@ class Spirit(SpellDefinition):
         # A value of 0 means it does not loop. 1 means it does loop
         self.setLoops(1)   
         # The number specified here is an index into the SpellIcons image file starting from 0
-        self.setSpellIconIndex(4)
+        self.setSpellIconIndex(22)
         self.setEffects(jarray.array(["ResistanceUp", "MindUp"], String), 1) # Level 1 battle effects
         self.setEffects(jarray.array(["ResistanceUp", "MindUp"], String), 2) # Level 2 battle effects
         self.setEffects(jarray.array(["ResistanceUp", "MindUp"], String), 3) # Level 3 battle effects
