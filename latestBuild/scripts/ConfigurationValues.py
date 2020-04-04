@@ -262,3 +262,13 @@ class ConfigurationValues(EngineConfigurationValues):
     
     def clearPythonModules(self):
         sys.modules.clear()
+        
+    # Return an integer that gives the x value of the empty item spot
+    # in the "items" resource. This is used for constructing the item menu
+    def getEmptyItemIndexX(self):
+        return 13
+    
+    # Return an integer that gives the Y value of the empty item spot
+    # in the "items" resource. This is used for constructing the item menu
+    def getEmptyItemIndexY(self):
+        return 0
