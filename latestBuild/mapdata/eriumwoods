@@ -1,6 +1,6 @@
 <area>
 <map file="EriumWoods.tmx"/>
-<trigger id="0" description="MapStart" require="," exclude="Battle 3," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="0" description="MapStart" require="" exclude="Battle 3," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<playmusic music="overworld" volume="75"/>
 	<runtriggers triggers="4,"/>
 </trigger>
@@ -8,7 +8,7 @@
 	<loadmap mapdata="worldmap" enter="FromCabin" transdir=""/>
 </trigger>
 <trigger id="2" description="Battle Prep" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
-	<showtext textid="0"/>
+	<loadcin mapdata="eriumwoods" cinid="0"/>
 </trigger>
 <trigger id="3" description="Start Battle 3" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<startbattle battletriggers="battle3" entrance="battlestart" battbg="2"/>
@@ -22,6 +22,38 @@
 <text id="0" description="Pre Battle3 Scene Placeholder">
 	<string require="," exclude="," trigger="3" heroportrait="" enemyportrait="" animportrait="" message="Cinematics Placeholder<pause> Battle 3 Commencing.<hardstop>"/>
 </text>
+<cinematic id="0" description="PreBattleThree" camerax="0" cameray="408">
+	<addactor x="456" y="456" name="Craig" anim="Craig" startanim="UnUp" visible="true" init="true" associatedhero=""/>
+	<addstatic x="168" y="384" spriteid="EddieSprite" spriteim="eddiedownNPC"/>
+	<addactor x="216" y="360" name="Captain" anim="MercCaptain" startanim="UnLeft" visible="true" init="false" associatedhero=""/>
+	<addstatic x="456" y="432" spriteid="LeftDoor" spriteim="HouseDoorLeft"/>
+	<addstatic x="480" y="432" spriteid="DoorCenter" spriteim="ArmorDoor"/>
+	<addstatic x="504" y="432" spriteid="DoorRight" spriteim="HouseDoorRight"/>
+	<addactor x="456" y="504" name="Olivia" anim="Olivia" startanim="UnUp" visible="true" init="true" associatedhero=""/>
+	<addactor x="408" y="480" name="Noah" anim="Noah" startanim="UnUp" visible="true" init="true" associatedhero=""/>
+	<addactor x="408" y="504" name="Sharna" anim="Sharna" startanim="UnUp" visible="true" init="true" associatedhero=""/>
+	<addactor x="432" y="528" name="Huun" anim="Huun" startanim="UnUp" visible="true" init="true" associatedhero=""/>
+	<fadein time="3000" halting="false" init="true"/>
+	<cameramove x="480" y="504" time="3000"/>
+	<speech text="Should be one o’ these, somewhere...<hardstop>" heroportrait="Craig" enemyportrait="" animportrait="Craig"/>
+	<speech text="Too bright<softstop> for a flock of barn owls.<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait="Olivia"/>
+	<speech text=".<pause>.<pause>.<pause>What are you talking about?<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait="Sharna"/>
+	<speech text=".<pause>.<pause>.<pause>That was a pass code to enter our hideout,<pause> but there's supposed to be an answer.<softstop> Something doesn’t feel right...<linebreak> I’m just going in.<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait="Olivia"/>
+	<haltingmove name="Craig" x="480" y="456" speed="6" movehor="false" movediag="false"/>
+	<playsound sound="dooropen" volume="100"/>
+	<remstatic spriteid="LeftDoor"/>
+	<haltingmove name="Olivia" x="336" y="216" speed="6" movehor="false" movediag="false"/>
+	<haltingmove name="Olivia" x="336" y="336" speed="6" movehor="false" movediag="false"/>
+	<speech text="Damn!<pause>  Hold on, Eddie, we’re on our way!<hardstop>" heroportrait="Craig" enemyportrait="" animportrait="Craig"/>
+	<playsound sound="hit2" volume="100"/>
+	<remstatic spriteid="DoorCenter"/>
+	<haltingmove name="Craig" x="336" y="216" speed="6" movehor="false" movediag="false"/>
+	<haltingmove name="Craig" x="336" y="312" speed="6" movehor="false" movediag="false"/>
+	<cameramove x="264" y="384" time="1000"/>
+	<speech text="Don’t worry about me!  Save my family!<hardstop>" heroportrait="Eddie" enemyportrait="" animportrait="Eddie"/>
+	<speech text="The traitors!<pause> I knew you were hiding something!<softstop> Capture them alive; do what you want with the rest!<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
+	<loadbattle mapdata="battle3" entrance="battlestart" battbg="1"/>
+</cinematic>
 <condition id="0" description="ToWorldmap" triggerid="1,">
 	<enterloc location="ToWorldmap" immediate="false"/>
 </condition>

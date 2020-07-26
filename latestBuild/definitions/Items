@@ -150,19 +150,19 @@
 	<usespell spellid="BLAZE" level="1" singleuse="false" damageitem="true"/>
 </item>
 <item id="48" name="Tremor Wand" description="" cost="850" isdeal="false" imageindexx="5" imageindexy="19" droppable="false">
-	<equippable attack="16" defense="0" speed="0" type="0" style="8" range="1" weaponimage="FlamingWand" weaponanim="" incmindam="0" inccrit="0" inccounter="0" incdouble="0" incevade="0" maxhpreg="0" minhpreg="0" maxmpreg="0" minmpreg="0" effect="" efflvl="0" effchc="0" csteff="false" dmgaff="Earth" fireAffin="12" elecAffin="-8" coldAffin="12" darkAffin="12" waterAffin="12" earthAffin="16" windAffin="12" lightAffin="12" ohko="0" ohkooc="0"/>
+	<equippable attack="16" defense="0" speed="0" type="0" style="8" range="1" weaponimage="FlamingWand" weaponanim="" incmindam="0" inccrit="0" inccounter="0" incdouble="0" incevade="0" maxhpreg="0" minhpreg="0" maxmpreg="0" minmpreg="0" effect="" efflvl="0" effchc="0" csteff="false" dmgaff="EARTH" fireAffin="12" elecAffin="-8" coldAffin="12" darkAffin="12" waterAffin="12" earthAffin="16" windAffin="12" lightAffin="12" ohko="0" ohkooc="0"/>
 	<usespell spellid="BOULDER" level="1" singleuse="false" damageitem="true"/>
 </item>
 <item id="49" name="Lightning Rod" description="" cost="2100" isdeal="false" imageindexx="6" imageindexy="19" droppable="false">
-	<equippable attack="20" defense="0" speed="0" type="0" style="8" range="1" weaponimage="FlamingWand" weaponanim="" incmindam="0" inccrit="0" inccounter="0" incdouble="0" incevade="0" maxhpreg="0" minhpreg="0" maxmpreg="0" minmpreg="0" effect="" efflvl="0" effchc="0" csteff="false" dmgaff="Electric" fireAffin="12" elecAffin="18" coldAffin="12" darkAffin="12" waterAffin="12" earthAffin="-8" windAffin="12" lightAffin="12" ohko="0" ohkooc="0"/>
+	<equippable attack="20" defense="0" speed="0" type="0" style="8" range="1" weaponimage="FlamingWand" weaponanim="" incmindam="0" inccrit="0" inccounter="0" incdouble="0" incevade="0" maxhpreg="0" minhpreg="0" maxmpreg="0" minmpreg="0" effect="" efflvl="0" effchc="0" csteff="false" dmgaff="ELECTRICITY" fireAffin="12" elecAffin="18" coldAffin="12" darkAffin="12" waterAffin="12" earthAffin="-8" windAffin="12" lightAffin="12" ohko="0" ohkooc="0"/>
 	<usespell spellid="BOLT" level="1" singleuse="false" damageitem="true"/>
 </item>
 <item id="50" name="Sun Rod" description="" cost="2400" isdeal="false" imageindexx="7" imageindexy="19" droppable="false">
-	<equippable attack="23" defense="0" speed="0" type="0" style="8" range="1" weaponimage="FlamingWand" weaponanim="" incmindam="0" inccrit="0" inccounter="0" incdouble="0" incevade="0" maxhpreg="0" minhpreg="0" maxmpreg="0" minmpreg="0" effect="" efflvl="0" effchc="0" csteff="false" dmgaff="Light" fireAffin="15" elecAffin="15" coldAffin="15" darkAffin="5" waterAffin="15" earthAffin="15" windAffin="15" lightAffin="25" ohko="0" ohkooc="0"/>
+	<equippable attack="23" defense="0" speed="0" type="0" style="8" range="1" weaponimage="FlamingWand" weaponanim="" incmindam="0" inccrit="0" inccounter="0" incdouble="0" incevade="0" maxhpreg="0" minhpreg="0" maxmpreg="0" minmpreg="0" effect="" efflvl="0" effchc="0" csteff="false" dmgaff="LIGHT" fireAffin="15" elecAffin="15" coldAffin="15" darkAffin="5" waterAffin="15" earthAffin="15" windAffin="15" lightAffin="25" ohko="0" ohkooc="0"/>
 	<usespell spellid="BURST" level="1" singleuse="false" damageitem="true"/>
 </item>
 <item id="51" name="Wither Wand" description="" cost="2900" isdeal="false" imageindexx="8" imageindexy="19" droppable="false">
-	<equippable attack="28" defense="0" speed="0" type="0" style="8" range="1" weaponimage="FlamingWand" weaponanim="" incmindam="0" inccrit="0" inccounter="0" incdouble="0" incevade="0" maxhpreg="0" minhpreg="0" maxmpreg="0" minmpreg="0" effect="" efflvl="0" effchc="0" csteff="false" dmgaff="Dark" fireAffin="20" elecAffin="20" coldAffin="20" darkAffin="30" waterAffin="20" earthAffin="20" windAffin="20" lightAffin="10" ohko="0" ohkooc="0"/>
+	<equippable attack="28" defense="0" speed="0" type="0" style="8" range="1" weaponimage="FlamingWand" weaponanim="" incmindam="0" inccrit="0" inccounter="0" incdouble="0" incevade="0" maxhpreg="0" minhpreg="0" maxmpreg="0" minmpreg="0" effect="" efflvl="0" effchc="0" csteff="false" dmgaff="DARKNESS" fireAffin="20" elecAffin="20" coldAffin="20" darkAffin="30" waterAffin="20" earthAffin="20" windAffin="20" lightAffin="10" ohko="0" ohkooc="0"/>
 	<usespell spellid="DESOUL" level="1" singleuse="false" damageitem="true"/>
 </item>
 <item id="52" name="Chaos Wand" description="" cost="5000" isdeal="false" imageindexx="9" imageindexy="19" droppable="false">

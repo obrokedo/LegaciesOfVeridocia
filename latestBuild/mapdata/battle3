@@ -3,10 +3,11 @@
 <trigger id="0" description="Battle1 Initialise" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<playmusic music="battle3" volume="75"/>
 </trigger>
-<trigger id="1" description="Victory Results" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="1" description="Victory Results" require="" exclude="" nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<completequest questid="Battle 3"/>
 	<reviveheroes hero="Sharna"/>
 	<reviveheroes hero="Huun"/>
+	<addhero heroid="Eddie"/>
 	<playmusic music="lovtheme" volume="75"/>
 	<showtext textid="4"/>
 	<showcin cinid="0" exittrigid="-1"/>
@@ -38,6 +39,32 @@
 <cinematic id="0" description="Exit Fade" camerax="0" cameray="0">
 	<fadeout time="2000" halting="true"/>
 	<showcredits/>
+</cinematic>
+<cinematic id="1" description="PostBattleThree" camerax="96" cameray="96">
+	<addactor x="168" y="216" name="EddotActor" anim="Eddie" startanim="UnLeft" visible="true" init="false" associatedhero=""/>
+	<addactor x="168" y="240" name="FamilyTwo" anim="MistalCloakedHooded" startanim="UnUp" visible="true" init="false" associatedhero=""/>
+	<addactor x="144" y="216" name="FamilyOne" anim="MistalCloakedHooded" startanim="UnUp" visible="true" init="false" associatedhero=""/>
+	<addactor x="192" y="216" name="CraigActor" anim="Craig" startanim="UnLeft" visible="true" init="false" associatedhero=""/>
+	<addactor x="192" y="240" name="OliviaActor" anim="Olivia" startanim="UnLeft" visible="true" init="false" associatedhero=""/>
+	<addactor x="240" y="192" name="HuunActor" anim="Huun" startanim="UnLeft" visible="true" init="false" associatedhero=""/>
+	<addactor x="240" y="216" name="NoahActor" anim="Noah" startanim="UnLeft" visible="true" init="false" associatedhero=""/>
+	<addactor x="240" y="240" name="SharnaActor" anim="Sharna" startanim="UnLeft" visible="true" init="false" associatedhero=""/>
+	<flash name="FamilyOne" time="5000" speed="500"/>
+	<flash name="FamilyTwo" time="5000" speed="500"/>
+	<wait time="5000"/>
+	<visible name="FamilyOne" isvis="false"/>
+	<visible name="FamilyTwo" isvis="false"/>
+	<speech text="No<pause>.<pause>.<pause>. No<pause>.<pause>.<pause>.<hardstop>" heroportrait="Eddie" enemyportrait="" animportrait="Eddie"/>
+	<speech text="Eddie,<hardstop> I’m sorry,<pause> but they’re g...<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait="Olivia"/>
+	<speech text="MISTAL!  WHEN I FIND YOU, I’LL CRUSH YOUR SCRAWNY NECK!<hardstop>" heroportrait="Eddie" enemyportrait="" animportrait="Eddie"/>
+	<forcedmove name="SharnaActor" x="264" y="240" speed="1" facing="2" movehor="false" movediag="false"/>
+	<forcedmove name="HuunActor" x="264" y="192" speed="1" facing="2" movehor="false" movediag="false"/>
+	<forcedmove name="NoahActor" x="264" y="216" speed="1" facing="2" movehor="false" movediag="false"/>
+	<speech text="It’s okay,<pause> you’re safe.<hardstop><linebreak>  Eddie would be an asset to us, Noah.<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait="Olivia"/>
+	<speech text="Better with us than against us…<hardstop>" heroportrait="Huun" enemyportrait="" animportrait="Huun"/>
+	<speech text="He certainly has the passion.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait="Noah"/>
+	<speech text="Eddie has joined the force.<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
+	<loadcin mapdata="battle3" cinid="0"/>
 </cinematic>
 <condition id="0" description="Shuffle" triggerid="2,">
 	<enterloc location="Shuffle" immediate="false"/>
