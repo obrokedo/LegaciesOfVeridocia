@@ -64,7 +64,7 @@
 	<spellprogression spellid="DELIRIUM" promotedprog="true" specialpromoted="true" gained="5,15,22"/>
 	<spellprogression spellid="CYCLONE" promotedprog="true" specialpromoted="true" gained="8,13,26"/>
 	<spellprogression spellid="BLAZE" promotedprog="true" specialpromoted="true" gained="17,24"/>
-	<item itemid="Lesser Wand" equipped="true"/>
+	<item itemid="Novice Wand" equipped="true"/>
 </hero>
 <hero id="7" name="Tyson" promoted="false" level="3" animations="Tyson" leader="false">
 	<progression promoted="false" specialpromoted="false" specialpromoteitem="" move="6" movementtype="NORMAL" attack="Late" attackstart="5" attackend="22" defense="Linear" defensestart="6" defenseend="27" speed="Linear" speedstart="6" speedend="25" hp="Linear" hpstart="10" hpend="32" mp="Early" mpstart="6" mpend="26" fireAffin="10" elecAffin="-10" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="15" windAffin="0" lightAffin="5" bodyStrength="STRONG" bodyProgress="Linear" mindStrength="MEDIUM" mindProgress="Mid" counterStrength="WEAK" evadeStrength="MEDIUM" doubleStrength="STRONG" critStrength="WEAK" usuableitems="9,7," class="Monk"/>
@@ -74,7 +74,7 @@
 	<spellprogression spellid="HEAL" promotedprog="true" specialpromoted="false" gained="10"/>
 	<spellprogression spellid="GUARD" promotedprog="true" specialpromoted="false" gained="18,24"/>
 	<spellprogression spellid="QUAKE" promotedprog="true" specialpromoted="false" gained="6,15,21,28"/>
-	<item itemid="Sharp Claw" equipped="true"/>
+	<item itemid="Wrist Spike" equipped="true"/>
 </hero>
 <hero id="8" name="Crook" promoted="false" level="3" animations="placeholder" leader="false">
 	<progression promoted="false" specialpromoted="false" specialpromoteitem="" move="5" movementtype="NORMAL" attack="Early" attackstart="8" attackend="32" defense="Linear" defensestart="5" defenseend="25" speed="Early" speedstart="5" speedend="23" hp="Linear" hpstart="10" hpend="32" mp="None" mpstart="0" mpend="0" fireAffin="5" elecAffin="-10" coldAffin="10" darkAffin="0" waterAffin="0" earthAffin="15" windAffin="0" lightAffin="0" bodyStrength="STRONG" bodyProgress="Strong" mindStrength="WEAK" mindProgress="Weak" counterStrength="STRONG" evadeStrength="WEAK" doubleStrength="WEAK" critStrength="MEDIUM" usuableitems="0," class="Hatchling"/>
@@ -209,7 +209,7 @@
 	<spellprogression spellid="DELIRIUM" promotedprog="true" specialpromoted="false" gained="1,1,18,24"/>
 	<spellprogression spellid="POWER" promotedprog="true" specialpromoted="false" gained="1,1,14,27"/>
 	<spellprogression spellid="PLAGUE" promotedprog="true" specialpromoted="false" gained="11,21"/>
-	<item itemid="Tremor Wand" equipped="true"/>
+	<item itemid="Tremor Rod" equipped="true"/>
 </hero>
 <hero id="28" name="Marahar" promoted="true" level="8" animations="placeholder" leader="false">
 	<progression promoted="true" specialpromoted="false" specialpromoteitem="" move="7" movementtype="NORMAL" attack="Start-Stop" attackstart="28" attackend="123" defense="2-Wave" defensestart="18" defenseend="64" speed="Step-Down" speedstart="25" speedend="103" hp="Late" hpstart="22" hpend="73" mp="None" mpstart="0" mpend="0" fireAffin="5" elecAffin="5" coldAffin="-10" darkAffin="5" waterAffin="5" earthAffin="10" windAffin="15" lightAffin="5" bodyStrength="STRONG" bodyProgress="Late" mindStrength="MEDIUM" mindProgress="Linear" counterStrength="STRONG" evadeStrength="STRONG" doubleStrength="MEDIUM" critStrength="WEAK" usuableitems="0," class="Mustang"/>
@@ -227,11 +227,11 @@
 </hero>
 <hero id="31" name="Annie" promoted="true" level="13" animations="placeholder" leader="false">
 	<progression promoted="true" specialpromoted="false" specialpromoteitem="" move="5" movementtype="NORMAL" attack="Early-Late" attackstart="13" attackend="60" defense="3-Wave" defensestart="24" defenseend="86" speed="Early" speedstart="22" speedend="86" hp="Middle" hpstart="25" hpend="88" mp="None" mpstart="0" mpend="0" fireAffin="5" elecAffin="20" coldAffin="5" darkAffin="0" waterAffin="10" earthAffin="-10" windAffin="5" lightAffin="5" bodyStrength="MEDIUM" bodyProgress="Late" mindStrength="MEDIUM" mindProgress="Linear" counterStrength="MEDIUM" evadeStrength="MEDIUM" doubleStrength="STRONG" critStrength="STRONG" usuableitems="4,6," class="Sniper"/>
-	<item itemid="Granite Shell" equipped="true"/>
+	<item itemid="Geode Shell" equipped="true"/>
 </hero>
 <hero id="32" name="Azure" promoted="true" level="7" animations="placeholder" leader="false">
 	<progression promoted="true" specialpromoted="false" specialpromoteitem="" move="6" movementtype="FREE" attack="2-Wave" attackstart="14" attackend="61" defense="Step-Up" defensestart="23" defenseend="77" speed="Step-Down" speedstart="25" speedend="98" hp="Early-Late" hpstart="28" hpend="98" mp="None" mpstart="0" mpend="0" fireAffin="0" elecAffin="5" coldAffin="-10" darkAffin="0" waterAffin="15" earthAffin="0" windAffin="20" lightAffin="10" bodyStrength="MEDIUM" bodyProgress="Mid" mindStrength="MEDIUM" mindProgress="Late" counterStrength="MEDIUM" evadeStrength="STRONG" doubleStrength="STRONG" critStrength="WEAK" usuableitems="7,10," class="Wind Walker"/>
-	<item itemid="Blade Wing" equipped="true"/>
+	<item itemid="Blade Talon" equipped="true"/>
 </hero>
 <hero id="33" name="Amos" promoted="true" level="17" animations="placeholder" leader="false">
 	<progression promoted="true" specialpromoted="false" specialpromoteitem="" move="4" movementtype="NORMAL" attack="Late" attackstart="26" attackend="108" defense="Late" defensestart="30" defenseend="122" speed="Late" speedstart="14" speedend="59" hp="Late" hpstart="26" hpend="93" mp="None" mpstart="0" mpend="0" fireAffin="15" elecAffin="10" coldAffin="15" darkAffin="5" waterAffin="-10" earthAffin="5" windAffin="0" lightAffin="0" bodyStrength="STRONG" bodyProgress="Strong" mindStrength="STRONG" mindProgress="Strong" counterStrength="STRONG" evadeStrength="WEAK" doubleStrength="MEDIUM" critStrength="MEDIUM" usuableitems="0," class="Android"/>

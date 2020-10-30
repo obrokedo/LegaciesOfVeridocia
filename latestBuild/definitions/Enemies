@@ -15,7 +15,7 @@
 	<item itemid="Erium Blade" equipped="true"/>
 </enemy>
 <enemy id="5" name="Sellsword" hp="15" mp="0" attack="16" defense="9" speed="6" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="15" mindStrength="5" counterStrength="7" evadeStrength="8" doubleStrength="15" critStrength="5" level="4" move="5" movementtype="NORMAL" animations="ReyvalTrapper" gold="36" palette="">
-	<item itemid="Iron Mace" equipped="true"/>
+	<item itemid="Iron Hammer" equipped="true"/>
 </enemy>
 <enemy id="6" name="Bounty Hunter" hp="14" mp="0" attack="16" defense="7" speed="10" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="10" mindStrength="10" counterStrength="9" evadeStrength="5" doubleStrength="5" critStrength="15" level="4" move="5" movementtype="FAST" animations="ReyvalScout" gold="38" palette="">
 	<item itemid="Iron Arrow" equipped="true"/>
@@ -54,7 +54,7 @@
 	<attackeffect effectid="Bleed" effectchance="20" effectlevel="2"/>
 </enemy>
 <enemy id="17" name="Huntsman" hp="30" mp="0" attack="25" defense="14" speed="20" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="10" mindStrength="10" counterStrength="7" evadeStrength="9" doubleStrength="10" critStrength="15" level="9" move="5" movementtype="FAST" animations="placeholder" gold="160" palette="">
-	<item itemid="Hotshot" equipped="true"/>
+	<item itemid="Flame Shot" equipped="true"/>
 </enemy>
 <enemy id="18" name="Signus Soldier" hp="24" mp="0" attack="25" defense="16" speed="13" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="15" mindStrength="5" counterStrength="8" evadeStrength="8" doubleStrength="10" critStrength="10" level="9" move="5" movementtype="NORMAL" animations="placeholder" gold="140" palette="">
 	<item itemid="Hand Axe" equipped="true"/>
@@ -85,7 +85,7 @@
 <enemy id="25" name="Gargoyle" hp="30" mp="0" attack="29" defense="17" speed="19" fireAffin="5" elecAffin="-20" coldAffin="5" darkAffin="5" waterAffin="5" earthAffin="20" windAffin="5" lightAffin="5" bodyStrength="25" mindStrength="20" counterStrength="15" evadeStrength="12" doubleStrength="20" critStrength="10" level="11" move="6" movementtype="HOVERING" animations="placeholder" gold="209" palette="">
 </enemy>
 <enemy id="26" name="Mad Mage" hp="26" mp="25" attack="26" defense="15" speed="22" fireAffin="0" elecAffin="13" coldAffin="13" darkAffin="-12" waterAffin="17" earthAffin="13" windAffin="13" lightAffin="28" bodyStrength="10" mindStrength="25" counterStrength="10" evadeStrength="12" doubleStrength="10" critStrength="10" level="11" move="5" movementtype="NORMAL" animations="placeholder" gold="209" palette="">
-	<item itemid="Water Wand" equipped="true"/>
+	<item itemid="Tidal Rod" equipped="true"/>
 	<attackeffect effectid="Confusion" effectchance="20" effectlevel="1"/>
 	<spell spellid="BURST" level="1"/>
 	<spell spellid="DELIRIUM" level="1"/>
@@ -114,13 +114,13 @@
 <enemy id="33" name="Golem" hp="26" mp="0" attack="36" defense="28" speed="12" fireAffin="5" elecAffin="-20" coldAffin="-20" darkAffin="5" waterAffin="5" earthAffin="20" windAffin="20" lightAffin="5" bodyStrength="20" mindStrength="100" counterStrength="8" evadeStrength="8" doubleStrength="10" critStrength="10" level="13" move="4" movementtype="TANK" animations="placeholder" gold="265" palette="">
 </enemy>
 <enemy id="34" name="Raltis 1" hp="46" mp="50" attack="35" defense="22" speed="27" fireAffin="-9" elecAffin="-23" coldAffin="22" darkAffin="19" waterAffin="67" earthAffin="61" windAffin="22" lightAffin="27" bodyStrength="25" mindStrength="45" counterStrength="14" evadeStrength="16" doubleStrength="15" critStrength="15" level="20" move="5" movementtype="NORMAL" animations="placeholder" gold="600" palette="">
-	<item itemid="Tremor Wand" equipped="true"/>
+	<item itemid="Tremor Rod" equipped="true"/>
 </enemy>
 <enemy id="35" name="Swashbuckler" hp="36" mp="0" attack="41" defense="30" speed="28" fireAffin="-20" elecAffin="5" coldAffin="5" darkAffin="5" waterAffin="20" earthAffin="5" windAffin="5" lightAffin="5" bodyStrength="20" mindStrength="15" counterStrength="17" evadeStrength="14" doubleStrength="15" critStrength="10" level="14" move="6" movementtype="NORMAL" animations="placeholder" gold="378" palette="">
 	<item itemid="Infantry Sabre" equipped="true"/>
 </enemy>
 <enemy id="36" name="Buccaneer" hp="32" mp="0" attack="43" defense="28" speed="30" fireAffin="-20" elecAffin="5" coldAffin="5" darkAffin="5" waterAffin="20" earthAffin="5" windAffin="5" lightAffin="5" bodyStrength="15" mindStrength="15" counterStrength="12" evadeStrength="11" doubleStrength="10" critStrength="20" level="14" move="5" movementtype="NORMAL" animations="placeholder" gold="372" palette="">
-	<item itemid="Amp Shot" equipped="true"/>
+	<item itemid="Voltage Bolt" equipped="true"/>
 </enemy>
 <enemy id="37" name="Storm Wizard" hp="35" mp="40" attack="32" defense="27" speed="32" fireAffin="5" elecAffin="25" coldAffin="20" darkAffin="5" waterAffin="5" earthAffin="-23" windAffin="-20" lightAffin="5" bodyStrength="15" mindStrength="25" counterStrength="11" evadeStrength="11" doubleStrength="10" critStrength="10" level="15" move="5" movementtype="NORMAL" animations="placeholder" gold="415" palette="">
 	<item itemid="Battle Staff" equipped="true"/>
@@ -142,7 +142,7 @@
 	<item itemid="Wakizashi" equipped="true"/>
 </enemy>
 <enemy id="44" name="Gulwin 1" hp="75" mp="30" attack="49" defense="38" speed="32" fireAffin="5" elecAffin="5" coldAffin="5" darkAffin="-23" waterAffin="5" earthAffin="5" windAffin="5" lightAffin="45" bodyStrength="45" mindStrength="60" counterStrength="18" evadeStrength="12" doubleStrength="20" critStrength="10" level="30" move="6" movementtype="NORMAL" animations="placeholder" gold="1120" palette="">
-	<item itemid="Buster Sword" equipped="true"/>
+	<item itemid="Battle Sword" equipped="true"/>
 	<item itemid="Flaming Wand" equipped="false"/>
 </enemy>
 <enemy id="45" name="Grotesque" hp="46" mp="0" attack="50" defense="35" speed="35" fireAffin="5" elecAffin="-20" coldAffin="5" darkAffin="5" waterAffin="5" earthAffin="20" windAffin="5" lightAffin="5" bodyStrength="25" mindStrength="25" counterStrength="19" evadeStrength="15" doubleStrength="20" critStrength="10" level="19" move="6" movementtype="HOVERING" animations="placeholder" gold="631" palette="">
@@ -203,7 +203,7 @@
 	<item itemid="Bloodstone Blade" equipped="true"/>
 </enemy>
 <enemy id="66" name="Shadow Monk" hp="73" mp="50" attack="77" defense="50" speed="61" fireAffin="5" elecAffin="-29" coldAffin="5" darkAffin="14" waterAffin="25" earthAffin="35" windAffin="5" lightAffin="-10" bodyStrength="35" mindStrength="30" counterStrength="24" evadeStrength="20" doubleStrength="20" critStrength="10" level="27" move="6" movementtype="NORMAL" animations="placeholder" gold="1400" palette="">
-	<item itemid="Coral Claw" equipped="true"/>
+	<item itemid="Kaiser Claw" equipped="true"/>
 </enemy>
 <enemy id="67" name="Storm Sage" hp="62" mp="90" attack="62" defense="40" speed="58" fireAffin="-6" elecAffin="45" coldAffin="30" darkAffin="31" waterAffin="50" earthAffin="-3" windAffin="30" lightAffin="35" bodyStrength="25" mindStrength="35" counterStrength="17" evadeStrength="16" doubleStrength="10" critStrength="10" level="28" move="5" movementtype="NORMAL" animations="placeholder" gold="1456" palette="">
 	<item itemid="Wither Wand" equipped="true"/>
@@ -223,13 +223,13 @@
 <enemy id="73" name="Phantasm" hp="40" mp="15" attack="1" defense="87" speed="80" fireAffin="80" elecAffin="80" coldAffin="80" darkAffin="80" waterAffin="80" earthAffin="80" windAffin="80" lightAffin="80" bodyStrength="100" mindStrength="100" counterStrength="0" evadeStrength="0" doubleStrength="0" critStrength="0" level="33" move="4" movementtype="FLIGHT" animations="placeholder" gold="1227" palette="">
 </enemy>
 <enemy id="74" name="Master Sage" hp="80" mp="120" attack="86" defense="53" speed="70" fireAffin="70" elecAffin="45" coldAffin="45" darkAffin="36" waterAffin="65" earthAffin="45" windAffin="45" lightAffin="60" bodyStrength="35" mindStrength="45" counterStrength="20" evadeStrength="18" doubleStrength="10" critStrength="10" level="33" move="5" movementtype="NORMAL" animations="placeholder" gold="2250" palette="">
-	<item itemid="Elixir Wand" equipped="true"/>
+	<item itemid="Caduceus Rod" equipped="true"/>
 </enemy>
 <enemy id="75" name="Possessed Hauron" hp="117" mp="0" attack="110" defense="77" speed="75" fireAffin="5" elecAffin="-20" coldAffin="5" darkAffin="15" waterAffin="0" earthAffin="5" windAffin="15" lightAffin="5" bodyStrength="40" mindStrength="40" counterStrength="29" evadeStrength="28" doubleStrength="10" critStrength="15" level="35" move="7" movementtype="FLIGHT" animations="placeholder" gold="2653" palette="">
-	<item itemid="Warp Javelin" equipped="true"/>
+	<item itemid="Warp Spear" equipped="true"/>
 </enemy>
 <enemy id="76" name="Possessed Sampson" hp="124" mp="0" attack="93" defense="73" speed="89" fireAffin="5" elecAffin="-10" coldAffin="0" darkAffin="10" waterAffin="20" earthAffin="5" windAffin="5" lightAffin="5" bodyStrength="35" mindStrength="40" counterStrength="21" evadeStrength="23" doubleStrength="10" critStrength="10" level="35" move="7" movementtype="FLIGHT" animations="placeholder" gold="2653" palette="">
-	<item itemid="Warp Javelin" equipped="true"/>
+	<item itemid="Warp Spear" equipped="true"/>
 </enemy>
 <enemy id="77" name="Chimera" hp="105" mp="0" attack="110" defense="59" speed="100" fireAffin="100" elecAffin="5" coldAffin="5" darkAffin="5" waterAffin="-50" earthAffin="5" windAffin="5" lightAffin="5" bodyStrength="45" mindStrength="90" counterStrength="31" evadeStrength="29" doubleStrength="20" critStrength="20" level="34" move="6" movementtype="SLOW" animations="placeholder" gold="2543" palette="">
 </enemy>
@@ -243,7 +243,7 @@
 	<item itemid="Flaming Wand" equipped="true"/>
 </enemy>
 <enemy id="81" name="Undead Raltis" hp="135" mp="130" attack="99" defense="53" speed="78" fireAffin="1" elecAffin="1" coldAffin="35" darkAffin="41" waterAffin="75" earthAffin="75" windAffin="35" lightAffin="35" bodyStrength="100" mindStrength="100" counterStrength="24" evadeStrength="26" doubleStrength="15" critStrength="15" level="40" move="5" movementtype="NORMAL" animations="placeholder" gold="3300" palette="">
-	<item itemid="Elixir Wand" equipped="true"/>
+	<item itemid="Caduceus Rod" equipped="true"/>
 </enemy>
 <enemy id="82" name="Undead Nokajiku" hp="126" mp="80" attack="120" defense="50" speed="119" fireAffin="65" elecAffin="5" coldAffin="-26" darkAffin="20" waterAffin="-26" earthAffin="5" windAffin="40" lightAffin="-10" bodyStrength="100" mindStrength="100" counterStrength="35" evadeStrength="32" doubleStrength="10" critStrength="20" level="40" move="6" movementtype="FAST" animations="placeholder" gold="3300" palette="">
 	<item itemid="Kechibi Shuriken" equipped="true"/>
@@ -253,7 +253,7 @@
 <enemy id="84" name="Dracolich" hp="175" mp="45" attack="105" defense="65" speed="85" fireAffin="5" elecAffin="20" coldAffin="5" darkAffin="5" waterAffin="5" earthAffin="-20" windAffin="5" lightAffin="5" bodyStrength="45" mindStrength="45" counterStrength="26" evadeStrength="24" doubleStrength="15" critStrength="15" level="35" move="7" movementtype="FLIGHT" animations="placeholder" gold="2771" palette="">
 </enemy>
 <enemy id="85" name="Mistal 2" hp="200" mp="300" attack="101" defense="56" speed="90" fireAffin="60" elecAffin="60" coldAffin="80" darkAffin="70" waterAffin="60" earthAffin="60" windAffin="30" lightAffin="30" bodyStrength="40" mindStrength="85" counterStrength="23" evadeStrength="22" doubleStrength="10" critStrength="10" level="45" move="5" movementtype="NORMAL" animations="placeholder" gold="5603" palette="">
-	<item itemid="Pandora's Wand" equipped="true"/>
+	<item itemid="Magus Rod" equipped="true"/>
 </enemy>
 <enemy id="86" name="Lexus" hp="300" mp="150" attack="125" defense="60" speed="84" fireAffin="40" elecAffin="60" coldAffin="30" darkAffin="30" waterAffin="30" earthAffin="30" windAffin="30" lightAffin="40" bodyStrength="80" mindStrength="80" counterStrength="26" evadeStrength="21" doubleStrength="20" critStrength="20" level="50" move="6" movementtype="NORMAL" animations="placeholder" gold="5992" palette="">
 	<item itemid="Novabrand" equipped="true"/>
