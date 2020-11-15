@@ -1,15 +1,16 @@
 <area>
 <map file="EriumWoods.tmx"/>
-<trigger id="0" description="Battle1 Initialise" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="0" description="Battle1 Initialise" require="," exclude="Battle 3," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<playmusic music="battle3" volume="75"/>
 </trigger>
-<trigger id="1" description="Victory Results" require="" exclude="" nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="1" description="Victory Results" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<completequest questid="Battle 3"/>
 	<reviveheroes hero="Sharna"/>
 	<reviveheroes hero="Huun"/>
 	<addhero heroid="Eddie"/>
 	<playmusic music="lovtheme" volume="75"/>
 	<showtext textid="4"/>
+	<loadcin mapdata="battle3" cinid="1"/>
 	<showcin cinid="0" exittrigid="-1"/>
 </trigger>
 <trigger id="2" description="Shuffle" require="," exclude="," nonretrig="false" retrigonenter="true" triggeronce="false" triggerimmediately="false">
@@ -64,6 +65,25 @@
 	<speech text="Better with us than against us…<hardstop>" heroportrait="Huun" enemyportrait="" animportrait="Huun"/>
 	<speech text="He certainly has the passion.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait="Noah"/>
 	<speech text="Eddie has joined the force.<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
+	<fadeout time="2000" halting="true"/>
+	<forcedmove name="NoahActor" x="456" y="384" speed="10" facing="0" movehor="false" movediag="true"/>
+	<forcedmove name="SharnaActor" x="480" y="384" speed="10" facing="0" movehor="false" movediag="true"/>
+	<forcedmove name="HuunActor" x="408" y="360" speed="10" facing="3" movehor="false" movediag="true"/>
+	<forcedmove name="EddotActor" x="456" y="264" speed="10" facing="1" movehor="false" movediag="true"/>
+	<forcedmove name="CraigActor" x="504" y="288" speed="10" facing="2" movehor="false" movediag="true"/>
+	<forcedmove name="OliviaActor" x="504" y="312" speed="10" facing="2" movehor="false" movediag="true"/>
+	<wait time="1000"/>
+	<cameramovetoactor actor="NoahActor" time="0"/>
+	<fadein time="1000" halting="true" init="false"/>
+	<speech text="This isn't just going to blow over, so how are we supposed to find out what Mistal is doing now? We can't even get close to the castle, let alone her. <hardstop>" heroportrait="Sharna" enemyportrait="" animportrait="Sharna"/>
+	<quiver name="EddotActor"/>
+	<speech text="You’re right; you<pause> can’t.<hardstop>" heroportrait="Eddie" enemyportrait="" animportrait="Eddie"/>
+	<speech text="You mean...<hardstop>" heroportrait="Noah" enemyportrait="" animportrait="Noah"/>
+	<speech text="Yes, I’ll go into the kingdom and see what I can find.<hardstop>" heroportrait="Eddie" enemyportrait="" animportrait="Eddie"/>
+	<speech text="I don’t know if that’s such a good idea.<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait="Olivia"/>
+	<speech text="I don’t know if stopping him is such a good idea.  Watch yer head out there, Eddie.<hardstop>" heroportrait="Craig" enemyportrait="" animportrait="Craig"/>
+	<loadmap mapdata="eriumwoods" enter="Post Battle 3 Entrance"/>
+	<speech text="test<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
 	<loadcin mapdata="battle3" cinid="0"/>
 </cinematic>
 <condition id="0" description="Shuffle" triggerid="2,">

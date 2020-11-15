@@ -19,8 +19,36 @@
 	<playsound sound="step" volume="75"/>
 	<runtriggers triggers="2,"/>
 </trigger>
+<trigger id="5" description="Keep In House" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<showcin cinid="1" exittrigid="-1"/>
+</trigger>
+<trigger id="6" description="Continue Story" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<showtext textid="2"/>
+	<loadcin mapdata="eriumwoods" cinid="2"/>
+</trigger>
+<trigger id="7" description="CraigSpokenTo" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<showtext textid="1"/>
+</trigger>
 <text id="0" description="Pre Battle3 Scene Placeholder">
-	<string require="" exclude="" trigger="3" heroportrait="" enemyportrait="" animportrait="" message="Cinematics Placeholder<pause> Battle 3 Commencing.<hardstop>"/>
+	<string require="," exclude="," trigger="3" heroportrait="" enemyportrait="" animportrait="" message="Cinematics Placeholder<pause> Battle 3 Commencing.<hardstop>"/>
+</text>
+<text id="1" description="craigYesNo">
+	<yesno require="," exclude="," triggeryes="6" triggerno="5" heroportrait="Craig" enemyportrait="" animportrait="Craig" message="Don’t get too far ahead of yerself.  Why don’t you take a rest.<hardstop>"/>
+</text>
+<text id="2" description="CraigYesOption">
+	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="Good, we’ll need all the rest we can get.<hardstop>"/>
+</text>
+<text id="3" description="HunnSpokenTo">
+	<string require="," exclude="," trigger="-1" heroportrait="Huun" enemyportrait="" animportrait="Huun" message="I could use some water.<hardstop>"/>
+</text>
+<text id="4" description="SharnaSpokenTo">
+	<string require="," exclude="," trigger="-1" heroportrait="Sharna" enemyportrait="" animportrait="Sharna" message="Who would have guessed there was a cabin hidden away in the woods.<hardstop>"/>
+</text>
+<text id="5" description="OliviaSpokenTo">
+	<string require="," exclude="," trigger="-1" heroportrait="Olivia" enemyportrait="" animportrait="Olivia" message="I'm sorry for the mess dear, I havent found the time to dust the place.<hardstop>"/>
+</text>
+<text id="6" description="CraigSpokenTo">
+	<string require="," exclude="," trigger="-1" heroportrait="Craig" enemyportrait="" animportrait="Craig" message="So, what do you think of the place?<pause> I built it myself.<hardstop>"/>
 </text>
 <cinematic id="0" description="PreBattleThree" camerax="0" cameray="408">
 	<addactor x="456" y="456" name="Craig" anim="Craig" startanim="UnUp" visible="true" init="true" associatedhero=""/>
@@ -54,10 +82,83 @@
 	<speech text="The traitors!<pause> I knew you were hiding something!<softstop> Capture them alive; do what you want with the rest!<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
 	<loadbattle mapdata="battle3" entrance="battlestart" battbg="1"/>
 </cinematic>
+<cinematic id="1" description="bring back in room" camerax="0" cameray="0">
+	<assactor name="Noah" hero="Noah" enemyid="0" npcid=""/>
+	<speech text="Don't tire out now.<hardstop>" heroportrait="Craig" enemyportrait="" animportrait="Craig"/>
+	<haltingmovepath name="Noah" x="456" y="384" speed="2.4"/>
+</cinematic>
+<cinematic id="2" description="Part4Exile" camerax="0" cameray="0">
+	<addactor x="216" y="336" name="Huun" anim="Huun" startanim="UnDown" visible="true" init="false" associatedhero=""/>
+	<addactor x="216" y="384" name="Sharna" anim="Sharna" startanim="UnRight" visible="true" init="false" associatedhero=""/>
+	<addactor x="288" y="336" name="Noah" anim="Noah" startanim="UnDown" visible="true" init="false" associatedhero=""/>
+	<addactor x="336" y="384" name="Craig" anim="Craig" startanim="UnLeft" visible="true" init="false" associatedhero=""/>
+	<addactor x="336" y="360" name="Olivia" anim="Olivia" startanim="UnLeft" visible="true" init="false" associatedhero=""/>
+	<camerafollow name="Noah"/>
+	<fadein time="2000" halting="true" init="true"/>
+	<speech text="Okay, and what about the man she was speaking with?<hardstop>" heroportrait="Noah" enemyportrait="" animportrait="Noah"/>
+	<speech text="We don’t have much to go on.<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait="Olivia"/>
+	<speech text="All we know is that he’s harder to catch than a thieving rat.<hardstop>" heroportrait="Craig" enemyportrait="" animportrait="Craig"/>
+	<speech text="We don’t even know his role.  He could outrank Mistal or just be a messenger for someone else.<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait="Olivia"/>
+	<speech text="What do you mean?  Isn’t it clear that Mistal is in charge?  Think of her title!<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait="Sharna"/>
+	<speech text="We know that she answers to someone, we just don’t know who.<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait="Olivia"/>
+	<speech text="We don’t know their plan either, but we know it can’t be good.  You can bet they ain’t bein’ all cloak and dagger about baking a cake.<hardstop>" heroportrait="Craig" enemyportrait="" animportrait="Craig"/>
+	<speech text="They wouldn’t have executed us over a surprise party for the king, would they?<hardstop>" heroportrait="Huun" enemyportrait="" animportrait="Huun"/>
+	<speech text="You may need your head checked, lad.<hardstop>" heroportrait="Craig" enemyportrait="" animportrait="Craig"/>
+	<fadeout time="2000" halting="true"/>
+	<move name="Huun" x="408" y="192" speed="20" movehor="false" movediag="true"/>
+	<move name="Noah" x="480" y="240" speed="20" movehor="false" movediag="true"/>
+	<move name="Craig" x="504" y="168" speed="20" movehor="false" movediag="true"/>
+	<move name="Sharna" x="408" y="240" speed="20" movehor="false" movediag="true"/>
+	<move name="Olivia" x="504" y="280" speed="20" movehor="false" movediag="true"/>
+	<addactor x="456" y="408" name="Eddie" anim="Eddie" startanim="UnUp" visible="true" init="false" associatedhero=""/>
+	<fadein time="2000" halting="true" init="false"/>
+	<speech text="It’s been three days.  Do you think Eddie was caught?<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait="Sharna"/>
+	<speech text="Eddie is too slick to be caught by the Erium guards... no offense.<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait="Olivia"/>
+	<haltingmove name="Eddie" x="456" y="336" speed="0.5" movehor="false" movediag="false"/>
+	<haltingmove name="Eddie" x="456" y="288" speed="0.5" movehor="false" movediag="false"/>
+	<haltingmove name="Eddie" x="456" y="264" speed="0.5" movehor="false" movediag="false"/>
+	<speech text="We need to leave… A small army is searching for us! I was barely able to sneak past them...<hardstop>" heroportrait="Eddie" enemyportrait="" animportrait="Eddie"/>
+	<speech text="How much time before they arrive?<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait="Olivia"/>
+	<speech text="I could hear them marching on my way here.  They will be here any moment…  Just grab your equipment and run!  The border is our only hope!<hardstop>" heroportrait="Eddie" enemyportrait="" animportrait="Eddie"/>
+	<fadeout time="2000" halting="true"/>
+	<move name="Olivia" x="552" y="480" speed="20" movehor="false" movediag="true"/>
+	<move name="Craig" x="576" y="456" speed="20" movehor="false" movediag="true"/>
+	<move name="Huun" x="600" y="456" speed="20" movehor="false" movediag="true"/>
+	<move name="Sharna" x="600" y="408" speed="20" movehor="false" movediag="true"/>
+	<move name="Noah" x="624" y="432" speed="20" movehor="false" movediag="true"/>
+	<move name="Eddie" x="624" y="360" speed="20" movehor="false" movediag="true"/>
+	<addactor x="336" y="696" name="Soldier1" anim="eriumarcher" startanim="UnUp" visible="true" init="false" associatedhero=""/>
+	<addactor x="384" y="696" name="Soldier2" anim="eriummage" startanim="UnUp" visible="true" init="false" associatedhero=""/>
+	<addactor x="360" y="624" name="Soldier3" anim="eriumguard" startanim="UnUp" visible="true" init="false" associatedhero=""/>
+	<wait time="1000"/>
+	<camerafollow name="Soldier3"/>
+	<speech text="Ugh! We should have brought torches up here and burned all this overgrowth!<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
+	<speech text="We get the jobs no one else wants. Didn't they tell you?<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
+	<speech text="What're the odds we find anything anyway?<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
+	<fadein time="2000" halting="true" init="false"/>
+	<speech text="A lot better than you think.  Look.<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
+	<cameramovetoactor actor="Noah" time="3000"/>
+	<speech text="They’ve found us; we’re too late! Craig and I will stay back and hold them off to give you time to escape!<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait="Olivia"/>
+	<speech text="Piece o’ cake.  Now, you heard the lady, get across that border.  Seek Princess Azure of Avaria and tell her everything you know about Mistal and her plan.  Erium needs all the help it can get!<hardstop>" heroportrait="Craig" enemyportrait="" animportrait="Craig"/>
+	<move name="Eddie" x="624" y="120" speed="1.0" movehor="false" movediag="false"/>
+	<move name="Sharna" x="624" y="144" speed="1.0" movehor="false" movediag="false"/>
+	<move name="Noah" x="624" y="168" speed="1.0" movehor="false" movediag="false"/>
+	<move name="Huun" x="624" y="216" speed="1.0" movehor="false" movediag="false"/>
+	<fadeout time="1500" halting="true"/>
+	<wait time="5000"/>
+	<speech text="Watch your tails; it’s been rough through here recently.<hardstop>" heroportrait="Eddie" enemyportrait="" animportrait="Eddie"/>
+	<speech text="What are we...?<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait="Sharna"/>
+	<speech text="Shut it, girl. It’ll be hard to hear the enemy with your jabbering.<hardstop>" heroportrait="Eddie" enemyportrait="" animportrait="Eddie"/>
+	<wait time="3000"/>
+	<loadmap mapdata="traderscabin" enter="EnterFromWorldMap"/>
+</cinematic>
 <condition id="0" description="ToWorldmap" triggerid="1,">
 	<enterloc location="ToWorldmap" immediate="false"/>
 </condition>
 <condition id="1" description="MapStart" triggerid="0,">
 	<maploaded/>
+</condition>
+<condition id="2" description="Step In Exit" triggerid="7,">
+	<enterloc location="Prevent Exit" immediate="false"/>
 </condition>
 </area>
