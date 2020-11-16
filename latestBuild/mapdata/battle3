@@ -56,13 +56,13 @@
 	<visible name="FamilyOne" isvis="false"/>
 	<visible name="FamilyTwo" isvis="false"/>
 	<speech text="No<pause>.<pause>.<pause>. No<pause>.<pause>.<pause>.<hardstop>" heroportrait="Eddie" enemyportrait="" animportrait="Eddie"/>
-	<speech text="Eddie,<hardstop> I’m sorry,<pause> but they’re g...<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait="Olivia"/>
-	<speech text="MISTAL!  WHEN I FIND YOU, I’LL CRUSH YOUR SCRAWNY NECK!<hardstop>" heroportrait="Eddie" enemyportrait="" animportrait="Eddie"/>
+	<speech text="Eddie,<hardstop> I'm sorry,<pause> but they're g...<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait="Olivia"/>
+	<speech text="MISTAL!  WHEN I FIND YOU, I'LL CRUSH YOUR SCRAWNY NECK!<hardstop>" heroportrait="Eddie" enemyportrait="" animportrait="Eddie"/>
 	<forcedmove name="SharnaActor" x="264" y="240" speed="1" facing="2" movehor="false" movediag="false"/>
 	<forcedmove name="HuunActor" x="264" y="192" speed="1" facing="2" movehor="false" movediag="false"/>
 	<forcedmove name="NoahActor" x="264" y="216" speed="1" facing="2" movehor="false" movediag="false"/>
-	<speech text="It’s okay,<pause> you’re safe.<hardstop><linebreak>  Eddie would be an asset to us, Noah.<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait="Olivia"/>
-	<speech text="Better with us than against us…<hardstop>" heroportrait="Huun" enemyportrait="" animportrait="Huun"/>
+	<speech text="It's okay,<pause> you're safe.<hardstop><linebreak>  Eddie would be an asset to us, Noah.<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait="Olivia"/>
+	<speech text="Better with us than against us...<hardstop>" heroportrait="Huun" enemyportrait="" animportrait="Huun"/>
 	<speech text="He certainly has the passion.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait="Noah"/>
 	<speech text="Eddie has joined the force.<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
 	<fadeout time="2000" halting="true"/>
@@ -75,13 +75,13 @@
 	<wait time="1000"/>
 	<cameramovetoactor actor="NoahActor" time="0"/>
 	<fadein time="1000" halting="true" init="false"/>
-	<speech text="This isn't just going to blow over, so how are we supposed to find out what Mistal is doing now? We can't even get close to the castle, let alone her. <hardstop>" heroportrait="Sharna" enemyportrait="" animportrait="Sharna"/>
+	<speech text="This isn't just going to blow over, so how are we supposed to find out what Mistal is doing now? <linebreak> We can't even get close to the castle, let alone her. <hardstop>" heroportrait="Sharna" enemyportrait="" animportrait="Sharna"/>
 	<quiver name="EddotActor"/>
-	<speech text="You’re right; you<pause> can’t.<hardstop>" heroportrait="Eddie" enemyportrait="" animportrait="Eddie"/>
+	<speech text="You're right; you<pause> can't.<hardstop>" heroportrait="Eddie" enemyportrait="" animportrait="Eddie"/>
 	<speech text="You mean...<hardstop>" heroportrait="Noah" enemyportrait="" animportrait="Noah"/>
-	<speech text="Yes, I’ll go into the kingdom and see what I can find.<hardstop>" heroportrait="Eddie" enemyportrait="" animportrait="Eddie"/>
-	<speech text="I don’t know if that’s such a good idea.<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait="Olivia"/>
-	<speech text="I don’t know if stopping him is such a good idea.  Watch yer head out there, Eddie.<hardstop>" heroportrait="Craig" enemyportrait="" animportrait="Craig"/>
+	<speech text="Yes, I'll go into the kingdom and see what I can find.<hardstop>" heroportrait="Eddie" enemyportrait="" animportrait="Eddie"/>
+	<speech text="I don't know if that's such a good idea.<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait="Olivia"/>
+	<speech text="I don't know if stopping him is such a good idea.  Watch yer head out there, Eddie.<hardstop>" heroportrait="Craig" enemyportrait="" animportrait="Craig"/>
 	<loadmap mapdata="eriumwoods" enter="Post Battle 3 Entrance"/>
 	<speech text="test<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
 	<loadcin mapdata="battle3" cinid="0"/>
