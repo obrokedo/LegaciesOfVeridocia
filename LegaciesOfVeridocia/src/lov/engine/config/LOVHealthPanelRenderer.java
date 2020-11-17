@@ -93,25 +93,31 @@ public class LOVHealthPanelRenderer implements HealthPanelRenderer {
 				xValueCoord + 3, yCoord, graphics);
 		
 		SpriteSheet healthBar = fcrm.getSpriteSheet("healthbar");
-		renderBar(currStat, barWidth, xCoord, yCoord, graphics, healthBar);
+		renderBar(currStat, maxStat, barWidth, xCoord, yCoord, graphics, healthBar);
 	}
 
 	// TODO Don't do this
-	public static void renderBar(int currStat, int barWidth, int xCoord, int yCoord, Graphics graphics,
+	public static void renderBar(int currStat, int maxStat, int barWidth, int xCoord, int yCoord, Graphics graphics,
 			SpriteSheet healthBar) {
-		graphics.drawImage(healthBar.getSprite(3, 0).getScaledCopy(barWidth - 2, 8), xCoord + 18, yCoord + 10);
+		graphics.drawImage(healthBar.getSprite(3, 0).getScaledCopy(barWidth, 8), xCoord + 18, yCoord + 10);
 		
 		int barIndex = 0;
 		do
 		{
-			graphics.drawImage(healthBar.getSprite(4 + barIndex, 0).getScaledCopy((int) (Math.min(100, Math.max(0, (currStat - barIndex * 100))) * 1.49), 8), 
+			int healthToRender = Math.min(100, currStat - (100 * barIndex));
+			if (maxStat <= 100)
+				graphics.drawImage(healthBar.getSprite(4 + barIndex, 0).getScaledCopy((int) (healthToRender * 1.0 / maxStat  * barWidth), 8), 
 					xCoord + 18, yCoord + 10);
+			else {
+				graphics.drawImage(healthBar.getSprite(4 + barIndex, 0).getScaledCopy((int) (healthToRender / 100.0 * barWidth), 8), 
+						xCoord + 18, yCoord + 10);
+			}
 			barIndex++;
 		}
 		while (currStat - (barIndex * 100) > 0);
 		
 		graphics.drawImage(healthBar.getSprite(0, 0), xCoord + 16, yCoord + 10);
 		graphics.drawImage(healthBar.getSprite(1, 0).getScaledCopy(barWidth - 2, 8), xCoord + 18, yCoord + 10);
-		graphics.drawImage(healthBar.getSprite(2, 0), xCoord + 16 + barWidth, yCoord + 10);
+		graphics.drawImage(healthBar.getSprite(2, 0), xCoord + 17 + barWidth, yCoord + 10);
 	}
 }
