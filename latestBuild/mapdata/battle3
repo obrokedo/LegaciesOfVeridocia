@@ -56,8 +56,8 @@
 	<visible name="FamilyOne" isvis="false"/>
 	<visible name="FamilyTwo" isvis="false"/>
 	<speech text="No<pause>.<pause>.<pause>. No<pause>.<pause>.<pause>.<hardstop>" heroportrait="Eddie" enemyportrait="" animportrait="Eddie"/>
-	<speech text="Eddie,<hardstop> I'm sorry,<pause> but they're g...<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait="Olivia"/>
-	<speech text="MISTAL!  WHEN I FIND YOU, I'LL CRUSH YOUR SCRAWNY NECK!<hardstop>" heroportrait="Eddie" enemyportrait="" animportrait="Eddie"/>
+	<speech text="Eddie,<softstop> I'm sorry,<pause> but they're g...<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait="Olivia"/>
+	<speech text="MISTAL!  WHEN I FIND YOU, I'LL CRUSH YOUR LITTLE NECK!<hardstop>" heroportrait="Eddie" enemyportrait="" animportrait="Eddie"/>
 	<forcedmove name="SharnaActor" x="264" y="240" speed="1" facing="2" movehor="false" movediag="false"/>
 	<forcedmove name="HuunActor" x="264" y="192" speed="1" facing="2" movehor="false" movediag="false"/>
 	<forcedmove name="NoahActor" x="264" y="216" speed="1" facing="2" movehor="false" movediag="false"/>
