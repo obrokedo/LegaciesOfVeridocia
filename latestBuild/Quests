@@ -13,4 +13,6 @@
 </quest>
 <quest id="6" description="Battle 3" extradescription="">
 </quest>
+<quest id="7" description="Ch1Part5CinFinished" extradescription="Used to prevent the cinimatic from playing again when moved to free roam.">
+</quest>
 </quests>

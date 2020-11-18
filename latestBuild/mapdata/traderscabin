@@ -1,37 +1,49 @@
 <area>
 <map file="TradersCabin.tmx"/>
-<trigger id="0" description="ContinuePart5" require="," exclude="Ch1Part5CinFinished," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="0" description="ContinuePart5" require="" exclude="Ch1Part5CinFinished," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<completequest questid="Ch1Part5CinFinished"/>
+	<showcin cinid="0" exittrigid="-1"/>
+</trigger>
+<trigger id="1" description="ContAfterFixingPosition" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<showcin cinid="1" exittrigid="1"/>
 </trigger>
-<trigger id="1" description="ContAfterFixingPosition" require="" exclude="" nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
-	<completequest questid="Ch1Part5CinFinished"/>
-	<loadcin mapdata="traderscabin" cinid="0"/>
-</trigger>
 <cinematic id="0" description="Part5HelpfulAdvice" camerax="0" cameray="0">
-	<addactor x="312" y="456" name="Noah" anim="Noah" startanim="UnUp" visible="true" init="false" associatedhero=""/>
+	<assactor name="Noah" hero="Noah" enemyid="0" npcid=""/>
 	<addactor x="312" y="312" name="Tyson" anim="Tyson" startanim="UnDown" visible="true" init="false" associatedhero=""/>
 	<addactor x="336" y="312" name="Hugh" anim="Lady1" startanim="UnDown" visible="true" init="false" associatedhero=""/>
-	<cameramovetoactor actor="Noah" time="0"/>
-	<haltingmove name="Tyson" x="312" y="384" speed="2.4" movehor="false" movediag="false"/>
+	<camerafollow name="Noah"/>
+	<haltingmove name="Noah" x="192" y="576" speed="2.4" movehor="false" movediag="false"/>
+	<facing name="Noah" dir="0"/>
+	<cameramove x="240" y="528" time="3000"/>
 	<speech text="What are you doing, trespassing on our land?<hardstop>" heroportrait="Tyson" enemyportrait="" animportrait="Tyson"/>
-	<addactor x="312" y="456" name="Sharna" anim="Sharna" startanim="UnUp" visible="true" init="false" associatedhero=""/>
-	<haltingmove name="Sharna" x="336" y="456" speed="0.5" movehor="false" movediag="false"/>
+	<haltingmove name="Tyson" x="312" y="504" speed="3.4" movehor="false" movediag="false"/>
+	<addactor x="192" y="576" name="Sharna" anim="Sharna" startanim="UnUp" visible="true" init="false" associatedhero=""/>
+	<haltingmove name="Sharna" x="216" y="576" speed="0.5" movehor="false" movediag="false"/>
 	<facing name="Sharna" dir="0"/>
 	<speech text="Just out for a stroll, we’ll be going.<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait="Sharna"/>
 	<speech text="Packing that much gear and moving that quick is a stroll now, eh?<hardstop>" heroportrait="Tyson" enemyportrait="" animportrait="Tyson"/>
 	<speech text="I, well.<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait="Sharna"/>
-	<haltingmove name="Hugh" x="336" y="384" speed="1.0" movehor="false" movediag="false"/>
+	<haltingmove name="Hugh" x="336" y="432" speed="2.4" movehor="false" movediag="false"/>
 	<speech text="There is no need to lie.  Who are you really?<hardstop>" heroportrait="Liza" enemyportrait="" animportrait="Liza"/>
-	<speech text="We’re travelling from Erium to seek the aid of friends.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait="Noah"/>
-	<speech text="Well come in and take a rest.  You look tired and we just finished dinner.  There is enough for everyone.<hardstop>" heroportrait="Liza" enemyportrait="" animportrait="Liza"/>
+	<speech text="We’ve departed from Erium to seek the aid of friends.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait="Noah"/>
+	<speech text="Well come in and take a rest. You look tired and we just finished dinner. There is enough for everyone.<hardstop>" heroportrait="Liza" enemyportrait="" animportrait="Liza"/>
+	<haltingmove name="Hugh" x="336" y="312" speed="2.4" movehor="false" movediag="false"/>
+	<cameramove x="216" y="576" time="2000"/>
+	<wait time="1500"/>
+	<facing name="Sharna" dir="2"/>
+	<facing name="Noah" dir="3"/>
+	<wait time="500"/>
+	<nod name="Noah"/>
+	<wait time="1000"/>
+	<stopse name="Noah"/>
 	<fadeout time="3000" halting="true"/>
-	<forcedmove name="Tyson" x="216" y="168" speed="20" facing="1" movehor="false" movediag="true"/>
-	<forcedmove name="Hugh" x="216" y="288" speed="20" facing="0" movehor="false" movediag="true"/>
-	<forcedmove name="Noah" x="264" y="192" speed="20" facing="2" movehor="false" movediag="true"/>
-	<forcedmove name="Sharna" x="264" y="216" speed="20" facing="2" movehor="false" movediag="true"/>
-	<addactor x="264" y="240" name="Huun" anim="Huun" startanim="UnLeft" visible="true" init="false" associatedhero=""/>
-	<addactor x="264" y="264" name="Eddie" anim="Eddie" startanim="UnLeft" visible="true" init="false" associatedhero=""/>
-	<camerafollow name="Sharna"/>
+	<forcedmove name="Tyson" x="240" y="168" speed="20" facing="1" movehor="false" movediag="true"/>
+	<forcedmove name="Hugh" x="216" y="240" speed="20" facing="3" movehor="false" movediag="true"/>
+	<forcedmove name="Noah" x="288" y="192" speed="20" facing="2" movehor="false" movediag="true"/>
+	<forcedmove name="Sharna" x="288" y="216" speed="20" facing="2" movehor="false" movediag="true"/>
+	<addactor x="288" y="240" name="Huun" anim="Huun" startanim="UnLeft" visible="true" init="false" associatedhero=""/>
+	<addactor x="288" y="264" name="Eddie" anim="Eddie" startanim="UnLeft" visible="true" init="false" associatedhero=""/>
+	<camerafollow name="Hugh"/>
 	<fadein time="3000" halting="true" init="false"/>
 	<speech text="What you’re telling us is that you’re fugitives. Why should we trust anything you've said? <hardstop>" heroportrait="Tyson" enemyportrait="" animportrait="Tyson"/>
 	<speech text="We’re only fugitives in the eyes of Mistal.  The kingdom is under attack from the inside and we need help stopping it.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait="Noah"/>
@@ -54,11 +66,14 @@
 	<forcedmove name="Sharna" x="624" y="240" speed="20" facing="1" movehor="false" movediag="true"/>
 	<forcedmove name="Huun" x="576" y="336" speed="20" facing="1" movehor="false" movediag="true"/>
 	<forcedmove name="Eddie" x="624" y="336" speed="20" facing="1" movehor="false" movediag="true"/>
+	<cameramove x="528" y="336" time="0"/>
 	<fadein time="3000" halting="true" init="false"/>
+	<haltingmove name="Hugh" x="528" y="312" speed="2.4" movehor="false" movediag="false"/>
 	<speech text="Noah, I've gone over our supplies; they won't get us far, even with mine and Tyson’s. Shall we stop in Reyval to pick up more?<hardstop>" heroportrait="Liza" enemyportrait="" animportrait="Liza"/>
+	<haltingmove name="Noah" x="576" y="264" speed="2.4" movehor="false" movediag="false"/>
 	<speech text="That’s just across the border, right?<hardstop>" heroportrait="Noah" enemyportrait="" animportrait="Noah"/>
 	<speech text="It is, and thankfully the terrain won’t be too rough.  Let’s just hope that word of your escape hasn’t travelled as far as you have.<hardstop>" heroportrait="Liza" enemyportrait="" animportrait="Liza"/>
-	<loadmap mapdata="traderscabin" enter="EnterFromWorldMap"/>
+	<loadmap mapdata="traderscabin" enter="AfterPart5"/>
 </cinematic>
 <cinematic id="1" description="FixPlayerPosition" camerax="0" cameray="0">
 	<assactor name="Noah" hero="Noah" enemyid="0" npcid=""/>
