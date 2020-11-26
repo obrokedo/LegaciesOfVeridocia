@@ -17,7 +17,7 @@
 	<assactor name="Noah" hero="Noah" enemyid="0" npcid=""/>
 	<cameramovetoactor actor="Noah" time="400"/>
 	<camerafollow name="Noah"/>
-	<haltingmovepath name="Noah" x="1032" y="4008" speed="2.4"/>
+	<haltingmovepath name="Noah" x="1032" y="3996" speed="2.4"/>
 	<fadeout time="500" halting="true"/>
 	<loadmap mapdata="eriumwoods" enter="FromWorldmap"/>
 </cinematic>
@@ -26,7 +26,7 @@
 	<assactor name="Noah" hero="Noah" enemyid="0" npcid=""/>
 	<cameramovetoactor actor="Noah" time="400"/>
 	<camerafollow name="Noah"/>
-	<haltingmove name="Noah" x="1200" y="4152" speed="2.4" movehor="false" movediag="false"/>
+	<haltingmove name="Noah" x="1200" y="4140" speed="2.4" movehor="false" movediag="false"/>
 </cinematic>
 <condition id="0" description="ToErium" triggerid="1,">
 	<enterloc location="ToErium" immediate="false"/>

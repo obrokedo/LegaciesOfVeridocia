@@ -45,18 +45,18 @@
 	<cameramovetoactor actor="Craig" time="1000"/>
 	<wait time="1000"/>
 	<camerafollow name="Craig"/>
-	<haltingmovepath name="Craig" x="720" y="264" speed="2.4"/>
-	<haltingmovepath name="Olivia" x="720" y="312" speed="2.4"/>
+	<haltingmovepath name="Craig" x="720" y="252" speed="2.4"/>
+	<haltingmovepath name="Olivia" x="720" y="300" speed="2.4"/>
 	<facing name="Craig" dir="2"/>
 	<wait time="100"/>
 	<speech text="I think we're done here, meet us upstairs when you've finished up.<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
-	<haltingmove name="Craig" x="744" y="288" speed="2.4" movehor="false" movediag="false"/>
+	<haltingmove name="Craig" x="744" y="276" speed="2.4" movehor="false" movediag="false"/>
 	<removeactor name="Craig"/>
-	<haltingmove name="Olivia" x="720" y="288" speed="2.4" movehor="false" movediag="false"/>
+	<haltingmove name="Olivia" x="720" y="276" speed="2.4" movehor="false" movediag="false"/>
 	<facing name="Olivia" dir="2"/>
 	<wait time="100"/>
 	<speech text="Be careful!<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait=""/>
-	<haltingmove name="Olivia" x="744" y="288" speed="2.4" movehor="false" movediag="false"/>
+	<haltingmove name="Olivia" x="744" y="276" speed="2.4" movehor="false" movediag="false"/>
 	<removeactor name="Olivia"/>
 </cinematic>
 <cinematic id="1" description="Noah Exit" camerax="504" cameray="0">
@@ -66,18 +66,18 @@
 	<cameramovetoactor actor="Noah" time="1000"/>
 	<wait time="10"/>
 	<camerafollow name="Noah"/>
-	<movepath name="Huun" x="696" y="48" speed="3"/>
-	<movepath name="Sharna" x="720" y="96" speed="3"/>
-	<haltingmovepath name="Noah" x="672" y="72" speed="2.4"/>
+	<movepath name="Huun" x="696" y="36" speed="3"/>
+	<movepath name="Sharna" x="720" y="84" speed="3"/>
+	<haltingmovepath name="Noah" x="672" y="60" speed="2.4"/>
 	<facing name="Noah" dir="1"/>
 	<wait time="1500"/>
 	<speech text="I can't belive we made it!<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<speech text="Don't die on us!<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
-	<haltingmovepath name="Noah" x="744" y="72" speed="2.4"/>
+	<haltingmovepath name="Noah" x="744" y="60" speed="2.4"/>
 	<removeactor name="Noah"/>
-	<haltingmovepath name="Sharna" x="744" y="72" speed="2"/>
+	<haltingmovepath name="Sharna" x="744" y="60" speed="2"/>
 	<removeactor name="Sharna"/>
-	<haltingmovepath name="Huun" x="744" y="72" speed="2"/>
+	<haltingmovepath name="Huun" x="744" y="60" speed="2"/>
 	<removeactor name="Huun"/>
 </cinematic>
 <condition id="0" description="EnterBottomMid" triggerid="1,">

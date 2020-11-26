@@ -237,19 +237,19 @@
 	<assactor name="Noah" hero="Noah" enemyid="0" npcid="0"/>
 	<assactor name="Bartender" hero="" enemyid="0" npcid="Bartender1"/>
 	<camerafollow name="Noah"/>
-	<haltingmove name="Bartender" x="1800" y="384" speed="2" movehor="false" movediag="false"/>
+	<haltingmove name="Bartender" x="1800" y="372" speed="2" movehor="false" movediag="false"/>
 	<tremble name="Bartender"/>
 	<wait time="100"/>
 	<stopse name="Bartender"/>
 	<speech text="Hey!<pause> Who said you could go up there?!<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
-	<haltingmove name="Noah" x="1752" y="384" speed="2" movehor="false" movediag="false"/>
+	<haltingmove name="Noah" x="1752" y="372" speed="2" movehor="false" movediag="false"/>
 	<facing name="Noah" dir="1"/>
 </cinematic>
 <cinematic id="2" description="Can'tLeave" camerax="384" cameray="1056">
 	<assactor name="Noah" hero="Noah" enemyid="0" npcid=""/>
 	<camerafollow name="Noah"/>
 	<speech text="As nice as the view is,<pause> I must report for duty.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
-	<haltingmovepath name="Noah" x="384" y="984" speed="2.4"/>
+	<haltingmovepath name="Noah" x="384" y="972" speed="2.4"/>
 </cinematic>
 <condition id="0" description="ToEriumCastleWest1" triggerid="4,">
 	<enterloc location="ToEriumCastleWest1" immediate="false"/>

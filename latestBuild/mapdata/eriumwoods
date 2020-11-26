@@ -85,7 +85,7 @@
 <cinematic id="1" description="bring back in room" camerax="0" cameray="0">
 	<assactor name="Noah" hero="Noah" enemyid="0" npcid=""/>
 	<speech text="Don't tire out now.<hardstop>" heroportrait="Craig" enemyportrait="" animportrait="Craig"/>
-	<haltingmovepath name="Noah" x="456" y="384" speed="2.4"/>
+	<haltingmovepath name="Noah" x="456" y="372" speed="2.4"/>
 </cinematic>
 <cinematic id="2" description="Part4Exile" camerax="0" cameray="0">
 	<addactor x="216" y="336" name="Huun" anim="Huun" startanim="UnDown" visible="true" init="false" associatedhero=""/>
