@@ -19,7 +19,7 @@
     	<javac encoding="ISO-8859-1" target="1.8" srcdir="src" destdir="bin" classpathref="classpath"/>
     </target>	
 	
-    <target name="create_run_jar">
+    <target name="create_run_jar" depends="clean,compile">
         <jar destfile="${dir.jarfile}/LoV-Dev.jar">
             <manifest>
                 <attribute name="Main-Class" value="tactical.engine.RunInJarLauncher"/>
