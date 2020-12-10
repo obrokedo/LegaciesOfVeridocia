@@ -28,6 +28,43 @@
 	<camerafollow name="Noah"/>
 	<haltingmove name="Noah" x="1200" y="4140" speed="2.4" movehor="false" movediag="false"/>
 </cinematic>
+<cinematic id="2" description="BorderStruggleCh1Part6" camerax="24" cameray="24">
+	<addactor x="864" y="3744" name="Hugh" anim="hugh" startanim="UnUp" visible="true" init="false" associatedhero=""/>
+	<addactor x="984" y="3576" name="Guard1" anim="eriumguard" startanim="UnUp" visible="true" init="false" associatedhero=""/>
+	<addactor x="984" y="3600" name="person" anim="Man1" startanim="UnDown" visible="true" init="false" associatedhero=""/>
+	<camerafollow name="Hugh"/>
+	<speech text="There are never this many guards here.  They must have come during the night.<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
+	<cameramove x="984" y="3600" time="3000"/>
+	<wait time="3000"/>
+	<speech text="If you’ll just empty your bags and...  IT’S THEM, THE ERIUM TRAITORS!  SEIZE THEM!<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
+	<quiver name="person"/>
+	<wait time="1000"/>
+	<haltingmovepath name="person" x="1032" y="3792" speed="4.0"/>
+	<removeactor name="person"/>
+	<cameramove x="864" y="3744" time="3000"/>
+	<wait time="3000"/>
+	<speech text="Damn, looks like we’ll have to fight them all to get out of this mess.<hardstop>" heroportrait="Tyson" enemyportrait="" animportrait="Tyson"/>
+	<speech text="Stand down! Do not harm my servants. They wandered ahead of me from my caravan.<hardstop>" heroportrait="Liza" enemyportrait="" animportrait="Liza"/>
+	<addactor x="936" y="3480" name="Liza" anim="Liza" startanim="UnDown" visible="true" init="false" associatedhero=""/>
+	<cameramove x="960" y="3576" time="3000"/>
+	<wait time="3000"/>
+	<haltingmovepath name="Guard1" x="960" y="3480" speed="2.4"/>
+	<facing name="Guard1" dir="2"/>
+	<speech text="These are the fugitives from Erium, and they are under arrest. Do not interfere, witch, or you will join them!<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
+	<speech text="Who are you calling a ‘witch’?!<hardstop>" heroportrait="Liza" enemyportrait="" animportrait="Liza"/>
+	<flashscreen time="0"/>
+	<addstatic x="960" y="3480" spriteid="Fire" spriteim="fire"/>
+	<playsound sound="casting" volume="75"/>
+	<wait time="1000"/>
+	<removeactor name="Guard1"/>
+	<remstatic spriteid="Fire"/>
+	<haltingmovepath name="Hugh" x="984" y="3552" speed="2.4"/>
+	<speech text="Liza!  Your arrival is most fortuitous!<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
+	<speech text="Indeed, it looks like you have quite the fight on your hands.<hardstop>" heroportrait="Liza" enemyportrait="" animportrait="Liza"/>
+	<speech text="Good. It’s about time I got to punch something.<hardstop>" heroportrait="Tyson" enemyportrait="" animportrait="Tyson"/>
+	<speech text="Thank you Liza, but one of you must stay with our caravan.<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
+	<addmultihero heroids="Liza,Tyson,"/>
+</cinematic>
 <condition id="0" description="ToErium" triggerid="1,">
 	<enterloc location="ToErium" immediate="false"/>
 </condition>
