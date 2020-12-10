@@ -46,6 +46,8 @@
         <spr name="Walk3" x="5472" y="0" w="24" h="24"/>
         <spr name="Walk4" x="5496" y="0" w="24" h="24"/>
         <spr name="Walk5" x="5520" y="0" w="24" h="24"/>
+        <spr name="PortraitTop0" x="5405" y="31" w="48" h="36"/>
+        <spr name="PortraitBottom0" x="5405" y="67" w="48" h="28"/>
       </dir>
     </dir>
   </definitions>

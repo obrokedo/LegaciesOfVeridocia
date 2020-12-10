@@ -179,4 +179,21 @@
 <spr name="/Unpromoted/Frame45" x="151" y="-56" z="0"/>
 </cell>
 </anim>
+<anim name="UnPortIdle" loops="0">
+    <cell index="0" delay="50">
+      <spr name="/Unpromoted/PortraitTop0" x="0" y="0" z="0"/>
+      <spr name="/Unpromoted/PortraitBottom0" x="0" y="0" z="0"/>
+    </cell>
+  </anim>
+  <anim name="UnPortBlink" loops="0">
+    <cell index="0" delay="50">
+      <spr name="/Unpromoted/PortraitTop0" x="0" y="0" z="0"/>
+    </cell>
+  </anim>
+  <anim name="UnPortTalk" loops="0">
+    <cell index="0" delay="50">
+      <spr name="/Unpromoted/PortraitBottom0" x="0" y="0" z="0"/>
+    </cell>
+
+  </anim>
 </animations>
