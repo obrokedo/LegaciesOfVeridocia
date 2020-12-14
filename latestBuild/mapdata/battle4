@@ -1,8 +1,15 @@
 <area>
-<map file="World Map.tmx"/>
+<map file="Battle4.tmx"/>
 <trigger id="0" description="Battle1 Initialise" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<playmusic music="overworld" volume="75"/>
 </trigger>
+<trigger id="1" description="EggSearch" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<completequest questid="FoundGargoyalEgg"/>
+	<showtext textid="0"/>
+</trigger>
+<text id="0" description="FoundEgg">
+	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="Found a strange Egg<hardstop>"/>
+</text>
 <condition id="0" description="MapLoad" triggerid="0,">
 	<maploaded/>
 </condition>

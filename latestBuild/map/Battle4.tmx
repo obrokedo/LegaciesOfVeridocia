@@ -1,0 +1,321 @@
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="52" height="72" tilewidth="12" tileheight="12" infinite="0" nextlayerid="18" nextobjectid="1">
+<tileset firstgid="1" name="overworld(day)-Master" tilewidth="12" tileheight="12" tilecount="1296" columns="36">
+<image source="../image/overworld(day)-Master.png" trans="495d47" width="432" height="432"/>
+</tileset>
+<layer id="2" name="BG" width="52" height="72">
+<data encoding="base64" compression="gzip">
+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
+</data>
+</layer>
+<layer id="4" name="BG Shadow" width="52" height="72">
+<data encoding="base64" compression="gzip">
+H4sIAAAAAAAAA+3BMQEAAADCoPVP7WkJoAAAAAAAAAAAAAAAAAAA4AaAgnBVgDoAAA==
+</data>
+</layer>
+<layer id="5" name="MG" width="52" height="72">
+<data encoding="base64" compression="gzip">
+H4sIAAAAAAAAA+3BMQEAAADCoPVP7WkJoAAAAAAAAAAAAAAAAAAA4AaAgnBVgDoAAA==
+</data>
+</layer>
+<layer id="6" name="MG Shadow" width="52" height="72">
+<data encoding="base64" compression="gzip">
+H4sIAAAAAAAAA+3BMQEAAADCoPVP7WkJoAAAAAAAAAAAAAAAAAAA4AaAgnBVgDoAAA==
+</data>
+</layer>
+<layer id="7" name="FG" width="52" height="72">
+<data encoding="base64" compression="gzip">
+H4sIAAAAAAAAA+3BMQEAAADCoPVP7WkJoAAAAAAAAAAAAAAAAAAA4AaAgnBVgDoAAA==
+</data>
+</layer>
+<layer id="8" name="FG Shadow" width="52" height="72">
+<data encoding="base64" compression="gzip">
+H4sIAAAAAAAAA+3BMQEAAADCoPVP7WkJoAAAAAAAAAAAAAAAAAAA4AaAgnBVgDoAAA==
+</data>
+</layer>
+<layer id="9" name="Lighting" width="52" height="72">
+<data encoding="base64" compression="gzip">
+H4sIAAAAAAAAA+3BMQEAAADCoPVP7WkJoAAAAAAAAAAAAAAAAAAA4AaAgnBVgDoAAA==
+</data>
+</layer>
+<layer id="10" name="Walkable" width="52" height="72" visible="0" opacity="0.6">
+<data encoding="base64" compression="gzip">
+H4sIAAAAAAAAA+3OsQ0AIAgAQfbfQnfBuWQECxMo7pLvPwIAAAB4tardPfFRVqd7AgAAAAAAAAAAAIBxLrr/s3OAOgAA
+</data>
+</layer>
+<objectgroup id="12" name="Trigger Regions">
+<object name="HeroStart" x="0" y="0">
+<properties>
+<property name="start" value="exit=BattleStart"/>
+</properties>
+<polyline points="312,840 384,840 384,792 312,792 312,840"/>
+</object>
+<object name="Egg" x="0" y="0">
+<properties>
+<property name="searcharea" value="searchtrigger=1"/>
+</properties>
+<polyline points="408,768 432,768 432,792 408,792 408,768"/>
+</object>
+</objectgroup>
+<objectgroup id="14" name="Meta">
+<object name="Item1" x="0" y="0">
+<properties>
+<property name="chest" value="spriteimage=blank itemid=2"/>
+</properties>
+<polyline points="504,552 528,552 528,576 504,576 504,552"/>
+</object>
+</objectgroup>
+<objectgroup id="16" name="Battle">
+<object name="EriumGuard1" x="0" y="0">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=slow enemyid=Erium Soldier unit=0"/>
+</properties>
+<polyline points="432,672 432,648 456,648 456,672 432,672"/>
+</object>
+<object name="EriumCalvary" x="0" y="0">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=fast enemyid=Erium Cavalry unit=0"/>
+</properties>
+<polyline points="336,576 360,576 360,600 336,600 336,576"/>
+</object>
+<object name="EriumCalvary2" x="0" y="0">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=fast enemyid=Erium Cavalry unit=0"/>
+</properties>
+<polyline points="192,624 216,624 216,648 192,648 192,624"/>
+</object>
+<object name="BountyHunter1" x="0" y="0">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=slow enemyid=Bounty Hunter unit=0"/>
+</properties>
+<polyline points="240,552 264,552 264,576 240,576 240,552"/>
+</object>
+<object name="EriumSoldier2" x="0" y="0">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=slow enemyid=Erium Soldier unit=0"/>
+</properties>
+<polyline points="240,504 240,480 264,480 264,504 240,504"/>
+</object>
+<object name="EriumCleric" x="0" y="0">
+<properties>
+<property name="enemy" value="ai=cleric aiapproach=wait enemyid=Reyval Medic unit=0"/>
+</properties>
+<polyline points="360,456 384,456 384,480 360,480 360,456"/>
+</object>
+<object name="EriumCalvary3" x="0" y="0">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=fast enemyid=Erium Cavalry unit=0"/>
+</properties>
+<polyline points="360,408 384,408 384,432 360,432 360,408"/>
+</object>
+<object name="EriumSoldier3" x="0" y="0">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=slow enemyid=Erium Soldier unit=0"/>
+</properties>
+<polyline points="408,336 432,336 432,360 408,360 408,360 408,336"/>
+</object>
+<object name="EriumCalvary4" x="0" y="0">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=fast enemyid=Erium Cavalry unit=0"/>
+</properties>
+<polyline points="240,336 264,336 264,360 240,360 240,336"/>
+</object>
+<object name="BountyHunter2" x="0" y="0">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=slow enemyid=Bounty Hunter unit=0"/>
+</properties>
+<polyline points="312,240 336,240 336,264 312,264 312,240"/>
+</object>
+<object name="ReyvalCleric2" x="0" y="0">
+<properties>
+<property name="enemy" value="ai=cleric aiapproach=wait enemyid=Reyval Medic unit=0"/>
+</properties>
+<polyline points="360,240 384,240 384,264 360,264 360,240"/>
+</object>
+<object name="Boss" x="0" y="0">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=slow enemyid=Merc. Captain unit=0"/>
+</properties>
+<polyline points="336,216 360,216 360,240 336,240 336,216"/>
+</object>
+<object name="BattleRegion" x="0" y="0">
+<properties>
+<property name="battleregion" value=""/>
+</properties>
+<polyline points="0,864 0,0 624,0 624,864 0,864"/>
+</object>
+</objectgroup>
+<layer id="17" name="Overlay" width="52" height="72">
+<data encoding="base64" compression="gzip">
+H4sIAAAAAAAAA+3BMQEAAADCoPVP7WkJoAAAAAAAAAAAAAAAAAAA4AaAgnBVgDoAAA==
+</data>
+</layer>
+<layer id="3" name="Grid" width="52" height="72" visible="0" opacity="0.17">
+<data encoding="base64" compression="gzip">
+H4sIAAAAAAAAA+3BMQEAAADCoPVP7WkJoAAAAAAAAAAAAAAAAAAA4AaAgnBVgDoAAA==
+</data>
+</layer>
+<objectgroup name="Terrain" visible="1">
+<object name="Forest1" x="0" y="0">
+<properties>
+<property name="terrain" value="type=FOREST"/>
+</properties>
+<polyline points="96,288 120,288 120,312 192,312 192,360 168,360 168,408 192,408 192,432 216,432 216,408 240,408 240,432 264,432 264,552 288,552 288,624 264,624 264,600 216,600 216,648 168,648 168,624 144,624 144,504 168,504 168,552 192,552 192,576 264,576 264,552 240,552 240,528 216,528 216,504 192,504 192,456 168,456 168,432 96,432 96,384 72,384 72,312 96,312 96,288"/>
+</object>
+<object name="Mountain1" x="0" y="0">
+<properties>
+<property name="terrain" value="type=HILLS"/>
+</properties>
+<polyline points="168,480 192,480 192,504 216,504 216,528 240,528 240,552 264,552 264,576 192,576 192,552 168,552 168,480"/>
+</object>
+<object name="Forest2" x="0" y="0">
+<properties>
+<property name="terrain" value="type=FOREST"/>
+</properties>
+<polyline points="312,456 336,456 336,480 408,480 408,456 432,456 432,432 480,432 480,456 504,456 504,504 456,504 456,480 432,480 432,504 384,504 384,528 336,528 336,552 408,552 408,576 336,576 336,600 312,600 312,528 288,528 288,480 312,480 312,456"/>
+</object>
+<object name="Forest3" x="0" y="0">
+<properties>
+<property name="terrain" value="type=FOREST"/>
+</properties>
+<polyline points="168,864 168,840 192,840 192,816 288,816 288,840 264,840 264,864 168,864"/>
+</object>
+<object name="Forest4" x="0" y="0">
+<properties>
+<property name="terrain" value="type=FOREST"/>
+</properties>
+<polyline points="384,792 408,792 408,768 432,768 432,792 456,792 456,840 480,840 480,864 408,864 408,840 384,840 384,792"/>
+</object>
+<object name="Forest5" x="0" y="0">
+<properties>
+<property name="terrain" value="type=FOREST"/>
+</properties>
+<polyline points="552,624 576,624 576,648 600,648 600,672 624,672 624,816 600,816 600,792 576,792 576,744 552,744 552,720 528,720 528,696 504,696 504,648 552,648 552,624"/>
+</object>
+<object name="Forest6" x="0" y="0">
+<properties>
+<property name="terrain" value="type=FOREST"/>
+</properties>
+<polyline points="408,360 408,312 432,312 432,288 456,288 456,312 552,312 552,336 504,336 504,360 480,360 480,336 432,336 432,360 408,360"/>
+</object>
+<object name="Forest8" x="0" y="0">
+<properties>
+<property name="terrain" value="type=FOREST"/>
+</properties>
+<polyline points="576,312 600,312 600,264 552,264 552,240 528,240 528,216 504,216 504,192 408,192 408,144 360,144 360,216 384,216 384,240 408,240 408,216 480,216 480,240 528,240 528,264 552,264 552,288 576,288 576,312"/>
+</object>
+<object name="Forest7" x="0" y="0">
+<properties>
+<property name="terrain" value="type=FOREST"/>
+</properties>
+<polyline points="24,216 24,168 48,168 48,144 72,144 72,168 96,168 96,192 48,192 48,216 24,216"/>
+</object>
+<object name="Forest9" x="0" y="0">
+<properties>
+<property name="terrain" value="type=FOREST"/>
+</properties>
+<polyline points="600,0 624,0 624,72 600,72 600,96 528,96 528,120 552,120 552,144 576,144 576,216 552,216 552,168 528,168 528,144 504,144 504,72 528,72 528,48 600,48 600,0"/>
+</object>
+<object name="Forest10" x="0" y="0">
+<properties>
+<property name="terrain" value="type=FOREST"/>
+</properties>
+<polyline points="0,0 240,0 240,24 264,24 264,96 240,96 240,72 168,72 168,96 144,96 144,144 120,144 120,120 96,120 96,96 48,96 48,72 0,72 0,0"/>
+</object>
+<object name="Forest11" x="0" y="0">
+<properties>
+<property name="terrain" value="type=FOREST"/>
+</properties>
+<polyline points="312,0 504,0 504,48 480,48 480,72 384,72 384,96 336,96 336,24 312,24 312,24 312,0"/>
+</object>
+<object name="Hills2" x="0" y="0">
+<properties>
+<property name="terrain" value="type=HILLS"/>
+</properties>
+<polyline points="600,72 624,72 624,96 600,96 600,216 624,216 624,240 576,240 576,144 552,144 552,120 528,120 528,96 600,96 600,72"/>
+</object>
+<object name="Hills3" x="0" y="0">
+<properties>
+<property name="terrain" value="type=HILLS"/>
+</properties>
+<polyline points="336,552 336,528 384,528 384,504 432,504 432,480 456,480 456,504 504,504 504,480 576,480 576,504 624,504 624,528 600,528 600,552 552,552 552,576 504,576 504,600 480,600 480,576 408,576 408,552 336,552"/>
+</object>
+<object name="Hills4" x="0" y="0">
+<properties>
+<property name="terrain" value="type=HILLS"/>
+</properties>
+<polyline points="408,216 432,216 432,264 480,264 480,288 528,288 528,312 456,312 456,288 432,288 432,240 408,240 408,216"/>
+</object>
+<object name="Forest12" x="0" y="0">
+<properties>
+<property name="terrain" value="type=FOREST"/>
+</properties>
+<polyline points="600,240 624,240 624,480 600,480 600,432 624,432 624,264 600,264 600,240"/>
+</object>
+<object name="Grass1" x="0" y="0">
+<properties>
+<property name="terrain" value="type=THICK-GRASS"/>
+</properties>
+<polyline points="312,744 336,744 336,840 312,840 312,864 264,864 264,840 288,840 288,816 264,816 264,792 288,792 288,768 312,768 312,744"/>
+</object>
+<object name="Grass2" x="0" y="0">
+<properties>
+<property name="terrain" value="type=THICK-GRASS"/>
+</properties>
+<polyline points="456,816 480,816 480,840 504,840 504,864 552,864 552,840 528,840 528,816 552,816 552,768 504,768 504,744 480,744 480,720 456,720 456,672 480,672 480,648 504,648 504,696 528,696 528,720 552,720 552,744 576,744 576,792 600,792 600,816 624,816 624,864 480,864 480,840 456,840 456,816"/>
+</object>
+<object name="Grass3" x="0" y="0">
+<properties>
+<property name="terrain" value="type=THICK-GRASS"/>
+</properties>
+<polyline points="120,432 168,432 168,456 192,456 192,480 144,480 144,456 120,456 120,432"/>
+</object>
+<object name="Grass5" x="0" y="0">
+<properties>
+<property name="terrain" value="type=THICK-GRASS"/>
+</properties>
+<polyline points="72,312 72,288 48,288 48,240 72,240 72,216 96,216 96,192 120,192 120,216 168,216 168,192 216,192 216,168 264,168 264,192 288,192 288,216 240,216 240,240 192,240 192,264 168,264 168,288 96,288 96,312 72,312"/>
+</object>
+<object name="Grass4" x="0" y="0">
+<properties>
+<property name="terrain" value="type=THICK-GRASS"/>
+</properties>
+<polyline points="456,432 456,384 480,384 480,360 504,360 504,336 552,336 552,384 528,384 528,408 504,408 504,432 456,432"/>
+</object>
+<object name="Grass6" x="0" y="0">
+<properties>
+<property name="terrain" value="type=THICK-GRASS"/>
+</properties>
+<polyline points="600,384 624,384 624,432 504,432 504,480 552,480 552,456 504,456 504,432 576,432 576,408 600,408 600,384"/>
+</object>
+<object name="Grass8" x="0" y="0">
+<properties>
+<property name="terrain" value="type=THICK-GRASS"/>
+</properties>
+<polyline points="96,120 72,120 72,96 168,96 168,72 240,72 264,72 264,24 240,24 240,0 312,0 312,24 336,24 336,96 288,96 288,72 240,72 240,96 168,96 96,96 96,120"/>
+</object>
+<object name="Grass9" x="0" y="0">
+<properties>
+<property name="terrain" value="type=THICK-GRASS"/>
+</properties>
+<polyline points="408,168 504,168 504,192 408,192 408,168"/>
+</object>
+<object name="Road1" x="0" y="0">
+<properties>
+<property name="terrain" value="type=ROAD"/>
+</properties>
+<polyline points="312,864 384,864 384,792 408,792 408,768 432,768 432,792 456,792 456,816 480,816 480,840 504,840 504,864 552,864 552,840 528,840 528,816 552,816 552,768 504,768 504,744 480,744 480,720 456,720 456,672 480,672 480,576 360,576 360,600 312,600 312,528 288,528 288,480 312,480 312,456 336,456 336,480 408,480 408,456 432,456 432,432 456,432 456,384 480,384 480,336 432,336 432,360 408,360 408,312 384,312 384,288 360,288 360,264 384,264 384,216 360,216 360,144 408,144 408,168 504,168 504,216 528,216 528,240 552,240 552,264 600,264 600,312 624,312 624,264 600,264 600,240 576,240 576,216 552,216 552,168 528,168 528,144 504,144 504,72 528,72 528,48 600,48 600,0 504,0 504,48 480,48 480,72 384,72 384,96 288,96 288,72 264,72 264,96 144,96 144,144 120,144 120,120 48,120 48,72 24,72 24,96 48,96 48,144 24,144 24,168 48,168 48,144 72,144 72,168 96,168 96,216 72,216 72,240 24,240 24,216 48,216 48,192 120,192 120,216 168,216 168,192 216,192 216,168 264,168 264,192 288,192 288,240 336,240 336,288 288,288 288,312 264,312 264,336 240,336 240,360 216,360 216,336 192,336 192,360 168,360 168,408 192,408 192,432 216,432 216,408 240,408 240,432 264,432 264,552 288,552 288,624 264,624 264,600 216,600 216,648 168,648 168,672 192,672 192,696 216,696 216,720 240,720 240,744 288,744 288,768 312,768 312,744 336,744 336,840 312,840 312,864"/>
+</object>
+<object name="Road2" x="0" y="0">
+<properties>
+<property name="terrain" value="type=ROAD"/>
+</properties>
+<polyline points="24,312 72,312 72,384 96,384 96,432 120,432 120,456 144,456 144,480 168,480 168,504 120,504 120,480 96,480 96,456 72,456 72,432 48,432 48,384 24,384 24,312"/>
+</object>
+<object name="Grass14" x="0" y="0">
+<properties>
+<property name="terrain" value="type=THICK-GRASS"/>
+</properties>
+<polyline points="384,864 408,864 408,840 384,840 384,864"/>
+</object>
+</objectgroup>
+</map>

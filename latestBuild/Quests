@@ -15,4 +15,6 @@
 </quest>
 <quest id="7" description="Ch1Part5CinFinished" extradescription="Used to prevent the cinimatic from playing again when moved to free roam.">
 </quest>
+<quest id="8" description="FoundGargoyalEgg" extradescription="This is completed if the egg is searched in battle4">
+</quest>
 </quests>
