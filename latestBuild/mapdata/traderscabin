@@ -20,12 +20,12 @@
 	<addactor x="192" y="576" name="Sharna" anim="Sharna" startanim="UnUp" visible="true" init="false" associatedhero=""/>
 	<haltingmove name="Sharna" x="216" y="564" speed="0.5" movehor="false" movediag="false"/>
 	<facing name="Sharna" dir="0"/>
-	<speech text="Just out for a stroll, we’ll be going.<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait="Sharna"/>
+	<speech text="Just out for a stroll, we'll be going.<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait="Sharna"/>
 	<speech text="Packing that much gear and moving that quick is a stroll now, eh?<hardstop>" heroportrait="Tyson" enemyportrait="" animportrait="Tyson"/>
 	<speech text="I, well.<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait="Sharna"/>
 	<haltingmove name="Hugh" x="336" y="420" speed="2.4" movehor="false" movediag="false"/>
 	<speech text="There is no need to lie.  Who are you really?<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
-	<speech text="We’ve departed from Erium to seek the aid of friends.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait="Noah"/>
+	<speech text="We've departed from Erium to seek the aid of friends.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait="Noah"/>
 	<speech text="Well come in and take a rest. You look tired and we just finished dinner. There is enough for everyone.<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
 	<haltingmove name="Hugh" x="336" y="300" speed="2.4" movehor="false" movediag="false"/>
 	<cameramove x="216" y="576" time="2000"/>
@@ -45,19 +45,19 @@
 	<addactor x="288" y="264" name="Eddie" anim="Eddie" startanim="UnLeft" visible="true" init="false" associatedhero=""/>
 	<camerafollow name="Hugh"/>
 	<fadein time="3000" halting="true" init="false"/>
-	<speech text="What you’re telling us is that you’re fugitives. Why should we trust anything you've said? <hardstop>" heroportrait="Tyson" enemyportrait="" animportrait="Tyson"/>
-	<speech text="We’re only fugitives in the eyes of Mistal.  The kingdom is under attack from the inside and we need help stopping it.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait="Noah"/>
+	<speech text="What you're telling us is that you're fugitives. Why should we trust anything you've said? <hardstop>" heroportrait="Tyson" enemyportrait="" animportrait="Tyson"/>
+	<speech text="We're only fugitives in the eyes of Mistal.  The kingdom is under attack from the inside and we need help stopping it.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait="Noah"/>
 	<speech text="Unbelievable!  I say we hand them over to Erium!<hardstop>" heroportrait="Tyson" enemyportrait="" animportrait="Tyson"/>
 	<speech text="Come now, that's hardly hospitable! I appreciate a man as honest as you, Noah. Where are you headed?<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
 	<speech text="Avaria, to meet with Princess Azure.<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait="Sharna"/>
 	<speech text="Did you say Avaria?<hardstop>" heroportrait="Tyson" enemyportrait="" animportrait="Tyson"/>
 	<speech text="Hmm... Perhaps we could be of service, then. I've seen my share of battles, and I've taught Tyson here all he knows. Seems you could use all the help you can get.<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
 	<speech text="Not to be ungrateful, but I think it's our turn to be suspicious. What's in it for you?<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait="Sharna"/>
-	<speech text="You’re a little slow on the uptake, aren’t you, girl?  Expanding our trade route to Avaria is a golden opportunity.<hardstop>" heroportrait="Tyson" enemyportrait="" animportrait="Tyson"/>
+	<speech text="You're a little slow on the uptake, aren't you, girl?  Expanding our trade route to Avaria is a golden opportunity.<hardstop>" heroportrait="Tyson" enemyportrait="" animportrait="Tyson"/>
 	<speech text="You kids seem sincere enough; how about we help you on your journey out there?<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
 	<speech text="That's generous, but we wouldn't want to put you in any danger.<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait="Sharna"/>
 	<speech text="Ha! Don't you know? This is the famous mercenary Hugh! And I've been training under him for three years; we can handle anything you've got!<hardstop>" heroportrait="Tyson" enemyportrait="" animportrait="Tyson"/>
-	<speech text="Now, we have a long journey ahead.  Since we’ve been fed, we should get some rest.<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
+	<speech text="Now, we have a long journey ahead.  Since we've been fed, we should get some rest.<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
 	<fadeout time="3000" halting="true"/>
 	<camerafollow name="Noah"/>
 	<forcedmove name="Tyson" x="528" y="228" speed="20" facing="1" movehor="false" movediag="true"/>
@@ -69,10 +69,10 @@
 	<cameramove x="528" y="336" time="0"/>
 	<fadein time="3000" halting="true" init="false"/>
 	<haltingmove name="Hugh" x="528" y="300" speed="2.4" movehor="false" movediag="false"/>
-	<speech text="Noah, I've gone over our supplies; they won't get us far, even with mine and Tyson’s. Shall we stop in Reyval to pick up more?<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
+	<speech text="Noah, I've gone over our supplies; they won't get us far, even with mine and Tyson's. Shall we stop in Reyval to pick up more?<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
 	<haltingmove name="Noah" x="576" y="252" speed="2.4" movehor="false" movediag="false"/>
-	<speech text="That’s just across the border, right?<hardstop>" heroportrait="Noah" enemyportrait="" animportrait="Noah"/>
-	<speech text="It is, and thankfully the terrain won’t be too rough.  Let’s just hope that word of your escape hasn’t travelled as far as you have.<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
+	<speech text="That's just across the border, right?<hardstop>" heroportrait="Noah" enemyportrait="" animportrait="Noah"/>
+	<speech text="It is, and thankfully the terrain won't be too rough.  Let's just hope that word of your escape hasn't travelled as far as you have.<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
 	<loadmap mapdata="traderscabin" enter="AfterPart5"/>
 </cinematic>
 <cinematic id="1" description="FixPlayerPosition" camerax="0" cameray="0">
