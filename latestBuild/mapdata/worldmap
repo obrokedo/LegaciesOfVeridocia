@@ -64,6 +64,7 @@
 	<speech text="Good. It’s about time I got to punch something.<hardstop>" heroportrait="Tyson" enemyportrait="" animportrait="Tyson"/>
 	<speech text="Thank you Liza, but one of you must stay with our caravan.<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
 	<addmultihero heroids="Liza,Tyson,"/>
+	<loadbattle mapdata="battle4" entrance="BattleStart" battbg="2"/>
 </cinematic>
 <condition id="0" description="ToErium" triggerid="1,">
 	<enterloc location="ToErium" immediate="false"/>
