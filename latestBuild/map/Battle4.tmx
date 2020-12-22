@@ -49,11 +49,29 @@ H4sIAAAAAAAAA+3OsQ0AIAgAQfbfQnfBuWQECxMo7pLvPwIAAAB4tardPfFRVqd7AgAAAAAAAAAAAIBx
 </properties>
 <polyline points="312,840 384,840 384,792 312,792 312,840"/>
 </object>
-<object name="Egg" x="0" y="0">
+<object name="OrangeZone" x="0" y="0">
 <properties>
-<property name="searcharea" value="searchtrigger=1"/>
+<property name="" value=""/>
 </properties>
-<polyline points="408,768 432,768 432,792 408,792 408,768"/>
+<polyline points="0,672 624,672 624,504 0,504 0,672"/>
+</object>
+<object name="YellowZone" x="0" y="0">
+<properties>
+<property name="" value=""/>
+</properties>
+<polyline points="144,552 624,552 624,336 240,336 240,360 216,360 216,432 192,432 192,456 168,456 168,480 144,480 144,552"/>
+</object>
+<object name="GreenZone" x="0" y="0">
+<properties>
+<property name="" value=""/>
+</properties>
+<polyline points="0,504 144,504 144,480 168,480 168,456 192,456 192,432 216,432 216,336 192,336 192,312 0,312 0,504"/>
+</object>
+<object name="BlueZone" x="0" y="0">
+<properties>
+<property name="" value=""/>
+</properties>
+<polyline points="0,240 168,240 168,264 192,264 192,288 240,288 240,144 0,144 0,240"/>
 </object>
 </objectgroup>
 <objectgroup id="14" name="Meta">
@@ -63,77 +81,83 @@ H4sIAAAAAAAAA+3OsQ0AIAgAQfbfQnfBuWQECxMo7pLvPwIAAAB4tardPfFRVqd7AgAAAAAAAAAAAIBx
 </properties>
 <polyline points="504,552 528,552 528,576 504,576 504,552"/>
 </object>
+<object name="EggImage" x="0" y="0">
+<properties>
+<property name="sprite" value="name=EggImage searchtrigger=1 image=Egg"/>
+</properties>
+<polyline points="408,768 432,768 432,792 408,792 408,768"/>
+</object>
 </objectgroup>
 <objectgroup id="16" name="Battle">
 <object name="EriumGuard1" x="0" y="0">
 <properties>
-<property name="enemy" value="ai=fighter aiapproach=slow enemyid=Erium Soldier unit=0"/>
+<property name="enemy" value="ai=fighter aiapproach=fast enemyid=Erium Soldier unit=0"/>
 </properties>
 <polyline points="432,672 432,648 456,648 456,672 432,672"/>
 </object>
 <object name="EriumCalvary" x="0" y="0">
 <properties>
-<property name="enemy" value="ai=fighter aiapproach=fast enemyid=Erium Cavalry unit=0"/>
+<property name="enemy" value="ai=fighter aiapproach=wait enemyid=Erium Cavalry unit=2"/>
 </properties>
 <polyline points="336,576 360,576 360,600 336,600 336,576"/>
 </object>
 <object name="EriumCalvary2" x="0" y="0">
 <properties>
-<property name="enemy" value="ai=fighter aiapproach=fast enemyid=Erium Cavalry unit=0"/>
+<property name="enemy" value="ai=fighter aiapproach=fast enemyid=Erium Cavalry unit=1"/>
 </properties>
 <polyline points="192,624 216,624 216,648 192,648 192,624"/>
 </object>
 <object name="BountyHunter1" x="0" y="0">
 <properties>
-<property name="enemy" value="ai=fighter aiapproach=slow enemyid=Bounty Hunter unit=0"/>
+<property name="enemy" value="ai=fighter aiapproach=wait enemyid=Bounty Hunter unit=3"/>
 </properties>
 <polyline points="240,552 264,552 264,576 240,576 240,552"/>
 </object>
 <object name="EriumSoldier2" x="0" y="0">
 <properties>
-<property name="enemy" value="ai=fighter aiapproach=slow enemyid=Erium Soldier unit=0"/>
+<property name="enemy" value="ai=fighter aiapproach=wait enemyid=Erium Soldier unit=4"/>
 </properties>
 <polyline points="240,504 240,480 264,480 264,504 240,504"/>
 </object>
 <object name="EriumCleric" x="0" y="0">
 <properties>
-<property name="enemy" value="ai=cleric aiapproach=wait enemyid=Reyval Medic unit=0"/>
+<property name="enemy" value="ai=cleric aiapproach=wait enemyid=Reyval Medic unit=5"/>
 </properties>
 <polyline points="360,456 384,456 384,480 360,480 360,456"/>
 </object>
 <object name="EriumCalvary3" x="0" y="0">
 <properties>
-<property name="enemy" value="ai=fighter aiapproach=fast enemyid=Erium Cavalry unit=0"/>
+<property name="enemy" value="ai=fighter aiapproach=fast enemyid=Erium Cavalry unit=6"/>
 </properties>
 <polyline points="360,408 384,408 384,432 360,432 360,408"/>
 </object>
 <object name="EriumSoldier3" x="0" y="0">
 <properties>
-<property name="enemy" value="ai=fighter aiapproach=slow enemyid=Erium Soldier unit=0"/>
+<property name="enemy" value="ai=fighter aiapproach=slow enemyid=Erium Soldier unit=8"/>
 </properties>
 <polyline points="408,336 432,336 432,360 408,360 408,360 408,336"/>
 </object>
 <object name="EriumCalvary4" x="0" y="0">
 <properties>
-<property name="enemy" value="ai=fighter aiapproach=fast enemyid=Erium Cavalry unit=0"/>
+<property name="enemy" value="ai=fighter aiapproach=fast enemyid=Erium Cavalry unit=7"/>
 </properties>
 <polyline points="240,336 264,336 264,360 240,360 240,336"/>
 </object>
 <object name="BountyHunter2" x="0" y="0">
 <properties>
-<property name="enemy" value="ai=fighter aiapproach=slow enemyid=Bounty Hunter unit=0"/>
+<property name="enemy" value="ai=fighter aiapproach=slow enemyid=Bounty Hunter unit=9"/>
 </properties>
 <polyline points="312,240 336,240 336,264 312,264 312,240"/>
 </object>
 <object name="ReyvalCleric2" x="0" y="0">
 <properties>
-<property name="enemy" value="ai=cleric aiapproach=wait enemyid=Reyval Medic unit=0"/>
+<property name="enemy" value="ai=cleric aiapproach=wait enemyid=Reyval Medic unit=10"/>
 </properties>
 <polyline points="360,240 384,240 384,264 360,264 360,240"/>
 </object>
 <object name="Boss" x="0" y="0">
 <properties>
-<property name="enemy" value="ai=fighter aiapproach=slow enemyid=Merc. Captain unit=0"/>
+<property name="enemy" value="ai=fighter aiapproach=wait enemyid=Merc. Captain unit=11"/>
 </properties>
 <polyline points="336,216 360,216 360,240 336,240 336,216"/>
 </object>
@@ -233,12 +257,6 @@ H4sIAAAAAAAAA+3BMQEAAADCoPVP7WkJoAAAAAAAAAAAAAAAAAAA4AaAgnBVgDoAAA==
 </properties>
 <polyline points="600,72 624,72 624,96 600,96 600,216 624,216 624,240 576,240 576,144 552,144 552,120 528,120 528,96 600,96 600,72"/>
 </object>
-<object name="Hills3" x="0" y="0">
-<properties>
-<property name="terrain" value="type=HILLS"/>
-</properties>
-<polyline points="336,552 336,528 384,528 384,504 432,504 432,480 456,480 456,504 504,504 504,480 576,480 576,504 624,504 624,528 600,528 600,552 552,552 552,576 504,576 504,600 480,600 480,576 408,576 408,552 336,552"/>
-</object>
 <object name="Hills4" x="0" y="0">
 <properties>
 <property name="terrain" value="type=HILLS"/>
@@ -293,18 +311,6 @@ H4sIAAAAAAAAA+3BMQEAAADCoPVP7WkJoAAAAAAAAAAAAAAAAAAA4AaAgnBVgDoAAA==
 </properties>
 <polyline points="96,120 72,120 72,96 168,96 168,72 240,72 264,72 264,24 240,24 240,0 312,0 312,24 336,24 336,96 288,96 288,72 240,72 240,96 168,96 96,96 96,120"/>
 </object>
-<object name="Grass9" x="0" y="0">
-<properties>
-<property name="terrain" value="type=THICK-GRASS"/>
-</properties>
-<polyline points="408,168 504,168 504,192 408,192 408,168"/>
-</object>
-<object name="Road1" x="0" y="0">
-<properties>
-<property name="terrain" value="type=ROAD"/>
-</properties>
-<polyline points="312,864 384,864 384,792 408,792 408,768 432,768 432,792 456,792 456,816 480,816 480,840 504,840 504,864 552,864 552,840 528,840 528,816 552,816 552,768 504,768 504,744 480,744 480,720 456,720 456,672 480,672 480,576 360,576 360,600 312,600 312,528 288,528 288,480 312,480 312,456 336,456 336,480 408,480 408,456 432,456 432,432 456,432 456,384 480,384 480,336 432,336 432,360 408,360 408,312 384,312 384,288 360,288 360,264 384,264 384,216 360,216 360,144 408,144 408,168 504,168 504,216 528,216 528,240 552,240 552,264 600,264 600,312 624,312 624,264 600,264 600,240 576,240 576,216 552,216 552,168 528,168 528,144 504,144 504,72 528,72 528,48 600,48 600,0 504,0 504,48 480,48 480,72 384,72 384,96 288,96 288,72 264,72 264,96 144,96 144,144 120,144 120,120 48,120 48,72 24,72 24,96 48,96 48,144 24,144 24,168 48,168 48,144 72,144 72,168 96,168 96,216 72,216 72,240 24,240 24,216 48,216 48,192 120,192 120,216 168,216 168,192 216,192 216,168 264,168 264,192 288,192 288,240 336,240 336,288 288,288 288,312 264,312 264,336 240,336 240,360 216,360 216,336 192,336 192,360 168,360 168,408 192,408 192,432 216,432 216,408 240,408 240,432 264,432 264,552 288,552 288,624 264,624 264,600 216,600 216,648 168,648 168,672 192,672 192,696 216,696 216,720 240,720 240,744 288,744 288,768 312,768 312,744 336,744 336,840 312,840 312,864"/>
-</object>
 <object name="Road2" x="0" y="0">
 <properties>
 <property name="terrain" value="type=ROAD"/>
@@ -316,6 +322,90 @@ H4sIAAAAAAAAA+3BMQEAAADCoPVP7WkJoAAAAAAAAAAAAAAAAAAA4AaAgnBVgDoAAA==
 <property name="terrain" value="type=THICK-GRASS"/>
 </properties>
 <polyline points="384,864 408,864 408,840 384,840 384,864"/>
+</object>
+<object name="Hill2" x="0" y="0">
+<properties>
+<property name="terrain" value="type=HILLS"/>
+</properties>
+<polyline points="408,600 432,600 432,576 480,576 480,600 504,600 504,576 528,576 528,552 576,552 576,528 624,528 624,504 576,504 576,480 504,480 504,504 456,504 456,480 432,480 432,504 384,504 384,528 336,528 336,552 408,552 408,600"/>
+</object>
+<object name="Grass9" x="0" y="0">
+<properties>
+<property name="terrain" value="type=THICK-GRASS"/>
+</properties>
+<polyline points="408,168 552,168 552,192 528,192 528,168 504,168 504,192 408,192 408,168"/>
+</object>
+<object name="GrassBits" x="0" y="0">
+<properties>
+<property name="terrain" value="type=THICK-GRASS"/>
+</properties>
+<polyline points="240,600 312,600 312,624 336,624 336,576 360,576 360,600 312,600 264,600 264,624 240,624 240,600"/>
+</object>
+<object name="Field1" x="0" y="0">
+<properties>
+<property name="terrain" value="type=GRASS"/>
+</properties>
+<polyline points="168,648 168,672 192,672 192,696 216,696 216,720 240,720 240,744 288,744 288,768 312,768 312,744 312,696 288,696 288,624 240,624 240,600 216,600 216,648 168,648"/>
+</object>
+<object name="Road1" x="0" y="0">
+<properties>
+<property name="terrain" value="type=ROAD"/>
+</properties>
+<polyline points="360,864 312,864 312,840 336,840 336,744 312,744 312,696 288,696 288,552 264,552 264,408 288,408 288,384 312,384 312,360 336,360 336,168 312,168 312,144 288,144 288,96 312,96 312,120 408,120 408,96 456,96 456,72 480,72 480,48 504,48 504,24 576,24 576,48 528,48 528,72 504,72 504,96 504,168 528,168 528,192 552,192 552,216 576,216 576,240 600,240 600,264 624,264 624,288 600,288 600,264 576,264 576,240 552,240 552,216 504,216 504,168 504,96 480,96 480,120 456,120 456,144 360,144 360,384 336,384 336,408 312,408 312,432 288,432 288,528 312,528 312,672 336,672 336,720 360,720 360,864"/>
+</object>
+<object name="Road3" x="0" y="0">
+<properties>
+<property name="terrain" value="type=ROAD"/>
+</properties>
+<polyline points="552,24 552,0 576,0 576,24 552,24"/>
+</object>
+<object name="Field2" x="0" y="0">
+<properties>
+<property name="terrain" value="type=GRASS"/>
+</properties>
+<polyline points="360,864 360,720 336,720 336,672 312,672 312,624 336,624 336,600 360,600 360,576 408,576 408,600 432,600 432,576 480,576 480,672 456,672 456,720 480,720 480,744 504,744 504,768 552,768 552,816 528,816 528,840 552,840 552,864 504,864 504,840 480,840 480,816 456,816 456,792 432,792 432,768 408,768 408,792 384,792 384,864 360,864"/>
+</object>
+<object name="Field3" x="0" y="0">
+<properties>
+<property name="terrain" value="type=GRASS"/>
+</properties>
+<polyline points="312,480 288,480 288,432 312,432 312,408 264,408 264,432 240,432 240,408 216,408 216,432 192,432 192,408 168,408 168,360 192,360 192,336 216,336 216,360 240,360 240,336 264,336 264,312 288,312 288,288 312,288 312,240 288,240 288,192 264,192 264,168 216,168 216,192 168,192 168,216 120,216 120,192 48,192 48,216 24,216 24,240 72,240 72,216 96,216 96,168 72,168 72,144 24,144 24,168 48,168 48,72 24,72 24,96 48,96 48,120 120,120 120,144 144,144 144,96 264,96 264,72 288,72 288,144 312,144 312,168 336,168 336,240 312,240 312,288 336,288 336,360 312,360 312,384 288,384 288,408 336,408 336,384 360,384 360,216 384,216 384,264 360,264 360,288 384,288 384,312 408,312 408,360 432,360 432,336 480,336 480,384 456,384 456,432 432,432 432,456 408,456 408,480 336,480 336,456 312,456 312,480"/>
+</object>
+<object name="Field5" x="0" y="0">
+<properties>
+<property name="terrain" value="type=GRASS"/>
+</properties>
+<polyline points="312,96 384,96 384,72 456,72 456,96 408,96 408,144 456,144 456,120 480,120 480,96 504,96 504,144 528,144 528,240 552,240 552,264 576,264 576,288 624,288 624,312 600,312 600,288 576,288 576,240 552,240 552,216 528,216 528,168 408,168 408,120 312,120 312,96"/>
+</object>
+<object name="Field6" x="0" y="0">
+<properties>
+<property name="terrain" value="type=GRASS"/>
+</properties>
+<polyline points="504,0 600,0 600,48 576,48 576,0 552,0 552,24 504,24 504,0"/>
+</object>
+<object name="Forest13" x="0" y="0">
+<properties>
+<property name="terrain" value="type=FOREST"/>
+</properties>
+<polyline points="312,240 336,240 336,264 312,264 312,240"/>
+</object>
+<object name="Water1" x="0" y="0">
+<properties>
+<property name="terrain" value="type=LOW-SKY"/>
+</properties>
+<polyline points="576,312 624,312 624,384 600,384 600,408 576,408 576,432 600,432 600,480 624,480 624,504 576,504 576,480 552,480 552,456 480,456 480,432 504,432 504,408 528,408 528,384 552,384 552,336 576,336 576,312"/>
+</object>
+<object name="Water2" x="0" y="0">
+<properties>
+<property name="terrain" value="type=LOW-SKY"/>
+</properties>
+<polyline points="240,216 288,216 288,240 312,240 312,288 288,288 288,312 264,312 264,336 240,336 240,360 216,360 216,336 192,336 192,312 72,312 72,288 48,288 48,240 24,240 24,144 48,144 48,120 72,120 72,96 24,96 24,72 0,72 0,864 168,864 168,840 192,840 192,816 264,816 264,792 288,792 288,744 240,744 240,720 216,720 216,696 192,696 192,672 168,672 168,624 144,624 144,504 120,504 120,480 96,480 96,456 72,456 72,432 48,432 48,384 24,384 24,312 120,312 120,288 168,288 168,264 192,264 192,240 240,240 240,216"/>
+</object>
+<object name="HighMountains" x="0" y="0">
+<properties>
+<property name="terrain" value="type=HIGH-SKY"/>
+</properties>
+<polyline points="600,96 624,96 624,336 552,336 552,312 528,312 528,288 480,288 480,264 432,264 432,312 384,312 384,288 312,288 312,264 336,264 336,288 360,288 360,264 384,264 384,240 432,240 432,216 480,216 480,240 528,240 528,264 552,264 552,288 576,288 576,528 576,552 528,552 528,576 504,576 504,600 480,600 480,648 552,648 552,624 576,624 576,648 600,648 600,672 624,672 624,528 576,528 576,336 624,336 624,216 600,216 600,96"/>
 </object>
 </objectgroup>
 </map>
