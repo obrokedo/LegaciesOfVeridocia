@@ -1,5 +1,8 @@
-HERO Sharna
-HERO Huun
-HERO Craig
-HERO Olivia
-LEVEL 2
+<partyconfig>
+<gold amt=100/>
+<hero name=Noah level=2 exp=0 promoted=false promotionPath=-1 item=0,2 eqp=true,false/>
+<hero name=Sharna level=2 exp=0 promoted=false promotionPath=-1 item=1 eqp=true/>
+<hero name=Huun level=2 exp=0 promoted=false promotionPath=-1 item=3 eqp=true/>
+<hero name=Craig level=7 exp=0 promoted=true promotionPath=0 item=89,2 eqp=true,false/>
+<hero name=Olivia level=7 exp=0 promoted=true promotionPath=0 item=58,2 eqp=true,false/>
+</partyconfig>
