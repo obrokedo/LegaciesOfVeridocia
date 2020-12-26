@@ -8,12 +8,9 @@ import lov.game.sprite.progression.LOVProgression;
 import tactical.engine.TacticalGame;
 import tactical.engine.config.LevelProgressionConfiguration;
 import tactical.game.battle.spell.KnownSpell;
-import tactical.game.dev.DevHeroAI;
 import tactical.game.item.EquippableItem;
-import tactical.game.item.Item;
 import tactical.game.sprite.CombatSprite;
 import tactical.game.sprite.HeroProgression;
-import tactical.game.sprite.Sprite;
 
 public class LOVCombatSprite extends CombatSprite
 {
@@ -88,66 +85,8 @@ public class LOVCombatSprite extends CombatSprite
 			int level, int exp, boolean promoted, int id)
 	{
 		super(isLeader, name, imageName, heroProgression, level, exp, promoted, id);
-
-		this.isPromoted = promoted;
-		// If a CombatSprite is created as promoted then it must not be on a special promotion path
-		if (isPromoted)
-			this.promotionPath = 0;
-		this.level = level;
-		this.exp = 0;
-
-
-		dodges = true;
-
-		this.heroProgression = heroProgression;
-
-		// Handle attribute strengths for heroes
-		if (heroProgression != null)
-		{
-			// Stats in the progression are set up as [0] = stat progression, [1] = stat start, [2] = stat end
-			currentHP = maxHP = (int) this.getCurrentProgression().getHp()[1];
-			maxMP = (int) this.getCurrentProgression().getMp()[1];
-			maxSpeed = (int) this.getCurrentProgression().getSpeed()[1];
-			maxMove = this.getCurrentProgression().getMove();
-			movementType = this.getCurrentProgression().getMovementType();
-			maxAttack = (int) this.getCurrentProgression().getAttack()[1];
-			maxDefense = (int) this.getCurrentProgression().getDefense()[1];
-
-			setNonRandomStats();			
-		}
-
-		this.isHero = true;
-		this.isLeader = isLeader;
-		this.name = name;
-		this.imageName = imageName;
-		this.items = new ArrayList<Item>();
-		this.equipped = new ArrayList<Boolean>();
-
-		if (heroProgression != null)
-		{
-			this.usuableWeapons = this.getCurrentProgression().getUsuableWeapons();
-			this.usuableArmor = this.getCurrentProgression().getUsuableArmor();
-		}
-
-		this.battleEffects = new ArrayList<>();
-		
-		this.spriteType = Sprite.TYPE_COMBAT;
-		this.id = id;
-		this.attackEffectId = null;
-
-		if (TacticalGame.TEST_MODE_ENABLED)
-		{
-			this.ai = new DevHeroAI(1);
-			if (this.isHero && this.isLeader && !TacticalGame.BATTLE_MODE_OPTIMIZE)
-			{
-				this.setMaxHP(99);
-				this.setMaxAttack(99);
-				this.setMaxDefense(99);
-				this.setMaxSpeed(99);
-			}
-		}
 	}
-	
+
 	private LOVProgression getTypedCurrentProgression() {
 		return (LOVProgression) this.getCurrentProgression();
 	}
@@ -180,7 +119,6 @@ public class LOVCombatSprite extends CombatSprite
 	{	
 		super.initializeStats();
 		
-
 		this.currentFireAffin = maxFireAffin;
 		this.currentElecAffin = maxElecAffin;
 		this.currentColdAffin = maxColdAffin;
@@ -230,9 +168,7 @@ public class LOVCombatSprite extends CombatSprite
 	@Override
 	public String levelUpCustomStatistics()
 	{
-		LevelProgressionConfiguration jlp = TacticalGame.ENGINE_CONFIGURATIOR.getLevelProgression();
-		String text = jlp.levelUpHero(this);
-
+		LevelProgressionConfiguration jlp = TacticalGame.ENGINE_CONFIGURATIOR.getLevelProgression();	
 		Log.debug("Leveling up heroes non-displayed stats: " + this.getName());
 
 		int increase = jlp.getLevelUpBattleStat(this.getTypedCurrentProgression().getCounterStrength(), this, level, isPromoted, this.maxCounter);
@@ -258,6 +194,8 @@ public class LOVCombatSprite extends CombatSprite
 		increase = jlp.getLevelUpBodyMindStat(this.getTypedCurrentProgression().getMindProgression(), this, level, isPromoted);
 		maxMind += increase;
 		currentMind += increase;
+		
+		String text = jlp.levelUpHero(this);
 		return text;
 	}
 	
