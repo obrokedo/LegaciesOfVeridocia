@@ -24,7 +24,7 @@ public class LoVGame extends TacticalGame   {
 	}
 	
 	public LoVGame(boolean devMode, String[] gameArgs) {
-		super("Legacies of Veridocia", "DEV 1.380 Mar 24, 2019", devMode, gameArgs);		
+		super("Legacies of Veridocia", "DEV 1.390 Dec 2, 2021", devMode, gameArgs);		
 	}
 
 	@Override
