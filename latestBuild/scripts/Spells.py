@@ -30,6 +30,7 @@ from Spellz.Cyclone import Cyclone
 from Spellz.Burst import Burst
 from Spellz.Flare import Flare
 from Spellz.Detox import Detox
+from Spellz.Egress import Egress
 
 class Spells(SpellFactory):    
     # This defines the id for each spell in the game.
@@ -93,6 +94,8 @@ class Spells(SpellFactory):
             spell = Burst();
         elif "FLARE" == id:
             spell = Flare();
+        elif "EGRESS" == id:
+            spell = Egress();
         else:
             spell = None
             print "BAD SPELL " + id
