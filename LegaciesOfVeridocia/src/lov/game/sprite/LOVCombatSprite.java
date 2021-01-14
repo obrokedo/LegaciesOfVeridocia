@@ -462,6 +462,21 @@ public class LOVCombatSprite extends CombatSprite
 	public void setBaseCrit(int currentCrit) {
 		this.baseCrit = currentCrit;
 	}
+	
+	// TODO THIS IS SO INCREDIBLY UGLY BECAUSE THESE ARE JUST INDEXES INTO A SCRIPT DEFINED ARRAY. NEED TO FIX THIS
+	public boolean isCaster() {
+		if (isHero() && getCurrentProgression().getUsuableWeapons().length > 0) {
+			for (int weapon : getCurrentProgression().getUsuableWeapons()) {
+				if (weapon == 3 || weapon == 8) {
+					return true;
+				}
+			}
+		}
+		
+		if (getEquippedWeapon() != null && (getEquippedWeapon().getItemStyle() == 3 || getEquippedWeapon().getItemStyle() == 8))
+			return true;
+		return false;
+	}
 
 	@Override
 	public String toString() {
