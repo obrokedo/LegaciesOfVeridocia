@@ -7,9 +7,9 @@
 	<completequest questid="FoundGargoyalEgg"/>
 	<showtext textid="0"/>
 </trigger>
-<trigger id="2" description="OrangeZone" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="2" description="OrangeZone" require="" exclude="" nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<changeaimove id="2" x="312" y="528" priority="1"/>
-	<changeaimove id="4" x="288" y="504" priority="1"/>
+	<changeaimove id="3" x="288" y="504" priority="1"/>
 </trigger>
 <trigger id="3" description="GreenZone" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<changeaimove id="7" x="72" y="312" priority="1"/>
@@ -23,7 +23,7 @@
 	<changeaimove id="7" x="312" y="336" priority="1"/>
 	<changeaimove id="8" x="360" y="336" priority="1"/>
 </trigger>
-<trigger id="5" description="BlueZone" require="" exclude="" nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="5" description="BlueZone" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<changeaimove id="9" x="240" y="168" priority="1"/>
 	<changeaimove id="10" x="288" y="96" priority="1"/>
 	<changeaimove id="11" x="264" y="120" priority="1"/>
