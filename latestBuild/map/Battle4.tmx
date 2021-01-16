@@ -97,7 +97,7 @@ H4sIAAAAAAAACu3OsQ0AIAgAQfbfQnfBuWQECxMo7pLvPwIAAAB4tardPfFRVqd7AgAAAAAAAAAAAIBx
 </object>
 <object id="9" name="EriumCalvary" x="0" y="-24">
 <properties>
-<property name="enemy" value="ai=fighter vision=2 aiapproach=wait enemyid=Erium Cavalry unit=2"/>
+<property name="enemy" value="ai=fighter vision=0 aiapproach=wait enemyid=Erium Cavalry unit=2 music="/>
 </properties>
 <polyline points="336,576 360,576 360,600 336,600 336,576"/>
 </object>
@@ -109,7 +109,7 @@ H4sIAAAAAAAACu3OsQ0AIAgAQfbfQnfBuWQECxMo7pLvPwIAAAB4tardPfFRVqd7AgAAAAAAAAAAAIBx
 </object>
 <object id="11" name="BountyHunter1" x="0" y="0">
 <properties>
-<property name="enemy" value="ai=fighter vision=2 aiapproach=wait enemyid=Bounty Hunter unit=3"/>
+<property name="enemy" value="ai=fighter vision=0 aiapproach=wait enemyid=Bounty Hunter unit=3 music="/>
 </properties>
 <polyline points="240,552 264,552 264,576 240,576 240,552"/>
 </object>
@@ -139,7 +139,7 @@ H4sIAAAAAAAACu3OsQ0AIAgAQfbfQnfBuWQECxMo7pLvPwIAAAB4tardPfFRVqd7AgAAAAAAAAAAAIBx
 </object>
 <object id="16" name="EriumCalvary4" x="0" y="0">
 <properties>
-<property name="enemy" value="ai=fighter aiapproach=fast enemyid=Erium Cavalry unit=7"/>
+<property name="enemy" value="ai=fighter vision=0 aiapproach=fast enemyid=Erium Cavalry unit=7 music="/>
 </properties>
 <polyline points="240,336 264,336 264,360 240,360 240,336"/>
 </object>
