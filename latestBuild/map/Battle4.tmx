@@ -131,25 +131,25 @@ H4sIAAAAAAAACu3OsQ0AIAgAQfbfQnfBuWQECxMo7pLvPwIAAAB4tardPfFRVqd7AgAAAAAAAAAAAIBx
 </object>
 <object id="13" name="ReyvalMedic1" x="0" y="0">
 <properties>
-<property name="enemy" value="ai=cleric aiapproach=wait enemyid=Reyval Medic unit=5"/>
+<property name="enemy" value="ai=cleric vision=4 aiapproach=wait enemyid=Reyval Medic unit=5 music="/>
 </properties>
 <polyline points="360,456 384,456 384,480 360,480 360,456"/>
 </object>
 <object id="14" name="EriumCavalry3" x="0" y="0">
 <properties>
-<property name="enemy" value="ai=fighter vision=0 aiapproach=wait enemyid=Erium Cavalry unit=6"/>
+<property name="enemy" value="ai=fighter vision=4 aiapproach=wait enemyid=Erium Cavalry unit=6 music="/>
 </properties>
 <polyline points="360,408 384,408 384,432 360,432 360,408"/>
 </object>
 <object id="15" name="Sellsword3" x="0" y="0">
 <properties>
-<property name="enemy" value="ai=fighter vision=0 aiapproach=wait enemyid=Sellsword unit=8"/>
+<property name="enemy" value="ai=fighter vision=4 aiapproach=wait enemyid=Sellsword unit=8 music="/>
 </properties>
 <polyline points="408,336 432,336 432,360 408,360 408,360 408,336"/>
 </object>
 <object id="16" name="EriumCavalry4" x="0" y="0">
 <properties>
-<property name="enemy" value="ai=fighter vision=0 aiapproach=wait enemyid=Erium Cavalry unit=7"/>
+<property name="enemy" value="ai=fighter vision=4 aiapproach=wait enemyid=Erium Cavalry unit=7 music="/>
 </properties>
 <polyline points="240,336 264,336 264,360 240,360 240,336"/>
 </object>

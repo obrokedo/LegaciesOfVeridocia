@@ -13,22 +13,24 @@
 	<changeaimove id="4" x="11" y="19" priority="1"/>
 	<changeaimove id="5" x="14" y="14" priority="1"/>
 	<changeaitargetenemy id="6" targetid="5" priority="1"/>
-	<changeaitargetenemy id="7" targetid="5" priority="1"/>
-	<changeaitargetenemy id="8" targetid="5" priority="1"/>
 </trigger>
-<trigger id="3" description="GreenZone" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="3" description="GreenZone" require="" exclude="" nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<aivision id="2" vision="0"/>
 	<aivision id="3" vision="0"/>
 	<aivision id="4" vision="0"/>
+	<aivision id="7" vision="0"/>
+	<aivision id="8" vision="0"/>
 	<changeaiapproach id="2" aitype="1" priority="2"/>
 	<changeaiapproach id="3" aitype="1" priority="2"/>
 	<changeaiapproach id="4" aitype="1" priority="2"/>
 	<changeaiapproach id="5" aitype="1" priority="2"/>
+	<changeaiapproach id="7" aitype="1" priority="2"/>
+	<changeaiapproach id="8" aitype="1" priority="2"/>
 </trigger>
 <trigger id="4" description="YellowZone" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
-	<changeaiapproach id="5" aitype="1" priority="2"/>
+	<changeaiapproach id="5" aitype="2" priority="2"/>
 </trigger>
-<trigger id="5" description="BlueZone" require="" exclude="" nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="5" description="BlueZone" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<changeaimove id="9" x="240" y="168" priority="1"/>
 	<changeaimove id="10" x="288" y="96" priority="1"/>
 	<changeaimove id="11" x="264" y="120" priority="1"/>
