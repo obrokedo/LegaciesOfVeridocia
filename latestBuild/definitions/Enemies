@@ -14,7 +14,7 @@
 <enemy id="4" name="Erium Captain" hp="15" mp="0" attack="13" defense="6" speed="7" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="15" mindStrength="10" counterStrength="9" evadeStrength="6" doubleStrength="10" critStrength="10" level="2" move="6" movementtype="NORMAL" animations="guardcaptain" gold="16" palette="">
 	<item itemid="Erium Blade" equipped="true"/>
 </enemy>
-<enemy id="5" name="Sellsword" hp="15" mp="0" attack="16" defense="9" speed="6" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="15" mindStrength="5" counterStrength="7" evadeStrength="8" doubleStrength="15" critStrength="5" level="4" move="5" movementtype="NORMAL" animations="ReyvalTrapper" gold="36" palette="">
+<enemy id="5" name="Sellsword" hp="11" mp="0" attack="15" defense="9" speed="6" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="15" mindStrength="5" counterStrength="7" evadeStrength="8" doubleStrength="15" critStrength="5" level="4" move="5" movementtype="NORMAL" animations="ReyvalTrapper" gold="36" palette="">
 	<item itemid="Iron Hammer" equipped="true"/>
 </enemy>
 <enemy id="6" name="Bounty Hunter" hp="14" mp="0" attack="16" defense="7" speed="10" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="10" mindStrength="10" counterStrength="9" evadeStrength="5" doubleStrength="5" critStrength="15" level="4" move="5" movementtype="FAST" animations="ReyvalScout" gold="38" palette="">
