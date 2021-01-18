@@ -93,7 +93,7 @@
 	<addactor x="288" y="336" name="Noah" anim="Noah" startanim="UnDown" visible="true" init="false" associatedhero=""/>
 	<addactor x="336" y="384" name="Craig" anim="Craig" startanim="UnLeft" visible="true" init="false" associatedhero=""/>
 	<addactor x="336" y="360" name="Olivia" anim="Olivia" startanim="UnLeft" visible="true" init="false" associatedhero=""/>
-	<camerafollow name="Noah"/>
+	<cameramove x="288" y="360" time="0"/>
 	<fadein time="2000" halting="true" init="true"/>
 	<speech text="Okay, and what about the man she was speaking with?<hardstop>" heroportrait="Noah" enemyportrait="" animportrait="Noah"/>
 	<speech text="We don't have much to go on.<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait="Olivia"/>
@@ -110,13 +110,20 @@
 	<move name="Craig" x="504" y="168" speed="20" movehor="false" movediag="true"/>
 	<move name="Sharna" x="408" y="240" speed="20" movehor="false" movediag="true"/>
 	<move name="Olivia" x="504" y="280" speed="20" movehor="false" movediag="true"/>
+	<camerafollow name="Noah"/>
 	<addactor x="456" y="408" name="Eddie" anim="Eddie" startanim="UnUp" visible="true" init="false" associatedhero=""/>
+	<wait time="500"/>
+	<facing name="Huun" dir="3"/>
+	<facing name="Sharna" dir="3"/>
+	<facing name="Noah" dir="2"/>
+	<facing name="Craig" dir="1"/>
+	<facing name="Olivia" dir="0"/>
 	<fadein time="2000" halting="true" init="false"/>
 	<speech text="It has been three days.  Do you think Eddie was caught?<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait="Sharna"/>
 	<speech text="Eddie is too slick to be caught by the Erium guards... no offense.<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait="Olivia"/>
-	<haltingmove name="Eddie" x="456" y="336" speed="0.5" movehor="false" movediag="false"/>
-	<haltingmove name="Eddie" x="456" y="288" speed="0.5" movehor="false" movediag="false"/>
-	<haltingmove name="Eddie" x="456" y="264" speed="0.5" movehor="false" movediag="false"/>
+	<haltingmove name="Eddie" x="456" y="336" speed="2" movehor="false" movediag="false"/>
+	<haltingmove name="Eddie" x="456" y="288" speed="2" movehor="false" movediag="false"/>
+	<haltingmove name="Eddie" x="456" y="264" speed="2" movehor="false" movediag="false"/>
 	<speech text="We need to leave... A small army is searching for us! I was barely able to sneak past them...<hardstop>" heroportrait="Eddie" enemyportrait="" animportrait="Eddie"/>
 	<speech text="How much time before they arrive?<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait="Olivia"/>
 	<speech text="I could hear them marching on my way here.  They'll be here any moment... Just grab your gear and run!  The border is our only hope!<hardstop>" heroportrait="Eddie" enemyportrait="" animportrait="Eddie"/>
