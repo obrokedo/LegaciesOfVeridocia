@@ -78,13 +78,14 @@
 	<speech text="This isn't just going to blow over, so how are we supposed to find out what Mistal is doing now? <linebreak> We can't even get close to the castle, let alone her. <hardstop>" heroportrait="Sharna" enemyportrait="" animportrait="Sharna"/>
 	<quiver name="EddotActor"/>
 	<speech text="You're right; you<pause> can't.<hardstop>" heroportrait="Eddie" enemyportrait="" animportrait="Eddie"/>
+	<stopse name="EddotActor"/>
 	<speech text="You mean...<hardstop>" heroportrait="Noah" enemyportrait="" animportrait="Noah"/>
 	<speech text="Yes, I'll go into the kingdom and see what I can find.<hardstop>" heroportrait="Eddie" enemyportrait="" animportrait="Eddie"/>
 	<speech text="I don't know if that's such a good idea.<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait="Olivia"/>
 	<speech text="I don't know if stopping him is such a good idea.  Watch yer head out there, Eddie.<hardstop>" heroportrait="Craig" enemyportrait="" animportrait="Craig"/>
+	<move name="EddotActor" x="456" y="360" speed="0.5" movehor="false" movediag="false"/>
+	<fadeout time="1000" halting="true"/>
 	<loadmap mapdata="eriumwoods" enter="Post Battle 3 Entrance"/>
-	<speech text="test<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
-	<loadcin mapdata="battle3" cinid="0"/>
 </cinematic>
 <condition id="0" description="Shuffle" triggerid="2,">
 	<enterloc location="Shuffle" immediate="false"/>
