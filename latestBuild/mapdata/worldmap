@@ -79,6 +79,24 @@
 	<addmultihero heroids="Liza,Tyson,"/>
 	<loadbattle mapdata="battle4" entrance="BattleStart" battbg="2"/>
 </cinematic>
+<cinematic id="3" description="PostBattle4Crook" camerax="0" cameray="0">
+	<addactor x="936" y="2952" name="Noah" anim="Noah" startanim="UnDown" visible="true" init="false" associatedhero=""/>
+	<camerafollow name="Noah"/>
+	<speech text="Squawk!<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
+	<addactor x="936" y="2976" name="Crook" anim="Man1" startanim="UnDown" visible="true" init="false" associatedhero=""/>
+	<addactor x="936" y="2952" name="Huun" anim="Huun" startanim="UnDown" visible="true" init="false" associatedhero=""/>
+	<haltingmove name="Huun" x="960" y="2952" speed="2.4" movehor="false" movediag="false"/>
+	<facing name="Huun" dir="1"/>
+	<addactor x="936" y="2952" name="Hugh" anim="hugh" startanim="UnDown" visible="true" init="false" associatedhero=""/>
+	<haltingmove name="Hugh" x="912" y="2952" speed="2.4" movehor="false" movediag="false"/>
+	<facing name="Hugh" dir="1"/>
+	<tremble name="Crook"/>
+	<stopse name="Crook"/>
+	<wait time="750"/>
+	<speech text="Oh!  Look at this little guy!  Can we keep him?<hardstop>" heroportrait="Huun" enemyportrait="" animportrait=""/>
+	<speech text="That’s a good idea.  We can’t just leave him here on his own.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
+	<speech text="We need to pick up the pace to avoid any reinforcements.  Let’s get to Reyval for supplies and information then leave as quick as we came.<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
+</cinematic>
 <condition id="0" description="ToErium" triggerid="1,">
 	<enterloc location="ToErium" immediate="false"/>
 </condition>
