@@ -43,18 +43,14 @@
 </cinematic>
 <cinematic id="1" description="PostBattleThree" camerax="96" cameray="96">
 	<addactor x="168" y="216" name="EddotActor" anim="Eddie" startanim="UnLeft" visible="true" init="false" associatedhero=""/>
-	<addactor x="168" y="240" name="FamilyTwo" anim="MistalCloakedHooded" startanim="UnUp" visible="true" init="false" associatedhero=""/>
-	<addactor x="144" y="216" name="FamilyOne" anim="MistalCloakedHooded" startanim="UnUp" visible="true" init="false" associatedhero=""/>
+	<addstatic x="148" y="222" spriteid="EddieWife" spriteim="EddieWife"/>
+	<addstatic x="144" y="212" spriteid="EddieChild" spriteim="EddieChild"/>
 	<addactor x="192" y="216" name="CraigActor" anim="Craig" startanim="UnLeft" visible="true" init="false" associatedhero=""/>
 	<addactor x="192" y="240" name="OliviaActor" anim="Olivia" startanim="UnLeft" visible="true" init="false" associatedhero=""/>
 	<addactor x="240" y="192" name="HuunActor" anim="Huun" startanim="UnLeft" visible="true" init="false" associatedhero=""/>
 	<addactor x="240" y="216" name="NoahActor" anim="Noah" startanim="UnLeft" visible="true" init="false" associatedhero=""/>
 	<addactor x="240" y="240" name="SharnaActor" anim="Sharna" startanim="UnLeft" visible="true" init="false" associatedhero=""/>
-	<flash name="FamilyOne" time="5000" speed="500"/>
-	<flash name="FamilyTwo" time="5000" speed="500"/>
-	<wait time="5000"/>
-	<visible name="FamilyOne" isvis="false"/>
-	<visible name="FamilyTwo" isvis="false"/>
+	<wait time="1000"/>
 	<speech text="No<pause>.<pause>.<pause>. No<pause>.<pause>.<pause>.<hardstop>" heroportrait="Eddie" enemyportrait="" animportrait="Eddie"/>
 	<speech text="Eddie,<softstop> I'm sorry,<pause> but they're g...<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait="Olivia"/>
 	<speech text="MISTAL!  WHEN I FIND YOU, I'LL CRUSH YOUR LITTLE NECK!<hardstop>" heroportrait="Eddie" enemyportrait="" animportrait="Eddie"/>
