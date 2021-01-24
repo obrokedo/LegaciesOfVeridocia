@@ -129,81 +129,81 @@
   </anim>
   <anim name="ProStand" loops="0">
     <cell index="0" delay="330">
-      <spr name="/Weapon" x="201" y="-29" z="0" angle="270.0"/>
+      <spr name="/Weapon" x="201" y="-29" z="0" angle="270.0" flipV="1"/>
     </cell>
     <cell index="1" delay="80">
-      <spr name="/Weapon" x="201" y="-29" z="0" angle="270.0"/>
+      <spr name="/Weapon" x="201" y="-29" z="0" angle="270.0" flipV="1"/>
     </cell>
     <cell index="2" delay="80">
-      <spr name="/Weapon" x="201" y="-28" z="0" angle="270.0"/>
+      <spr name="/Weapon" x="201" y="-28" z="0" angle="270.0" flipV="1"/>
     </cell>
     <cell index="3" delay="330">
-      <spr name="/Weapon" x="202" y="-28" z="0" angle="270.0"/>
+      <spr name="/Weapon" x="202" y="-28" z="0" angle="270.0" flipV="1"/>
     </cell>
     <cell index="4" delay="80">
-      <spr name="/Weapon" x="202" y="-28" z="0" angle="270.0"/>
+      <spr name="/Weapon" x="202" y="-28" z="0" angle="270.0" flipV="1"/>
     </cell>
     <cell index="5" delay="80">
-      <spr name="/Weapon" x="202" y="-29" z="0" angle="270.0"/>
+      <spr name="/Weapon" x="202" y="-29" z="0" angle="270.0" flipV="1"/>
     </cell>
     <cell index="6" delay="330">
-      <spr name="/Weapon" x="201" y="-29" z="0" angle="270.0"/>
+      <spr name="/Weapon" x="201" y="-29" z="0" angle="270.0" flipV="1"/>
     </cell>
   </anim>
   <anim name="ProWinddown" loops="0">
     <cell index="0" delay="30">
-      <spr name="/Weapon" x="172" y="-28" z="0" angle="252.0"/>
+      <spr name="/Weapon" x="172" y="-28" z="0" angle="252.0" flipV="1"/>
     </cell>
     <cell index="1" delay="30">
-      <spr name="/Weapon" x="180" y="-34" z="0" angle="262.0"/>
+      <spr name="/Weapon" x="180" y="-34" z="0" angle="262.0" flipV="1"/>
     </cell>
     <cell index="2" delay="30">
-      <spr name="/Weapon" x="196" y="-37" z="0" angle="278.0"/>
+      <spr name="/Weapon" x="196" y="-37" z="0" angle="278.0" flipV="1"/>
     </cell>
     <cell index="3" delay="110">
-      <spr name="/Weapon" x="202" y="-28" z="0" angle="270.0"/>
+      <spr name="/Weapon" x="202" y="-28" z="0" angle="270.0" flipV="1"/>
     </cell>
     <cell index="4" delay="330">
-      <spr name="/Weapon" x="202" y="-29" z="0" angle="270.0"/>
+      <spr name="/Weapon" x="202" y="-29" z="0" angle="270.0" flipV="1"/>
     </cell>
   </anim>
   <anim name="ProAttack" loops="0">
     <cell index="0" delay="30">
-      <spr name="/Weapon" x="183" y="-45" z="0" angle="360.0"/>
+      <spr name="/Weapon" x="183" y="-45" z="0" angle="360.0" flipV="1"/>
     </cell>
     <cell index="1" delay="30">
-      <spr name="/Weapon" x="180" y="-46" z="0" angle="360.0"/>
+      <spr name="/Weapon" x="180" y="-46" z="0" angle="360.0" flipV="1"/>
     </cell>
     <cell index="2" delay="100">
-      <spr name="/Weapon" x="178" y="-47" z="0" angle="360.0"/>
+      <spr name="/Weapon" x="178" y="-47" z="0" angle="360.0" flipV="1"/>
     </cell>
     <cell index="3" delay="50">
-      <spr name="/Weapon" x="137" y="-19" z="0" angle="209.0"/>
+      <spr name="/Weapon" x="137" y="-19" z="0" angle="209.0" flipV="1"/>
     </cell>
     <cell index="4" delay="30">
-      <spr name="/Weapon" x="137" y="-19" z="0" angle="209.0"/>
+      <spr name="/Weapon" x="137" y="-19" z="0" angle="209.0" flipV="1"/>
     </cell>
     <cell index="5" delay="30">
-      <spr name="/Weapon" x="137" y="-17" z="0" angle="205.0"/>
+      <spr name="/Weapon" x="137" y="-17" z="0" angle="205.0" flipV="1"/>
     </cell>
     <cell index="6" delay="60">
-      <spr name="/Weapon" x="137" y="-17" z="0" angle="205.0"/>
+      <spr name="/Weapon" x="137" y="-17" z="0" angle="205.0" flipV="1"/>
     </cell>
     <cell index="7" delay="50">
-      <spr name="/Weapon" x="137" y="-18" z="0" angle="205.0"/>
+      <spr name="/Weapon" x="137" y="-18" z="0" angle="205.0" flipV="1"/>
     </cell>
   </anim>
   <anim name="ProDodge" loops="0">
     <cell index="0" delay="30">
-      <spr name="/Weapon" x="200" y="-27" z="0" angle="295.0"/>
+      <spr name="/Weapon" x="200" y="-27" z="0" angle="295.0" flipV="1"/>
     </cell>
     <cell index="1" delay="50">
-      <spr name="/Weapon" x="197" y="-27" z="0" angle="295.0"/>
+      <spr name="/Weapon" x="197" y="-27" z="0" angle="295.0" flipV="1"/>
     </cell>
   </anim>
   <anim name="ProDodgeWinddown" loops="0">
     <cell index="0" delay="30">
-      <spr name="/Weapon" x="200" y="-27" z="0" angle="295.0"/>
+      <spr name="/Weapon" x="200" y="-27" z="0" angle="295.0" flipV="1"/>
     </cell>
   </anim>
   <anim name="ProPortIdle" loops="0">
