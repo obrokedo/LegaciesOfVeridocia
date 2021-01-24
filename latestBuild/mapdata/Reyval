@@ -1,0 +1,31 @@
+<area>
+<map file="Reyval.tmx"/>
+<trigger id="0" description="PostBattle4MapEvent" require="" exclude="" nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<showcin cinid="0" exittrigid="-1"/>
+</trigger>
+<cinematic id="0" description="Postbattle4" camerax="0" cameray="0">
+	<assactor name="Noah" hero="Noah" enemyid="0" npcid=""/>
+	<haltingmove name="Noah" x="576" y="792" speed="2.4" movehor="true" movediag="false"/>
+	<facing name="Noah" dir="0"/>
+	<cameramovetoactor actor="Noah" time="1000"/>
+	<addactor x="576" y="792" name="Sharna" anim="Sharna" startanim="UnUp" visible="true" init="false" associatedhero=""/>
+	<haltingmove name="Sharna" x="600" y="744" speed="2.4" movehor="true" movediag="false"/>
+	<facing name="Sharna" dir="1"/>
+	<addactor x="576" y="792" name="Hugh" anim="hugh" startanim="UnDown" visible="true" init="false" associatedhero=""/>
+	<haltingmove name="Hugh" x="552" y="744" speed="2.4" movehor="true" movediag="false"/>
+	<facing name="Hugh" dir="1"/>
+	<speech text="I have spent too many days away from the church.  I’ll have to stop there.<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
+	<speech text="Just don’t stay too long, we can’t risk being out in the open.  We can stay at an old friend’s house for the night but we shouldn’t stay more than a day.<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
+	<speech text="I’ll be happy to distance ourselves from the border.  Lead the way.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
+	<move name="Sharna" x="600" y="504" speed="1.0" movehor="false" movediag="false"/>
+	<wait time="250"/>
+	<move name="Hugh" x="600" y="552" speed="1.0" movehor="true" movediag="false"/>
+	<wait time="250"/>
+	<move name="Noah" x="600" y="528" speed="1.0" movehor="false" movediag="false"/>
+	<fadeout time="1000" halting="true"/>
+	<showcredits/>
+</cinematic>
+<condition id="0" description="TriggerPostBattle4Cinimatic" triggerid="0,">
+	<enterloc location="TriggerPosBattle4Cinimatic" immediate="false"/>
+</condition>
+</area>

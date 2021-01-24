@@ -17,4 +17,6 @@
 </quest>
 <quest id="8" description="FoundGargoyalEgg" extradescription="This is completed if the egg is searched in battle4">
 </quest>
+<quest id="9" description="Battle4" extradescription="">
+</quest>
 </quests>

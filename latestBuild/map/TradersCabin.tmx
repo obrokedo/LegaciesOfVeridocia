@@ -82,6 +82,12 @@ H4sIAAAAAAAACu2USxLDIAxDc6Xe/3Jdk1Ew2JYhQW+GRfPB8ivOdbX8jHUq8oKRF4y8YOQDIy8Yr5eq
 </properties>
 <polyline points="48,0 144,0 144,24 48,24 48,0"/>
 </object>
+<object name="ToWorldMapSouth" x="0" y="0">
+<properties>
+<property name="" value=""/>
+</properties>
+<polyline points="120,696 240,696 240,720 120,720 120,696"/>
+</object>
 </objectgroup>
 <objectgroup id="12" name="Meta">
 <object name="chest1" x="0" y="0">

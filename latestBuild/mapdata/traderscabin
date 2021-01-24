@@ -4,11 +4,14 @@
 	<completequest questid="Ch1Part5CinFinished"/>
 	<showcin cinid="0" exittrigid="-1"/>
 </trigger>
-<trigger id="1" description="ContAfterFixingPosition" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
-	<showcin cinid="1" exittrigid="1"/>
+<trigger id="1" description="ToWorldMap" require="" exclude="" nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<runtriggers triggers="2,3,"/>
 </trigger>
-<trigger id="2" description="ToWorldMap" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="2" description="PreBattle4Cinimatic" require="," exclude="Battle4," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<loadcin mapdata="worldmap" cinid="2"/>
+</trigger>
+<trigger id="3" description="PostBattle4ToWorldMap" require="Battle4," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<loadmap mapdata="worldmap" enter="FromTraderCabin" transdir=""/>
 </trigger>
 <text id="0" description="Huun">
 	<string require="," exclude="," trigger="-1" heroportrait="Huun" enemyportrait="" animportrait="" message="About that glass of water.<hardstop>"/>
@@ -29,6 +32,7 @@
 	<assactor name="Noah" hero="Noah" enemyid="0" npcid=""/>
 	<addactor x="312" y="312" name="Tyson" anim="Tyson" startanim="UnDown" visible="true" init="false" associatedhero=""/>
 	<addactor x="336" y="312" name="Hugh" anim="hugh" startanim="UnDown" visible="true" init="false" associatedhero=""/>
+	<cameramovetoactor actor="Noah" time="750"/>
 	<camerafollow name="Noah"/>
 	<haltingmove name="Noah" x="192" y="564" speed="2.4" movehor="false" movediag="false"/>
 	<facing name="Noah" dir="0"/>
@@ -95,17 +99,13 @@
 	<speech text="It is, and thankfully the terrain won't be too rough.  Let's just hope that word of your escape hasn't travelled as far as you have.<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
 	<loadmap mapdata="traderscabin" enter="AfterPart5"/>
 </cinematic>
-<cinematic id="1" description="FixPlayerPosition" camerax="0" cameray="0">
-	<assactor name="Noah" hero="Noah" enemyid="0" npcid=""/>
-	<cameramovetoactor actor="Noah" time="1000"/>
-	<camerafollow name="Noah"/>
-	<haltingmove name="Noah" x="312" y="444" speed="2.4" movehor="true" movediag="false"/>
-	<wait time="500"/>
-</cinematic>
 <condition id="0" description="ContinuePart5" triggerid="0,">
 	<enterloc location="ContinuePart5" immediate="false"/>
 </condition>
-<condition id="1" description="ToWorldMap" triggerid="2,">
+<condition id="1" description="ToWorldMap" triggerid="1,">
 	<enterloc location="ToWorldMap" immediate="false"/>
+</condition>
+<condition id="2" description="ToWorldMapSouth" triggerid="1,">
+	<enterloc location="ToWorldMapSouth" immediate="false"/>
 </condition>
 </area>

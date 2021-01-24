@@ -77,6 +77,48 @@ H4sIAAAAAAAACu3d0c7ltm4G0HNRnIfvUxfFYJBk5/dsy5b0UdJaAC8ymW1TFEWrSNH+9z//+c9/bwQA
 <property name="" value=""/>
 </properties>
 </object>
+<object name="PostBattle4" x="0" y="0">
+<properties>
+<property name="start" value="exit=PostBattle4"/>
+</properties>
+<polyline points="960,2952 936,2952 936,2976 960,2976 960,2952"/>
+</object>
+<object name="ToReyval" x="0" y="0">
+<properties>
+<property name="" value=""/>
+</properties>
+<polyline points="936,2880 960,2880 960,2904 936,2904 936,2880"/>
+</object>
+<object name="Chapter1Block" x="0" y="0">
+<properties>
+<property name="" value=""/>
+</properties>
+<polyline points="1272,2688 1296,2688 1296,2712 1272,2712 1272,2688"/>
+</object>
+<object name="Chapter1Block2" x="0" y="0">
+<properties>
+<property name="" value=""/>
+</properties>
+<polyline points="1248,3024 1272,3024 1272,3120 1248,3120 1248,3024"/>
+</object>
+<object name="ToTraderCabin" x="0" y="0">
+<properties>
+<property name="" value=""/>
+</properties>
+<polyline points="864,3744 888,3744 888,3768 864,3768 864,3744"/>
+</object>
+<object name="FromTraderCabin" x="0" y="0">
+<properties>
+<property name="start" value="exit=FromTraderCabin"/>
+</properties>
+<polyline points="864,3720 888,3720 888,3744 864,3744 864,3720"/>
+</object>
+<object name="FromReyval" x="0" y="0">
+<properties>
+<property name="start" value="exit=FromReyval"/>
+</properties>
+<polyline points="936,2904 960,2904 960,2928 936,2928 936,2904"/>
+</object>
 </objectgroup>
 <objectgroup id="50" name="Meta"/>
 <objectgroup id="51" name="Battle"/>

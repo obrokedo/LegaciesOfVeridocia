@@ -12,6 +12,18 @@
 <trigger id="3" description="CabinNotVisited" require="," exclude="Battle 3," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<showcin cinid="0" exittrigid="-1"/>
 </trigger>
+<trigger id="4" description="ToReyval" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<loadmap mapdata="Reyval" enter="EnterFromWorldMap" transdir=""/>
+</trigger>
+<trigger id="5" description="Chapter1Block" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<showcin cinid="4" exittrigid="-1"/>
+</trigger>
+<trigger id="6" description="Chapter1Block2" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<showcin cinid="5" exittrigid="-1"/>
+</trigger>
+<trigger id="7" description="ToTraderCabin" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<loadmap mapdata="traderscabin" enter="EnterFromWorldMap" transdir=""/>
+</trigger>
 <cinematic id="0" description="WarnPastCabin" camerax="0" cameray="0">
 	<speech text="Oi. Where d'ya think you're goin', genius?<pause><linebreak> The cabin was back that way!<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
 	<assactor name="Noah" hero="Noah" enemyid="0" npcid=""/>
@@ -95,7 +107,19 @@
 	<wait time="750"/>
 	<speech text="Oh!  Look at this little guy!  Can we keep him?<hardstop>" heroportrait="Huun" enemyportrait="" animportrait=""/>
 	<speech text="That’s a good idea.  We can’t just leave him here on his own.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
+	<speech text="Crook has joined the party.<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
 	<speech text="We need to pick up the pace to avoid any reinforcements.  Let’s get to Reyval for supplies and information then leave as quick as we came.<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
+	<loadmap mapdata="worldmap" enter="PostBattle4"/>
+</cinematic>
+<cinematic id="4" description="Chapter1Block" camerax="0" cameray="0">
+	<assactor name="Noah" hero="Noah" enemyid="0" npcid=""/>
+	<speech text="We need to pick up the pace to avoid any reinforcements.  Let’s get to Reyval for supplies and information then leave as quick as we came.<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
+	<haltingmove name="Noah" x="1272" y="2736" speed="2.4" movehor="false" movediag="false"/>
+</cinematic>
+<cinematic id="5" description="Chapter1Block2" camerax="0" cameray="0">
+	<assactor name="Noah" hero="Noah" enemyid="0" npcid=""/>
+	<speech text="We need to pick up the pace to avoid any reinforcements.  Let’s get to Reyval for supplies and information then leave as quick as we came.<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
+	<haltingmove name="Noah" x="1200" y="3024" speed="2.4" movehor="false" movediag="false"/>
 </cinematic>
 <condition id="0" description="ToErium" triggerid="1,">
 	<enterloc location="ToErium" immediate="false"/>
@@ -108,5 +132,17 @@
 </condition>
 <condition id="3" description="WarnTooFar" triggerid="3,">
 	<enterloc location="CabinNotVisited" immediate="false"/>
+</condition>
+<condition id="4" description="ToReyval" triggerid="4,">
+	<enterloc location="ToReyval" immediate="false"/>
+</condition>
+<condition id="5" description="Chapter1Block" triggerid="5,">
+	<enterloc location="Chapter1Block" immediate="false"/>
+</condition>
+<condition id="6" description="Chapter1Block2" triggerid="6,">
+	<enterloc location="Chapter1Block2" immediate="false"/>
+</condition>
+<condition id="7" description="ToTraderCabin" triggerid="7,">
+	<enterloc location="ToTraderCabin" immediate="false"/>
 </condition>
 </area>
