@@ -40,8 +40,8 @@
 	<loadmap mapdata="eriumjail" enter="JailBattleFail" transdir=""/>
 </trigger>
 <cinematic id="0" description="Craig Olivia Exit" camerax="0" cameray="0">
-	<assactor name="Craig" hero="Craig" enemyid="0" npcid="0"/>
-	<assactor name="Olivia" hero="Olivia" enemyid="0" npcid="0"/>
+	<assactor name="Craig" hero="Craig" enemyid="0" npcid="0" staticid=""/>
+	<assactor name="Olivia" hero="Olivia" enemyid="0" npcid="0" staticid=""/>
 	<cameramovetoactor actor="Craig" time="1000"/>
 	<wait time="1000"/>
 	<camerafollow name="Craig"/>
@@ -60,9 +60,9 @@
 	<removeactor name="Olivia"/>
 </cinematic>
 <cinematic id="1" description="Noah Exit" camerax="504" cameray="0">
-	<assactor name="Noah" hero="Noah" enemyid="0" npcid=""/>
-	<assactor name="Sharna" hero="Sharna" enemyid="0" npcid=""/>
-	<assactor name="Huun" hero="Huun" enemyid="0" npcid=""/>
+	<assactor name="Noah" hero="Noah" enemyid="0" npcid="" staticid=""/>
+	<assactor name="Sharna" hero="Sharna" enemyid="0" npcid="" staticid=""/>
+	<assactor name="Huun" hero="Huun" enemyid="0" npcid="" staticid=""/>
 	<cameramovetoactor actor="Noah" time="1000"/>
 	<wait time="10"/>
 	<camerafollow name="Noah"/>

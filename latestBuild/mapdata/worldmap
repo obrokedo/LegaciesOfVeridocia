@@ -26,7 +26,7 @@
 </trigger>
 <cinematic id="0" description="WarnPastCabin" camerax="0" cameray="0">
 	<speech text="Oi. Where d'ya think you're goin', genius?<pause><linebreak> The cabin was back that way!<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
-	<assactor name="Noah" hero="Noah" enemyid="0" npcid=""/>
+	<assactor name="Noah" hero="Noah" enemyid="0" npcid="" staticid=""/>
 	<cameramovetoactor actor="Noah" time="400"/>
 	<camerafollow name="Noah"/>
 	<haltingmovepath name="Noah" x="1032" y="3996" speed="2.4"/>
@@ -35,7 +35,7 @@
 </cinematic>
 <cinematic id="1" description="NoGoingBack" camerax="0" cameray="0">
 	<speech text="Oi. Are you mad!?<pause><linebreak> We can't go back!<pause> They'll catch you for sure!!<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
-	<assactor name="Noah" hero="Noah" enemyid="0" npcid=""/>
+	<assactor name="Noah" hero="Noah" enemyid="0" npcid="" staticid=""/>
 	<cameramovetoactor actor="Noah" time="400"/>
 	<camerafollow name="Noah"/>
 	<haltingmove name="Noah" x="1200" y="4140" speed="2.4" movehor="false" movediag="false"/>
@@ -112,12 +112,12 @@
 	<loadmap mapdata="worldmap" enter="PostBattle4"/>
 </cinematic>
 <cinematic id="4" description="Chapter1Block" camerax="0" cameray="0">
-	<assactor name="Noah" hero="Noah" enemyid="0" npcid=""/>
+	<assactor name="Noah" hero="Noah" enemyid="0" npcid="" staticid=""/>
 	<speech text="We need to pick up the pace to avoid any reinforcements.  Let’s get to Reyval for supplies and information then leave as quick as we came.<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
 	<haltingmove name="Noah" x="1272" y="2736" speed="2.4" movehor="false" movediag="false"/>
 </cinematic>
 <cinematic id="5" description="Chapter1Block2" camerax="0" cameray="0">
-	<assactor name="Noah" hero="Noah" enemyid="0" npcid=""/>
+	<assactor name="Noah" hero="Noah" enemyid="0" npcid="" staticid=""/>
 	<speech text="We need to pick up the pace to avoid any reinforcements.  Let’s get to Reyval for supplies and information then leave as quick as we came.<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
 	<haltingmove name="Noah" x="1200" y="3024" speed="2.4" movehor="false" movediag="false"/>
 </cinematic>

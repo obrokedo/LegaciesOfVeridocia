@@ -13,7 +13,7 @@
 <trigger id="3" description="Restart Battle2" require="Battle1," exclude="Battle2," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<startbattle battletriggers="battle2" entrance="battlestart" battbg="0"/>
 </trigger>
-<trigger id="4" description="TESTTRIG" require="" exclude="" nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="4" description="TESTTRIG" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<showcin cinid="1" exittrigid="-1"/>
 </trigger>
 <trigger id="5" description="TESTTRIGEXIT" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
@@ -248,7 +248,7 @@
 	<loadbattle mapdata="battle2" entrance="battlestart" battbg="0"/>
 </cinematic>
 <cinematic id="1" description="TESTIT" camerax="0" cameray="0">
-	<assactor name="NOah" hero="Noah" enemyid="0" npcid=""/>
+	<assactor name="NOah" hero="Noah" enemyid="0" npcid="" staticid=""/>
 	<cameramovetoactor actor="NOah" time="2000"/>
 	<camerafollow name="NOah"/>
 	<haltingmove name="NOah" x="216" y="312" speed="2.4" movehor="false" movediag="false"/>

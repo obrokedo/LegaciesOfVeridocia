@@ -2,6 +2,7 @@
 <map file="Erium.tmx"/>
 <trigger id="0" description="MapStart" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<playmusic music="erium" volume="75"/>
+	<setegress mapname="erium" locx="6" locy="10"/>
 </trigger>
 <trigger id="1" description="OpenItemShop" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<showshop buypercent="1.2" sellpercent="0.8" itemssold="Medical Herb," portrait="Shopkeeper1"/>
@@ -234,8 +235,8 @@
 	<loadmap mapdata="erium" enter="NoahHouse"/>
 </cinematic>
 <cinematic id="1" description="Bartender" camerax="1752" cameray="384">
-	<assactor name="Noah" hero="Noah" enemyid="0" npcid="0"/>
-	<assactor name="Bartender" hero="" enemyid="0" npcid="Bartender1"/>
+	<assactor name="Noah" hero="Noah" enemyid="0" npcid="0" staticid=""/>
+	<assactor name="Bartender" hero="" enemyid="0" npcid="Bartender1" staticid=""/>
 	<camerafollow name="Noah"/>
 	<haltingmove name="Bartender" x="1800" y="372" speed="2" movehor="false" movediag="false"/>
 	<tremble name="Bartender"/>
@@ -246,7 +247,7 @@
 	<facing name="Noah" dir="1"/>
 </cinematic>
 <cinematic id="2" description="Can'tLeave" camerax="384" cameray="1056">
-	<assactor name="Noah" hero="Noah" enemyid="0" npcid=""/>
+	<assactor name="Noah" hero="Noah" enemyid="0" npcid="" staticid=""/>
 	<camerafollow name="Noah"/>
 	<speech text="As nice as the view is,<pause> I must report for duty.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<haltingmovepath name="Noah" x="384" y="972" speed="2.4"/>

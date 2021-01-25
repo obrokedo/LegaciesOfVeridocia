@@ -1,6 +1,0 @@
-<partyconfig>
-<gold amt=100/>
-<hero name=Noah level=1 exp=0 promoted=false promotionPath=-1 item=0,2 eqp=true,false/>
-<hero name=Sharna level=1 exp=0 promoted=false promotionPath=-1 item=1 eqp=true/>
-<hero name=Huun level=1 exp=0 promoted=false promotionPath=-1 item=3 eqp=true/>
-</partyconfig>

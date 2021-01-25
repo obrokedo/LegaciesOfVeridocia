@@ -1,10 +1,10 @@
 <area>
 <map file="Reyval.tmx"/>
-<trigger id="0" description="PostBattle4MapEvent" require="" exclude="" nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="0" description="PostBattle4MapEvent" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<showcin cinid="0" exittrigid="-1"/>
 </trigger>
 <cinematic id="0" description="Postbattle4" camerax="0" cameray="0">
-	<assactor name="Noah" hero="Noah" enemyid="0" npcid=""/>
+	<assactor name="Noah" hero="Noah" enemyid="0" npcid="" staticid=""/>
 	<haltingmove name="Noah" x="576" y="792" speed="2.4" movehor="true" movediag="false"/>
 	<facing name="Noah" dir="0"/>
 	<cameramovetoactor actor="Noah" time="1000"/>

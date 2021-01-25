@@ -306,8 +306,8 @@
 	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="W...<pause> what? Awwww.<pause>.<pause>.<hardstop>"/>
 </text>
 <cinematic id="0" description="Mage2RunsOff" camerax="0" cameray="0">
-	<assactor name="Noah" hero="Noah" enemyid="0" npcid=""/>
-	<assactor name="Mage2" hero="" enemyid="0" npcid="Mage2"/>
+	<assactor name="Noah" hero="Noah" enemyid="0" npcid="" staticid=""/>
+	<assactor name="Mage2" hero="" enemyid="0" npcid="Mage2" staticid=""/>
 	<flash name="Mage2" time="250" speed="50"/>
 	<playsound sound="casting" volume="50"/>
 	<wait time="250"/>

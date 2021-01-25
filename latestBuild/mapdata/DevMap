@@ -1,0 +1,5 @@
+<area>
+<map file="DevMap.tmx"/>
+<trigger id="0" description="startbattle" require="" exclude="" nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+</trigger>
+</area>

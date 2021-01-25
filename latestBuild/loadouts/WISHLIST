@@ -1,0 +1,13 @@
+// Type of state to enter battle/town/cinematic
+state battle 
+// The name of the mapfile without the .tmx extension
+map eriumcastle
+// The text file that should be loaded
+text battle1
+// The location that the heroes should start
+start battle1
+// Group level (not required)
+grouplevel
+// Name of hero in group, don't need to include the starting heroes
+// unless you want to specify items, promoted or individual level (not required)
+hero 

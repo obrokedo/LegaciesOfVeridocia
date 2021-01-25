@@ -3,7 +3,7 @@
 <trigger id="0" description="Battle1 Initialise" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<playmusic music="overworld" volume="75"/>
 </trigger>
-<trigger id="1" description="EggSearch" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="1" description="EggSearch" require="" exclude="" nonretrig="true" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<completequest questid="FoundGargoyalEgg"/>
 	<showtext textid="0"/>
 </trigger>
@@ -35,7 +35,7 @@
 	<changeaimove id="10" x="288" y="96" priority="1"/>
 	<changeaimove id="11" x="264" y="120" priority="1"/>
 </trigger>
-<trigger id="6" description="BattleWin" require="" exclude="" nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="6" description="BattleWin" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<completequest questid="Battle4"/>
 	<runtriggers triggers="9,10,"/>
 </trigger>
