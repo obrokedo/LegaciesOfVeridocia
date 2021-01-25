@@ -11,7 +11,6 @@
 	<camerafollow name="Noah"/>
 	<fadein time="4000" halting="false" init="true"/>
 	<move name="Noah" x="600" y="1056" speed="1" movehor="true" movediag="false"/>
-	<addmultihero heroids="Craig,Olivia,"/>
 	<move name="Sharna" x="600" y="1068" speed="1" movehor="true" movediag="false"/>
 	<speech text="You know, just the other day I caught Huun sleeping at his post!<pause> <linebreak> Can you believe it? Sleeping!<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
 	<move name="Noah" x="600" y="1056" speed="1" movehor="true" movediag="false"/>
