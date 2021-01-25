@@ -534,6 +534,85 @@
 	<fadeout time="1000" halting="true"/>
 	<loadcin mapdata="eriumoutskirts" cinid="0"/>
 </cinematic>
+<cinematic id="5" description="GameStartIntro" camerax="0" cameray="0">
+	<addactor x="528" y="528" name="King" anim="KingErium" startanim="UnUp" visible="true" init="false" associatedhero=""/>
+	<addactor x="528" y="552" name="Mistal" anim="Mistal" startanim="UnUp" visible="true" init="false" associatedhero=""/>
+	<camerafollow name="King"/>
+	<fadein time="1000" halting="false" init="false"/>
+	<move name="King" x="768" y="432" speed="3.0" movehor="false" movediag="false"/>
+	<move name="Mistal" x="744" y="432" speed="3.0" movehor="false" movediag="false"/>
+	<wait time="2250"/>
+	<move name="King" x="768" y="312" speed="3.0" movehor="false" movediag="false"/>
+	<move name="Mistal" x="768" y="312" speed="3.0" movehor="false" movediag="false"/>
+	<wait time="1000"/>
+	<addstatic x="768" y="360" spriteid="DoorRight" spriteim="HouseDoorRight"/>
+	<addstatic x="744" y="360" spriteid="DoorLeft" spriteim="HouseDoorLeft"/>
+	<playsound sound="dooropen" volume="50"/>
+	<wait time="500"/>
+	<haltingmove name="King" x="768" y="192" speed="2.4" movehor="false" movediag="false"/>
+	<haltingmove name="Mistal" x="720" y="240" speed="2.4" movehor="false" movediag="false"/>
+	<facing name="King" dir="1"/>
+	<facing name="Mistal" dir="1"/>
+	<tremble name="King"/>
+	<wait time="750"/>
+	<stopse name="King"/>
+	<speech text="King What are those things?<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
+	<speech text="I believe it is a species of ooze, Sire.<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
+	<addactor x="744" y="384" name="Oooz1" anim="Darkling Ooze" startanim="UnUp" visible="true" init="false" associatedhero=""/>
+	<addactor x="768" y="384" name="Oooz2" anim="Darkling Ooze" startanim="UnUp" visible="true" init="false" associatedhero=""/>
+	<quiver name="King"/>
+	<wait time="750"/>
+	<stopse name="King"/>
+	<speech text="King Mistal!  They’re getting in under the door!  Please!  Do something!<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
+	<speech text="As you wish, Sire.<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
+	<cameramove x="768" y="336" time="1000"/>
+	<haltingmove name="Mistal" x="768" y="336" speed="2.4" movehor="true" movediag="false"/>
+	<tremble name="Oooz2"/>
+	<wait time="250"/>
+	<tremble name="Oooz1"/>
+	<wait time="500"/>
+	<stopse name="Oooz2"/>
+	<wait time="250"/>
+	<stopse name="Oooz1"/>
+	<remstatic spriteid="DoorLeft"/>
+	<remstatic spriteid="DoorRight"/>
+	<playsound sound="dooropen" volume="50"/>
+	<cameramove x="768" y="236" time="1000"/>
+	<speech text="King Mistal!  What are you doing?!<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
+	<haltingmove name="Mistal" x="744" y="240" speed="2.4" movehor="true" movediag="false"/>
+	<move name="Oooz2" x="768" y="264" speed="2.4" movehor="false" movediag="false"/>
+	<move name="Oooz1" x="744" y="264" speed="2.4" movehor="false" movediag="false"/>
+	<wait time="1000"/>
+	<speech text="I would have thought that obvious, even to you.<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
+	<speech text="King Betrayed in my own throne room... I’ll have your head for this!<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
+	<speech text="You won't even have your own head when I’m finished with you.<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
+	<flash name="Mistal" time="1000" speed="100"/>
+	<flashscreen time="100"/>
+	<playsound sound="casting" volume="50"/>
+	<flash name="King" time="100" speed="100"/>
+	<spin name="King" speed="250" time="2000"/>
+	<wait time="1000"/>
+	<layonsideright name="King" dir="3"/>
+	<speech text="King Hrrmph!<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
+	<speech text="Marvelous!  Now be a good boy and listen to what I must tell you.<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
+	<haltingmove name="Mistal" x="768" y="204" speed="2.4" movehor="false" movediag="false"/>
+	<speech text="whisper whisper whisper....<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
+	<speech text="king ...!<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
+	<forcedmove name="Mistal" x="768" y="240" speed="1.0" facing="0" movehor="false" movediag="false"/>
+	<wait time="1000"/>
+	<speech text="I trust that we have an understanding.<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
+	<stopanim name="King"/>
+	<facing name="King" dir="1"/>
+	<nod name="King"/>
+	<haltingmove name="Oooz2" x="792" y="264" speed="2.4" movehor="false" movediag="false"/>
+	<move name="Mistal" x="768" y="336" speed="1.0" movehor="false" movediag="false"/>
+	<wait time="1000"/>
+	<move name="Oooz2" x="768" y="264" speed="2.4" movehor="false" movediag="false"/>
+	<wait time="250"/>
+	<move name="Oooz1" x="744" y="336" speed="2.4" movehor="false" movediag="false"/>
+	<move name="Oooz2" x="768" y="336" speed="2.4" movehor="false" movediag="false"/>
+	<fadeout time="1000" halting="true"/>
+</cinematic>
 <condition id="0" description="MapLoad" triggerid="0,">
 	<maploaded/>
 </condition>
