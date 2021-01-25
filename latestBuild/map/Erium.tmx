@@ -72,11 +72,10 @@ H4sIAAAAAAAACu2XW27dQAxDs/9dtHtp19X+5MfIRKJEinLsAxTGrechyRGH8/HB5df/f78Tz6eSrc9b
 <property name="start" value="exit=FromEriumCastleWest1"/>
 </properties>
 </object>
-<object name="Start" x="0" y="0">
+<object id="3" name="Start" x="144" y="240" width="24" height="24">
 <properties>
 <property name="start" value="exit=NoahHouse"/>
 </properties>
-<polyline points="192,312 216,312 216,336 192,336"/>
 </object>
 <object id="28" name="ToEriumCastleWest1" x="240" y="0" width="24" height="24">
 <properties>
