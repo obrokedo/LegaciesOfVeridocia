@@ -130,19 +130,19 @@ H4sIAAAAAAAAA+3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAAAAAAAADwZkvEChtAOAAA
 </properties>
 <polyline points="504,312 528,312 528,336 504,336 504,312"/>
 </object>
-<object id="60" name="Door" x="0" y="72">
+<object name="Door" x="0" y="0">
 <properties>
 <property name="door" value="image=HouseDoorLeft"/>
 </properties>
 <polyline points="456,432 480,432 480,456 456,456 456,432"/>
 </object>
-<object id="61" name="Door 2" x="0" y="72">
+<object name="Door 2" x="0" y="0">
 <properties>
 <property name="door" value="image=HouseDoorRight"/>
 </properties>
 <polyline points="504,432 528,432 528,456 504,456 504,432"/>
 </object>
-<object id="62" name="Door 3" x="0" y="72">
+<object name="Door 3" x="0" y="0">
 <properties>
 <property name="door" value="image=ArmorDoor"/>
 </properties>
