@@ -105,3 +105,17 @@ class MenuConfiguration(MenuConfiguration):
         return "There was a " + itemName + " inside,<softstop> but you have no room...<hardstop>"
     def getItemRecievedText(self, heroName, itemName):
         return heroName + " recieved the " + itemName + ".<hardstop>"
+    
+    # Town menus
+    def getGiveToWhoText(self, heroName, itemName):
+        return "Who will you give the " + itemName + " to?<hardstop>"
+    def getGiveSuccessText(self, giverName, itemName, targetName):
+        return "The " + itemName + " now belongs to " + targetName + "<hardstop>"
+    def getDropConfirmText(self, itemName):
+        return "Are you sure you want to drop the " + itemName + "?<hardstop>"
+    def getDropSuccessText(self, itemName):
+        return "The " + itemName + " has been discarded<hardstop>"
+    def getUseTargetText(self, itemName):
+        return "Who would you like to use the " + itemName + " on?<hardstop>"
+    def getUseFailedText(self, heroName, itemName):
+        return heroName + " uses the " + itemName + "!<pause> But it has no effect...<hardstop>"
