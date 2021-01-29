@@ -562,7 +562,7 @@
 	<quiver name="King"/>
 	<wait time="750"/>
 	<stopse name="King"/>
-	<speech text="King Mistal!  They’re getting in under the door!  Please!  Do something!<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
+	<speech text="King Mistal!  They're getting in under the door!  Do something!<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
 	<speech text="As you wish, Sire.<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
 	<cameramove x="768" y="336" time="1000"/>
 	<haltingmove name="Mistal" x="768" y="336" speed="2.4" movehor="true" movediag="false"/>
@@ -583,8 +583,8 @@
 	<move name="Oooz1" x="744" y="264" speed="2.4" movehor="false" movediag="false"/>
 	<wait time="1000"/>
 	<speech text="I would have thought that obvious, even to you.<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
-	<speech text="King Betrayed in my own throne room... I’ll have your head for this!<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
-	<speech text="You won't even have your own head when I’m finished with you.<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
+	<speech text="King Betrayed in my own throne room... I'll have your head for this!<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
+	<speech text="You won't even have your own head when I'm finished with you.<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
 	<flash name="Mistal" time="1000" speed="100"/>
 	<flashscreen time="100"/>
 	<playsound sound="casting" volume="50"/>
@@ -595,7 +595,7 @@
 	<speech text="King Hrrmph!<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
 	<speech text="Marvelous!  Now be a good boy and listen to what I must tell you.<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
 	<haltingmove name="Mistal" x="768" y="204" speed="2.4" movehor="false" movediag="false"/>
-	<speech text="whisper whisper whisper....<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
+	<speech text="...<softstop>....<softstop>...<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
 	<speech text="king ...!<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
 	<forcedmove name="Mistal" x="768" y="240" speed="1.0" facing="0" movehor="false" movediag="false"/>
 	<wait time="1000"/>
