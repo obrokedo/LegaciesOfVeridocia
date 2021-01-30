@@ -82,7 +82,7 @@
 <trigger id="26" description="SearchSign2" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<showtext textid="21"/>
 </trigger>
-<trigger id="27" description="Can'tLeave" require="," exclude="Battle2," nonretrig="false" retrigonenter="true" triggeronce="false" triggerimmediately="false">
+<trigger id="27" description="Can'tLeave" require="" exclude="Battle2," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<showcin cinid="2" exittrigid="-1"/>
 </trigger>
 <text id="0" description="citizen1">

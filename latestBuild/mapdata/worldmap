@@ -95,7 +95,7 @@
 <cinematic id="3" description="PostBattle4Crook" camerax="0" cameray="0">
 	<addactor x="936" y="2952" name="Noah" anim="Noah" startanim="UnDown" visible="true" init="false" associatedhero=""/>
 	<camerafollow name="Noah"/>
-	<speech text="Squawk!<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
+	<speech text="Squawk!<hardstop>" heroportrait="" enemyportrait="" animportrait="Crook"/>
 	<addactor x="936" y="2976" name="Crook" anim="Crook" startanim="UnDown" visible="true" init="false" associatedhero=""/>
 	<addactor x="936" y="2952" name="Huun" anim="Huun" startanim="UnDown" visible="true" init="false" associatedhero=""/>
 	<haltingmove name="Huun" x="960" y="2952" speed="2.4" movehor="false" movediag="false"/>

@@ -128,7 +128,7 @@ H4sIAAAAAAAACu2USxLDIAxDc6Xe/3Jdk1Ew2JYhQW+GRfPB8ivOdbX8jHUq8oKRF4y8YOQDIy8Yr5eq
 </object>
 <object name="NPCSharna" x="0" y="0">
 <properties>
-<property name="npc" value="noturn=false facing=1 name=NPCName throughwall=false noanimate=false animation=Sharna textid=1 wander=3"/>
+<property name="npc" value="noturn=false facing=1 name=NPCSharna throughwall=false noanimate=false animation=Sharna textid=1 wander=3"/>
 </properties>
 <polyline points="600,96 624,96 624,120 600,120 600,96"/>
 </object>
