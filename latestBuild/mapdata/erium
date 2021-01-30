@@ -83,11 +83,7 @@
 	<showtext textid="21"/>
 </trigger>
 <trigger id="27" description="Can'tLeave" require="," exclude="Battle2," nonretrig="false" retrigonenter="true" triggeronce="false" triggerimmediately="false">
-	<showcin cinid="2" exittrigid="28"/>
-</trigger>
-<trigger id="28" description="CanLeave" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
-	<completequest questid="Battle2"/>
-	<showtext textid="22"/>
+	<showcin cinid="2" exittrigid="-1"/>
 </trigger>
 <text id="0" description="citizen1">
 	<conversation require="," exclude="," trigger="-1" heroportrait1="" enemyportrait1="" animportrait1="" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="Good evening, Noah.<pause>  That blizzard the other night was really bizarre, wasn't it?<hardstop><split>I've never seen anything like that...<pause>  It came and went in almost no time at all!<hardstop><split>And you wouldn't even know it by the weather today!<hardstop>"/>
@@ -158,9 +154,6 @@
 </text>
 <text id="21" description="SearchSign2">
 	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="No Entrance!<hardstop>"/>
-</text>
-<text id="22" description="LeavingSoSoon?">
-	<string require="," exclude="Battle2," trigger="23" heroportrait="Noah" enemyportrait="" animportrait="" message="(Battle2 Quest Completed for testing. Delete in Final Version.)<hardstop>"/>
 </text>
 <cinematic id="0" description="NoahGettingReady" camerax="0" cameray="1056">
 	<pausemusic/>
@@ -237,7 +230,6 @@
 <cinematic id="1" description="Bartender" camerax="1752" cameray="384">
 	<assactor name="Noah" hero="Noah" enemyid="0" npcid="0" staticid=""/>
 	<assactor name="Bartender" hero="" enemyid="0" npcid="Bartender1" staticid=""/>
-	<camerafollow name="Noah"/>
 	<haltingmove name="Bartender" x="1800" y="372" speed="2" movehor="false" movediag="false"/>
 	<tremble name="Bartender"/>
 	<wait time="100"/>
@@ -245,12 +237,13 @@
 	<speech text="Hey!<pause> Who said you could go up there?!<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
 	<haltingmove name="Noah" x="1752" y="372" speed="2" movehor="false" movediag="false"/>
 	<facing name="Noah" dir="1"/>
+	<cameramovetoactor actor="Noah" time="500"/>
 </cinematic>
 <cinematic id="2" description="Can'tLeave" camerax="384" cameray="1056">
 	<assactor name="Noah" hero="Noah" enemyid="0" npcid="" staticid=""/>
-	<camerafollow name="Noah"/>
 	<speech text="As nice as the view is,<pause> I must report for duty.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
-	<haltingmovepath name="Noah" x="384" y="972" speed="2.4"/>
+	<haltingmovepath name="Noah" x="384" y="996" speed="2.4"/>
+	<cameramovetoactor actor="Noah" time="1000"/>
 </cinematic>
 <condition id="0" description="ToEriumCastleWest1" triggerid="4,">
 	<enterloc location="ToEriumCastleWest1" immediate="false"/>

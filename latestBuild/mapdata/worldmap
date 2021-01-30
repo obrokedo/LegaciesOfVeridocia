@@ -45,6 +45,7 @@
 	<addactor x="984" y="3564" name="Guard1" anim="eriumguard" startanim="UnDown" visible="true" init="false" associatedhero=""/>
 	<addactor x="984" y="3588" name="person" anim="Man1" startanim="UnUp" visible="true" init="false" associatedhero=""/>
 	<camerafollow name="Hugh"/>
+	<fadein time="100" halting="true" init="true"/>
 	<speech text="There are never this many guards here.  They must have come during the night.<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
 	<cameramove x="984" y="3600" time="1500"/>
 	<wait time="500"/>

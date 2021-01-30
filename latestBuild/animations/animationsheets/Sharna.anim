@@ -81,60 +81,45 @@
   </anim>
   <anim name="UnAttack" loops="0">
     <cell index="0" delay="50">
-      <spr name="/Unpromoted/Frame0" x="164" y="-39" z="0"/>
-    </cell>
-    <cell index="1" delay="50">
-      <spr name="/Unpromoted/Frame1" x="164" y="-39" z="0"/>
-    </cell>
-    <cell index="2" delay="50">
-      <spr name="/Unpromoted/Frame2" x="164" y="-39" z="0"/>
-    </cell>
-    <cell index="3" delay="50">
-      <spr name="/Unpromoted/Frame3" x="164" y="-39" z="0"/>
-    </cell>
-    <cell index="4" delay="50">
-      <spr name="/Unpromoted/Frame4" x="164" y="-39" z="0"/>
-    </cell>
-    <cell index="5" delay="50">
       <spr name="/Unpromoted/Frame5" x="164" y="-39" z="0"/>
     </cell>
-    <cell index="6" delay="80">
+    <cell index="1" delay="80">
       <spr name="/Unpromoted/Frame6" x="164" y="-39" z="0"/>
     </cell>
-    <cell index="7" delay="50">
+    <cell index="2" delay="50">
       <spr name="/Unpromoted/Frame7" x="164" y="-39" z="0"/>
     </cell>
-    <cell index="8" delay="50">
+    <cell index="3" delay="50">
       <spr name="/Unpromoted/Frame8" x="164" y="-39" z="0"/>
     </cell>
-    <cell index="9" delay="50">
+    <cell index="4" delay="50">
       <spr name="/Unpromoted/Frame9" x="164" y="-39" z="0"/>
     </cell>
-    <cell index="10" delay="80">
+    <cell index="5" delay="80">
       <spr name="/Unpromoted/Frame10" x="164" y="-39" z="0"/>
     </cell>
-    <cell index="11" delay="80">
+    <cell index="6" delay="80">
       <spr name="/Unpromoted/Frame11" x="164" y="-39" z="0"/>
     </cell>
-    <cell index="12" delay="50">
+    <cell index="7" delay="50">
       <spr name="/Unpromoted/Frame12" x="164" y="-39" z="0"/>
     </cell>
-    <cell index="13" delay="50">
+    <cell index="8" delay="50">
       <spr name="/Unpromoted/Frame13" x="164" y="-39" z="0"/>
     </cell>
-    <cell index="14" delay="50">
+    <cell index="9" delay="50">
       <spr name="/Unpromoted/Frame14" x="164" y="-39" z="0"/>
     </cell>
-    <cell index="15" delay="50">
+    <cell index="10" delay="50">
       <spr name="/Unpromoted/Frame15" x="164" y="-39" z="0"/>
     </cell>
-    <cell index="16" delay="50">
+    <cell index="11" delay="50">
       <spr name="/Unpromoted/Frame16" x="164" y="-39" z="0"/>
     </cell>
-    <cell index="17" delay="80">
+    <cell index="12" delay="80">
       <spr name="/Unpromoted/Frame17" x="164" y="-39" z="0"/>
     </cell>
-    <cell index="18" delay="50">
+    <cell index="13" delay="50">
       <spr name="/Unpromoted/Frame18" x="164" y="-39" z="0"/>
     </cell>
   </anim>

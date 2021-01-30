@@ -45,6 +45,8 @@
 	<move name="Lexus" x="480" y="792" speed="1.0" movehor="false" movediag="false"/>
 	<wait time="1000"/>
 	<fadeout time="3000" halting="true"/>
+	<speech text="Such short-sightedness. There are many uses for a reckless pawn such as yourself.  Many indeed...<softstop><nextcin>" heroportrait="" enemyportrait="" animportrait=""/>
+	<wait time="250"/>
 	<loadcin mapdata="eriumcastlenight" cinid="5"/>
 </cinematic>
 </area>

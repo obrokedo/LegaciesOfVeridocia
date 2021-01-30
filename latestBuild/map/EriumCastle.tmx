@@ -513,6 +513,12 @@ H4sIAAAAAAAACu2XS24cMQxEff9bJHdJzpVsZmHBAv+sksQCDGLG3WJJ4BM5X1+j0Wg0Go1Go9FoNBqN
 <property name="searcharea" value="searchtrigger=39"/>
 </properties>
 </object>
+<object name="SearchLocation400" x="0" y="0">
+<properties>
+<property name="searcharea" value="searchtrigger=21"/>
+</properties>
+<polyline points="1440,576 1464,576 1464,600 1440,600 1440,576"/>
+</object>
 </objectgroup>
 <objectgroup name="Meta">
 <object id="7" name="Entrance Guard 1" x="336" y="1416" width="24" height="24">

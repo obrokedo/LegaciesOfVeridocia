@@ -107,6 +107,7 @@
 <cinematic id="0" description="SharnaCutScene" camerax="72" cameray="672">
 	<assactor name="Sharna" hero="" enemyid="0" npcid="Sharna" staticid=""/>
 	<assactor name="Noah" hero="Noah" enemyid="0" npcid="" staticid=""/>
+	<cameramovetoactor actor="Noah" time="1000"/>
 	<camerafollow name="Noah"/>
 	<speech text="Actually, isn't that his handwriting?<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<haltingmove name="Noah" x="192" y="660" speed="2.4" movehor="false" movediag="false"/>

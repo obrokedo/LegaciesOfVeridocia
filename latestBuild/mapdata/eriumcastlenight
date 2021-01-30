@@ -535,15 +535,21 @@
 </cinematic>
 <cinematic id="5" description="GameStartIntro" camerax="0" cameray="0">
 	<addactor x="528" y="528" name="King" anim="KingErium" startanim="UnUp" visible="true" init="false" associatedhero=""/>
-	<addactor x="528" y="552" name="Mistal" anim="Mistal" startanim="UnUp" visible="true" init="false" associatedhero=""/>
+	<addactor x="528" y="552" name="Mistal" anim="MistalEvil" startanim="UnUp" visible="true" init="false" associatedhero=""/>
+	<addstatic x="744" y="360" spriteid="DoorLeft2" spriteim="HouseDoorLeft"/>
+	<addstatic x="768" y="360" spriteid="DoorRight2" spriteim="HouseDoorRight"/>
 	<camerafollow name="King"/>
-	<fadein time="1000" halting="false" init="false"/>
+	<fadein time="1000" halting="false" init="true"/>
 	<move name="King" x="768" y="432" speed="3.0" movehor="false" movediag="false"/>
 	<move name="Mistal" x="744" y="432" speed="3.0" movehor="false" movediag="false"/>
 	<wait time="2250"/>
 	<move name="King" x="768" y="312" speed="3.0" movehor="false" movediag="false"/>
 	<move name="Mistal" x="768" y="312" speed="3.0" movehor="false" movediag="false"/>
-	<wait time="1000"/>
+	<wait time="350"/>
+	<remstatic spriteid="DoorRight2"/>
+	<remstatic spriteid="DoorLeft2"/>
+	<playsound sound="dooropen" volume="100"/>
+	<wait time="650"/>
 	<addstatic x="768" y="360" spriteid="DoorRight" spriteim="HouseDoorRight"/>
 	<addstatic x="744" y="360" spriteid="DoorLeft" spriteim="HouseDoorLeft"/>
 	<playsound sound="dooropen" volume="50"/>
@@ -555,15 +561,17 @@
 	<tremble name="King"/>
 	<wait time="750"/>
 	<stopse name="King"/>
-	<speech text="King What are those things?<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
-	<speech text="I believe it is a species of ooze, Sire.<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
+	<speech text="What are those things?<softstop><nextcin>" heroportrait="" enemyportrait="" animportrait="KingErium"/>
+	<wait time="250"/>
+	<speech text="I believe it is a species of ooze, Sire.<softstop><nextcin>" heroportrait="" enemyportrait="" animportrait="Mistal"/>
 	<addactor x="744" y="384" name="Oooz1" anim="Darkling Ooze" startanim="UnUp" visible="true" init="false" associatedhero=""/>
 	<addactor x="768" y="384" name="Oooz2" anim="Darkling Ooze" startanim="UnUp" visible="true" init="false" associatedhero=""/>
 	<quiver name="King"/>
 	<wait time="750"/>
 	<stopse name="King"/>
-	<speech text="King Mistal!  They're getting in under the door!  Do something!<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
-	<speech text="As you wish, Sire.<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
+	<speech text="Mistal!  They're getting in under the door!  Do something!<softstop><nextcin>" heroportrait="" enemyportrait="" animportrait="KingErium"/>
+	<wait time="250"/>
+	<speech text="As you wish, Sire.<softstop><nextcin>" heroportrait="" enemyportrait="" animportrait="Mistal"/>
 	<cameramove x="768" y="336" time="1000"/>
 	<haltingmove name="Mistal" x="768" y="336" speed="2.4" movehor="true" movediag="false"/>
 	<tremble name="Oooz2"/>
@@ -577,14 +585,16 @@
 	<remstatic spriteid="DoorRight"/>
 	<playsound sound="dooropen" volume="50"/>
 	<cameramove x="768" y="236" time="1000"/>
-	<speech text="King Mistal!  What are you doing?!<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
+	<speech text="Mistal!  What are you doing?!<softstop><nextcin>" heroportrait="" enemyportrait="" animportrait="KingErium"/>
 	<haltingmove name="Mistal" x="744" y="240" speed="2.4" movehor="true" movediag="false"/>
 	<move name="Oooz2" x="768" y="264" speed="2.4" movehor="false" movediag="false"/>
 	<move name="Oooz1" x="744" y="264" speed="2.4" movehor="false" movediag="false"/>
 	<wait time="1000"/>
-	<speech text="I would have thought that obvious, even to you.<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
-	<speech text="King Betrayed in my own throne room... I'll have your head for this!<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
-	<speech text="You won't even have your own head when I'm finished with you.<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
+	<speech text="I would have thought that obvious, even to you.<softstop><nextcin>" heroportrait="" enemyportrait="" animportrait="Mistal"/>
+	<wait time="250"/>
+	<speech text="Betrayed in my own throne room... I'll have your head for this!<softstop><nextcin>" heroportrait="" enemyportrait="" animportrait="KingErium"/>
+	<wait time="250"/>
+	<speech text="You won't even have your own head when I'm finished with you.<softstop><nextcin>" heroportrait="" enemyportrait="" animportrait="Mistal"/>
 	<flash name="Mistal" time="1000" speed="100"/>
 	<flashscreen time="100"/>
 	<playsound sound="casting" volume="50"/>
@@ -592,14 +602,16 @@
 	<spin name="King" speed="250" time="2000"/>
 	<wait time="1000"/>
 	<layonsideright name="King" dir="3"/>
-	<speech text="King Hrrmph!<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
-	<speech text="Marvelous!  Now be a good boy and listen to what I must tell you.<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
+	<speech text="Hrrmph!<softstop><nextcin>" heroportrait="" enemyportrait="" animportrait="KingErium"/>
+	<wait time="250"/>
+	<speech text="Marvelous!  Now be a good boy and listen to what I must tell you.<softstop><nextcin>" heroportrait="" enemyportrait="" animportrait="Mistal"/>
 	<haltingmove name="Mistal" x="768" y="204" speed="2.4" movehor="false" movediag="false"/>
-	<speech text="...<softstop>....<softstop>...<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
-	<speech text="king ...!<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
+	<speech text="...<softstop>....<softstop>...<softstop><nextcin>" heroportrait="" enemyportrait="" animportrait="Mistal"/>
+	<wait time="250"/>
+	<speech text="...!<softstop><nextcin>" heroportrait="" enemyportrait="" animportrait="KingErium"/>
 	<forcedmove name="Mistal" x="768" y="240" speed="1.0" facing="0" movehor="false" movediag="false"/>
 	<wait time="1000"/>
-	<speech text="I trust that we have an understanding.<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
+	<speech text="I trust that we have an understanding.<softstop><nextcin>" heroportrait="" enemyportrait="" animportrait="Mistal"/>
 	<stopanim name="King"/>
 	<facing name="King" dir="1"/>
 	<nod name="King"/>
