@@ -6,7 +6,7 @@
 <trigger id="1" description="ToErium" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<showcin cinid="1" exittrigid="-1"/>
 </trigger>
-<trigger id="2" description="ToCabin" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="2" description="ToCabin" require="Battle 3," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<loadmap mapdata="eriumwoods" enter="FromWorldmap" transdir=""/>
 </trigger>
 <trigger id="3" description="CabinNotVisited" require="," exclude="Battle 3," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
@@ -24,14 +24,27 @@
 <trigger id="7" description="ToTraderCabin" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<loadmap mapdata="traderscabin" enter="EnterFromWorldMap" transdir=""/>
 </trigger>
+<trigger id="8" description="ToDarkShrine" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<loadmap mapdata="darkshrineday" enter="FromWorldMap" transdir=""/>
+</trigger>
+<trigger id="9" description="PreBattle3Cinimatic" require="," exclude="Battle 3," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<removehero heroid="Olivia"/>
+	<removehero heroid="Craig"/>
+	<playsound sound="step" volume="75"/>
+	<loadcin mapdata="eriumwoods" cinid="0"/>
+</trigger>
+<trigger id="10" description="ToEriumWoodsCabin" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<runtriggers triggers="2,9,"/>
+</trigger>
+<trigger id="11" description="ToEriumOutskirts" require="Battle4," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<loadmap mapdata="eriumoutskirts" enter="FromWorldMap" transdir=""/>
+</trigger>
 <cinematic id="0" description="WarnPastCabin" camerax="0" cameray="0">
 	<speech text="Oi. Where d'ya think you're goin', genius?<pause><linebreak> The cabin was back that way!<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
 	<assactor name="Noah" hero="Noah" enemyid="0" npcid="" staticid=""/>
 	<cameramovetoactor actor="Noah" time="400"/>
 	<camerafollow name="Noah"/>
 	<haltingmovepath name="Noah" x="1032" y="3996" speed="2.4"/>
-	<fadeout time="500" halting="true"/>
-	<loadmap mapdata="eriumwoods" enter="FromWorldmap"/>
 </cinematic>
 <cinematic id="1" description="NoGoingBack" camerax="0" cameray="0">
 	<speech text="Oi. Are you mad!?<pause><linebreak> We can't go back!<pause> They'll catch you for sure!!<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
@@ -78,11 +91,11 @@
 	<facing name="Liza" dir="3"/>
 	<speech text="Who are you calling a ‘witch’?!<hardstop>" heroportrait="Liza" enemyportrait="" animportrait="Liza"/>
 	<flashscreen time="0"/>
-	<addstatic x="960" y="3480" spriteid="Fire" spriteim="fire"/>
+	<addactor x="960" y="3480" name="FireBall" anim="SpriteFire" startanim="UnUp" visible="true" init="false" associatedhero=""/>
 	<playsound sound="casting" volume="75"/>
 	<wait time="1000"/>
 	<removeactor name="Guard1"/>
-	<remstatic spriteid="Fire"/>
+	<removeactor name="FireBall"/>
 	<haltingmove name="Hugh" x="984" y="3552" speed="2.4" movehor="true" movediag="false"/>
 	<speech text="Liza!  Your arrival is most fortuitous!<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
 	<haltingmove name="Liza" x="984" y="3504" speed="2.4" movehor="true" movediag="false"/>
@@ -125,7 +138,7 @@
 <condition id="0" description="ToErium" triggerid="1,">
 	<enterloc location="ToErium" immediate="false"/>
 </condition>
-<condition id="1" description="ToCabin" triggerid="2,">
+<condition id="1" description="ToCabin" triggerid="10,">
 	<enterloc location="ToCabin" immediate="false"/>
 </condition>
 <condition id="2" description="MapStart" triggerid="0,">
@@ -145,5 +158,11 @@
 </condition>
 <condition id="7" description="ToTraderCabin" triggerid="7,">
 	<enterloc location="ToTraderCabin" immediate="false"/>
+</condition>
+<condition id="8" description="ToDarkShrine" triggerid="8,">
+	<enterloc location="ToDarkShrine" immediate="false"/>
+</condition>
+<condition id="9" description="ToEriumOutskirts" triggerid="11,">
+	<enterloc location="ToEriumOutskirts" immediate="false"/>
 </condition>
 </area>

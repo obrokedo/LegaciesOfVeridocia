@@ -19,7 +19,7 @@
 <trigger id="5" description="PreBattle4" require="," exclude="Battle4," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<showtext textid="5"/>
 </trigger>
-<trigger id="6" description="RemoveNpcs" require="" exclude="" nonretrig="false" retrigonenter="true" triggeronce="false" triggerimmediately="false">
+<trigger id="6" description="RemoveNpcs" require="Battle4," exclude="" nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<removesprite name="NPCHugh"/>
 	<removesprite name="NPCHuun"/>
 	<removesprite name="NPCTyson"/>
@@ -125,6 +125,6 @@
 	<enterloc location="ToWorldMapSouth" immediate="false"/>
 </condition>
 <condition id="3" description="UponMapEntry" triggerid="6,">
-	<questcomp quest="Battle4"/>
+	<maploaded/>
 </condition>
 </area>

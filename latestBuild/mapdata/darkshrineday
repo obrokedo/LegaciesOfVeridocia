@@ -1,0 +1,9 @@
+<area>
+<map file="DarkShrineDay.tmx"/>
+<trigger id="0" description="ToWorldMap" require="" exclude="" nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<loadmap mapdata="worldmap" enter="FromDarkShrine" transdir=""/>
+</trigger>
+<condition id="0" description="ToWorldMap" triggerid="0,">
+	<enterloc location="ToWorldMap" immediate="false"/>
+</condition>
+</area>

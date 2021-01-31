@@ -87,6 +87,24 @@ H4sIAAAAAAAAC+2UTQ7BUBRGX0LFBjBhIXQdtmEtOsYCdCxmzCUae6iasAQivpd3GzcdMTB413eSk3fb
 </properties>
 <polyline points="504,336 504,360 528,360 528,336 504,336"/>
 </object>
+<object name="ToWorldMap" x="0" y="0">
+<properties>
+<property name="" value=""/>
+</properties>
+<polyline points="336,0 408,0 408,24 336,24 336,0"/>
+</object>
+<object name="FromWorldMap" x="0" y="0">
+<properties>
+<property name="start" value="exit=FromWorldMap"/>
+</properties>
+<polyline points="360,24 384,24 384,48 360,48 360,24"/>
+</object>
+<object name="ToWorldMapEast" x="0" y="0">
+<properties>
+<property name="" value=""/>
+</properties>
+<polyline points="696,312 720,312 720,384 696,384 696,312"/>
+</object>
 </objectgroup>
 <objectgroup name="Meta">
 <object id="4" name="craig npc2" x="0" y="0">

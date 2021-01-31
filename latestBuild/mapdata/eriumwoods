@@ -1,39 +1,32 @@
 <area>
 <map file="EriumWoods.tmx"/>
-<trigger id="0" description="MapStart" require="," exclude="Battle 3," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
-	<playmusic music="overworld" volume="75"/>
-	<runtriggers triggers="4,"/>
-</trigger>
-<trigger id="1" description="ToWorldMap" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="0" description="ToWorldMap" require="Battle4," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<loadmap mapdata="worldmap" enter="FromCabin" transdir=""/>
 </trigger>
-<trigger id="2" description="Battle Prep" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
-	<loadcin mapdata="eriumwoods" cinid="0"/>
-</trigger>
-<trigger id="3" description="Start Battle 3" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="1" description="Start Battle 3" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<startbattle battletriggers="battle3" entrance="battlestart" battbg="2"/>
 </trigger>
-<trigger id="4" description="Remove Craig + Olivia" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
-	<removehero heroid="Olivia"/>
-	<removehero heroid="Craig"/>
-	<playsound sound="step" volume="75"/>
-	<runtriggers triggers="2,"/>
-</trigger>
-<trigger id="5" description="Keep In House" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="2" description="Keep In House" require="," exclude="Battle4," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<showcin cinid="1" exittrigid="-1"/>
 </trigger>
-<trigger id="6" description="Continue Story" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="3" description="Continue Story" require="," exclude="Battle4," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<showtext textid="2"/>
 	<loadcin mapdata="eriumwoods" cinid="2"/>
 </trigger>
-<trigger id="7" description="CraigSpokenTo" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="4" description="CraigSpokenTo" require="," exclude="Battle4," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<showtext textid="1"/>
 </trigger>
+<trigger id="5" description="RemoveNPCs" require="Battle4," exclude="" nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<removesprite name="NPCHuun"/>
+	<removesprite name="NPCCraig"/>
+	<removesprite name="NPCOlivia"/>
+	<removesprite name="NPCSharna"/>
+</trigger>
 <text id="0" description="Pre Battle3 Scene Placeholder">
-	<string require="," exclude="," trigger="3" heroportrait="" enemyportrait="" animportrait="" message="Cinematics Placeholder<pause> Battle 3 Commencing.<hardstop>"/>
+	<string require="," exclude="," trigger="1" heroportrait="" enemyportrait="" animportrait="" message="Cinematics Placeholder<pause> Battle 3 Commencing.<hardstop>"/>
 </text>
 <text id="1" description="craigYesNo">
-	<yesno require="," exclude="," triggeryes="6" triggerno="5" heroportrait="Craig" enemyportrait="" animportrait="Craig" message="Don't get too far ahead of yerself.  Why don't you take a rest.<hardstop>"/>
+	<yesno require="," exclude="," triggeryes="3" triggerno="2" heroportrait="Craig" enemyportrait="" animportrait="Craig" message="Don't get too far ahead of yerself.  Why don't you take a rest.<hardstop>"/>
 </text>
 <text id="2" description="CraigYesOption">
 	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="Good, we'll need all the rest we can get.<hardstop>"/>
@@ -139,6 +132,8 @@
 	<addactor x="360" y="624" name="Soldier3" anim="eriumguard" startanim="UnUp" visible="true" init="false" associatedhero=""/>
 	<wait time="1000"/>
 	<camerafollow name="Soldier3"/>
+	<facing name="Eddie" dir="1"/>
+	<facing name="Sharna" dir="1"/>
 	<speech text="Ugh! We should have brought torches up here and burned all this overgrowth!<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
 	<speech text="We get the jobs no one else wants. Didn't they tell you?<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
 	<speech text="What're the odds we find anything anyway?<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
@@ -159,13 +154,16 @@
 	<wait time="3000"/>
 	<loadmap mapdata="traderscabin" enter="EnterFromWorldMap"/>
 </cinematic>
-<condition id="0" description="ToWorldmap" triggerid="1,">
+<condition id="0" description="ToWorldmap" triggerid="0,">
 	<enterloc location="ToWorldmap" immediate="false"/>
 </condition>
-<condition id="1" description="MapStart" triggerid="0,">
+<condition id="1" description="Step In Exit" triggerid="4,">
+	<enterloc location="Prevent Exit" immediate="false"/>
+</condition>
+<condition id="2" description="HideNpcs" triggerid="5,">
 	<maploaded/>
 </condition>
-<condition id="2" description="Step In Exit" triggerid="7,">
-	<enterloc location="Prevent Exit" immediate="false"/>
+<condition id="3" description="ToWorldMapNorth" triggerid="0,">
+	<enterloc location="ToWorldMapNorth" immediate="false"/>
 </condition>
 </area>
