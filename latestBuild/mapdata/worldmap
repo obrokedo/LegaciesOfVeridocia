@@ -24,7 +24,7 @@
 <trigger id="7" description="ToTraderCabin" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<loadmap mapdata="traderscabin" enter="EnterFromWorldMap" transdir=""/>
 </trigger>
-<trigger id="8" description="ToDarkShrine" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="8" description="ToDarkShrine" require="" exclude="" nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<loadmap mapdata="darkshrineday" enter="FromWorldMap" transdir=""/>
 </trigger>
 <trigger id="9" description="PreBattle3Cinimatic" require="," exclude="Battle 3," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
@@ -35,9 +35,6 @@
 </trigger>
 <trigger id="10" description="ToEriumWoodsCabin" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<runtriggers triggers="2,9,"/>
-</trigger>
-<trigger id="11" description="ToEriumOutskirts" require="Battle4," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
-	<loadmap mapdata="eriumoutskirts" enter="FromWorldMap" transdir=""/>
 </trigger>
 <cinematic id="0" description="WarnPastCabin" camerax="0" cameray="0">
 	<speech text="Oi. Where d'ya think you're goin', genius?<pause><linebreak> The cabin was back that way!<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
@@ -161,8 +158,5 @@
 </condition>
 <condition id="8" description="ToDarkShrine" triggerid="8,">
 	<enterloc location="ToDarkShrine" immediate="false"/>
-</condition>
-<condition id="9" description="ToEriumOutskirts" triggerid="11,">
-	<enterloc location="ToEriumOutskirts" immediate="false"/>
 </condition>
 </area>

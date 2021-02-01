@@ -3,7 +3,7 @@
 <trigger id="0" description="ToWorldMap" require="Battle4," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<loadmap mapdata="worldmap" enter="FromCabin" transdir=""/>
 </trigger>
-<trigger id="1" description="Start Battle 3" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="1" description="Start Battle 3" require="" exclude="" nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<startbattle battletriggers="battle3" entrance="battlestart" battbg="2"/>
 </trigger>
 <trigger id="2" description="Keep In House" require="," exclude="Battle4," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
@@ -16,7 +16,7 @@
 <trigger id="4" description="CraigSpokenTo" require="," exclude="Battle4," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<showtext textid="1"/>
 </trigger>
-<trigger id="5" description="RemoveNPCs" require="Battle4," exclude="" nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="5" description="RemoveNPCs" require="Battle4," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<removesprite name="NPCHuun"/>
 	<removesprite name="NPCCraig"/>
 	<removesprite name="NPCOlivia"/>
@@ -73,6 +73,7 @@
 	<cameramove x="264" y="384" time="1000"/>
 	<speech text="Don't worry about me!  Save my family!<hardstop>" heroportrait="Eddie" enemyportrait="" animportrait="Eddie"/>
 	<speech text="The traitors!<pause> I knew you were hiding something!<softstop> Capture them alive; do what you want with the rest!<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
+	<addhero heroid="Eddie" init="false"/>
 	<loadbattle mapdata="battle3" entrance="battlestart" battbg="1"/>
 </cinematic>
 <cinematic id="1" description="bring back in room" camerax="0" cameray="0">

@@ -3,4 +3,5 @@
 <hero name=Noah level=3 exp=0 promoted=false promotionPath=-1 item=0,2 eqp=true,false/>
 <hero name=Sharna level=3 exp=0 promoted=false promotionPath=-1 item=1 eqp=true/>
 <hero name=Huun level=3 exp=0 promoted=false promotionPath=-1 item=3 eqp=true/>
+<hero name=Eddie level=3 exp=0 promoted=false promotionPath=-1 item=8 eqp=true/>
 </partyconfig>

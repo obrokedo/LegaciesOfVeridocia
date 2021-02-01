@@ -3,11 +3,10 @@
 <trigger id="0" description="Battle1 Initialise" require="," exclude="Battle 3," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<playmusic music="battle3" volume="75"/>
 </trigger>
-<trigger id="1" description="Victory Results" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="1" description="Victory Results" require="" exclude="" nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<completequest questid="Battle 3"/>
 	<reviveheroes hero="Sharna"/>
 	<reviveheroes hero="Huun"/>
-	<addhero heroid="Eddie"/>
 	<playmusic music="lovtheme" volume="75"/>
 	<showtext textid="4"/>
 	<loadcin mapdata="battle3" cinid="1"/>
