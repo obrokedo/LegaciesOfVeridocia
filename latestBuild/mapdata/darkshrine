@@ -4,6 +4,7 @@
 	<cameramove x="480" y="600" time="0"/>
 	<addstatic x="480" y="192" spriteid="Nazalem" spriteim="Nazalem"/>
 	<addactor x="456" y="720" name="Lexus" anim="Lexus" startanim="UnUp" visible="true" init="false" associatedhero=""/>
+	<playmusic music="desolation" volume="100"/>
 	<fadein time="3000" halting="false" init="true"/>
 	<wait time="1500"/>
 	<move name="Lexus" x="456" y="264" speed="1.0" movehor="false" movediag="false"/>
