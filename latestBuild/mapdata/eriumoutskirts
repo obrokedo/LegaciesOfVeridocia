@@ -35,7 +35,7 @@
 <trigger id="8" description="Got 'Em All" require="Short Blade Get,Short Sword Get,Wooden Arrow Get,Spell Shot Get,Crooked Staff Get,Lesser Wand Get," exclude="," nonretrig="true" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<showtext textid="5"/>
 </trigger>
-<trigger id="9" description="Hit the Sack" require="" exclude="" nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="9" description="Hit the Sack" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<showtext textid="6"/>
 </trigger>
 <text id="0" description="Huun Speech">
@@ -49,7 +49,7 @@
 </text>
 <text id="3" description="Craig Speech">
 	<conversation require="," exclude="Short Blade Get,Short Sword Get,Wooden Arrow Get,Spell Shot Get,Crooked Staff Get,Lesser Wand Get," trigger="-1" heroportrait1="Noah" enemyportrait1="" animportrait1="" heroportrait2="Craig" enemyportrait2="" animportrait2="" message="All that fighting has made me pretty tired.<hardstop><split>Yeah, you'll be able to rest soon, but before you do, check out the racks inside. <pause>Maybe there's some abandoned gear you can use.<hardstop>Once you've checked it out, tell me if you find anything.<hardstop>"/>
-	<conversation require="Short Blade Get,Short Sword Get,Wooden Arrow Get,Spell Shot Get,Crooked Staff Get,Lesser Wand Get," exclude="" trigger="9" heroportrait1="Craig" enemyportrait1="" animportrait1="" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="So, d'ya find anything?<hardstop><split>Yes. A whole bunch of weapons just left lying around.<hardstop><split>Insert Dialogue about Weapon System here.<hardstop>"/>
+	<conversation require="Short Blade Get,Short Sword Get,Wooden Arrow Get,Spell Shot Get,Crooked Staff Get,Lesser Wand Get," exclude="" trigger="9" heroportrait1="Craig" enemyportrait1="" animportrait1="" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="So, d'ya find anything?<hardstop><split>Yes. A whole bunch of weapons just left lying around.<hardstop><split>Looks like it's better than the old Erium hand-me-downs.<hardstop> Take a good look.<softstop> You might prefer some weapon types over the other.<hardstop>"/>
 </text>
 <text id="4" description="Full Inventory">
 	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message=""/>
@@ -58,7 +58,7 @@
 	<string require="Short Blade Get,Short Sword Get,Wooden Arrow Get,Spell Shot Get,Crooked Staff Get,Lesser Wand Get," exclude="," trigger="-1" heroportrait="Noah" enemyportrait="" animportrait="" message="I've searched everywhere. I don't think I'll find anything else.<hardstop>"/>
 </text>
 <text id="6" description="Craig Hit the Sack">
-	<yesno require="Short Blade Get,Short Sword Get,Wooden Arrow Get,Spell Shot Get,Crooked Staff Get,Lesser Wand Get," exclude="," triggeryes="1" triggerno="-1" heroportrait="Craig" enemyportrait="" animportrait="" message="OK. So after all that, ya ready to hit the sack?<softstop>"/>
+	<yesno require="Short Blade Get,Short Sword Get,Wooden Arrow Get,Spell Shot Get,Crooked Staff Get,Lesser Wand Get," exclude="," triggeryes="1" triggerno="-1" heroportrait="Craig" enemyportrait="" animportrait="" message="Ya finally ready to hit the sack?<softstop>"/>
 </text>
 <cinematic id="0" description="Scene1" camerax="0" cameray="0">
 	<playmusic music="castlenight" volume="75"/>
@@ -79,12 +79,12 @@
 	<speech text="I've never been in such a disgusting place in my life! I'm going to have nightmares for years. Thanks, Craig.<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait=""/>
 	<speech text="You guys wait here and lay low while I scout the area out. <hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
 	<haltingmove name="Craig" x="96" y="264" speed="2.4" movehor="false" movediag="false"/>
-	<speech text="Has anyone seen Hunn? <hardstop>" heroportrait="Olivia" enemyportrait="" animportrait=""/>
+	<speech text="Has anyone seen Huun? <hardstop>" heroportrait="Olivia" enemyportrait="" animportrait=""/>
 	<speech text="I'm not going back in there for that bum.  I'm sure he can find his way out. <hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
 	<haltingmove name="Craig" x="96" y="192" speed="2.4" movehor="false" movediag="false"/>
 	<speech text="It looks like we've come out near an old guard post in the outskirts of Erium. <hardstop> " heroportrait="Craig" enemyportrait="" animportrait=""/>
 	<speech text="WHAT, more guards?! You're saying that I went through that disgusting sewer to escape, just to run into a guard post?!<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
-	<speech text="Sheesh! Relax! it's an old abandond guard house. <hardstop> I think we should take shelter there for the night. <softstop> We could all use some rest.<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
+	<speech text="Sheesh! Relax! It's an old abandond guard house. <hardstop> I think we should take shelter there for the night. <softstop> We could all use some rest.<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
 	<fademusic duration="1000"/>
 	<haltingmovepath name="Craig" x="144" y="288" speed="2.4"/>
 	<haltingmovepath name="Noah" x="120" y="264" speed="2.4"/>

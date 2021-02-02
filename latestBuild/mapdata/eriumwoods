@@ -3,7 +3,7 @@
 <trigger id="0" description="ToWorldMap" require="Battle4," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<loadmap mapdata="worldmap" enter="FromCabin" transdir=""/>
 </trigger>
-<trigger id="1" description="Start Battle 3" require="" exclude="" nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="1" description="Start Battle 3" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<startbattle battletriggers="battle3" entrance="battlestart" battbg="2"/>
 </trigger>
 <trigger id="2" description="Keep In House" require="," exclude="Battle4," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
@@ -26,7 +26,7 @@
 	<string require="," exclude="," trigger="1" heroportrait="" enemyportrait="" animportrait="" message="Cinematics Placeholder<pause> Battle 3 Commencing.<hardstop>"/>
 </text>
 <text id="1" description="craigYesNo">
-	<yesno require="," exclude="," triggeryes="3" triggerno="2" heroportrait="Craig" enemyportrait="" animportrait="Craig" message="Don't get too far ahead of yerself.  Why don't you take a rest.<hardstop>"/>
+	<yesno require="," exclude="," triggeryes="3" triggerno="2" heroportrait="Craig" enemyportrait="" animportrait="Craig" message="Don't get too far ahead of yerself.  Sit down and have a drink.<hardstop>"/>
 </text>
 <text id="2" description="CraigYesOption">
 	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="Good, we'll need all the rest we can get.<hardstop>"/>
@@ -35,13 +35,13 @@
 	<string require="," exclude="," trigger="-1" heroportrait="Huun" enemyportrait="" animportrait="Huun" message="I could use some water.<hardstop>"/>
 </text>
 <text id="4" description="SharnaSpokenTo">
-	<string require="," exclude="," trigger="-1" heroportrait="Sharna" enemyportrait="" animportrait="Sharna" message="Who would have guessed there was a cabin hidden away in the woods?<hardstop>"/>
+	<string require="," exclude="," trigger="-1" heroportrait="Sharna" enemyportrait="" animportrait="Sharna" message="I never knew there was a cabin hidden away in the woods.<hardstop>"/>
 </text>
 <text id="5" description="OliviaSpokenTo">
 	<string require="," exclude="," trigger="-1" heroportrait="Olivia" enemyportrait="" animportrait="Olivia" message="What happened to Eddie is awful.  I understand why he's upset.<hardstop>"/>
 </text>
 <text id="6" description="CraigSpokenTo">
-	<string require="," exclude="," trigger="-1" heroportrait="Craig" enemyportrait="" animportrait="Craig" message="So, what do you think of the place?<pause> I built it myself!<hardstop>"/>
+	<string require="" exclude="" trigger="-1" heroportrait="Craig" enemyportrait="" animportrait="Craig" message="Nice place, eh?<pause> Eddie picked a great spot!<hardstop>"/>
 </text>
 <cinematic id="0" description="PreBattleThree" camerax="0" cameray="408">
 	<addactor x="456" y="456" name="Craig" anim="Craig" startanim="UnUp" visible="true" init="true" associatedhero=""/>

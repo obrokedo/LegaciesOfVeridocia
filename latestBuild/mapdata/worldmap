@@ -24,7 +24,7 @@
 <trigger id="7" description="ToTraderCabin" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<loadmap mapdata="traderscabin" enter="EnterFromWorldMap" transdir=""/>
 </trigger>
-<trigger id="8" description="ToDarkShrine" require="" exclude="" nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="8" description="ToDarkShrine" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<loadmap mapdata="darkshrineday" enter="FromWorldMap" transdir=""/>
 </trigger>
 <trigger id="9" description="PreBattle3Cinimatic" require="," exclude="Battle 3," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
@@ -59,14 +59,14 @@
 	<speech text="There are never this many guards here.  They must have come during the night.<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
 	<cameramove x="984" y="3600" time="1500"/>
 	<wait time="500"/>
-	<speech text="If you’ll just empty your bags and...<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
+	<speech text="If you'll just empty your bags and...<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
 	<tremble name="person"/>
 	<wait time="500"/>
 	<stopse name="person"/>
 	<tremble name="Guard1"/>
 	<wait time="750"/>
 	<stopse name="Guard1"/>
-	<speech text="IT’S THEM, THE ERIUM TRAITORS!  SEIZE THEM!<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
+	<speech text="IT'S THEM, THE ERIUM TRAITORS!  SEIZE THEM!<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
 	<haltingmove name="person" x="984" y="3648" speed="4.0" movehor="false" movediag="false"/>
 	<fallonface name="person" dir="1"/>
 	<wait time="750"/>
@@ -77,7 +77,7 @@
 	<removeactor name="person"/>
 	<cameramove x="864" y="3744" time="1500"/>
 	<wait time="500"/>
-	<speech text="Damn, looks like we’ll have to fight them all to get out of this mess.<hardstop>" heroportrait="Tyson" enemyportrait="" animportrait="Tyson"/>
+	<speech text="Damn, looks like we'll have to fight them all to get out of this mess.<hardstop>" heroportrait="Tyson" enemyportrait="" animportrait="Tyson"/>
 	<speech text="Stand down! Do not harm my servants. They wandered ahead of me from my caravan.<hardstop>" heroportrait="Liza" enemyportrait="" animportrait="Liza"/>
 	<addactor x="936" y="3480" name="Liza" anim="Liza" startanim="UnDown" visible="true" init="false" associatedhero=""/>
 	<cameramove x="960" y="3576" time="1500"/>
@@ -86,7 +86,7 @@
 	<facing name="Guard1" dir="2"/>
 	<speech text="These are the fugitives from Erium, and they are under arrest. Do not interfere, witch, or you will join them!<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
 	<facing name="Liza" dir="3"/>
-	<speech text="Who are you calling a ‘witch’?!<hardstop>" heroportrait="Liza" enemyportrait="" animportrait="Liza"/>
+	<speech text="Who are you calling a 'witch'>?!<hardstop>" heroportrait="Liza" enemyportrait="" animportrait="Liza"/>
 	<flashscreen time="0"/>
 	<addactor x="960" y="3480" name="FireBall" anim="SpriteFire" startanim="UnUp" visible="true" init="false" associatedhero=""/>
 	<playsound sound="casting" volume="75"/>
@@ -98,7 +98,7 @@
 	<haltingmove name="Liza" x="984" y="3504" speed="2.4" movehor="true" movediag="false"/>
 	<speech text="Indeed, it looks like you have quite the fight on your hands.<hardstop>" heroportrait="Liza" enemyportrait="" animportrait="Liza"/>
 	<speech text="Good. It’s about time I got to punch something.<hardstop>" heroportrait="Tyson" enemyportrait="" animportrait="Tyson"/>
-	<speech text="Thank you Liza, but one of you must stay with our caravan.<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
+	<speech text="Thank you Liza, but one of you must stay with our caravan.<hardstop>  Noah, who should join us?<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
 	<addmultihero heroids="Liza,Tyson,"/>
 	<loadbattle mapdata="battle4" entrance="BattleStart" battbg="2"/>
 </cinematic>
@@ -117,9 +117,9 @@
 	<stopse name="Crook"/>
 	<wait time="750"/>
 	<speech text="Oh!  Look at this little guy!  Can we keep him?<hardstop>" heroportrait="Huun" enemyportrait="" animportrait=""/>
-	<speech text="That’s a good idea.  We can’t just leave him here on his own.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
+	<speech text="That's a good idea.  We can't just leave him here on his own.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<speech text="Crook has joined the party.<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
-	<speech text="We need to pick up the pace to avoid any reinforcements.  Let’s get to Reyval for supplies and information then leave as quick as we came.<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
+	<speech text="We need to pick up the pace to avoid any reinforcements.  Let's get to Reyval for supplies and information.<hardstop> We'll try before any more trouble shows up.<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
 	<loadmap mapdata="worldmap" enter="PostBattle4"/>
 </cinematic>
 <cinematic id="4" description="Chapter1Block" camerax="0" cameray="0">
