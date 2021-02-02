@@ -64,7 +64,7 @@
 	<spellprogression spellid="DELIRIUM" promotedprog="true" specialpromoted="true" gained="5,15,22"/>
 	<spellprogression spellid="CYCLONE" promotedprog="true" specialpromoted="true" gained="8,13,26"/>
 	<spellprogression spellid="BLAZE" promotedprog="true" specialpromoted="true" gained="17,24"/>
-	<item itemid="Novice Wand" equipped="true"/>
+	<item itemid="Lesser Wand" equipped="true"/>
 </hero>
 <hero id="7" name="Tyson" promoted="false" level="3" animations="Tyson" leader="false">
 	<progression promoted="false" specialpromoted="false" specialpromoteitem="" move="6" movementtype="NORMAL" attack="Late" attackstart="5" attackend="22" defense="Linear" defensestart="6" defenseend="27" speed="Linear" speedstart="6" speedend="25" hp="Linear" hpstart="10" hpend="32" mp="Early" mpstart="6" mpend="26" fireAffin="10" elecAffin="-10" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="15" windAffin="0" lightAffin="5" bodyStrength="STRONG" bodyProgress="Linear" mindStrength="MEDIUM" mindProgress="Mid" counterStrength="WEAK" evadeStrength="MEDIUM" doubleStrength="STRONG" critStrength="WEAK" usuableitems="9,7," class="Monk"/>

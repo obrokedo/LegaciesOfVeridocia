@@ -19,4 +19,16 @@
 </quest>
 <quest id="9" description="Battle4" extradescription="">
 </quest>
+<quest id="10" description="Short Blade Get" extradescription="Found the Short Blade">
+</quest>
+<quest id="11" description="Short Sword Get" extradescription="Found the Short Sword">
+</quest>
+<quest id="12" description="Wooden Arrow Get" extradescription="Found the Wooden Arrow">
+</quest>
+<quest id="13" description="Spell Shot Get" extradescription="Found the Spell Shot">
+</quest>
+<quest id="14" description="Crooked Staff Get" extradescription="Found the Crooked Staff">
+</quest>
+<quest id="15" description="Lesser Wand Get" extradescription="Found the Lesser Wand">
+</quest>
 </quests>
