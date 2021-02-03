@@ -50,7 +50,7 @@
 	<changeaiapproach id="3" aitype="1" priority="2"/>
 	<changeaiapproach id="4" aitype="1" priority="2"/>
 </trigger>
-<trigger id="9" description="ShowCrookCinematic" require="FoundGargoyalEgg," exclude="" nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="9" description="ShowCrookCinematic" require="FoundGargoyalEgg," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<addhero heroid="Crook"/>
 	<loadcin mapdata="worldmap" cinid="3"/>
 </trigger>
@@ -58,7 +58,7 @@
 	<loadmap mapdata="worldmap" enter="PostBattle4" transdir=""/>
 </trigger>
 <text id="0" description="FoundEgg">
-	<string require="" exclude="" trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="Look, a strange egg!<hardstop>"/>
+	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="Look, a strange egg!<hardstop>"/>
 </text>
 <condition id="0" description="MapLoad" triggerid="0,">
 	<maploaded/>

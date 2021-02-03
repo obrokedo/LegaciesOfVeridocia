@@ -119,17 +119,17 @@
 	<speech text="Oh!  Look at this little guy!  Can we keep him?<hardstop>" heroportrait="Huun" enemyportrait="" animportrait=""/>
 	<speech text="That's a good idea.  We can't just leave him here on his own.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<speech text="Crook has joined the party.<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
-	<speech text="We need to pick up the pace to avoid any reinforcements.  Let's get to Reyval for supplies and information.<hardstop> We'll try before any more trouble shows up.<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
+	<speech text="We need to pick up the pace to avoid any reinforcements.  Let's get to Reyval for supplies and information.<hardstop> We'll try to leave before any more trouble shows up.<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
 	<loadmap mapdata="worldmap" enter="PostBattle4"/>
 </cinematic>
 <cinematic id="4" description="Chapter1Block" camerax="0" cameray="0">
 	<assactor name="Noah" hero="Noah" enemyid="0" npcid="" staticid=""/>
-	<speech text="We need to pick up the pace to avoid any reinforcements.  Let’s get to Reyval for supplies and information then leave as quick as we came.<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
+	<speech text="We need to pick up the pace to avoid any reinforcements.  Let's get to Reyval for supplies and information.<hardstop> We'll try to leave before any more trouble shows up.<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
 	<haltingmove name="Noah" x="1272" y="2736" speed="2.4" movehor="false" movediag="false"/>
 </cinematic>
 <cinematic id="5" description="Chapter1Block2" camerax="0" cameray="0">
 	<assactor name="Noah" hero="Noah" enemyid="0" npcid="" staticid=""/>
-	<speech text="We need to pick up the pace to avoid any reinforcements.  Let’s get to Reyval for supplies and information then leave as quick as we came.<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
+	<speech text="We need to pick up the pace to avoid any reinforcements.  Let's get to Reyval for supplies and information.<hardstop> We'll try to leave before any more trouble shows up.<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
 	<haltingmove name="Noah" x="1200" y="3024" speed="2.4" movehor="false" movediag="false"/>
 </cinematic>
 <condition id="0" description="ToErium" triggerid="1,">

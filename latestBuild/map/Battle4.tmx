@@ -91,11 +91,11 @@ H4sIAAAAAAAACu3OsQ0AIAgAQfbfQnfBuWQECxMo7pLvPwIAAAB4tardPfFRVqd7AgAAAAAAAAAAAIBx
 </properties>
 <polyline points="504,552 528,552 528,576 504,576 504,552"/>
 </object>
-<object id="7" name="EggImage" x="0" y="0">
+<object name="EggImage" x="0" y="0">
 <properties>
 <property name="sprite" value="name=EggImage searchtrigger=1 image=Egg"/>
 </properties>
-<polyline points="408,768 432,768 432,792 408,792 408,768"/>
+<polyline points="264,312 288,312 288,336 264,336 264,312"/>
 </object>
 </objectgroup>
 <objectgroup id="16" name="Battle">
@@ -155,19 +155,19 @@ H4sIAAAAAAAACu3OsQ0AIAgAQfbfQnfBuWQECxMo7pLvPwIAAAB4tardPfFRVqd7AgAAAAAAAAAAAIBx
 </object>
 <object id="17" name="BountyHunter2" x="0" y="0">
 <properties>
-<property name="enemy" value="ai=fighter vision=0 aiapproach=wait enemyid=Bounty Hunter unit=9"/>
+<property name="enemy" value="ai=fighter vision=2 aiapproach=wait enemyid=Bounty Hunter unit=9 music="/>
 </properties>
 <polyline points="312,240 336,240 336,264 312,264 312,240"/>
 </object>
 <object id="18" name="ReyvalMedic2" x="0" y="0">
 <properties>
-<property name="enemy" value="ai=cleric aiapproach=wait enemyid=Reyval Medic unit=10"/>
+<property name="enemy" value="ai=cleric vision=2 aiapproach=wait enemyid=Reyval Medic unit=10 music="/>
 </properties>
 <polyline points="360,240 384,240 384,264 360,264 360,240"/>
 </object>
 <object id="19" name="Boss (Mercenary Captain)" x="0" y="0">
 <properties>
-<property name="enemy" value="ai=fighter aiapproach=wait enemyid=Merc. Captain unit=11"/>
+<property name="enemy" value="ai=fighter vision=2 aiapproach=wait enemyid=Merc. Captain unit=11 music="/>
 </properties>
 <polyline points="336,216 360,216 360,240 336,240 336,216"/>
 </object>
