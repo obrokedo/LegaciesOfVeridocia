@@ -86,7 +86,7 @@
 	<facing name="Guard1" dir="2"/>
 	<speech text="These are the fugitives from Erium, and they are under arrest. Do not interfere, witch, or you will join them!<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
 	<facing name="Liza" dir="3"/>
-	<speech text="Who are you calling a 'witch'>?!<hardstop>" heroportrait="Liza" enemyportrait="" animportrait="Liza"/>
+	<speech text="Who are you calling a 'witch'?!<hardstop>" heroportrait="Liza" enemyportrait="" animportrait="Liza"/>
 	<flashscreen time="0"/>
 	<addactor x="960" y="3480" name="FireBall" anim="SpriteFire" startanim="UnUp" visible="true" init="false" associatedhero=""/>
 	<playsound sound="casting" volume="75"/>
@@ -94,11 +94,11 @@
 	<removeactor name="Guard1"/>
 	<removeactor name="FireBall"/>
 	<haltingmove name="Hugh" x="984" y="3552" speed="2.4" movehor="true" movediag="false"/>
-	<speech text="Liza!  Your arrival is most fortuitous!<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
+	<speech text="Liza!  Your timing is perfect!<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
 	<haltingmove name="Liza" x="984" y="3504" speed="2.4" movehor="true" movediag="false"/>
 	<speech text="Indeed, it looks like you have quite the fight on your hands.<hardstop>" heroportrait="Liza" enemyportrait="" animportrait="Liza"/>
 	<speech text="Good. It’s about time I got to punch something.<hardstop>" heroportrait="Tyson" enemyportrait="" animportrait="Tyson"/>
-	<speech text="Thank you Liza, but one of you must stay with our caravan.<hardstop>  Noah, who should join us?<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
+	<speech text="I can't have you both joining in. Someone will have to continue our work.<hardstop>  Noah, who should join us?<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
 	<addmultihero heroids="Liza,Tyson,"/>
 	<loadbattle mapdata="battle4" entrance="BattleStart" battbg="2"/>
 </cinematic>

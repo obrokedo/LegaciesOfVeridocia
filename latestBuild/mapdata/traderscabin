@@ -19,7 +19,7 @@
 <trigger id="5" description="PreBattle4" require="," exclude="Battle4," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<showtext textid="5"/>
 </trigger>
-<trigger id="6" description="RemoveNpcs" require="Battle4," exclude="" nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="6" description="RemoveNpcs" require="Battle4," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<removesprite name="NPCHugh"/>
 	<removesprite name="NPCHuun"/>
 	<removesprite name="NPCTyson"/>
@@ -42,7 +42,7 @@
 	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="hugh" message="It has been a while since I went to Avaria...  It's going to be harder to climb up there now.<hardstop>"/>
 </text>
 <text id="5" description="PreBattle4">
-	<string require="," exclude="," trigger="-1" heroportrait="Noah" enemyportrait="" animportrait="" message="We should keep moving<hardstop>"/>
+	<string require="" exclude="" trigger="-1" heroportrait="Noah" enemyportrait="" animportrait="" message="We should keep moving.<hardstop>"/>
 </text>
 <cinematic id="0" description="Part5HelpfulAdvice" camerax="0" cameray="0">
 	<assactor name="Noah" hero="Noah" enemyid="0" npcid="" staticid=""/>
