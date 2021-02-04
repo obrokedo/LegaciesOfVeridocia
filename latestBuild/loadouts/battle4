@@ -1,8 +1,8 @@
 <partyconfig>
 <gold amt=100/>
-<hero name=Noah level=3 exp=0 promoted=false promotionPath=-1 item=0,2 eqp=true,false/>
-<hero name=Sharna level=3 exp=0 promoted=false promotionPath=-1 item=1 eqp=true/>
-<hero name=Huun level=3 exp=0 promoted=false promotionPath=-1 item=3 eqp=true/>
+<hero name=Noah level=3 exp=0 promoted=false promotionPath=-1 item=4,2 eqp=true,false/>
+<hero name=Sharna level=3 exp=0 promoted=false promotionPath=-1 item=10 eqp=true/>
+<hero name=Huun level=3 exp=0 promoted=false promotionPath=-1 item=7 eqp=true/>
 <hero name=Eddie level=3 exp=0 promoted=false promotionPath=-1 item=8,2 eqp=true,false/>
 <hero name=Liza level=3 exp=0 promoted=false promotionPath=-1 item=11 eqp=true/>
 </partyconfig>
