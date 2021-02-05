@@ -49,5 +49,6 @@
 	<speech text="Such short-sightedness. There are many uses for a reckless pawn such as yourself.  Many indeed...<softstop><nextcin>" heroportrait="" enemyportrait="" animportrait=""/>
 	<wait time="250"/>
 	<loadcin mapdata="eriumcastlenight" cinid="5"/>
+	<showmainmenu/>
 </cinematic>
 </area>

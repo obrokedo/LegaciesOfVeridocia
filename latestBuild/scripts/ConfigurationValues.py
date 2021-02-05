@@ -12,6 +12,10 @@ class ConfigurationValues(EngineConfigurationValues):
     def getStartingMapData(self):
         return "erium"
     
+    # Gets the map that the intro cinematic should be played from. It plays cinematic 0
+    def getIntroCinematicMap(self):
+        return "darkshrine"
+    
     # TOWN
     # CINEMATIC
     #    If cinematic is selected then cinematic 0 will be ran and the start location will be ignored
