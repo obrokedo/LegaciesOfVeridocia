@@ -24,6 +24,7 @@ ss,menuborder,image/MenuBorder.png,12,12,0
 ss,healthbar,image/HealthBars.png,2,8
 ss,spelllevel,image/SpellLevels.png,14,8
 ss,yesnoselect,image/yesnoselector.png,6,34
+ss,portraitgems,image/PortraitGems.png,6,6,1
 // TYPE,NAME,PATH,SCALE
 image,battlecursor,image/battlecursor.gif
 image,smallflor,image/smflor.png
