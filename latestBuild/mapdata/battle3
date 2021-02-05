@@ -2,8 +2,6 @@
 <map file="EriumWoods.tmx"/>
 <trigger id="0" description="Battle1 Initialise" require="" exclude="Battle 3," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<playmusic music="battle3" volume="75"/>
-	<changeaitargethero id="3" heroid="5" priority="5"/>
-	<changeaitargethero id="5" heroid="5" priority="5"/>
 </trigger>
 <trigger id="1" description="Victory Results" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<completequest questid="Battle 3"/>
@@ -18,7 +16,7 @@
 	<changeaitargetenemy id="4" targetid="7" priority="1"/>
 	<changeaimove id="6" x="13" y="13" priority="1"/>
 </trigger>
-<trigger id="3" description="Fail Results" require="" exclude="" nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="3" description="Fail Results" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<reviveheroes hero="Noah"/>
 	<loadmap mapdata="eriumoutskirts" enter="start" transdir=""/>
 </trigger>

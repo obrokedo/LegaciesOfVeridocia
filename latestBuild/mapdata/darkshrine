@@ -10,24 +10,24 @@
 	<move name="Lexus" x="456" y="264" speed="1.0" movehor="false" movediag="false"/>
 	<wait time="1000"/>
 	<flashscreen time="100"/>
-	<playsound sound="Thunder" volume="100"/>
+	<playsound sound="thundercrack" volume="100"/>
 	<cameramove x="480" y="264" time="7000"/>
 	<flashscreen time="100"/>
-	<playsound sound="Thunder" volume="100"/>
+	<playsound sound="thundercrack" volume="100"/>
 	<wait time="1500"/>
 	<flashscreen time="100"/>
-	<playsound sound="Thunder" volume="100"/>
+	<playsound sound="thundercrack" volume="100"/>
 	<wait time="250"/>
 	<flashscreen time="100"/>
-	<playsound sound="Thunder" volume="100"/>
+	<playsound sound="thundercrack" volume="100"/>
 	<wait time="2750"/>
 	<flashscreen time="100"/>
-	<playsound sound="Thunder" volume="100"/>
+	<playsound sound="thundercrack" volume="100"/>
 	<speech text="Preparations move as I have dictated, do they not?<softstop><nextcin>" heroportrait="" enemyportrait="" animportrait=""/>
 	<flashscreen time="100"/>
 	<speech text="They do.<softstop><nextcin>" heroportrait="" enemyportrait="" animportrait=""/>
 	<flashscreen time="100"/>
-	<playsound sound="Thunder" volume="100"/>
+	<playsound sound="thundercrack" volume="100"/>
 	<speech text="Then why have you chosen to disturb me?<softstop><nextcin>" heroportrait="" enemyportrait="" animportrait=""/>
 	<haltingmove name="Lexus" x="504" y="264" speed="1.0" movehor="false" movediag="false"/>
 	<facing name="Lexus" dir="0"/>
@@ -42,7 +42,7 @@
 	<facing name="Lexus" dir="0"/>
 	<speech text="This will be your undoing... <softstop><nextcin>" heroportrait="" enemyportrait="" animportrait=""/>
 	<flashscreen time="100"/>
-	<playsound sound="Thunder" volume="100"/>
+	<playsound sound="thundercrack" volume="100"/>
 	<move name="Lexus" x="480" y="792" speed="1.0" movehor="false" movediag="false"/>
 	<wait time="1000"/>
 	<fadeout time="3000" halting="true"/>

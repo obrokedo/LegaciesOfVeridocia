@@ -180,13 +180,13 @@ H4sIAAAAAAAACu3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAAAAAAAADwZkvEChtAOAAA
 </object>
 <object name="Erium Archer" x="0" y="0">
 <properties>
-<property name="enemy" value="ai=fighter vision=0 aiapproach=wait enemyid=Erium Archer unit=2 music="/>
+<property name="enemy" value="ai=fighter vision=0 aiapproach=wait enemyid=Erium Archer unit=2"/>
 </properties>
 <polyline points="312,192 336,192 336,216 312,216"/>
 </object>
 <object name="Soldier" x="0" y="0">
 <properties>
-<property name="enemy" value="ai=fighter vision=1 aiapproach=wait enemyid=Erium Soldier unit=3 music="/>
+<property name="enemy" value="ai=fighter vision=1 aiapproach=wait enemyid=Erium Soldier unit=3"/>
 </properties>
 <polyline points="288,216 312,216 312,240 288,240"/>
 </object>
@@ -197,7 +197,7 @@ H4sIAAAAAAAACu3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAAAAAAAADwZkvEChtAOAAA
 </object>
 <object id="9" name="Soldier" type="NPC" x="288" y="240" width="24" height="24">
 <properties>
-<property name="enemy" value="ai=fighter vision=1 aiapproach=wait enemyid=Erium Soldier unit=5 music="/>
+<property name="enemy" value="ai=fighter vision=1 aiapproach=wait enemyid=Erium Soldier unit=5"/>
 </properties>
 </object>
 <object id="10" name="Erium Archer" type="NPC" x="240" y="336" width="24" height="24">
