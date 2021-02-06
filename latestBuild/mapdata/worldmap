@@ -159,4 +159,89 @@
 <condition id="8" description="ToDarkShrine" triggerid="8,">
 	<enterloc location="ToDarkShrine" immediate="false"/>
 </condition>
+<objectgroup id="48" name="Trigger Regions">
+<object id="5" name="ToErium" x="1200" y="4176" width="24" height="24">
+<properties>
+<property name=" " value=""/>
+</properties>
+</object>
+<object id="10" name="FromErium" x="-24" y="0">
+<properties>
+<property name="start" value="exit=FromErium"/>
+</properties>
+<polyline points="1248,4176 1272,4176 1272,4200 1248,4200"/>
+</object>
+<object id="7" name="FromCabin" x="1032" y="4032" width="24" height="24">
+<properties>
+<property name="start" value="exit=FromCabin"/>
+</properties>
+</object>
+<object id="8" name="ToCabin" x="1032" y="4008" width="24" height="24">
+<properties>
+<property name=" " value=""/>
+</properties>
+</object>
+<object id="9" name="CabinNotVisited" x="744" y="3960" width="816" height="24">
+<properties>
+<property name="" value=""/>
+</properties>
+</object>
+<object id="11" name="PostBattle4" x="0" y="0">
+<properties>
+<property name="start" value="exit=PostBattle4"/>
+</properties>
+<polyline points="960,2952 936,2952 936,2976 960,2976 960,2952"/>
+</object>
+<object id="12" name="ToReyval" x="0" y="0">
+<properties>
+<property name="" value=""/>
+</properties>
+<polyline points="936,2880 960,2880 960,2904 936,2904 936,2880"/>
+</object>
+<object id="13" name="Chapter1Block" x="0" y="0">
+<properties>
+<property name="" value=""/>
+</properties>
+<polyline points="1272,2688 1296,2688 1296,2712 1272,2712 1272,2688"/>
+</object>
+<object id="14" name="Chapter1Block2" x="0" y="0">
+<properties>
+<property name="" value=""/>
+</properties>
+<polyline points="1248,3024 1272,3024 1272,3120 1248,3120 1248,3024"/>
+</object>
+<object id="15" name="ToTraderCabin" x="0" y="0">
+<properties>
+<property name="" value=""/>
+</properties>
+<polyline points="864,3744 888,3744 888,3768 864,3768 864,3744"/>
+</object>
+<object id="16" name="FromTraderCabin" x="0" y="0">
+<properties>
+<property name="start" value="exit=FromTraderCabin"/>
+</properties>
+<polyline points="864,3720 888,3720 888,3744 864,3744 864,3720"/>
+</object>
+<object id="17" name="FromReyval" x="0" y="0">
+<properties>
+<property name="start" value="exit=FromReyval"/>
+</properties>
+<polyline points="936,2904 960,2904 960,2928 936,2928 936,2904"/>
+</object>
+<object id="18" name="ToDarkShrine" x="0" y="0">
+<properties>
+<property name="" value=""/>
+</properties>
+<polyline points="1080,4296 1104,4296 1104,4320 1080,4320 1080,4296"/>
+</object>
+<object id="19" name="FromDarkShrine" x="0" y="0">
+<properties>
+<property name="start" value="exit=FromDarkShrine"/>
+</properties>
+<polyline points="1080,4320 1104,4320 1104,4344 1080,4344 1080,4320"/>
+</object>
+</objectgroup>
+<objectgroup id="51" name="Battle"/>
+<objectgroup name="NPCs-Objects" visible="1"/>
+<objectgroup id="53" name="Terrain"/>
 </area>

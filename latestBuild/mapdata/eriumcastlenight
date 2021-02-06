@@ -627,4 +627,169 @@
 <condition id="0" description="MapLoad" triggerid="0,">
 	<maploaded/>
 </condition>
+<objectgroup name="Trigger Region" visible="1">
+<object id="9" name="Battle Start" x="672" y="648" width="24" height="24">
+<properties>
+<property name="start" value="exit=battle1"/>
+</properties>
+</object>
+<object id="10" name="Top Left BT" x="624" y="672" width="96" height="120">
+<properties>
+<property name="" value=""/>
+</properties>
+</object>
+<object id="11" name="Top Right BT" x="816" y="648" width="144" height="120">
+<properties>
+<property name="" value=""/>
+</properties>
+</object>
+<object id="12" name="Bottom Left BT" x="624" y="696" width="96" height="180">
+<properties>
+<property name="" value=""/>
+</properties>
+</object>
+<object id="13" name="Kill Box BT" x="696" y="708" width="168" height="132">
+<properties>
+<property name="" value=""/>
+</properties>
+</object>
+<object id="14" name="Bottom Right BT" x="864" y="744" width="144" height="144">
+<properties>
+<property name="" value=""/>
+</properties>
+</object>
+<object id="27" name="Battle Start" x="672" y="600" width="48" height="24">
+<properties>
+<property name="start" value="exit=battle1"/>
+</properties>
+</object>
+<object id="28" name="Battle Start" x="600" y="576" width="48" height="24">
+<properties>
+<property name="start" value="exit=battle1"/>
+</properties>
+</object>
+</objectgroup>
+<objectgroup id="18" name="Battle">
+<object id="1" name="Darkling Ooze" x="840" y="600" width="24" height="24">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=slow enemyid=Darkling Ooze unit=0"/>
+</properties>
+</object>
+<object id="2" name="Darkling Ooze" x="936" y="696" width="24" height="24">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=wait enemyid=Darkling Ooze unit=4"/>
+</properties>
+</object>
+<object id="3" name="Darkling Ooze" x="888" y="792" width="24" height="24">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=wait enemyid=Darkling Ooze unit=5"/>
+</properties>
+</object>
+<object id="4" name="Darkling Ooze" x="792" y="864" width="24" height="24">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=wait enemyid=Darkling Ooze unit=6"/>
+</properties>
+</object>
+<object id="5" name="Darkling Ooze" x="744" y="912" width="24" height="24">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=wait enemyid=Darkling Ooze unit=3"/>
+</properties>
+</object>
+<object id="6" name="Darkling Ooze" x="648" y="792" width="24" height="24">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=wait enemyid=Darkling Ooze unit=2"/>
+</properties>
+</object>
+<object id="7" name="Darkling Ooze" x="648" y="720" width="24" height="24">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=wait enemyid=Darkling Ooze unit=1"/>
+</properties>
+</object>
+<object id="8" name="Darkling Ooze" x="816" y="768" width="24" height="24">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=wait enemyid=Darkling Ooze unit=7"/>
+</properties>
+</object>
+<object id="15" x="600" y="576" width="432" height="432">
+<properties>
+<property name="battleregion" value=""/>
+</properties>
+</object>
+</objectgroup>
+<objectgroup name="NPCs-Objects" visible="1">
+<object name="DoorLeft" x="0" y="0">
+<properties>
+<property name="door" value="image=HouseDoorLeft"/>
+</properties>
+<polyline points="744,360 768,360 768,384 744,384 744,360"/>
+</object>
+<object name="DoorRight" x="0" y="0">
+<properties>
+<property name="door" value="image=HouseDoorRight"/>
+</properties>
+<polyline points="768,360 792,360 792,384 768,384 768,360"/>
+</object>
+</objectgroup>
+<objectgroup id="13" name="Terrain" visible="0">
+<object id="16" x="600" y="576">
+<properties>
+<property name="terrain" value="platform=grassfloor type=GRASS"/>
+</properties>
+<polyline points="0,0 144,0 144,96 48,96 48,72 120,72 120,48 48,48 48,24 0,24 0,0"/>
+</object>
+<object id="17" x="744" y="576">
+<properties>
+<property name="terrain" value="type=ROAD"/>
+</properties>
+<polyline points="0,0 48,0 48,168 96,168 96,192 192,192 192,96 216,96 216,216 96,216 96,240 48,240 48,288 24,288 24,360 48,360 48,432 0,432 0,264 24,264 24,240 -24,240 -24,216 -48,216 -48,192 -24,192 -24,168 24,168 24,216 48,216 48,192 24,192 24,144 -24,144 -24,120 -96,120 -96,96 0,96 0,0"/>
+</object>
+<object id="18" x="648" y="696">
+<properties>
+<property name="terrain" value="platform=grassfloor type=THICK-GRASS"/>
+</properties>
+<polyline points="0,0 0,36 24,36 24,24 48,24 48,0 0,0"/>
+</object>
+<object id="19" x="936" y="672">
+<properties>
+<property name="terrain" value="type=THICK-GRASS"/>
+</properties>
+<polyline points="0,0 -24,0 -24,24 0,24 0,0"/>
+</object>
+<object id="20" x="624" y="816">
+<properties>
+<property name="terrain" value="platform=grassfloor type=THICK-GRASS"/>
+</properties>
+<polyline points="0,0 24,0 24,96 0,96 0,0"/>
+</object>
+<object id="21" x="960" y="960">
+<properties>
+<property name="terrain" value="platform=grassfloor type=THICK-GRASS"/>
+</properties>
+<polyline points="0,0 24,0 24,-24 48,-24 48,-168 24,-168 24,-72 0,-72 0,0"/>
+</object>
+<object id="22" x="648" y="672">
+<properties>
+<property name="terrain" value="platform=grassfloor type=GRASS"/>
+</properties>
+<polyline points="0,0 -24,0 -24,144 0,144 0,240 -24,240 -24,264 0,264 0,336 96,336 96,264 72,264 72,216 96,216 96,168 48,168 48,144 24,144 24,120 48,120 48,96 24,96 24,60 0,60 0,0"/>
+</object>
+<object id="23" x="792" y="576">
+<properties>
+<property name="terrain" value="platform=grassfloor type=GRASS"/>
+</properties>
+<polyline points="0,0 240,0 240,24 72,24 72,72 48,72 48,96 120,96 120,120 144,120 144,192 72,192 72,144 96,144 96,120 0,120 0,48 24,48 24,24 0,24 0,0"/>
+</object>
+<object id="24" x="960" y="672">
+<properties>
+<property name="terrain" value="platform=grassfloor type=THICK-GRASS"/>
+</properties>
+<polyline points="0,0 72,0 72,24 48,24 48,48 72,48 72,72 24,72 24,48 0,48 0,0"/>
+</object>
+<object id="25" x="960" y="720">
+<properties>
+<property name="terrain" value="platform=grassfloor type=GRASS"/>
+</properties>
+<polyline points="0,0 24,0 24,24 48,24 48,72 24,72 24,168 0,168 0,288 -168,288 -168,168 -192,168 -192,144 -168,144 -168,120 -96,120 -96,72 0,72 0,0"/>
+</object>
+</objectgroup>
 </area>

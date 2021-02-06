@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="82" height="88" tilewidth="12" tileheight="12" infinite="0" nextlayerid="32" nextobjectid="4">
+<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="82" height="88" tilewidth="12" tileheight="12" infinite="0" nextlayerid="32" nextobjectid="4">
  <tileset firstgid="1" name="Dev-Map" tilewidth="12" tileheight="12" tilecount="495" columns="15">
   <image source="../image/Dev-Map.gif" trans="495d47" width="180" height="400"/>
  </tileset>
@@ -57,30 +57,6 @@
    H4sIAAAAAAAACu3WQQ7DIAwF0R6g9z9vV14kUhMMH9vAjJRNRAK8iiqfDxEREREREREREdEZfRsveg7HvlrdcH0OR029Hjhew1HTP4+384vjNRw14agJR02t3zN89zyHY1+q7+7TXXH0FeW1u2+2F461HLN/h2wvHGs4Zvv9W0eVq3f91arm9bauquHoK/v89rpU8bOyvXCMdbzfx/FMx97nRp9vHV8lHDX1Orw9P2vean4WjrmNnmvVfKt3umPr/7n3PVGOVcJxbH7v/3jU5V1/VjhqU5/XKM8qfhaOmlZzrHaeLRw1repYLRzH8q6/9blZfvf5W+/PDkdNvfvofZ96ntb7s8NxrNnnLfp99/FR4ahp1NF7Lr3jotY1Go6aotY76xxn+6nXi+N1vlnrHx23m6N33Nv41nG9v3dWs/YR9b4qnrPOldrlNMfsK6vsfe/iaGXvf3U/K9thF0cr22N1PyvbZRfHe9lOq/tZ2V67OFrZbjjiONLp+1eFoy/OqSYcteGnaXXHH5GPTBTAcAAA
   </data>
  </layer>
- <objectgroup id="27" name="Terrain"/>
- <objectgroup id="28" name="Trigger Regions">
-  <object id="1" name="ToWorldMap" x="0" y="0">
-   <properties>
-    <property name="" value=""/>
-   </properties>
-   <polyline points="456,1032 528,1032 528,1056 456,1056 456,1032"/>
-  </object>
-  <object id="2" name="FromWorldMap" x="0" y="0">
-   <properties>
-    <property name="start" value="exit=FromWorldMap"/>
-   </properties>
-   <polyline points="480,1008 504,1008 504,1032 480,1032 480,1008"/>
-  </object>
- </objectgroup>
- <objectgroup id="29" name="Meta">
-  <object id="3" name="Chest1" x="0" y="0">
-   <properties>
-    <property name="chest" value="spriteimage=closedchest itemid=17"/>
-   </properties>
-   <polyline points="888,360 912,360 912,384 888,384 888,360"/>
-  </object>
- </objectgroup>
- <objectgroup id="30" name="Battle"/>
  <layer id="31" name="Overlay" width="82" height="88">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAACu3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPBuT4AgAcBwAAA=

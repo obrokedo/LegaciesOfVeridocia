@@ -32,10 +32,10 @@
 	<additem itemid="Lesser Wand" failuretext="4"/>
 	<completequest questid="Lesser Wand Get"/>
 </trigger>
-<trigger id="8" description="Got 'Em All" require="Short Blade Get,Short Sword Get,Wooden Arrow Get,Spell Shot Get,Crooked Staff Get,Lesser Wand Get," exclude="" nonretrig="true" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="8" description="Got 'Em All" require="Short Blade Get,Short Sword Get,Wooden Arrow Get,Spell Shot Get,Crooked Staff Get,Lesser Wand Get," exclude="," nonretrig="true" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<showtext textid="5"/>
 </trigger>
-<trigger id="9" description="Hit the Sack" require="" exclude="" nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="9" description="Hit the Sack" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<showtext textid="6"/>
 </trigger>
 <text id="0" description="Huun Speech">
@@ -48,7 +48,7 @@
 	<string require="," exclude="," trigger="-1" heroportrait="Olivia" enemyportrait="" animportrait="" message="I'm standing watch, <pause> just incase one of those guards is crazy enough to follow us through there.<hardstop>"/>
 </text>
 <text id="3" description="Craig Speech">
-	<conversation require="" exclude="Short Blade Get,Short Sword Get,Wooden Arrow Get,Spell Shot Get,Crooked Staff Get,Lesser Wand Get," trigger="-1" heroportrait1="Noah" enemyportrait1="" animportrait1="" heroportrait2="Craig" enemyportrait2="" animportrait2="" message="All that fighting has made me pretty tired.<hardstop><split>Yeah, you'll be able to rest soon, but before you do, check out the racks inside. <pause>Maybe there's some abandoned gear you can use.<hardstop>Once you've checked it out, tell me if you find anything.<hardstop>"/>
+	<conversation require="," exclude="Short Blade Get,Short Sword Get,Wooden Arrow Get,Spell Shot Get,Crooked Staff Get,Lesser Wand Get," trigger="-1" heroportrait1="Noah" enemyportrait1="" animportrait1="" heroportrait2="Craig" enemyportrait2="" animportrait2="" message="All that fighting has made me pretty tired.<hardstop><split>Yeah, you'll be able to rest soon, but before you do, check out the racks inside. <pause>Maybe there's some abandoned gear you can use.<hardstop>Once you've checked it out, tell me if you find anything.<hardstop>"/>
 	<conversation require="Short Blade Get,Short Sword Get,Wooden Arrow Get,Spell Shot Get,Crooked Staff Get,Lesser Wand Get," exclude="," trigger="9" heroportrait1="Craig" enemyportrait1="" animportrait1="" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="So, d'ya find anything?<hardstop><split>Yes. A whole bunch of weapons just left lying around.<hardstop><split>Looks like it's better than the old Erium hand-me-downs.<hardstop> Take a good look.<softstop> You might prefer some weapon types over the other.<hardstop>"/>
 </text>
 <text id="4" description="Full Inventory">
@@ -114,4 +114,82 @@
 	<questcomp quest="Crooked Staff Get"/>
 	<questcomp quest="Lesser Wand Get"/>
 </condition>
+<objectgroup name="Trigger Region" visible="1">
+<object id="9" name="start" x="0" y="0">
+<properties>
+<property name="start" value="exit=start"/>
+</properties>
+<polyline points="504,336 504,360 528,360 528,336 504,336"/>
+</object>
+<object id="10" name="Weapon Rack" x="0" y="0">
+<properties>
+<property name="searcharea" value="searchtrigger=-1"/>
+</properties>
+<polyline points="-288,-120 -288,-120 -312,-120 -312,-96 -288,-96 -288,-120"/>
+</object>
+<object id="14" name="Rack 1" x="0" y="0">
+<properties>
+<property name="searcharea" value="searchtrigger=2"/>
+</properties>
+<polyline points="528,216 552,216 552,240 528,240 528,216"/>
+</object>
+<object id="16" name="Rack 2b" x="0" y="0">
+<properties>
+<property name="searcharea" value="searchtrigger=3"/>
+</properties>
+<polyline points="552,192 576,192 576,216 552,216 552,192"/>
+</object>
+<object id="17" name="Rack 3" x="0" y="0">
+<properties>
+<property name="searcharea" value="searchtrigger=4"/>
+</properties>
+<polyline points="576,192 600,192 600,216 576,216 576,192"/>
+</object>
+<object id="18" name="Crate" x="0" y="0">
+<properties>
+<property name="searcharea" value="searchtrigger=5"/>
+</properties>
+<polyline points="600,192 624,192 624,216 600,216 600,192"/>
+</object>
+<object id="19" name="Barrel 2" x="0" y="0">
+<properties>
+<property name="searcharea" value="searchtrigger=7"/>
+</properties>
+<polyline points="624,240 648,240 648,264 624,264 624,240"/>
+</object>
+<object id="20" name="Barrel 1" x="0" y="0">
+<properties>
+<property name="searcharea" value="searchtrigger=6"/>
+</properties>
+<polyline points="600,240 624,240 624,264 600,264 600,240"/>
+</object>
+</objectgroup>
+<objectgroup name="Battle" visible="1"/>
+<objectgroup id="12" name="Meta">
+<object id="11" name="craig npc2" x="816" y="504">
+<properties>
+<property name="npc" value="noturn=false facing=1 name=Craig throughwall=false noanimate=false animation=Craig textid=3 wander=0"/>
+</properties>
+<polyline points="-288,-168 -264,-168 -264,-192 -288,-192 -288,-168"/>
+</object>
+<object id="5" name="NPC Olivia" x="24" y="0">
+<properties>
+<property name="npc" value="noturn=false facing=3 name=Olivia throughwall=false noanimate=false animation=Olivia textid=2 wander=0"/>
+</properties>
+<polyline points="240,312 264,312 264,336 240,336 240,312"/>
+</object>
+<object id="12" name="NPC Sharna" x="840" y="336">
+<properties>
+<property name="npc" value="noturn=false facing=2 name=Sharna throughwall=false noanimate=false animation=Sharna textid=1 wander=0"/>
+</properties>
+<polyline points="-216,-120 -192,-120 -192,-96 -216,-96 -216,-120"/>
+</object>
+<object id="7" name="NPC Huun" x="0" y="0">
+<properties>
+<property name="npc" value="noturn=false facing=1 name=Huun throughwall=false noanimate=false animation=Huun textid=0 wander=2"/>
+</properties>
+<polyline points="312,168 336,168 336,192 312,192 312,168"/>
+</object>
+</objectgroup>
+<objectgroup id="10" name="Terrain" visible="0"/>
 </area>

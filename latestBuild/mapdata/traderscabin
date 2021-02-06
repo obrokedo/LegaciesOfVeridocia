@@ -42,7 +42,7 @@
 	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="hugh" message="It has been a while since I went to Avaria...  It's going to be harder to climb up there now.<hardstop>"/>
 </text>
 <text id="5" description="PreBattle4">
-	<string require="" exclude="" trigger="-1" heroportrait="Noah" enemyportrait="" animportrait="" message="We should keep moving.<hardstop>"/>
+	<string require="," exclude="," trigger="-1" heroportrait="Noah" enemyportrait="" animportrait="" message="We should keep moving.<hardstop>"/>
 </text>
 <cinematic id="0" description="Part5HelpfulAdvice" camerax="0" cameray="0">
 	<assactor name="Noah" hero="Noah" enemyid="0" npcid="" staticid=""/>
@@ -127,4 +127,82 @@
 <condition id="3" description="UponMapEntry" triggerid="6,">
 	<maploaded/>
 </condition>
+<objectgroup name="Trigger Region" visible="1">
+<object id="2" name="EnterFromWorldMap" x="0" y="0">
+<properties>
+<property name="start" value="exit=EnterFromWorldMap"/>
+</properties>
+<polyline points="192,696 216,696 216,720 192,720 192,696"/>
+</object>
+<object id="3" name="ContinuePart5" x="0" y="0">
+<properties>
+<property name="" value=""/>
+</properties>
+<polyline points="144,600 240,600 240,624 144,624 144,600"/>
+</object>
+<object id="4" name="AfterPart5" x="0" y="0">
+<properties>
+<property name="start" value="exit=AfterPart5"/>
+</properties>
+<polyline points="576,264 600,264 600,288 576,288 576,264"/>
+</object>
+<object id="5" name="ToWorldMap" x="0" y="0">
+<properties>
+<property name="" value=""/>
+</properties>
+<polyline points="48,0 144,0 144,24 48,24 48,0"/>
+</object>
+<object id="6" name="ToWorldMapSouth" x="0" y="0">
+<properties>
+<property name="" value=""/>
+</properties>
+<polyline points="120,696 240,696 240,720 120,720 120,696"/>
+</object>
+</objectgroup>
+<objectgroup name="Battle" visible="1"/>
+<objectgroup id="12" name="Meta">
+<object id="7" name="chest1" x="0" y="0">
+<properties>
+<property name="chest" value="spriteimage=closedchest itemid=-1"/>
+</properties>
+<polyline points="504,240 528,240 528,264 504,264 504,240"/>
+</object>
+<object id="8" name="ROOF" x="0" y="0">
+<properties>
+<property name="roof" value=""/>
+</properties>
+<polyline points="168,384 672,384 672,216 504,216 504,48 168,48 168,384"/>
+</object>
+<object id="9" name="NPCTyson" x="0" y="0">
+<properties>
+<property name="npc" value="noturn=false facing=1 name=NPCTyson throughwall=false noanimate=false animation=Tyson textid=3 wander=5"/>
+</properties>
+<polyline points="528,528 552,528 552,552 528,552 528,528"/>
+</object>
+<object id="10" name="NPCEddie" x="0" y="0">
+<properties>
+<property name="npc" value="noturn=false facing=1 name=NPCEddie throughwall=false noanimate=false animation=Eddie textid=2 wander=4"/>
+</properties>
+<polyline points="528,144 552,144 552,168 528,168 528,144"/>
+</object>
+<object id="11" name="NPCHuun" x="0" y="0">
+<properties>
+<property name="npc" value="noturn=false facing=1 name=NPCHuun throughwall=false noanimate=false animation=Huun textid=0 wander=4"/>
+</properties>
+<polyline points="264,96 288,96 288,120 264,120 264,96"/>
+</object>
+<object id="12" name="NPCHugh" x="0" y="0">
+<properties>
+<property name="npc" value="noturn=false facing=2 name=NPCHugh throughwall=false noanimate=false animation=hugh textid=4 wander=3"/>
+</properties>
+<polyline points="408,528 432,528 432,552 408,552 408,528"/>
+</object>
+<object id="13" name="NPCSharna" x="0" y="0">
+<properties>
+<property name="npc" value="noturn=false facing=1 name=NPCSharna throughwall=false noanimate=false animation=Sharna textid=1 wander=3"/>
+</properties>
+<polyline points="600,96 624,96 624,120 600,120 600,96"/>
+</object>
+</objectgroup>
+<objectgroup id="10" name="Terrain"/>
 </area>

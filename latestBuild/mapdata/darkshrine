@@ -51,4 +51,8 @@
 	<loadcin mapdata="eriumcastlenight" cinid="5"/>
 	<showmainmenu/>
 </cinematic>
+<objectgroup name="Trigger Region" visible="1"/>
+<objectgroup name="Battle" visible="1"/>
+<objectgroup id="29" name="Meta"/>
+<objectgroup id="27" name="Terrain"/>
 </area>

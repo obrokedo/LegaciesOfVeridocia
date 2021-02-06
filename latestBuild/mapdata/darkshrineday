@@ -1,9 +1,33 @@
 <area>
 <map file="DarkShrineDay.tmx"/>
-<trigger id="0" description="ToWorldMap" require="" exclude="" nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="0" description="ToWorldMap" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<loadmap mapdata="worldmap" enter="FromDarkShrine" transdir=""/>
 </trigger>
 <condition id="0" description="ToWorldMap" triggerid="0,">
 	<enterloc location="ToWorldMap" immediate="false"/>
 </condition>
+<objectgroup name="Trigger Region" visible="1">
+<object id="1" name="ToWorldMap" x="0" y="0">
+<properties>
+<property name="" value=""/>
+</properties>
+<polyline points="456,1032 528,1032 528,1056 456,1056 456,1032"/>
+</object>
+<object id="2" name="FromWorldMap" x="0" y="0">
+<properties>
+<property name="start" value="exit=FromWorldMap"/>
+</properties>
+<polyline points="480,1008 504,1008 504,1032 480,1032 480,1008"/>
+</object>
+</objectgroup>
+<objectgroup name="Battle" visible="1"/>
+<objectgroup id="29" name="Meta">
+<object id="3" name="Chest1" x="0" y="0">
+<properties>
+<property name="chest" value="spriteimage=closedchest itemid=17"/>
+</properties>
+<polyline points="888,360 912,360 912,384 888,384 888,360"/>
+</object>
+</objectgroup>
+<objectgroup id="27" name="Terrain"/>
 </area>

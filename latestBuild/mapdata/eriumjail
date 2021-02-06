@@ -7,7 +7,7 @@
 <trigger id="1" description="SouthStairsExit" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<loadmap mapdata="eriumcastle" enter="SouthJailStairsEntrance" transdir=""/>
 </trigger>
-<trigger id="2" description="NorthSairsExit" require="" exclude="" nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="2" description="NorthSairsExit" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<loadmap mapdata="eriumcastle" enter="NorthJailStairsEntrance" transdir=""/>
 </trigger>
 <trigger id="3" description="Restart Battle2" require="Battle1," exclude="Battle2," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
@@ -253,4 +253,287 @@
 <condition id="3" description="MapLoad" triggerid="0,">
 	<maploaded/>
 </condition>
+<objectgroup name="Trigger Region" visible="1">
+<object id="50" name="SecondWave" x="312" y="228" width="120" height="168">
+<properties>
+<property name="" value=""/>
+</properties>
+</object>
+<object id="51" name="ThirdWave" x="432" y="228" width="96" height="168">
+<properties>
+<property name="" value=""/>
+</properties>
+</object>
+<object id="53" name="FirstWave" x="240" y="312" width="24" height="24">
+<properties>
+<property name="battletrigger" value="triggerid=4"/>
+</properties>
+</object>
+<object id="58" name="Noah Half" x="765" y="34">
+<properties>
+<property name="" value=""/>
+</properties>
+<polyline points="3,14 3,86 -477,86 -477,254 -741,254 -741,14 3,14"/>
+</object>
+<object id="61" name="Bottom Half" x="24" y="288">
+<properties>
+<property name="" value=""/>
+</properties>
+<polyline points="0,0 288,0 288,-60 648,-60 648,-168 744,-168 744,72 744,108 0,108 0,0"/>
+</object>
+<object id="14" name="SouthStairsEntrance" x="720" y="288" width="24" height="24">
+<properties>
+<property name="start" value="exit=SouthStairsEntrance"/>
+</properties>
+</object>
+<object id="55" name="NorthStairsEntrance" x="720" y="72" width="24" height="24">
+<properties>
+<property name="start" value="exit=NorthStairsEntrance"/>
+</properties>
+</object>
+<object id="56" name="NorthStairsExit" x="744" y="72" width="24" height="24">
+<properties>
+<property name="" value=""/>
+</properties>
+</object>
+<object id="57" name="SouthStairsExit" x="744" y="288" width="24" height="24">
+<properties>
+<property name="" value=""/>
+</properties>
+</object>
+<object id="59" name="Battle2Restart" x="576" y="216" width="24" height="24">
+<properties>
+<property name="" value=""/>
+</properties>
+</object>
+<object id="60" name="JailBattleFail" x="624" y="144" width="24" height="24">
+<properties>
+<property name="start" value="exit=JailBattleFail"/>
+</properties>
+</object>
+<object id="21" name="Battle Start" type="START" x="120" y="240" width="72" height="24">
+<properties>
+<property name="start" value="exit=battlestart"/>
+</properties>
+</object>
+<object id="22" name="Battle Start" type="START" x="192" y="312" width="48" height="24">
+<properties>
+<property name="start" value="exit=battlestart"/>
+</properties>
+</object>
+</objectgroup>
+<objectgroup id="14" name="Battle" visible="0">
+<object id="23" name="Soldier" type="NPC" x="240" y="72" width="24" height="24">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=slow enemyid=Erium Soldier unit=1"/>
+</properties>
+</object>
+<object id="24" name="Soldier" type="NPC" x="144" y="120" width="24" height="24">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=slow enemyid=Erium Soldier unit=0"/>
+</properties>
+</object>
+<object id="25" name="Erium Soldier" type="NPC" x="360" y="336" width="24" height="24">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=slow enemyid=Erium Soldier unit=7"/>
+</properties>
+</object>
+<object id="26" name="Erium Mage" type="NPC" x="480" y="336" width="24" height="24">
+<properties>
+<property name="enemy" value="ai=wizard aiapproach=wait enemyid=Erium Mage unit=11"/>
+</properties>
+</object>
+<object id="27" name="Soldier" type="NPC" x="720" y="96" width="24" height="24">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=wait enemyid=Erium Soldier unit=3"/>
+</properties>
+</object>
+<object id="28" name="Soldier" type="NPC" x="720" y="48" width="24" height="24">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=wait enemyid=Erium Soldier unit=2"/>
+</properties>
+</object>
+<object id="29" name="Erium Archer" type="NPC" x="480" y="264" width="24" height="24">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=wait enemyid=Erium Archer unit=8"/>
+</properties>
+</object>
+<object id="30" name="Erium Captain" type="NPC" x="720" y="288" width="24" height="24">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=wait enemyid=Erium Captain unit=18"/>
+</properties>
+</object>
+<object id="32" name="Erium Soldier" type="NPC" x="360" y="288" width="24" height="24">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=slow enemyid=Erium Soldier unit=5"/>
+</properties>
+</object>
+<object id="33" name="Erium Soldier" type="NPC" x="360" y="264" width="24" height="24">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=slow enemyid=Erium Soldier unit=4"/>
+</properties>
+</object>
+<object id="34" name="Erium Soldier" type="NPC" x="480" y="312" width="24" height="24">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=wait enemyid=Erium Soldier unit=10"/>
+</properties>
+</object>
+<object id="35" name="Erium Soldier" type="NPC" x="480" y="288" width="24" height="24">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=wait enemyid=Erium Soldier unit=9"/>
+</properties>
+</object>
+<object id="36" name="Erium Soldier" type="NPC" x="360" y="312" width="24" height="24">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=slow enemyid=Erium Soldier unit=6"/>
+</properties>
+</object>
+<object id="37" name="Erium Soldier" type="NPC" x="576" y="264" width="24" height="24">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=wait enemyid=Erium Soldier unit=12"/>
+</properties>
+</object>
+<object id="38" name="Erium Archer" type="NPC" x="576" y="312" width="24" height="24">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=wait enemyid=Erium Archer unit=14"/>
+</properties>
+</object>
+<object id="39" name="Erium Mage" type="NPC" x="576" y="336" width="24" height="24">
+<properties>
+<property name="enemy" value="ai=wizard aiapproach=wait enemyid=Erium Mage unit=15"/>
+</properties>
+</object>
+<object id="40" name="Erium Mage" type="NPC" x="576" y="288" width="24" height="24">
+<properties>
+<property name="enemy" value="ai=wizard aiapproach=wait enemyid=Erium Mage unit=13"/>
+</properties>
+</object>
+<object id="43" name="Erium Soldier" type="NPC" x="624" y="288" width="24" height="24">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=wait enemyid=Erium Soldier unit=16"/>
+</properties>
+</object>
+<object id="44" name="Erium Soldier" type="NPC" x="624" y="312" width="24" height="24">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=wait enemyid=Erium Soldier unit=17"/>
+</properties>
+</object>
+<object id="62" name="Erium Archer" type="NPC" x="456" y="72" width="24" height="24">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=wait enemyid=Erium Archer unit=19"/>
+</properties>
+</object>
+</objectgroup>
+<objectgroup name="NPCs-Objects" visible="1">
+<object id="15" name="Door Sprite 3" x="360" y="204" width="24" height="24">
+<properties>
+<property name="door" value="image=jaildoor(night)"/>
+</properties>
+</object>
+<object id="16" name="Door Sprite 4" x="480" y="204" width="24" height="24">
+<properties>
+<property name="door" value="image=jaildoor(night)"/>
+</properties>
+</object>
+<object id="17" name="Door Sprite 5" x="576" y="204" width="24" height="24">
+<properties>
+<property name="door" value="image=jaildoor(night)"/>
+</properties>
+</object>
+<object id="18" name="Door Sprite 2" x="216" y="288" width="24" height="24">
+<properties>
+<property name="door" value="image=jaildoor(night)"/>
+</properties>
+</object>
+<object id="19" name="Door Sprite 1" x="96" y="288" width="24" height="24">
+<properties>
+<property name="door" value="image=jaildoor(night)"/>
+</properties>
+</object>
+<object id="20" name="NPC" x="648" y="312" width="24" height="24">
+<properties>
+<property name="npc" value="animation=eriumguard textid=0 wander=1"/>
+</properties>
+</object>
+</objectgroup>
+<objectgroup id="10" name="Terrain">
+<object id="1" name="Rug" x="480" y="264">
+<properties>
+<property name="terrain" value="type=GRASS"/>
+</properties>
+<polyline points="0,0 0,96 24,96 24,72 96,72 96,48 24,48 24,0 0,0"/>
+</object>
+<object id="2" name="Floor" x="192" y="360">
+<properties>
+<property name="terrain" value="type=ROAD"/>
+</properties>
+<polyline points="0,0 0,24 -168,24 -168,0 -144,0 -144,-48 0,-48 0,-24 -24,-24 -24,0 0,0"/>
+</object>
+<object id="3" name="Floor" x="192" y="384">
+<properties>
+<property name="terrain" value="type=ROAD"/>
+</properties>
+<polyline points="0,0 0,-72 144,-72 144,-96 120,-96 120,-144 168,-144 192,-144 216,-144 216,-72 288,-72 288,-48 264,-48 264,-24 288,-24 288,0 0,0"/>
+</object>
+<object id="4" name="Floor" x="672" y="240">
+<properties>
+<property name="terrain" value="type=ROAD"/>
+</properties>
+<polyline points="0,0 0,-72 72,-72 72,-48 96,-48 96,0 96,48 72,48 72,0 0,0"/>
+</object>
+<object id="5" name="Floor" x="672" y="240">
+<properties>
+<property name="terrain" value="type=ROAD"/>
+</properties>
+<polyline points="0,0 48,0 48,24 72,24 72,72 96,72 96,144 -24,144 -24,72 0,72 0,0"/>
+</object>
+<object id="6" name="Floor" x="648" y="384">
+<properties>
+<property name="terrain" value="type=ROAD"/>
+</properties>
+<polyline points="0,0 -168,0 -168,-24 -48,-24 -48,-48 -24,-48 -24,-72 0,-72 0,0"/>
+</object>
+<object id="7" name="Floor" x="48" y="72">
+<properties>
+<property name="terrain" value="type=ROAD"/>
+</properties>
+<polyline points="0,0 0,48 -24,48 -24,-24 240,-24 240,0 264,0 264,24 240,24 240,48 192,48 192,0 120,0 120,48 72,48 72,0 0,0"/>
+</object>
+<object id="8" name="Rug" x="312" y="48">
+<properties>
+<property name="terrain" value="type=GRASS"/>
+</properties>
+<polyline points="0,0 0,72 456,72 456,0 312,0 312,24 288,24 288,0 168,0 168,24 144,24 144,0 0,0"/>
+</object>
+<object id="9" name="Floor" x="96" y="288">
+<properties>
+<property name="terrain" value="type=ROAD"/>
+</properties>
+<polyline points="0,0 -72,0 -72,-48 -48,-48 -48,-72 -72,-72 -72,-144 -48,-144 -48,-96 -24,-96 0,-96 0,-48 120,-48 120,-168 168,-168 168,-144 192,-144 192,-120 168,-120 168,-96 192,-96 192,-72 168,-72 168,-48 144,-48 144,0 0,0"/>
+</object>
+<object id="10" name="Rug" x="192" y="240">
+<properties>
+<property name="terrain" value="type=GRASS"/>
+</properties>
+<polyline points="0,0 0,-96 -48,-96 -48,0 -96,0 -96,-120 24,-120 24,0"/>
+</object>
+<object id="11" x="504" y="264">
+<properties>
+<property name="terrain" value="type=GRASS"/>
+</properties>
+<polyline points="0,0 96,0 96,96 48,96 48,72 72,72 72,24 0,24 0,0"/>
+</object>
+<object id="12" type="TERRAIN" x="24" y="120">
+<properties>
+<property name="terrain" value="type=ROAD"/>
+</properties>
+<polyline points="0,0 72,0 72,72 48,72 48,24 0,24 0,0"/>
+</object>
+<object id="13" type="TERRAIN" x="408" y="240">
+<properties>
+<property name="terrain" value="type=ROAD"/>
+</properties>
+<polyline points="0,0 264,0 264,48 240,48 240,72 192,72 192,24 72,24 72,72 48,72 48,48 0,48 0,0"/>
+</object>
+</objectgroup>
 </area>

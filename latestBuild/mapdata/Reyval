@@ -28,4 +28,21 @@
 <condition id="0" description="TriggerPostBattle4Cinimatic" triggerid="0,">
 	<enterloc location="TriggerPosBattle4Cinimatic" immediate="false"/>
 </condition>
+<objectgroup name="Trigger Region" visible="1">
+<object name="TriggerPosBattle4Cinimatic" x="0" y="0">
+<properties>
+<property name="" value=""/>
+</properties>
+<polyline points="528,888 528,864 648,864 648,888 528,888"/>
+</object>
+<object name="EnterFromWorldMap" x="0" y="0">
+<properties>
+<property name="start" value="exit=EnterFromWorldMap"/>
+</properties>
+<polyline points="576,912 600,912 600,936 576,936 576,912"/>
+</object>
+</objectgroup>
+<objectgroup name="Battle" visible="1"/>
+<objectgroup id="66" name="Meta"/>
+<objectgroup id="64" name="Terrain"/>
 </area>
