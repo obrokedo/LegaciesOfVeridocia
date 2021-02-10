@@ -276,3 +276,7 @@ class ConfigurationValues(EngineConfigurationValues):
     # in the "items" resource. This is used for constructing the item menu
     def getEmptyItemIndexY(self):
         return 0
+    
+    # Return the name of the anim file that the advisors portrait should be found
+    def getAdvisorPortraitAnimFile(self):
+        return "hugh"

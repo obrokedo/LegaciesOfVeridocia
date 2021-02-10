@@ -119,3 +119,34 @@ class MenuConfiguration(MenuConfiguration):
         return "Who would you like to use the " + itemName + " on?<hardstop>"
     def getUseFailedText(self, heroName, itemName):
         return heroName + " uses the " + itemName + "!<pause> But it has no effect...<hardstop>"
+    
+    
+    def getStorageDepositText(self):
+        return "Which item would you like to deposit?<hardstop>"
+    def getStorageDepositedText(self, itemName):
+        return "The " + itemName + " has been deposited.<hardstop>"
+    def getStorageWithdrawText(self):
+        return "Which item would you like to withdraw?<hardstop>"
+    def getStorageWithdrawnText(self):
+        return "I hope it serves you well!<hardstop>"
+    def getStorageEvaluateText(self):
+        return "Which item would you like to evaluate?<hardstop>"
+    def getStorageWithdrawNoItemsText(self):
+        return "You don't have any items stored...<hardstop>"
+    
+    def getPartyNoOneToJoinText(self):
+        return "Our garrison is empty!<hardstop>"
+    def getPartyGroupIsFull(self):
+        return "Our group is at full capacity, why don't you let someone rest?<hardstop>"
+    def getPartyWhoToAdd(self):
+        return "Who should be added?<hardstop>"
+    def getPartyWhoToRemove(self):
+        return "Who should take a break?<hardstop>"
+    def getPartyNoOneToRemove(self):
+        return "Taking a group that was any smaller would be suicide...<hardstop>"
+    def getPartyWhoToInpsect(self):
+        return "Who would you like to inspect?<hardstop>"
+    def getPartyMemberRemoved(self, heroName):
+        return  heroName + " why don't you take a break for a bit?<hardstop>"
+    def getPartyMemberAdded(self, heroName):
+         return heroName + " will now follow us into battle!<hardstop>"
