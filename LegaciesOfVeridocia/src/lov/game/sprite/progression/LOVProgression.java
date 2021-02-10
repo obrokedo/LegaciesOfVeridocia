@@ -26,9 +26,9 @@ public class LOVProgression extends Progression {
 			int windAffin, int lightAffin, AttributeStrength counterStrength, AttributeStrength evadeStrength,
 			AttributeStrength doubleStrength, AttributeStrength critStrength, AttributeStrength bodyStrength,
 			AttributeStrength mindStrength, String bodyProgression, String mindProgression, ArrayList<String> spellIds,
-			 ArrayList<int[]> spellLevelLearned, int specialPromotionItemId, String className) {
+			 ArrayList<int[]> spellLevelLearned, int specialPromotionItemId, String className, String classDescription) {
 		super(usuableWeapons, usuableArmor, move, movementType, attackGains, defenseGains, speedGains, hpGains, mpGains,
-				spellIds, spellLevelLearned, specialPromotionItemId, className);
+				spellIds, spellLevelLearned, specialPromotionItemId, className, classDescription);
 		this.counterStrength = counterStrength;
 		this.evadeStrength = evadeStrength;
 		this.doubleStrength = doubleStrength;

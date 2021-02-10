@@ -13,6 +13,7 @@ import tactical.engine.config.EngineConfigurator;
  */
 public class LoVGame extends TacticalGame   {
 
+	public static final String LOV_VERSION = "DEV 1.402 Feb 10, 2021";
 	/**
 	 * Entry point into the game
 	 */
@@ -24,7 +25,8 @@ public class LoVGame extends TacticalGame   {
 	}
 	
 	public LoVGame(boolean devMode, String[] gameArgs) {
-		super("Legacies of Veridocia", "DEV 1.394 Jan 10, 2021", devMode, gameArgs);		
+		super("Legacies of Veridocia", LOV_VERSION , devMode, gameArgs);
+		
 	}
 
 	@Override

@@ -86,7 +86,7 @@ public class LOVHeroDefinition extends HeroDefinition {
 				maxWaterAffin[index], maxEarthAffin[index], maxWindAffin[index], maxLightAffin[index],
 				maxCounter[index], maxEvade[index], maxDouble[index], maxCrit[index], maxBody[index], maxMind[index],
 				bodyProgression[index], mindProgression[index], spellIds.get(index), spellsPerLevel.get(index),
-				specialPromotionItemId[index], className[index]);
+				specialPromotionItemId[index], className[index], classDescription[index]);
 	}
 	
 	protected CombatSprite createNewCombatSprite(HeroProgression heroProgression) {
