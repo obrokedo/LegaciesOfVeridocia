@@ -280,3 +280,9 @@ class ConfigurationValues(EngineConfigurationValues):
     # Return the name of the anim file that the advisors portrait should be found
     def getAdvisorPortraitAnimFile(self):
         return "hugh"
+    
+    def isWorldMap(self, mapname):
+        if "World Map.tmx" == mapname:
+            return 1
+        else:
+            return 0
