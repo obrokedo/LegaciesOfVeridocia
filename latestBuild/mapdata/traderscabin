@@ -26,6 +26,9 @@
 	<removesprite name="NPCEddie"/>
 	<removesprite name="NPCSharna"/>
 </trigger>
+<trigger id="7" description="searchnoitem" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<showtext textid="6"/>
+</trigger>
 <text id="0" description="Huun">
 	<string require="," exclude="," trigger="-1" heroportrait="Huun" enemyportrait="" animportrait="" message="About that glass of water...<hardstop>"/>
 </text>
@@ -43,6 +46,9 @@
 </text>
 <text id="5" description="PreBattle4">
 	<string require="," exclude="," trigger="-1" heroportrait="Noah" enemyportrait="" animportrait="" message="We should keep moving.<hardstop>"/>
+</text>
+<text id="6" description="searchnoitem">
+	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="It's dark inside...<hardstop>"/>
 </text>
 <cinematic id="0" description="Part5HelpfulAdvice" camerax="0" cameray="0">
 	<assactor name="Noah" hero="Noah" enemyid="0" npcid="" staticid=""/>
@@ -158,9 +164,57 @@
 </properties>
 <polyline points="120,696 240,696 240,720 120,720 120,696"/>
 </object>
+<object name="barrel1" x="0" y="0">
+<properties>
+<property name="searcharea" value="searchtrigger=7"/>
+</properties>
+<polyline points="192,336 240,336 240,360 192,360 192,336"/>
+</object>
+<object name="barrel2" x="0" y="0">
+<properties>
+<property name="searcharea" value="searchtrigger=7"/>
+</properties>
+<polyline points="672,72 720,72 720,120 696,120 696,96 672,96 672,72"/>
+</object>
+<object name="barrel3" x="0" y="0">
+<properties>
+<property name="searcharea" value="searchtrigger=7"/>
+</properties>
+<polyline points="192,144 216,144 216,168 192,168 192,144"/>
+</object>
+<object name="searcharea0" x="0" y="0">
+<properties>
+<property name="searcharea" value="searchtrigger=7"/>
+</properties>
+<polyline points="432,72 456,72 456,96 432,96"/>
+</object>
+<object name="searcharea1" x="0" y="0">
+<properties>
+<property name="searcharea" value="searchtrigger=7"/>
+</properties>
+<polyline points="360,96 384,96 384,120 360,120"/>
+</object>
+<object name="searcharea2" x="0" y="0">
+<properties>
+<property name="searcharea" value="searchtrigger=7"/>
+</properties>
+<polyline points="408,432 432,432 432,456 408,456"/>
+</object>
+<object name="searcharea3" x="0" y="0">
+<properties>
+<property name="searcharea" value="searchtrigger=7"/>
+</properties>
+<polyline points="144,264 168,264 168,288 144,288"/>
+</object>
+<object name="searcharea4" x="0" y="0">
+<properties>
+<property name="searcharea" value="searchtrigger=7"/>
+</properties>
+<polyline points="144,288 168,288 168,312 144,312"/>
+</object>
 </objectgroup>
 <objectgroup name="Battle" visible="1"/>
-<objectgroup id="12" name="Meta">
+<objectgroup name="NPCs-Objects" visible="1">
 <object id="7" name="chest1" x="0" y="0">
 <properties>
 <property name="chest" value="spriteimage=closedchest itemid=-1"/>
@@ -204,5 +258,5 @@
 <polyline points="600,96 624,96 624,120 600,120 600,96"/>
 </object>
 </objectgroup>
-<objectgroup id="10" name="Terrain"/>
+<objectgroup name="Terrain" visible="1"/>
 </area>

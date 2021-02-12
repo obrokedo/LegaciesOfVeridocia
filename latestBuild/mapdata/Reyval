@@ -3,6 +3,12 @@
 <trigger id="0" description="PostBattle4MapEvent" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<showcin cinid="0" exittrigid="-1"/>
 </trigger>
+<trigger id="1" description="searchnoitem" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<showtext textid="0"/>
+</trigger>
+<text id="0" description="shownoitem">
+	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="It was dark inside...<hardstop>"/>
+</text>
 <cinematic id="0" description="Postbattle4" camerax="0" cameray="0">
 	<assactor name="Noah" hero="Noah" enemyid="0" npcid="" staticid=""/>
 	<haltingmove name="Noah" x="576" y="792" speed="2.4" movehor="true" movediag="false"/>
@@ -41,8 +47,86 @@
 </properties>
 <polyline points="576,912 600,912 600,936 576,936 576,912"/>
 </object>
+<object name="searcharea0" x="0" y="0">
+<properties>
+<property name="searcharea" value="searchtrigger=1"/>
+</properties>
+<polyline points="624,216 648,216 648,240 624,240 624,216"/>
+</object>
+<object name="searcharea1" x="0" y="0">
+<properties>
+<property name="searcharea" value="searchtrigger=1"/>
+</properties>
+<polyline points="336,648 360,648 360,672 336,672"/>
+</object>
+<object name="searcharea2" x="0" y="0">
+<properties>
+<property name="searcharea" value="searchtrigger=1"/>
+</properties>
+<polyline points="456,720 480,720 480,744 456,744"/>
+</object>
+<object name="searcharea3" x="0" y="0">
+<properties>
+<property name="searcharea" value="searchtrigger=1"/>
+</properties>
+<polyline points="912,696 936,696 936,720 912,720"/>
+</object>
+<object name="searcharea4" x="0" y="0">
+<properties>
+<property name="searcharea" value="searchtrigger=1"/>
+</properties>
+<polyline points="888,768 912,768 912,792 888,792"/>
+</object>
+<object name="searcharea5" x="0" y="0">
+<properties>
+<property name="searcharea" value="searchtrigger=1"/>
+</properties>
+<polyline points="744,696 768,696 768,720 744,720"/>
+</object>
+<object name="searcharea6" x="0" y="0">
+<properties>
+<property name="searcharea" value="searchtrigger=1"/>
+</properties>
+<polyline points="984,480 1008,480 1008,504 984,504"/>
+</object>
+<object name="searcharea7" x="0" y="0">
+<properties>
+<property name="searcharea" value="searchtrigger=1"/>
+</properties>
+<polyline points="1080,504 1104,504 1104,528 1080,528"/>
+</object>
+<object name="searcharea8" x="0" y="0">
+<properties>
+<property name="searcharea" value="searchtrigger=1"/>
+</properties>
+<polyline points="1032,240 1056,240 1056,264 1032,264"/>
+</object>
+<object name="searcharea9" x="0" y="0">
+<properties>
+<property name="searcharea" value="searchtrigger=1"/>
+</properties>
+<polyline points="912,168 936,168 936,192 912,192"/>
+</object>
+<object name="searcharea10" x="0" y="0">
+<properties>
+<property name="searcharea" value="searchtrigger=1"/>
+</properties>
+<polyline points="576,192 600,192 600,216 576,216"/>
+</object>
+<object name="searcharea11" x="0" y="0">
+<properties>
+<property name="searcharea" value="searchtrigger=1"/>
+</properties>
+<polyline points="192,672 216,672 216,696 192,696"/>
+</object>
+<object name="searcharea12" x="0" y="0">
+<properties>
+<property name="searcharea" value="searchtrigger=1"/>
+</properties>
+<polyline points="1104,720 1128,720 1128,744 1104,744"/>
+</object>
 </objectgroup>
 <objectgroup name="Battle" visible="1"/>
 <objectgroup id="66" name="Meta"/>
-<objectgroup id="64" name="Terrain"/>
+<objectgroup name="Terrain" visible="1"/>
 </area>

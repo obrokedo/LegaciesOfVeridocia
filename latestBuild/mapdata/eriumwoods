@@ -22,6 +22,9 @@
 	<removesprite name="NPCOlivia"/>
 	<removesprite name="NPCSharna"/>
 </trigger>
+<trigger id="6" description="searchnoitem" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<showtext textid="7"/>
+</trigger>
 <text id="0" description="Pre Battle3 Scene Placeholder">
 	<string require="," exclude="," trigger="1" heroportrait="" enemyportrait="" animportrait="" message="Cinematics Placeholder<pause> Battle 3 Commencing.<hardstop>"/>
 </text>
@@ -42,6 +45,9 @@
 </text>
 <text id="6" description="CraigSpokenTo">
 	<string require="," exclude="," trigger="-1" heroportrait="Craig" enemyportrait="" animportrait="Craig" message="Nice place, eh?<pause> Eddie picked a great spot!<hardstop>"/>
+</text>
+<text id="7" description="shownoitem">
+	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="It was dark inside...<hardstop>"/>
 </text>
 <cinematic id="0" description="PreBattleThree" camerax="0" cameray="408">
 	<addactor x="456" y="456" name="Craig" anim="Craig" startanim="UnUp" visible="true" init="true" associatedhero=""/>
@@ -213,8 +219,62 @@
 </properties>
 <polyline points="168,384 192,384 192,408 168,408 168,384"/>
 </object>
+<object name="searcharea0" x="0" y="0">
+<properties>
+<property name="searcharea" value="searchtrigger=6"/>
+</properties>
+<polyline points="408,336 432,336 432,360 408,360"/>
+</object>
+<object name="searcharea1" x="0" y="0">
+<properties>
+<property name="searcharea" value="searchtrigger=6"/>
+</properties>
+<polyline points="408,288 432,288 432,312 408,312"/>
+</object>
+<object name="searcharea2" x="0" y="0">
+<properties>
+<property name="searcharea" value="searchtrigger=6"/>
+</properties>
+<polyline points="144,288 168,288 168,312 144,312"/>
+</object>
+<object name="searcharea3" x="0" y="0">
+<properties>
+<property name="searcharea" value="searchtrigger=6"/>
+</properties>
+<polyline points="504,384 528,384 528,408 504,408"/>
+</object>
+<object name="searcharea4" x="0" y="0">
+<properties>
+<property name="searcharea" value="searchtrigger=6"/>
+</properties>
+<polyline points="360,312 384,312 384,336 360,336"/>
+</object>
+<object name="searcharea5" x="0" y="0">
+<properties>
+<property name="searcharea" value="searchtrigger=6"/>
+</properties>
+<polyline points="360,336 384,336 384,360 360,360"/>
+</object>
+<object name="searcharea6" x="0" y="0">
+<properties>
+<property name="searcharea" value="searchtrigger=6"/>
+</properties>
+<polyline points="360,360 384,360 384,384 360,384"/>
+</object>
+<object name="searcharea7" x="0" y="0">
+<properties>
+<property name="searcharea" value="searchtrigger=6"/>
+</properties>
+<polyline points="360,384 384,384 384,408 360,408"/>
+</object>
+<object name="searcharea8" x="0" y="0">
+<properties>
+<property name="searcharea" value="searchtrigger=6"/>
+</properties>
+<polyline points="408,264 432,264 432,288 408,288"/>
+</object>
 </objectgroup>
-<objectgroup id="15" name="Battle">
+<objectgroup name="Battle" visible="1">
 <object id="3" name="Soldier" type="NPC" x="504" y="264" width="24" height="24">
 <properties>
 <property name="enemy" value="ai=fighter aiapproach=wait enemyid=Erium Soldier unit=0"/>

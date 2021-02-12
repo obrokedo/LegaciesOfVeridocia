@@ -162,12 +162,20 @@
     </cell>
   </anim>
   <anim name="UnPortIdle" loops="0">
-    <cell index="0" delay="50"/>
+    <cell index="0" delay="250"/>
   </anim>
   <anim name="UnPortBlink" loops="0">
     <cell index="0" delay="50"/>
+    <cell index="1" delay="50"/>
+    <cell index="2" delay="50"/>
+    <cell index="3" delay="50"/>
+    <cell index="4" delay="50"/>
   </anim>
   <anim name="UnPortTalk" loops="0">
     <cell index="0" delay="50"/>
+    <cell index="1" delay="50"/>
+    <cell index="2" delay="50"/>
+    <cell index="3" delay="50"/>
+    <cell index="4" delay="50"/>
   </anim>
 </animations>

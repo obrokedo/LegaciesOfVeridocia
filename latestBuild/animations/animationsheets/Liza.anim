@@ -194,19 +194,43 @@
     </cell>
   </anim>
   <anim name="UnPortIdle" loops="0">
-    <cell index="0" delay="50">
+    <cell index="0" delay="250">
       <spr name="/Unpromoted/PortraitTop0" x="0" y="0" z="0"/>
       <spr name="/Unpromoted/PortraitBottom0" x="0" y="0" z="0"/>
     </cell>
   </anim>
   <anim name="UnPortBlink" loops="0">
     <cell index="0" delay="50">
-      <spr name="/Unpromoted/PortraitTop0" x="0" y="0" z="0"/>
+      <spr name="/Unpromoted/PortraitTop1" x="0" y="0" z="0"/>
+    </cell>
+    <cell index="1" delay="50">
+      <spr name="/Unpromoted/PortraitTop2" x="0" y="0" z="0"/>
+    </cell>
+    <cell index="2" delay="50">
+      <spr name="/Unpromoted/PortraitTop3" x="0" y="0" z="0"/>
+    </cell>
+    <cell index="3" delay="50">
+      <spr name="/Unpromoted/PortraitTop4" x="0" y="0" z="0"/>
+    </cell>
+    <cell index="4" delay="50">
+      <spr name="/Unpromoted/PortraitTop5" x="0" y="0" z="0"/>
     </cell>
   </anim>
   <anim name="UnPortTalk" loops="0">
     <cell index="0" delay="50">
-      <spr name="/Unpromoted/PortraitBottom0" x="0" y="0" z="0"/>
+      <spr name="/Unpromoted/PortraitBottom6" x="0" y="0" z="0"/>
+    </cell>
+    <cell index="1" delay="50">
+      <spr name="/Unpromoted/PortraitBottom7" x="0" y="0" z="0"/>
+    </cell>
+    <cell index="2" delay="50">
+      <spr name="/Unpromoted/PortraitBottom8" x="0" y="0" z="0"/>
+    </cell>
+    <cell index="3" delay="50">
+      <spr name="/Unpromoted/PortraitBottom9" x="0" y="0" z="0"/>
+    </cell>
+    <cell index="4" delay="50">
+      <spr name="/Unpromoted/PortraitBottom10" x="0" y="0" z="0"/>
     </cell>
   </anim>
 </animations>
