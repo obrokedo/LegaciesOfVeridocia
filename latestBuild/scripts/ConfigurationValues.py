@@ -286,3 +286,8 @@ class ConfigurationValues(EngineConfigurationValues):
             return 1
         else:
             return 0
+        
+    def getFirstChapterHeaderText(self):
+        return "Chapter One - Slugman Cometh"
+    def getFirstChapterDescriptionText(self):
+        return "In distant lands evil abounds and dark forces conspire to destroy the world... However, in Erium this daft fool can't find his stuff..."
