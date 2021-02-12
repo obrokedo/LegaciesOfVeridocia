@@ -23,30 +23,30 @@
 	<wait time="2750"/>
 	<flashscreen time="100"/>
 	<playsound sound="thundercrack" volume="100"/>
-	<speech text="Preparations move as I have dictated, do they not?<softstop><nextcin>" heroportrait="" enemyportrait="" animportrait=""/>
+	<speech text="Preparations move as I have dictated, do they not?<softstop><nextcin>" heroportrait="" enemyportrait="" animportrait="Disguise1"/>
 	<flashscreen time="100"/>
-	<speech text="They do.<softstop><nextcin>" heroportrait="" enemyportrait="" animportrait=""/>
+	<speech text="They do.<softstop><nextcin>" heroportrait="" enemyportrait="" animportrait="Disguise2"/>
 	<flashscreen time="100"/>
 	<playsound sound="thundercrack" volume="100"/>
-	<speech text="Then why have you chosen to disturb me?<softstop><nextcin>" heroportrait="" enemyportrait="" animportrait=""/>
+	<speech text="Then why have you chosen to disturb me?<softstop><nextcin>" heroportrait="" enemyportrait="" animportrait="Disguise1"/>
 	<haltingmove name="Lexus" x="504" y="264" speed="1.0" movehor="false" movediag="false"/>
 	<facing name="Lexus" dir="0"/>
-	<speech text="I am not satisfied with our progress! For all our planning, the seals remain intact!<softstop><nextcin>" heroportrait="" enemyportrait="" animportrait=""/>
-	<speech text="All things in their own time. Patience has placed the prize within our grasp.<softstop><nextcin>" heroportrait="" enemyportrait="" animportrait=""/>
+	<speech text="I am not satisfied with our progress! For all our planning, the seals remain intact!<softstop>" heroportrait="" enemyportrait="" animportrait="Disguise2"/>
+	<speech text="All things in their own time. Patience has placed the prize within our grasp.<softstop><nextcin>" heroportrait="" enemyportrait="" animportrait="Disguise1"/>
 	<haltingmove name="Lexus" x="456" y="264" speed="1.0" movehor="false" movediag="false"/>
 	<facing name="Lexus" dir="0"/>
-	<speech text="I am not content to wait forever, and I have come too far to turn back now!<softstop><nextcin>" heroportrait="" enemyportrait="" animportrait=""/>
+	<speech text="I am not content to wait forever, and I have come too far to turn back now!<softstop><nextcin>" heroportrait="" enemyportrait="" animportrait="Disguise2"/>
 	<move name="Lexus" x="456" y="480" speed="1.0" movehor="false" movediag="false"/>
 	<cameramove x="456" y="504" time="4000"/>
 	<wait time="2000"/>
 	<facing name="Lexus" dir="0"/>
-	<speech text="This will be your undoing... <softstop><nextcin>" heroportrait="" enemyportrait="" animportrait=""/>
+	<speech text="This will be your undoing... <softstop><nextcin>" heroportrait="" enemyportrait="" animportrait="Disguise1"/>
 	<flashscreen time="100"/>
 	<playsound sound="thundercrack" volume="100"/>
 	<move name="Lexus" x="480" y="792" speed="1.0" movehor="false" movediag="false"/>
 	<wait time="1000"/>
 	<fadeout time="3000" halting="true"/>
-	<speech text="Such short-sightedness. There are many uses for a reckless pawn such as yourself.  Many indeed...<softstop><nextcin>" heroportrait="" enemyportrait="" animportrait=""/>
+	<speech text="Such short-sightedness. There are many uses for a reckless pawn such as yourself.  Many indeed...<softstop><nextcin>" heroportrait="" enemyportrait="" animportrait="Disguise1"/>
 	<wait time="250"/>
 	<loadcin mapdata="eriumcastlenight" cinid="5"/>
 	<showmainmenu/>
@@ -54,5 +54,5 @@
 <objectgroup name="Trigger Region" visible="1"/>
 <objectgroup name="Battle" visible="1"/>
 <objectgroup id="29" name="Meta"/>
-<objectgroup id="27" name="Terrain"/>
+<objectgroup name="Terrain" visible="1"/>
 </area>
