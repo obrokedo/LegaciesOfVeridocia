@@ -6,6 +6,9 @@
 <trigger id="1" description="searchnoitem" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<showtext textid="0"/>
 </trigger>
+<trigger id="2" description="ToWorldMap" require="" exclude="" nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<loadmap mapdata="worldmap" enter="FromReyval" transdir=""/>
+</trigger>
 <text id="0" description="shownoitem">
 	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="It was dark inside...<hardstop>"/>
 </text>
@@ -33,6 +36,9 @@
 </cinematic>
 <condition id="0" description="TriggerPostBattle4Cinimatic" triggerid="0,">
 	<enterloc location="TriggerPosBattle4Cinimatic" immediate="false"/>
+</condition>
+<condition id="1" description="ToWorldMapSouth" triggerid="2,">
+	<enterloc location="ToWorldMapSouth" immediate="false"/>
 </condition>
 <objectgroup name="Trigger Region" visible="1">
 <object name="TriggerPosBattle4Cinimatic" x="0" y="0">
@@ -125,8 +131,14 @@
 </properties>
 <polyline points="1104,720 1128,720 1128,744 1104,744"/>
 </object>
+<object name="ToWorldMapSouth" x="0" y="0">
+<properties>
+<property name="" value=""/>
+</properties>
+<polyline points="528,912 624,912 624,936 528,936 528,912"/>
+</object>
 </objectgroup>
 <objectgroup name="Battle" visible="1"/>
-<objectgroup id="66" name="Meta"/>
+<objectgroup name="NPCs-Objects" visible="1"/>
 <objectgroup name="Terrain" visible="1"/>
 </area>
