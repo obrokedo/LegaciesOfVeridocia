@@ -404,6 +404,7 @@
 </cinematic>
 <cinematic id="2" description="Battle 2 Craig First" camerax="1176" cameray="120">
 	<playmusic music="UnHero" volume="75"/>
+	<addstatic x="1296" y="144" spriteid="Crate" spriteim="Crate(night)"/>
 	<addactor x="1368" y="240" name="Olivia" anim="Olivia" startanim="UnUp" visible="true" init="true" associatedhero=""/>
 	<addactor x="1344" y="240" name="Craig" anim="Craig" startanim="UnUp" visible="true" init="true" associatedhero=""/>
 	<addactor x="1440" y="192" name="Noah" anim="Noah" startanim="UnDown" visible="true" init="true" associatedhero=""/>
@@ -430,6 +431,7 @@
 </cinematic>
 <cinematic id="3" description="Battle 2 Noah First" camerax="1176" cameray="120">
 	<playmusic music="UnHero" volume="75"/>
+	<addstatic x="1296" y="144" spriteid="Crate" spriteim="Crate(night)"/>
 	<addactor x="1104" y="528" name="Olivia" anim="Olivia" startanim="UnUp" visible="true" init="true" associatedhero=""/>
 	<addactor x="1104" y="504" name="Craig" anim="Craig" startanim="UnUp" visible="true" init="true" associatedhero=""/>
 	<addactor x="1440" y="192" name="Noah" anim="Noah" startanim="UnLeft" visible="true" init="true" associatedhero=""/>
@@ -475,7 +477,7 @@
 </cinematic>
 <cinematic id="4" description="Battle 2 Core" camerax="1176" cameray="120">
 	<playmusic music="UnHero" volume="75"/>
-	<addstatic x="1296" y="144" spriteid="Crate" spriteim="Crate(night)"/>
+	<addactor x="1296" y="140" name="Crate" anim="Crate(night)" startanim="UnUp" visible="true" init="false" associatedhero=""/>
 	<addactor x="1368" y="240" name="Olivia" anim="Olivia" startanim="UnUp" visible="true" init="true" associatedhero=""/>
 	<addactor x="1344" y="240" name="Craig" anim="Craig" startanim="UnUp" visible="true" init="true" associatedhero=""/>
 	<addactor x="1344" y="192" name="Noah" anim="Noah" startanim="UnDown" visible="true" init="true" associatedhero=""/>
@@ -523,7 +525,9 @@
 	<wait time="250"/>
 	<facing name="Craig" dir="0"/>
 	<speech text="AHA... There it is, I hope you like small, dark, places.<hardstop> " heroportrait="Craig" enemyportrait="" animportrait=""/>
+	<haltingmove name="Craig" x="1296" y="155" speed="1.0" movehor="false" movediag="false"/>
 	<speech text="This is our ticket out of here.<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
+	<haltingmove name="Crate" x="1320" y="140" speed="0.5" movehor="false" movediag="false"/>
 	<forcedmove name="Noah" x="1296" y="168" speed="1" facing="2" movehor="true" movediag="false"/>
 	<forcedmove name="Sharna" x="1296" y="168" speed="1" facing="2" movehor="true" movediag="false"/>
 	<forcedmove name="Huun" x="1296" y="168" speed="1" facing="2" movehor="true" movediag="false"/>
@@ -669,7 +673,7 @@
 </properties>
 </object>
 </objectgroup>
-<objectgroup id="18" name="Battle">
+<objectgroup name="Battle" visible="1">
 <object id="1" name="Darkling Ooze" x="840" y="600" width="24" height="24">
 <properties>
 <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Darkling Ooze unit=0"/>
@@ -730,7 +734,7 @@
 <polyline points="768,360 792,360 792,384 768,384 768,360"/>
 </object>
 </objectgroup>
-<objectgroup id="13" name="Terrain" visible="0">
+<objectgroup name="Terrain" visible="1">
 <object id="16" x="600" y="576">
 <properties>
 <property name="terrain" value="platform=grassfloor type=GRASS"/>
