@@ -288,6 +288,6 @@ class ConfigurationValues(EngineConfigurationValues):
             return 0
         
     def getFirstChapterHeaderText(self):
-        return "Chapter One - Slugman Cometh"
+        return "Chapter One - Treachery"
     def getFirstChapterDescriptionText(self):
-        return "In distant lands evil abounds and dark forces conspire to destroy the world... However, in Erium this daft fool can't find his stuff..."
+        return "Long ago, gods roamed the lands of Veridocia and their power now rests in seals across the land.  Centuries later, a new threat arises, seeking to take the power themselves.  The kingdom of Erium is their first target..."
