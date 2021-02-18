@@ -14,7 +14,7 @@
 <item id="4" name="Short Blade" description="" cost="80" isdeal="false" imageindexx="1" imageindexy="1" droppable="false">
 	<equippable attack="7" defense="0" speed="0" type="0" style="5" range="1" weaponimage="BLD-01-ShortBlade" weaponanim="" incmindam="10" inccrit="0" inccounter="0" incdouble="0" incevade="0" maxhpreg="0" minhpreg="0" maxmpreg="0" minmpreg="0" effect="" efflvl="-1" effchc="0" dmgaff="NORMAL" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" ohko="0" ohkooc="0" promoteonly="false"/>
 </item>
-<item id="5" name="Spellshot" description="" cost="50" isdeal="false" imageindexx="0" imageindexy="9" droppable="false">
+<item id="5" name="Spell Shot" description="" cost="50" isdeal="false" imageindexx="0" imageindexy="9" droppable="false">
 	<equippable attack="4" defense="0" speed="0" type="0" style="6" range="2" weaponimage="SPL-01-SPellshot" weaponanim="" incmindam="0" inccrit="0" inccounter="0" incdouble="0" incevade="0" maxhpreg="0" minhpreg="0" maxmpreg="0" minmpreg="0" effect="Addled" efflvl="1" effchc="20" dmgaff="NORMAL" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" ohko="0" ohkooc="0" promoteonly="false"/>
 </item>
 <item id="6" name="Short Sword" description="" cost="60" isdeal="false" imageindexx="0" imageindexy="2" droppable="false">
@@ -92,7 +92,7 @@
 <item id="29" name="Steel Blade" description="" cost="48" isdeal="false" imageindexx="3" imageindexy="1" droppable="false">
 	<equippable attack="18" defense="0" speed="0" type="0" style="5" range="1" weaponimage="BLD-04-SteelBlade" weaponanim="" incmindam="15" inccrit="0" inccounter="0" incdouble="0" incevade="0" maxhpreg="0" minhpreg="0" maxmpreg="0" minmpreg="0" effect="" efflvl="0" effchc="0" dmgaff="NORMAL" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" ohko="0" ohkooc="0" promoteonly="false"/>
 </item>
-<item id="30" name="Broadsword" description="" cost="170" isdeal="false" imageindexx="3" imageindexy="2" droppable="false">
+<item id="30" name="Claymore" description="" cost="170" isdeal="false" imageindexx="3" imageindexy="2" droppable="false">
 	<equippable attack="16" defense="0" speed="0" type="0" style="2" range="1" weaponimage="SWD-04-BroadSword" weaponanim="" incmindam="0" inccrit="0" inccounter="6" incdouble="0" incevade="0" maxhpreg="0" minhpreg="0" maxmpreg="0" minmpreg="0" effect="" efflvl="0" effchc="0" dmgaff="NORMAL" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" ohko="0" ohkooc="0" promoteonly="false"/>
 </item>
 <item id="31" name="Barbed Arrow" description="" cost="160" isdeal="false" imageindexx="4" imageindexy="8" droppable="false">
@@ -153,7 +153,7 @@
 	<equippable attack="16" defense="0" speed="0" type="0" style="8" range="1" weaponimage="WND-06-TremorRod" weaponanim="" incmindam="0" inccrit="0" inccounter="0" incdouble="0" incevade="0" maxhpreg="0" minhpreg="0" maxmpreg="0" minmpreg="0" effect="" efflvl="0" effchc="0" dmgaff="EARTH" fireAffin="12" elecAffin="-8" coldAffin="12" darkAffin="12" waterAffin="12" earthAffin="16" windAffin="12" lightAffin="12" ohko="0" ohkooc="0" promoteonly="false"/>
 	<usespell spellid="BOULDER" level="1" singleuse="false" damageitem="true" useoutsidebattle="false"/>
 </item>
-<item id="49" name="Lightning Rod" description="" cost="2100" isdeal="false" imageindexx="6" imageindexy="19" droppable="false">
+<item id="49" name="Voltaic Rod" description="" cost="2100" isdeal="false" imageindexx="6" imageindexy="19" droppable="false">
 	<equippable attack="20" defense="0" speed="0" type="0" style="8" range="1" weaponimage="WND-07-LightingRod" weaponanim="" incmindam="0" inccrit="0" inccounter="0" incdouble="0" incevade="0" maxhpreg="0" minhpreg="0" maxmpreg="0" minmpreg="0" effect="" efflvl="0" effchc="0" dmgaff="ELECTRICITY" fireAffin="12" elecAffin="18" coldAffin="12" darkAffin="12" waterAffin="12" earthAffin="-8" windAffin="12" lightAffin="12" ohko="0" ohkooc="0" promoteonly="false"/>
 	<usespell spellid="BOLT" level="1" singleuse="false" damageitem="true" useoutsidebattle="false"/>
 </item>
@@ -169,12 +169,12 @@
 	<equippable attack="32" defense="0" speed="0" type="0" style="8" range="1" weaponimage="WND-10-ChaosWand" weaponanim="WND-10-ChaosWand" incmindam="0" inccrit="0" inccounter="0" incdouble="0" incevade="0" maxhpreg="0" minhpreg="0" maxmpreg="0" minmpreg="0" effect="" efflvl="0" effchc="0" dmgaff="NORMAL" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" ohko="0" ohkooc="0" promoteonly="false"/>
 	<usespell spellid="DELIRIUM" level="1" singleuse="false" damageitem="true" useoutsidebattle="false"/>
 </item>
-<item id="53" name="Caduceus Rod" description="" cost="10000" isdeal="false" imageindexx="10" imageindexy="19" droppable="false">
+<item id="53" name="Elixir Wand" description="" cost="10000" isdeal="false" imageindexx="10" imageindexy="19" droppable="false">
 	<equippable attack="35" defense="0" speed="0" type="0" style="8" range="1" weaponimage="WND-11-CaduceusWand" weaponanim="WND-11-CaduceusWand" incmindam="0" inccrit="0" inccounter="0" incdouble="0" incevade="0" maxhpreg="5" minhpreg="5" maxmpreg="0" minmpreg="0" effect="" efflvl="0" effchc="0" dmgaff="NORMAL" fireAffin="25" elecAffin="25" coldAffin="25" darkAffin="25" waterAffin="25" earthAffin="25" windAffin="25" lightAffin="25" ohko="0" ohkooc="0" promoteonly="false"/>
 	<usespell spellid="HEAL" level="1" singleuse="false" damageitem="true" useoutsidebattle="false"/>
 	<usespell spellid="DETOX" level="1" singleuse="false" damageitem="true" useoutsidebattle="false"/>
 </item>
-<item id="54" name="Magus Rod" description="" cost="10000" isdeal="false" imageindexx="11" imageindexy="19" droppable="false">
+<item id="54" name="Pandora Wand" description="" cost="10000" isdeal="false" imageindexx="11" imageindexy="19" droppable="false">
 	<equippable attack="40" defense="0" speed="0" type="0" style="8" range="1" weaponimage="WND-12-MagusRod" weaponanim="" incmindam="0" inccrit="0" inccounter="0" incdouble="0" incevade="0" maxhpreg="0" minhpreg="0" maxmpreg="0" minmpreg="0" effect="" efflvl="0" effchc="0" dmgaff="NORMAL" fireAffin="30" elecAffin="30" coldAffin="30" darkAffin="30" waterAffin="30" earthAffin="30" windAffin="30" lightAffin="30" ohko="0" ohkooc="0" promoteonly="false"/>
 </item>
 <item id="55" name="Demon Rod" description="" cost="1" isdeal="false" imageindexx="12" imageindexy="19" droppable="false">
@@ -198,7 +198,7 @@
 <item id="61" name="Leech Cane" description="" cost="900" isdeal="false" imageindexx="11" imageindexy="18" droppable="false">
 	<equippable attack="39" defense="0" speed="0" type="0" style="3" range="1" weaponimage="STF-11-LeechCane" weaponanim="STF-11-LeechCane" incmindam="0" inccrit="0" inccounter="0" incdouble="0" incevade="0" maxhpreg="0" minhpreg="0" maxmpreg="0" minmpreg="0" effect="" efflvl="0" effchc="0" dmgaff="NORMAL" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" ohko="0" ohkooc="0" promoteonly="false"/>
 </item>
-<item id="62" name="Restoring Staff" description="" cost="900" isdeal="false" imageindexx="12" imageindexy="18" droppable="false">
+<item id="62" name="Restore Staff" description="" cost="900" isdeal="false" imageindexx="12" imageindexy="18" droppable="false">
 	<equippable attack="42" defense="0" speed="0" type="0" style="3" range="1" weaponimage="STF-12-RestoringStaff" weaponanim="STF-12-RestoringStaff" incmindam="0" inccrit="0" inccounter="0" incdouble="0" incevade="0" maxhpreg="0" minhpreg="0" maxmpreg="0" minmpreg="0" effect="" efflvl="0" effchc="0" dmgaff="NORMAL" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" ohko="0" ohkooc="0" promoteonly="false"/>
 </item>
 <item id="63" name="BARASKNUX" description="" cost="1" isdeal="false" imageindexx="0" imageindexy="17" droppable="false">
@@ -300,7 +300,7 @@
 <item id="95" name="Flanged Mace" description="" cost="1" isdeal="false" imageindexx="2" imageindexy="11" droppable="false">
 	<equippable attack="28" defense="0" speed="0" type="0" style="13" range="1" weaponimage="MCE-07-FlangedMace" weaponanim="" incmindam="0" inccrit="0" inccounter="0" incdouble="0" incevade="0" maxhpreg="0" minhpreg="0" maxmpreg="0" minmpreg="0" effect="" efflvl="0" effchc="0" dmgaff="NORMAL" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" ohko="0" ohkooc="0" promoteonly="false"/>
 </item>
-<item id="96" name="Moonstone Maul" description="" cost="1" isdeal="false" imageindexx="3" imageindexy="11" droppable="false">
+<item id="96" name="Lunar Maul" description="" cost="1" isdeal="false" imageindexx="3" imageindexy="11" droppable="false">
 	<equippable attack="37" defense="0" speed="0" type="0" style="13" range="1" weaponimage="MCE-09-MoonstoneMaul" weaponanim="" incmindam="0" inccrit="0" inccounter="0" incdouble="0" incevade="0" maxhpreg="0" minhpreg="0" maxmpreg="0" minmpreg="0" effect="" efflvl="0" effchc="0" dmgaff="NORMAL" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" ohko="0" ohkooc="0" promoteonly="false"/>
 </item>
 <item id="97" name="Magma Mace" description="" cost="1" isdeal="false" imageindexx="4" imageindexy="11" droppable="false">
@@ -378,10 +378,10 @@
 <item id="121" name="Infernal Gale" description="" cost="1" isdeal="false" imageindexx="7" imageindexy="7" droppable="false">
 	<equippable attack="45" defense="0" speed="0" type="0" style="15" range="3" weaponimage="SHK-00-InfernalGale" weaponanim="" incmindam="0" inccrit="0" inccounter="0" incdouble="0" incevade="0" maxhpreg="0" minhpreg="0" maxmpreg="0" minmpreg="0" effect="" efflvl="0" effchc="0" dmgaff="NORMAL" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" ohko="0" ohkooc="0" promoteonly="false"/>
 </item>
-<item id="122" name="Kodachi" description="" cost="1" isdeal="false" imageindexx="0" imageindexy="6" droppable="false">
+<item id="122" name="Tanto" description="" cost="1" isdeal="false" imageindexx="0" imageindexy="6" droppable="false">
 	<equippable attack="23" defense="0" speed="0" type="0" style="14" range="1" weaponimage="KTN-06-Kodachi" weaponanim="" incmindam="0" inccrit="0" inccounter="0" incdouble="0" incevade="0" maxhpreg="0" minhpreg="0" maxmpreg="0" minmpreg="0" effect="" efflvl="0" effchc="0" dmgaff="NORMAL" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" ohko="0" ohkooc="0" promoteonly="false"/>
 </item>
-<item id="123" name="Wakizashi" description="" cost="1" isdeal="false" imageindexx="1" imageindexy="6" droppable="false">
+<item id="123" name="Kodachi" description="" cost="1" isdeal="false" imageindexx="1" imageindexy="6" droppable="false">
 	<equippable attack="28" defense="0" speed="0" type="0" style="14" range="1" weaponimage="KTN-07-Wakizashi" weaponanim="" incmindam="0" inccrit="0" inccounter="0" incdouble="0" incevade="0" maxhpreg="0" minhpreg="0" maxmpreg="0" minmpreg="0" effect="" efflvl="0" effchc="0" dmgaff="NORMAL" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" ohko="0" ohkooc="0" promoteonly="false"/>
 </item>
 <item id="124" name="Ninja-to" description="" cost="1" isdeal="false" imageindexx="2" imageindexy="6" droppable="false">
@@ -414,10 +414,10 @@
 <item id="133" name="Sun Sabre" description="" cost="1" isdeal="false" imageindexx="7" imageindexy="3" droppable="false">
 	<equippable attack="41" defense="0" speed="0" type="0" style="10" range="1" weaponimage="RPR-11-SunSaber" weaponanim="" incmindam="0" inccrit="0" inccounter="0" incdouble="0" incevade="0" maxhpreg="0" minhpreg="0" maxmpreg="0" minmpreg="0" effect="" efflvl="0" effchc="0" dmgaff="NORMAL" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" ohko="0" ohkooc="0" promoteonly="false"/>
 </item>
-<item id="134" name="Novabrand" description="" cost="1" isdeal="false" imageindexx="8" imageindexy="3" droppable="false">
+<item id="134" name="Nova Brand" description="" cost="1" isdeal="false" imageindexx="8" imageindexy="3" droppable="false">
 	<equippable attack="44" defense="0" speed="0" type="0" style="10" range="1" weaponimage="RPR-12-Novabrand" weaponanim="RPR-12-Novabrand" incmindam="0" inccrit="0" inccounter="0" incdouble="0" incevade="0" maxhpreg="0" minhpreg="0" maxmpreg="0" minmpreg="0" effect="" efflvl="0" effchc="0" dmgaff="NORMAL" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" ohko="0" ohkooc="0" promoteonly="false"/>
 </item>
-<item id="135" name="Greatsword" description="" cost="1" isdeal="false" imageindexx="5" imageindexy="2" droppable="false">
+<item id="135" name="Great Sword" description="" cost="1" isdeal="false" imageindexx="5" imageindexy="2" droppable="false">
 	<equippable attack="23" defense="0" speed="0" type="0" style="2" range="1" weaponimage="SWD-06-Greatsword" weaponanim="" incmindam="0" inccrit="0" inccounter="0" incdouble="0" incevade="0" maxhpreg="0" minhpreg="0" maxmpreg="0" minmpreg="0" effect="" efflvl="0" effchc="0" dmgaff="NORMAL" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" ohko="0" ohkooc="0" promoteonly="false"/>
 </item>
 <item id="136" name="Battle Sword" description="" cost="1" isdeal="false" imageindexx="6" imageindexy="2" droppable="false">
@@ -450,7 +450,7 @@
 <item id="145" name="Infernus" description="" cost="1" isdeal="false" imageindexx="5" imageindexy="1" droppable="false">
 	<equippable attack="34" defense="0" speed="0" type="0" style="5" range="1" weaponimage="BLD-07-Infernus" weaponanim="" incmindam="0" inccrit="0" inccounter="0" incdouble="0" incevade="0" maxhpreg="0" minhpreg="0" maxmpreg="0" minmpreg="0" effect="" efflvl="0" effchc="0" dmgaff="NORMAL" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" ohko="0" ohkooc="0" promoteonly="false"/>
 </item>
-<item id="146" name="Bloodstone Blade" description="" cost="1" isdeal="false" imageindexx="6" imageindexy="1" droppable="false">
+<item id="146" name="Obsidian Blade" description="" cost="1" isdeal="false" imageindexx="6" imageindexy="1" droppable="false">
 	<equippable attack="40" defense="0" speed="0" type="0" style="5" range="1" weaponimage="BLD-09-BloodstoneBlade" weaponanim="" incmindam="0" inccrit="0" inccounter="0" incdouble="0" incevade="0" maxhpreg="0" minhpreg="0" maxmpreg="0" minmpreg="0" effect="" efflvl="0" effchc="0" dmgaff="NORMAL" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" ohko="0" ohkooc="0" promoteonly="false"/>
 </item>
 <item id="147" name="Tower Blade" description="A ruinous omen." cost="1" isdeal="false" imageindexx="7" imageindexy="1" droppable="false">
