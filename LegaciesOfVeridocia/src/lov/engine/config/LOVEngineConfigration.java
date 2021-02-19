@@ -5,6 +5,7 @@ import org.newdawn.slick.Music;
 
 import lov.engine.config.loading.LOVFirstLoadRenderer;
 import lov.engine.config.loading.LOVLogoLoadRenderer;
+import lov.game.menu.LOVHeroStatMenu;
 import tactical.engine.config.BattleEffectFactory;
 import tactical.engine.config.BattleFunctionConfiguration;
 import tactical.engine.config.CinematicActorConfiguration;
@@ -14,6 +15,9 @@ import tactical.engine.config.MenuConfiguration;
 import tactical.engine.config.MusicConfiguration;
 import tactical.engine.config.SpellFactory;
 import tactical.engine.config.provided.DefaultEngineConfiguration;
+import tactical.engine.state.StateInfo;
+import tactical.game.menu.Menu;
+import tactical.game.sprite.CombatSprite;
 import tactical.loading.LoadingScreenRenderer;
 
 public class LOVEngineConfigration extends DefaultEngineConfiguration {
@@ -85,6 +89,11 @@ public class LOVEngineConfigration extends DefaultEngineConfiguration {
 	@Override
 	public LoadingScreenRenderer getLoadScreenRenderer(GameContainer container) {
 		return new LoadingScreenRenderer(container);
+	}
+	
+	@Override
+	public Menu getHeroStatMenu(GameContainer gc, CombatSprite selectedSprite, StateInfo stateInfo) {
+		return new LOVHeroStatMenu(gc, selectedSprite, stateInfo);
 	}
 
 	@Override

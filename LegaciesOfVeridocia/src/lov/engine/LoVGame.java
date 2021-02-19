@@ -13,7 +13,7 @@ import tactical.engine.config.EngineConfigurator;
  */
 public class LoVGame extends TacticalGame   {
 
-	public static final String LOV_VERSION = "DEV 1.402 Feb 10, 2021";
+	public static final String LOV_VERSION = "DEV 1.407 Feb 19, 2021";
 	/**
 	 * Entry point into the game
 	 */
