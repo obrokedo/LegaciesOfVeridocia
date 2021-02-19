@@ -39,7 +39,7 @@ class ConfigurationValues(EngineConfigurationValues):
     def getWeaponTypes(self):
         return jarray.array(["SPEAR", "AXE", "SWORD", "STAFF", "ARROW", "BLADE", "SPELLSHOT", 
                              "CLAW", "WAND", "GLOVE", "RAPIER", "LANCE", "WING", "MACE", 
-                             "KATANA", "SHURIKEN"], String)        
+                             "KATANA", "SHURIKEN", "NONE"], String)        
         
     def getMovementTypes(self):
         return jarray.array(["NORMAL", "SLOW", "FAST", "BEAST", 
