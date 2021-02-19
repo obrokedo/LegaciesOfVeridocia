@@ -67,8 +67,14 @@ class Burn(BattleEffect):
     def getAnimationFile(self):
         return "Burning";
     
+    def getIconName(self):
+        return "Burned"
+    
     def isNegativeEffect(self):
         return True
+    
+    def getRemainingTurns(self):
+        return 3 - self.getCurrentTurn()
     
     def isDone(self):
         # Burn lasts for 3 turns

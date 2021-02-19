@@ -65,6 +65,13 @@ class Bleed(BattleEffect):
         effectLevel = self.getEffectLevel()
         return "Bleeding"
     
+    # A value of -1 means that this is a permanent effect
+    def getRemainingTurns(self):
+        return -1
+    
+    def getIconName(self):
+        return "Bleeding"
+    
     def isNegativeEffect(self):
         return True
     

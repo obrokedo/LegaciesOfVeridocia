@@ -61,6 +61,12 @@ class Shock(BattleEffect):
         effectLevel = self.getEffectLevel()
         return "No animation file";
     
+    def getRemainingTurns(self):
+        return 3 - self.getCurrentTurn()
+    
+    def getIconName(self):
+        return "Shocked"
+    
     def isNegativeEffect(self):
         return True
     

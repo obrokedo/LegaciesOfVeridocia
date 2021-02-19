@@ -10,6 +10,8 @@ animsheetdir,animations/weaponanim
 spritedir,sprite
 // Load all weapons
 imagedir,image/weapons
+// Load all ailments
+imagedir,image/ailments
 // Load item images
 ss,items,image/Items.png,16,24
 // Load Battle Resources
@@ -37,10 +39,12 @@ image,selectside,image/selectside.png
 image,selecttop,image/selecttop.png
 image,yesnoflor,image/yesnoflourish.gif
 image,chapter,image/chapter.png
+image,herostats,image/statsheetsprites.png
 font,speechfont,font/LoVDialogueFont.ttf,40
 font,menufont,font/MenuFont.ttf,54
 font,chaptermenufont,font/MenuFont.ttf,74
 font,smallmenufont,font/MenuFont.ttf,12
+ss,affinities,image/Affinities.png,16,16
 ss,portraits,image/Portraits.png,48,64,0
 itemdefs,/definitions/Items
 herodefs,/definitions/Heroes
