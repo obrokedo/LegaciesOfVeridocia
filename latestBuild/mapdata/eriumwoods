@@ -73,13 +73,13 @@
 	<facing name="Olivia" dir="2"/>
 	<speech text=".<pause>.<pause>.<pause>That was a pass code to enter our hideout,<pause> but there's supposed to be an answer.<softstop> Something doesn't feel right...<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait="Olivia"/>
 	<haltingmove name="Craig" x="480" y="456" speed="2.4" movehor="false" movediag="false"/>
-	<speech text="LEAVE MY FAMILY ALONE YOU BASTARDS!!!<hardstop>" heroportrait="Eddie" enemyportrait="" animportrait=""/>
+	<speech text="LEAVE MY FAMILY ALONE YOU BASTARDS!<hardstop>" heroportrait="Eddie" enemyportrait="" animportrait=""/>
 	<wait time="2000"/>
 	<facing name="Craig" dir="0"/>
 	<playsound sound="thundercrack" volume="100"/>
 	<speech text="That has to be the worst timing ever.<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
-	<speech text="Noah, I need you to go help eddie, hurry! Craig and I need to report for duty!<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait=""/>
-	<speech text="Where counting on you.<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
+	<speech text="Noah, I need you to go help Eddie.  Hurry!  Craig and I need take care of our pursuers!<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait=""/>
+	<speech text="We're countin' on ya.<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
 	<haltingmove name="Olivia" x="360" y="552" speed="2.4" movehor="false" movediag="false"/>
 	<haltingmove name="Olivia" x="360" y="672" speed="2.4" movehor="false" movediag="false"/>
 	<haltingmove name="Craig" x="456" y="552" speed="2.4" movehor="true" movediag="false"/>
