@@ -43,23 +43,32 @@
 	<addactor x="168" y="216" name="EddotActor" anim="Eddie" startanim="UnLeft" visible="true" init="false" associatedhero=""/>
 	<addstatic x="148" y="222" spriteid="EddieWife" spriteim="EddieWife"/>
 	<addstatic x="144" y="212" spriteid="EddieChild" spriteim="EddieChild"/>
-	<addactor x="192" y="216" name="CraigActor" anim="Craig" startanim="UnLeft" visible="true" init="false" associatedhero=""/>
-	<addactor x="192" y="240" name="OliviaActor" anim="Olivia" startanim="UnLeft" visible="true" init="false" associatedhero=""/>
 	<addactor x="240" y="192" name="HuunActor" anim="Huun" startanim="UnLeft" visible="true" init="false" associatedhero=""/>
 	<addactor x="240" y="216" name="NoahActor" anim="Noah" startanim="UnLeft" visible="true" init="false" associatedhero=""/>
-	<addactor x="240" y="240" name="SharnaActor" anim="Sharna" startanim="UnLeft" visible="true" init="false" associatedhero=""/>
+	<addactor x="240" y="232" name="SharnaActor" anim="Sharna" startanim="UnLeft" visible="true" init="false" associatedhero=""/>
 	<wait time="1000"/>
 	<speech text="No<pause>.<pause>.<pause>. No<pause>.<pause>.<pause>.<hardstop>" heroportrait="Eddie" enemyportrait="" animportrait="Eddie"/>
-	<speech text="Eddie,<softstop> I'm sorry,<pause> but they're g...<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait="Olivia"/>
-	<speech text="MISTAL!  WHEN I FIND YOU, I'LL CRUSH YOUR LITTLE NECK!<hardstop>" heroportrait="Eddie" enemyportrait="" animportrait="Eddie"/>
-	<forcedmove name="SharnaActor" x="264" y="240" speed="1" facing="2" movehor="false" movediag="false"/>
+	<speech text="Eddie,<softstop> I'm sorry,<pause> but they're g...<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
+	<speech text="MISTAL!  WHEN I FIND YOU, I'LL CRUSH YOUR LITTLE NECK!<hardstop>" heroportrait="Eddie" enemyportrait="" animportrait=""/>
+	<forcedmove name="SharnaActor" x="264" y="232" speed="1" facing="2" movehor="false" movediag="false"/>
 	<forcedmove name="HuunActor" x="264" y="192" speed="1" facing="2" movehor="false" movediag="false"/>
 	<forcedmove name="NoahActor" x="264" y="216" speed="1" facing="2" movehor="false" movediag="false"/>
-	<speech text="It's okay,<pause> you're safe.<hardstop><linebreak>  Eddie would be an asset to us, Noah.<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait="Olivia"/>
-	<speech text="Better with us than against us...<hardstop>" heroportrait="Huun" enemyportrait="" animportrait="Huun"/>
-	<speech text="He certainly has the passion.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait="Noah"/>
+	<wait time="1000"/>
+	<haltingmove name="SharnaActor" x="216" y="232" speed="2.4" movehor="false" movediag="false"/>
+	<speech text="I'm so sorry,<pause> we couldent make it in time.<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
+	<facing name="HuunActor" dir="1"/>
+	<speech text="Eddie would be an asset to us, Noah.<hardstop>" heroportrait="Huun" enemyportrait="" animportrait=""/>
+	<haltingmove name="NoahActor" x="192" y="216" speed="2.4" movehor="false" movediag="false"/>
+	<speech text="Would you like to join us Eddie? <linebreak> We will get to the bottom of this!<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
+	<quiver name="EddotActor"/>
+	<wait time="1000"/>
+	<stopse name="EddotActor"/>
+	<facing name="EddotActor" dir="3"/>
+	<speech text="I will avenge my family.<hardstop>" heroportrait="Eddie" enemyportrait="" animportrait=""/>
 	<speech text="Eddie has joined the force.<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
 	<fadeout time="2000" halting="true"/>
+	<addactor x="192" y="216" name="CraigActor" anim="Craig" startanim="UnLeft" visible="true" init="false" associatedhero=""/>
+	<addactor x="192" y="240" name="OliviaActor" anim="Olivia" startanim="UnLeft" visible="true" init="false" associatedhero=""/>
 	<forcedmove name="NoahActor" x="456" y="384" speed="10" facing="0" movehor="false" movediag="true"/>
 	<forcedmove name="SharnaActor" x="480" y="384" speed="10" facing="0" movehor="false" movediag="true"/>
 	<forcedmove name="HuunActor" x="408" y="360" speed="10" facing="3" movehor="false" movediag="true"/>
@@ -140,7 +149,7 @@
 <polyline points="168,384 192,384 192,408 168,408 168,384"/>
 </object>
 </objectgroup>
-<objectgroup id="15" name="Battle">
+<objectgroup name="Battle" visible="1">
 <object id="3" name="Soldier" type="NPC" x="504" y="264" width="24" height="24">
 <properties>
 <property name="enemy" value="ai=fighter aiapproach=wait enemyid=Erium Soldier unit=0"/>
