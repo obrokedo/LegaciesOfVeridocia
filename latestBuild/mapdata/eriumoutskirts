@@ -36,10 +36,20 @@
 	<showtext textid="5"/>
 </trigger>
 <trigger id="9" description="Hit the Sack" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<completequest questid="bedtime?"/>
 	<showtext textid="6"/>
 </trigger>
 <trigger id="10" description="OpenPriest" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<showpriest portrait="Priestess1"/>
+</trigger>
+<trigger id="11" description="weaponqueststart" require="," exclude="," nonretrig="false" retrigonenter="true" triggeronce="false" triggerimmediately="false">
+	<completequest questid="weaponqueststart"/>
+</trigger>
+<trigger id="12" description="weaponquestcomplete" require="weaponqueststart," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<completequest questid="weaponquestcomplete"/>
+</trigger>
+<trigger id="13" description="StayLonger" require="" exclude="" nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<showtext textid="9"/>
 </trigger>
 <text id="0" description="Huun Speech">
 	<string require="," exclude="," trigger="-1" heroportrait="Huun" enemyportrait="" animportrait="" message="I can't believe you just left me in there.<hardstop> I thought I'd die alone.<hardstop>"/>
@@ -51,23 +61,28 @@
 	<string require="," exclude="," trigger="-1" heroportrait="Olivia" enemyportrait="" animportrait="" message="I'm standing watch, <pause> just incase one of those guards is crazy enough to follow us through there.<hardstop>"/>
 </text>
 <text id="3" description="Craig Speech">
-	<conversation require="" exclude="Short Blade Get,Short Sword Get,Wooden Arrow Get,Spell Shot Get,Crooked Staff Get,Lesser Wand Get," trigger="-1" heroportrait1="Noah" enemyportrait1="" animportrait1="" heroportrait2="Craig" enemyportrait2="" animportrait2="" message="All that fighting has made me pretty tired.<hardstop><split>Yeah, you'll be able to rest soon, but before you do, check out the racks inside. <pause>Maybe there's some abandoned gear you can use.<hardstop>Once you've checked it out, tell me if you find anything.<hardstop>"/>
-	<conversation require="Short Blade Get,Short Sword Get,Wooden Arrow Get,Spell Shot Get,Crooked Staff Get,Lesser Wand Get," exclude="," trigger="9" heroportrait1="Craig" enemyportrait1="" animportrait1="" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="So, d'ya find anything?<hardstop><split>Yes. A whole bunch of weapons just left lying around.<hardstop><split>Looks like it's better than the old Erium hand-me-downs.<hardstop> Take a good look.<softstop> You might prefer some weapon types over the other.<hardstop>"/>
+	<conversation require="," exclude="Short Blade Get,Short Sword Get,Wooden Arrow Get,Spell Shot Get,Crooked Staff Get,Lesser Wand Get,weaponqueststart," trigger="11" heroportrait1="Noah" enemyportrait1="" animportrait1="" heroportrait2="Craig" enemyportrait2="" animportrait2="" message="All that fighting has made me pretty tired.<hardstop><split>Yeah, you'll be able to rest soon, but before you do, check out the racks inside. <pause>Maybe there's some abandoned gear you can use. <hardstop>Once you've checked it out, tell me if you find anything.<hardstop>"/>
+	<string require="weaponqueststart," exclude="weaponquestcomplete," trigger="-1" heroportrait="Craig" enemyportrait="" animportrait="" message="Keep looking in there.<pause> It's an old guard post.<pause> Should be a few weapons lying around, I reckon.<hardstop><linebreak> If you've emptied the racks, try the barrels and crates too. <pause>You never know.<hardstop>"/>
+	<conversation require="Short Blade Get,Short Sword Get,Wooden Arrow Get,Spell Shot Get,Crooked Staff Get,Lesser Wand Get,weaponquestcomplete," exclude="bedtime?," trigger="9" heroportrait1="Craig" enemyportrait1="" animportrait1="" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="So, d'ya find anything?<hardstop><split>Yes. A whole bunch of weapons just left lying around.<hardstop><split>Looks like it's better than the old Erium hand-me-downs.<hardstop> Take a good look.<softstop> You might prefer some weapon types over the other.<hardstop>"/>
+	<yesno require="bedtime?," exclude="" triggeryes="1" triggerno="13" heroportrait="Craig" enemyportrait="" animportrait="" message="Are you ready to sleep yet? You ain't the only one who's tired here!<softstop>"/>
 </text>
 <text id="4" description="Full Inventory">
 	<string require="," exclude="," trigger="-1" heroportrait="Noah" enemyportrait="" animportrait="" message="Looks like everyone's hands are full. We'll need to discard some things to make room.<hardstop>"/>
 </text>
 <text id="5" description="Got 'Em All">
-	<string require="Short Blade Get,Short Sword Get,Wooden Arrow Get,Spell Shot Get,Crooked Staff Get,Lesser Wand Get," exclude="," trigger="-1" heroportrait="Noah" enemyportrait="" animportrait="" message="I've searched everywhere. I don't think I'll find anything else.<hardstop>"/>
+	<string require="Short Blade Get,Short Sword Get,Wooden Arrow Get,Spell Shot Get,Crooked Staff Get,Lesser Wand Get," exclude="," trigger="12" heroportrait="Noah" enemyportrait="" animportrait="" message="I've searched everywhere. I don't think I'll find anything else.<hardstop>"/>
 </text>
 <text id="6" description="Craig Hit the Sack">
-	<yesno require="Short Blade Get,Short Sword Get,Wooden Arrow Get,Spell Shot Get,Crooked Staff Get,Lesser Wand Get," exclude="," triggeryes="1" triggerno="-1" heroportrait="Craig" enemyportrait="" animportrait="" message="Ya finally ready to hit the sack?<softstop>"/>
+	<yesno require="Short Blade Get,Short Sword Get,Wooden Arrow Get,Spell Shot Get,Crooked Staff Get,Lesser Wand Get," exclude="," triggeryes="1" triggerno="13" heroportrait="Craig" enemyportrait="" animportrait="" message="Ya finally ready to hit the sack?<softstop>"/>
 </text>
 <text id="7" description="PriestessSpeech">
 	<string require="," exclude="," trigger="10" heroportrait="" enemyportrait="" animportrait="Priestess1" message="You all surprised me! I wasn't expecting people to come out of the woods at this time of night!<hardstop> Goodness, you look worn out! I can't turn away people needing help.<hardstop><linebreak> Welcome my lamb. How may I be of service to you? <hardstop>"/>
 </text>
 <text id="8" description="SignText">
 	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="Danger!<hardstop> Stay out of the cave system! The Erium Guard will not be held responsible for injury!<hardstop>"/>
+</text>
+<text id="9" description="CraigStayLonger">
+	<string require="," exclude="," trigger="-1" heroportrait="Craig" enemyportrait="" animportrait="" message="Alright, that's fine, I guess. <pause>Just let me know when you are.<hardstop>"/>
 </text>
 <cinematic id="0" description="Scene1" camerax="0" cameray="0">
 	<playmusic music="castlenight" volume="75"/>
@@ -108,8 +123,12 @@
 	<loadmap mapdata="eriumoutskirts" enter="start"/>
 </cinematic>
 <cinematic id="1" description="Hit the Sack" camerax="0" cameray="0">
-	<speech text="" heroportrait="" enemyportrait="" animportrait=""/>
-	<fadeout time="0" halting="false"/>
+	<speech text="OK. <pause>About time. <pause> Get some rest, and we'll head north for our cabin first thing in the morning.<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
+	<fademusic duration="3000"/>
+	<fadeout time="3000" halting="true"/>
+	<wait time="1000"/>
+	<fadein time="2000" halting="false" init="false"/>
+	<playmusic music="overworld" volume="100"/>
 	<loadmap mapdata="worldmap" enter="FromErium"/>
 </cinematic>
 <condition id="0" description="MapLoad" triggerid="0,">

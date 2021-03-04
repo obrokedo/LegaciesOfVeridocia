@@ -31,4 +31,10 @@
 </quest>
 <quest id="15" description="Lesser Wand Get" extradescription="Found the Lesser Wand">
 </quest>
+<quest id="16" description="weaponqueststart" extradescription="Embarked on the weapon quest.">
+</quest>
+<quest id="17" description="weaponquestcomplete" extradescription="">
+</quest>
+<quest id="18" description="bedtime?" extradescription="">
+</quest>
 </quests>
