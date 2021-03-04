@@ -25,7 +25,7 @@
 	<completequest questid="Short Blade Get"/>
 </trigger>
 <trigger id="6" description="Barrel 1" require="," exclude="," nonretrig="true" retrigonenter="false" triggeronce="false" triggerimmediately="false">
-	<additem itemid="Spellshot" failuretext="4"/>
+	<additem itemid="Spell Shot" failuretext="4"/>
 	<completequest questid="Spell Shot Get"/>
 </trigger>
 <trigger id="7" description="Barrel 2" require="," exclude="," nonretrig="true" retrigonenter="false" triggeronce="false" triggerimmediately="false">
@@ -38,6 +38,9 @@
 <trigger id="9" description="Hit the Sack" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<showtext textid="6"/>
 </trigger>
+<trigger id="10" description="OpenPriest" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<showpriest portrait="Priestess1"/>
+</trigger>
 <text id="0" description="Huun Speech">
 	<string require="," exclude="," trigger="-1" heroportrait="Huun" enemyportrait="" animportrait="" message="I can't believe you just left me in there.<hardstop> I thought I'd die alone.<hardstop>"/>
 </text>
@@ -48,7 +51,7 @@
 	<string require="," exclude="," trigger="-1" heroportrait="Olivia" enemyportrait="" animportrait="" message="I'm standing watch, <pause> just incase one of those guards is crazy enough to follow us through there.<hardstop>"/>
 </text>
 <text id="3" description="Craig Speech">
-	<conversation require="," exclude="Short Blade Get,Short Sword Get,Wooden Arrow Get,Spell Shot Get,Crooked Staff Get,Lesser Wand Get," trigger="-1" heroportrait1="Noah" enemyportrait1="" animportrait1="" heroportrait2="Craig" enemyportrait2="" animportrait2="" message="All that fighting has made me pretty tired.<hardstop><split>Yeah, you'll be able to rest soon, but before you do, check out the racks inside. <pause>Maybe there's some abandoned gear you can use.<hardstop>Once you've checked it out, tell me if you find anything.<hardstop>"/>
+	<conversation require="" exclude="Short Blade Get,Short Sword Get,Wooden Arrow Get,Spell Shot Get,Crooked Staff Get,Lesser Wand Get," trigger="-1" heroportrait1="Noah" enemyportrait1="" animportrait1="" heroportrait2="Craig" enemyportrait2="" animportrait2="" message="All that fighting has made me pretty tired.<hardstop><split>Yeah, you'll be able to rest soon, but before you do, check out the racks inside. <pause>Maybe there's some abandoned gear you can use.<hardstop>Once you've checked it out, tell me if you find anything.<hardstop>"/>
 	<conversation require="Short Blade Get,Short Sword Get,Wooden Arrow Get,Spell Shot Get,Crooked Staff Get,Lesser Wand Get," exclude="," trigger="9" heroportrait1="Craig" enemyportrait1="" animportrait1="" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="So, d'ya find anything?<hardstop><split>Yes. A whole bunch of weapons just left lying around.<hardstop><split>Looks like it's better than the old Erium hand-me-downs.<hardstop> Take a good look.<softstop> You might prefer some weapon types over the other.<hardstop>"/>
 </text>
 <text id="4" description="Full Inventory">
@@ -59,6 +62,12 @@
 </text>
 <text id="6" description="Craig Hit the Sack">
 	<yesno require="Short Blade Get,Short Sword Get,Wooden Arrow Get,Spell Shot Get,Crooked Staff Get,Lesser Wand Get," exclude="," triggeryes="1" triggerno="-1" heroportrait="Craig" enemyportrait="" animportrait="" message="Ya finally ready to hit the sack?<softstop>"/>
+</text>
+<text id="7" description="PriestessSpeech">
+	<string require="," exclude="," trigger="10" heroportrait="" enemyportrait="" animportrait="Priestess1" message="You all surprised me! I wasn't expecting people to come out of the woods at this time of night!<hardstop> Goodness, you look worn out! I can't turn away people needing help.<hardstop><linebreak> Welcome my lamb. How may I be of service to you? <hardstop>"/>
+</text>
+<text id="8" description="SignText">
+	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="Danger!<hardstop> Stay out of the cave system! The Erium Guard will not be held responsible for injury!<hardstop>"/>
 </text>
 <cinematic id="0" description="Scene1" camerax="0" cameray="0">
 	<playmusic music="castlenight" volume="75"/>
@@ -165,7 +174,7 @@
 </object>
 </objectgroup>
 <objectgroup name="Battle" visible="1"/>
-<objectgroup id="12" name="Meta">
+<objectgroup name="NPCs-Objects" visible="1">
 <object id="11" name="craig npc2" x="816" y="504">
 <properties>
 <property name="npc" value="noturn=false facing=1 name=Craig throughwall=false noanimate=false animation=Craig textid=3 wander=0"/>
@@ -190,6 +199,18 @@
 </properties>
 <polyline points="312,168 336,168 336,192 312,192 312,168"/>
 </object>
+<object name="Priestess" x="0" y="0">
+<properties>
+<property name="npc" value="noturn=false facing=1 throughwall=false noanimate=false animation=Priestess1 textid=7 wander=0"/>
+</properties>
+<polyline points="384,240 360,240 360,216 384,216 384,240"/>
+</object>
+<object name="Sign1" x="0" y="0">
+<properties>
+<property name="npc" value="noturn=true facing=-1 throughwall=false noanimate=false animation=blank textid=8 wander=0"/>
+</properties>
+<polyline points="384,48 384,72 408,72 408,48 384,48"/>
+</object>
 </objectgroup>
-<objectgroup id="10" name="Terrain" visible="0"/>
+<objectgroup name="Terrain" visible="1"/>
 </area>
