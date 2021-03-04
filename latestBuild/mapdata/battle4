@@ -119,7 +119,7 @@
 <properties>
 <property name="" value=""/>
 </properties>
-<polygon points="0,0 288,0 288,-96 0,-96"/>
+<polyline points="0,0 288,0 288,-96 0,-96"/>
 </object>
 </objectgroup>
 <objectgroup id="16" name="Battle">
