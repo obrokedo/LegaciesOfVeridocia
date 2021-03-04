@@ -8,31 +8,37 @@
 <trigger id="1" description="Leave Outskirts" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<showcin cinid="1" exittrigid="-1"/>
 </trigger>
-<trigger id="2" description="Weapon Rack 1" require="," exclude="," nonretrig="true" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="2" description="Weapon Rack 1" require="" exclude="" nonretrig="true" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<additem itemid="Short Sword" failuretext="4"/>
 	<completequest questid="Short Sword Get"/>
+	<completequest questid="weaponqueststart"/>
 </trigger>
-<trigger id="3" description="Weapon Rack 2" require="," exclude="," nonretrig="true" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="3" description="Weapon Rack 2" require="" exclude="" nonretrig="true" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<additem itemid="Wooden Arrow" failuretext="4"/>
 	<completequest questid="Wooden Arrow Get"/>
+	<completequest questid="weaponqueststart"/>
 </trigger>
-<trigger id="4" description="Weapon Rack 3" require="," exclude="," nonretrig="true" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="4" description="Weapon Rack 3" require="" exclude="" nonretrig="true" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<additem itemid="Crooked Staff" failuretext="4"/>
 	<completequest questid="Crooked Staff Get"/>
+	<completequest questid="weaponqueststart"/>
 </trigger>
-<trigger id="5" description="Crate" require="," exclude="," nonretrig="true" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="5" description="Crate" require="" exclude="" nonretrig="true" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<additem itemid="Short Blade" failuretext="4"/>
 	<completequest questid="Short Blade Get"/>
+	<completequest questid="weaponqueststart"/>
 </trigger>
-<trigger id="6" description="Barrel 1" require="," exclude="," nonretrig="true" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="6" description="Barrel 1" require="" exclude="" nonretrig="true" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<additem itemid="Spell Shot" failuretext="4"/>
 	<completequest questid="Spell Shot Get"/>
+	<completequest questid="weaponqueststart"/>
 </trigger>
-<trigger id="7" description="Barrel 2" require="," exclude="," nonretrig="true" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="7" description="Barrel 2" require="" exclude="" nonretrig="true" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<additem itemid="Lesser Wand" failuretext="4"/>
 	<completequest questid="Lesser Wand Get"/>
+	<completequest questid="weaponqueststart"/>
 </trigger>
-<trigger id="8" description="Got 'Em All" require="Short Blade Get,Short Sword Get,Wooden Arrow Get,Spell Shot Get,Crooked Staff Get,Lesser Wand Get," exclude="," nonretrig="true" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="8" description="Got 'Em All" require="Short Blade Get,Short Sword Get,Wooden Arrow Get,Spell Shot Get,Crooked Staff Get,Lesser Wand Get," exclude="" nonretrig="true" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<showtext textid="5"/>
 </trigger>
 <trigger id="9" description="Hit the Sack" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
@@ -48,7 +54,7 @@
 <trigger id="12" description="weaponquestcomplete" require="weaponqueststart," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<completequest questid="weaponquestcomplete"/>
 </trigger>
-<trigger id="13" description="StayLonger" require="" exclude="" nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="13" description="StayLonger" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<showtext textid="9"/>
 </trigger>
 <text id="0" description="Huun Speech">
@@ -61,10 +67,10 @@
 	<string require="," exclude="," trigger="-1" heroportrait="Olivia" enemyportrait="" animportrait="" message="I'm standing watch, <pause> just incase one of those guards is crazy enough to follow us through there.<hardstop>"/>
 </text>
 <text id="3" description="Craig Speech">
-	<conversation require="," exclude="Short Blade Get,Short Sword Get,Wooden Arrow Get,Spell Shot Get,Crooked Staff Get,Lesser Wand Get,weaponqueststart," trigger="11" heroportrait1="Noah" enemyportrait1="" animportrait1="" heroportrait2="Craig" enemyportrait2="" animportrait2="" message="All that fighting has made me pretty tired.<hardstop><split>Yeah, you'll be able to rest soon, but before you do, check out the racks inside. <pause>Maybe there's some abandoned gear you can use. <hardstop>Once you've checked it out, tell me if you find anything.<hardstop>"/>
+	<conversation require="" exclude="Short Blade Get,Short Sword Get,Wooden Arrow Get,Spell Shot Get,Crooked Staff Get,Lesser Wand Get,weaponqueststart," trigger="11" heroportrait1="Noah" enemyportrait1="" animportrait1="" heroportrait2="Craig" enemyportrait2="" animportrait2="" message="All that fighting has made me pretty tired.<hardstop><split>Yeah, you'll be able to rest soon, but before you do, check out the racks inside. <pause>Maybe there's some abandoned gear you can use. <hardstop>Once you've checked it out, tell me if you find anything.<hardstop>"/>
 	<string require="weaponqueststart," exclude="weaponquestcomplete," trigger="-1" heroportrait="Craig" enemyportrait="" animportrait="" message="Keep looking in there.<pause> It's an old guard post.<pause> Should be a few weapons lying around, I reckon.<hardstop><linebreak> If you've emptied the racks, try the barrels and crates too. <pause>You never know.<hardstop>"/>
 	<conversation require="Short Blade Get,Short Sword Get,Wooden Arrow Get,Spell Shot Get,Crooked Staff Get,Lesser Wand Get,weaponquestcomplete," exclude="bedtime?," trigger="9" heroportrait1="Craig" enemyportrait1="" animportrait1="" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="So, d'ya find anything?<hardstop><split>Yes. A whole bunch of weapons just left lying around.<hardstop><split>Looks like it's better than the old Erium hand-me-downs.<hardstop> Take a good look.<softstop> You might prefer some weapon types over the other.<hardstop>"/>
-	<yesno require="bedtime?," exclude="" triggeryes="1" triggerno="13" heroportrait="Craig" enemyportrait="" animportrait="" message="Are you ready to sleep yet? You ain't the only one who's tired here!<softstop>"/>
+	<yesno require="bedtime?," exclude="," triggeryes="1" triggerno="13" heroportrait="Craig" enemyportrait="" animportrait="" message="Are you ready to sleep yet? You ain't the only one who's tired here!<softstop>"/>
 </text>
 <text id="4" description="Full Inventory">
 	<string require="," exclude="," trigger="-1" heroportrait="Noah" enemyportrait="" animportrait="" message="Looks like everyone's hands are full. We'll need to discard some things to make room.<hardstop>"/>
