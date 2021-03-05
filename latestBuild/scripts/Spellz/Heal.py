@@ -53,7 +53,7 @@ class Heal(SpellDefinition):
                 break;
     
         if bleeding:
-            baseDamage = 0
+            baseDamage = self.getDamage()[spellLevel]
         else :
             # Keep in mind that healing spells will have a positive base damage value. 
             baseDamage = Math.min(target.getMaxHP() - target.getCurrentHP(), # Maximum value is the amount of hp the target is missing 
@@ -61,14 +61,14 @@ class Heal(SpellDefinition):
         return int(baseDamage)
     
     def getBattleText(self, target, damage, mpDamage, attackerHPDamage, attackerMPDamage):
-        # If the target is bleeding we won't actually heal any hp, just cure the bleeding
+        # If the target is bleeding we won't actually heal any hp, just cure the bleeding *THIS IS WRONG, IT'S SUPPOSED TO HEAL AND CURE BLEED*
         # The text should reflect that. If the bleed effect is found, just return a blank
         # string as the heal effect will output the effec ended string. Otherwise
         # return the healing text
         battleEffects = target.getBattleEffects();
         for i in range(battleEffects.size()):
             if "Bleed" == battleEffects.get(i).getName():
-                return ""
+                return target.getName() + "'s wounds are healed. " + target.getName() + " recovers " + `damage` + " HP!"
         # 
         return target.getName() + "'s wounds are healed. " + target.getName() + " recovers " + `damage` + " HP!"
         

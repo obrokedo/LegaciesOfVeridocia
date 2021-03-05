@@ -19,12 +19,12 @@ class Bleed(BattleEffect):
     # The string returned from here should NOT have a line end special character    
     def performEffectImpl(self, target, currentTurn):
         effectLevel = self.getEffectLevel()
-        damage = (effectLevel + 1) * -2;
+        damage = effectLevel * -2;
         target.modifyCurrentHP(damage);
     
     def performEffectText(self, target, currentTurn):
         effectLevel = self.getEffectLevel()
-        damage = (effectLevel + 1) * -2;
+        damage = effectLevel * -2;
         return target.getName() + " suffers " + `-1 * damage` + " damage as their wound bleeds.";
         
     # This is called as soon as the effect is applied (on the casters turn NOT THE TARGETS)
@@ -35,7 +35,7 @@ class Bleed(BattleEffect):
     
     # This is the text indicating what effect has been applied
     def effectStartedText(self, attacker, target):
-        return None;
+        return "[" + target.getName() + " is bleeding!"
         
     # This should reset any stats that have been changed as a result of this effect
     def effectEnded(self, target):
@@ -53,7 +53,7 @@ class Bleed(BattleEffect):
         effectChance = self.getEffectChance()
         effectLevel = self.getEffectLevel()
         
-        resistance = 0
+        resistance = target.getCurrentBody()
             
         # Check to see using the given resistance whether the effect is successful
         if (self.getEffectChance() - resistance) >= random.randint(0, 100):
