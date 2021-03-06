@@ -290,4 +290,4 @@ class ConfigurationValues(EngineConfigurationValues):
     def getFirstChapterHeaderText(self):
         return "Chapter One - Treachery"
     def getFirstChapterDescriptionText(self):
-        return "Long ago, gods roamed the lands of Veridocia and their power now rests in seals across the land.  Centuries later, a new threat arises, seeking to take the power themselves.  The kingdom of Erium is their first target..."
+        return "Long ago, gods roamed the lands of Veridocia and their power now rests in seals across the continent.  Centuries later, a new threat arises, seeking to take the power themselves.  The kingdom of Erium is their first target..."
