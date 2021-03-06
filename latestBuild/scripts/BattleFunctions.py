@@ -40,7 +40,10 @@ class BattleFunctions(BattleFunctionConfiguration):
     # Get the text that should be displayed when an attacker gets a critical hit.
     # The damage variable must be used like `damage` to be put into a string
     def getCriticalAttackText(self, attacker, target, damage):
-        return attacker.getName() + " strikes a deadly blow against " + target.getName() + ", dealing " + `damage` + " damage.] "
+        if attacker.isHero():
+            return attacker.getName() + " strikes a vulnerable spot!!] " + target.getName() + " takes " + `damage` + " damage!] "
+        else:    
+            return attacker.getName() + " strikes a deadly blow!!] " + target.getName() + " suffers " + `damage` + " damage!] "
     
     # Get the text that should be displayed when an attacker gets a normal hit. 
     # The damage variable must be used like `damage` to be put into a string
@@ -48,8 +51,11 @@ class BattleFunctions(BattleFunctionConfiguration):
         return attacker.getName() + " deals " + `damage` + " damage to " + target.getName() + ".] "
         
     # The text that should be displayed when a combatant dies
-    def getCombatantDeathText(self, attack, target):
-        return target.getName() + " has been defeated!] "
+    def getCombatantDeathText(self, attacker, target):
+        if target.isHero():
+            return "[ " + target.getName() + " is exhausted...] "
+        else:
+            return "[ " + target.getName() + " has been defeated!] "
     
     # Gets the percent chance that the given attacker will get a double attack against the target
     # this value should be between 0-100 
@@ -64,6 +70,9 @@ class BattleFunctions(BattleFunctionConfiguration):
     # Get the amount that the damage dealt by an attack should be modified by when it's a counter attack
     def getCounterDamageModifier(self, attacker, target):
         return .75
+    # Get the amount that the damage dealt by a second attack should be modified by
+    # def getDoubleDamageModifier(self, attacker, target):
+    #    return .5
     
     # Get the amount of experience that should be gained for hurting someone with a normal attack
     # The damage provided will always be NEGATIVE

@@ -3,7 +3,7 @@
 </enemy>
 <enemy id="1" name="Erium Soldier" hp="10" mp="0" attack="13" defense="6" speed="4" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="15" mindStrength="5" counterStrength="5" evadeStrength="5" doubleStrength="5" critStrength="10" level="1" move="5" movementtype="NORMAL" animations="eriumguard" gold="6" palette="">
 	<item itemid="Erium Blade" equipped="true"/>
-	<attackeffect effectid="Bleed" effectchance="25" effectlevel="1"/>
+	<attackeffect effectid="Bleed" effectchance="20" effectlevel="1"/>
 </enemy>
 <enemy id="2" name="Erium Archer" hp="11" mp="0" attack="14" defense="5" speed="7" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="10" mindStrength="10" counterStrength="5" evadeStrength="5" doubleStrength="7" critStrength="5" level="1" move="5" movementtype="FAST" animations="eriumarcher" gold="6" palette="">
 	<item itemid="Erium Arrow" equipped="true"/>

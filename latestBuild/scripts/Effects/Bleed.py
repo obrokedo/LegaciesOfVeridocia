@@ -25,7 +25,7 @@ class Bleed(BattleEffect):
     def performEffectText(self, target, currentTurn):
         effectLevel = self.getEffectLevel()
         damage = effectLevel * -2;
-        return target.getName() + " suffers " + `-1 * damage` + " damage as their wound bleeds.";
+        return target.getName() + " suffers " + `-1 * damage` + " damage as their wound bleeds.] ";
         
     # This is called as soon as the effect is applied (on the casters turn NOT THE TARGETS)
     # This should return a string indicating what occurred when the effect started or None if
@@ -35,15 +35,15 @@ class Bleed(BattleEffect):
     
     # This is the text indicating what effect has been applied
     def effectStartedText(self, attacker, target):
-        return "[" + target.getName() + " is bleeding!"
-        
+        return "[ " + target.getName() + "'s injury starts bleeding!] "
+                
     # This should reset any stats that have been changed as a result of this effect
     def effectEnded(self, target):
         return None;
     
     # Returns what should be displayed when the effects ends.
     def effectEndedText(self, target):
-        return target.getName() + " has stopped bleeding!"
+        return "[ " + target.getName() + " has stopped bleeding!] "
     
     # target is the target of the effect
     # chance is the base percent chance 0-100 that this
