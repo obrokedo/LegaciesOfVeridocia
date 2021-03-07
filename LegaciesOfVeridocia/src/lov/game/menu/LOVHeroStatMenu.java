@@ -19,13 +19,14 @@ import tactical.game.battle.spell.KnownSpell;
 import tactical.game.hudmenu.Panel;
 import tactical.game.input.KeyMapping;
 import tactical.game.input.UserInput;
+import tactical.game.menu.AbstractHeroStatMenu;
 import tactical.game.menu.Menu;
 import tactical.game.menu.Portrait;
 import tactical.game.sprite.CombatSprite;
 import tactical.game.ui.PaddedGameContainer;
 import tactical.utils.StringUtils;
 
-public class LOVHeroStatMenu extends Menu {
+public class LOVHeroStatMenu extends AbstractHeroStatMenu {
 
 	private CombatSprite selectedSprite;
 	private int x;
@@ -444,6 +445,11 @@ public class LOVHeroStatMenu extends Menu {
 	private void drawCenteredString(String str, int centerX, int y, Graphics g) {
 		int w = StringUtils.getStringWidth(str, PANEL_FONT);				
 		StringUtils.drawString(str, centerX - (w / 2), y, g);
+	}
+
+	@Override
+	public CombatSprite getSelectedSprite() {
+		return selectedSprite;
 	}
 	
 

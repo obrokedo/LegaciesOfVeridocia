@@ -16,7 +16,7 @@ import tactical.engine.config.MusicConfiguration;
 import tactical.engine.config.SpellFactory;
 import tactical.engine.config.provided.DefaultEngineConfiguration;
 import tactical.engine.state.StateInfo;
-import tactical.game.menu.Menu;
+import tactical.game.menu.AbstractHeroStatMenu;
 import tactical.game.sprite.CombatSprite;
 import tactical.loading.LoadingScreenRenderer;
 
@@ -92,7 +92,7 @@ public class LOVEngineConfigration extends DefaultEngineConfiguration {
 	}
 	
 	@Override
-	public Menu getHeroStatMenu(GameContainer gc, CombatSprite selectedSprite, StateInfo stateInfo) {
+	public AbstractHeroStatMenu getHeroStatMenu(GameContainer gc, CombatSprite selectedSprite, StateInfo stateInfo) {
 		return new LOVHeroStatMenu(gc, selectedSprite, stateInfo);
 	}
 
