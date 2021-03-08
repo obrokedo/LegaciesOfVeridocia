@@ -95,31 +95,31 @@
 	<fadein time="1000" halting="true" init="true"/>
 	<addactor x="72" y="96" name="Craig" anim="Craig" startanim="UnDown" visible="true" init="false" associatedhero=""/>
 	<speech text="I think we're at a safe distance now.<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
-	<haltingmove name="Craig" x="72" y="120" speed="2.4" movehor="false" movediag="false"/>
+	<move name="Craig" x="72" y="120" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false/>
 	<addactor x="72" y="96" name="Noah" anim="Noah" startanim="UnDown" visible="true" init="false" associatedhero=""/>
 	<speech text="I don't think anyone is crazy enough to follow us through there!<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
-	<haltingmove name="Craig" x="72" y="144" speed="2.4" movehor="false" movediag="false"/>
-	<haltingmove name="Noah" x="72" y="120" speed="2.4" movehor="false" movediag="false"/>
+	<move name="Craig" x="72" y="144" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false/>
+	<move name="Noah" x="72" y="120" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false/>
 	<addactor x="72" y="96" name="Sharna" anim="Sharna" startanim="UnDown" visible="true" init="false" associatedhero=""/>
 	<speech text="I would rather die than ever have to go through that again.<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
-	<haltingmove name="Craig" x="96" y="144" speed="2.4" movehor="false" movediag="false"/>
-	<haltingmove name="Noah" x="72" y="144" speed="2.4" movehor="false" movediag="false"/>
-	<haltingmove name="Sharna" x="72" y="120" speed="2.4" movehor="false" movediag="false"/>
+	<move name="Craig" x="96" y="144" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false/>
+	<move name="Noah" x="72" y="144" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false/>
+	<move name="Sharna" x="72" y="120" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false/>
 	<addactor x="72" y="96" name="Olivia" anim="Olivia" startanim="UnDown" visible="true" init="false" associatedhero=""/>
 	<speech text="I've never been in such a disgusting place in my life! I'm going to have nightmares for years. Thanks, Craig.<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait=""/>
 	<speech text="You guys wait here and lay low while I scout the area out. <hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
-	<haltingmove name="Craig" x="96" y="264" speed="2.4" movehor="false" movediag="false"/>
+	<move name="Craig" x="96" y="264" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false/>
 	<speech text="Has anyone seen Huun? <hardstop>" heroportrait="Olivia" enemyportrait="" animportrait=""/>
 	<speech text="I'm not going back in there for that bum.  I'm sure he can find his way out. <hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
-	<haltingmove name="Craig" x="96" y="192" speed="2.4" movehor="false" movediag="false"/>
+	<move name="Craig" x="96" y="192" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false/>
 	<speech text="It looks like we've come out near an old guard post in the outskirts of Erium. <hardstop> " heroportrait="Craig" enemyportrait="" animportrait=""/>
 	<speech text="WHAT, more guards?! You're saying that I went through that disgusting sewer to escape, just to run into a guard post?!<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
 	<speech text="Sheesh! Relax! It's an old abandond guard house. <hardstop> I think we should take shelter there for the night. <softstop> We could all use some rest.<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
 	<fademusic duration="1000"/>
-	<haltingmovepath name="Craig" x="144" y="288" speed="2.4"/>
-	<haltingmovepath name="Noah" x="120" y="264" speed="2.4"/>
-	<haltingmovepath name="Sharna" x="96" y="288" speed="2.4"/>
-	<haltingmovepath name="Olivia" x="96" y="264" speed="2.4"/>
+	<move name="Craig" x="144" y="288" speed="2.4" movediag=false movehorz=false halting=true pathfinding=true/>
+	<move name="Noah" x="120" y="264" speed="2.4" movediag=false movehorz=false halting=true pathfinding=true/>
+	<move name="Sharna" x="96" y="288" speed="2.4" movediag=false movehorz=false halting=true pathfinding=true/>
+	<move name="Olivia" x="96" y="264" speed="2.4" movediag=false movehorz=false halting=true pathfinding=true/>
 	<wait time="3000"/>
 	<speech text="OK. I got turned around but I think I'm back on track now.<hardstop>" heroportrait="Huun" enemyportrait="" animportrait=""/>
 	<wait time="3000"/>

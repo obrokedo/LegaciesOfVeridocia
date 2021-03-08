@@ -56,22 +56,22 @@
 	<addactor x="336" y="312" name="Hugh" anim="hugh" startanim="UnDown" visible="true" init="false" associatedhero=""/>
 	<cameramovetoactor actor="Noah" time="750"/>
 	<camerafollow name="Noah"/>
-	<haltingmove name="Noah" x="192" y="564" speed="2.4" movehor="false" movediag="false"/>
+	<move name="Noah" x="192" y="564" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false/>
 	<facing name="Noah" dir="0"/>
 	<cameramove x="240" y="528" time="3000"/>
 	<speech text="What are you doing, trespassing on our land?<hardstop>" heroportrait="Tyson" enemyportrait="" animportrait="Tyson"/>
-	<haltingmove name="Tyson" x="312" y="492" speed="3.4" movehor="false" movediag="false"/>
+	<move name="Tyson" x="312" y="492" speed="3.4" movehor="false" movediag="false" halting=true pathfinding=false/>
 	<addactor x="192" y="564" name="Sharna" anim="Sharna" startanim="UnUp" visible="true" init="false" associatedhero=""/>
-	<haltingmove name="Sharna" x="216" y="564" speed="0.5" movehor="false" movediag="false"/>
+	<move name="Sharna" x="216" y="564" speed="0.5" movehor="false" movediag="false" halting=true pathfinding=false/>
 	<facing name="Sharna" dir="0"/>
 	<speech text="Just out for a stroll, we'll be going.<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait="Sharna"/>
 	<speech text="Packing that much gear and moving that quick is a stroll now, eh?<hardstop>" heroportrait="Tyson" enemyportrait="" animportrait="Tyson"/>
 	<speech text="I, well...<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait="Sharna"/>
-	<haltingmove name="Hugh" x="336" y="420" speed="2.4" movehor="false" movediag="false"/>
+	<move name="Hugh" x="336" y="420" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false/>
 	<speech text="There is no need to lie.  Who are you really?<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
 	<speech text="We've departed from Erium to seek the aid of friends.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait="Noah"/>
 	<speech text="Well come in and take a rest. You look tired and we just finished dinner. There is enough for everyone.<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
-	<haltingmove name="Hugh" x="336" y="300" speed="2.4" movehor="false" movediag="false"/>
+	<move name="Hugh" x="336" y="300" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false/>
 	<cameramove x="216" y="576" time="2000"/>
 	<wait time="1500"/>
 	<facing name="Sharna" dir="2"/>
@@ -114,9 +114,9 @@
 	<cameramove x="528" y="336" time="0"/>
 	<wait time="500"/>
 	<fadein time="3000" halting="true" init="false"/>
-	<haltingmove name="Hugh" x="528" y="300" speed="2.4" movehor="false" movediag="false"/>
+	<move name="Hugh" x="528" y="300" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false/>
 	<speech text="Noah, I've gone over our supplies; they won't get us far, even with mine and Tyson's. We'll stop in Reyval to pick up more.<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
-	<haltingmove name="Noah" x="576" y="252" speed="2.4" movehor="false" movediag="false"/>
+	<move name="Noah" x="576" y="252" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false/>
 	<speech text="That's just across the border, right?<hardstop>" heroportrait="Noah" enemyportrait="" animportrait="Noah"/>
 	<speech text="It is, and thankfully the terrain won't be too rough.  Let's just hope that word of your escape hasn't travelled as far as you have.<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
 	<loadmap mapdata="traderscabin" enter="AfterPart5"/>

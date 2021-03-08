@@ -54,11 +54,11 @@
 	<forcedmove name="HuunActor" x="312" y="336" speed="1" facing="2" movehor="false" movediag="false"/>
 	<forcedmove name="NoahActor" x="312" y="360" speed="1" facing="2" movehor="false" movediag="false"/>
 	<wait time="1000"/>
-	<haltingmove name="SharnaActor" x="264" y="384" speed="2.4" movehor="false" movediag="false"/>
+	<move name="SharnaActor" x="264" y="384" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false/>
 	<speech text="I'm so sorry,<pause> we couldent make it in time.<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
 	<facing name="HuunActor" dir="1"/>
 	<speech text="Eddie would be an asset to us, Noah.<hardstop>" heroportrait="Huun" enemyportrait="" animportrait=""/>
-	<haltingmove name="NoahActor" x="240" y="360" speed="2.4" movehor="false" movediag="false"/>
+	<move name="NoahActor" x="240" y="360" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false/>
 	<speech text="Would you like to join us Eddie? <linebreak> We will get to the bottom of this!<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<quiver name="EddotActor"/>
 	<wait time="1000"/>
@@ -86,7 +86,7 @@
 	<speech text="Yes, I'll go into the kingdom and see what I can find.<hardstop>" heroportrait="Eddie" enemyportrait="" animportrait="Eddie"/>
 	<speech text="I don't know if that's such a good idea.<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait="Olivia"/>
 	<speech text="I don't know if stopping him is such a good idea.  Watch yer head out there, Eddie.<hardstop>" heroportrait="Craig" enemyportrait="" animportrait="Craig"/>
-	<move name="EddotActor" x="456" y="360" speed="0.5" movehor="false" movediag="false"/>
+	<move name="EddotActor" x="456" y="360" speed="0.5" movehor="false" movediag="false" halting=false pathfinding=false/>
 	<fadeout time="1000" halting="true"/>
 	<loadmap mapdata="eriumwoods" enter="Post Battle 3 Entrance"/>
 </cinematic>
