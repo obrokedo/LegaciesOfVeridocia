@@ -7,7 +7,7 @@
 	<playmusic music="desolation" volume="100"/>
 	<fadein time="3000" halting="false" init="true"/>
 	<wait time="1500"/>
-	<move name="Lexus" x="456" y="264" speed="1.0" movehor="false" movediag="false" halting=false pathfinding=false/>
+	<move name="Lexus" x="456" y="264" speed="1.0" movehor="false" movediag="false" halting="false" pathfinding="false"/>
 	<wait time="1000"/>
 	<flashscreen time="100"/>
 	<playsound sound="thundercrack" volume="100"/>
@@ -29,21 +29,21 @@
 	<flashscreen time="100"/>
 	<playsound sound="thundercrack" volume="100"/>
 	<speech text="Then why have you chosen to disturb me?<softstop><nextcin>" heroportrait="" enemyportrait="" animportrait="Disguise1"/>
-	<move name="Lexus" x="504" y="264" speed="1.0" movehor="false" movediag="false" halting=true pathfinding=false/>
+	<move name="Lexus" x="504" y="264" speed="1.0" movehor="false" movediag="false" halting="true" pathfinding="false"/>
 	<facing name="Lexus" dir="0"/>
 	<speech text="I am not satisfied with our progress! For all our planning, the seals remain intact!<softstop>" heroportrait="" enemyportrait="" animportrait="Disguise2"/>
 	<speech text="All things in their own time. Patience has placed the prize within our grasp.<softstop><nextcin>" heroportrait="" enemyportrait="" animportrait="Disguise1"/>
-	<move name="Lexus" x="456" y="264" speed="1.0" movehor="false" movediag="false" halting=true pathfinding=false/>
+	<move name="Lexus" x="456" y="264" speed="1.0" movehor="false" movediag="false" halting="true" pathfinding="false"/>
 	<facing name="Lexus" dir="0"/>
 	<speech text="I am not content to wait forever, and I have come too far to turn back now!<softstop><nextcin>" heroportrait="" enemyportrait="" animportrait="Disguise2"/>
-	<move name="Lexus" x="456" y="480" speed="1.0" movehor="false" movediag="false" halting=false pathfinding=false/>
+	<move name="Lexus" x="456" y="480" speed="1.0" movehor="false" movediag="false" halting="false" pathfinding="false"/>
 	<cameramove x="456" y="504" time="4000"/>
 	<wait time="2000"/>
 	<facing name="Lexus" dir="0"/>
-	<speech text="This will be your undoing... <softstop><nextcin>" heroportrait="" enemyportrait="" animportrait="Disguise1"/>
+	<speech text="This will be your undoing... <softstop><nextcin>" heroportrait="" enemyportrait="" animportrait="Disguise2"/>
 	<flashscreen time="100"/>
 	<playsound sound="thundercrack" volume="100"/>
-	<move name="Lexus" x="480" y="792" speed="1.0" movehor="false" movediag="false" halting=false pathfinding=false/>
+	<move name="Lexus" x="480" y="792" speed="1.0" movehor="false" movediag="false" halting="false" pathfinding="false"/>
 	<wait time="1000"/>
 	<fadeout time="3000" halting="true"/>
 	<speech text="Such short-sightedness. There are many uses for a reckless pawn such as yourself.  Many indeed...<softstop><nextcin>" heroportrait="" enemyportrait="" animportrait="Disguise1"/>
@@ -53,6 +53,6 @@
 </cinematic>
 <objectgroup name="Trigger Region" visible="1"/>
 <objectgroup name="Battle" visible="1"/>
-<objectgroup id="29" name="Meta"/>
+<objectgroup name="NPCs-Objects" visible="1"/>
 <objectgroup name="Terrain" visible="1"/>
 </area>
