@@ -1,34 +1,34 @@
 <enemies>
 <enemy id="0" name="Darkling Ooze" hp="9" mp="0" attack="9" defense="4" speed="4" fireAffin="-10" elecAffin="0" coldAffin="0" darkAffin="10" waterAffin="10" earthAffin="0" windAffin="0" lightAffin="-10" bodyStrength="5" mindStrength="100" counterStrength="5" evadeStrength="5" doubleStrength="5" critStrength="5" level="1" move="4" movementtype="NORMAL" animations="Darkling Ooze" gold="7" palette="">
 </enemy>
-<enemy id="1" name="Erium Soldier" hp="10" mp="0" attack="13" defense="6" speed="4" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="15" mindStrength="5" counterStrength="5" evadeStrength="5" doubleStrength="5" critStrength="10" level="1" move="5" movementtype="NORMAL" animations="eriumguard" gold="6" palette="">
+<enemy id="1" name="Erium Soldier" hp="10" mp="0" attack="11" defense="6" speed="4" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="15" mindStrength="5" counterStrength="5" evadeStrength="5" doubleStrength="5" critStrength="10" level="1" move="5" movementtype="NORMAL" animations="eriumguard" gold="6" palette="">
 	<item itemid="Erium Blade" equipped="true"/>
 	<attackeffect effectid="Bleed" effectchance="20" effectlevel="1"/>
 </enemy>
-<enemy id="2" name="Erium Archer" hp="11" mp="0" attack="14" defense="5" speed="7" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="10" mindStrength="10" counterStrength="5" evadeStrength="5" doubleStrength="7" critStrength="5" level="1" move="5" movementtype="FAST" animations="eriumarcher" gold="6" palette="">
+<enemy id="2" name="Erium Archer" hp="11" mp="0" attack="12" defense="5" speed="7" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="10" mindStrength="10" counterStrength="5" evadeStrength="5" doubleStrength="7" critStrength="5" level="1" move="5" movementtype="FAST" animations="eriumarcher" gold="6" palette="">
 	<item itemid="Erium Arrow" equipped="true"/>
 </enemy>
-<enemy id="3" name="Erium Mage" hp="14" mp="6" attack="12" defense="5" speed="6" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="5" mindStrength="15" counterStrength="5" evadeStrength="5" doubleStrength="5" critStrength="5" level="2" move="5" movementtype="NORMAL" animations="eriummage" gold="5" palette="">
+<enemy id="3" name="Erium Mage" hp="14" mp="6" attack="10" defense="5" speed="6" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="5" mindStrength="15" counterStrength="5" evadeStrength="5" doubleStrength="5" critStrength="5" level="2" move="5" movementtype="NORMAL" animations="eriummage" gold="5" palette="">
 	<spell spellid="BLAZE" level="1"/>
 	<item itemid="Erium Cane" equipped="true"/>
 </enemy>
-<enemy id="4" name="Erium Captain" hp="20" mp="0" attack="15" defense="7" speed="7" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="15" mindStrength="10" counterStrength="6" evadeStrength="5" doubleStrength="7" critStrength="10" level="2" move="6" movementtype="NORMAL" animations="guardcaptain" gold="16" palette="">
+<enemy id="4" name="Erium Captain" hp="20" mp="0" attack="13" defense="7" speed="7" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="15" mindStrength="10" counterStrength="6" evadeStrength="5" doubleStrength="7" critStrength="10" level="2" move="6" movementtype="NORMAL" animations="guardcaptain" gold="16" palette="">
 	<item itemid="Erium Blade" equipped="true"/>
 </enemy>
-<enemy id="5" name="Sellsword" hp="11" mp="0" attack="15" defense="9" speed="6" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="15" mindStrength="5" counterStrength="5" evadeStrength="5" doubleStrength="10" critStrength="7" level="4" move="5" movementtype="NORMAL" animations="ReyvalTrapper" gold="36" palette="">
+<enemy id="5" name="Sellsword" hp="11" mp="0" attack="13" defense="9" speed="6" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="15" mindStrength="5" counterStrength="5" evadeStrength="5" doubleStrength="10" critStrength="7" level="4" move="5" movementtype="NORMAL" animations="ReyvalTrapper" gold="36" palette="">
 	<item itemid="Steel Sword" equipped="true"/>
 </enemy>
-<enemy id="6" name="Bounty Hunter" hp="14" mp="0" attack="16" defense="7" speed="10" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="10" mindStrength="10" counterStrength="5" evadeStrength="5" doubleStrength="7" critStrength="10" level="4" move="5" movementtype="FAST" animations="ReyvalScout" gold="38" palette="">
+<enemy id="6" name="Bounty Hunter" hp="14" mp="0" attack="14" defense="7" speed="10" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="10" mindStrength="10" counterStrength="5" evadeStrength="5" doubleStrength="7" critStrength="10" level="4" move="5" movementtype="FAST" animations="ReyvalScout" gold="38" palette="">
 	<item itemid="Iron Arrow" equipped="true"/>
 </enemy>
-<enemy id="7" name="Erium Cavalry" hp="18" mp="0" attack="14" defense="8" speed="7" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="10" mindStrength="5" counterStrength="6" evadeStrength="5" doubleStrength="5" critStrength="7" level="4" move="7" movementtype="SLOW" animations="ReyvalCavalry" gold="38" palette="">
+<enemy id="7" name="Erium Cavalry" hp="18" mp="0" attack="12" defense="8" speed="7" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="10" mindStrength="5" counterStrength="6" evadeStrength="5" doubleStrength="5" critStrength="7" level="4" move="7" movementtype="SLOW" animations="ReyvalCavalry" gold="38" palette="">
 	<item itemid="Short Spear" equipped="true"/>
 </enemy>
-<enemy id="8" name="Reyval Medic" hp="12" mp="9" attack="13" defense="6" speed="8" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="-10" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="10" bodyStrength="5" mindStrength="10" counterStrength="5" evadeStrength="5" doubleStrength="5" critStrength="5" level="4" move="5" movementtype="NORMAL" animations="ReyvalMedic" gold="32" palette="">
+<enemy id="8" name="Reyval Medic" hp="12" mp="9" attack="11" defense="6" speed="8" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="-10" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="10" bodyStrength="5" mindStrength="10" counterStrength="5" evadeStrength="5" doubleStrength="5" critStrength="5" level="4" move="5" movementtype="NORMAL" animations="ReyvalMedic" gold="32" palette="">
 	<spell spellid="HEAL" level="1"/>
 	<item itemid="Oaken Staff" equipped="true"/>
 </enemy>
-<enemy id="9" name="Merc. Captain" hp="17" mp="0" attack="18" defense="8" speed="8" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="15" mindStrength="10" counterStrength="8" evadeStrength="5" doubleStrength="5" critStrength="7" level="5" move="6" movementtype="NORMAL" animations="MercCaptain" gold="51" palette="">
+<enemy id="9" name="Merc. Captain" hp="17" mp="0" attack="15" defense="8" speed="8" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" bodyStrength="15" mindStrength="10" counterStrength="8" evadeStrength="5" doubleStrength="5" critStrength="7" level="5" move="6" movementtype="NORMAL" animations="MercCaptain" gold="51" palette="">
 	<item itemid="Battle Axe" equipped="true"/>
 	<attackeffect effectid="Bleed" effectchance="25" effectlevel="1"/>
 </enemy>
