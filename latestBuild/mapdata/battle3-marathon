@@ -1,0 +1,289 @@
+<area>
+<map file="EriumWoods.tmx"/>
+<trigger id="0" description="Battle1 Initialise" require="," exclude="Battle 3," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<playmusic music="battle3" volume="75"/>
+</trigger>
+<trigger id="1" description="Victory Results" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<completequest questid="Battle 3"/>
+	<reviveheroes hero="Sharna"/>
+	<reviveheroes hero="Huun"/>
+	<loadmap mapdata="marathon" enter="enter" transdir=""/>
+</trigger>
+<trigger id="2" description="Shuffle" require="," exclude="," nonretrig="false" retrigonenter="true" triggeronce="false" triggerimmediately="false">
+	<changeaitargetenemy id="4" targetid="7" priority="1"/>
+	<changeaiapproach id="6" aitype="1" priority="1"/>
+</trigger>
+<trigger id="3" description="Fail Results" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<reviveheroes hero="Noah"/>
+	<loadmap mapdata="eriumoutskirts" enter="start" transdir=""/>
+</trigger>
+<text id="0" description="Defcon 1">
+	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="Defcon 1 Activated!!<hardstop>"/>
+</text>
+<text id="1" description="Defcon 2">
+	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="Defcon 2 Activated!!<hardstop>"/>
+</text>
+<text id="2" description="Defcon 3">
+	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="Defcon 3 Activated!!<hardstop>"/>
+</text>
+<text id="3" description="Defcon 4">
+	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="Defcon 4 Activated!!<hardstop>"/>
+</text>
+<text id="4" description="Demo 3 Over">
+	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="Congratulations!<pause> <linebreak> You've completed Demo 3!<hardstop> <linebreak> Thanks for playing!<hardstop>"/>
+</text>
+<cinematic id="0" description="Exit Fade" camerax="0" cameray="0">
+	<fadeout time="2000" halting="true"/>
+	<showcredits/>
+</cinematic>
+<cinematic id="1" description="PostBattleThree" camerax="48" cameray="240">
+	<addactor x="216" y="384" name="EddotActor" anim="Eddie" startanim="UnLeft" visible="true" init="false" associatedhero=""/>
+	<addstatic x="196" y="390" spriteid="EddieWife" spriteim="EddieWife"/>
+	<addstatic x="192" y="380" spriteid="EddieChild" spriteim="EddieChild"/>
+	<addactor x="288" y="336" name="HuunActor" anim="Huun" startanim="UnLeft" visible="true" init="false" associatedhero=""/>
+	<addactor x="288" y="360" name="NoahActor" anim="Noah" startanim="UnLeft" visible="true" init="false" associatedhero=""/>
+	<addactor x="288" y="384" name="SharnaActor" anim="Sharna" startanim="UnLeft" visible="true" init="false" associatedhero=""/>
+	<wait time="1000"/>
+	<speech text="No<pause>.<pause>.<pause>. No<pause>.<pause>.<pause>.<hardstop>" heroportrait="Eddie" enemyportrait="" animportrait="Eddie"/>
+	<speech text="Eddie,<softstop> I'm sorry,<pause> but they're g...<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
+	<speech text="MISTAL!  WHEN I FIND YOU, I'LL CRUSH YOUR LITTLE NECK!<hardstop>" heroportrait="Eddie" enemyportrait="" animportrait=""/>
+	<move name="SharnaActor" x="312" y="384" speed="1" facing="2" movehor="false" movediag="false" halting="false" pathfinding="false"/>
+	<move name="HuunActor" x="312" y="336" speed="1" facing="2" movehor="false" movediag="false" halting="false" pathfinding="false"/>
+	<move name="NoahActor" x="312" y="360" speed="1" facing="2" movehor="false" movediag="false" halting="false" pathfinding="false"/>
+	<wait time="1000"/>
+	<move name="SharnaActor" x="264" y="384" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false facing="-1"/>
+	<speech text="I'm so sorry,<pause> we couldent make it in time.<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
+	<facing name="HuunActor" dir="1"/>
+	<speech text="Eddie would be an asset to us, Noah.<hardstop>" heroportrait="Huun" enemyportrait="" animportrait=""/>
+	<move name="NoahActor" x="240" y="360" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false facing="-1"/>
+	<speech text="Would you like to join us Eddie? <linebreak> We will get to the bottom of this!<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
+	<quiver name="EddotActor"/>
+	<wait time="1000"/>
+	<stopse name="EddotActor"/>
+	<facing name="EddotActor" dir="3"/>
+	<speech text="I will avenge my family.<hardstop>" heroportrait="Eddie" enemyportrait="" animportrait=""/>
+	<speech text="Eddie has joined the force.<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
+	<fadeout time="2000" halting="true"/>
+	<addactor x="192" y="216" name="CraigActor" anim="Craig" startanim="UnLeft" visible="true" init="false" associatedhero=""/>
+	<addactor x="192" y="240" name="OliviaActor" anim="Olivia" startanim="UnLeft" visible="true" init="false" associatedhero=""/>
+	<move name="NoahActor" x="456" y="384" speed="10" facing="0" movehor="false" movediag="true" halting="false" pathfinding="false"/>
+	<move name="SharnaActor" x="480" y="384" speed="10" facing="0" movehor="false" movediag="true" halting="false" pathfinding="false"/>
+	<move name="HuunActor" x="408" y="360" speed="10" facing="3" movehor="false" movediag="true" halting="false" pathfinding="false"/>
+	<move name="EddotActor" x="456" y="264" speed="10" facing="1" movehor="false" movediag="true" halting="false" pathfinding="false"/>
+	<move name="CraigActor" x="504" y="288" speed="10" facing="2" movehor="false" movediag="true" halting="false" pathfinding="false"/>
+	<move name="OliviaActor" x="504" y="312" speed="10" facing="2" movehor="false" movediag="true" halting="false" pathfinding="false"/>
+	<wait time="1000"/>
+	<cameramovetoactor actor="NoahActor" time="0"/>
+	<fadein time="1000" halting="true" init="false"/>
+	<speech text="This isn't just going to blow over, so how are we supposed to find out what Mistal is doing now? <linebreak> We can't even get close to the castle, let alone her. <hardstop>" heroportrait="Sharna" enemyportrait="" animportrait="Sharna"/>
+	<quiver name="EddotActor"/>
+	<speech text="You're right; you<pause> can't.<hardstop>" heroportrait="Eddie" enemyportrait="" animportrait="Eddie"/>
+	<stopse name="EddotActor"/>
+	<speech text="You mean...<hardstop>" heroportrait="Noah" enemyportrait="" animportrait="Noah"/>
+	<speech text="Yes, I'll go into the kingdom and see what I can find.<hardstop>" heroportrait="Eddie" enemyportrait="" animportrait="Eddie"/>
+	<speech text="I don't know if that's such a good idea.<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait="Olivia"/>
+	<speech text="I don't know if stopping him is such a good idea.  Watch yer head out there, Eddie.<hardstop>" heroportrait="Craig" enemyportrait="" animportrait="Craig"/>
+	<move name="EddotActor" x="456" y="360" speed="0.5" movehor="false" movediag="false" halting=false pathfinding=false facing="-1"/>
+	<fadeout time="1000" halting="true"/>
+	<loadmap mapdata="eriumwoods" enter="Post Battle 3 Entrance"/>
+</cinematic>
+<condition id="0" description="Shuffle" triggerid="2,">
+	<enterloc location="Shuffle" immediate="false"/>
+</condition>
+<condition id="1" description="Noah Dies" triggerid="3,">
+	<herodeath unitid="Noah"/>
+</condition>
+<condition id="2" description="MapLoad" triggerid="0,">
+	<maploaded/>
+</condition>
+<condition id="3" description="AllEnemiesKilled" triggerid="1,">
+	<enemremain operator="Equals" amount="0"/>
+</condition>
+<objectgroup name="Trigger Region" visible="1">
+<object name="Shuffle" x="0" y="0">
+<properties>
+<property name="" value=""/>
+</properties>
+<polyline points="312,144 480,144 480,288 312,288"/>
+</object>
+<object id="1" name="FromWorldmap" x="360" y="672" width="24" height="24">
+<properties>
+<property name="start" value="exit=FromWorldmap"/>
+</properties>
+</object>
+<object id="2" name="ToWorldmap" x="360" y="696" width="24" height="24">
+<properties>
+<property name="" value=""/>
+</properties>
+</object>
+<object id="6" name="battlestart" type="START" x="456" y="456">
+<properties>
+<property name="start" value="exit=battlestart"/>
+</properties>
+<polyline points="0,0 72,0 72,-24 0,-24 0,0"/>
+</object>
+<object id="63" name="Prevent Exit" x="0" y="0">
+<properties>
+<property name="" value=""/>
+</properties>
+<polyline points="456,408 528,408 528,432 456,432 456,408"/>
+</object>
+<object id="64" name="Start Post Battle 3" x="0" y="0">
+<properties>
+<property name="start" value="exit=Post Battle 3 Entrance"/>
+</properties>
+<polyline points="456,384 480,384 480,408 456,408 456,384"/>
+</object>
+<object id="73" name="ToWorldMapNorth" x="0" y="0">
+<properties>
+<property name="" value=""/>
+</properties>
+<polyline points="456,24 408,24 408,0 456,0 456,24"/>
+</object>
+<object id="74" name="battlestart" type="START" x="-24" y="-120">
+<properties>
+<property name="start" value="exit=battlestart"/>
+</properties>
+<polyline points="168,384 192,384 192,408 168,408 168,384"/>
+</object>
+</objectgroup>
+<objectgroup name="Battle" visible="1">
+<object id="3" name="Soldier" type="NPC" x="504" y="264" width="24" height="24">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=wait enemyid=Erium Soldier unit=0"/>
+</properties>
+</object>
+<object name="Erium Mage" x="0" y="0">
+<properties>
+<property name="enemy" value="ai=wizard vision=0 aiapproach=wait enemyid=Erium Mage unit=1 music="/>
+</properties>
+<polyline points="408,192 432,192 432,216 408,216"/>
+</object>
+<object name="Erium Archer" x="0" y="0">
+<properties>
+<property name="enemy" value="ai=fighter vision=0 aiapproach=wait enemyid=Erium Archer unit=2"/>
+</properties>
+<polyline points="312,192 336,192 336,216 312,216"/>
+</object>
+<object name="Soldier" x="0" y="0">
+<properties>
+<property name="enemy" value="ai=fighter vision=1 aiapproach=wait enemyid=Erium Soldier unit=3"/>
+</properties>
+<polyline points="288,216 312,216 312,240 288,240"/>
+</object>
+<object name="Erium Mage" x="0" y="0">
+<properties>
+<property name="enemy" value="ai=wizard aiapproach=wait enemyid=Erium Mage unit=4"/>
+</properties>
+<polyline points="336,384 360,384 360,408 336,408"/>
+</object>
+<object id="9" name="Soldier" type="NPC" x="288" y="240" width="24" height="24">
+<properties>
+<property name="enemy" value="ai=fighter vision=1 aiapproach=wait enemyid=Erium Soldier unit=5"/>
+</properties>
+</object>
+<object id="10" name="Erium Archer" type="NPC" x="240" y="336" width="24" height="24">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=wait enemyid=Erium Archer unit=6"/>
+</properties>
+</object>
+<object id="11" name="Erium Captain" type="NPC" x="216" y="384" width="24" height="24">
+<properties>
+<property name="enemy" value="ai=fighter aiapproach=wait enemyid=Erium Captain unit=7"/>
+</properties>
+</object>
+<object id="66" x="144" y="168" width="408" height="288">
+<properties>
+<property name="battleregion" value=""/>
+</properties>
+</object>
+<object name="Erium Cavalry" x="0" y="0">
+<properties>
+<property name="enemy" value="ai=fighter vision=4 aiapproach=wait enemyid=Erium Cavalry unit=0"/>
+</properties>
+<polyline points="336,360 336,384 360,384 360,360 336,360"/>
+</object>
+</objectgroup>
+<objectgroup name="NPCs-Objects" visible="1">
+<object id="56" name="NPC Huun" x="0" y="0">
+<properties>
+<property name="npc" value="noturn=false facing=3 name=NPCHuun throughwall=false noanimate=false animation=Huun textid=3 wander=0"/>
+</properties>
+<polyline points="432,360 432,384 408,384 408,360 432,360"/>
+</object>
+<object id="57" name="NPC Sharna" x="0" y="0">
+<properties>
+<property name="npc" value="noturn=false facing=0 name=NPCSharna throughwall=false noanimate=false animation=Sharna textid=4 wander=0"/>
+</properties>
+<polyline points="504,384 480,384 480,408 504,408 504,384"/>
+</object>
+<object id="58" name="NPC Craig" x="0" y="0">
+<properties>
+<property name="npc" value="noturn=false facing=2 name=NPCCraig throughwall=false noanimate=false animation=Craig textid=6 wander=0"/>
+</properties>
+<polyline points="528,288 504,288 504,312 528,312 528,288"/>
+</object>
+<object id="59" name="NPC Olivia" x="0" y="0">
+<properties>
+<property name="npc" value="noturn=false facing=2 name=NPCOlivia throughwall=false noanimate=false animation=Olivia textid=5 wander=2"/>
+</properties>
+<polyline points="504,312 528,312 528,336 504,336 504,312"/>
+</object>
+<object id="70" name="Door" x="0" y="0">
+<properties>
+<property name="door" value="image=HouseDoorLeft"/>
+</properties>
+<polyline points="456,432 480,432 480,456 456,456 456,432"/>
+</object>
+<object id="71" name="Door 2" x="0" y="0">
+<properties>
+<property name="door" value="image=HouseDoorRight"/>
+</properties>
+<polyline points="504,432 528,432 528,456 504,456 504,432"/>
+</object>
+<object id="72" name="Door 3" x="0" y="0">
+<properties>
+<property name="door" value="image=ArmorDoor"/>
+</properties>
+<polyline points="480,432 504,432 504,456 480,456 480,432"/>
+</object>
+<object id="67" name="Chest1" x="0" y="0">
+<properties>
+<property name="chest" value="spriteimage=closedchest itemid=-1"/>
+</properties>
+<polyline points="408,168 432,168 432,192 408,192 408,168"/>
+</object>
+<object id="68" name="Chest2" x="0" y="0">
+<properties>
+<property name="chest" value="spriteimage=blank itemid=-1"/>
+</properties>
+<polyline points="264,336 288,336 288,360 264,360 264,336"/>
+</object>
+<object id="69" name="Chest3" x="0" y="0">
+<properties>
+<property name="chest" value="spriteimage=blank itemid=-1"/>
+</properties>
+<polyline points="144,240 168,240 168,264 144,264 144,240"/>
+</object>
+</objectgroup>
+<objectgroup name="Terrain" visible="1">
+<object id="47" x="312" y="312">
+<properties>
+<property name="terrain" value="type=GRASS"/>
+</properties>
+<polyline points="0,0 0,-120 72,-120 72,0 0,0"/>
+</object>
+<object name="null" x="0" y="0">
+<properties>
+<property name="terrain" value="platform=woodbeamfloor type=ROAD"/>
+</properties>
+<polyline points="144,432 144,336 264,336 264,360 288,360 288,336 312,336 312,264 216,264 216,288 288,288 288,312 168,312 168,288 144,288 144,264 168,264 168,240 144,240 144,216 168,216 168,192 288,192 288,216 312,216 312,168 384,168 384,192 312,192 312,312 384,312 384,216 408,216 408,360 432,360 432,336 408,336 408,312 432,312 432,264 408,264 408,192 480,192 480,168 552,168 552,192 504,192 504,264 552,264 552,432 528,432 528,408 528,360 504,360 504,408 528,408 528,456 504,456 456,456 456,432 408,432 408,264 384,264 384,312 360,312 360,432 312,432 216,432 216,360 168,360 168,384 216,384 216,408 168,408 168,432 144,432"/>
+</object>
+<object id="54" x="312" y="192">
+<properties>
+<property name="terrain" value="platform=woodbeamfloor type=THICK-GRASS"/>
+</properties>
+<polygon points="0,0 72,0 72,120 0,120"/>
+</object>
+</objectgroup>
+</area>

@@ -1,0 +1,208 @@
+<area>
+<map file="Marathon.tmx"/>
+<trigger id="0" description="battle1start" require="" exclude="" nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<addhero heroid="Sharna"/>
+	<addhero heroid="Huun"/>
+	<startbattle battletriggers="battle1-marathon" entrance="battle1" battbg="0"/>
+</trigger>
+<trigger id="1" description="moveguard1" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<showcin cinid="0" exittrigid="2"/>
+</trigger>
+<trigger id="2" description="replaceguard1" require="," exclude="," nonretrig="false" retrigonenter="true" triggeronce="false" triggerimmediately="false">
+	<removesprite name="guard1"/>
+	<addnpc textid="5" name="guard1" animation="Guard1" wander="0" facing="0" location="guard1move"/>
+</trigger>
+<trigger id="3" description="battle2start" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<addhero heroid="Craig"/>
+	<addhero heroid="Olivia"/>
+	<startbattle battletriggers="battle2-marathon" entrance="battlestart" battbg="0"/>
+</trigger>
+<trigger id="4" description="battle3start" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<removehero heroid="Craig"/>
+	<removehero heroid="Olivia"/>
+	<addhero heroid="Eddie"/>
+	<startbattle battletriggers="battle3-marathon" entrance="battlestart" battbg="0"/>
+</trigger>
+<trigger id="5" description="battle4start" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<startbattle battletriggers="battle4-marathon" entrance="battlestart" battbg="0"/>
+</trigger>
+<trigger id="6" description="moveguard2" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<showcin cinid="1" exittrigid="8"/>
+</trigger>
+<trigger id="7" description="moveguard3" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<showcin cinid="2" exittrigid="9"/>
+</trigger>
+<trigger id="8" description="replaceguard2" require="," exclude="," nonretrig="false" retrigonenter="true" triggeronce="false" triggerimmediately="false">
+	<removesprite name="guard1"/>
+	<addnpc textid="7" name="guard1" animation="Guard1" wander="0" facing="3" location="guard1move2"/>
+</trigger>
+<trigger id="9" description="replaceguard3" require="," exclude="," nonretrig="false" retrigonenter="true" triggeronce="false" triggerimmediately="false">
+	<removesprite name="guard1"/>
+	<addnpc textid="1" name="guard1" animation="Guard1" wander="0" facing="3" location="guard1move3"/>
+</trigger>
+<trigger id="10" description="openpriest" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<showpriest portrait="Priestess1"/>
+</trigger>
+<trigger id="11" description="showjoinmessage" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<showtext textid="8"/>
+</trigger>
+<trigger id="12" description="showjoinmenu" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<addmultihero heroids="Liza,Tyson,"/>
+	<runtriggers triggers="7,"/>
+</trigger>
+<trigger id="13" description="mapenter" require="" exclude="" nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<playmusic music="erium" volume="30"/>
+	<runtriggers triggers="14,"/>
+</trigger>
+<trigger id="14" description="DisplayGameFinish" require="" exclude="" nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<showtext textid="9"/>
+</trigger>
+<text id="0" description="advisor1speech">
+	<string require="Battle1," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="You have performed admirably, please proceed to the next challenge.<hardstop>"/>
+	<yesno require="," exclude="," triggeryes="0" triggerno="-1" heroportrait="" enemyportrait="" animportrait="" message="Are you ready to begin battle one?<hardstop>"/>
+</text>
+<text id="1" description="guard1speech">
+	<string require="Battle1," exclude="," trigger="1" heroportrait="" enemyportrait="" animportrait="" message="Nice work in there! Let me get out of your way!<hardstop>"/>
+	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="I don't think you're ready yet...<hardstop>"/>
+</text>
+<text id="2" description="advisor2speech">
+	<string require="Battle2," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="You have performed admirably, please proceed to the next challenge.<hardstop>"/>
+	<yesno require="," exclude="," triggeryes="3" triggerno="-1" heroportrait="" enemyportrait="" animportrait="" message="Are you ready to begin battle two?<hardstop>"/>
+</text>
+<text id="3" description="advisor3speech">
+	<string require="Battle 3," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="You have performed admirably, please proceed to the next challenge.<hardstop>"/>
+	<yesno require="," exclude="," triggeryes="4" triggerno="-1" heroportrait="" enemyportrait="" animportrait="" message="Are you ready to begin battle three?<hardstop>"/>
+</text>
+<text id="4" description="advisor4speech">
+	<string require="Battle4," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="You have performed admirably, please proceed to the next challenge.<hardstop>"/>
+	<yesno require="," exclude="," triggeryes="5" triggerno="-1" heroportrait="" enemyportrait="" animportrait="" message="Are you ready to begin battle four?<hardstop>"/>
+</text>
+<text id="5" description="guard1speech2ndposition">
+	<string require="Battle2," exclude="," trigger="6" heroportrait="" enemyportrait="" animportrait="" message="Nice work in there! Let me get out of your way!<hardstop>"/>
+	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="I don't think you're ready yet...<hardstop>"/>
+</text>
+<text id="6" description="priestspeech">
+	<string require="," exclude="," trigger="10" heroportrait="" enemyportrait="" animportrait="" message="How can I help you my lamb?<hardstop>"/>
+</text>
+<text id="7" description="guard1speech3rdposition">
+	<string require="Battle2," exclude="," trigger="11" heroportrait="" enemyportrait="" animportrait="" message="Nice work in there! Let me get out of your way!<hardstop>"/>
+	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="I don't think you're ready yet...<hardstop>"/>
+</text>
+<text id="8" description="joinmessage">
+	<string require="," exclude="," trigger="12" heroportrait="" enemyportrait="" animportrait="" message="You have two new heroes looking to join your party, but only space for one! Who would you like to take?<hardstop>"/>
+</text>
+<text id="9" description="MarathonFinished">
+	<string require="Battle4," exclude="" trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="Congratulations, you have completed the marathon! If you would like to start over please exit the game and delete the 'Test.progress' file that is in the same directory as the executable.<softstop> You should then be able to start from battle one again.<softstop> Thanks for playing!<hardstop>"/>
+</text>
+<cinematic id="0" description="guard1move" camerax="0" cameray="0">
+	<assactor name="guard1" hero="" enemyid="0" npcid="guard1" staticid=""/>
+	<move name="guard1" x="216" y="144" speed="2.4" movehor="false" movediag="false" halting="true" pathfinding="true" facing="-1"/>
+</cinematic>
+<cinematic id="1" description="guard1moveposition2" camerax="0" cameray="0">
+	<assactor name="guard1" hero="" enemyid="0" npcid="guard1" staticid=""/>
+	<move name="guard1" x="144" y="264" speed="2.4" movehor="false" movediag="false" halting="true" pathfinding="true" facing="-1"/>
+</cinematic>
+<cinematic id="2" description="guard1moveposition3" camerax="0" cameray="0">
+	<assactor name="guard1" hero="" enemyid="0" npcid="guard1" staticid=""/>
+	<move name="guard1" x="72" y="288" speed="2.4" movehor="false" movediag="false" halting="true" pathfinding="true" facing="-1"/>
+</cinematic>
+<condition id="0" description="mapenter" triggerid="13,">
+	<maploaded/>
+</condition>
+<objectgroup name="Trigger Region" visible="1">
+<object name="enter" x="0" y="0">
+<properties>
+<property name="start" value="exit=enter"/>
+</properties>
+<polyline points="24,48 48,48 48,72 24,72 24,48"/>
+</object>
+<object name="guard1move" x="0" y="0">
+<properties>
+<property name="" value=""/>
+</properties>
+<polyline points="216,144 240,144 240,168 216,168 216,144"/>
+</object>
+<object name="guard1move2" x="0" y="0">
+<properties>
+<property name="" value=""/>
+</properties>
+<polyline points="144,264 168,264 168,288 144,288 144,264"/>
+</object>
+<object name="guard1move3" x="0" y="0">
+<properties>
+<property name="" value=""/>
+</properties>
+<polyline points="72,288 96,288 96,312 72,312 72,288"/>
+</object>
+</objectgroup>
+<objectgroup name="Battle" visible="1"/>
+<objectgroup name="NPCs-Objects" visible="1">
+<object name="advisor1" x="0" y="0">
+<properties>
+<property name="npc" value="noturn=false facing=1 throughwall=false noanimate=false animation=Man1 textid=0 wander=0"/>
+</properties>
+<polyline points="72,24 96,24 96,48 72,48 72,24"/>
+</object>
+<object name="guard1" x="0" y="0">
+<properties>
+<property name="npc" value="noturn=false facing=2 name=guard1 throughwall=false noanimate=false animation=Guard1 textid=1 wander=0"/>
+</properties>
+<polyline points="96,48 120,48 120,72 96,72 96,48"/>
+</object>
+<object name="priest1" x="0" y="0">
+<properties>
+<property name="npc" value="noturn=false facing=2 throughwall=false noanimate=false animation=Priestess1 textid=6 wander=0"/>
+</properties>
+<polyline points="264,48 288,48 288,72 264,72 264,48"/>
+</object>
+<object name="advisor2" x="0" y="0">
+<properties>
+<property name="npc" value="noturn=false facing=1 throughwall=false noanimate=false animation=Lady1 textid=2 wander=0"/>
+</properties>
+<polyline points="216,24 216,48 240,48 240,24 216,24"/>
+</object>
+<object name="advisor3" x="0" y="0">
+<properties>
+<property name="npc" value="noturn=false facing=0 throughwall=false noanimate=false animation=Mage1 textid=3 wander=0"/>
+</properties>
+<polyline points="240,288 240,312 216,312 216,288 240,288"/>
+</object>
+<object name="advisor4" x="0" y="0">
+<properties>
+<property name="npc" value="noturn=false facing=3 throughwall=false noanimate=false animation=child1 textid=4 wander=0"/>
+</properties>
+<polyline points="24,264 48,264 48,288 24,288 24,264"/>
+</object>
+<object name="priest2" x="0" y="0">
+<properties>
+<property name="npc" value="noturn=false facing=2 throughwall=false noanimate=false animation=Priestess1 textid=6 wander=0"/>
+</properties>
+<polyline points="264,240 288,240 288,264 264,264 264,240"/>
+</object>
+<object name="priest3" x="0" y="0">
+<properties>
+<property name="npc" value="noturn=false facing=1 throughwall=false noanimate=false animation=Priestess1 textid=6 wander=0"/>
+</properties>
+<polyline points="72,216 96,216 96,240 72,240 72,216"/>
+</object>
+<object name="chest1" x="0" y="0">
+<properties>
+<property name="chest" value="spriteimage=closedchest itemid=4"/>
+</properties>
+<polyline points="168,216 192,216 192,240 168,240 168,216"/>
+</object>
+<object name="chest2" x="0" y="0">
+<properties>
+<property name="chest" value="spriteimage=closedchest itemid=10"/>
+</properties>
+<polyline points="192,216 216,216 216,240 192,240 192,216"/>
+</object>
+<object name="chest3" x="0" y="0">
+<properties>
+<property name="chest" value="spriteimage=closedchest itemid=7"/>
+</properties>
+<polyline points="240,216 264,216 264,240 240,240 240,216"/>
+</object>
+</objectgroup>
+<objectgroup name="Terrain" visible="1"/>
+</area>

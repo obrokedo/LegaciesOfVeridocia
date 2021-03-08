@@ -45,18 +45,18 @@
 	<cameramovetoactor actor="Craig" time="1000"/>
 	<wait time="1000"/>
 	<camerafollow name="Craig"/>
-	<move name="Craig" x="720" y="252" speed="2.4" movediag=false movehorz=false halting=true pathfinding=true/>
-	<move name="Olivia" x="720" y="300" speed="2.4" movediag=false movehorz=false halting=true pathfinding=true/>
+	<move name="Craig" x="720" y="252" speed="2.4" movediag=false movehorz=false halting=true pathfinding=true facing="-1"/>
+	<move name="Olivia" x="720" y="300" speed="2.4" movediag=false movehorz=false halting=true pathfinding=true facing="-1"/>
 	<facing name="Craig" dir="2"/>
 	<wait time="100"/>
 	<speech text="I think we're done here, meet us upstairs when you've finished up.<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
-	<move name="Craig" x="744" y="276" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false/>
+	<move name="Craig" x="744" y="276" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false facing="-1"/>
 	<removeactor name="Craig"/>
-	<move name="Olivia" x="720" y="276" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false/>
+	<move name="Olivia" x="720" y="276" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false facing="-1"/>
 	<facing name="Olivia" dir="2"/>
 	<wait time="100"/>
 	<speech text="Be careful!<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait=""/>
-	<move name="Olivia" x="744" y="276" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false/>
+	<move name="Olivia" x="744" y="276" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false facing="-1"/>
 	<removeactor name="Olivia"/>
 </cinematic>
 <cinematic id="1" description="Noah Exit" camerax="504" cameray="0">
@@ -66,18 +66,18 @@
 	<cameramovetoactor actor="Noah" time="1000"/>
 	<wait time="10"/>
 	<camerafollow name="Noah"/>
-	<move name="Huun" x="696" y="36" speed="3" movediag=false movehorz=false halting=false pathfinding=true/>
-	<move name="Sharna" x="720" y="84" speed="3" movediag=false movehorz=false halting=false pathfinding=true/>
-	<move name="Noah" x="672" y="60" speed="2.4" movediag=false movehorz=false halting=true pathfinding=true/>
+	<move name="Huun" x="696" y="36" speed="3" movediag=false movehorz=false halting=false pathfinding=true facing="-1"/>
+	<move name="Sharna" x="720" y="84" speed="3" movediag=false movehorz=false halting=false pathfinding=true facing="-1"/>
+	<move name="Noah" x="672" y="60" speed="2.4" movediag=false movehorz=false halting=true pathfinding=true facing="-1"/>
 	<facing name="Noah" dir="1"/>
 	<wait time="1500"/>
 	<speech text="I can't belive we made it!<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<speech text="Don't die on us!<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
-	<move name="Noah" x="744" y="60" speed="2.4" movediag=false movehorz=false halting=true pathfinding=true/>
+	<move name="Noah" x="744" y="60" speed="2.4" movediag=false movehorz=false halting=true pathfinding=true facing="-1"/>
 	<removeactor name="Noah"/>
-	<move name="Sharna" x="744" y="60" speed="2" movediag=false movehorz=false halting=true pathfinding=true/>
+	<move name="Sharna" x="744" y="60" speed="2" movediag=false movehorz=false halting=true pathfinding=true facing="-1"/>
 	<removeactor name="Sharna"/>
-	<move name="Huun" x="744" y="60" speed="2" movediag=false movehorz=false halting=true pathfinding=true/>
+	<move name="Huun" x="744" y="60" speed="2" movediag=false movehorz=false halting=true pathfinding=true facing="-1"/>
 	<removeactor name="Huun"/>
 </cinematic>
 <condition id="0" description="EnterBottomMid" triggerid="1,">

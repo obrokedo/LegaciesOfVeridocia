@@ -167,23 +167,23 @@
 	<fadein time="750" halting="true" init="true"/>
 	<wait time="500"/>
 	<playsound sound="jump" volume="100"/>
-	<forcedmove name="Noah" x="96" y="96" speed="5" facing="1" movehor="false" movediag="false"/>
+	<move name="Noah" x="96" y="96" speed="5" facing="1" movehor="false" movediag="false" halting="false" pathfinding="false"/>
 	<wait time="250"/>
-	<forcedmove name="Noah" x="96" y="132" speed="7" facing="1" movehor="false" movediag="false"/>
+	<move name="Noah" x="96" y="132" speed="7" facing="1" movehor="false" movediag="false" halting="false" pathfinding="false"/>
 	<playsound sound="impact" volume="100"/>
 	<wait time="500"/>
 	<facing name="Noah" dir="3"/>
 	<wait time="750"/>
-	<forcedmove name="Noah" x="96" y="120" speed="7" facing="3" movehor="false" movediag="false"/>
+	<move name="Noah" x="96" y="120" speed="7" facing="3" movehor="false" movediag="false" halting="false" pathfinding="false"/>
 	<wait time="125"/>
-	<forcedmove name="Noah" x="96" y="132" speed="7" facing="3" movehor="false" movediag="false"/>
+	<move name="Noah" x="96" y="132" speed="7" facing="3" movehor="false" movediag="false" halting="false" pathfinding="false"/>
 	<wait time="125"/>
-	<forcedmove name="Noah" x="96" y="120" speed="7" facing="3" movehor="false" movediag="false"/>
+	<move name="Noah" x="96" y="120" speed="7" facing="3" movehor="false" movediag="false" halting="false" pathfinding="false"/>
 	<wait time="125"/>
-	<forcedmove name="Noah" x="96" y="132" speed="7" facing="3" movehor="false" movediag="false"/>
+	<move name="Noah" x="96" y="132" speed="7" facing="3" movehor="false" movediag="false" halting="false" pathfinding="false"/>
 	<wait time="125"/>
 	<speech text="I need to grab my gear!<softstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
-	<move name="Noah" x="168" y="120" speed="3" movehor="true" movediag="false" halting=true pathfinding=false/>
+	<move name="Noah" x="168" y="120" speed="3" movehor="true" movediag="false" halting="true" pathfinding="false" facing="-1"/>
 	<tremble name="Noah"/>
 	<wait time="125"/>
 	<stopse name="Noah"/>
@@ -193,7 +193,7 @@
 	<stopse name="Noah"/>
 	<playsound sound="speechblip" volume="100"/>
 	<wait time="500"/>
-	<move name="Noah" x="192" y="120" speed="3" movehor="true" movediag="false" halting=true pathfinding=false/>
+	<move name="Noah" x="192" y="120" speed="3" movehor="true" movediag="false" halting="true" pathfinding="false" facing="-1"/>
 	<facing name="Noah" dir="0"/>
 	<wait time="125"/>
 	<tremble name="Noah"/>
@@ -201,7 +201,7 @@
 	<stopse name="Noah"/>
 	<playsound sound="impact" volume="100"/>
 	<wait time="500"/>
-	<move name="Noah" x="144" y="156" speed="1.2" movehor="true" movediag="false" halting=true pathfinding=false/>
+	<move name="Noah" x="144" y="156" speed="1.2" movehor="true" movediag="false" halting="true" pathfinding="false" facing="-1"/>
 	<speech text="Sword,<pause> knife<pause>.<pause>.<pause>.<pause> What else am I forgetting?<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<wait time="125"/>
 	<facing name="Noah" dir="2"/>
@@ -211,38 +211,38 @@
 	<shakehead name="Noah" time="350"/>
 	<wait time="250"/>
 	<speech text="Something to eat!<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
-	<move name="Noah" x="180" y="156" speed="3" movehor="true" movediag="false" halting=true pathfinding=false/>
+	<move name="Noah" x="180" y="156" speed="3" movehor="true" movediag="false" halting="true" pathfinding="false" facing="-1"/>
 	<wait time="100"/>
 	<tremble name="Noah"/>
 	<wait time="125"/>
 	<stopse name="Noah"/>
 	<playsound sound="impact" volume="100"/>
 	<wait time="1000"/>
-	<move name="Noah" x="144" y="156" speed="2.4" movediag=false movehorz=false halting=true pathfinding=true/>
+	<move name="Noah" x="144" y="156" speed="2.4" movehor="false" movediag="false" halting="true" pathfinding="true" facing="-1"/>
 	<facing name="Noah" dir="1"/>
 	<wait time="500"/>
 	<nod name="Noah"/>
 	<speech text="All set.  Hopefully the captain isn't in the courtyard yet!  <hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<fadeout time="1000" halting="false"/>
-	<move name="Noah" x="144" y="180" speed="1.2" movehor="false" movediag="false" halting=true pathfinding=false/>
+	<move name="Noah" x="144" y="180" speed="1.2" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
 	<loadmap mapdata="erium" enter="NoahHouse"/>
 </cinematic>
 <cinematic id="1" description="Bartender" camerax="1752" cameray="384">
 	<assactor name="Noah" hero="Noah" enemyid="0" npcid="0" staticid=""/>
 	<assactor name="Bartender" hero="" enemyid="0" npcid="Bartender1" staticid=""/>
-	<move name="Bartender" x="1800" y="372" speed="2" movehor="false" movediag="false" halting=true pathfinding=false/>
+	<move name="Bartender" x="1800" y="372" speed="2" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
 	<tremble name="Bartender"/>
 	<wait time="100"/>
 	<stopse name="Bartender"/>
 	<speech text="Hey!<pause> Who said you could go up there?!<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
-	<move name="Noah" x="1752" y="372" speed="2" movehor="false" movediag="false" halting=true pathfinding=false/>
+	<move name="Noah" x="1752" y="372" speed="2" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
 	<facing name="Noah" dir="1"/>
 	<cameramovetoactor actor="Noah" time="500"/>
 </cinematic>
 <cinematic id="2" description="Can'tLeave" camerax="384" cameray="1056">
 	<assactor name="Noah" hero="Noah" enemyid="0" npcid="" staticid=""/>
 	<speech text="As nice as the view is,<pause> I must report for duty.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
-	<move name="Noah" x="384" y="996" speed="2.4" movediag=false movehorz=false halting=true pathfinding=true/>
+	<move name="Noah" x="384" y="996" speed="2.4" movehor="false" movediag="false" halting="true" pathfinding="true" facing="-1"/>
 	<cameramovetoactor actor="Noah" time="1000"/>
 </cinematic>
 <condition id="0" description="ToEriumCastleWest1" triggerid="4,">
@@ -804,5 +804,5 @@
 </properties>
 </object>
 </objectgroup>
-<objectgroup id="10" name="Terrain" visible="0"/>
+<objectgroup name="Terrain" visible="1"/>
 </area>

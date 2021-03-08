@@ -110,7 +110,7 @@
 	<cameramovetoactor actor="Noah" time="1000"/>
 	<camerafollow name="Noah"/>
 	<speech text="Actually, isn't that his handwriting?<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
-	<move name="Noah" x="192" y="660" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false/>
+	<move name="Noah" x="192" y="660" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false facing="-1"/>
 	<facing name="Noah" dir="0"/>
 	<speech text="Bowstring snapped, <pause>gone to get a new one. <pause>See you on patrol later.<pause> Huun.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<facing name="Sharna" dir="1"/>
@@ -118,7 +118,7 @@
 	<wait time="1000"/>
 	<facing name="Sharna" dir="3"/>
 	<speech text="He may be late again but at least he was here early today. Small steps, I suppose.<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
-	<move name="Noah" x="96" y="660" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false/>
+	<move name="Noah" x="96" y="660" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false facing="-1"/>
 	<speech text="He might still be back before our patrol. We're early anyway, he's got plenty of time.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<speech text="We'll see...<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
 </cinematic>

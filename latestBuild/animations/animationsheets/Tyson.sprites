@@ -50,14 +50,26 @@
         <spr name="Frame43" x="5590" y="0" w="130" h="96"/>
         <spr name="Frame44" x="5720" y="0" w="130" h="96"/>
         <spr name="Frame45" x="5850" y="0" w="130" h="96"/>
-        <spr name="Walk0" x="5980" y="0" w="24" h="24"/>
-        <spr name="Walk1" x="6004" y="0" w="24" h="24"/>
-        <spr name="Walk2" x="6028" y="0" w="24" h="24"/>
-        <spr name="Walk3" x="6052" y="0" w="24" h="24"/>
-        <spr name="Walk4" x="6076" y="0" w="24" h="24"/>
-        <spr name="Walk5" x="6100" y="0" w="24" h="24"/>
-        <spr name="PortraitTop0" x="5987" y="29" w="48" h="36"/>
-        <spr name="PortraitBottom0" x="5987" y="65" w="48" h="28"/>
+		<spr name="Walk0" x="5980" y="0" w="24" h="24"/>
+		<spr name="Walk1" x="6004" y="0" w="24" h="24"/>
+		<spr name="Walk2" x="6028" y="0" w="24" h="24"/>
+		<spr name="Walk3" x="6052" y="0" w="24" h="24"/>
+		<spr name="Walk4" x="6076" y="0" w="24" h="24"/>
+		<spr name="Walk5" x="6100" y="0" w="24" h="24"/>
+		<spr name="PortraitTop0" x="6172" y="0" w="48" h="32"/>
+		<spr name="PortraitBottom0" x="6172" y="32" w="48" h="32"/>
+		<spr name="PortraitTop1" x="6220" y="0" w="48" h="32"/>
+		<spr name="PortraitBottom1" x="6220" y="32" w="48" h="32"/>
+		<spr name="PortraitTop2" x="6268" y="0" w="48" h="32"/>
+		<spr name="PortraitBottom2" x="6268" y="32" w="48" h="32"/>
+		<spr name="PortraitTop3" x="6316" y="0" w="48" h="32"/>
+		<spr name="PortraitBottom3" x="6316" y="32" w="48" h="32"/>
+		<spr name="PortraitTop4" x="6364" y="0" w="48" h="32"/>
+		<spr name="PortraitBottom4" x="6364" y="32" w="48" h="32"/>
+		<spr name="PortraitTop5" x="6412" y="0" w="48" h="32"/>
+		<spr name="PortraitBottom5" x="6412" y="32" w="48" h="32"/>
+		<spr name="PortraitTop6" x="6460" y="0" w="48" h="32"/>
+		<spr name="PortraitBottom6" x="6460" y="32" w="48" h="32"/>
       </dir>
     </dir>
   </definitions>

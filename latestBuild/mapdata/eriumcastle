@@ -314,7 +314,7 @@
 	<stopse name="Mage2"/>
 	<visible name="Mage2" isvis="false"/>
 	<addactor x="288" y="852" name="Dog" anim="Porcupine" startanim="UnDown" visible="true" init="false" associatedhero=""/>
-	<move name="Dog" x="480" y="696" speed="3" movediag=false movehorz=false halting=true pathfinding=true/>
+	<move name="Dog" x="480" y="696" speed="3" movediag=false movehorz=false halting=true pathfinding=true facing="-1"/>
 </cinematic>
 <condition id="0" description="ToEriumWest1" triggerid="2,">
 	<enterloc location="ToEriumWest1" immediate="false"/>
