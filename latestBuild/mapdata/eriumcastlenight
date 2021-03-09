@@ -7,9 +7,9 @@
 	<addactor x="0" y="0" name="Cam" anim="Noah" startanim="Down" visible="false" init="true" associatedhero="Noah"/>
 	<addactor x="816" y="1056" name="Noah" anim="Noah" startanim="Left" visible="true" init="true" associatedhero="Noah"/>
 	<addactor x="816" y="1068" name="Sharna" anim="Sharna" startanim="UnLeft" visible="true" init="true" associatedhero=""/>
-	<playmusic music="castlenight" volume="75"/>
 	<camerafollow name="Noah"/>
 	<speech text="Later that night...<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
+	<playmusic music="castlenight" volume="75"/>
 	<fadein time="4000" halting="false" init="true"/>
 	<move name="Noah" x="600" y="1056" speed="1" movehor="true" movediag="false" halting="false" pathfinding="false" facing="-1"/>
 	<move name="Sharna" x="600" y="1068" speed="1" movehor="true" movediag="false" halting="false" pathfinding="false" facing="-1"/>
@@ -32,7 +32,7 @@
 	<speech text="Of course it matters!!<pause><linebreak> You still have to be awake to use your ears!<hardstop><linebreak> Besides, not everyone walks these halls in full armor.<pause> Eyes are better than ears for catching sneaks.<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
 	<move name="Noah" x="552" y="1008" speed="1.5" movehor="false" movediag="false" halting="false" pathfinding="false" facing="-1"/>
 	<wait time="1200"/>
-	<move name="Noah" x="559" y="1008" speed="1" facing="2" movehor="true" movediag="false" halting="false" pathfinding="false"/>
+	<move name="Noah" x="559" y="1008" speed="1" movehor="true" movediag="false" halting="false" pathfinding="false" facing="2"/>
 	<wait time="200"/>
 	<stopanim name="Noah"/>
 	<speech text="I think you should ease up on him.<pause>  Huun does things a little differently sometimes;<hardstop> it could be a cover,<pause> but it could also be a legitimate explanation.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
@@ -41,13 +41,13 @@
 	<stopse name="Sharna"/>
 	<move name="Sharna" x="528" y="1008" speed="5" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
 	<facing name="Sharna" dir="3"/>
-	<move name="Sharna" x="528" y="996" speed="9" facing="3" movehor="false" movediag="false" halting="false" pathfinding="false"/>
+	<move name="Sharna" x="528" y="996" speed="9" movehor="false" movediag="false" halting="false" pathfinding="false" facing="3"/>
 	<wait time="125"/>
-	<move name="Sharna" x="528" y="1008" speed="9" facing="3" movehor="false" movediag="false" halting="false" pathfinding="false"/>
+	<move name="Sharna" x="528" y="1008" speed="9" movehor="false" movediag="false" halting="false" pathfinding="false" facing="3"/>
 	<wait time="125"/>
-	<move name="Sharna" x="528" y="996" speed="9" facing="3" movehor="false" movediag="false" halting="false" pathfinding="false"/>
+	<move name="Sharna" x="528" y="996" speed="9" movehor="false" movediag="false" halting="false" pathfinding="false" facing="3"/>
 	<wait time="125"/>
-	<move name="Sharna" x="528" y="1008" speed="9" facing="3" movehor="false" movediag="false" halting="false" pathfinding="false"/>
+	<move name="Sharna" x="528" y="1008" speed="9" movehor="false" movediag="false" halting="false" pathfinding="false" facing="3"/>
 	<wait time="125"/>
 	<speech text="Sometimes I feel like you never agree with me!<softstop><linebreak> I swear you do it just to ...<nextcin><softstop>1000 <nextcin><softstop>500 <linebreak>...tease me...<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
 	<camerashake time="1000" severity="1"/>
@@ -74,7 +74,7 @@
 	<layonsideright name="Huun" dir="3"/>
 	<speech text="Eeeeep!!!<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
 	<playsound sound="fall" volume="75"/>
-	<move name="Sharna" x="672" y="432" speed="3" facing="3" movehor="false" movediag="false" halting="false" pathfinding="false"/>
+	<move name="Sharna" x="672" y="432" speed="3" movehor="false" movediag="false" halting="false" pathfinding="false" facing="3"/>
 	<stopanim name="Sharna"/>
 	<wait time="300"/>
 	<playsound sound="hit3" volume="75"/>
@@ -94,9 +94,9 @@
 	<shakehead name="Huun" time="300"/>
 	<wait time="2000"/>
 	<playsound sound="jump" volume="75"/>
-	<move name="Huun" x="624" y="420" speed="9" facing="3" movehor="false" movediag="false" halting="false" pathfinding="false"/>
+	<move name="Huun" x="624" y="420" speed="9" movehor="false" movediag="false" halting="false" pathfinding="false" facing="3"/>
 	<wait time="125"/>
-	<move name="Huun" x="624" y="432" speed="9" facing="3" movehor="false" movediag="false" halting="false" pathfinding="false"/>
+	<move name="Huun" x="624" y="432" speed="9" movehor="false" movediag="false" halting="false" pathfinding="false" facing="3"/>
 	<wait time="1000"/>
 	<facing name="Huun" dir="2"/>
 	<wait time="750"/>
@@ -122,8 +122,8 @@
 	<speech text="Alright, Sharna. What's this about?<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<speech text="I heard something in the courtyard. It sounded like voices.<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
 	<speech text="Nobody is permitted to be out there this late besides us. We'd better check it out. Sharna, Huun, let's go.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
-	<move name="Huun" x="624" y="420" speed="3" facing="1" movehor="true" movediag="false" halting="false" pathfinding="false"/>
-	<move name="Sharna" x="672" y="420" speed="3" facing="1" movehor="false" movediag="false" halting="false" pathfinding="false"/>
+	<move name="Huun" x="624" y="420" speed="3" movehor="true" movediag="false" halting="false" pathfinding="false" facing="1"/>
+	<move name="Sharna" x="672" y="420" speed="3" movehor="false" movediag="false" halting="false" pathfinding="false" facing="1"/>
 	<move name="Noah" x="744" y="600" speed="2" movehor="true" movediag="false" halting="true" pathfinding="false" facing="-1"/>
 	<move name="Sharna" x="720" y="432" speed="2" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
 	<move name="Huun" x="624" y="432" speed="3" movehor="false" movediag="false" halting="false" pathfinding="false" facing="-1"/>
@@ -135,15 +135,15 @@
 	<stopse name="Sharna"/>
 	<move name="Sharna" x="672" y="432" speed="5" movehor="false" movediag="false" halting="false" pathfinding="false" facing="-1"/>
 	<wait time="100"/>
-	<move name="Huun" x="648" y="432" speed="5" facing="3" movehor="false" movediag="false" halting="false" pathfinding="false"/>
+	<move name="Huun" x="648" y="432" speed="5" movehor="false" movediag="false" halting="false" pathfinding="false" facing="3"/>
 	<wait time="1250"/>
 	<move name="Sharna" x="660" y="432" speed="5" movehor="false" movediag="false" halting="false" pathfinding="false" facing="-1"/>
 	<wait time="50"/>
-	<move name="Huun" x="636" y="432" speed="5" facing="3" movehor="false" movediag="false" halting="false" pathfinding="false"/>
+	<move name="Huun" x="636" y="432" speed="5" movehor="false" movediag="false" halting="false" pathfinding="false" facing="3"/>
 	<wait time="1250"/>
 	<move name="Sharna" x="648" y="432" speed="5" movehor="false" movediag="false" halting="false" pathfinding="false" facing="-1"/>
 	<wait time="50"/>
-	<move name="Huun" x="624" y="432" speed="5" facing="3" movehor="false" movediag="false" halting="false" pathfinding="false"/>
+	<move name="Huun" x="624" y="432" speed="5" movehor="false" movediag="false" halting="false" pathfinding="false" facing="3"/>
 	<move name="Cam" x="648" y="432" speed="99" movehor="false" movediag="true" halting="false" pathfinding="false" facing="-1"/>
 	<wait time="1250"/>
 	<camerafollow name="Cam"/>
@@ -211,7 +211,7 @@
 	<fallonface name="Noah" dir="2"/>
 	<camerafollow name="Noah"/>
 	<playmusic music="battle1" volume="75"/>
-	<move name="Lexus" x="624" y="804" speed="4" facing="3" movehor="false" movediag="false" halting="false" pathfinding="false"/>
+	<move name="Lexus" x="624" y="804" speed="4" movehor="false" movediag="false" halting="false" pathfinding="false" facing="3"/>
 	<wait time="3000"/>
 	<flash name="Lexus" time="1000" speed="250"/>
 	<wait time="1000"/>
@@ -234,7 +234,7 @@
 	<wait time="1000"/>
 	<stopanim name="Noah"/>
 	<removeactor name="Mistal"/>
-	<move name="Noah" x="672" y="648" speed="7" facing="0" movehor="false" movediag="false" halting="false" pathfinding="false"/>
+	<move name="Noah" x="672" y="648" speed="7" movehor="false" movediag="false" halting="false" pathfinding="false" facing="0"/>
 	<move name="Cam" x="672" y="648" speed="99" movehor="false" movediag="true" halting="false" pathfinding="false" facing="-1"/>
 	<wait time="1500"/>
 	<camerafollow name="Cam"/>
@@ -242,13 +242,13 @@
 	<fallonface name="Noah" dir="3"/>
 	<playsound sound="hit3" volume="75"/>
 	<wait time="1500"/>
-	<move name="Sharna" x="696" y="588" speed="9" facing="1" movehor="false" movediag="false" halting="false" pathfinding="false"/>
+	<move name="Sharna" x="696" y="588" speed="9" movehor="false" movediag="false" halting="false" pathfinding="false" facing="1"/>
 	<wait time="125"/>
-	<move name="Sharna" x="696" y="600" speed="9" facing="1" movehor="false" movediag="false" halting="false" pathfinding="false"/>
+	<move name="Sharna" x="696" y="600" speed="9" movehor="false" movediag="false" halting="false" pathfinding="false" facing="1"/>
 	<wait time="125"/>
-	<move name="Sharna" x="696" y="588" speed="9" facing="1" movehor="false" movediag="false" halting="false" pathfinding="false"/>
+	<move name="Sharna" x="696" y="588" speed="9" movehor="false" movediag="false" halting="false" pathfinding="false" facing="1"/>
 	<wait time="125"/>
-	<move name="Sharna" x="696" y="600" speed="9" facing="1" movehor="false" movediag="false" halting="false" pathfinding="false"/>
+	<move name="Sharna" x="696" y="600" speed="9" movehor="false" movediag="false" halting="false" pathfinding="false" facing="1"/>
 	<wait time="125"/>
 	<rendernormal name="Noah"/>
 	<speech text="Noah!!<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
@@ -413,17 +413,17 @@
 	<addactor x="1440" y="192" name="Noah" anim="Noah" startanim="UnDown" visible="true" init="true" associatedhero=""/>
 	<move name="Noah" x="1416" y="192" speed="2.4" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
 	<addactor x="1440" y="192" name="Sharna" anim="Sharna" startanim="UnDown" visible="true" init="false" associatedhero=""/>
-	<move name="Noah" x="1392" y="192" speed="2" facing="2" movehor="false" movediag="false" halting="false" pathfinding="false"/>
+	<move name="Noah" x="1392" y="192" speed="2" movehor="false" movediag="false" halting="false" pathfinding="false" facing="2"/>
 	<wait time="200"/>
-	<move name="Sharna" x="1416" y="192" speed="2" facing="2" movehor="false" movediag="false" halting="false" pathfinding="false"/>
+	<move name="Sharna" x="1416" y="192" speed="2" movehor="false" movediag="false" halting="false" pathfinding="false" facing="2"/>
 	<wait time="200"/>
 	<addactor x="1440" y="192" name="Huun" anim="Huun" startanim="UnDown" visible="true" init="false" associatedhero=""/>
 	<wait time="200"/>
-	<move name="Noah" x="1344" y="192" speed="2" facing="2" movehor="false" movediag="false" halting="false" pathfinding="false"/>
+	<move name="Noah" x="1344" y="192" speed="2" movehor="false" movediag="false" halting="false" pathfinding="false" facing="2"/>
 	<wait time="200"/>
-	<move name="Sharna" x="1368" y="192" speed="2" facing="2" movehor="false" movediag="false" halting="false" pathfinding="false"/>
+	<move name="Sharna" x="1368" y="192" speed="2" movehor="false" movediag="false" halting="false" pathfinding="false" facing="2"/>
 	<wait time="200"/>
-	<move name="Huun" x="1392" y="192" speed="2" facing="2" movehor="false" movediag="false" halting="false" pathfinding="false"/>
+	<move name="Huun" x="1392" y="192" speed="2" movehor="false" movediag="false" halting="false" pathfinding="false" facing="2"/>
 	<wait time="600"/>
 	<facing name="Noah" dir="1"/>
 	<wait time="200"/>
@@ -531,11 +531,11 @@
 	<move name="Craig" x="1296" y="155" speed="1.0" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
 	<speech text="This is our ticket out of here.<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
 	<move name="Crate" x="1320" y="140" speed="0.5" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
-	<move name="Noah" x="1296" y="168" speed="1" facing="2" movehor="true" movediag="false" halting="false" pathfinding="false"/>
-	<move name="Sharna" x="1296" y="168" speed="1" facing="2" movehor="true" movediag="false" halting="false" pathfinding="false"/>
-	<move name="Huun" x="1296" y="168" speed="1" facing="2" movehor="true" movediag="false" halting="false" pathfinding="false"/>
-	<move name="Olivia" x="1296" y="168" speed="1" facing="2" movehor="true" movediag="false" halting="false" pathfinding="false"/>
-	<move name="Craig" x="1296" y="168" speed="1" facing="0" movehor="true" movediag="false" halting="false" pathfinding="false"/>
+	<move name="Noah" x="1296" y="168" speed="1" movehor="true" movediag="false" halting="false" pathfinding="false" facing="2"/>
+	<move name="Sharna" x="1296" y="168" speed="1" movehor="true" movediag="false" halting="false" pathfinding="false" facing="2"/>
+	<move name="Huun" x="1296" y="168" speed="1" movehor="true" movediag="false" halting="false" pathfinding="false" facing="2"/>
+	<move name="Olivia" x="1296" y="168" speed="1" movehor="true" movediag="false" halting="false" pathfinding="false" facing="2"/>
+	<move name="Craig" x="1296" y="168" speed="1" movehor="true" movediag="false" halting="false" pathfinding="false" facing="0"/>
 	<fademusic duration="1000"/>
 	<fadeout time="1000" halting="true"/>
 	<loadcin mapdata="eriumoutskirts" cinid="0"/>
@@ -616,7 +616,7 @@
 	<speech text="...<softstop>....<softstop>...<softstop><nextcin>" heroportrait="" enemyportrait="" animportrait="Mistal"/>
 	<wait time="250"/>
 	<speech text="...!<softstop><nextcin>" heroportrait="" enemyportrait="" animportrait="KingErium"/>
-	<move name="Mistal" x="768" y="240" speed="1.0" facing="0" movehor="false" movediag="false" halting="false" pathfinding="false"/>
+	<move name="Mistal" x="768" y="240" speed="1.0" movehor="false" movediag="false" halting="false" pathfinding="false" facing="0"/>
 	<wait time="1000"/>
 	<speech text="I trust that we have an understanding.<softstop><nextcin>" heroportrait="" enemyportrait="" animportrait="Mistal"/>
 	<stopanim name="King"/>

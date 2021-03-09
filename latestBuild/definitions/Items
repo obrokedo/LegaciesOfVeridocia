@@ -468,4 +468,10 @@
 <item id="151" name="Blade Talon" description="" cost="150" isdeal="false" imageindexx="0" imageindexy="0" droppable="false">
 	<equippable attack="21" defense="4" speed="0" type="0" style="12" range="1" weaponimage="TLN-08-BladeTalon" weaponanim="" incmindam="0" inccrit="0" inccounter="0" incdouble="0" incevade="0" maxhpreg="0" minhpreg="0" maxmpreg="0" minmpreg="0" effect="" efflvl="0" effchc="0" dmgaff="NORMAL" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" ohko="0" ohkooc="0" promoteonly="false"/>
 </item>
+<item id="152" name="Mystic Dew" description="Replenishes MP by 10" cost="100" isdeal="false" imageindexx="5" imageindexy="22" droppable="false">
+	<use targetsenemy="false" damage="0" mpdamage="10" range="1" area="1" text="replenishes <value> magic points!" singleuse="true" damageitem="false" damageitem="false" useoutsidebattle="false"/>
+</item>
+<item id="153" name="Divine Feather" description="Escapes from the battle." cost="100" isdeal="false" imageindexx="12" imageindexy="22" droppable="false">
+	<usespell spellid="EGRESS" level="1" singleuse="true" damageitem="false" useoutsidebattle="false"/>
+</item>
 </items>

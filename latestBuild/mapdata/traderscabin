@@ -29,6 +29,19 @@
 <trigger id="7" description="searchnoitem" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<showtext textid="6"/>
 </trigger>
+<trigger id="8" description="Call Item Shop" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<showshop buypercent="1.0" sellpercent="0.25" itemssold="Medical Herb,Mystic Dew,Divine Feather," portrait="Tyson"/>
+</trigger>
+<trigger id="9" description="Priestess Active" require="Ch1Part5CinFinished," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<showcin cinid="1" exittrigid="-1"/>
+	<changenpc name="Priestess" animation="Priestess1"/>
+</trigger>
+<trigger id="10" description="Priestess" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<showtext textid="7"/>
+</trigger>
+<trigger id="11" description="Call Priest Menu" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<showpriest portrait="Priestess1"/>
+</trigger>
 <text id="0" description="Huun">
 	<string require="," exclude="," trigger="-1" heroportrait="Huun" enemyportrait="" animportrait="" message="About that glass of water...<hardstop>"/>
 </text>
@@ -39,7 +52,7 @@
 	<string require="," exclude="," trigger="-1" heroportrait="Eddie" enemyportrait="" animportrait="" message="Let's get going soon.  Mistal isn't going to kick her own ass!<hardstop>"/>
 </text>
 <text id="3" description="Tyson">
-	<string require="," exclude="," trigger="-1" heroportrait="Tyson" enemyportrait="" animportrait="" message="There isn't much to trade between Erium and Reyval.<softstop>  The opportunity in Avaria is perfect!<hardstop>"/>
+	<yesno require="," exclude="," triggeryes="8" triggerno="-1" heroportrait="Tyson" enemyportrait="" animportrait="" message="There isn't much to trade between Erium and Reyval.<softstop>  The opportunity in Avaria is perfect!<softstop> I still have one or two items to spare though.<pause> Wanna check out my stock?<hardstop>"/>
 </text>
 <text id="4" description="Hugh">
 	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="hugh" message="It has been a while since I went to Avaria...  It's going to be harder to climb up there now.<hardstop>"/>
@@ -50,28 +63,31 @@
 <text id="6" description="searchnoitem">
 	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="It's dark inside...<hardstop>"/>
 </text>
+<text id="7" description="Priestess">
+	<string require="," exclude="," trigger="11" heroportrait="" enemyportrait="" animportrait="Priestess1" message="Oh!<pause> It's you again!<pause> We must stop meeting like this!<hardstop><linebreak> Do you need my assistance again?<hardstop><linebreak> Welcome, my lamb. How may I be of service to you?<hardstop>"/>
+</text>
 <cinematic id="0" description="Part5HelpfulAdvice" camerax="0" cameray="0">
 	<assactor name="Noah" hero="Noah" enemyid="0" npcid="" staticid=""/>
 	<addactor x="312" y="312" name="Tyson" anim="Tyson" startanim="UnDown" visible="true" init="false" associatedhero=""/>
 	<addactor x="336" y="312" name="Hugh" anim="hugh" startanim="UnDown" visible="true" init="false" associatedhero=""/>
 	<cameramovetoactor actor="Noah" time="750"/>
 	<camerafollow name="Noah"/>
-	<move name="Noah" x="192" y="564" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false facing="-1"/>
+	<move name="Noah" x="192" y="564" speed="2.4" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
 	<facing name="Noah" dir="0"/>
 	<cameramove x="240" y="528" time="3000"/>
 	<speech text="What are you doing, trespassing on our land?<hardstop>" heroportrait="Tyson" enemyportrait="" animportrait="Tyson"/>
-	<move name="Tyson" x="312" y="492" speed="3.4" movehor="false" movediag="false" halting=true pathfinding=false facing="-1"/>
+	<move name="Tyson" x="312" y="492" speed="3.4" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
 	<addactor x="192" y="564" name="Sharna" anim="Sharna" startanim="UnUp" visible="true" init="false" associatedhero=""/>
-	<move name="Sharna" x="216" y="564" speed="0.5" movehor="false" movediag="false" halting=true pathfinding=false facing="-1"/>
+	<move name="Sharna" x="216" y="564" speed="0.5" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
 	<facing name="Sharna" dir="0"/>
 	<speech text="Just out for a stroll, we'll be going.<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait="Sharna"/>
 	<speech text="Packing that much gear and moving that quick is a stroll now, eh?<hardstop>" heroportrait="Tyson" enemyportrait="" animportrait="Tyson"/>
 	<speech text="I, well...<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait="Sharna"/>
-	<move name="Hugh" x="336" y="420" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false facing="-1"/>
+	<move name="Hugh" x="336" y="420" speed="2.4" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
 	<speech text="There is no need to lie.  Who are you really?<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
 	<speech text="We've departed from Erium to seek the aid of friends.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait="Noah"/>
 	<speech text="Well come in and take a rest. You look tired and we just finished dinner. There is enough for everyone.<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
-	<move name="Hugh" x="336" y="300" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false facing="-1"/>
+	<move name="Hugh" x="336" y="300" speed="2.4" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
 	<cameramove x="216" y="576" time="2000"/>
 	<wait time="1500"/>
 	<facing name="Sharna" dir="2"/>
@@ -81,10 +97,10 @@
 	<wait time="1000"/>
 	<stopse name="Noah"/>
 	<fadeout time="3000" halting="true"/>
-	<move name="Tyson" x="240" y="164" speed="20" facing="1" movehor="false" movediag="true" halting="false" pathfinding="false"/>
-	<move name="Hugh" x="216" y="240" speed="20" facing="3" movehor="false" movediag="true" halting="false" pathfinding="false"/>
-	<move name="Noah" x="288" y="180" speed="20" facing="2" movehor="false" movediag="true" halting="false" pathfinding="false"/>
-	<move name="Sharna" x="288" y="204" speed="20" facing="2" movehor="false" movediag="true" halting="false" pathfinding="false"/>
+	<move name="Tyson" x="240" y="164" speed="20" movehor="false" movediag="true" halting="false" pathfinding="false" facing="1"/>
+	<move name="Hugh" x="216" y="240" speed="20" movehor="false" movediag="true" halting="false" pathfinding="false" facing="3"/>
+	<move name="Noah" x="288" y="180" speed="20" movehor="false" movediag="true" halting="false" pathfinding="false" facing="2"/>
+	<move name="Sharna" x="288" y="204" speed="20" movehor="false" movediag="true" halting="false" pathfinding="false" facing="2"/>
 	<addactor x="288" y="240" name="Huun" anim="Huun" startanim="UnLeft" visible="true" init="false" associatedhero=""/>
 	<addactor x="288" y="264" name="Eddie" anim="Eddie" startanim="UnLeft" visible="true" init="false" associatedhero=""/>
 	<camerafollow name="Hugh"/>
@@ -105,21 +121,25 @@
 	<speech text="Now, we have a long journey ahead.  Since we've been fed, we should get some rest.<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
 	<fadeout time="3000" halting="true"/>
 	<camerafollow name="Noah"/>
-	<move name="Tyson" x="528" y="228" speed="20" facing="1" movehor="false" movediag="true" halting="false" pathfinding="false"/>
-	<move name="Hugh" x="528" y="336" speed="20" facing="1" movehor="false" movediag="true" halting="false" pathfinding="false"/>
-	<move name="Noah" x="576" y="228" speed="20" facing="1" movehor="false" movediag="true" halting="false" pathfinding="false"/>
-	<move name="Sharna" x="624" y="228" speed="20" facing="1" movehor="false" movediag="true" halting="false" pathfinding="false"/>
-	<move name="Huun" x="576" y="336" speed="20" facing="1" movehor="false" movediag="true" halting="false" pathfinding="false"/>
-	<move name="Eddie" x="624" y="336" speed="20" facing="1" movehor="false" movediag="true" halting="false" pathfinding="false"/>
+	<move name="Tyson" x="528" y="228" speed="20" movehor="false" movediag="true" halting="false" pathfinding="false" facing="1"/>
+	<move name="Hugh" x="528" y="336" speed="20" movehor="false" movediag="true" halting="false" pathfinding="false" facing="1"/>
+	<move name="Noah" x="576" y="228" speed="20" movehor="false" movediag="true" halting="false" pathfinding="false" facing="1"/>
+	<move name="Sharna" x="624" y="228" speed="20" movehor="false" movediag="true" halting="false" pathfinding="false" facing="1"/>
+	<move name="Huun" x="576" y="336" speed="20" movehor="false" movediag="true" halting="false" pathfinding="false" facing="1"/>
+	<move name="Eddie" x="624" y="336" speed="20" movehor="false" movediag="true" halting="false" pathfinding="false" facing="1"/>
 	<cameramove x="528" y="336" time="0"/>
 	<wait time="500"/>
 	<fadein time="3000" halting="true" init="false"/>
-	<move name="Hugh" x="528" y="300" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false facing="-1"/>
+	<move name="Hugh" x="528" y="300" speed="2.4" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
 	<speech text="Noah, I've gone over our supplies; they won't get us far, even with mine and Tyson's. We'll stop in Reyval to pick up more.<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
-	<move name="Noah" x="576" y="252" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false facing="-1"/>
+	<move name="Noah" x="576" y="252" speed="2.4" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
 	<speech text="That's just across the border, right?<hardstop>" heroportrait="Noah" enemyportrait="" animportrait="Noah"/>
 	<speech text="It is, and thankfully the terrain won't be too rough.  Let's just hope that word of your escape hasn't travelled as far as you have.<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
 	<loadmap mapdata="traderscabin" enter="AfterPart5"/>
+</cinematic>
+<cinematic id="1" description="Priestess Active" camerax="0" cameray="0">
+	<assactor name="Priestess" hero="" enemyid="0" npcid="Priestess" staticid=""/>
+	<facing name="Priestess" dir="1"/>
 </cinematic>
 <condition id="0" description="ContinuePart5" triggerid="0,">
 	<enterloc location="ContinuePart5" immediate="false"/>
@@ -130,7 +150,7 @@
 <condition id="2" description="ToWorldMapSouth" triggerid="4,">
 	<enterloc location="ToWorldMapSouth" immediate="false"/>
 </condition>
-<condition id="3" description="UponMapEntry" triggerid="6,">
+<condition id="3" description="UponMapEntry" triggerid="9,">
 	<maploaded/>
 </condition>
 <objectgroup name="Trigger Region" visible="1">
@@ -229,7 +249,7 @@
 </object>
 <object id="9" name="NPCTyson" x="0" y="0">
 <properties>
-<property name="npc" value="noturn=false facing=1 name=NPCTyson throughwall=false noanimate=false animation=Tyson textid=3 wander=5"/>
+<property name="npc" value="noturn=false facing=1 name=NPCTyson throughwall=false noanimate=false animation=Tyson textid=3 wander=0"/>
 </properties>
 <polyline points="528,528 552,528 552,552 528,552 528,528"/>
 </object>
@@ -256,6 +276,12 @@
 <property name="npc" value="noturn=false facing=1 name=NPCSharna throughwall=false noanimate=false animation=Sharna textid=1 wander=3"/>
 </properties>
 <polyline points="600,96 624,96 624,120 600,120 600,96"/>
+</object>
+<object name="Priestess" x="0" y="0">
+<properties>
+<property name="npc" value="noturn=false facing=1 name=Priestess throughwall=false noanimate=false animation=blank textid=7 wander=0"/>
+</properties>
+<polyline points="216,504 240,504 240,528 216,528 216,504"/>
 </object>
 </objectgroup>
 <objectgroup name="Terrain" visible="1"/>
