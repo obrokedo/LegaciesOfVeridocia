@@ -34,7 +34,7 @@
 </trigger>
 <trigger id="9" description="Priestess Active" require="Ch1Part5CinFinished," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<showcin cinid="1" exittrigid="-1"/>
-	<changenpc name="Priestess" animation="Priestess1"/>
+	<changenpc name="Priestess" animation="Priestess1" facing="1"/>
 </trigger>
 <trigger id="10" description="Priestess" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<showtext textid="7"/>

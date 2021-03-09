@@ -1,6 +1,6 @@
 <area>
 <map file="Marathon.tmx"/>
-<trigger id="0" description="battle1start" require="" exclude="" nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="0" description="battle1start" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<addhero heroid="Sharna"/>
 	<addhero heroid="Huun"/>
 	<startbattle battletriggers="battle1-marathon" entrance="battle1" battbg="0"/>
@@ -50,12 +50,15 @@
 	<addmultihero heroids="Liza,Tyson,"/>
 	<runtriggers triggers="7,"/>
 </trigger>
-<trigger id="13" description="mapenter" require="" exclude="" nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="13" description="mapenter" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<playmusic music="erium" volume="30"/>
 	<runtriggers triggers="14,"/>
 </trigger>
-<trigger id="14" description="DisplayGameFinish" require="" exclude="" nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="14" description="DisplayGameFinish" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<showtext textid="9"/>
+</trigger>
+<trigger id="15" description="setegressloc" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<setegress mapname="marathon" locx="1" locy="2"/>
 </trigger>
 <text id="0" description="advisor1speech">
 	<string require="Battle1," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="You have performed admirably, please proceed to the next challenge.<hardstop>"/>
@@ -92,7 +95,7 @@
 	<string require="," exclude="," trigger="12" heroportrait="" enemyportrait="" animportrait="" message="You have two new heroes looking to join your party, but only space for one! Who would you like to take?<hardstop>"/>
 </text>
 <text id="9" description="MarathonFinished">
-	<string require="Battle4," exclude="" trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="Congratulations, you have completed the marathon! If you would like to start over please exit the game and delete the 'Test.progress' file that is in the same directory as the executable.<softstop> You should then be able to start from battle one again.<softstop> Thanks for playing!<hardstop>"/>
+	<string require="Battle4," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="Congratulations, you have completed the marathon! If you would like to start over please exit the game and delete the 'Test.progress' file that is in the same directory as the executable.<softstop> You should then be able to start from battle one again.<softstop> Thanks for playing!<hardstop>"/>
 </text>
 <cinematic id="0" description="guard1move" camerax="0" cameray="0">
 	<assactor name="guard1" hero="" enemyid="0" npcid="guard1" staticid=""/>
@@ -106,7 +109,7 @@
 	<assactor name="guard1" hero="" enemyid="0" npcid="guard1" staticid=""/>
 	<move name="guard1" x="72" y="288" speed="2.4" movehor="false" movediag="false" halting="true" pathfinding="true" facing="-1"/>
 </cinematic>
-<condition id="0" description="mapenter" triggerid="13,">
+<condition id="0" description="mapenter" triggerid="13,15,">
 	<maploaded/>
 </condition>
 <objectgroup name="Trigger Region" visible="1">

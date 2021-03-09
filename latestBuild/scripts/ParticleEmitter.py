@@ -5,6 +5,7 @@ from java.lang import Math
 
 class RandomHorizontalParticleEmitter(ParticleEmitterConfiguration):
     drawX = 0
+    drawY = 113
     width = 160
     interval = 500
     timer = 0
@@ -21,9 +22,10 @@ class RandomHorizontalParticleEmitter(ParticleEmitterConfiguration):
     def initialize(self, isHero):
         # Resolution is interpreted as 320x240
         if isHero:
-            self.drawX = 160
+            self.drawX = 105
         else:
             self.drawX = 0
+        
         self.timer = 0
     
     def update(self, particleSystem, delta):
@@ -41,7 +43,7 @@ class RandomHorizontalParticleEmitter(ParticleEmitterConfiguration):
             p.setSize(20)
             # You can scale animations size with setScale(float)
             # p.setScale(.3)
-            p.setPosition(rand + self.drawX, 113)
+            p.setPosition(rand + self.drawX, self.drawY)
             
     def updateParticle(self, particle, delta):
         # Detect when this particle is about to die. This would be the place to play an 'on end' sound
