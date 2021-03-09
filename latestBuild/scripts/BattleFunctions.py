@@ -53,9 +53,9 @@ class BattleFunctions(BattleFunctionConfiguration):
     # The text that should be displayed when a combatant dies
     def getCombatantDeathText(self, attacker, target):
         if target.isHero():
-            return "[ " + target.getName() + " is exhausted...] "
+            return target.getName() + " is exhausted...] "
         else:
-            return "[ " + target.getName() + " has been defeated!] "
+            return target.getName() + " has been defeated!] "
     
     # Gets the percent chance that the given attacker will get a double attack against the target
     # this value should be between 0-100 
