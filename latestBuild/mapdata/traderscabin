@@ -32,7 +32,7 @@
 <trigger id="8" description="Call Item Shop" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<showshop buypercent="1.0" sellpercent="0.25" itemssold="Medical Herb,Mystic Dew,Divine Feather," portrait="Tyson"/>
 </trigger>
-<trigger id="9" description="NPCs Active" require="Ch1Part5CinFinished," exclude="" nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="9" description="NPCs Active" require="Ch1Part5CinFinished," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<changenpc name="Priestess" animation="Priestess1" facing="1"/>
 	<changenpc name="NPCEddie" animation="Eddie" facing="1"/>
 	<changenpc name="NPCSharna" animation="Sharna" facing="2"/>
@@ -139,7 +139,7 @@
 	<wait time="200"/>
 	<quiver name="Tyson"/>
 	<wait time="200"/>
-	<speech text="What a load of rubbish!!<pause>  I say we hand them over to Erium at the earliest opportunity!<hardstop>" heroportrait="Tyson" enemyportrait="" animportrait="Tyson"/>
+	<speech text="I'm not buying it!<pause>  I say we hand them over to Erium at the earliest opportunity!<hardstop>" heroportrait="Tyson" enemyportrait="" animportrait="Tyson"/>
 	<wait time="200"/>
 	<speech text="No. We won't be doing that, since I believe them.<hardstop><nextcin><linebreak> I appreciate a man as forthright as you, Noah. Where are you heading?<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
 	<stopse name="Tyson"/>
@@ -161,7 +161,7 @@
 	<wait time="200"/>
 	<speech text="That's generous, but I expect we will face danger on the way.<pause> If you're alright with that, then...<pause><hardstop>" heroportrait="Noah" enemyportrait="" animportrait="Noah"/>
 	<wait time="200"/>
-	<speech text="Ha! Don't you know?<pause> This is the famous mercenary, Hugh!<pause> And I've been training under him for three years!<pause> We can handle anything you've got!<hardstop>" heroportrait="Tyson" enemyportrait="" animportrait="Tyson"/>
+	<speech text="Ha! Don't you know?<pause> This is the famous mercenary, Hugh!<harstop> I've been training under him for three years!<pause> We can handle anything you've got!<hardstop>" heroportrait="Tyson" enemyportrait="" animportrait="Tyson"/>
 	<wait time="200"/>
 	<speech text="Now, we have a long journey ahead.  Since we've been fed, we should get some rest.<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
 	<fadeout time="4000" halting="true"/>

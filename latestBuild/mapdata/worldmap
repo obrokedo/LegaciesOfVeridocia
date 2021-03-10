@@ -41,14 +41,14 @@
 	<assactor name="Noah" hero="Noah" enemyid="0" npcid="" staticid=""/>
 	<cameramovetoactor actor="Noah" time="400"/>
 	<camerafollow name="Noah"/>
-	<move name="Noah" x="1032" y="3996" speed="2.4" movediag=false movehorz=false halting=true pathfinding=true facing="-1"/>
+	<move name="Noah" x="1032" y="3996" speed="2.4" movehor="false" movediag="false" halting="true" pathfinding="true" facing="-1"/>
 </cinematic>
 <cinematic id="1" description="NoGoingBack" camerax="0" cameray="0">
 	<speech text="Oi. Are you mad!?<pause><linebreak> We can't go back!<pause> They'll catch you for sure!!<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
 	<assactor name="Noah" hero="Noah" enemyid="0" npcid="" staticid=""/>
 	<cameramovetoactor actor="Noah" time="400"/>
 	<camerafollow name="Noah"/>
-	<move name="Noah" x="1200" y="4140" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false facing="-1"/>
+	<move name="Noah" x="1200" y="4140" speed="2.4" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
 </cinematic>
 <cinematic id="2" description="BorderStruggleCh1Part6" camerax="24" cameray="24">
 	<addactor x="864" y="3732" name="Hugh" anim="hugh" startanim="UnUp" visible="true" init="false" associatedhero=""/>
@@ -67,12 +67,12 @@
 	<wait time="750"/>
 	<stopse name="Guard1"/>
 	<speech text="IT'S THEM, THE ERIUM TRAITORS!  SEIZE THEM!<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
-	<move name="person" x="984" y="3648" speed="4.0" movehor="false" movediag="false" halting=true pathfinding=false facing="-1"/>
+	<move name="person" x="984" y="3648" speed="4.0" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
 	<fallonface name="person" dir="1"/>
 	<wait time="750"/>
 	<stopse name="person"/>
 	<wait time="500"/>
-	<move name="person" x="984" y="3744" speed="4.0" movehor="false" movediag="false" halting=true pathfinding=false facing="-1"/>
+	<move name="person" x="984" y="3744" speed="4.0" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
 	<wait time="500"/>
 	<removeactor name="person"/>
 	<cameramove x="864" y="3744" time="1500"/>
@@ -82,7 +82,7 @@
 	<addactor x="936" y="3480" name="Liza" anim="Liza" startanim="UnDown" visible="true" init="false" associatedhero=""/>
 	<cameramove x="960" y="3576" time="1500"/>
 	<wait time="500"/>
-	<move name="Guard1" x="960" y="3480" speed="2.4" movediag=false movehorz=false halting=true pathfinding=true facing="-1"/>
+	<move name="Guard1" x="960" y="3480" speed="2.4" movehor="false" movediag="false" halting="true" pathfinding="true" facing="-1"/>
 	<facing name="Guard1" dir="2"/>
 	<speech text="These are the fugitives from Erium, and they are under arrest. Do not interfere, witch, or you will join them!<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
 	<facing name="Liza" dir="3"/>
@@ -93,11 +93,11 @@
 	<wait time="1000"/>
 	<removeactor name="Guard1"/>
 	<removeactor name="FireBall"/>
-	<move name="Hugh" x="984" y="3552" speed="2.4" movehor="true" movediag="false" halting=true pathfinding=false facing="-1"/>
+	<move name="Hugh" x="984" y="3552" speed="2.4" movehor="true" movediag="false" halting="true" pathfinding="false" facing="-1"/>
 	<speech text="Liza!  Your timing is perfect!<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
-	<move name="Liza" x="984" y="3504" speed="2.4" movehor="true" movediag="false" halting=true pathfinding=false facing="-1"/>
+	<move name="Liza" x="984" y="3504" speed="2.4" movehor="true" movediag="false" halting="true" pathfinding="false" facing="-1"/>
 	<speech text="Indeed, it looks like you have quite the fight on your hands.<hardstop>" heroportrait="Liza" enemyportrait="" animportrait="Liza"/>
-	<speech text="Good. It’s about time I got to punch something.<hardstop>" heroportrait="Tyson" enemyportrait="" animportrait="Tyson"/>
+	<speech text="Good. It's about time I got to punch something.<hardstop>" heroportrait="Tyson" enemyportrait="" animportrait="Tyson"/>
 	<speech text="I can't have you both joining in. Someone will have to continue our work.<hardstop>  Noah, who should join us?<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
 	<addmultihero heroids="Liza,Tyson,"/>
 	<loadbattle mapdata="battle4" entrance="BattleStart" battbg="2"/>
@@ -108,10 +108,10 @@
 	<speech text="Squawk!<hardstop>" heroportrait="" enemyportrait="" animportrait="Crook"/>
 	<addactor x="936" y="2976" name="Crook" anim="Crook" startanim="UnDown" visible="true" init="false" associatedhero=""/>
 	<addactor x="936" y="2952" name="Huun" anim="Huun" startanim="UnDown" visible="true" init="false" associatedhero=""/>
-	<move name="Huun" x="960" y="2952" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false facing="-1"/>
+	<move name="Huun" x="960" y="2952" speed="2.4" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
 	<facing name="Huun" dir="1"/>
 	<addactor x="936" y="2952" name="Hugh" anim="hugh" startanim="UnDown" visible="true" init="false" associatedhero=""/>
-	<move name="Hugh" x="912" y="2952" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false facing="-1"/>
+	<move name="Hugh" x="912" y="2952" speed="2.4" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
 	<facing name="Hugh" dir="1"/>
 	<tremble name="Crook"/>
 	<stopse name="Crook"/>
@@ -125,12 +125,12 @@
 <cinematic id="4" description="Chapter1Block" camerax="0" cameray="0">
 	<assactor name="Noah" hero="Noah" enemyid="0" npcid="" staticid=""/>
 	<speech text="We need to pick up the pace to avoid any reinforcements.  Let's get to Reyval for supplies and information.<hardstop> We'll try to leave before any more trouble shows up.<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
-	<move name="Noah" x="1272" y="2736" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false facing="-1"/>
+	<move name="Noah" x="1272" y="2736" speed="2.4" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
 </cinematic>
 <cinematic id="5" description="Chapter1Block2" camerax="0" cameray="0">
 	<assactor name="Noah" hero="Noah" enemyid="0" npcid="" staticid=""/>
 	<speech text="We need to pick up the pace to avoid any reinforcements.  Let's get to Reyval for supplies and information.<hardstop> We'll try to leave before any more trouble shows up.<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
-	<move name="Noah" x="1200" y="3024" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false facing="-1"/>
+	<move name="Noah" x="1200" y="3024" speed="2.4" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
 </cinematic>
 <condition id="0" description="ToErium" triggerid="1,">
 	<enterloc location="ToErium" immediate="false"/>
@@ -159,7 +159,7 @@
 <condition id="8" description="ToDarkShrine" triggerid="8,">
 	<enterloc location="ToDarkShrine" immediate="false"/>
 </condition>
-<objectgroup id="48" name="Trigger Regions">
+<objectgroup name="Trigger Region" visible="1">
 <object id="5" name="ToErium" x="1200" y="4176" width="24" height="24">
 <properties>
 <property name=" " value=""/>
@@ -241,7 +241,7 @@
 <polyline points="1080,4320 1104,4320 1104,4344 1080,4344 1080,4320"/>
 </object>
 </objectgroup>
-<objectgroup id="51" name="Battle"/>
+<objectgroup name="Battle" visible="1"/>
 <objectgroup name="NPCs-Objects" visible="1"/>
 <objectgroup id="53" name="Terrain"/>
 </area>
