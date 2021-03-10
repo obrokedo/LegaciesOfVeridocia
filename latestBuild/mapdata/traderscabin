@@ -32,9 +32,11 @@
 <trigger id="8" description="Call Item Shop" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<showshop buypercent="1.0" sellpercent="0.25" itemssold="Medical Herb,Mystic Dew,Divine Feather," portrait="Tyson"/>
 </trigger>
-<trigger id="9" description="Priestess Active" require="Ch1Part5CinFinished," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
-	<showcin cinid="1" exittrigid="-1"/>
+<trigger id="9" description="NPCs Active" require="Ch1Part5CinFinished," exclude="" nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<changenpc name="Priestess" animation="Priestess1" facing="1"/>
+	<changenpc name="NPCEddie" animation="Eddie" facing="1"/>
+	<changenpc name="NPCSharna" animation="Sharna" facing="2"/>
+	<changenpc name="NPCHuun" animation="Huun" facing="1"/>
 </trigger>
 <trigger id="10" description="Priestess" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<showtext textid="7"/>
@@ -70,7 +72,7 @@
 	<string require="," exclude="," trigger="11" heroportrait="" enemyportrait="" animportrait="Priestess1" message="Oh!<pause> It's you again!<pause> We must stop meeting like this!<hardstop><linebreak> Do you need my assistance again?<hardstop><linebreak> Welcome, my lamb. How may I be of service to you?<hardstop>"/>
 </text>
 <text id="8" description="Hugh's Huge Hauls">
-	<string require="" exclude="" trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="----- Hugh's Huge Hauls -----<linebreak> Trading Company Headquarters<hardstop>"/>
+	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="----- Hugh's Huge Hauls -----<linebreak> Trading Company Headquarters<hardstop>"/>
 </text>
 <cinematic id="0" description="Part5HelpfulAdvice" camerax="0" cameray="0">
 	<assactor name="Noah" hero="Noah" enemyid="0" npcid="" staticid=""/>
@@ -171,7 +173,15 @@
 	<camerafollow name="Noah"/>
 	<facing name="Noah" dir="1"/>
 	<fadein time="3000" halting="true" init="false"/>
-	<wait time="2000"/>
+	<facing name="Noah" dir="3"/>
+	<wait time="500"/>
+	<facing name="Noah" dir="2"/>
+	<wait time="500"/>
+	<facing name="Noah" dir="3"/>
+	<wait time="500"/>
+	<facing name="Noah" dir="2"/>
+	<wait time="500"/>
+	<speech text="Huh.<pause> Looks like I'm the last one up again.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<move name="Noah" x="240" y="312" speed="2.4" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
 	<move name="Noah" x="240" y="300" speed="1.2" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
 	<cameramove x="240" y="276" time="600"/>
@@ -189,10 +199,6 @@
 	<fadeout time="3000" halting="true"/>
 	<loadmap mapdata="traderscabin" enter="AfterPart5"/>
 	<fadein time="2000" halting="true" init="false"/>
-</cinematic>
-<cinematic id="1" description="Priestess Active" camerax="0" cameray="0">
-	<assactor name="Priestess" hero="" enemyid="0" npcid="Priestess" staticid=""/>
-	<facing name="Priestess" dir="1"/>
 </cinematic>
 <condition id="0" description="ContinuePart5" triggerid="0,">
 	<enterloc location="ContinuePart5" immediate="false"/>
@@ -308,13 +314,13 @@
 </object>
 <object id="10" name="NPCEddie" x="0" y="0">
 <properties>
-<property name="npc" value="noturn=false facing=1 name=NPCEddie throughwall=false noanimate=false animation=Eddie textid=2 wander=4"/>
+<property name="npc" value="noturn=false facing=1 name=NPCEddie throughwall=false noanimate=false animation=blank textid=2 wander=4"/>
 </properties>
 <polyline points="528,144 552,144 552,168 528,168 528,144"/>
 </object>
 <object id="11" name="NPCHuun" x="0" y="0">
 <properties>
-<property name="npc" value="noturn=false facing=1 name=NPCHuun throughwall=false noanimate=false animation=Huun textid=0 wander=4"/>
+<property name="npc" value="noturn=false facing=1 name=NPCHuun throughwall=false noanimate=false animation=blank textid=0 wander=4"/>
 </properties>
 <polyline points="264,96 288,96 288,120 264,120 264,96"/>
 </object>
@@ -326,7 +332,7 @@
 </object>
 <object id="13" name="NPCSharna" x="0" y="0">
 <properties>
-<property name="npc" value="noturn=false facing=1 name=NPCSharna throughwall=false noanimate=false animation=Sharna textid=1 wander=3"/>
+<property name="npc" value="noturn=false facing=1 name=NPCSharna throughwall=false noanimate=false animation=blank textid=1 wander=3"/>
 </properties>
 <polyline points="600,96 624,96 624,120 600,120 600,96"/>
 </object>
