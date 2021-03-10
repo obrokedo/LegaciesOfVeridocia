@@ -42,6 +42,9 @@
 <trigger id="11" description="Call Priest Menu" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<showpriest portrait="Priestess1"/>
 </trigger>
+<trigger id="12" description="MapStart" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<playmusic music="traderscabin" volume="75"/>
+</trigger>
 <text id="0" description="Huun">
 	<string require="," exclude="," trigger="-1" heroportrait="Huun" enemyportrait="" animportrait="" message="About that glass of water...<hardstop>"/>
 </text>
@@ -66,6 +69,9 @@
 <text id="7" description="Priestess">
 	<string require="," exclude="," trigger="11" heroportrait="" enemyportrait="" animportrait="Priestess1" message="Oh!<pause> It's you again!<pause> We must stop meeting like this!<hardstop><linebreak> Do you need my assistance again?<hardstop><linebreak> Welcome, my lamb. How may I be of service to you?<hardstop>"/>
 </text>
+<text id="8" description="Hugh's Huge Hauls">
+	<string require="" exclude="" trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="----- Hugh's Huge Hauls -----<linebreak> Trading Company Headquarters<hardstop>"/>
+</text>
 <cinematic id="0" description="Part5HelpfulAdvice" camerax="0" cameray="0">
 	<assactor name="Noah" hero="Noah" enemyid="0" npcid="" staticid=""/>
 	<addactor x="312" y="312" name="Tyson" anim="Tyson" startanim="UnDown" visible="true" init="false" associatedhero=""/>
@@ -74,20 +80,39 @@
 	<camerafollow name="Noah"/>
 	<move name="Noah" x="192" y="564" speed="2.4" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
 	<facing name="Noah" dir="0"/>
+	<speech text="HALT!!<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
+	<wait time="200"/>
+	<tremble name="Noah"/>
+	<wait time="600"/>
+	<stopse name="Noah"/>
+	<wait time="200"/>
 	<cameramove x="240" y="528" time="3000"/>
-	<speech text="What are you doing, trespassing on our land?<hardstop>" heroportrait="Tyson" enemyportrait="" animportrait="Tyson"/>
 	<move name="Tyson" x="312" y="492" speed="3.4" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
+	<speech text="What are you doing, trespassing on our land?<hardstop>" heroportrait="Tyson" enemyportrait="" animportrait="Tyson"/>
 	<addactor x="192" y="564" name="Sharna" anim="Sharna" startanim="UnUp" visible="true" init="false" associatedhero=""/>
-	<move name="Sharna" x="216" y="564" speed="0.5" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
+	<move name="Sharna" x="216" y="564" speed="2.4" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
 	<facing name="Sharna" dir="0"/>
 	<speech text="Just out for a stroll, we'll be going.<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait="Sharna"/>
 	<speech text="Packing that much gear and moving that quick is a stroll now, eh?<hardstop>" heroportrait="Tyson" enemyportrait="" animportrait="Tyson"/>
-	<speech text="I, well...<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait="Sharna"/>
-	<move name="Hugh" x="336" y="420" speed="2.4" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
-	<speech text="There is no need to lie.  Who are you really?<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
+	<speech text="I<pause>...<pause> Well...<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait="Sharna"/>
+	<move name="Hugh" x="264" y="420" speed="1.2" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
+	<move name="Hugh" x="264" y="438" speed="1.2" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
+	<stopanim name="Hugh"/>
+	<wait time="500"/>
+	<speech text="There is no need to lie.<softstop>  Who are you really?<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
+	<wait time="200"/>
 	<speech text="We've departed from Erium to seek the aid of friends.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait="Noah"/>
-	<speech text="Well come in and take a rest. You look tired and we just finished dinner. There is enough for everyone.<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
-	<move name="Hugh" x="336" y="300" speed="2.4" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
+	<wait time="200"/>
+	<speech text="I see.<pause><linebreak> Well come in and take a rest.<pause> You look tired and we just finished making dinner.<softstop><linebreak> There is enough for everyone,<pause> and you are welcome to join us.<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
+	<move name="Hugh" x="336" y="300" speed="1.2" movehor="true" movediag="false" halting="true" pathfinding="false" facing="-1"/>
+	<wait time="1000"/>
+	<tremble name="Tyson"/>
+	<wait time="1000"/>
+	<stopse name="Tyson"/>
+	<wait time="200"/>
+	<speech text="Well.<softstop> Come in then.<pause> I suppose.<hardstop>" heroportrait="Tyson" enemyportrait="" animportrait=""/>
+	<wait time="200"/>
+	<move name="Tyson" x="312" y="312" speed="2.4" movehor="false" movediag="false" halting="false" pathfinding="false" facing="-1"/>
 	<cameramove x="216" y="576" time="2000"/>
 	<wait time="1500"/>
 	<facing name="Sharna" dir="2"/>
@@ -106,36 +131,64 @@
 	<camerafollow name="Hugh"/>
 	<wait time="500"/>
 	<fadein time="3000" halting="true" init="false"/>
-	<speech text="What you're telling us is that you're fugitives. Why should we trust anything you've said? <hardstop>" heroportrait="Tyson" enemyportrait="" animportrait="Tyson"/>
-	<speech text="We're only fugitives in the eyes of Mistal.  The kingdom is under attack from the inside and we need help stopping it.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait="Noah"/>
-	<speech text="Unbelievable!  I say we hand them over to Erium!<hardstop>" heroportrait="Tyson" enemyportrait="" animportrait="Tyson"/>
-	<speech text="Come now, that's hardly hospitable! I appreciate a man as honest as you, Noah. Where are you headed?<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
-	<speech text="Avaria, to meet with Princess Azure.<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait="Sharna"/>
-	<speech text="Did you say Avaria?<hardstop>" heroportrait="Tyson" enemyportrait="" animportrait="Tyson"/>
-	<speech text="Hmm... Perhaps we could be of service, then. I've seen my share of battles, and I've taught Tyson here all he knows. Seems you could use all the help you can get.<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
-	<speech text="Not to be ungrateful, but I think it's our turn to be suspicious. What's in it for you?<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait="Sharna"/>
-	<speech text="You're a little slow on the uptake, aren't you, girl?  Expanding our trade route to Avaria is a golden opportunity.<hardstop>" heroportrait="Tyson" enemyportrait="" animportrait="Tyson"/>
-	<speech text="You kids seem sincere enough; how about we help you on your journey out there?<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
-	<speech text="That's generous, but we wouldn't want to put you in any danger.<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait="Sharna"/>
-	<speech text="Ha! Don't you know? This is the famous mercenary Hugh! And I've been training under him for three years; we can handle anything you've got!<hardstop>" heroportrait="Tyson" enemyportrait="" animportrait="Tyson"/>
+	<speech text="What you're telling us is that you're fugitives.<pause> Why should we trust anything you've said, then?<hardstop>" heroportrait="Tyson" enemyportrait="" animportrait="Tyson"/>
+	<wait time="200"/>
+	<speech text="We're only fugitives because Mistal framed us for something we didn't do.<pause> The kingdom is under siege from within<pause> and we need help stopping it.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait="Noah"/>
+	<wait time="200"/>
+	<quiver name="Tyson"/>
+	<wait time="200"/>
+	<speech text="What a load of rubbish!!<pause>  I say we hand them over to Erium at the earliest opportunity!<hardstop>" heroportrait="Tyson" enemyportrait="" animportrait="Tyson"/>
+	<wait time="200"/>
+	<speech text="No. We won't be doing that, since I believe them.<hardstop><nextcin><linebreak> I appreciate a man as forthright as you, Noah. Where are you heading?<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
+	<stopse name="Tyson"/>
+	<wait time="1000"/>
+	<tremble name="Tyson"/>
+	<wait time="600"/>
+	<stopse name="Tyson"/>
+	<speech text="Avaria, to meet with Princess Azure and seek their aid.<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait="Sharna"/>
+	<wait time="200"/>
+	<speech text="Avaria, huh?<hardstop>" heroportrait="Tyson" enemyportrait="" animportrait="Tyson"/>
+	<wait time="200"/>
+	<speech text="Hmm... Perhaps we could be of service, then.<pause> I've seen my share of battles, and I've taught Tyson here all he knows.<softstop> It seems you could use all the help you can get.<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
+	<wait time="200"/>
+	<speech text="Not to be ungrateful, but.<pause>.<pause>.<pause> I think it's our turn to be suspicious.<pause> What's in it for you?<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait="Sharna"/>
+	<wait time="200"/>
+	<speech text="Isn't it obvious?<pause> Expanding our trade route to Avaria is a golden opportunity.<hardstop>" heroportrait="Tyson" enemyportrait="" animportrait="Tyson"/>
+	<wait time="200"/>
+	<speech text="You seem sincere enough.<softstop><linebreak> Very well. We will help you on your journey, and get a new potential trading partner out of the bargain.<pause> Deal?<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
+	<wait time="200"/>
+	<speech text="That's generous, but I expect we will face danger on the way.<pause> If you're alright with that, then...<pause><hardstop>" heroportrait="Noah" enemyportrait="" animportrait="Noah"/>
+	<wait time="200"/>
+	<speech text="Ha! Don't you know?<pause> This is the famous mercenary, Hugh!<pause> And I've been training under him for three years!<pause> We can handle anything you've got!<hardstop>" heroportrait="Tyson" enemyportrait="" animportrait="Tyson"/>
+	<wait time="200"/>
 	<speech text="Now, we have a long journey ahead.  Since we've been fed, we should get some rest.<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
-	<fadeout time="3000" halting="true"/>
+	<fadeout time="4000" halting="true"/>
 	<camerafollow name="Noah"/>
-	<move name="Tyson" x="528" y="228" speed="20" movehor="false" movediag="true" halting="false" pathfinding="false" facing="1"/>
-	<move name="Hugh" x="528" y="336" speed="20" movehor="false" movediag="true" halting="false" pathfinding="false" facing="1"/>
-	<move name="Noah" x="576" y="228" speed="20" movehor="false" movediag="true" halting="false" pathfinding="false" facing="1"/>
-	<move name="Sharna" x="624" y="228" speed="20" movehor="false" movediag="true" halting="false" pathfinding="false" facing="1"/>
-	<move name="Huun" x="576" y="336" speed="20" movehor="false" movediag="true" halting="false" pathfinding="false" facing="1"/>
-	<move name="Eddie" x="624" y="336" speed="20" movehor="false" movediag="true" halting="false" pathfinding="false" facing="1"/>
 	<cameramove x="528" y="336" time="0"/>
+	<move name="Noah" x="576" y="264" speed="24" movehor="false" movediag="true" halting="false" pathfinding="false" facing="-1"/>
 	<wait time="500"/>
+	<speech text="The following day.<pause>.<pause>.<hardstop>" heroportrait="" enemyportrait="" animportrait=""/>
+	<camerafollow name="Noah"/>
+	<facing name="Noah" dir="1"/>
 	<fadein time="3000" halting="true" init="false"/>
-	<move name="Hugh" x="528" y="300" speed="2.4" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
-	<speech text="Noah, I've gone over our supplies; they won't get us far, even with mine and Tyson's. We'll stop in Reyval to pick up more.<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
-	<move name="Noah" x="576" y="252" speed="2.4" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
-	<speech text="That's just across the border, right?<hardstop>" heroportrait="Noah" enemyportrait="" animportrait="Noah"/>
-	<speech text="It is, and thankfully the terrain won't be too rough.  Let's just hope that word of your escape hasn't travelled as far as you have.<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
+	<wait time="2000"/>
+	<move name="Noah" x="240" y="312" speed="2.4" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
+	<move name="Noah" x="240" y="300" speed="1.2" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
+	<cameramove x="240" y="276" time="600"/>
+	<facing name="Hugh" dir="1"/>
+	<speech text="Good morning, Noah.<pause> I hope you slept well.<softstop> I've gone over our supplies. I'm afraid that they won't get us far,<pause> even with mine and Tyson's.<hardstop><linebreak> We'll stop in Reyval to pick up more.<softstop> In the meantime, if you need some healing items,<pause> Tyson might part with some.<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
+	<wait time="200"/>
+	<speech text="Thank you.<pause>. Reyval is just across the border, right?<hardstop>" heroportrait="Noah" enemyportrait="" animportrait="Noah"/>
+	<nod name="Hugh"/>
+	<wait time="1500"/>
+	<speech text="It is, and thankfully the terrain won't be too rough.<pause> Let's just hope that word of your escape hasn't travelled as far as you have.<hardstop><linebreak> Right then. Feel free to have some breakfast.<pause> When you're ready to move out, head north along the path.<hardstop><nextcin><linebreak> Get moving, Tyson!<pause> Our work won't finish itself!<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
+	<facing name="Hugh" dir="0"/>
+	<tremble name="Tyson"/>
+	<wait time="600"/>
+	<stopse name="Tyson"/>
+	<fadeout time="3000" halting="true"/>
 	<loadmap mapdata="traderscabin" enter="AfterPart5"/>
+	<fadein time="2000" halting="true" init="false"/>
 </cinematic>
 <cinematic id="1" description="Priestess Active" camerax="0" cameray="0">
 	<assactor name="Priestess" hero="" enemyid="0" npcid="Priestess" staticid=""/>
@@ -150,7 +203,7 @@
 <condition id="2" description="ToWorldMapSouth" triggerid="4,">
 	<enterloc location="ToWorldMapSouth" immediate="false"/>
 </condition>
-<condition id="3" description="UponMapEntry" triggerid="9,">
+<condition id="3" description="UponMapEntry" triggerid="12,9,">
 	<maploaded/>
 </condition>
 <objectgroup name="Trigger Region" visible="1">
@@ -166,11 +219,11 @@
 </properties>
 <polyline points="144,600 240,600 240,624 144,624 144,600"/>
 </object>
-<object id="4" name="AfterPart5" x="0" y="0">
+<object name="AfterPart5" x="0" y="0">
 <properties>
 <property name="start" value="exit=AfterPart5"/>
 </properties>
-<polyline points="576,264 600,264 600,288 576,288 576,264"/>
+<polyline points="240,312 264,312 264,336 240,336 240,312"/>
 </object>
 <object id="5" name="ToWorldMap" x="0" y="0">
 <properties>
@@ -282,6 +335,12 @@
 <property name="npc" value="noturn=false facing=1 name=Priestess throughwall=false noanimate=false animation=blank textid=7 wander=0"/>
 </properties>
 <polyline points="216,504 240,504 240,528 216,528 216,504"/>
+</object>
+<object name="Sign" x="0" y="0">
+<properties>
+<property name="npc" value="noturn=false facing=-1 throughwall=false noanimate=true animation=blank textid=8 wander=0"/>
+</properties>
+<polyline points="360,480 360,504 384,504 384,480 360,480"/>
 </object>
 </objectgroup>
 <objectgroup name="Terrain" visible="1"/>

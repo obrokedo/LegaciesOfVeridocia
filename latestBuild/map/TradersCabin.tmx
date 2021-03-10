@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="70" height="60" tilewidth="12" tileheight="12" infinite="0" nextlayerid="15" nextobjectid="14">
+<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="right-down" width="70" height="60" tilewidth="12" tileheight="12" infinite="0" nextlayerid="15" nextobjectid="14">
  <tileset firstgid="1" name="castletown(day)-Master" tilewidth="12" tileheight="12" tilecount="900" columns="25">
   <image source="../image/castletown(day)-Master.png" trans="495d47" width="300" height="440"/>
  </tileset>
@@ -34,7 +34,7 @@
  </layer>
  <layer id="6" name="FG" width="70" height="60">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACu1a603EMAzOie6AkGABfiG2ADbg8YMdEBvcTcAxAvALdrjJSAWRqipp/K5z7SdZ1Yk8nC+OYztsT0LYRYFii2yvPY4W3qJue4R+2Pba43jDaZR9lFtleY9yZrQmCVxFuY7yuCnLLkz/hkiaxyvG/sBKX++8jP3BykseKy95rLzkYaXvTZQ7g3mk0No+cgGNQ5fGCzQOXRovUHB56eNlT3FsOifcvI3Ly9z2Nl5/OifcvI27rv6e+Q7z5Udp/dJ5fYmX8y6Ey3+56Mr9H5zkR9J5vWVc9xzaycOt413JPJxzdmp9vecBU/04Z6fWt2VeNDE3L/fd9O9hP8ta8ty8YPpp3cm1eTVBzadz+uV8g1X84gVQ/Wp+FMtba7xQ7QJ7d7XGy3B9EI6oPLbGyxAQG6DGOC3zooFkX1bzUus0VP24fqil+AUDbn4NrZ9w5Yc4T98PEvdI1ekScvWTQ+Et+iPK50i+CO/WpXaHwvdpU18HtE4H5Q3D82tGvxeAzrl5St9h+6l+VEDPl1Q9FDtP6Qvtt1TU7ML7/2lpoWYXx2I3WvtbGrcVe9La35pfGoPKlzTPVnpA21P3R3pfrfTAtrc6Z17Os7bdYOHlfvBqN9LQ1tvLfmLRqt7SqOVBrdo9F9B8SQpe4hKt+azeCazH487H1Ycbf3L3TTtPtrYbaP1D++9QPaGQzjegdTTqvcKtz2nFvdB9pd4f2PGxsIp7sf4lV6+VrNdLw8q/jNsdS31We3+h7wLY8bShvb/YdwHoeCv+4NVfzQ1vdmKd93q/zxKs816q//kF9fyCrqBBAAA=
+   H4sIAAAAAAAACu1ay00DMRB1xPaAkKABTogugA74HLgABSA6SCoglACcoIdUhiOwtFrs9fx3nOyTRqsIf8ZvxvbMmOVBCKsoUCyR7bXH0cJr1G2N0A/bXnscbziMso5yqSxvUY6M1iSBsyjnUW4XZVmF8d8QSfN4xfA8sNLXOy/D82DmJY+ZlzxmXvKw0vciypXBPFJozY5cQOPQfeMFGofuGy9QcHnZxsue4ti0T7h5G5eXqf1tuP60T7h5G3dd23vmK0yXH6X1S+f1JV6OuxBO/+SkK/e/cZIfSef1lnHdfWgnD7eOdyXzcM7eqfX1ngeM9ePsnVrflnnRxNS8XHfjv/v9LGvJU/OC6ad1J9fm1QQ1n87plzsbrOIXL4DqVztHsby1xgvVL7B3V2u89NcH4YjKY2u89AHxAWqM0zIvGkj+ZTUvtU5D1Y97DrUUv2DAza+h9ROufBPn2faDxD1SdbqEXP1kU3iLfo/yMZBPwrt1qd2m8L1b1NcBrdNBecPw/JLR7xmgc26e0rfffqwfFdD9JVUPxc5T+kL77StqfuH9/7S0UPOLXfEbLfuWxm3Fn7TsWzuXhqDylfo9dv/lKfNe8pBp1xeuHtLtqfaRtquVHtj2VvvMy37W9hssvNwPXv1GGtp6e7EnFq3qLY1aHtSq33MBzZekIM2ztd208iUvcYnWfFx9uPEn127aebK130DrH9p/h+oJhXS+Aa2jUe8Vbn1OK+6F2pV6f2DHx8Iq7sWeL7l6rWS9XhpW58uw3a7UZ7XtC30XwI6nDW37Yt8FoOPN+IXX82pqePMT67zX+32WYJ33Us+fH8Hy88GgQQAA
   </data>
  </layer>
  <layer id="7" name="FG Shadow" width="70" height="60">
