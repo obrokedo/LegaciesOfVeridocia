@@ -86,74 +86,74 @@
 	<showcin cinid="2" exittrigid="-1"/>
 </trigger>
 <text id="0" description="citizen1">
-	<conversation require="," exclude="," trigger="-1" heroportrait1="" enemyportrait1="" animportrait1="" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="Good evening, Noah.<pause>  That blizzard the other night was really bizarre, wasn't it?<hardstop><split>I've never seen anything like that...<pause>  It came and went in almost no time at all!<hardstop><split>And you wouldn't even know it by the weather today!<hardstop>"/>
+	<conversation require="," exclude="," trigger="-1," heroportrait1="" enemyportrait1="" animportrait1="" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="Good evening, Noah.<pause>  That blizzard the other night was really bizarre, wasn't it?<hardstop><split>I've never seen anything like that...<pause>  It came and went in almost no time at all!<hardstop><split>And you wouldn't even know it by the weather today!<hardstop>"/>
 </text>
 <text id="1" description="child1">
-	<conversation require="," exclude="," trigger="-1" heroportrait1="" enemyportrait1="" animportrait1="" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="Do you want to catch bugs with me?<hardstop><split>Not today kiddo, I need to get to the castle and -<hardstop><split>Time for bed!<hardstop><split>Better mind your mother.  We'll play next time! Bye!<hardstop>"/>
+	<conversation require="," exclude="," trigger="-1," heroportrait1="" enemyportrait1="" animportrait1="" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="Do you want to catch bugs with me?<hardstop><split>Not today kiddo, I need to get to the castle and -<hardstop><split>Time for bed!<hardstop><split>Better mind your mother.  We'll play next time! Bye!<hardstop>"/>
 </text>
 <text id="2" description="citizen2">
-	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="Erium has maintained peace for a long time, so we don't have to enlist unless we want to.<pause> Me, I'd rather be fishing!<hardstop>"/>
+	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="Erium has maintained peace for a long time, so we don't have to enlist unless we want to.<pause> Me, I'd rather be fishing!<hardstop>"/>
 </text>
 <text id="3" description="citizen3">
-	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="There are some really cute girls that work in the castle. I'm jealous that you get to see them whenever you want.<hardstop>"/>
+	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="There are some really cute girls that work in the castle. I'm jealous that you get to see them whenever you want.<hardstop>"/>
 </text>
 <text id="4" description="citizen4">
-	<conversation require="," exclude="," trigger="-1" heroportrait1="" enemyportrait1="" animportrait1="" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="Have you ever wondered what is on the other side of the mountains?<hardstop><split>The kingdom of Signus is to the east, but the passage is too treacherous for safe use.<hardstop><split>Oh that's right. It's a shame, I'd like to visit there some day.<hardstop>"/>
+	<conversation require="," exclude="," trigger="-1," heroportrait1="" enemyportrait1="" animportrait1="" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="Have you ever wondered what is on the other side of the mountains?<hardstop><split>The kingdom of Signus is to the east, but the passage is too treacherous for safe use.<hardstop><split>Oh that's right. It's a shame, I'd like to visit there some day.<hardstop>"/>
 </text>
 <text id="5" description="citizen5">
-	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="I enjoy that we can leave our doors open for anyone to drop in, but I must get ready for bed. Please see your way out.<hardstop>"/>
+	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="I enjoy that we can leave our doors open for anyone to drop in, but I must get ready for bed. Please see your way out.<hardstop>"/>
 </text>
 <text id="6" description="Item Shop">
-	<string require="," exclude="," trigger="1" heroportrait="" enemyportrait="" animportrait="Shopkeeper1" message="We have the finest remedies in town. How can I help you?<hardstop>"/>
+	<string require="," exclude="," trigger="1," heroportrait="" enemyportrait="" animportrait="Shopkeeper1" message="We have the finest remedies in town. How can I help you?<hardstop>"/>
 </text>
 <text id="7" description="Weapon Shop">
-	<string require="EriumWeaponShopInitialTalk," exclude="Battle2," trigger="-1" heroportrait="" enemyportrait="" animportrait="Shopkeeper1" message="See you again.<hardstop>"/>
-	<conversation require="," exclude="EriumWeaponShopInitialTalk,Battle2," trigger="2" heroportrait1="" enemyportrait1="" animportrait1="Shopkeeper1" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="Sorry, I'm out of stock right now.<hardstop><split>Out of stock? You're never out of stock!<hardstop><split>Grand Mage Mistal cleaned me out. I guess she's going to start a new training plan?<hardstop><split>She's not exactly in charge of training. Maybe it was a special request from King Erium.<hardstop><split>I'm not sure. I'm expecting a new shipment any day now though. The trade caravan should be here this week.<hardstop><split>I'll check another day then. Thank you.<hardstop>"/>
-	<string require="Battle2," exclude="," trigger="24" heroportrait="" enemyportrait="" animportrait="" message="Looking for some sharp new weapons?<hardstop>"/>
+	<string require="EriumWeaponShopInitialTalk," exclude="Battle2," trigger="-1," heroportrait="" enemyportrait="" animportrait="Shopkeeper1" message="See you again.<hardstop>"/>
+	<conversation require="," exclude="EriumWeaponShopInitialTalk,Battle2," trigger="2," heroportrait1="" enemyportrait1="" animportrait1="Shopkeeper1" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="Sorry, I'm out of stock right now.<hardstop><split>Out of stock? You're never out of stock!<hardstop><split>Grand Mage Mistal cleaned me out. I guess she's going to start a new training plan?<hardstop><split>She's not exactly in charge of training. Maybe it was a special request from King Erium.<hardstop><split>I'm not sure. I'm expecting a new shipment any day now though. The trade caravan should be here this week.<hardstop><split>I'll check another day then. Thank you.<hardstop>"/>
+	<string require="Battle2," exclude="," trigger="24," heroportrait="" enemyportrait="" animportrait="" message="Looking for some sharp new weapons?<hardstop>"/>
 </text>
 <text id="8" description="Priestess">
-	<string require="," exclude="," trigger="3" heroportrait="" enemyportrait="" animportrait="Priestess1" message="Welcome, my lamb.  How may I be of service to you?<hardstop>"/>
+	<string require="," exclude="," trigger="3," heroportrait="" enemyportrait="" animportrait="Priestess1" message="Welcome, my lamb.  How may I be of service to you?<hardstop>"/>
 </text>
 <text id="9" description="Bartender">
-	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="Sorry, I'm about to close up for the night.<hardstop>"/>
+	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="Sorry, I'm about to close up for the night.<hardstop>"/>
 </text>
 <text id="10" description="BartenderScolds">
-	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="Who said you were allowed up there!<hardstop>"/>
+	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="Who said you were allowed up there!<hardstop>"/>
 </text>
 <text id="11" description="SearchNoItem">
-	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="There doesn't seem to be anything here.<hardstop>"/>
+	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="There doesn't seem to be anything here.<hardstop>"/>
 </text>
 <text id="12" description="SearchSign">
-	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="Welcome to Erium<hardstop>"/>
+	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="Welcome to Erium<hardstop>"/>
 </text>
 <text id="13" description="SearchStatue">
-	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="I wonder who this statue is supposed to represent.<hardstop>"/>
+	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="I wonder who this statue is supposed to represent.<hardstop>"/>
 </text>
 <text id="14" description="BehindCounter">
-	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="Shopkeeper1" message="Hey, you're not allowed back here!<hardstop>"/>
+	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="Shopkeeper1" message="Hey, you're not allowed back here!<hardstop>"/>
 </text>
 <text id="15" description="Book1">
-	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Genesis: Ancient Technology.<hardstop>"/>
+	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Genesis: Ancient Technology.<hardstop>"/>
 </text>
 <text id="16" description="Book2">
-	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Tough,<pause> Thorough,<pause> Thought.<hardstop>"/>
+	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Tough,<pause> Thorough,<pause> Thought.<hardstop>"/>
 </text>
 <text id="17" description="Book3">
-	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Is This The Real Life?<hardstop>"/>
+	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Is This The Real Life?<hardstop>"/>
 </text>
 <text id="18" description="Demo2Over">
-	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="This is the end of Demo 2. Thank you for playing!<hardstop>"/>
+	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="This is the end of Demo 2. Thank you for playing!<hardstop>"/>
 </text>
 <text id="19" description="Codger1">
-	<string require="Codger1spokento," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="Have you been through his house yet?<softstop> HEEHEEHAHAHA!!!<hardstop>"/>
-	<conversation require="," exclude="," trigger="25" heroportrait1="" enemyportrait1="" animportrait1="" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="This house was built before the cave connecting us to Signus was overrun by goblins.<hardstop> The owner finally had to settle here since he couldn't get back through!<hardstop><split>I remember that!<pause> I was just a boy when they built it.<hardstop><split>Yeah, well it messed up the whole flow of the town!<hardstop> I've been telling him to cut this darn tree down so people can get 'round, but he won't budge!<hardstop><split>It is kind of annoying,<pause> now that you mention it.<hardstop><split>Not to worry, sonny.<pause> I've been telling everyone to go through his house until he cuts it down.<hardstop><linebreak> Reckon that'll teach him!<pause><linebreak> HEEHEEHAHAHA!<hardstop>"/>
+	<string require="Codger1spokento," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="Have you been through his house yet?<softstop> HEEHEEHAHAHA!!!<hardstop>"/>
+	<conversation require="," exclude="," trigger="25," heroportrait1="" enemyportrait1="" animportrait1="" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="This house was built before the cave connecting us to Signus was overrun by goblins.<hardstop> The owner finally had to settle here since he couldn't get back through!<hardstop><split>I remember that!<pause> I was just a boy when they built it.<hardstop><split>Yeah, well it messed up the whole flow of the town!<hardstop> I've been telling him to cut this darn tree down so people can get 'round, but he won't budge!<hardstop><split>It is kind of annoying,<pause> now that you mention it.<hardstop><split>Not to worry, sonny.<pause> I've been telling everyone to go through his house until he cuts it down.<hardstop><linebreak> Reckon that'll teach him!<pause><linebreak> HEEHEEHAHAHA!<hardstop>"/>
 </text>
 <text id="20" description="Codger2">
-	<string require="Codger1spokento," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="Who's that laughing outside?<softstop> That old goat!<pause> I should have known!<hardstop><linebreak> He's the one sending you all through my house!!<softstop> It is not a damned thoroughfare!<hardstop>"/>
-	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="Of course!<pause> By all means walk on through my home!<softstop> Everyone else does!<hardstop>"/>
+	<string require="Codger1spokento," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="Who's that laughing outside?<softstop> That old goat!<pause> I should have known!<hardstop><linebreak> He's the one sending you all through my house!!<softstop> It is not a damned thoroughfare!<hardstop>"/>
+	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="Of course!<pause> By all means walk on through my home!<softstop> Everyone else does!<hardstop>"/>
 </text>
 <text id="21" description="SearchSign2">
-	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="No Entrance!<hardstop>"/>
+	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="No Entrance!<hardstop>"/>
 </text>
 <cinematic id="0" description="NoahGettingReady" camerax="0" cameray="1056">
 	<pausemusic/>
@@ -167,20 +167,20 @@
 	<fadein time="750" halting="true" init="true"/>
 	<wait time="500"/>
 	<playsound sound="jump" volume="100"/>
-	<move name="Noah" x="96" y="96" speed="5" facing="1" movehor="false" movediag="false" halting="false" pathfinding="false"/>
+	<move name="Noah" x="96" y="96" speed="5" movehor="false" movediag="false" halting="false" pathfinding="false" facing="1"/>
 	<wait time="250"/>
-	<move name="Noah" x="96" y="132" speed="7" facing="1" movehor="false" movediag="false" halting="false" pathfinding="false"/>
+	<move name="Noah" x="96" y="132" speed="7" movehor="false" movediag="false" halting="false" pathfinding="false" facing="1"/>
 	<playsound sound="impact" volume="100"/>
 	<wait time="500"/>
 	<facing name="Noah" dir="3"/>
 	<wait time="750"/>
-	<move name="Noah" x="96" y="120" speed="7" facing="3" movehor="false" movediag="false" halting="false" pathfinding="false"/>
+	<move name="Noah" x="96" y="120" speed="7" movehor="false" movediag="false" halting="false" pathfinding="false" facing="3"/>
 	<wait time="125"/>
-	<move name="Noah" x="96" y="132" speed="7" facing="3" movehor="false" movediag="false" halting="false" pathfinding="false"/>
+	<move name="Noah" x="96" y="132" speed="7" movehor="false" movediag="false" halting="false" pathfinding="false" facing="3"/>
 	<wait time="125"/>
-	<move name="Noah" x="96" y="120" speed="7" facing="3" movehor="false" movediag="false" halting="false" pathfinding="false"/>
+	<move name="Noah" x="96" y="120" speed="7" movehor="false" movediag="false" halting="false" pathfinding="false" facing="3"/>
 	<wait time="125"/>
-	<move name="Noah" x="96" y="132" speed="7" facing="3" movehor="false" movediag="false" halting="false" pathfinding="false"/>
+	<move name="Noah" x="96" y="132" speed="7" movehor="false" movediag="false" halting="false" pathfinding="false" facing="3"/>
 	<wait time="125"/>
 	<speech text="I need to grab my gear!<softstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<move name="Noah" x="168" y="120" speed="3" movehor="true" movediag="false" halting="true" pathfinding="false" facing="-1"/>
@@ -788,10 +788,11 @@
 <property name="chest" value="spriteimage=closedchest itemid=2"/>
 </properties>
 </object>
-<object id="156" name="Codger1" x="1488" y="696" width="24" height="24">
+<object name="Codger1" x="0" y="0">
 <properties>
-<property name="npc" value="noturn=false facing=1 throughwall=false noanimate=true animation=SeniorMale textid=19 wander=0"/>
+<property name="npc" value="noturn=false facing=1 name=Codger1 throughwall=false noanimate=true animation=SeniorMale textid=19 wander=0"/>
 </properties>
+<polyline points="1488,696 1512,696 1512,720 1488,720"/>
 </object>
 <object id="157" name="Codger2" x="1704" y="792" width="24" height="24">
 <properties>

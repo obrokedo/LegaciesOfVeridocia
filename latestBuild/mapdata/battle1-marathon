@@ -3,7 +3,7 @@
 <trigger id="0" description="Battle1 Initialise" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<playmusic music="battle1" volume="75"/>
 </trigger>
-<trigger id="1" description="Victory Results" require="" exclude="" nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="1" description="Victory Results" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<completequest questid="Battle1"/>
 	<reviveheroes hero="Sharna"/>
 	<reviveheroes hero="Huun"/>
@@ -37,9 +37,9 @@
 	<changeaiapproach id="7" aitype="2" priority="0"/>
 	<changeaitargetenemy id="1" targetid="7" priority="0"/>
 </trigger>
-<trigger id="7" description="Fail Results" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="7" description="Fail Results" require="" exclude="" nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<reviveheroes hero="Noah"/>
-	<loadmap mapdata="erium" enter="InfrontPreistess" transdir=""/>
+	<loadmap mapdata="marathon" enter="enter" transdir=""/>
 </trigger>
 <text id="0" description="Defcon 1">
 	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="Defcon 1 Activated!!<hardstop>"/>
@@ -180,7 +180,7 @@
 <polyline points="768,360 792,360 792,384 768,384 768,360"/>
 </object>
 </objectgroup>
-<objectgroup id="13" name="Terrain" visible="0">
+<objectgroup name="Terrain" visible="1">
 <object id="16" x="600" y="576">
 <properties>
 <property name="terrain" value="platform=grassfloor type=GRASS"/>

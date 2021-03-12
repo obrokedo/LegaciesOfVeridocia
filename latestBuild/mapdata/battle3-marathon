@@ -13,9 +13,9 @@
 	<changeaitargetenemy id="4" targetid="7" priority="1"/>
 	<changeaiapproach id="6" aitype="1" priority="1"/>
 </trigger>
-<trigger id="3" description="Fail Results" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="3" description="Fail Results" require="" exclude="" nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<reviveheroes hero="Noah"/>
-	<loadmap mapdata="eriumoutskirts" enter="start" transdir=""/>
+	<loadmap mapdata="marathon" enter="enter" transdir=""/>
 </trigger>
 <text id="0" description="Defcon 1">
 	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="Defcon 1 Activated!!<hardstop>"/>
@@ -47,15 +47,15 @@
 	<speech text="No<pause>.<pause>.<pause>. No<pause>.<pause>.<pause>.<hardstop>" heroportrait="Eddie" enemyportrait="" animportrait="Eddie"/>
 	<speech text="Eddie,<softstop> I'm sorry,<pause> but they're g...<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
 	<speech text="MISTAL!  WHEN I FIND YOU, I'LL CRUSH YOUR LITTLE NECK!<hardstop>" heroportrait="Eddie" enemyportrait="" animportrait=""/>
-	<move name="SharnaActor" x="312" y="384" speed="1" facing="2" movehor="false" movediag="false" halting="false" pathfinding="false"/>
-	<move name="HuunActor" x="312" y="336" speed="1" facing="2" movehor="false" movediag="false" halting="false" pathfinding="false"/>
-	<move name="NoahActor" x="312" y="360" speed="1" facing="2" movehor="false" movediag="false" halting="false" pathfinding="false"/>
+	<move name="SharnaActor" x="312" y="384" speed="1" movehor="false" movediag="false" halting="false" pathfinding="false" facing="2"/>
+	<move name="HuunActor" x="312" y="336" speed="1" movehor="false" movediag="false" halting="false" pathfinding="false" facing="2"/>
+	<move name="NoahActor" x="312" y="360" speed="1" movehor="false" movediag="false" halting="false" pathfinding="false" facing="2"/>
 	<wait time="1000"/>
-	<move name="SharnaActor" x="264" y="384" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false facing="-1"/>
+	<move name="SharnaActor" x="264" y="384" speed="2.4" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
 	<speech text="I'm so sorry,<pause> we couldent make it in time.<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
 	<facing name="HuunActor" dir="1"/>
 	<speech text="Eddie would be an asset to us, Noah.<hardstop>" heroportrait="Huun" enemyportrait="" animportrait=""/>
-	<move name="NoahActor" x="240" y="360" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false facing="-1"/>
+	<move name="NoahActor" x="240" y="360" speed="2.4" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
 	<speech text="Would you like to join us Eddie? <linebreak> We will get to the bottom of this!<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<quiver name="EddotActor"/>
 	<wait time="1000"/>
@@ -66,12 +66,12 @@
 	<fadeout time="2000" halting="true"/>
 	<addactor x="192" y="216" name="CraigActor" anim="Craig" startanim="UnLeft" visible="true" init="false" associatedhero=""/>
 	<addactor x="192" y="240" name="OliviaActor" anim="Olivia" startanim="UnLeft" visible="true" init="false" associatedhero=""/>
-	<move name="NoahActor" x="456" y="384" speed="10" facing="0" movehor="false" movediag="true" halting="false" pathfinding="false"/>
-	<move name="SharnaActor" x="480" y="384" speed="10" facing="0" movehor="false" movediag="true" halting="false" pathfinding="false"/>
-	<move name="HuunActor" x="408" y="360" speed="10" facing="3" movehor="false" movediag="true" halting="false" pathfinding="false"/>
-	<move name="EddotActor" x="456" y="264" speed="10" facing="1" movehor="false" movediag="true" halting="false" pathfinding="false"/>
-	<move name="CraigActor" x="504" y="288" speed="10" facing="2" movehor="false" movediag="true" halting="false" pathfinding="false"/>
-	<move name="OliviaActor" x="504" y="312" speed="10" facing="2" movehor="false" movediag="true" halting="false" pathfinding="false"/>
+	<move name="NoahActor" x="456" y="384" speed="10" movehor="false" movediag="true" halting="false" pathfinding="false" facing="0"/>
+	<move name="SharnaActor" x="480" y="384" speed="10" movehor="false" movediag="true" halting="false" pathfinding="false" facing="0"/>
+	<move name="HuunActor" x="408" y="360" speed="10" movehor="false" movediag="true" halting="false" pathfinding="false" facing="3"/>
+	<move name="EddotActor" x="456" y="264" speed="10" movehor="false" movediag="true" halting="false" pathfinding="false" facing="1"/>
+	<move name="CraigActor" x="504" y="288" speed="10" movehor="false" movediag="true" halting="false" pathfinding="false" facing="2"/>
+	<move name="OliviaActor" x="504" y="312" speed="10" movehor="false" movediag="true" halting="false" pathfinding="false" facing="2"/>
 	<wait time="1000"/>
 	<cameramovetoactor actor="NoahActor" time="0"/>
 	<fadein time="1000" halting="true" init="false"/>
@@ -83,7 +83,7 @@
 	<speech text="Yes, I'll go into the kingdom and see what I can find.<hardstop>" heroportrait="Eddie" enemyportrait="" animportrait="Eddie"/>
 	<speech text="I don't know if that's such a good idea.<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait="Olivia"/>
 	<speech text="I don't know if stopping him is such a good idea.  Watch yer head out there, Eddie.<hardstop>" heroportrait="Craig" enemyportrait="" animportrait="Craig"/>
-	<move name="EddotActor" x="456" y="360" speed="0.5" movehor="false" movediag="false" halting=false pathfinding=false facing="-1"/>
+	<move name="EddotActor" x="456" y="360" speed="0.5" movehor="false" movediag="false" halting="false" pathfinding="false" facing="-1"/>
 	<fadeout time="1000" halting="true"/>
 	<loadmap mapdata="eriumwoods" enter="Post Battle 3 Entrance"/>
 </cinematic>
@@ -155,7 +155,7 @@
 </object>
 <object name="Erium Mage" x="0" y="0">
 <properties>
-<property name="enemy" value="ai=wizard vision=0 aiapproach=wait enemyid=Erium Mage unit=1 music="/>
+<property name="enemy" value="ai=wizard vision=0 aiapproach=wait enemyid=Erium Mage unit=1"/>
 </properties>
 <polyline points="408,192 432,192 432,216 408,216"/>
 </object>

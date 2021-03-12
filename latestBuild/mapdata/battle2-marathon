@@ -17,27 +17,23 @@
 	<changeaimove id="17" x="30" y="13" priority="0"/>
 	<changeaimove id="16" x="30" y="11" priority="0"/>
 </trigger>
-<trigger id="3" description="Noah Exit" require="" exclude="" nonretrig="false" retrigonenter="false" triggeronce="true" triggerimmediately="false">
+<trigger id="3" description="Noah Exit" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="true" triggerimmediately="false">
 	<showcin cinid="1" exittrigid="-1"/>
 </trigger>
-<trigger id="4" description="Noah First" require="" exclude="" nonretrig="false" retrigonenter="false" triggeronce="true" triggerimmediately="false">
+<trigger id="4" description="Noah First" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="true" triggerimmediately="false">
 	<completequest questid="Battle2"/>
 	<loadmap mapdata="marathon" enter="enter" transdir=""/>
 </trigger>
-<trigger id="5" description="Craig First" require="" exclude="" nonretrig="false" retrigonenter="false" triggeronce="true" triggerimmediately="false">
+<trigger id="5" description="Craig First" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="true" triggerimmediately="false">
 	<completequest questid="Battle2"/>
 	<loadmap mapdata="marathon" enter="enter" transdir=""/>
 </trigger>
-<trigger id="6" description="Craig And Olivia scene" require="" exclude="" nonretrig="false" retrigonenter="false" triggeronce="true" triggerimmediately="false">
+<trigger id="6" description="Craig And Olivia scene" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="true" triggerimmediately="false">
 	<showcin cinid="0" exittrigid="-1"/>
 </trigger>
-<trigger id="7" description="Fail Result" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="true" triggerimmediately="false">
-	<reviveheroes hero="Craig"/>
+<trigger id="7" description="Fail Result" require="" exclude="" nonretrig="false" retrigonenter="false" triggeronce="true" triggerimmediately="false">
 	<reviveheroes hero="Noah"/>
-	<reviveheroes hero="Sharna"/>
-	<reviveheroes hero="Huun"/>
-	<reviveheroes hero="Olivia"/>
-	<loadmap mapdata="eriumjail" enter="JailBattleFail" transdir=""/>
+	<loadmap mapdata="marathon" enter="enter" transdir=""/>
 </trigger>
 <cinematic id="0" description="Craig Olivia Exit" camerax="0" cameray="0">
 	<assactor name="Craig" hero="Craig" enemyid="0" npcid="0" staticid=""/>
@@ -45,18 +41,18 @@
 	<cameramovetoactor actor="Craig" time="1000"/>
 	<wait time="1000"/>
 	<camerafollow name="Craig"/>
-	<move name="Craig" x="720" y="252" speed="2.4" movediag=false movehorz=false halting=true pathfinding=true facing="-1"/>
-	<move name="Olivia" x="720" y="300" speed="2.4" movediag=false movehorz=false halting=true pathfinding=true facing="-1"/>
+	<move name="Craig" x="720" y="252" speed="2.4" movehor="false" movediag="false" halting="true" pathfinding="true" facing="-1"/>
+	<move name="Olivia" x="720" y="300" speed="2.4" movehor="false" movediag="false" halting="true" pathfinding="true" facing="-1"/>
 	<facing name="Craig" dir="2"/>
 	<wait time="100"/>
 	<speech text="I think we're done here, meet us upstairs when you've finished up.<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
-	<move name="Craig" x="744" y="276" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false facing="-1"/>
+	<move name="Craig" x="744" y="276" speed="2.4" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
 	<removeactor name="Craig"/>
-	<move name="Olivia" x="720" y="276" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false facing="-1"/>
+	<move name="Olivia" x="720" y="276" speed="2.4" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
 	<facing name="Olivia" dir="2"/>
 	<wait time="100"/>
 	<speech text="Be careful!<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait=""/>
-	<move name="Olivia" x="744" y="276" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false facing="-1"/>
+	<move name="Olivia" x="744" y="276" speed="2.4" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
 	<removeactor name="Olivia"/>
 </cinematic>
 <cinematic id="1" description="Noah Exit" camerax="504" cameray="0">
@@ -66,18 +62,18 @@
 	<cameramovetoactor actor="Noah" time="1000"/>
 	<wait time="10"/>
 	<camerafollow name="Noah"/>
-	<move name="Huun" x="696" y="36" speed="3" movediag=false movehorz=false halting=false pathfinding=true facing="-1"/>
-	<move name="Sharna" x="720" y="84" speed="3" movediag=false movehorz=false halting=false pathfinding=true facing="-1"/>
-	<move name="Noah" x="672" y="60" speed="2.4" movediag=false movehorz=false halting=true pathfinding=true facing="-1"/>
+	<move name="Huun" x="696" y="36" speed="3" movehor="false" movediag="false" halting="false" pathfinding="true" facing="-1"/>
+	<move name="Sharna" x="720" y="84" speed="3" movehor="false" movediag="false" halting="false" pathfinding="true" facing="-1"/>
+	<move name="Noah" x="672" y="60" speed="2.4" movehor="false" movediag="false" halting="true" pathfinding="true" facing="-1"/>
 	<facing name="Noah" dir="1"/>
 	<wait time="1500"/>
 	<speech text="I can't belive we made it!<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<speech text="Don't die on us!<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
-	<move name="Noah" x="744" y="60" speed="2.4" movediag=false movehorz=false halting=true pathfinding=true facing="-1"/>
+	<move name="Noah" x="744" y="60" speed="2.4" movehor="false" movediag="false" halting="true" pathfinding="true" facing="-1"/>
 	<removeactor name="Noah"/>
-	<move name="Sharna" x="744" y="60" speed="2" movediag=false movehorz=false halting=true pathfinding=true facing="-1"/>
+	<move name="Sharna" x="744" y="60" speed="2" movehor="false" movediag="false" halting="true" pathfinding="true" facing="-1"/>
 	<removeactor name="Sharna"/>
-	<move name="Huun" x="744" y="60" speed="2" movediag=false movehorz=false halting=true pathfinding=true facing="-1"/>
+	<move name="Huun" x="744" y="60" speed="2" movehor="false" movediag="false" halting="true" pathfinding="true" facing="-1"/>
 	<removeactor name="Huun"/>
 </cinematic>
 <condition id="0" description="EnterBottomMid" triggerid="1,">
@@ -180,7 +176,7 @@
 </properties>
 </object>
 </objectgroup>
-<objectgroup id="14" name="Battle" visible="0">
+<objectgroup name="Battle" visible="1">
 <object id="23" name="Soldier" type="NPC" x="240" y="72" width="24" height="24">
 <properties>
 <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Erium Soldier unit=1"/>
@@ -314,7 +310,7 @@
 </properties>
 </object>
 </objectgroup>
-<objectgroup id="10" name="Terrain">
+<objectgroup name="Terrain" visible="1">
 <object id="1" name="Rug" x="480" y="264">
 <properties>
 <property name="terrain" value="type=GRASS"/>
