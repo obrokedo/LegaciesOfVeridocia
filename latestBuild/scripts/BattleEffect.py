@@ -28,6 +28,7 @@ from Effects.Petrification import Petrification
 from Effects.Sleep import Sleep
 from Effects.Encumbered import Encumbered
 from Effects.Blind import Blind
+from Effects.Momentum import Momentum
 
 class BattleEffect(BattleEffectFactory):
     def getBattleEffectList(self):
@@ -36,7 +37,7 @@ class BattleEffect(BattleEffectFactory):
                              "Dispel", "Blind", "Addled", "Detox", "Heal", 
                              "DefenceUp", "BodyUp", "ResistanceUp", "MindUp",
                              "AttackUp", "StrikeUp", "InstantDeath", "Petrification",
-                             "Encumbered"], String)
+                             "Encumbered", "Momentum"], String)
     # Intialize the BattleEffects, generally this includes
     # setting duration
     def createEffect(self, id, level):
@@ -90,6 +91,8 @@ class BattleEffect(BattleEffectFactory):
             battleEffect = Encumbered()
         elif "Blind" == id:
             battleEffect = Blind()
+        elif "Momentum" == id:
+            battleEffect = Momentum()
         else:
             initChild = False
             battleEffect = BattleEffect()

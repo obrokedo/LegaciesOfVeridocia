@@ -150,3 +150,50 @@ class MenuConfiguration(MenuConfiguration):
         return  heroName + " why don't you take a break for a bit?<hardstop>"
     def getPartyMemberAdded(self, heroName):
          return heroName + " will now follow us into battle!<hardstop>"
+     
+    # Lower values makes the text scroll quicker
+    def getIntroScrollSpeed(self):
+        return 100
+    # Gets the time that the screen will automatically transition to the menu 
+    def getIntroExitTime(self):
+        return 1380
+    # Gets the amount of time that the text will wait before appearing on the screen
+    def getIntroTextEnterDelayTime(self):
+        return 80
+    def getIntroTextMaxWidth(self):
+        return 720
+    def getIntroAnimationFileName(self):
+        return "Intro"
+    def getIntroText(self):
+        text = '''
+Legends tell of a war in antiquity.
+The tides of light and darkness clashed for eons.
+The forces of light claimed victory, but the cost was great -
+The King among the Gods of light was slain;
+his divinity coursed from his lifeless body.
+Veridocia was ravaged by its holy fire.
+His Brothers and Sisters used his light to vanquish the forces of darkness.
+But the light continued to burn. Veridocia continued to burn.
+And so, they contained his life force within five holy seals,
+and scattered them far and wide across the Veridocian continent.
+The world was safe.
+With the war's end and the searing light restrained,
+The Pantheon ascended to the heavens in answer to a new call to arms
+from beyond the world; a space beyond mortal reckoning.
+The gods departed one by one.
+But as the last was about to leave, The Opportunist stepped out from the shadows.
+He sought to claim the God king's divinity for himself and tried to break the seals open.
+The remaining God of Light overpowered The Opportunist, who retreated into hiding.
+Weary from the fighting, the last God of light attempted to repair the damage,
+using a divine sword as a key.
+The God of Light entrusted guardianship of the key and the seals
+to a noble family, who had once fought alongside The Pantheon
+and stood fast against the tides of darkness.
+Though his power waned,
+he remained to ensure that humanity would prosper,
+and once he was satisfied of this, departed this world to follow his brethren to war once again.
+Peace has reigned for generations, and The Pantheon has been all but forgotten.
+But tales tell of a new darkness looming, just beyond the horizon...
+        '''
+        return text 
+            

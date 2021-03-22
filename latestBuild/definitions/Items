@@ -188,6 +188,7 @@
 </item>
 <item id="58" name="Momentum Staff" description="" cost="900" isdeal="false" imageindexx="8" imageindexy="18" droppable="false">
 	<equippable attack="29" defense="0" speed="0" type="0" style="3" range="1" weaponimage="STF-08-MomentumStaff" weaponanim="" incmindam="0" inccrit="0" inccounter="0" incdouble="0" incevade="0" maxhpreg="0" minhpreg="0" maxmpreg="0" minmpreg="0" effect="" efflvl="0" effchc="0" dmgaff="NORMAL" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" ohko="0" ohkooc="0" promoteonly="false"/>
+	<usespell spellid="MOMENTUM" level="1" singleuse="false" damageitem="false" useoutsidebattle="false"/>
 </item>
 <item id="59" name="Crystal Staff" description="" cost="900" isdeal="false" imageindexx="9" imageindexy="18" droppable="false">
 	<equippable attack="34" defense="0" speed="0" type="0" style="3" range="1" weaponimage="STF-09-CrystalStaff" weaponanim="" incmindam="0" inccrit="0" inccounter="0" incdouble="0" incevade="0" maxhpreg="0" minhpreg="0" maxmpreg="0" minmpreg="0" effect="" efflvl="0" effchc="0" dmgaff="NORMAL" fireAffin="0" elecAffin="0" coldAffin="0" darkAffin="0" waterAffin="0" earthAffin="0" windAffin="0" lightAffin="0" ohko="0" ohkooc="0" promoteonly="false"/>

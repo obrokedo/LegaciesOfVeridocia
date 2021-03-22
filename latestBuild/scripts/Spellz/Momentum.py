@@ -61,20 +61,20 @@ class Momentum(SpellDefinition):
         # No effects = []
         # 1 effect = ["Effect"]
         # Many effects = ["Effect1", "Effect2"...]
-        self.setEffects(jarray.array(["MovementUp", "SpeedUp"], String), 1) # Level 1 battle effects
-        self.setEffects(jarray.array(["MovementUp", "SpeedUp"], String), 2) # Level 2 battle effects
-        self.setEffects(jarray.array(["MovementUp", "SpeedUp"], String), 3) # Level 3 battle effects
-        self.setEffects(jarray.array(["MovementUp", "SpeedUp"], String), 4) # Level 4 battle effects
+        self.setEffects(jarray.array(["Momentum"], String), 1) # Level 1 battle effects
+        self.setEffects(jarray.array(["Momentum"], String), 2) # Level 2 battle effects
+        self.setEffects(jarray.array(["Momentum"], String), 3) # Level 3 battle effects
+        self.setEffects(jarray.array(["Momentum"], String), 4) # Level 4 battle effects
         
         # Set the effect level for each of the effects specified
         # For effects that don't have levels a value of 1 should be specified
         # No effects = []
         # 1 effect = [1]
         # Many effects = [1, 2...]
-        self.setEffectLevel(jarray.array([1,1], 'i'), 1) # Level 1 battle effects
-        self.setEffectLevel(jarray.array([2,2], 'i'), 2) # Level 2 battle effects
-        self.setEffectLevel(jarray.array([3,3], 'i'), 3) # Level 3 battle effects
-        self.setEffectLevel(jarray.array([4,4], 'i'), 4) # Level 4 battle effects
+        self.setEffectLevel(jarray.array([1], 'i'), 1) # Level 1 battle effects
+        self.setEffectLevel(jarray.array([2], 'i'), 2) # Level 2 battle effects
+        self.setEffectLevel(jarray.array([3], 'i'), 3) # Level 3 battle effects
+        self.setEffectLevel(jarray.array([4], 'i'), 4) # Level 4 battle effects
     
     # Affin methods are
     #----------------------
@@ -90,7 +90,7 @@ class Momentum(SpellDefinition):
         return 0
     
     def getBattleText(self, target, damage, mpDamage, attackerHPDamage, attackerMPDamage):
-        return "Momentum spell was cast"
+        return target.getName() + "'s movements become a blur!"
         
     def getExpGained(self, level, attacker, target):
         # Call the common method

@@ -1,0 +1,46 @@
+<animations spriteSheet="Intro.sprites" ver="1.2">
+<anim name="1" loops="0">
+<cell index="0" delay="5000">
+<spr name="/Frame0" x="0" y="0" z="0"/>
+</cell>
+<cell index="1" delay="250">
+<spr name="/Frame1" x="0" y="0" z="0"/>
+</cell>
+<cell index="2" delay="250">
+<spr name="/Frame2" x="0" y="0" z="0"/>
+</cell>
+<cell index="3" delay="250">
+<spr name="/Frame3" x="0" y="0" z="0"/>
+</cell>
+<cell index="4" delay="250">
+<spr name="/Frame4" x="0" y="0" z="0"/>
+</cell>
+<cell index="5" delay="250">
+<spr name="/Frame5" x="0" y="0" z="0"/>
+</cell>
+<cell index="6" delay="250">
+<spr name="/Frame6" x="0" y="0" z="0"/>
+</cell>
+<cell index="7" delay="250">
+<spr name="/Frame7" x="0" y="0" z="0"/>
+</cell>
+<cell index="8" delay="250">
+<spr name="/Frame8" x="0" y="0" z="0"/>
+</cell>
+<cell index="9" delay="250">
+<spr name="/Frame9" x="0" y="0" z="0"/>
+</cell>
+<cell index="10" delay="250">
+<spr name="/Frame10" x="0" y="0" z="0"/>
+</cell>
+<cell index="11" delay="250">
+<spr name="/Frame11" x="0" y="0" z="0"/>
+</cell>
+<cell index="12" delay="250">
+<spr name="/Frame12" x="0" y="0" z="0"/>
+</cell>
+<cell index="13" delay="5000">
+<spr name="/Frame13" x="0" y="0" z="0"/>
+</cell>
+</anim>
+</animations>
