@@ -166,6 +166,8 @@ class MenuConfiguration(MenuConfiguration):
         return 720
     def getIntroAnimationFileName(self):
         return "Intro"
+    
+    # For a new paragraph place <linebreak> on its own line
     def getIntroText(self):
         text = '''
 Legends tell of a war in antiquity.
