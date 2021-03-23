@@ -48,7 +48,7 @@
 	<fadeout time="3000" halting="true"/>
 	<speech text="Such short-sightedness. There are many uses for a reckless pawn such as yourself.  Many indeed...<softstop><nextcin>" heroportrait="" enemyportrait="" animportrait="Disguise1"/>
 	<wait time="250"/>
-	<showintro/>
+	<loadcin mapdata="eriumcastlenight" cinid="5"/>
 </cinematic>
 <objectgroup name="Trigger Region" visible="1"/>
 <objectgroup name="Battle" visible="1"/>

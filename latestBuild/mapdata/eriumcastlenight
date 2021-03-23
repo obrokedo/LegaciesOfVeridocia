@@ -629,7 +629,11 @@
 	<wait time="250"/>
 	<move name="Oooz1" x="744" y="336" speed="2.4" movehor="false" movediag="false" halting="false" pathfinding="false" facing="-1"/>
 	<move name="Oooz2" x="768" y="336" speed="2.4" movehor="false" movediag="false" halting="false" pathfinding="false" facing="-1"/>
-	<fadeout time="1000" halting="true"/>
+	<fadeout time="2000" halting="true"/>
+	<showintro/>
+</cinematic>
+<cinematic id="6" description="" camerax="0" cameray="0">
+	<camerafollow name=""/>
 </cinematic>
 <condition id="0" description="MapLoad" triggerid="0,">
 	<maploaded/>
