@@ -151,6 +151,8 @@ class MenuConfiguration(MenuConfiguration):
     def getPartyMemberAdded(self, heroName):
          return heroName + " will now follow us into battle!<hardstop>"
      
+    def getIntroMusicName(self):
+        return "lovtheme"
     # Lower values makes the text scroll quicker
     def getIntroScrollSpeed(self):
         return 100

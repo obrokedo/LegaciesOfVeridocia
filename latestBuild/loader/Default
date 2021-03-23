@@ -12,6 +12,8 @@ spritedir,sprite
 imagedir,image/weapons
 // Load all ailments
 imagedir,image/ailments
+// Load main menu images
+imagedir,image/mainmenu
 // Load item images
 ss,items,image/Items.png,16,24
 // Load Battle Resources
