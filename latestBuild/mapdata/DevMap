@@ -16,12 +16,21 @@
 <trigger id="5" description="quest4" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<completequest questid="Battle4"/>
 </trigger>
+<trigger id="6" description="Intro Vid" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<showcin cinid="0" exittrigid="-1"/>
+</trigger>
 <text id="0" description="asdasd">
-	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="asdasdasd<hardstop>"/>
+	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="asdasdasd<hardstop>"/>
 </text>
 <text id="1" description="fart">
-	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="FART FART<hardstop>"/>
+	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="FART FART<hardstop>"/>
 </text>
+<text id="2" description="Intro Vid?">
+	<yesno require="," exclude="," triggeryes="6," triggerno="-1," heroportrait="" enemyportrait="" animportrait="" message="Do you want me to tell you a story?"/>
+</text>
+<cinematic id="0" description="Play Intro Vid" camerax="0" cameray="0">
+	<showintro/>
+</cinematic>
 <condition id="0" description="search" triggerid="1,2,3,5,">
 	<enterloc location="searchme" immediate="false"/>
 </condition>
@@ -29,4 +38,174 @@
 	<questcomp quest="Battle4"/>
 	<maploaded/>
 </condition>
+<objectgroup name="Trigger Region" visible="1">
+<object id="27" name="battlestart" x="0" y="0">
+<properties>
+<property name="start" value="exit=battlestart"/>
+</properties>
+<polyline points="72,312 288,312 288,360 72,360 72,312"/>
+</object>
+<object id="28" name="searchme" x="0" y="0">
+<properties>
+<property name="" value=""/>
+</properties>
+<polyline points="336,336 360,336 360,360 336,360 336,336"/>
+</object>
+</objectgroup>
+<objectgroup id="4" name="Battle">
+<object id="1" name="fighter" x="0" y="0">
+<properties>
+<property name="enemy" value="ai=fighter vision=0 aiapproach=wait enemyid=Darkling Ooze unit=0"/>
+</properties>
+<polyline points="0,0 0,24 24,24 24,0 0,0"/>
+</object>
+<object id="2" name="healer" x="0" y="0">
+<properties>
+<property name="enemy" value="ai=cleric vision=0 aiapproach=wait enemyid=Reyval Medic unit=0"/>
+</properties>
+<polyline points="144,0 144,24 168,24 168,0 144,0"/>
+</object>
+<object id="3" name="caster" x="0" y="0">
+<properties>
+<property name="enemy" value="ai=wizard vision=0 aiapproach=wait enemyid=Erium Mage unit=0"/>
+</properties>
+<polyline points="312,0 312,24 336,24 336,0 312,0"/>
+</object>
+<object id="4" name="fighter" x="24" y="0">
+<properties>
+<property name="enemy" value="ai=fighter vision=0 aiapproach=wait enemyid=Darkling Ooze unit=0"/>
+</properties>
+<polyline points="0,0 0,24 24,24 24,0 0,0"/>
+</object>
+<object id="5" name="fighter" x="0" y="24">
+<properties>
+<property name="enemy" value="ai=fighter vision=0 aiapproach=wait enemyid=Darkling Ooze unit=0"/>
+</properties>
+<polyline points="0,0 0,24 24,24 24,0 0,0"/>
+</object>
+<object id="6" name="fighter" x="24" y="24">
+<properties>
+<property name="enemy" value="ai=fighter vision=0 aiapproach=wait enemyid=Darkling Ooze unit=0"/>
+</properties>
+<polyline points="0,0 0,24 24,24 24,0 0,0"/>
+</object>
+<object id="7" name="fighter" x="48" y="0">
+<properties>
+<property name="enemy" value="ai=fighter vision=0 aiapproach=wait enemyid=Darkling Ooze unit=0"/>
+</properties>
+<polyline points="0,0 0,24 24,24 24,0 0,0"/>
+</object>
+<object id="8" name="fighter" x="48" y="24">
+<properties>
+<property name="enemy" value="ai=fighter vision=0 aiapproach=wait enemyid=Darkling Ooze unit=0"/>
+</properties>
+<polyline points="0,0 0,24 24,24 24,0 0,0"/>
+</object>
+<object id="9" name="healer" x="24" y="0">
+<properties>
+<property name="enemy" value="ai=cleric vision=0 aiapproach=wait enemyid=Reyval Medic unit=0"/>
+</properties>
+<polyline points="144,0 144,24 168,24 168,0 144,0"/>
+</object>
+<object id="10" name="healer" x="48" y="0">
+<properties>
+<property name="enemy" value="ai=cleric vision=0 aiapproach=wait enemyid=Reyval Medic unit=0"/>
+</properties>
+<polyline points="144,0 144,24 168,24 168,0 144,0"/>
+</object>
+<object id="12" name="caster" x="-24" y="0">
+<properties>
+<property name="enemy" value="ai=wizard vision=0 aiapproach=wait enemyid=Erium Mage unit=0"/>
+</properties>
+<polyline points="312,0 312,24 336,24 336,0 312,0"/>
+</object>
+<object id="14" name="caster" x="24" y="0">
+<properties>
+<property name="enemy" value="ai=wizard vision=0 aiapproach=wait enemyid=Erium Mage unit=0"/>
+</properties>
+<polyline points="312,0 312,24 336,24 336,0 312,0"/>
+</object>
+<object id="15" name="healer" x="0" y="24">
+<properties>
+<property name="enemy" value="ai=cleric vision=0 aiapproach=wait enemyid=Reyval Medic unit=0"/>
+</properties>
+<polyline points="144,0 144,24 168,24 168,0 144,0"/>
+</object>
+<object id="16" name="healer" x="24" y="24">
+<properties>
+<property name="enemy" value="ai=cleric vision=0 aiapproach=wait enemyid=Reyval Medic unit=0"/>
+</properties>
+<polyline points="144,0 144,24 168,24 168,0 144,0"/>
+</object>
+<object id="17" name="healer" x="48" y="24">
+<properties>
+<property name="enemy" value="ai=cleric vision=0 aiapproach=wait enemyid=Reyval Medic unit=0"/>
+</properties>
+<polyline points="144,0 144,24 168,24 168,0 144,0"/>
+</object>
+<object id="18" name="caster" x="0" y="24">
+<properties>
+<property name="enemy" value="ai=wizard vision=0 aiapproach=wait enemyid=Erium Mage unit=0"/>
+</properties>
+<polyline points="312,0 312,24 336,24 336,0 312,0"/>
+</object>
+<object id="19" name="caster" x="-24" y="24">
+<properties>
+<property name="enemy" value="ai=wizard vision=0 aiapproach=wait enemyid=Erium Mage unit=0"/>
+</properties>
+<polyline points="312,0 312,24 336,24 336,0 312,0"/>
+</object>
+<object id="20" name="caster" x="24" y="24">
+<properties>
+<property name="enemy" value="ai=wizard vision=0 aiapproach=wait enemyid=Erium Mage unit=0"/>
+</properties>
+<polyline points="312,0 312,24 336,24 336,0 312,0"/>
+</object>
+</objectgroup>
+<objectgroup id="2" name="NPCs-Objects">
+<object name="Intro Video" x="0" y="0">
+<properties>
+<property name="npc" value="noturn=false facing=1 name=Intro Video throughwall=false noanimate=false animation=child1 textid=2 wander=0"/>
+</properties>
+<polyline points="72,264 96,264 96,288 72,288 72,264"/>
+</object>
+</objectgroup>
+<objectgroup name="Terrain" visible="1">
+<object id="21" name="forest" x="0" y="0">
+<properties>
+<property name="terrain" value="type=FOREST"/>
+</properties>
+<polyline points="24,168 96,168 96,240 24,240 24,168"/>
+</object>
+<object id="22" name="forest2" x="0" y="0">
+<properties>
+<property name="terrain" value="type=FOREST"/>
+</properties>
+<polyline points="120,168 192,168 192,240 168,240 168,192 144,192 144,216 168,216 168,240 120,240 120,168"/>
+</object>
+<object id="23" name="hills" x="0" y="0">
+<properties>
+<property name="terrain" value="type=HILLS"/>
+</properties>
+<polyline points="240,168 288,168 288,240 240,240 240,168"/>
+</object>
+<object id="24" name="hills2" x="0" y="0">
+<properties>
+<property name="terrain" value="type=HILLS"/>
+</properties>
+<polyline points="144,192 168,192 168,216 144,216 144,192"/>
+</object>
+<object id="25" name="water" x="0" y="0">
+<properties>
+<property name="terrain" value="type=WATER"/>
+</properties>
+<polyline points="312,168 360,168 360,216 312,216 312,168"/>
+</object>
+<object id="26" name="grass" x="0" y="0">
+<properties>
+<property name="terrain" value="type=GRASS"/>
+</properties>
+<polyline points="0,0 360,0 360,168 312,168 312,216 360,216 360,360 288,360 288,168 240,168 240,240 288,240 288,360 192,360 192,168 120,168 120,240 192,240 192,360 96,360 96,168 24,168 24,240 96,240 96,360 0,360 0,0"/>
+</object>
+</objectgroup>
 </area>

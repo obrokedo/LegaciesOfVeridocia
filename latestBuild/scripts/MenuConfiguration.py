@@ -1,3 +1,4 @@
+# -*- coding: cp1252 -*-
 from tactical.engine.config import MenuConfiguration
 
 class MenuConfiguration(MenuConfiguration):
@@ -155,10 +156,10 @@ class MenuConfiguration(MenuConfiguration):
         return "lovtheme"
     # Lower values makes the text scroll quicker
     def getIntroScrollSpeed(self):
-        return 100
+        return 90
     # Gets the time that the screen will automatically transition to the menu 
     def getIntroExitTime(self):
-        return 1380
+        return 1600
     # Gets the amount of time that the text will wait before appearing on the screen
     def getIntroTextEnterDelayTime(self):
         return 80
@@ -170,33 +171,30 @@ class MenuConfiguration(MenuConfiguration):
     # For a new paragraph place <linebreak> on its own line
     def getIntroText(self):
         text = '''
-Legends tell of a war in antiquity.
-The tides of light and darkness clashed for eons.
-The forces of light claimed victory, but the cost was great -
-The King among the Gods of light was slain;
-his divinity coursed from his lifeless body.
-Veridocia was ravaged by its holy fire.
-His Brothers and Sisters used his light to vanquish the forces of darkness.
-But the light continued to burn. Veridocia continued to burn.
-And so, they contained his life force within five holy seals,
-and scattered them far and wide across the Veridocian continent.
-The world was safe.
-With the war's end and the searing light restrained,
-The Pantheon ascended to the heavens in answer to a new call to arms
-from beyond the world; a space beyond mortal reckoning.
-The gods departed one by one.
-But as the last was about to leave, The Opportunist stepped out from the shadows.
-He sought to claim the God king's divinity for himself and tried to break the seals open.
-The remaining God of Light overpowered The Opportunist, who retreated into hiding.
-Weary from the fighting, the last God of light attempted to repair the damage,
-using a divine sword as a key.
-The God of Light entrusted guardianship of the key and the seals
-to a noble family, who had once fought alongside The Pantheon
-and stood fast against the tides of darkness.
-Though his power waned,
-he remained to ensure that humanity would prosper,
-and once he was satisfied of this, departed this world to follow his brethren to war once again.
+Long ago, the powers of light and darkness fought for dominance. The world suffered. After eons, the forces of light claimed victory, but the cost was great.
+<linebreak>
+The king of the Gods of Light was slain; his divinity coursed from his lifeless body, his blood burning the land in holy fire.
+<linebreak>
+His Brothers and Sisters channelled his light to vanquish the forces of darkness, but his blood continued to burn.
+<linebreak>
+And so, they contained his life force within five holy seals, and scattered them far and wide across the Veridocian continent.
+<linebreak>
+The world was safe once more.
+<linebreak>
+With the war over, and Veridocia spared, the gods left the world to defend a distant world beyond the stars, departing one by one.
+<linebreak>
+But as the last God was about to leave, The Opportunist stepped out from the shadows.
+<linebreak>
+He sought to claim the God king's divinity for himself and tried to break the seals.
+<linebreak>
+The God of Light defeated The Opportunist, who retreated into hiding. Weary from the fighting, the last God of Light forged a divine key, and used it to mend the damaged seals.
+<linebreak>
+The God entrusted guardianship of the key and the seals to a noble family, who had defended Veridocia with The Pantheon against the tides of darkness.
+<linebreak>
+Once the God was satisfied that the world was in safe hands, he departed this world to join his kin among the stars.
+<linebreak>
 Peace has reigned for generations, and The Pantheon has been all but forgotten.
+<linebreak>
 But tales tell of a new darkness looming, just beyond the horizon...
         '''
         return text 
