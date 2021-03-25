@@ -26,28 +26,28 @@
 	<showtext textid="7"/>
 </trigger>
 <text id="0" description="Pre Battle3 Scene Placeholder">
-	<string require="," exclude="," trigger="1" heroportrait="" enemyportrait="" animportrait="" message="Cinematics Placeholder<pause> Battle 3 Commencing.<hardstop>"/>
+	<string require="," exclude="," trigger="1," heroportrait="" enemyportrait="" animportrait="" message="Cinematics Placeholder<pause> Battle 3 Commencing.<hardstop>"/>
 </text>
 <text id="1" description="craigYesNo">
-	<yesno require="," exclude="," triggeryes="3" triggerno="2" heroportrait="Craig" enemyportrait="" animportrait="Craig" message="Don't get too far ahead of yerself.  Sit down and have a drink.<hardstop>"/>
+	<yesno require="," exclude="," triggeryes="3," triggerno="2," heroportrait="Craig" enemyportrait="" animportrait="Craig" message="Don't get too far ahead of yerself.  Sit down and have a drink.<hardstop>"/>
 </text>
 <text id="2" description="CraigYesOption">
-	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="Good, we'll need all the rest we can get.<hardstop>"/>
+	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="Good, we'll need all the rest we can get.<hardstop>"/>
 </text>
 <text id="3" description="HunnSpokenTo">
-	<string require="," exclude="," trigger="-1" heroportrait="Huun" enemyportrait="" animportrait="Huun" message="I could use some water.<hardstop>"/>
+	<string require="," exclude="," trigger="-1," heroportrait="Huun" enemyportrait="" animportrait="Huun" message="I could use some water.<hardstop>"/>
 </text>
 <text id="4" description="SharnaSpokenTo">
-	<string require="," exclude="," trigger="-1" heroportrait="Sharna" enemyportrait="" animportrait="Sharna" message="I never knew there was a cabin hidden away in the woods.<hardstop>"/>
+	<string require="," exclude="," trigger="-1," heroportrait="Sharna" enemyportrait="" animportrait="Sharna" message="I never knew there was a cabin hidden away in the woods.<hardstop>"/>
 </text>
 <text id="5" description="OliviaSpokenTo">
-	<string require="," exclude="," trigger="-1" heroportrait="Olivia" enemyportrait="" animportrait="Olivia" message="What happened to Eddie is awful.  I understand why he's upset.<hardstop>"/>
+	<string require="," exclude="," trigger="-1," heroportrait="Olivia" enemyportrait="" animportrait="Olivia" message="What happened to Eddie is awful.  I understand why he's upset.<hardstop>"/>
 </text>
 <text id="6" description="CraigSpokenTo">
-	<string require="," exclude="," trigger="-1" heroportrait="Craig" enemyportrait="" animportrait="Craig" message="Nice place, eh?<pause> Eddie picked a great spot!<hardstop>"/>
+	<string require="," exclude="," trigger="-1," heroportrait="Craig" enemyportrait="" animportrait="Craig" message="Nice place, eh?<pause> Eddie picked a great spot!<hardstop>"/>
 </text>
 <text id="7" description="shownoitem">
-	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="It was dark inside...<hardstop>"/>
+	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="It was dark inside...<hardstop>"/>
 </text>
 <cinematic id="0" description="PreBattleThree" camerax="0" cameray="408">
 	<addactor x="456" y="456" name="Craig" anim="Craig" startanim="UnUp" visible="true" init="true" associatedhero=""/>
@@ -60,45 +60,52 @@
 	<addactor x="432" y="528" name="Huun" anim="Huun" startanim="UnUp" visible="true" init="true" associatedhero=""/>
 	<fadein time="3000" halting="false" init="true"/>
 	<cameramove x="480" y="504" time="3000"/>
-	<move name="Craig" x="528" y="456" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false facing="-1"/>
+	<move name="Craig" x="528" y="456" speed="2.4" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
 	<facing name="Craig" dir="0"/>
 	<speech text="Should be one o' these, somewhere...<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
-	<move name="Olivia" x="456" y="456" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false facing="-1"/>
+	<move name="Olivia" x="456" y="456" speed="2.4" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
 	<speech text="Too bright<softstop> for a flock of barn owls.<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait="Olivia"/>
 	<facing name="Craig" dir="2"/>
 	<speech text=".<pause>.<pause>.<pause>What are you talking about?<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait="Sharna"/>
 	<facing name="Sharna" dir="3"/>
 	<facing name="Noah" dir="3"/>
-	<move name="Olivia" x="456" y="480" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false facing="-1"/>
+	<move name="Olivia" x="456" y="480" speed="2.4" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
 	<facing name="Olivia" dir="2"/>
 	<speech text=".<pause>.<pause>.<pause>That was a pass code to enter our hideout,<pause> but there's supposed to be an answer.<softstop> Something doesn't feel right...<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait="Olivia"/>
-	<move name="Craig" x="480" y="456" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false facing="-1"/>
+	<move name="Craig" x="480" y="456" speed="2.4" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
 	<speech text="LEAVE MY FAMILY ALONE YOU BASTARDS!<hardstop>" heroportrait="Eddie" enemyportrait="" animportrait=""/>
 	<wait time="2000"/>
 	<facing name="Craig" dir="0"/>
-	<playsound sound="thundercrack" volume="100"/>
+	<playsound sound="horn" volume="100"/>
 	<speech text="That has to be the worst timing ever.<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
-	<speech text="Noah, I need you to go help Eddie.  Hurry!  Craig and I need take care of our pursuers!<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait=""/>
+	<speech text="Oh no!<pause> More soldiers in the woods!<hardstop> Noah,<pause> I need you three to help Eddie!<pause> Hurry!<hardstop> Craig and I need take care of our pursuers!<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait=""/>
 	<speech text="We're countin' on ya.<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
-	<move name="Olivia" x="360" y="552" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false facing="-1"/>
-	<move name="Olivia" x="360" y="672" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false facing="-1"/>
-	<move name="Craig" x="456" y="552" speed="2.4" movehor="true" movediag="false" halting=true pathfinding=false facing="-1"/>
-	<move name="Craig" x="360" y="648" speed="2.4" movehor="true" movediag="false" halting=true pathfinding=false facing="-1"/>
-	<move name="Huun" x="456" y="456" speed="2.4" movehor="true" movediag="false" halting=true pathfinding=false facing="-1"/>
-	<move name="Huun" x="504" y="456" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false facing="-1"/>
+	<wait time="100"/>
+	<move name="Olivia" x="360" y="672" speed="3.6" movehor="false" movediag="false" halting="false" pathfinding="true" facing="-1"/>
+	<move name="Craig" x="360" y="648" speed="3.6" movehor="true" movediag="false" halting="true" pathfinding="true" facing="-1"/>
+	<wait time="1000"/>
+	<move name="Huun" x="456" y="456" speed="2.4" movehor="true" movediag="false" halting="false" pathfinding="false" facing="-1"/>
+	<wait time="200"/>
+	<move name="Sharna" x="456" y="456" speed="2.4" movehor="true" movediag="false" halting="false" pathfinding="false" facing="-1"/>
+	<wait time="200"/>
+	<move name="Noah" x="432" y="480" speed="2.4" movehor="false" movediag="false" halting="false" pathfinding="false" facing="-1"/>
+	<wait time="200"/>
+	<move name="Huun" x="504" y="456" speed="2.4" movehor="false" movediag="false" halting="false" pathfinding="false" facing="-1"/>
+	<move name="Sharna" x="480" y="456" speed="2.4" movehor="false" movediag="false" halting="false" pathfinding="false" facing="-1"/>
+	<wait time="200"/>
+	<move name="Noah" x="456" y="456" speed="2.4" movehor="true" movediag="false" halting="true" pathfinding="false" facing="-1"/>
 	<facing name="Huun" dir="0"/>
-	<move name="Sharna" x="456" y="456" speed="2.4" movehor="true" movediag="false" halting=true pathfinding=false facing="-1"/>
-	<move name="Sharna" x="480" y="456" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false facing="-1"/>
 	<facing name="Sharna" dir="0"/>
-	<move name="Noah" x="456" y="456" speed="2.4" movehor="true" movediag="false" halting=true pathfinding=false facing="-1"/>
 	<facing name="Noah" dir="0"/>
+	<wait time="500"/>
 	<playsound sound="dooropen" volume="100"/>
-	<move name="Noah" x="456" y="408" speed="2.4" movehor="false" movediag="false" halting=false pathfinding=false facing="-1"/>
-	<move name="Sharna" x="480" y="408" speed="2.4" movehor="false" movediag="false" halting=false pathfinding=false facing="-1"/>
-	<move name="Huun" x="504" y="408" speed="2.4" movehor="false" movediag="false" halting=false pathfinding=false facing="-1"/>
+	<move name="Noah" x="456" y="408" speed="2.4" movehor="false" movediag="false" halting="false" pathfinding="false" facing="-1"/>
+	<move name="Sharna" x="480" y="408" speed="2.4" movehor="false" movediag="false" halting="false" pathfinding="false" facing="-1"/>
+	<move name="Huun" x="504" y="408" speed="2.4" movehor="false" movediag="false" halting="false" pathfinding="false" facing="-1"/>
 	<remstatic spriteid="LeftDoor"/>
 	<remstatic spriteid="DoorCenter"/>
 	<remstatic spriteid="DoorRight"/>
+	<wait time="400"/>
 	<fadeout time="1000" halting="true"/>
 	<addhero heroid="Eddie" init="false"/>
 	<loadbattle mapdata="battle3" entrance="battlestart" battbg="1"/>
@@ -106,7 +113,7 @@
 <cinematic id="1" description="bring back in room" camerax="0" cameray="0">
 	<assactor name="Noah" hero="Noah" enemyid="0" npcid="" staticid=""/>
 	<speech text="Don't tire out now.<hardstop>" heroportrait="Craig" enemyportrait="" animportrait="Craig"/>
-	<move name="Noah" x="456" y="372" speed="2.4" movediag=false movehorz=false halting=true pathfinding=true facing="-1"/>
+	<move name="Noah" x="456" y="372" speed="2.4" movehor="false" movediag="false" halting="true" pathfinding="true" facing="-1"/>
 </cinematic>
 <cinematic id="2" description="Part4Exile" camerax="0" cameray="0">
 	<addactor x="216" y="336" name="Huun" anim="Huun" startanim="UnDown" visible="true" init="false" associatedhero=""/>
@@ -126,11 +133,11 @@
 	<speech text="They wouldn't have executed us over a surprise party for the king, would they?<hardstop>" heroportrait="Huun" enemyportrait="" animportrait="Huun"/>
 	<speech text="You may need your head checked, lad.<hardstop>" heroportrait="Craig" enemyportrait="" animportrait="Craig"/>
 	<fadeout time="2000" halting="true"/>
-	<move name="Huun" x="408" y="192" speed="20" movehor="false" movediag="true" halting=false pathfinding=false facing="-1"/>
-	<move name="Noah" x="480" y="240" speed="20" movehor="false" movediag="true" halting=false pathfinding=false facing="-1"/>
-	<move name="Craig" x="504" y="168" speed="20" movehor="false" movediag="true" halting=false pathfinding=false facing="-1"/>
-	<move name="Sharna" x="408" y="240" speed="20" movehor="false" movediag="true" halting=false pathfinding=false facing="-1"/>
-	<move name="Olivia" x="504" y="280" speed="20" movehor="false" movediag="true" halting=false pathfinding=false facing="-1"/>
+	<move name="Huun" x="408" y="192" speed="20" movehor="false" movediag="true" halting="false" pathfinding="false" facing="-1"/>
+	<move name="Noah" x="480" y="240" speed="20" movehor="false" movediag="true" halting="false" pathfinding="false" facing="-1"/>
+	<move name="Craig" x="504" y="168" speed="20" movehor="false" movediag="true" halting="false" pathfinding="false" facing="-1"/>
+	<move name="Sharna" x="408" y="240" speed="20" movehor="false" movediag="true" halting="false" pathfinding="false" facing="-1"/>
+	<move name="Olivia" x="504" y="280" speed="20" movehor="false" movediag="true" halting="false" pathfinding="false" facing="-1"/>
 	<camerafollow name="Noah"/>
 	<addactor x="456" y="408" name="Eddie" anim="Eddie" startanim="UnUp" visible="true" init="false" associatedhero=""/>
 	<wait time="500"/>
@@ -142,19 +149,19 @@
 	<fadein time="2000" halting="true" init="false"/>
 	<speech text="It has been three days.  Do you think Eddie was caught?<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait="Sharna"/>
 	<speech text="Eddie is too slick to be caught by the Erium guards... no offense.<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait="Olivia"/>
-	<move name="Eddie" x="456" y="336" speed="2" movehor="false" movediag="false" halting=true pathfinding=false facing="-1"/>
-	<move name="Eddie" x="456" y="288" speed="2" movehor="false" movediag="false" halting=true pathfinding=false facing="-1"/>
-	<move name="Eddie" x="456" y="264" speed="2" movehor="false" movediag="false" halting=true pathfinding=false facing="-1"/>
+	<move name="Eddie" x="456" y="336" speed="2" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
+	<move name="Eddie" x="456" y="288" speed="2" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
+	<move name="Eddie" x="456" y="264" speed="2" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
 	<speech text="We need to leave... A small army is searching for us! I was barely able to sneak past them...<hardstop>" heroportrait="Eddie" enemyportrait="" animportrait="Eddie"/>
 	<speech text="How much time before they arrive?<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait="Olivia"/>
 	<speech text="I could hear them marching on my way here.  They'll be here any moment... Just grab your gear and run!  The border is our only hope!<hardstop>" heroportrait="Eddie" enemyportrait="" animportrait="Eddie"/>
 	<fadeout time="2000" halting="true"/>
-	<move name="Olivia" x="552" y="480" speed="20" movehor="false" movediag="true" halting=false pathfinding=false facing="-1"/>
-	<move name="Craig" x="576" y="456" speed="20" movehor="false" movediag="true" halting=false pathfinding=false facing="-1"/>
-	<move name="Huun" x="600" y="456" speed="20" movehor="false" movediag="true" halting=false pathfinding=false facing="-1"/>
-	<move name="Sharna" x="600" y="408" speed="20" movehor="false" movediag="true" halting=false pathfinding=false facing="-1"/>
-	<move name="Noah" x="624" y="432" speed="20" movehor="false" movediag="true" halting=false pathfinding=false facing="-1"/>
-	<move name="Eddie" x="624" y="360" speed="20" movehor="false" movediag="true" halting=false pathfinding=false facing="-1"/>
+	<move name="Olivia" x="552" y="480" speed="20" movehor="false" movediag="true" halting="false" pathfinding="false" facing="-1"/>
+	<move name="Craig" x="576" y="456" speed="20" movehor="false" movediag="true" halting="false" pathfinding="false" facing="-1"/>
+	<move name="Huun" x="600" y="456" speed="20" movehor="false" movediag="true" halting="false" pathfinding="false" facing="-1"/>
+	<move name="Sharna" x="600" y="408" speed="20" movehor="false" movediag="true" halting="false" pathfinding="false" facing="-1"/>
+	<move name="Noah" x="624" y="432" speed="20" movehor="false" movediag="true" halting="false" pathfinding="false" facing="-1"/>
+	<move name="Eddie" x="624" y="360" speed="20" movehor="false" movediag="true" halting="false" pathfinding="false" facing="-1"/>
 	<addactor x="336" y="696" name="Soldier1" anim="eriumarcher" startanim="UnUp" visible="true" init="false" associatedhero=""/>
 	<addactor x="384" y="696" name="Soldier2" anim="eriummage" startanim="UnUp" visible="true" init="false" associatedhero=""/>
 	<addactor x="360" y="624" name="Soldier3" anim="eriumguard" startanim="UnUp" visible="true" init="false" associatedhero=""/>
@@ -170,10 +177,10 @@
 	<cameramovetoactor actor="Noah" time="3000"/>
 	<speech text="They've found us; we're too late! Craig and I will stay back and hold them off to give you time to escape!<hardstop>" heroportrait="Olivia" enemyportrait="" animportrait="Olivia"/>
 	<speech text="Piece o' cake.  Now, you heard the lady, get across that border. <linebreak>  Find Princess Azure of Avaria and tell her everything you know about Mistal and her plan. <linebreak> Erium needs all the help it can get!<hardstop>" heroportrait="Craig" enemyportrait="" animportrait="Craig"/>
-	<move name="Eddie" x="624" y="120" speed="1.0" movehor="false" movediag="false" halting=false pathfinding=false facing="-1"/>
-	<move name="Sharna" x="624" y="144" speed="1.0" movehor="false" movediag="false" halting=false pathfinding=false facing="-1"/>
-	<move name="Noah" x="624" y="168" speed="1.0" movehor="false" movediag="false" halting=false pathfinding=false facing="-1"/>
-	<move name="Huun" x="624" y="216" speed="1.0" movehor="false" movediag="false" halting=false pathfinding=false facing="-1"/>
+	<move name="Eddie" x="624" y="120" speed="1.0" movehor="false" movediag="false" halting="false" pathfinding="false" facing="-1"/>
+	<move name="Sharna" x="624" y="144" speed="1.0" movehor="false" movediag="false" halting="false" pathfinding="false" facing="-1"/>
+	<move name="Noah" x="624" y="168" speed="1.0" movehor="false" movediag="false" halting="false" pathfinding="false" facing="-1"/>
+	<move name="Huun" x="624" y="216" speed="1.0" movehor="false" movediag="false" halting="false" pathfinding="false" facing="-1"/>
 	<fadeout time="1500" halting="true"/>
 	<wait time="5000"/>
 	<speech text="Watch your tails; it's been rough through here recently.<hardstop>" heroportrait="Eddie" enemyportrait="" animportrait="Eddie"/>
