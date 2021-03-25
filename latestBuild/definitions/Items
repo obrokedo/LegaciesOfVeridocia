@@ -475,4 +475,7 @@
 <item id="153" name="Divine Feather" description="Escapes from the battle." cost="100" isdeal="false" imageindexx="12" imageindexy="22" droppable="false">
 	<usespell spellid="EGRESS" level="1" singleuse="true" damageitem="false" useoutsidebattle="false"/>
 </item>
+<item id="154" name="Healing Seed" description="Heals the target for 20 HP" cost="200" isdeal="false" imageindexx="1" imageindexy="22" droppable="false">
+	<use targetsenemy="false" damage="20" mpdamage="0" range="1" area="1" text="regains 20 hit points!" singleuse="true" damageitem="false" damageitem="false" useoutsidebattle="false"/>
+</item>
 </items>

@@ -6,8 +6,32 @@
 <trigger id="1" description="searchnoitem" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<showtext textid="0"/>
 </trigger>
+<trigger id="2" description="Bookshelf1" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<showtext textid="1"/>
+</trigger>
+<trigger id="3" description="Bookshelf2" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<showtext textid="2"/>
+</trigger>
+<trigger id="4" description="Bookshelf3" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<showtext textid="3"/>
+</trigger>
+<trigger id="5" description="Bookshelf4" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<showtext textid="4"/>
+</trigger>
 <text id="0" description="searchnoitem">
-	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="It's a barrel...<hardstop>"/>
+	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="Noah searched the barrel...<hardstop> <linebreak> It was empty.<hardstop>"/>
+</text>
+<text id="1" description="Bookshelf1">
+	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="A lot of dusty old tomes.<hardstop>"/>
+</text>
+<text id="2" description="Bookshelf2">
+	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="These books are so old that half of the pages are missing.<hardstop>"/>
+</text>
+<text id="3" description="Bookshelf3">
+	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="The pages are all torn and stained with mould.<hardstop>"/>
+</text>
+<text id="4" description="Bookshelf4">
+	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="You can't understand any of these.<pause> They're all written in ancient runes.<hardstop>"/>
 </text>
 <condition id="0" description="ToWorldMap" triggerid="0,">
 	<enterloc location="ToWorldMap" immediate="false"/>
@@ -29,7 +53,7 @@
 <properties>
 <property name="searcharea" value="searchtrigger=1"/>
 </properties>
-<polyline points="408,744 432,744 432,768 408,768 408,744"/>
+<polyline points="624,576 648,576 648,600 624,600 624,576"/>
 </object>
 <object name="searcharea0" x="0" y="0">
 <properties>
@@ -37,14 +61,44 @@
 </properties>
 <polyline points="648,600 672,600 672,624 648,624"/>
 </object>
+<object name="Bookshelf1" x="0" y="0">
+<properties>
+<property name="searcharea" value="searchtrigger=2"/>
+</properties>
+<polyline points="264,360 336,360 336,336 264,336 264,360"/>
+</object>
+<object name="Bookshelf2" x="0" y="0">
+<properties>
+<property name="searcharea" value="searchtrigger=3"/>
+</properties>
+<polyline points="264,456 264,432 336,432 336,456 264,456"/>
+</object>
+<object name="Bookshelf3" x="0" y="0">
+<properties>
+<property name="searcharea" value="searchtrigger=4"/>
+</properties>
+<polyline points="648,360 648,336 720,336 720,360 648,360"/>
+</object>
+<object name="Bookshelf4" x="0" y="0">
+<properties>
+<property name="searcharea" value="searchtrigger=5"/>
+</properties>
+<polyline points="648,432 648,456 720,456 720,432 648,432"/>
+</object>
 </objectgroup>
 <objectgroup name="Battle" visible="1"/>
-<objectgroup id="29" name="Meta">
-<object id="3" name="Chest1" x="0" y="0">
+<objectgroup name="NPCs-Objects" visible="1">
+<object name="Chest" x="0" y="0">
 <properties>
-<property name="chest" value="spriteimage=closedchest itemid=17"/>
+<property name="chest" value="spriteimage=closedchest itemid=152"/>
 </properties>
-<polyline points="888,360 912,360 912,384 888,384 888,360"/>
+<polyline points="312,576 336,576 336,600 312,600 312,576"/>
+</object>
+<object name="Chest2" x="0" y="0">
+<properties>
+<property name="chest" value="spriteimage=closedchest itemid=154"/>
+</properties>
+<polyline points="888,360 888,384 912,384 912,360 888,360"/>
 </object>
 </objectgroup>
 <objectgroup name="Terrain" visible="1"/>
