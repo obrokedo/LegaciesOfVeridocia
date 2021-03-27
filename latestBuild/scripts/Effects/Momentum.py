@@ -57,10 +57,13 @@ class Momentum(BattleEffect):
     def effectStartedText(self, attacker, target):
         return None
         
-    # Returns what should be displayed when the effects ends. Additonally
-    # this should reset any stats that have been changed as a result of this effect
+    # Reset any stats that have been changed as a result of this effect
     def effectEnded(self, target):
         target.setCurrentMove(target.getCurrentMove() - self.effectValue)
+        target.setCurrentSpeed(target.getCurrentSpeed() - self.effectValue)
+    
+    # Returns what should be displayed when the effects ends. 
+    def effectEndedText(self, target):
         return target.getName() + "'s movement has returned back to normal."
     
     # target is the target of the effect
@@ -76,8 +79,8 @@ class Momentum(BattleEffect):
         # Check to see using the given resistance whether the effect is successful
         #if (self.getEffectChance() - resistance) >= random.randint(0, 100):
         #    return True;
-            
         return True;
+    
     def getIconName(self):
         return "Momentum"
     
