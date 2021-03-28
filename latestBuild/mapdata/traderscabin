@@ -161,7 +161,7 @@
 	<wait time="200"/>
 	<speech text="That's generous, but I expect we will face danger on the way.<pause> If you're alright with that, then...<pause><hardstop>" heroportrait="Noah" enemyportrait="" animportrait="Noah"/>
 	<wait time="200"/>
-	<speech text="Ha! Don't you know?<pause> This is the famous mercenary, Hugh!<harstop> I've been training under him for three years!<pause> We can handle anything you've got!<hardstop>" heroportrait="Tyson" enemyportrait="" animportrait="Tyson"/>
+	<speech text="Ha! Don't you know?<pause> This is the famous mercenary, Hugh!<hardstop> I've been training under him for three years!<pause> We can handle anything you've got!<hardstop>" heroportrait="Tyson" enemyportrait="" animportrait="Tyson"/>
 	<wait time="200"/>
 	<speech text="Now, we have a long journey ahead.  Since we've been fed, we should get some rest.<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
 	<fadeout time="4000" halting="true"/>
