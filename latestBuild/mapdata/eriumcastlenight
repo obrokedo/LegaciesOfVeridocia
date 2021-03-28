@@ -553,7 +553,7 @@
 	<fadeout time="1000" halting="true"/>
 	<loadcin mapdata="eriumoutskirts" cinid="0"/>
 </cinematic>
-<cinematic id="5" description="GameStartIntro" camerax="0" cameray="0">
+<cinematic id="5" description="GameStartIntro" camerax="0" cameray="0" skippable="true">
 	<addactor x="528" y="528" name="King" anim="KingErium" startanim="UnUp" visible="true" init="false" associatedhero=""/>
 	<addactor x="528" y="552" name="Mistal" anim="MistalEvil" startanim="UnUp" visible="true" init="false" associatedhero=""/>
 	<addstatic x="744" y="360" spriteid="DoorLeft2" spriteim="HouseDoorLeft"/>

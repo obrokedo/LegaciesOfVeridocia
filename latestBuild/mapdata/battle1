@@ -38,20 +38,19 @@
 	<changeaitargetenemy id="1" targetid="7" priority="0"/>
 </trigger>
 <trigger id="7" description="Fail Results" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
-	<reviveheroes hero="Noah"/>
-	<loadmap mapdata="erium" enter="InfrontPreistess" transdir=""/>
+	<loadegress/>
 </trigger>
 <text id="0" description="Defcon 1">
-	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="Defcon 1 Activated!!<hardstop>"/>
+	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="Defcon 1 Activated!!<hardstop>"/>
 </text>
 <text id="1" description="Defcon 2">
-	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="Defcon 2 Activated!!<hardstop>"/>
+	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="Defcon 2 Activated!!<hardstop>"/>
 </text>
 <text id="2" description="Defcon 3">
-	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="Defcon 3 Activated!!<hardstop>"/>
+	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="Defcon 3 Activated!!<hardstop>"/>
 </text>
 <text id="3" description="Defcon 4">
-	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="Defcon 4 Activated!!<hardstop>"/>
+	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="Defcon 4 Activated!!<hardstop>"/>
 </text>
 <condition id="0" description="TLEnter" triggerid="2,">
 	<enterloc location="Top Left BT" immediate="false"/>
@@ -119,7 +118,7 @@
 </properties>
 </object>
 </objectgroup>
-<objectgroup id="18" name="Battle">
+<objectgroup name="Battle" visible="1">
 <object id="1" name="Darkling Ooze" x="840" y="600" width="24" height="24">
 <properties>
 <property name="enemy" value="ai=fighter aiapproach=slow enemyid=Darkling Ooze unit=0"/>
@@ -180,7 +179,7 @@
 <polyline points="768,360 792,360 792,384 768,384 768,360"/>
 </object>
 </objectgroup>
-<objectgroup id="13" name="Terrain" visible="0">
+<objectgroup name="Terrain" visible="1">
 <object id="16" x="600" y="576">
 <properties>
 <property name="terrain" value="platform=grassfloor type=GRASS"/>

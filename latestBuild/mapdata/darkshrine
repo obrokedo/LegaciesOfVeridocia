@@ -1,6 +1,6 @@
 <area>
 <map file="DarkShrine.tmx"/>
-<cinematic id="0" description="Intro" camerax="0" cameray="0">
+<cinematic id="0" description="Intro" camerax="0" cameray="0" skippable="true">
 	<cameramove x="480" y="600" time="0"/>
 	<addstatic x="480" y="192" spriteid="Nazalem" spriteim="Nazalem"/>
 	<addactor x="456" y="720" name="Lexus" anim="Lexus" startanim="UnUp" visible="true" init="false" associatedhero=""/>

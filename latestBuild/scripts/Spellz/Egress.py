@@ -53,7 +53,9 @@ class Egress(SpellDefinition):
     # performed here
     def performSkippedSpellAction(self, stateInfo):
     	# Load the map that we last saved at
-    	stateInfo.getPersistentStateInfo().loadMap(stateInfo.getPersistentStateInfo().getClientProgress().getLastSaveMapData(), None);
+        stateInfo.getPersistentStateInfo().loadMap(
+                    stateInfo.getPersistentStateInfo().getClientProgress().getLastEgressLocation().getLastSaveMapData(),
+                    stateInfo.getPersistentStateInfo().getClientProgress().getLastEgressLocation().getInTownLocation())
         
     def getExpGained(self, level, attacker, target):
         return 10
