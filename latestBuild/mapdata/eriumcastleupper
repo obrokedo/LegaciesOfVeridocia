@@ -4,6 +4,7 @@
 </trigger>
 <trigger id="1" description="Sharna cutscene" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<completequest questid="EriumCastleUpperSharnaTalk"/>
+	<setegress mapname="eriumcastlenight" locx="37" locy="16"/>
 	<showcin cinid="0" exittrigid="-1"/>
 </trigger>
 <trigger id="2" description="NorthWestStairsExit1" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
@@ -53,56 +54,56 @@
 	<showtext textid="1"/>
 </trigger>
 <text id="0" description="Soldier 1 Dining Hall">
-	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="Sometimes I enjoy a good nightcap by myself as opposed to the pub. It's usually quiet in here at the very least.<hardstop>"/>
+	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="Sometimes I enjoy a good nightcap by myself as opposed to the pub. It's usually quiet in here at the very least.<hardstop>"/>
 </text>
 <text id="1" description="Soldier 2 Dining Hall">
-	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="Zzzz...zzz<hardstop>"/>
+	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="Zzzz...zzz<hardstop>"/>
 </text>
 <text id="2" description="Servant 1 Dining Hall">
-	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="I better hurry and finish cleaning before the sun sets fully. Candle light hides dirt more than you'd think!<hardstop>"/>
+	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="I better hurry and finish cleaning before the sun sets fully. Candle light hides dirt more than you'd think!<hardstop>"/>
 </text>
 <text id="3" description="Servant 2 Dining Hall">
-	<conversation require="," exclude="," trigger="-1" heroportrait1="" enemyportrait1="" animportrait1="" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="Soldiers are such slobs! Every one of them have the manners of a toddl...<pause> Oh! Hi, Noah! I don't mean you of course!<hardstop><split>You just don't see my messes because I make them at home. Can I lend a hand?<hardstop><split>Oh, that's alright. I complain but I really do enjoy my job and everyone I see. Besides, doesn't your shift start soon?<hardstop><split>It does but I can still help...<hardstop><split>That's okay, I'm almost finished anyway. Thank you though.<hardstop>"/>
+	<conversation require="," exclude="," trigger="-1," heroportrait1="" enemyportrait1="" animportrait1="" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="Soldiers are such slobs! Every one of them have the manners of a toddl...<pause> Oh! Hi, Noah! I don't mean you of course!<hardstop><split>You just don't see my messes because I make them at home. Can I lend a hand?<hardstop><split>Oh, that's alright. I complain but I really do enjoy my job and everyone I see. Besides, doesn't your shift start soon?<hardstop><split>It does but I can still help...<hardstop><split>That's okay, I'm almost finished anyway. Thank you though.<hardstop>"/>
 </text>
 <text id="4" description="Soldier 1 Study">
-	<conversation require="," exclude="," trigger="15" heroportrait1="" enemyportrait1="" animportrait1="" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="I love serving King Erium but I'm studying to work for the Kingdom.<hardstop> I hope to one day be a great blacksmith but...<pause> well, you can see the quality of my work.<hardstop><split>This is a great start! We'll all be lucky to have you making our weapons one day.<hardstop><split>You really think so? That means a lot! <hardstop>"/>
+	<conversation require="," exclude="," trigger="15," heroportrait1="" enemyportrait1="" animportrait1="" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="I love serving King Erium but I'm studying to work for the Kingdom.<hardstop> I hope to one day be a great blacksmith but...<pause> well, you can see the quality of my work.<hardstop><split>This is a great start! We'll all be lucky to have you making our weapons one day.<hardstop><split>You really think so? That means a lot! <hardstop>"/>
 </text>
 <text id="5" description="Soldier 1 Storage">
-	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="I'm going to start studying to become a Warlord but I can't decide which weapon I should train with.<hardstop> I've heard that taking this career path requires a lot of discipline, if you want to be any good with your weapon of choice.<hardstop> Diversifying will only weaken your ablilities.<hardstop>"/>
+	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="I'm going to start studying to become a Warlord but I can't decide which weapon I should train with.<hardstop> I've heard that taking this career path requires a lot of discipline, if you want to be any good with your weapon of choice.<hardstop> Diversifying will only weaken your ablilities.<hardstop>"/>
 </text>
 <text id="6" description="Sharna">
-	<string require="," exclude="EriumCastleUpperSharnaTalk," trigger="1" heroportrait="Sharna" enemyportrait="" animportrait="" message="Hello, Noah. <pause>Glad to see you're here this early. I just got here, too! <hardstop>I hope Huun makes it on time tonight. It makes us all look sloppy when one of us is late.<hardstop>"/>
-	<string require="EriumCastleUpperSharnaTalk," exclude="," trigger="-1" heroportrait="Sharna" enemyportrait="" animportrait="" message="Check with the captain to see if he's ready for us to begin our patrol.<hardstop>  I saw him in the courtyard eariler.<hardstop>"/>
+	<string require="," exclude="EriumCastleUpperSharnaTalk," trigger="1," heroportrait="Sharna" enemyportrait="" animportrait="" message="Hello, Noah. <pause>Glad to see you're here this early. I just got here, too! <hardstop>I hope Huun makes it on time tonight. It makes us all look sloppy when one of us is late.<hardstop>"/>
+	<string require="EriumCastleUpperSharnaTalk," exclude="," trigger="-1," heroportrait="Sharna" enemyportrait="" animportrait="" message="Check with the captain to see if he's ready for us to begin our patrol.<hardstop>  I saw him in the courtyard eariler.<hardstop>"/>
 </text>
 <text id="7" description="SearchNoItem">
-	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="There doesn't seem to be anything here.<hardstop>"/>
+	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="There doesn't seem to be anything here.<hardstop>"/>
 </text>
 <text id="8" description="Book1">
-	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, The Beacon of Veridocia.<hardstop>"/>
+	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, The Beacon of Veridocia.<hardstop>"/>
 </text>
 <text id="9" description="Book2">
-	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Erium Royalty: Details of the Erium Nobility and Their Exploits.<hardstop>"/>
+	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Erium Royalty: Details of the Erium Nobility and Their Exploits.<hardstop>"/>
 </text>
 <text id="10" description="Book3">
-	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Atlas of the Veridocian Continent.<hardstop>"/>
+	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Atlas of the Veridocian Continent.<hardstop>"/>
 </text>
 <text id="11" description="Book4">
-	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Glory and Honor: Tales of Erium's Past Military Victories.<hardstop>"/>
+	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Glory and Honor: Tales of Erium's Past Military Victories.<hardstop>"/>
 </text>
 <text id="12" description="Book5">
-	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, The Adventures of Finn and Xander.<hardstop>"/>
+	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, The Adventures of Finn and Xander.<hardstop>"/>
 </text>
 <text id="13" description="Book6">
-	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Ancient Erium.<hardstop>"/>
+	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Ancient Erium.<hardstop>"/>
 </text>
 <text id="14" description="Book7">
-	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Castle Architecture.<hardstop>"/>
+	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="There's a book here.<pause> The title reads, Castle Architecture.<hardstop>"/>
 </text>
 <text id="15" description="ReceiveSwordFromGuard">
-	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="Please take this and let me know how well it fares in your training.<hardstop>"/>
+	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="Please take this and let me know how well it fares in your training.<hardstop>"/>
 </text>
 <text id="16" description="NoRoomForSword">
-	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="Oh it looks like you don't have enough room for this, come back when you've made space.<hardstop>"/>
+	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="Oh it looks like you don't have enough room for this, come back when you've made space.<hardstop>"/>
 </text>
 <cinematic id="0" description="SharnaCutScene" camerax="72" cameray="672">
 	<assactor name="Sharna" hero="" enemyid="0" npcid="Sharna" staticid=""/>
@@ -110,7 +111,7 @@
 	<cameramovetoactor actor="Noah" time="1000"/>
 	<camerafollow name="Noah"/>
 	<speech text="Actually, isn't that his handwriting?<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
-	<move name="Noah" x="192" y="660" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false facing="-1"/>
+	<move name="Noah" x="192" y="660" speed="2.4" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
 	<facing name="Noah" dir="0"/>
 	<speech text="Bowstring snapped, <pause>gone to get a new one. <pause>See you on patrol later.<pause> Huun.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<facing name="Sharna" dir="1"/>
@@ -118,7 +119,7 @@
 	<wait time="1000"/>
 	<facing name="Sharna" dir="3"/>
 	<speech text="He may be late again but at least he was here early today. Small steps, I suppose.<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
-	<move name="Noah" x="96" y="660" speed="2.4" movehor="false" movediag="false" halting=true pathfinding=false facing="-1"/>
+	<move name="Noah" x="96" y="660" speed="2.4" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
 	<speech text="He might still be back before our patrol. We're early anyway, he's got plenty of time.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<speech text="We'll see...<hardstop>" heroportrait="Sharna" enemyportrait="" animportrait=""/>
 </cinematic>
@@ -258,7 +259,7 @@
 </object>
 </objectgroup>
 <objectgroup name="Battle" visible="1"/>
-<objectgroup name="Meta" visible="0">
+<objectgroup name="NPCs-Objects" visible="1">
 <object id="1" name="Soldier 1 Study" x="1176" y="360" width="24" height="24">
 <properties>
 <property name="npc" value="animation=Guard2 textid=4 wander=0"/>

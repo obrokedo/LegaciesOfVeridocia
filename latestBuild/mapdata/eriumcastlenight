@@ -2,7 +2,20 @@
 <map file="EriumCastleNight.tmx"/>
 <trigger id="0" description="MapStart" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<playmusic music="castlenight" volume="75"/>
+	<setegress mapname="eriumcastlenight" locx="37" locy="16"/>
 </trigger>
+<trigger id="1" description="Priestess" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<showpriest portrait="Priestess1"/>
+</trigger>
+<trigger id="2" description="Blockades" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<showcin cinid="7" exittrigid="-1"/>
+</trigger>
+<trigger id="3" description="Restart Battle 1" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<startbattle battletriggers="battle1" entrance="battle1" battbg="1"/>
+</trigger>
+<text id="0" description="Priestess">
+	<string require="," exclude="," trigger="1," heroportrait="" enemyportrait="" animportrait="Priestess1" message="I don't usually receive vistors so late,<pause> but If you need my aid, I can assist you.<hardstop><linebreak> Welcome, my lamb.<pause> How may I be of service to you?<hardstop>"/>
+</text>
 <cinematic id="0" description="scene1-1" camerax="600" cameray="0">
 	<addactor x="0" y="0" name="Cam" anim="Noah" startanim="Down" visible="false" init="true" associatedhero="Noah"/>
 	<addactor x="816" y="1056" name="Noah" anim="Noah" startanim="Left" visible="true" init="true" associatedhero="Noah"/>
@@ -332,13 +345,13 @@
 	<speech text="I don't have time to deal with you, but I can't have you getting away, either. My pets will keep you busy!<hardstop>" heroportrait="" enemyportrait="" animportrait="Mistal"/>
 	<playsound sound="casting" volume="75"/>
 	<flash name="Mistal" time="1500" speed="100"/>
+	<loadbattle mapdata="battle1" entrance="battle1" battbg="1"/>
 	<flashscreen time="250"/>
 	<wait time="125"/>
 	<removeactor name="Mistal"/>
 	<addhero heroid="Huun" init="false"/>
 	<addhero heroid="Sharna" init="false"/>
 	<fadeout time="1000" halting="true"/>
-	<loadbattle mapdata="battle1" entrance="battle1" battbg="1"/>
 </cinematic>
 <cinematic id="1" description="Battle1 Aftermath" camerax="600" cameray="960">
 	<playmusic music="battle1" volume="75"/>
@@ -635,8 +648,22 @@
 <cinematic id="6" description="" camerax="0" cameray="0">
 	<camerafollow name=""/>
 </cinematic>
+<cinematic id="7" description="Blockades" camerax="0" cameray="0">
+	<assactor name="Noah" hero="Noah" enemyid="0" npcid="" staticid=""/>
+	<cameramovetoactor actor="Noah" time="500"/>
+	<wait time="500"/>
+	<camerafollow name="Noah"/>
+	<speech text="We don't have time to search the entire castle.<pause><nextcin> We need to return to the courtyard to deal with those creatures.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
+	<move name="Noah" x="840" y="420" speed="2.4" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
+</cinematic>
 <condition id="0" description="MapLoad" triggerid="0,">
 	<maploaded/>
+</condition>
+<condition id="1" description="Blockades" triggerid="2,">
+	<enterloc location="Blockade" immediate="false"/>
+</condition>
+<condition id="2" description="Restart Battle1" triggerid="3,">
+	<enterloc location="Restart Battle1" immediate="false"/>
 </condition>
 <objectgroup name="Trigger Region" visible="1">
 <object id="9" name="Battle Start" x="672" y="648" width="24" height="24">
@@ -678,6 +705,18 @@
 <properties>
 <property name="start" value="exit=battle1"/>
 </properties>
+</object>
+<object name="Blockade" x="0" y="0">
+<properties>
+<property name="" value=""/>
+</properties>
+<polyline points="960,432 984,432 984,552 720,552 720,408 744,408 744,384 792,384 792,408 744,408 744,552 960,552 960,432"/>
+</object>
+<object name="Restart Battle1" x="0" y="0">
+<properties>
+<property name="" value=""/>
+</properties>
+<polyline points="744,552 792,552 792,576 744,576 744,552"/>
 </object>
 </objectgroup>
 <objectgroup name="Battle" visible="1">
@@ -739,6 +778,12 @@
 <property name="door" value="image=HouseDoorRight"/>
 </properties>
 <polyline points="768,360 792,360 792,384 768,384 768,360"/>
+</object>
+<object name="Priestess" x="0" y="0">
+<properties>
+<property name="npc" value="noturn=false facing=3 name=Priestess throughwall=false noanimate=false animation=Priestess1 textid=0 wander=0"/>
+</properties>
+<polyline points="864,384 864,408 888,408 888,384 864,384"/>
 </object>
 </objectgroup>
 <objectgroup name="Terrain" visible="1">
