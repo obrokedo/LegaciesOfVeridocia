@@ -18,6 +18,9 @@
 <trigger id="5" description="Bookshelf4" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<showtext textid="4"/>
 </trigger>
+<trigger id="6" description="Priestess" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<showpriest portrait="Priestess1"/>
+</trigger>
 <text id="0" description="searchnoitem">
 	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="Noah searched the barrel...<hardstop> <linebreak> It was empty.<hardstop>"/>
 </text>
@@ -32,6 +35,9 @@
 </text>
 <text id="4" description="Bookshelf4">
 	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="You can't understand any of these.<pause> They're all written in ancient runes.<hardstop>"/>
+</text>
+<text id="5" description="Priestess">
+	<string require="," exclude="," trigger="6," heroportrait="" enemyportrait="" animportrait="Priestess1" message="Oh my! Someone has left a bit of a mess here!<hardstop> Nevermind. If you need my help I'll tidy it up later.<hardstop><linebreak> Welcome, my lamb. How may I be of service to you?<hardstop>"/>
 </text>
 <condition id="0" description="ToWorldMap" triggerid="0,">
 	<enterloc location="ToWorldMap" immediate="false"/>
@@ -99,6 +105,12 @@
 <property name="chest" value="spriteimage=closedchest itemid=154"/>
 </properties>
 <polyline points="888,360 888,384 912,384 912,360 888,360"/>
+</object>
+<object name="Priestess" x="0" y="0">
+<properties>
+<property name="npc" value="noturn=false facing=-1 name=Priestess throughwall=true noanimate=false animation=Priestess1 textid=5 wander=0"/>
+</properties>
+<polyline points="480,288 504,288 504,312 480,312 480,288"/>
 </object>
 </objectgroup>
 <objectgroup name="Terrain" visible="1"/>

@@ -27,30 +27,33 @@
 <trigger id="8" description="ToDarkShrine" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<loadmap mapdata="darkshrineday" enter="FromWorldMap" transdir=""/>
 </trigger>
-<trigger id="9" description="PreBattle3Cinimatic" require="," exclude="Battle 3," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="9" description="PreBattle3Cinimatic" require="," exclude="Flock of Barn Owls Seen," nonretrig="true" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<removehero heroid="Olivia"/>
 	<removehero heroid="Craig"/>
 	<playsound sound="step" volume="75"/>
 	<loadcin mapdata="eriumwoods" cinid="0"/>
 </trigger>
-<trigger id="10" description="ToEriumWoodsCabin" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="10" description="ToEriumWoodsCabin" require="," exclude="Flock of Barn Owls Seen," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<runtriggers triggers="2,9,"/>
 </trigger>
-<cinematic id="0" description="WarnPastCabin" camerax="0" cameray="0">
+<trigger id="11" description="Cabin Egress/Death" require="Flock of Barn Owls Seen," exclude="Battle 3," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<startbattle battletriggers="battle3" entrance="battlestart" battbg="2"/>
+</trigger>
+<cinematic id="0" description="WarnPastCabin" camerax="0" cameray="0" skippable="false">
 	<speech text="Oi. Where d'ya think you're goin', genius?<pause><linebreak> The cabin was back that way!<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
 	<assactor name="Noah" hero="Noah" enemyid="0" npcid="" staticid=""/>
 	<cameramovetoactor actor="Noah" time="400"/>
 	<camerafollow name="Noah"/>
 	<move name="Noah" x="1032" y="3996" speed="2.4" movehor="false" movediag="false" halting="true" pathfinding="true" facing="-1"/>
 </cinematic>
-<cinematic id="1" description="NoGoingBack" camerax="0" cameray="0">
+<cinematic id="1" description="NoGoingBack" camerax="0" cameray="0" skippable="false">
 	<speech text="Oi. Are you mad!?<pause><linebreak> We can't go back!<pause> They'll catch you for sure!!<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
 	<assactor name="Noah" hero="Noah" enemyid="0" npcid="" staticid=""/>
 	<cameramovetoactor actor="Noah" time="400"/>
 	<camerafollow name="Noah"/>
 	<move name="Noah" x="1200" y="4140" speed="2.4" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
 </cinematic>
-<cinematic id="2" description="BorderStruggleCh1Part6" camerax="24" cameray="24">
+<cinematic id="2" description="BorderStruggleCh1Part6" camerax="24" cameray="24" skippable="false">
 	<addactor x="864" y="3732" name="Hugh" anim="hugh" startanim="UnUp" visible="true" init="false" associatedhero=""/>
 	<addactor x="984" y="3564" name="Guard1" anim="eriumguard" startanim="UnDown" visible="true" init="false" associatedhero=""/>
 	<addactor x="984" y="3588" name="person" anim="Man1" startanim="UnUp" visible="true" init="false" associatedhero=""/>
@@ -102,7 +105,7 @@
 	<addmultihero heroids="Liza,Tyson,"/>
 	<loadbattle mapdata="battle4" entrance="BattleStart" battbg="2"/>
 </cinematic>
-<cinematic id="3" description="PostBattle4Crook" camerax="0" cameray="0">
+<cinematic id="3" description="PostBattle4Crook" camerax="0" cameray="0" skippable="false">
 	<addactor x="936" y="2952" name="Noah" anim="Noah" startanim="UnDown" visible="true" init="false" associatedhero=""/>
 	<camerafollow name="Noah"/>
 	<speech text="Squawk!<hardstop>" heroportrait="" enemyportrait="" animportrait="Crook"/>
@@ -122,12 +125,12 @@
 	<speech text="We need to pick up the pace to avoid any reinforcements.  Let's get to Reyval for supplies and information.<hardstop> We'll try to leave before any more trouble shows up.<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
 	<loadmap mapdata="worldmap" enter="PostBattle4"/>
 </cinematic>
-<cinematic id="4" description="Chapter1Block" camerax="0" cameray="0">
+<cinematic id="4" description="Chapter1Block" camerax="0" cameray="0" skippable="false">
 	<assactor name="Noah" hero="Noah" enemyid="0" npcid="" staticid=""/>
 	<speech text="We need to pick up the pace to avoid any reinforcements.  Let's get to Reyval for supplies and information.<hardstop> We'll try to leave before any more trouble shows up.<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
 	<move name="Noah" x="1272" y="2736" speed="2.4" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
 </cinematic>
-<cinematic id="5" description="Chapter1Block2" camerax="0" cameray="0">
+<cinematic id="5" description="Chapter1Block2" camerax="0" cameray="0" skippable="false">
 	<assactor name="Noah" hero="Noah" enemyid="0" npcid="" staticid=""/>
 	<speech text="We need to pick up the pace to avoid any reinforcements.  Let's get to Reyval for supplies and information.<hardstop> We'll try to leave before any more trouble shows up.<hardstop>" heroportrait="" enemyportrait="" animportrait="hugh"/>
 	<move name="Noah" x="1200" y="3024" speed="2.4" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
@@ -243,5 +246,5 @@
 </objectgroup>
 <objectgroup name="Battle" visible="1"/>
 <objectgroup name="NPCs-Objects" visible="1"/>
-<objectgroup id="53" name="Terrain"/>
+<objectgroup name="Terrain" visible="1"/>
 </area>

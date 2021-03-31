@@ -2,6 +2,7 @@
 <map file="EriumWoods.tmx"/>
 <trigger id="0" description="Battle1 Initialise" require="," exclude="Battle 3," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<playmusic music="battle3" volume="75"/>
+	<completequest questid="Flock of Barn Owls Seen"/>
 	<setegressloc mapname="eriumoutskirts" location="start"/>
 </trigger>
 <trigger id="1" description="Victory Results" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
@@ -17,7 +18,7 @@
 	<changeaitargetenemy id="4" targetid="7" priority="1"/>
 	<changeaiapproach id="6" aitype="1" priority="1"/>
 </trigger>
-<trigger id="3" description="Fail Results" require="" exclude="" nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="3" description="Fail Results" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<reviveheroes hero="Noah"/>
 	<loadegress/>
 </trigger>
@@ -36,11 +37,11 @@
 <text id="4" description="Demo 3 Over">
 	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="Congratulations!<pause> <linebreak> You've completed Demo 3!<hardstop> <linebreak> Thanks for playing!<hardstop>"/>
 </text>
-<cinematic id="0" description="Exit Fade" camerax="0" cameray="0">
+<cinematic id="0" description="Exit Fade" camerax="0" cameray="0" skippable="false">
 	<fadeout time="2000" halting="true"/>
 	<showcredits/>
 </cinematic>
-<cinematic id="1" description="PostBattleThree" camerax="48" cameray="240">
+<cinematic id="1" description="PostBattleThree" camerax="48" cameray="240" skippable="false">
 	<addactor x="216" y="384" name="EddotActor" anim="Eddie" startanim="UnLeft" visible="true" init="false" associatedhero=""/>
 	<addstatic x="196" y="390" spriteid="EddieWife" spriteim="EddieWife"/>
 	<addstatic x="192" y="380" spriteid="EddieChild" spriteim="EddieChild"/>
