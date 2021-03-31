@@ -13,8 +13,14 @@
 <trigger id="3" description="Restart Battle2" require="," exclude="Battle2," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<startbattle battletriggers="battle2" entrance="battlestart" battbg="0"/>
 </trigger>
+<trigger id="4" description="Priestess" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<showpriest portrait="Priestess1"/>
+</trigger>
 <text id="0" description="guard1">
 	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="Halt! Who goes there?<hardstop>"/>
+</text>
+<text id="1" description="Priestess">
+	<string require="," exclude="," trigger="4," heroportrait="" enemyportrait="" animportrait="Priestess1" message="The prison guard sent me to tend your injuries.<pause> They say you're guilty, but the tale is dubious.<hardstop> I believe you are innocent,<pause> so I have left the door unlocked for you.<hardstop><linebreak> Welcome, my lamb. How may I be of service to you?<hardstop>"/>
 </text>
 <cinematic id="0" description="Cinematic Jailbreak" camerax="0" cameray="0" skippable="false">
 	<addhero heroid="Craig" init="true"/>
@@ -460,7 +466,7 @@
 </object>
 <object name="Priestess" x="0" y="0">
 <properties>
-<property name="npc" value="noturn=false facing=3 name= throughwall=false noanimate=false animation=Priestess1 textid=-1 wander=0"/>
+<property name="npc" value="noturn=false facing=3 throughwall=false noanimate=false animation=Priestess1 textid=1 wander=0"/>
 </properties>
 <polyline points="552,144 576,144 576,168 552,168 552,144"/>
 </object>
