@@ -27,17 +27,18 @@
 <trigger id="8" description="ToDarkShrine" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<loadmap mapdata="darkshrineday" enter="FromWorldMap" transdir=""/>
 </trigger>
-<trigger id="9" description="PreBattle3Cinimatic" require="," exclude="Flock of Barn Owls Seen," nonretrig="true" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="9" description="PreBattle3Cinimatic" require="," exclude="Battle 3,PreBattle3CinSeen," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<removehero heroid="Olivia"/>
 	<removehero heroid="Craig"/>
 	<playsound sound="step" volume="75"/>
+	<completequest questid="PreBattle3CinSeen"/>
 	<loadcin mapdata="eriumwoods" cinid="0"/>
 </trigger>
-<trigger id="10" description="ToEriumWoodsCabin" require="," exclude="Flock of Barn Owls Seen," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
-	<runtriggers triggers="2,9,"/>
+<trigger id="10" description="ToEriumWoodsCabin" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<runtriggers triggers="2,9,11,"/>
 </trigger>
-<trigger id="11" description="Cabin Egress/Death" require="Flock of Barn Owls Seen," exclude="Battle 3," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
-	<startbattle battletriggers="battle3" entrance="battlestart" battbg="2"/>
+<trigger id="11" description="Skip3Cinematic" require="PreBattle3CinSeen," exclude="Battle 3," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<startbattle battletriggers="battle3" entrance="battlestart" battbg="0"/>
 </trigger>
 <cinematic id="0" description="WarnPastCabin" camerax="0" cameray="0" skippable="false">
 	<speech text="Oi. Where d'ya think you're goin', genius?<pause><linebreak> The cabin was back that way!<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
