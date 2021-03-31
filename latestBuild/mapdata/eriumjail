@@ -10,13 +10,13 @@
 <trigger id="2" description="NorthSairsExit" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<loadmap mapdata="eriumcastle" enter="NorthJailStairsEntrance" transdir=""/>
 </trigger>
-<trigger id="3" description="Restart Battle2" require="Battle1," exclude="Battle2," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="3" description="Restart Battle2" require="," exclude="Battle2," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<startbattle battletriggers="battle2" entrance="battlestart" battbg="0"/>
 </trigger>
 <text id="0" description="guard1">
-	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="Halt! Who goes there?<hardstop>"/>
+	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="Halt! Who goes there?<hardstop>"/>
 </text>
-<cinematic id="0" description="Cinematic Jailbreak" camerax="0" cameray="0">
+<cinematic id="0" description="Cinematic Jailbreak" camerax="0" cameray="0" skippable="false">
 	<addhero heroid="Craig" init="true"/>
 	<addhero heroid="Olivia" init="true"/>
 	<addactor x="576" y="144" name="Noah" anim="Noah" startanim="Up" visible="true" init="true" associatedhero="Noah"/>
@@ -114,7 +114,7 @@
 	<move name="Craig" x="576" y="228" speed="2.4" movehor="true" movediag="false" halting="true" pathfinding="false" facing="-1"/>
 	<cameramove x="576" y="228" time="100"/>
 	<speech text="He'll be out for a while.<pause><pause> Now let's get you out<pause><nextcin><pause>.<pause><pause>.<pause><pause>.<pause><pause> <nextcin><pause><nextcin><nextcin><nextcin><pause><linebreak> There!<pause><hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
-	<move name="Craig" x="576" y="276" speed="2.4" facing="0" movehor="false" movediag="false" halting="false" pathfinding="false"/>
+	<move name="Craig" x="576" y="276" speed="2.4" movehor="false" movediag="false" halting="false" pathfinding="false" facing="0"/>
 	<move name="Craig" x="576" y="216" speed="3.6" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
 	<camerashake time="500" severity="2"/>
 	<remstatic spriteid="Door1"/>
@@ -220,14 +220,14 @@
 	<wait time="500"/>
 	<facing name="Craig" dir="3"/>
 	<wait time="1000"/>
-	<move name="Craig" x="216" y="300" speed="9" facing="3" movehor="false" movediag="false" halting="false" pathfinding="false"/>
+	<move name="Craig" x="216" y="300" speed="9" movehor="false" movediag="false" halting="false" pathfinding="false" facing="3"/>
 	<rendertop name="Craig"/>
 	<wait time="125"/>
-	<move name="Craig" x="216" y="312" speed="9" facing="3" movehor="false" movediag="false" halting="false" pathfinding="false"/>
+	<move name="Craig" x="216" y="312" speed="9" movehor="false" movediag="false" halting="false" pathfinding="false" facing="3"/>
 	<wait time="125"/>
-	<move name="Craig" x="216" y="300" speed="9" facing="3" movehor="false" movediag="false" halting="false" pathfinding="false"/>
+	<move name="Craig" x="216" y="300" speed="9" movehor="false" movediag="false" halting="false" pathfinding="false" facing="3"/>
 	<wait time="125"/>
-	<move name="Craig" x="216" y="312" speed="9" facing="3" movehor="false" movediag="false" halting="false" pathfinding="false"/>
+	<move name="Craig" x="216" y="312" speed="9" movehor="false" movediag="false" halting="false" pathfinding="false" facing="3"/>
 	<wait time="1000"/>
 	<speech text="C'mon, ya cowards!<hardstop>" heroportrait="Craig" enemyportrait="" animportrait=""/>
 	<rendernormal name="Craig"/>
@@ -457,6 +457,12 @@
 <properties>
 <property name="npc" value="animation=eriumguard textid=0 wander=1"/>
 </properties>
+</object>
+<object name="Priestess" x="0" y="0">
+<properties>
+<property name="npc" value="noturn=false facing=3 name= throughwall=false noanimate=false animation=Priestess1 textid=-1 wander=0"/>
+</properties>
+<polyline points="552,144 576,144 576,168 552,168 552,144"/>
 </object>
 </objectgroup>
 <objectgroup name="Terrain" visible="1">

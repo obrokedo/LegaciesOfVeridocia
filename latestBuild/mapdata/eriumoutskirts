@@ -5,7 +5,7 @@
 	<removehero heroid="Craig"/>
 	<removehero heroid="Olivia"/>
 </trigger>
-<trigger id="1" description="Leave Outskirts" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="1" description="Leave Outskirts" require="" exclude="" nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<setegress mapname="darkshrineday" locx="20" locy="14"/>
 	<showcin cinid="1" exittrigid="-1"/>
 </trigger>

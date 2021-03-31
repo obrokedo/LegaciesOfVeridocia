@@ -5,10 +5,11 @@
 	<showcin cinid="0" exittrigid="-1"/>
 </trigger>
 <trigger id="1" description="ToWorldMap" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
-	<runtriggers triggers="2,3,"/>
+	<runtriggers triggers="2,3,13,"/>
 </trigger>
-<trigger id="2" description="PreBattle4Cinimatic" require="," exclude="Battle4," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="2" description="PreBattle4Cinimatic" require="," exclude="Tyson/Liza Choice Made?," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<loadcin mapdata="worldmap" cinid="2"/>
+	<completequest questid="Tyson/Liza Choice Made?"/>
 </trigger>
 <trigger id="3" description="PostBattle4ToWorldMap" require="Battle4," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<loadmap mapdata="worldmap" enter="FromTraderCabin" transdir=""/>
@@ -47,34 +48,37 @@
 <trigger id="12" description="MapStart" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<playmusic music="traderscabin" volume="75"/>
 </trigger>
+<trigger id="13" description="PreBattle4Egress/Death" require="Tyson/Liza Choice Made?," exclude="Battle4," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<startbattle battletriggers="battle4" entrance="BattleStart" battbg="3"/>
+</trigger>
 <text id="0" description="Huun">
-	<string require="," exclude="," trigger="-1" heroportrait="Huun" enemyportrait="" animportrait="" message="About that glass of water...<hardstop>"/>
+	<string require="," exclude="," trigger="-1," heroportrait="Huun" enemyportrait="" animportrait="" message="About that glass of water...<hardstop>"/>
 </text>
 <text id="1" description="Sharna">
-	<string require="," exclude="," trigger="-1" heroportrait="Sharna" enemyportrait="" animportrait="" message="Looks like we really do have to leave our old lives behind.<hardstop>"/>
+	<string require="," exclude="," trigger="-1," heroportrait="Sharna" enemyportrait="" animportrait="" message="Looks like we really do have to leave our old lives behind.<hardstop>"/>
 </text>
 <text id="2" description="Eddie">
-	<string require="," exclude="," trigger="-1" heroportrait="Eddie" enemyportrait="" animportrait="" message="Let's get going soon.  Mistal isn't going to kick her own ass!<hardstop>"/>
+	<string require="," exclude="," trigger="-1," heroportrait="Eddie" enemyportrait="" animportrait="" message="Let's get going soon.  Mistal isn't going to kick her own ass!<hardstop>"/>
 </text>
 <text id="3" description="Tyson">
-	<yesno require="," exclude="," triggeryes="8" triggerno="-1" heroportrait="Tyson" enemyportrait="" animportrait="" message="There isn't much to trade between Erium and Reyval.<softstop>  The opportunity in Avaria is perfect!<softstop> I still have one or two items to spare though.<pause> Wanna check out my stock?<hardstop>"/>
+	<yesno require="," exclude="," triggeryes="8," triggerno="-1," heroportrait="Tyson" enemyportrait="" animportrait="" message="There isn't much to trade between Erium and Reyval.<softstop>  The opportunity in Avaria is perfect!<softstop> I still have one or two items to spare though.<pause> Wanna check out my stock?<hardstop>"/>
 </text>
 <text id="4" description="Hugh">
-	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="hugh" message="It has been a while since I went to Avaria...  It's going to be harder to climb up there now.<hardstop>"/>
+	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="hugh" message="It has been a while since I went to Avaria...  It's going to be harder to climb up there now.<hardstop>"/>
 </text>
 <text id="5" description="PreBattle4">
-	<string require="," exclude="," trigger="-1" heroportrait="Noah" enemyportrait="" animportrait="" message="We should keep moving.<hardstop>"/>
+	<string require="," exclude="," trigger="-1," heroportrait="Noah" enemyportrait="" animportrait="" message="We should keep moving.<hardstop>"/>
 </text>
 <text id="6" description="searchnoitem">
-	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="It's dark inside...<hardstop>"/>
+	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="It's dark inside...<hardstop>"/>
 </text>
 <text id="7" description="Priestess">
-	<string require="," exclude="," trigger="11" heroportrait="" enemyportrait="" animportrait="Priestess1" message="Oh!<pause> It's you again!<pause> We must stop meeting like this!<hardstop><linebreak> Do you need my assistance again?<hardstop><linebreak> Welcome, my lamb. How may I be of service to you?<hardstop>"/>
+	<string require="," exclude="," trigger="11," heroportrait="" enemyportrait="" animportrait="Priestess1" message="Oh!<pause> It's you again!<pause> We must stop meeting like this!<hardstop><linebreak> Do you need my assistance again?<hardstop><linebreak> Welcome, my lamb. How may I be of service to you?<hardstop>"/>
 </text>
 <text id="8" description="Hugh's Huge Hauls">
-	<string require="," exclude="," trigger="-1" heroportrait="" enemyportrait="" animportrait="" message="----- Hugh's Huge Hauls -----<linebreak> Trading Company Headquarters<hardstop>"/>
+	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="----- Hugh's Huge Hauls -----<linebreak> Trading Company Headquarters<hardstop>"/>
 </text>
-<cinematic id="0" description="Part5HelpfulAdvice" camerax="0" cameray="0">
+<cinematic id="0" description="Part5HelpfulAdvice" camerax="0" cameray="0" skippable="false">
 	<assactor name="Noah" hero="Noah" enemyid="0" npcid="" staticid=""/>
 	<addactor x="312" y="312" name="Tyson" anim="Tyson" startanim="UnDown" visible="true" init="false" associatedhero=""/>
 	<addactor x="336" y="312" name="Hugh" anim="hugh" startanim="UnDown" visible="true" init="false" associatedhero=""/>
