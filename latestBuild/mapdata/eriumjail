@@ -10,11 +10,14 @@
 <trigger id="2" description="NorthSairsExit" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<loadmap mapdata="eriumcastle" enter="NorthJailStairsEntrance" transdir=""/>
 </trigger>
-<trigger id="3" description="Restart Battle2" require="," exclude="Battle2," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+<trigger id="3" description="Restart Battle2" require="Battle1," exclude="Battle2," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<startbattle battletriggers="battle2" entrance="battlestart" battbg="0"/>
 </trigger>
 <trigger id="4" description="Priestess" require="," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
 	<showpriest portrait="Priestess1"/>
+</trigger>
+<trigger id="5" description="Enable Priestess" require="Battle1," exclude="," nonretrig="false" retrigonenter="false" triggeronce="false" triggerimmediately="false">
+	<changenpc name="Priestess" animation="Priestess1" facing="3"/>
 </trigger>
 <text id="0" description="guard1">
 	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="Halt! Who goes there?<hardstop>"/>
@@ -259,7 +262,7 @@
 <condition id="2" description="ReStart Battle2" triggerid="3,">
 	<enterloc location="Battle2Restart" immediate="false"/>
 </condition>
-<condition id="3" description="MapLoad" triggerid="0,">
+<condition id="3" description="MapLoad" triggerid="0,5,">
 	<maploaded/>
 </condition>
 <objectgroup name="Trigger Region" visible="1">
@@ -466,7 +469,7 @@
 </object>
 <object name="Priestess" x="0" y="0">
 <properties>
-<property name="npc" value="noturn=false facing=3 throughwall=false noanimate=false animation=Priestess1 textid=1 wander=0"/>
+<property name="npc" value="noturn=false facing=-1 name= throughwall=false noanimate=false animation=blank textid=1 wander=0"/>
 </properties>
 <polyline points="552,144 576,144 576,168 552,168 552,144"/>
 </object>

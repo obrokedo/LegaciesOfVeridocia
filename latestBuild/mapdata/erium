@@ -101,7 +101,7 @@
 	<conversation require="," exclude="," trigger="-1," heroportrait1="" enemyportrait1="" animportrait1="" heroportrait2="Noah" enemyportrait2="" animportrait2="" message="Have you ever wondered what is on the other side of the mountains?<hardstop><split>The kingdom of Signus is to the east, but the passage is too treacherous for safe use.<hardstop><split>Oh that's right. It's a shame, I'd like to visit there some day.<hardstop>"/>
 </text>
 <text id="5" description="citizen5">
-	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="I enjoy that we can leave our doors open for anyone to drop in, but I must get ready for bed. Please see your way out.<hardstop>"/>
+	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="I enjoy that we can leave our doors open for anyone to drop in, but I must get ready for bed. Please make your way out.<hardstop>"/>
 </text>
 <text id="6" description="Item Shop">
 	<string require="," exclude="," trigger="1," heroportrait="" enemyportrait="" animportrait="Shopkeeper1" message="We have the finest remedies in town. How can I help you?<hardstop>"/>
@@ -155,7 +155,7 @@
 <text id="21" description="SearchSign2">
 	<string require="," exclude="," trigger="-1," heroportrait="" enemyportrait="" animportrait="" message="No Entrance!<hardstop>"/>
 </text>
-<cinematic id="0" description="NoahGettingReady" camerax="0" cameray="1056">
+<cinematic id="0" description="NoahGettingReady" camerax="0" cameray="1056" skippable="false">
 	<pausemusic/>
 	<addactor x="144" y="156" name="cam" anim="Noah" startanim="Down" visible="false" init="true" associatedhero="Noah"/>
 	<addactor x="96" y="108" name="Noah" anim="Noah" startanim="Down" visible="true" init="true" associatedhero="Noah"/>
@@ -227,7 +227,7 @@
 	<move name="Noah" x="144" y="180" speed="1.2" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
 	<loadmap mapdata="erium" enter="NoahHouse"/>
 </cinematic>
-<cinematic id="1" description="Bartender" camerax="1752" cameray="384">
+<cinematic id="1" description="Bartender" camerax="1752" cameray="384" skippable="false">
 	<assactor name="Noah" hero="Noah" enemyid="0" npcid="0" staticid=""/>
 	<assactor name="Bartender" hero="" enemyid="0" npcid="Bartender1" staticid=""/>
 	<move name="Bartender" x="1800" y="372" speed="2" movehor="false" movediag="false" halting="true" pathfinding="false" facing="-1"/>
@@ -239,7 +239,7 @@
 	<facing name="Noah" dir="1"/>
 	<cameramovetoactor actor="Noah" time="500"/>
 </cinematic>
-<cinematic id="2" description="Can'tLeave" camerax="384" cameray="1056">
+<cinematic id="2" description="Can'tLeave" camerax="384" cameray="1056" skippable="false">
 	<assactor name="Noah" hero="Noah" enemyid="0" npcid="" staticid=""/>
 	<speech text="As nice as the view is,<pause> I must report for duty.<hardstop>" heroportrait="Noah" enemyportrait="" animportrait=""/>
 	<move name="Noah" x="384" y="996" speed="2.4" movehor="false" movediag="false" halting="true" pathfinding="true" facing="-1"/>
