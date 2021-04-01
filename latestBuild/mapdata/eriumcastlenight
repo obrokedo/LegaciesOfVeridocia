@@ -16,7 +16,7 @@
 <text id="0" description="Priestess">
 	<string require="," exclude="," trigger="1," heroportrait="" enemyportrait="" animportrait="Priestess1" message="I don't usually receive vistors so late,<pause> but If you need my aid, I can assist you.<hardstop><linebreak> Welcome, my lamb.<pause> How may I be of service to you?<hardstop>"/>
 </text>
-<cinematic id="0" description="scene1-1" camerax="600" cameray="0">
+<cinematic id="0" description="scene1-1" camerax="600" cameray="0" skippable="false">
 	<addactor x="0" y="0" name="Cam" anim="Noah" startanim="Down" visible="false" init="true" associatedhero="Noah"/>
 	<addactor x="816" y="1056" name="Noah" anim="Noah" startanim="Left" visible="true" init="true" associatedhero="Noah"/>
 	<addactor x="816" y="1068" name="Sharna" anim="Sharna" startanim="UnLeft" visible="true" init="true" associatedhero=""/>
@@ -345,15 +345,15 @@
 	<speech text="I don't have time to deal with you, but I can't have you getting away, either. My pets will keep you busy!<hardstop>" heroportrait="" enemyportrait="" animportrait="Mistal"/>
 	<playsound sound="casting" volume="75"/>
 	<flash name="Mistal" time="1500" speed="100"/>
-	<loadbattle mapdata="battle1" entrance="battle1" battbg="1"/>
 	<flashscreen time="250"/>
 	<wait time="125"/>
 	<removeactor name="Mistal"/>
 	<addhero heroid="Huun" init="false"/>
 	<addhero heroid="Sharna" init="false"/>
 	<fadeout time="1000" halting="true"/>
+	<loadbattle mapdata="battle1" entrance="battle1" battbg="1"/>
 </cinematic>
-<cinematic id="1" description="Battle1 Aftermath" camerax="600" cameray="960">
+<cinematic id="1" description="Battle1 Aftermath" camerax="600" cameray="960" skippable="false">
 	<playmusic music="battle1" volume="75"/>
 	<addactor x="816" y="840" name="Huun" anim="Huun" startanim="UnDown" visible="true" init="true" associatedhero=""/>
 	<addactor x="864" y="864" name="Noah" anim="Noah" startanim="UnDown" visible="true" init="true" associatedhero=""/>
@@ -418,7 +418,7 @@
 	<fadeout time="3000" halting="true"/>
 	<loadcin mapdata="eriumjail" cinid="0"/>
 </cinematic>
-<cinematic id="2" description="Battle 2 Craig First" camerax="1176" cameray="120">
+<cinematic id="2" description="Battle 2 Craig First" camerax="1176" cameray="120" skippable="false">
 	<playmusic music="UnHero" volume="75"/>
 	<addstatic x="1296" y="144" spriteid="Crate" spriteim="Crate(night)"/>
 	<addactor x="1368" y="240" name="Olivia" anim="Olivia" startanim="UnUp" visible="true" init="true" associatedhero=""/>
@@ -445,7 +445,7 @@
 	<facing name="Huun" dir="1"/>
 	<loadcin mapdata="eriumcastlenight" cinid="4"/>
 </cinematic>
-<cinematic id="3" description="Battle 2 Noah First" camerax="1176" cameray="120">
+<cinematic id="3" description="Battle 2 Noah First" camerax="1176" cameray="120" skippable="false">
 	<playmusic music="UnHero" volume="75"/>
 	<addstatic x="1296" y="144" spriteid="Crate" spriteim="Crate(night)"/>
 	<addactor x="1104" y="528" name="Olivia" anim="Olivia" startanim="UnUp" visible="true" init="true" associatedhero=""/>
@@ -491,7 +491,7 @@
 	<wait time="250"/>
 	<loadcin mapdata="eriumcastlenight" cinid="4"/>
 </cinematic>
-<cinematic id="4" description="Battle 2 Core" camerax="1176" cameray="120">
+<cinematic id="4" description="Battle 2 Core" camerax="1176" cameray="120" skippable="false">
 	<playmusic music="UnHero" volume="75"/>
 	<addactor x="1296" y="140" name="Crate" anim="Crate(night)" startanim="UnUp" visible="true" init="false" associatedhero=""/>
 	<addactor x="1368" y="240" name="Olivia" anim="Olivia" startanim="UnUp" visible="true" init="true" associatedhero=""/>
@@ -645,10 +645,10 @@
 	<fadeout time="2000" halting="true"/>
 	<showintro/>
 </cinematic>
-<cinematic id="6" description="" camerax="0" cameray="0">
+<cinematic id="6" description="" camerax="0" cameray="0" skippable="false">
 	<camerafollow name=""/>
 </cinematic>
-<cinematic id="7" description="Blockades" camerax="0" cameray="0">
+<cinematic id="7" description="Blockades" camerax="0" cameray="0" skippable="false">
 	<assactor name="Noah" hero="Noah" enemyid="0" npcid="" staticid=""/>
 	<cameramovetoactor actor="Noah" time="500"/>
 	<wait time="500"/>
